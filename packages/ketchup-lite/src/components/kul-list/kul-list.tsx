@@ -74,6 +74,11 @@ export class KulList {
      */
     @Prop({ mutable: true }) kulData: KulDataDataset = null;
     /**
+     * Text displayed when the list is empty.
+     * @default ""
+     */
+    @Prop() kulEmptyLabel = '';
+    /**
      * Defines whether items can be removed from the list or not.
      * @default false
      */
@@ -385,8 +390,8 @@ export class KulList {
     }
 
     #prepTitle(node: KulDataNode) {
-        return node.value ? (
-            <div class="node__title">{node.value}</div>
+        return String(node.value).valueOf() ? (
+            <div class="node__title">{String(node.value).valueOf()}</div>
         ) : undefined;
     }
 
@@ -436,9 +441,10 @@ export class KulList {
                     {isEmpty ? (
                         <div class="empty-data">
                             <div class="empty-data__text">
-                                {this.#kulManager.language.translate(
-                                    KulLanguageGeneric.EMPTY_DATA
-                                )}
+                                {this.kulEmptyLabel ||
+                                    this.#kulManager.language.translate(
+                                        KulLanguageGeneric.EMPTY_DATA
+                                    )}
                             </div>
                         </div>
                     ) : (

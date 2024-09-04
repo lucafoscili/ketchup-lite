@@ -10,6 +10,7 @@
 | Property             | Attribute              | Description                                                           | Type             | Default |
 | -------------------- | ---------------------- | --------------------------------------------------------------------- | ---------------- | ------- |
 | `kulData`            | --                     | The data of the list.                                                 | `KulDataDataset` | `null`  |
+| `kulEmptyLabel`      | `kul-empty-label`      | Text displayed when the list is empty.                                | `string`         | `''`    |
 | `kulEnableDeletions` | `kul-enable-deletions` | Defines whether items can be removed from the list or not.            | `boolean`        | `false` |
 | `kulNavigation`      | `kul-navigation`       | When true, enables items' navigation through arrow keys.              | `boolean`        | `true`  |
 | `kulRipple`          | `kul-ripple`           | When set to true, the pointerdown event will trigger a ripple effect. | `boolean`        | `true`  |

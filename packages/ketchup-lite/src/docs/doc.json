@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-03T16:38:57",
+  "timestamp": "2024-09-04T23:06:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -4776,6 +4776,33 @@
           "values": [
             {
               "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulEmptyLabel",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-empty-label",
+          "reflectToAttr": false,
+          "docs": "Text displayed when the list is empty.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
             }
           ],
           "optional": false,

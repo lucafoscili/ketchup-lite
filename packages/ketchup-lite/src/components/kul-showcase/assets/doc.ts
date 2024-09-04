@@ -1254,6 +1254,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         type: "KulDataDataset",
       },
       {
+        name: "kulEmptyLabel",
+        docs: "Text displayed when the list is empty.",
+        type: "string",
+      },
+      {
         name: "kulEnableDeletions",
         docs: "Defines whether items can be removed from the list or not.",
         type: "boolean",
