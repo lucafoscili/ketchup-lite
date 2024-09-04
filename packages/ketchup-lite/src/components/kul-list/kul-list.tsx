@@ -385,8 +385,8 @@ export class KulList {
     }
 
     #prepTitle(node: KulDataNode) {
-        return node.value ? (
-            <div class="node__title">{node.value}</div>
+        return String(node.value).valueOf() ? (
+            <div class="node__title">{String(node.value).valueOf()}</div>
         ) : undefined;
     }
 
