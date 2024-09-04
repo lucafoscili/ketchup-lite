@@ -104,6 +104,7 @@ describe('Methods', () => {
     it(`getProps: check keys against Kul${listCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(listTag, {
             kulData: null,
+            kulEmptyLabel: null,
             kulEnableDeletions: null,
             kulNavigation: null,
             kulRipple: null,

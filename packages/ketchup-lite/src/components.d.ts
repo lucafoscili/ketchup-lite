@@ -657,6 +657,11 @@ export namespace Components {
          */
         "kulData": KulDataDataset;
         /**
+          * Text displayed when the list is empty.
+          * @default ""
+         */
+        "kulEmptyLabel": string;
+        /**
           * Defines whether items can be removed from the list or not.
           * @default false
          */
@@ -2358,6 +2363,11 @@ declare namespace LocalJSX {
           * @default []
          */
         "kulData"?: KulDataDataset;
+        /**
+          * Text displayed when the list is empty.
+          * @default ""
+         */
+        "kulEmptyLabel"?: string;
         /**
           * Defines whether items can be removed from the list or not.
           * @default false

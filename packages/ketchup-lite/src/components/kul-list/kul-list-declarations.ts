@@ -18,6 +18,7 @@ export interface KulListEventPayload extends KulEventPayload {
 
 export enum KulListProps {
     kulData = 'The actual data of the list.',
+    kulEmptyLabel = 'Text displayed when the list is empty.',
     kulEnableDeletions = 'Defines whether items can be removed from the list or not.',
     kulNavigation = "When true, enables items' navigation through arrow keys.",
     kulRipple = 'When set to true, the pointerdown event will trigger a ripple effect.',
@@ -27,6 +28,7 @@ export enum KulListProps {
 
 export interface KulListPropsInterface {
     kulData?: KulDataDataset;
+    kulEmptyLabel?: string;
     kulEnableDeletions?: boolean;
     kulNavigation?: boolean;
     kulRipple?: boolean;
