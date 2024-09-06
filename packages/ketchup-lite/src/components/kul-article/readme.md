@@ -103,6 +103,7 @@ Type: `Promise<void>`
  - [kul-showcase-lazy](../kul-showcase/components/lazy)
  - [kul-showcase-list](../kul-showcase/components/list)
  - [kul-showcase-photoframe](../kul-showcase/components/photoframe)
+ - [kul-showcase-progressbar](../kul-showcase/components/progressbar)
  - [kul-showcase-spinner](../kul-showcase/components/spinner)
  - [kul-showcase-splash](../kul-showcase/components/splash)
  - [kul-showcase-switch](../kul-showcase/components/switch)
@@ -140,6 +141,7 @@ graph TD;
   kul-showcase-lazy --> kul-article
   kul-showcase-list --> kul-article
   kul-showcase-photoframe --> kul-article
+  kul-showcase-progressbar --> kul-article
   kul-showcase-spinner --> kul-article
   kul-showcase-splash --> kul-article
   kul-showcase-switch --> kul-article

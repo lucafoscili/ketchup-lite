@@ -744,7 +744,7 @@ export const themesJson: KulThemeJSON = {
             '--kul-spinner-color': '#c0c0c0',
             '--kul-chart-color-1': '#ffffff',
             '--kul-chart-color-2': '#979797',
-            '--kul-chart-color-3': '#5c5c5c',
+            '--kul-chart-color-3': '#bababa',
             '--kul-chart-color-4': '#000000',
             '--kul-chart-color-5': '#b35454',
             '--kul-chart-color-6': '#59af57',

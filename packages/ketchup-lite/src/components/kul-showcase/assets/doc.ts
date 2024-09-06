@@ -1402,6 +1402,111 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-progressbar": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Retrieves the debug information reflecting the current state of the component.",
+        returns: {
+          type: "Promise<KulDebugComponentInfo>",
+          docs: "A promise that resolves to a KulDebugComponentInfo object containing debug information.",
+        },
+        signature: "() => Promise<KulDebugComponentInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Retrieves the properties of the component, with optional descriptions.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "Triggers a re-render of the component to reflect any state changes.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulCenteredLabel",
+        docs: "Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed.",
+        type: "boolean",
+      },
+      {
+        name: "kulIcon",
+        docs: "Specifies an icon to replace the label.",
+        type: "string",
+      },
+      {
+        name: "kulIsRadial",
+        docs: "Radial version.",
+        type: "boolean",
+      },
+      {
+        name: "kulLabel",
+        docs: "Specifies a text for the bar's label.",
+        type: "string",
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "The current value the progress bar must display.",
+        type: "number",
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-progressbar-border-radius",
+        docs: "Sets border radius of the component. Defaults to 4px.",
+      },
+      {
+        name: "--kul-progressbar-font-family",
+        docs: "Sets font family of the component. Defaults to the value of --kul-font-family.",
+      },
+      {
+        name: "--kul-progressbar-font-size",
+        docs: "Sets font size of the component. Defaults to the value of --kul-font-size.",
+      },
+      {
+        name: "--kul-progressbar-height",
+        docs: "Sets height of the component. Defaults to 1.25em.",
+      },
+      {
+        name: "--kul-progressbar-primary-color",
+        docs: "Sets primary color of the component. Defaults to the value of --kul-primary-color.",
+      },
+      {
+        name: "--kul-progressbar-text-color",
+        docs: "Sets text color of the component. Defaults to the value of --kul-text-color.",
+      },
+      {
+        name: "--kul-progressbar-text-color-rgb",
+        docs: "Sets text color RGB values of the component (used for shaders). Defaults to the value of --kul-text-color-rgb.",
+      },
+      {
+        name: "--kul-progressbar-text-on-primary-color",
+        docs: "Sets text on primary color of the component. Defaults to the value of --kul-text-on-primary-color.",
+      },
+      {
+        name: "--kul-progressbar-track-color",
+        docs: "Sets track color of the progress bar (empty section). Defaults to the value of --kul-disabled-background-color.",
+      },
+      {
+        name: "--kul-progressbar-width",
+        docs: "Sets width of the component. Defaults to 100%.",
+      },
+    ],
+  },
   "kul-showcase": {
     methods: [
       {
@@ -1557,6 +1662,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-photoframe": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-progressbar": {
     methods: [],
     props: [],
     styles: [],

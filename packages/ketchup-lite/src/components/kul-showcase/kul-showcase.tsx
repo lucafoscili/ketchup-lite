@@ -29,7 +29,6 @@ import {
     KUL_SHOWCASE_UTILITIES,
 } from './kul-showcase-data';
 import { KulCardCustomEvent, KulDataDataset } from '../../components';
-import { ARTICLE_DOC } from './components/article/kul-showcase-article-data';
 
 @Component({
     assetsDirs: ['assets/media'],

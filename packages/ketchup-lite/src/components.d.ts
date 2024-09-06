@@ -733,6 +733,53 @@ export namespace Components {
          */
         "refresh": () => Promise<void>;
     }
+    interface KulProgressbar {
+        /**
+          * Retrieves the debug information reflecting the current state of the component.
+          * @returns A promise that resolves to a KulDebugComponentInfo object containing debug information.
+         */
+        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        /**
+          * Retrieves the properties of the component, with optional descriptions.
+          * @param descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
+          * @returns A promise that resolves to an object where each key is a property name, optionally with its description.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed.
+          * @default false
+         */
+        "kulCenteredLabel": boolean;
+        /**
+          * Specifies an icon to replace the label.
+          * @default ""
+         */
+        "kulIcon": string;
+        /**
+          * Radial version.
+          * @default false
+         */
+        "kulIsRadial": boolean;
+        /**
+          * Specifies a text for the bar's label.
+          * @default ""
+         */
+        "kulLabel": string;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * The current value the progress bar must display.
+          * @default 0
+         */
+        "kulValue": number;
+        /**
+          * Triggers a re-render of the component to reflect any state changes.
+         */
+        "refresh": () => Promise<void>;
+    }
     interface KulShowcase {
         /**
           * Fetches debug information of the component's current state.
@@ -802,6 +849,8 @@ export namespace Components {
     interface KulShowcaseList {
     }
     interface KulShowcasePhotoframe {
+    }
+    interface KulShowcaseProgressbar {
     }
     interface KulShowcaseSpinner {
     }
@@ -1290,6 +1339,10 @@ export interface KulPhotoframeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulPhotoframeElement;
 }
+export interface KulProgressbarCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulProgressbarElement;
+}
 export interface KulShowcaseCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulShowcaseElement;
@@ -1565,6 +1618,23 @@ declare global {
         prototype: HTMLKulPhotoframeElement;
         new (): HTMLKulPhotoframeElement;
     };
+    interface HTMLKulProgressbarElementEventMap {
+        "kul-progressbar-event": KulEventPayload;
+    }
+    interface HTMLKulProgressbarElement extends Components.KulProgressbar, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulProgressbarElementEventMap>(type: K, listener: (this: HTMLKulProgressbarElement, ev: KulProgressbarCustomEvent<HTMLKulProgressbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulProgressbarElementEventMap>(type: K, listener: (this: HTMLKulProgressbarElement, ev: KulProgressbarCustomEvent<HTMLKulProgressbarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulProgressbarElement: {
+        prototype: HTMLKulProgressbarElement;
+        new (): HTMLKulProgressbarElement;
+    };
     interface HTMLKulShowcaseElementEventMap {
         "kul-showcase-event": KulEventPayload;
     }
@@ -1725,6 +1795,12 @@ declare global {
     var HTMLKulShowcasePhotoframeElement: {
         prototype: HTMLKulShowcasePhotoframeElement;
         new (): HTMLKulShowcasePhotoframeElement;
+    };
+    interface HTMLKulShowcaseProgressbarElement extends Components.KulShowcaseProgressbar, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseProgressbarElement: {
+        prototype: HTMLKulShowcaseProgressbarElement;
+        new (): HTMLKulShowcaseProgressbarElement;
     };
     interface HTMLKulShowcaseSpinnerElement extends Components.KulShowcaseSpinner, HTMLStencilElement {
     }
@@ -1925,6 +2001,7 @@ declare global {
         "kul-lazy": HTMLKulLazyElement;
         "kul-list": HTMLKulListElement;
         "kul-photoframe": HTMLKulPhotoframeElement;
+        "kul-progressbar": HTMLKulProgressbarElement;
         "kul-showcase": HTMLKulShowcaseElement;
         "kul-showcase-accordion": HTMLKulShowcaseAccordionElement;
         "kul-showcase-article": HTMLKulShowcaseArticleElement;
@@ -1950,6 +2027,7 @@ declare global {
         "kul-showcase-lazy": HTMLKulShowcaseLazyElement;
         "kul-showcase-list": HTMLKulShowcaseListElement;
         "kul-showcase-photoframe": HTMLKulShowcasePhotoframeElement;
+        "kul-showcase-progressbar": HTMLKulShowcaseProgressbarElement;
         "kul-showcase-spinner": HTMLKulShowcaseSpinnerElement;
         "kul-showcase-splash": HTMLKulShowcaseSplashElement;
         "kul-showcase-switch": HTMLKulShowcaseSwitchElement;
@@ -2424,6 +2502,42 @@ declare namespace LocalJSX {
          */
         "onKul-photoframe-event"?: (event: KulPhotoframeCustomEvent<KulPhotoframeEventPayload>) => void;
     }
+    interface KulProgressbar {
+        /**
+          * Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed.
+          * @default false
+         */
+        "kulCenteredLabel"?: boolean;
+        /**
+          * Specifies an icon to replace the label.
+          * @default ""
+         */
+        "kulIcon"?: string;
+        /**
+          * Radial version.
+          * @default false
+         */
+        "kulIsRadial"?: boolean;
+        /**
+          * Specifies a text for the bar's label.
+          * @default ""
+         */
+        "kulLabel"?: string;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * The current value the progress bar must display.
+          * @default 0
+         */
+        "kulValue"?: number;
+        /**
+          * Describes event emitted.
+         */
+        "onKul-progressbar-event"?: (event: KulProgressbarCustomEvent<KulEventPayload>) => void;
+    }
     interface KulShowcase {
         /**
           * Custom style of the component.
@@ -2482,6 +2596,8 @@ declare namespace LocalJSX {
     interface KulShowcaseList {
     }
     interface KulShowcasePhotoframe {
+    }
+    interface KulShowcaseProgressbar {
     }
     interface KulShowcaseSpinner {
     }
@@ -2794,6 +2910,7 @@ declare namespace LocalJSX {
         "kul-lazy": KulLazy;
         "kul-list": KulList;
         "kul-photoframe": KulPhotoframe;
+        "kul-progressbar": KulProgressbar;
         "kul-showcase": KulShowcase;
         "kul-showcase-accordion": KulShowcaseAccordion;
         "kul-showcase-article": KulShowcaseArticle;
@@ -2819,6 +2936,7 @@ declare namespace LocalJSX {
         "kul-showcase-lazy": KulShowcaseLazy;
         "kul-showcase-list": KulShowcaseList;
         "kul-showcase-photoframe": KulShowcasePhotoframe;
+        "kul-showcase-progressbar": KulShowcaseProgressbar;
         "kul-showcase-spinner": KulShowcaseSpinner;
         "kul-showcase-splash": KulShowcaseSplash;
         "kul-showcase-switch": KulShowcaseSwitch;
@@ -2855,6 +2973,7 @@ declare module "@stencil/core" {
             "kul-lazy": LocalJSX.KulLazy & JSXBase.HTMLAttributes<HTMLKulLazyElement>;
             "kul-list": LocalJSX.KulList & JSXBase.HTMLAttributes<HTMLKulListElement>;
             "kul-photoframe": LocalJSX.KulPhotoframe & JSXBase.HTMLAttributes<HTMLKulPhotoframeElement>;
+            "kul-progressbar": LocalJSX.KulProgressbar & JSXBase.HTMLAttributes<HTMLKulProgressbarElement>;
             "kul-showcase": LocalJSX.KulShowcase & JSXBase.HTMLAttributes<HTMLKulShowcaseElement>;
             "kul-showcase-accordion": LocalJSX.KulShowcaseAccordion & JSXBase.HTMLAttributes<HTMLKulShowcaseAccordionElement>;
             "kul-showcase-article": LocalJSX.KulShowcaseArticle & JSXBase.HTMLAttributes<HTMLKulShowcaseArticleElement>;
@@ -2880,6 +2999,7 @@ declare module "@stencil/core" {
             "kul-showcase-lazy": LocalJSX.KulShowcaseLazy & JSXBase.HTMLAttributes<HTMLKulShowcaseLazyElement>;
             "kul-showcase-list": LocalJSX.KulShowcaseList & JSXBase.HTMLAttributes<HTMLKulShowcaseListElement>;
             "kul-showcase-photoframe": LocalJSX.KulShowcasePhotoframe & JSXBase.HTMLAttributes<HTMLKulShowcasePhotoframeElement>;
+            "kul-showcase-progressbar": LocalJSX.KulShowcaseProgressbar & JSXBase.HTMLAttributes<HTMLKulShowcaseProgressbarElement>;
             "kul-showcase-spinner": LocalJSX.KulShowcaseSpinner & JSXBase.HTMLAttributes<HTMLKulShowcaseSpinnerElement>;
             "kul-showcase-splash": LocalJSX.KulShowcaseSplash & JSXBase.HTMLAttributes<HTMLKulShowcaseSplashElement>;
             "kul-showcase-switch": LocalJSX.KulShowcaseSwitch & JSXBase.HTMLAttributes<HTMLKulShowcaseSwitchElement>;
