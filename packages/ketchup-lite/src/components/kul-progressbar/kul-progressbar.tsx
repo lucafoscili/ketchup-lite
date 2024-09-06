@@ -183,7 +183,7 @@ export class KulProgressbar {
             <div class={'progress-bar'}>
                 {this.#prepLabel()}
                 <div
-                    class={`pie ${this.kulValue ? 'has-value' : ''}  ${this.kulValue > 50 ? 'half-full' : ''}`}
+                    class={`pie ${this.kulValue ? 'has-value' : ''}  ${this.kulValue > 50 ? 'half-full' : 'half-empty'}`}
                 >
                     <div class="left-side half-circle"></div>
                     <div class="right-side half-circle"></div>
