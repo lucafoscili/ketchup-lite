@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-06T14:22:25",
+  "timestamp": "2024-09-06T16:56:35",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5562,7 +5562,7 @@
       "filePath": "src/components/kul-progressbar/kul-progressbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-progressbar",
-      "readme": "# kul-progressbar\n\n\n",
+      "readme": "# kul-progressbar\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7133,7 +7133,7 @@
       "filePath": "src/components/kul-showcase/components/progressbar/kul-showcase-progressbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-progressbar",
-      "readme": "# kul-showcase-progressbar\n\n\n",
+      "readme": "# kul-showcase-progressbar\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
