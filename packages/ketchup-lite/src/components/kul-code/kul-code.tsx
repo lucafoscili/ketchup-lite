@@ -17,10 +17,10 @@ import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
-import Prism from 'prismjs';
-import 'prismjs/components/';
 import { KulButton } from '../kul-button/kul-button';
 import { KulButtonEventPayload } from '../kul-button/kul-button-declarations';
+import Prism from 'prismjs';
+import { STATIC_LANGUAGES } from './languages/static-languages';
 
 @Component({
     assetsDirs: ['assets/prism'],
@@ -176,10 +176,16 @@ export class KulCode {
 
     async #highlightCode(): Promise<void> {
         try {
-            await this.#loadLanguage();
+            if (!Prism.languages[this.kulLanguage]) {
+                await this.#loadLanguage();
+            }
             Prism.highlightElement(this.#el);
         } catch (error) {
-            console.error('Failed to highlight code:', error);
+            this.#kulManager.debug.logMessage(
+                this,
+                'Failed to highlight code:' + error,
+                'error'
+            );
             this.#el.innerHTML = this.value;
         }
     }
@@ -233,6 +239,17 @@ export class KulCode {
 
     componentWillLoad() {
         this.#kulManager.theme.register(this);
+        STATIC_LANGUAGES.css(Prism);
+        STATIC_LANGUAGES.javascript(Prism);
+        STATIC_LANGUAGES.json(Prism);
+        STATIC_LANGUAGES.jsx(Prism);
+        STATIC_LANGUAGES.markdown(Prism);
+        STATIC_LANGUAGES.markup(Prism);
+        STATIC_LANGUAGES.python(Prism);
+        STATIC_LANGUAGES.regex(Prism);
+        STATIC_LANGUAGES.scss(Prism);
+        STATIC_LANGUAGES.tsx(Prism);
+        STATIC_LANGUAGES.typescript(Prism);
         this.#updateValue();
     }
 
