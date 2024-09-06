@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-04T23:06:07",
+  "timestamp": "2024-09-06T14:22:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -643,6 +643,7 @@
         "kul-showcase-lazy",
         "kul-showcase-list",
         "kul-showcase-photoframe",
+        "kul-showcase-progressbar",
         "kul-showcase-spinner",
         "kul-showcase-splash",
         "kul-showcase-switch",
@@ -727,6 +728,9 @@
           "kul-article"
         ],
         "kul-showcase-photoframe": [
+          "kul-article"
+        ],
+        "kul-showcase-progressbar": [
           "kul-article"
         ],
         "kul-showcase-spinner": [
@@ -5555,6 +5559,369 @@
       }
     },
     {
+      "filePath": "src/components/kul-progressbar/kul-progressbar.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-progressbar",
+      "readme": "# kul-progressbar\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulCenteredLabel",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-centered-label",
+          "reflectToAttr": true,
+          "docs": "Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulIcon",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-icon",
+          "reflectToAttr": false,
+          "docs": "Specifies an icon to replace the label.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulIsRadial",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-is-radial",
+          "reflectToAttr": true,
+          "docs": "Radial version.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLabel",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-label",
+          "reflectToAttr": false,
+          "docs": "Specifies a text for the bar's label.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-style",
+          "reflectToAttr": false,
+          "docs": "Custom style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulValue",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-value",
+          "reflectToAttr": false,
+          "docs": "The current value the progress bar must display.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "0"
+            }
+          ],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugComponentInfo>",
+            "docs": "A promise that resolves to a KulDebugComponentInfo object containing debug information."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugComponentInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugComponentInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugComponentInfo"
+              }
+            },
+            "return": "Promise<KulDebugComponentInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugComponentInfo>",
+          "parameters": [],
+          "docs": "Retrieves the debug information reflecting the current state of the component.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves to a KulDebugComponentInfo object containing debug information."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "A promise that resolves to an object where each key is a property name, optionally with its description."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- If true, returns properties with descriptions; otherwise, returns properties only."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- If true, returns properties with descriptions; otherwise, returns properties only."
+            }
+          ],
+          "docs": "Retrieves the properties of the component, with optional descriptions.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - If true, returns properties with descriptions; otherwise, returns properties only."
+            },
+            {
+              "name": "returns",
+              "text": "A promise that resolves to an object where each key is a property name, optionally with its description."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "Triggers a re-render of the component to reflect any state changes.",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-progressbar-event",
+          "detail": "KulEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
+            "references": {
+              "KulEventPayload": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-progressbar-border-radius",
+          "annotation": "prop",
+          "docs": "Sets border radius of the component. Defaults to 4px."
+        },
+        {
+          "name": "--kul-progressbar-font-family",
+          "annotation": "prop",
+          "docs": "Sets font family of the component. Defaults to the value of --kul-font-family."
+        },
+        {
+          "name": "--kul-progressbar-font-size",
+          "annotation": "prop",
+          "docs": "Sets font size of the component. Defaults to the value of --kul-font-size."
+        },
+        {
+          "name": "--kul-progressbar-height",
+          "annotation": "prop",
+          "docs": "Sets height of the component. Defaults to 1.25em."
+        },
+        {
+          "name": "--kul-progressbar-primary-color",
+          "annotation": "prop",
+          "docs": "Sets primary color of the component. Defaults to the value of --kul-primary-color."
+        },
+        {
+          "name": "--kul-progressbar-text-color",
+          "annotation": "prop",
+          "docs": "Sets text color of the component. Defaults to the value of --kul-text-color."
+        },
+        {
+          "name": "--kul-progressbar-text-color-rgb",
+          "annotation": "prop",
+          "docs": "Sets text color RGB values of the component (used for shaders). Defaults to the value of --kul-text-color-rgb."
+        },
+        {
+          "name": "--kul-progressbar-text-on-primary-color",
+          "annotation": "prop",
+          "docs": "Sets text on primary color of the component. Defaults to the value of --kul-text-on-primary-color."
+        },
+        {
+          "name": "--kul-progressbar-track-color",
+          "annotation": "prop",
+          "docs": "Sets track color of the progress bar (empty section). Defaults to the value of --kul-disabled-background-color."
+        },
+        {
+          "name": "--kul-progressbar-width",
+          "annotation": "prop",
+          "docs": "Sets width of the component. Defaults to 100%."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-progressbar"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "kul-showcase-progressbar": [
+          "kul-progressbar"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-showcase/kul-showcase.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase",
@@ -6758,6 +7125,54 @@
       "dependencyGraph": {
         "kul-showcase-photoframe": [
           "kul-photoframe",
+          "kul-article"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/components/progressbar/kul-showcase-progressbar.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-progressbar",
+      "readme": "# kul-showcase-progressbar\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-progressbar",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-progressbar": [
+          "kul-progressbar",
           "kul-article"
         ]
       }

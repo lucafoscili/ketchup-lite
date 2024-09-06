@@ -13,6 +13,7 @@ export const COMPONENTS = [
     'lazy',
     'list',
     'photoframe',
+    'progressbar',
     'splash',
     'spinner',
     'switch',
@@ -204,6 +205,12 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'photo_album',
             id: 'Photoframe',
             value: 'Photoframe',
+        },
+        {
+            description: 'Displays the percentage of completion.',
+            icon: 'data_usage',
+            id: 'Progressbar',
+            value: 'Progress bar',
         },
         {
             description:
