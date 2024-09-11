@@ -1311,7 +1311,7 @@ export class KulChart {
             this.#kulManager.debug.logMessage(
                 this,
                 'Not enough data. (' + JSON.stringify(this.kulData) + ')',
-                'warning'
+                'informational'
             );
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');

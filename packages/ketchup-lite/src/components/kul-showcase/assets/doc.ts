@@ -764,6 +764,132 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-chip": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugComponentInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugComponentInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's props values.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "Chip of props as object, each key will be a prop.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "getSelected",
+        docs: "Returns the selected nodes.",
+        returns: {
+          type: "Promise<Set<KulDataNode>>",
+          docs: "Selected nodes.",
+        },
+        signature: "() => Promise<Set<KulDataNode>>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "selectNodes",
+        docs: "Selects one or more nodes in the chip component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature:
+          "(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulData",
+        docs: "The data of the chip list.",
+        type: "KulDataDataset",
+      },
+      {
+        name: "kulRipple",
+        docs: "When set to true, the pointerdown event will trigger a ripple effect.",
+        type: "boolean",
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+      {
+        name: "kulStyling",
+        docs: 'Styling of the chip component, includes: "choice", "input", "filter" and "standard".',
+        type: '"choice" | "filter" | "input" | "standard"',
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-chip-background-color",
+        docs: "Sets background color of the component. Defaults to the value of --kul-background-color.",
+      },
+      {
+        name: "--kul-chip-border-radius",
+        docs: "Sets border radius of the chips. Defaults to 16px.",
+      },
+      {
+        name: "--kul-chip-font-family",
+        docs: "Sets font family of the chips. Defaults to the value of --kul-font-family.",
+      },
+      {
+        name: "--kul-chip-font-size",
+        docs: "Sets font size of the chips. Defaults to the value of --kul-font-size.",
+      },
+      {
+        name: "--kul-chip-font-weight",
+        docs: "Sets font weight of the chips. Defaults to the value of --kul-font-weight.",
+      },
+      {
+        name: "--kul-chip-height",
+        docs: "Sets height of the chips. Defaults to 32px.",
+      },
+      {
+        name: "--kul-chip-indent-multiplier",
+        docs: "Sets the indentation multiplier for children chips. Defaults to 10.",
+      },
+      {
+        name: "--kul-chip-margin",
+        docs: "Sets margin of the chips. Defaults to 4px.",
+      },
+      {
+        name: "--kul-chip-padding",
+        docs: "Sets padding of the chips. Defaults to 0 12px.",
+      },
+      {
+        name: "--kul-chip-primary-color",
+        docs: "Sets primary color of the component. Defaults to the value of --kul-primary-color.",
+      },
+      {
+        name: "--kul-chip-primary-color-rgb",
+        docs: "Sets primary color RGB values of the component (used for shaders). Defaults to the value of --kul-primary-color-rgb.",
+      },
+      {
+        name: "--kul-chip-text-color",
+        docs: "Sets text color of the component. Defaults to the value of --kul-text-color.",
+      },
+      {
+        name: "--kul-chip-text-color-rgb",
+        docs: "Sets text color RGB values of the component (used for shaders). Defaults to the value of --kul-text-color-rgb.",
+      },
+    ],
+  },
   "kul-code": {
     methods: [
       {
@@ -1577,6 +1703,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-chat": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-chip": {
     methods: [],
     props: [],
     styles: [],

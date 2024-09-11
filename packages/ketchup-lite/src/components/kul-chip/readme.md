@@ -1,0 +1,124 @@
+# kul-chip
+
+
+
+<!-- Auto Generated Below -->
+
+
+## Properties
+
+| Property     | Attribute     | Description                                                                          | Type                                            | Default      |
+| ------------ | ------------- | ------------------------------------------------------------------------------------ | ----------------------------------------------- | ------------ |
+| `kulData`    | --            | The data of the chip list.                                                           | `KulDataDataset`                                | `null`       |
+| `kulRipple`  | `kul-ripple`  | When set to true, the pointerdown event will trigger a ripple effect.                | `boolean`                                       | `true`       |
+| `kulStyle`   | `kul-style`   | Custom style of the component.                                                       | `string`                                        | `''`         |
+| `kulStyling` | `kul-styling` | Styling of the chip component, includes: "choice", "input", "filter" and "standard". | `"choice" \| "filter" \| "input" \| "standard"` | `'standard'` |
+
+
+## Events
+
+| Event            | Description              | Type                               |
+| ---------------- | ------------------------ | ---------------------------------- |
+| `kul-chip-event` | Describes event emitted. | `CustomEvent<KulChipEventPayload>` |
+
+
+## Methods
+
+### `getDebugInfo() => Promise<KulDebugComponentInfo>`
+
+Fetches debug information of the component's current state.
+
+#### Returns
+
+Type: `Promise<KulDebugComponentInfo>`
+
+A promise that resolves with the debug information object.
+
+### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+
+Used to retrieve component's props values.
+
+#### Parameters
+
+| Name           | Type      | Description                                                                            |
+| -------------- | --------- | -------------------------------------------------------------------------------------- |
+| `descriptions` | `boolean` | - When provided and true, the result will be the chip of props with their description. |
+
+#### Returns
+
+Type: `Promise<GenericObject<unknown>>`
+
+Chip of props as object, each key will be a prop.
+
+### `getSelected() => Promise<Set<KulDataNode>>`
+
+Returns the selected nodes.
+
+#### Returns
+
+Type: `Promise<Set<KulDataNode>>`
+
+Selected nodes.
+
+### `refresh() => Promise<void>`
+
+This method is used to trigger a new render of the component.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `selectNodes(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>`
+
+Selects one or more nodes in the chip component.
+
+#### Parameters
+
+| Name    | Type                                  | Description                                                   |
+| ------- | ------------------------------------- | ------------------------------------------------------------- |
+| `nodes` | `(string[] \| KulDataNode[]) & any[]` | - An array of KulDataNode objects or node IDs to be selected. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+
+## CSS Custom Properties
+
+| Name                           | Description                                                                                                          |
+| ------------------------------ | -------------------------------------------------------------------------------------------------------------------- |
+| `--kul-chip-background-color`  | Sets background color of the component. Defaults to the value of --kul-background-color.                             |
+| `--kul-chip-border-radius`     | Sets border radius of the chips. Defaults to 16px.                                                                   |
+| `--kul-chip-font-family`       | Sets font family of the chips. Defaults to the value of --kul-font-family.                                           |
+| `--kul-chip-font-size`         | Sets font size of the chips. Defaults to the value of --kul-font-size.                                               |
+| `--kul-chip-font-weight`       | Sets font weight of the chips. Defaults to the value of --kul-font-weight.                                           |
+| `--kul-chip-height`            | Sets height of the chips. Defaults to 32px.                                                                          |
+| `--kul-chip-indent-multiplier` | Sets the indentation multiplier for children chips. Defaults to 10.                                                  |
+| `--kul-chip-margin`            | Sets margin of the chips. Defaults to 4px.                                                                           |
+| `--kul-chip-padding`           | Sets padding of the chips. Defaults to 0 12px.                                                                       |
+| `--kul-chip-primary-color`     | Sets primary color of the component. Defaults to the value of --kul-primary-color.                                   |
+| `--kul-chip-primary-color-rgb` | Sets primary color RGB values of the component (used for shaders). Defaults to the value of --kul-primary-color-rgb. |
+| `--kul-chip-text-color`        | Sets text color of the component. Defaults to the value of --kul-text-color.                                         |
+| `--kul-chip-text-color-rgb`    | Sets text color RGB values of the component (used for shaders). Defaults to the value of --kul-text-color-rgb.       |
+
+
+## Dependencies
+
+### Used by
+
+ - [kul-showcase-chip](../kul-showcase/components/chip)
+
+### Graph
+```mermaid
+graph TD;
+  kul-showcase-chip --> kul-chip
+  style kul-chip fill:#f9f,stroke:#333,stroke-width:4px
+```
+
+----------------------------------------------
+
+*Built with [StencilJS](https://stenciljs.com/)*

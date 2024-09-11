@@ -15,6 +15,7 @@ import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./compo
 import { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 import { XAXisComponentOption, YAXisComponentOption } from "echarts";
 import { KulChatEventPayload, KulChatState } from "./components/kul-chat/kul-chat-declarations";
+import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
@@ -35,6 +36,7 @@ export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./compo
 export { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 export { XAXisComponentOption, YAXisComponentOption } from "echarts";
 export { KulChatEventPayload, KulChatState } from "./components/kul-chat/kul-chat-declarations";
+export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
@@ -428,6 +430,54 @@ export namespace Components {
          */
         "setHistory": (history: string) => Promise<void>;
     }
+    interface KulChip {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        /**
+          * Used to retrieve component's props values.
+          * @param descriptions - When provided and true, the result will be the chip of props with their description.
+          * @returns Chip of props as object, each key will be a prop.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Returns the selected nodes.
+          * @returns Selected nodes.
+         */
+        "getSelected": () => Promise<Set<KulDataNode>>;
+        /**
+          * The data of the chip list.
+          * @default []
+         */
+        "kulData": KulDataDataset;
+        /**
+          * When set to true, the pointerdown event will trigger a ripple effect.
+          * @default true
+         */
+        "kulRipple": boolean;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * Styling of the chip component, includes: "choice", "input", "filter" and "standard".
+          * @default ""
+         */
+        "kulStyling": KulChipStyling;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Selects one or more nodes in the chip component.
+          * @param nodes - An array of KulDataNode objects or node IDs to be selected.
+          * @returns
+         */
+        "selectNodes": (nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>;
+    }
     interface KulCode {
         /**
           * Retrieves the debug information reflecting the current state of the component.
@@ -815,6 +865,8 @@ export namespace Components {
     interface KulShowcaseChart {
     }
     interface KulShowcaseChat {
+    }
+    interface KulShowcaseChip {
     }
     interface KulShowcaseCode {
     }
@@ -1311,6 +1363,10 @@ export interface KulChatCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulChatElement;
 }
+export interface KulChipCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulChipElement;
+}
 export interface KulCodeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulCodeElement;
@@ -1498,6 +1554,23 @@ declare global {
     var HTMLKulChatElement: {
         prototype: HTMLKulChatElement;
         new (): HTMLKulChatElement;
+    };
+    interface HTMLKulChipElementEventMap {
+        "kul-chip-event": KulChipEventPayload;
+    }
+    interface HTMLKulChipElement extends Components.KulChip, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulChipElementEventMap>(type: K, listener: (this: HTMLKulChipElement, ev: KulChipCustomEvent<HTMLKulChipElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulChipElementEventMap>(type: K, listener: (this: HTMLKulChipElement, ev: KulChipCustomEvent<HTMLKulChipElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulChipElement: {
+        prototype: HTMLKulChipElement;
+        new (): HTMLKulChipElement;
     };
     interface HTMLKulCodeElementEventMap {
         "kul-code-event": KulEventPayload;
@@ -1693,6 +1766,12 @@ declare global {
     var HTMLKulShowcaseChatElement: {
         prototype: HTMLKulShowcaseChatElement;
         new (): HTMLKulShowcaseChatElement;
+    };
+    interface HTMLKulShowcaseChipElement extends Components.KulShowcaseChip, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseChipElement: {
+        prototype: HTMLKulShowcaseChipElement;
+        new (): HTMLKulShowcaseChipElement;
     };
     interface HTMLKulShowcaseCodeElement extends Components.KulShowcaseCode, HTMLStencilElement {
     }
@@ -1994,6 +2073,7 @@ declare global {
         "kul-card": HTMLKulCardElement;
         "kul-chart": HTMLKulChartElement;
         "kul-chat": HTMLKulChatElement;
+        "kul-chip": HTMLKulChipElement;
         "kul-code": HTMLKulCodeElement;
         "kul-drawer": HTMLKulDrawerElement;
         "kul-header": HTMLKulHeaderElement;
@@ -2010,6 +2090,7 @@ declare global {
         "kul-showcase-card": HTMLKulShowcaseCardElement;
         "kul-showcase-chart": HTMLKulShowcaseChartElement;
         "kul-showcase-chat": HTMLKulShowcaseChatElement;
+        "kul-showcase-chip": HTMLKulShowcaseChipElement;
         "kul-showcase-code": HTMLKulShowcaseCodeElement;
         "kul-showcase-debug": HTMLKulShowcaseDebugElement;
         "kul-showcase-drawer": HTMLKulShowcaseDrawerElement;
@@ -2314,6 +2395,32 @@ declare namespace LocalJSX {
          */
         "onKul-chat-event"?: (event: KulChatCustomEvent<KulChatEventPayload>) => void;
     }
+    interface KulChip {
+        /**
+          * The data of the chip list.
+          * @default []
+         */
+        "kulData"?: KulDataDataset;
+        /**
+          * When set to true, the pointerdown event will trigger a ripple effect.
+          * @default true
+         */
+        "kulRipple"?: boolean;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Styling of the chip component, includes: "choice", "input", "filter" and "standard".
+          * @default ""
+         */
+        "kulStyling"?: KulChipStyling;
+        /**
+          * Describes event emitted.
+         */
+        "onKul-chip-event"?: (event: KulChipCustomEvent<KulChipEventPayload>) => void;
+    }
     interface KulCode {
         /**
           * Automatically formats the value.
@@ -2562,6 +2669,8 @@ declare namespace LocalJSX {
     interface KulShowcaseChart {
     }
     interface KulShowcaseChat {
+    }
+    interface KulShowcaseChip {
     }
     interface KulShowcaseCode {
     }
@@ -2903,6 +3012,7 @@ declare namespace LocalJSX {
         "kul-card": KulCard;
         "kul-chart": KulChart;
         "kul-chat": KulChat;
+        "kul-chip": KulChip;
         "kul-code": KulCode;
         "kul-drawer": KulDrawer;
         "kul-header": KulHeader;
@@ -2919,6 +3029,7 @@ declare namespace LocalJSX {
         "kul-showcase-card": KulShowcaseCard;
         "kul-showcase-chart": KulShowcaseChart;
         "kul-showcase-chat": KulShowcaseChat;
+        "kul-showcase-chip": KulShowcaseChip;
         "kul-showcase-code": KulShowcaseCode;
         "kul-showcase-debug": KulShowcaseDebug;
         "kul-showcase-drawer": KulShowcaseDrawer;
@@ -2966,6 +3077,7 @@ declare module "@stencil/core" {
             "kul-card": LocalJSX.KulCard & JSXBase.HTMLAttributes<HTMLKulCardElement>;
             "kul-chart": LocalJSX.KulChart & JSXBase.HTMLAttributes<HTMLKulChartElement>;
             "kul-chat": LocalJSX.KulChat & JSXBase.HTMLAttributes<HTMLKulChatElement>;
+            "kul-chip": LocalJSX.KulChip & JSXBase.HTMLAttributes<HTMLKulChipElement>;
             "kul-code": LocalJSX.KulCode & JSXBase.HTMLAttributes<HTMLKulCodeElement>;
             "kul-drawer": LocalJSX.KulDrawer & JSXBase.HTMLAttributes<HTMLKulDrawerElement>;
             "kul-header": LocalJSX.KulHeader & JSXBase.HTMLAttributes<HTMLKulHeaderElement>;
@@ -2982,6 +3094,7 @@ declare module "@stencil/core" {
             "kul-showcase-card": LocalJSX.KulShowcaseCard & JSXBase.HTMLAttributes<HTMLKulShowcaseCardElement>;
             "kul-showcase-chart": LocalJSX.KulShowcaseChart & JSXBase.HTMLAttributes<HTMLKulShowcaseChartElement>;
             "kul-showcase-chat": LocalJSX.KulShowcaseChat & JSXBase.HTMLAttributes<HTMLKulShowcaseChatElement>;
+            "kul-showcase-chip": LocalJSX.KulShowcaseChip & JSXBase.HTMLAttributes<HTMLKulShowcaseChipElement>;
             "kul-showcase-code": LocalJSX.KulShowcaseCode & JSXBase.HTMLAttributes<HTMLKulShowcaseCodeElement>;
             "kul-showcase-debug": LocalJSX.KulShowcaseDebug & JSXBase.HTMLAttributes<HTMLKulShowcaseDebugElement>;
             "kul-showcase-drawer": LocalJSX.KulShowcaseDrawer & JSXBase.HTMLAttributes<HTMLKulShowcaseDrawerElement>;

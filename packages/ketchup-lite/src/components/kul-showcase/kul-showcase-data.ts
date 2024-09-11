@@ -8,6 +8,7 @@ export const COMPONENTS = [
     'card',
     'chart',
     'chat',
+    'chip',
     'code',
     'image',
     'lazy',
@@ -173,6 +174,12 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'message',
             id: 'Chat',
             value: 'Chat',
+        },
+        {
+            description: 'Widget that can be used to display multiple items',
+            icon: 'storage',
+            id: 'Chip',
+            value: 'Chip',
         },
         {
             description: 'Visualizes code in a readable format.',
