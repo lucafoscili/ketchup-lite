@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-06T14:22:25",
+  "timestamp": "2024-09-11T17:28:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -3187,7 +3187,7 @@
       "filePath": "src/components/kul-chip/kul-chip.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chip",
-      "readme": "# kul-chip\n\n\n",
+      "readme": "# kul-chip\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6005,7 +6005,7 @@
       "filePath": "src/components/kul-progressbar/kul-progressbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-progressbar",
-      "readme": "# kul-progressbar\n\n\n",
+      "readme": "# kul-progressbar\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6849,7 +6849,7 @@
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
-      "readme": "# kul-showcase-chart\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-chart\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6966,7 +6966,7 @@
       "filePath": "src/components/kul-showcase/components/chip/kul-showcase-chip.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chip",
-      "readme": "# kul-showcase-chip\n\n\n",
+      "readme": "# kul-showcase-chip\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7480,7 +7480,7 @@
       "filePath": "src/components/kul-showcase/components/lazy/kul-showcase-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-lazy",
-      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-lazy\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7528,7 +7528,7 @@
       "filePath": "src/components/kul-showcase/components/list/kul-showcase-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-list",
-      "readme": "# kul-showcase-list\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-list\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7576,7 +7576,7 @@
       "filePath": "src/components/kul-showcase/components/photoframe/kul-showcase-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-photoframe",
-      "readme": "# kul-showcase-photoframe\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-photoframe\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7624,7 +7624,7 @@
       "filePath": "src/components/kul-showcase/components/progressbar/kul-showcase-progressbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-progressbar",
-      "readme": "# kul-showcase-progressbar\n\n\n",
+      "readme": "# kul-showcase-progressbar\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10275,7 +10275,7 @@
               "text": "() => void"
             }
           ],
-          "default": "() => {\r\n        const e = new CustomEvent('unmount');\r\n        this.onKulEvent(e, 'unmount');\r\n        this.kulEvent.emit({\r\n            comp: this,\r\n            eventType: 'unmount',\r\n            id: this.rootElement.id,\r\n            originalEvent: e,\r\n        });\r\n        this.rootElement.remove();\r\n    }",
+          "default": "() => {\n        const e = new CustomEvent('unmount');\n        this.onKulEvent(e, 'unmount');\n        this.kulEvent.emit({\n            comp: this,\n            eventType: 'unmount',\n            id: this.rootElement.id,\n            originalEvent: e,\n        });\n        this.rootElement.remove();\n    }",
           "values": [
             {
               "type": "() => void"
@@ -10307,7 +10307,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'clear' }"
             }
           ],
-          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'clear',\r\n    }",
+          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'clear',\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -10339,7 +10339,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'info' }"
             }
           ],
-          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'info',\r\n    }",
+          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'info',\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
