@@ -626,6 +626,7 @@
         "kul-showcase-card",
         "kul-showcase-chart",
         "kul-showcase-chat",
+        "kul-showcase-chip",
         "kul-showcase-code",
         "kul-showcase-debug",
         "kul-showcase-drawer",
@@ -677,6 +678,9 @@
           "kul-article"
         ],
         "kul-showcase-chat": [
+          "kul-article"
+        ],
+        "kul-showcase-chip": [
           "kul-article"
         ],
         "kul-showcase-code": [
@@ -3176,6 +3180,445 @@
         ],
         "kul-showcase-chat": [
           "kul-chat"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-chip/kul-chip.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-chip",
+      "readme": "# kul-chip\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulData",
+          "type": "KulDataDataset",
+          "complexType": {
+            "original": "KulDataDataset",
+            "resolved": "KulDataDataset",
+            "references": {
+              "KulDataDataset": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The data of the chip list.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[]"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulRipple",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-ripple",
+          "reflectToAttr": true,
+          "docs": "When set to true, the pointerdown event will trigger a ripple effect.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": false,
+          "docs": "Custom style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyling",
+          "type": "\"choice\" | \"filter\" | \"input\" | \"standard\"",
+          "complexType": {
+            "original": "KulChipStyling",
+            "resolved": "\"choice\" | \"filter\" | \"input\" | \"standard\"",
+            "references": {
+              "KulChipStyling": {
+                "location": "import",
+                "path": "./kul-chip-declarations",
+                "id": "src/components/kul-chip/kul-chip-declarations.ts::KulChipStyling"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-styling",
+          "reflectToAttr": false,
+          "docs": "Styling of the chip component, includes: \"choice\", \"input\", \"filter\" and \"standard\".",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "'standard'",
+          "values": [
+            {
+              "value": "choice",
+              "type": "string"
+            },
+            {
+              "value": "filter",
+              "type": "string"
+            },
+            {
+              "value": "input",
+              "type": "string"
+            },
+            {
+              "value": "standard",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugComponentInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugComponentInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugComponentInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugComponentInfo"
+              }
+            },
+            "return": "Promise<KulDebugComponentInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugComponentInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "Chip of props as object, each key will be a prop."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When provided and true, the result will be the chip of props with their description."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When provided and true, the result will be the chip of props with their description."
+            }
+          ],
+          "docs": "Used to retrieve component's props values.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When provided and true, the result will be the chip of props with their description."
+            },
+            {
+              "name": "returns",
+              "text": "Chip of props as object, each key will be a prop."
+            }
+          ]
+        },
+        {
+          "name": "getSelected",
+          "returns": {
+            "type": "Promise<Set<KulDataNode>>",
+            "docs": "Selected nodes."
+          },
+          "complexType": {
+            "signature": "() => Promise<Set<KulDataNode>>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "Set": {
+                "location": "global",
+                "id": "global::Set"
+              },
+              "KulDataNode": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataNode"
+              }
+            },
+            "return": "Promise<Set<KulDataNode>>"
+          },
+          "signature": "getSelected() => Promise<Set<KulDataNode>>",
+          "parameters": [],
+          "docs": "Returns the selected nodes.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "Selected nodes."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "selectNodes",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>",
+            "parameters": [
+              {
+                "name": "nodes",
+                "type": "(string[] | KulDataNode[]) & any[]",
+                "docs": "- An array of KulDataNode objects or node IDs to be selected."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDataNode": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataNode"
+              },
+              "Array": {
+                "location": "global",
+                "id": "global::Array"
+              },
+              "Set": {
+                "location": "global",
+                "id": "global::Set"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "selectNodes(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>",
+          "parameters": [
+            {
+              "name": "nodes",
+              "type": "(string[] | KulDataNode[]) & any[]",
+              "docs": "- An array of KulDataNode objects or node IDs to be selected."
+            }
+          ],
+          "docs": "Selects one or more nodes in the chip component.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "nodes - An array of KulDataNode objects or node IDs to be selected."
+            },
+            {
+              "name": "returns"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-chip-event",
+          "detail": "KulChipEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulChipEventPayload",
+            "resolved": "KulChipEventPayload",
+            "references": {
+              "KulChipEventPayload": {
+                "location": "import",
+                "path": "./kul-chip-declarations",
+                "id": "src/components/kul-chip/kul-chip-declarations.ts::KulChipEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-chip-background-color",
+          "annotation": "prop",
+          "docs": "Sets background color of the component. Defaults to the value of --kul-background-color."
+        },
+        {
+          "name": "--kul-chip-border-radius",
+          "annotation": "prop",
+          "docs": "Sets border radius of the chips. Defaults to 16px."
+        },
+        {
+          "name": "--kul-chip-font-family",
+          "annotation": "prop",
+          "docs": "Sets font family of the chips. Defaults to the value of --kul-font-family."
+        },
+        {
+          "name": "--kul-chip-font-size",
+          "annotation": "prop",
+          "docs": "Sets font size of the chips. Defaults to the value of --kul-font-size."
+        },
+        {
+          "name": "--kul-chip-font-weight",
+          "annotation": "prop",
+          "docs": "Sets font weight of the chips. Defaults to the value of --kul-font-weight."
+        },
+        {
+          "name": "--kul-chip-height",
+          "annotation": "prop",
+          "docs": "Sets height of the chips. Defaults to 32px."
+        },
+        {
+          "name": "--kul-chip-indent-multiplier",
+          "annotation": "prop",
+          "docs": "Sets the indentation multiplier for children chips. Defaults to 10."
+        },
+        {
+          "name": "--kul-chip-margin",
+          "annotation": "prop",
+          "docs": "Sets margin of the chips. Defaults to 4px."
+        },
+        {
+          "name": "--kul-chip-padding",
+          "annotation": "prop",
+          "docs": "Sets padding of the chips. Defaults to 0 12px."
+        },
+        {
+          "name": "--kul-chip-primary-color",
+          "annotation": "prop",
+          "docs": "Sets primary color of the component. Defaults to the value of --kul-primary-color."
+        },
+        {
+          "name": "--kul-chip-primary-color-rgb",
+          "annotation": "prop",
+          "docs": "Sets primary color RGB values of the component (used for shaders). Defaults to the value of --kul-primary-color-rgb."
+        },
+        {
+          "name": "--kul-chip-text-color",
+          "annotation": "prop",
+          "docs": "Sets text color of the component. Defaults to the value of --kul-text-color."
+        },
+        {
+          "name": "--kul-chip-text-color-rgb",
+          "annotation": "prop",
+          "docs": "Sets text color RGB values of the component (used for shaders). Defaults to the value of --kul-text-color-rgb."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-chip"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "kul-showcase-chip": [
+          "kul-chip"
         ]
       }
     },
@@ -6406,7 +6849,7 @@
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
-      "readme": "# kul-showcase-chart\n\n\n",
+      "readme": "# kul-showcase-chart\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6516,6 +6959,54 @@
         ],
         "kul-code": [
           "kul-button"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/components/chip/kul-showcase-chip.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-chip",
+      "readme": "# kul-showcase-chip\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-chip",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-chip": [
+          "kul-chip",
+          "kul-article"
         ]
       }
     },
@@ -6989,7 +7480,7 @@
       "filePath": "src/components/kul-showcase/components/lazy/kul-showcase-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-lazy",
-      "readme": "# kul-showcase-lazy\n\n\n",
+      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7037,7 +7528,7 @@
       "filePath": "src/components/kul-showcase/components/list/kul-showcase-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-list",
-      "readme": "# kul-showcase-list\n\n\n",
+      "readme": "# kul-showcase-list\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7085,7 +7576,7 @@
       "filePath": "src/components/kul-showcase/components/photoframe/kul-showcase-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-photoframe",
-      "readme": "# kul-showcase-photoframe\n\n\n",
+      "readme": "# kul-showcase-photoframe\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9784,7 +10275,7 @@
               "text": "() => void"
             }
           ],
-          "default": "() => {\n        const e = new CustomEvent('unmount');\n        this.onKulEvent(e, 'unmount');\n        this.kulEvent.emit({\n            comp: this,\n            eventType: 'unmount',\n            id: this.rootElement.id,\n            originalEvent: e,\n        });\n        this.rootElement.remove();\n    }",
+          "default": "() => {\r\n        const e = new CustomEvent('unmount');\r\n        this.onKulEvent(e, 'unmount');\r\n        this.kulEvent.emit({\r\n            comp: this,\r\n            eventType: 'unmount',\r\n            id: this.rootElement.id,\r\n            originalEvent: e,\r\n        });\r\n        this.rootElement.remove();\r\n    }",
           "values": [
             {
               "type": "() => void"
@@ -9816,7 +10307,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'clear' }"
             }
           ],
-          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'clear',\n    }",
+          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'clear',\r\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -9848,7 +10339,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'info' }"
             }
           ],
-          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'info',\n    }",
+          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'info',\r\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -10961,6 +11452,21 @@
       "docstring": "",
       "path": "src/components/kul-chat/kul-chat-declarations.ts"
     },
+    "src/components/kul-chip/kul-chip-declarations.ts::KulChipStyling": {
+      "declaration": "export type KulChipStyling = 'choice' | 'filter' | 'input' | 'standard';",
+      "docstring": "",
+      "path": "src/components/kul-chip/kul-chip-declarations.ts"
+    },
+    "src/components/kul-chip/kul-chip-declarations.ts::KulChipEventPayload": {
+      "declaration": "export interface KulChipEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
+      "docstring": "",
+      "path": "src/components/kul-chip/kul-chip-declarations.ts"
+    },
+    "src/managers/kul-data/kul-data-declarations.ts::KulDataNode": {
+      "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: unknown;\n}",
+      "docstring": "",
+      "path": "src/managers/kul-data/kul-data-declarations.ts"
+    },
     "src/components.d.ts::KulDebugComponentInfo": {
       "declaration": "any",
       "docstring": "",
@@ -10980,11 +11486,6 @@
       "declaration": "export interface KulListEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
       "docstring": "",
       "path": "src/components/kul-list/kul-list-declarations.ts"
-    },
-    "src/managers/kul-data/kul-data-declarations.ts::KulDataNode": {
-      "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: unknown;\n}",
-      "docstring": "",
-      "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
     "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
       "declaration": "export interface KulPhotoframeEventPayload extends KulEventPayload {\n    isPlaceholder?: boolean;\n}",
