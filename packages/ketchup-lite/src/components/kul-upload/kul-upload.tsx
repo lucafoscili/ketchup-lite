@@ -100,14 +100,22 @@ export class KulUpload {
     })
     kulEvent: EventEmitter<KulUploadEventPayload>;
 
-    onKulEvent(e: Event | CustomEvent, eventType: KulUploadEvent) {
-        if (eventType === 'pointerdown') {
-            if (this.kulRipple) {
-                this.#kulManager.theme.ripple.trigger(
-                    e as PointerEvent,
-                    this.#rippleSurface
+    onKulEvent(e: Event | CustomEvent, eventType: KulUploadEvent, file?: File) {
+        switch (eventType) {
+            case 'delete':
+                this.selectedFiles = this.selectedFiles.filter(
+                    (f) => f !== file
                 );
-            }
+                break;
+
+            case 'pointerdown':
+                if (this.kulRipple) {
+                    this.#kulManager.theme.ripple.trigger(
+                        e as PointerEvent,
+                        this.#rippleSurface
+                    );
+                }
+                break;
         }
         this.kulEvent.emit({
             comp: this,
@@ -213,10 +221,8 @@ export class KulUpload {
                     class="file-info__clear"
                     kulIcon={'clear'}
                     kulStyling="flat"
-                    onClick={() => {
-                        this.selectedFiles = this.selectedFiles.filter(
-                            (f) => f !== file
-                        );
+                    onClick={(e) => {
+                        this.onKulEvent(e, 'delete', file);
                     }}
                     title="Remove"
                 ></kul-button>

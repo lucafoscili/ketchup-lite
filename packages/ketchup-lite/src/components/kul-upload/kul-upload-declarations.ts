@@ -4,7 +4,7 @@ export interface KulUploadEventPayload extends KulEventPayload {
     selectedFiles: File[];
 }
 
-export type KulUploadEvent = 'pointerdown' | 'ready' | 'upload';
+export type KulUploadEvent = 'delete' | 'pointerdown' | 'ready' | 'upload';
 
 export enum KulUploadProps {
     kulLabel = "Sets the button's label.",

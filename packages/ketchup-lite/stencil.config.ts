@@ -22,6 +22,7 @@ export const config: Config = {
                 'kul-showcase-button',
                 'kul-showcase-card',
                 'kul-showcase-chart',
+                'kul-showcase-chip',
                 'kul-showcase-code',
                 'kul-showcase-debug',
                 'kul-showcase-drawer',
