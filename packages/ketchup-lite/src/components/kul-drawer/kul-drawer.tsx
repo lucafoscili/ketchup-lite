@@ -26,7 +26,7 @@ export class KulDrawer {
     /**
      * References the root HTML element of the component (<kul-drawer>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulDrawerElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */
