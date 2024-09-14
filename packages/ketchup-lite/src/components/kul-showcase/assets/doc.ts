@@ -690,6 +690,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         type: "string",
       },
       {
+        name: "kulLayout",
+        docs: "Sets the layout of the chat.",
+        type: '"bottom-textarea" | "top-textarea"',
+      },
+      {
         name: "kulMaxTokens",
         docs: "The maximum amount of tokens allowed in the LLM's answer.",
         type: "number",
@@ -930,6 +935,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "kulLanguage",
         docs: "Sets the language of the snippet.",
         type: "string",
+      },
+      {
+        name: "kulPreserveSpaces",
+        docs: "Whether to preserve spaces or not. When missing it is set automatically.",
+        type: "boolean",
       },
       {
         name: "kulStyle",
@@ -1465,6 +1475,67 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-messenger": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugComponentInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugComponentInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's props values.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "List of props as object, each key will be a prop.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulData",
+        docs: "The data of the messenger.",
+        type: "KulMessengerDataset",
+      },
+      {
+        name: "kulStyle",
+        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+        type: "string",
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-messenger-backdrop-filter",
+        docs: "Sets the backdrop filter of the messenger. Defaults to blur(3.5px).",
+      },
+      {
+        name: "--kul-messenger-background-color",
+        docs: "Sets the background color. Defaults to var(--kul-background-color).",
+      },
+      {
+        name: "--kul-messenger-font-size",
+        docs: "Sets the font size of the component. Defaults to var(--kul-font-size).",
+      },
+      {
+        name: "--kul-messenger-text-color",
+        docs: "Sets the color of text. Defaults to var(--kul-text-color).",
+      },
+    ],
+  },
   "kul-photoframe": {
     methods: [
       {
@@ -1788,6 +1859,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-list": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-messenger": {
     methods: [],
     props: [],
     styles: [],

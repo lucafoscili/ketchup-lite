@@ -13,6 +13,7 @@ export const COMPONENTS = [
     'image',
     'lazy',
     'list',
+    'messenger',
     'photoframe',
     'progressbar',
     'splash',
@@ -110,18 +111,6 @@ export const KUL_DOC: KulArticleDataset = {
                     value: '',
                 },
             ],
-        },
-    ],
-};
-
-export const KUL_SHOWCASE_UTILITIES: KulDataDataset = {
-    nodes: [
-        {
-            description:
-                'Provides an environment to test individual component functionality.',
-            icon: 'bug',
-            id: 'Debug',
-            value: 'Debug',
         },
     ],
 };
@@ -348,6 +337,25 @@ export const KUL_SHOWCASE_LAYOUT: KulDataDataset = {
             icon: 'web_asset',
             id: 'Header',
             value: 'Header',
+        },
+        {
+            description:
+                'A small template that acts as an interface between the user and an LLM for roleplay.',
+            icon: 'assistant',
+            id: 'Messenger',
+            value: 'Messenger',
+        },
+    ],
+};
+
+export const KUL_SHOWCASE_UTILITIES: KulDataDataset = {
+    nodes: [
+        {
+            description:
+                'Provides an environment to test individual component functionality.',
+            icon: 'bug',
+            id: 'Debug',
+            value: 'Debug',
         },
     ],
 };

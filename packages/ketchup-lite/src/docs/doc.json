@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-11T17:28:42",
+  "timestamp": "2024-09-14T08:17:57",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -643,6 +643,7 @@
         "kul-showcase-kultheme",
         "kul-showcase-lazy",
         "kul-showcase-list",
+        "kul-showcase-messenger",
         "kul-showcase-photoframe",
         "kul-showcase-progressbar",
         "kul-showcase-spinner",
@@ -729,6 +730,9 @@
           "kul-article"
         ],
         "kul-showcase-list": [
+          "kul-article"
+        ],
+        "kul-showcase-messenger": [
           "kul-article"
         ],
         "kul-showcase-photoframe": [
@@ -2688,6 +2692,44 @@
           "required": false
         },
         {
+          "name": "kulLayout",
+          "type": "\"bottom-textarea\" | \"top-textarea\"",
+          "complexType": {
+            "original": "KulChatLayout",
+            "resolved": "\"bottom-textarea\" | \"top-textarea\"",
+            "references": {
+              "KulChatLayout": {
+                "location": "import",
+                "path": "./kul-chat-declarations",
+                "id": "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-layout",
+          "reflectToAttr": true,
+          "docs": "Sets the layout of the chat.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "'top-textarea'",
+          "values": [
+            {
+              "value": "bottom-textarea",
+              "type": "string"
+            },
+            {
+              "value": "top-textarea",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "kulMaxTokens",
           "type": "number",
           "complexType": {
@@ -3147,6 +3189,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-messenger",
         "kul-showcase-chat"
       ],
       "dependencies": [
@@ -3177,6 +3220,9 @@
         ],
         "kul-code": [
           "kul-button"
+        ],
+        "kul-messenger": [
+          "kul-chat"
         ],
         "kul-showcase-chat": [
           "kul-chat"
@@ -3686,6 +3732,32 @@
           "required": false
         },
         {
+          "name": "kulPreserveSpaces",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-preserve-spaces",
+          "reflectToAttr": true,
+          "docs": "Whether to preserve spaces or not. When missing it is set automatically.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "undefined"
+            }
+          ],
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "kulStyle",
           "type": "string",
           "complexType": {
@@ -3928,6 +4000,7 @@
       "parts": [],
       "dependents": [
         "kul-chat",
+        "kul-messenger",
         "kul-showcase-code"
       ],
       "dependencies": [
@@ -3949,6 +4022,9 @@
           "kul-image"
         ],
         "kul-chat": [
+          "kul-code"
+        ],
+        "kul-messenger": [
           "kul-code"
         ],
         "kul-showcase-code": [
@@ -4786,6 +4862,7 @@
         "kul-button",
         "kul-card",
         "kul-chat",
+        "kul-messenger",
         "kul-showcase-image",
         "kul-tabbar",
         "kul-toast",
@@ -4810,6 +4887,9 @@
           "kul-image"
         ],
         "kul-chat": [
+          "kul-image"
+        ],
+        "kul-messenger": [
           "kul-image"
         ],
         "kul-showcase-image": [
@@ -5719,6 +5799,270 @@
         ],
         "kul-showcase-list": [
           "kul-list"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-messenger/kul-messenger.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-messenger",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulData",
+          "type": "KulMessengerDataset",
+          "complexType": {
+            "original": "KulMessengerDataset",
+            "resolved": "KulMessengerDataset",
+            "references": {
+              "KulMessengerDataset": {
+                "location": "import",
+                "path": "./kul-messenger-declarations",
+                "id": "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The data of the messenger.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[]"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "KulMessengerDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-style",
+          "reflectToAttr": false,
+          "docs": "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugComponentInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugComponentInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugComponentInfo": {
+                "location": "import",
+                "path": "../../components",
+                "id": "src/components.d.ts::KulDebugComponentInfo"
+              }
+            },
+            "return": "Promise<KulDebugComponentInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugComponentInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "List of props as object, each key will be a prop."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When provided and true, the result will be the list of props with their description."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When provided and true, the result will be the list of props with their description."
+            }
+          ],
+          "docs": "Used to retrieve component's props values.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When provided and true, the result will be the list of props with their description."
+            },
+            {
+              "name": "returns",
+              "text": "List of props as object, each key will be a prop."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-messenger-event",
+          "detail": "KulEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
+            "references": {
+              "KulEventPayload": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-messenger-backdrop-filter",
+          "annotation": "prop",
+          "docs": "Sets the backdrop filter of the messenger. Defaults to blur(3.5px)."
+        },
+        {
+          "name": "--kul-messenger-background-color",
+          "annotation": "prop",
+          "docs": "Sets the background color. Defaults to var(--kul-background-color)."
+        },
+        {
+          "name": "--kul-messenger-font-size",
+          "annotation": "prop",
+          "docs": "Sets the font size of the component. Defaults to var(--kul-font-size)."
+        },
+        {
+          "name": "--kul-messenger-text-color",
+          "annotation": "prop",
+          "docs": "Sets the color of text. Defaults to var(--kul-text-color)."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-messenger"
+      ],
+      "dependencies": [
+        "kul-image",
+        "kul-code",
+        "kul-tabbar",
+        "kul-chat"
+      ],
+      "dependencyGraph": {
+        "kul-messenger": [
+          "kul-image",
+          "kul-code",
+          "kul-tabbar",
+          "kul-chat"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
+        "kul-chat": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-code",
+          "kul-textfield"
+        ],
+        "kul-showcase-messenger": [
+          "kul-messenger"
         ]
       }
     },
@@ -7569,6 +7913,84 @@
         "kul-showcase-list": [
           "kul-list",
           "kul-article"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/layout/messenger/kul-showcase-messenger.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-messenger",
+      "readme": "# kul-showcase-messenger\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-messenger",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-messenger": [
+          "kul-messenger",
+          "kul-article"
+        ],
+        "kul-messenger": [
+          "kul-image",
+          "kul-code",
+          "kul-tabbar",
+          "kul-chat"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
+        "kul-chat": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-code",
+          "kul-textfield"
         ]
       }
     },
@@ -9600,6 +10022,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-messenger",
         "kul-showcase-tabbar"
       ],
       "dependencies": [
@@ -9615,6 +10038,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-messenger": [
+          "kul-tabbar"
         ],
         "kul-showcase-tabbar": [
           "kul-tabbar"
@@ -11442,6 +11868,11 @@
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
+    "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
+      "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
+      "docstring": "",
+      "path": "src/components/kul-chat/kul-chat-declarations.ts"
+    },
     "src/components/kul-chat/kul-chat-declarations.ts::KulChatState": {
       "declaration": "export type KulChatState = 'connecting' | 'offline' | 'ready';",
       "docstring": "",
@@ -11486,6 +11917,11 @@
       "declaration": "export interface KulListEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
       "docstring": "",
       "path": "src/components/kul-list/kul-list-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
+      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes: KulMessengerCharacterNode[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
     "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
       "declaration": "export interface KulPhotoframeEventPayload extends KulEventPayload {\n    isPlaceholder?: boolean;\n}",

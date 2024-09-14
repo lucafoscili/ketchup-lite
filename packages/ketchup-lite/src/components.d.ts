@@ -14,12 +14,13 @@ import { KulImagePropsInterface } from "./components/kul-image/kul-image-declara
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 import { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 import { XAXisComponentOption, YAXisComponentOption } from "echarts";
-import { KulChatEventPayload, KulChatState } from "./components/kul-chat/kul-chat-declarations";
+import { KulChatEventPayload, KulChatLayout, KulChatState } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
+import { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -35,12 +36,13 @@ export { KulImagePropsInterface } from "./components/kul-image/kul-image-declara
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 export { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 export { XAXisComponentOption, YAXisComponentOption } from "echarts";
-export { KulChatEventPayload, KulChatState } from "./components/kul-chat/kul-chat-declarations";
+export { KulChatEventPayload, KulChatLayout, KulChatState } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
+export { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -387,6 +389,11 @@ export namespace Components {
          */
         "kulEndpointUrl": string;
         /**
+          * Sets the layout of the chat.
+          * @default ""
+         */
+        "kulLayout": KulChatLayout;
+        /**
           * The maximum amount of tokens allowed in the LLM's answer.
           * @default ""
          */
@@ -500,6 +507,11 @@ export namespace Components {
           * @default "javascript"
          */
         "kulLanguage": string;
+        /**
+          * Whether to preserve spaces or not. When missing it is set automatically.
+          * @default undefined
+         */
+        "kulPreserveSpaces": boolean;
         /**
           * Enables customization of the component's style.
           * @default "" - No custom style applied by default.
@@ -746,6 +758,33 @@ export namespace Components {
          */
         "selectNode": (index?: number) => Promise<void>;
     }
+    interface KulMessenger {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
+        /**
+          * Used to retrieve component's props values.
+          * @param descriptions - When provided and true, the result will be the list of props with their description.
+          * @returns List of props as object, each key will be a prop.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * The data of the messenger.
+          * @default []
+         */
+        "kulData": KulMessengerDataset;
+        /**
+          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+    }
     interface KulPhotoframe {
         /**
           * Fetches debug information of the component's current state.
@@ -899,6 +938,8 @@ export namespace Components {
     interface KulShowcaseLazy {
     }
     interface KulShowcaseList {
+    }
+    interface KulShowcaseMessenger {
     }
     interface KulShowcasePhotoframe {
     }
@@ -1391,6 +1432,10 @@ export interface KulListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulListElement;
 }
+export interface KulMessengerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulMessengerElement;
+}
 export interface KulPhotoframeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulPhotoframeElement;
@@ -1674,6 +1719,23 @@ declare global {
         prototype: HTMLKulListElement;
         new (): HTMLKulListElement;
     };
+    interface HTMLKulMessengerElementEventMap {
+        "kul-messenger-event": KulEventPayload;
+    }
+    interface HTMLKulMessengerElement extends Components.KulMessenger, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulMessengerElementEventMap>(type: K, listener: (this: HTMLKulMessengerElement, ev: KulMessengerCustomEvent<HTMLKulMessengerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulMessengerElementEventMap>(type: K, listener: (this: HTMLKulMessengerElement, ev: KulMessengerCustomEvent<HTMLKulMessengerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulMessengerElement: {
+        prototype: HTMLKulMessengerElement;
+        new (): HTMLKulMessengerElement;
+    };
     interface HTMLKulPhotoframeElementEventMap {
         "kul-photoframe-event": KulPhotoframeEventPayload;
     }
@@ -1868,6 +1930,12 @@ declare global {
     var HTMLKulShowcaseListElement: {
         prototype: HTMLKulShowcaseListElement;
         new (): HTMLKulShowcaseListElement;
+    };
+    interface HTMLKulShowcaseMessengerElement extends Components.KulShowcaseMessenger, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseMessengerElement: {
+        prototype: HTMLKulShowcaseMessengerElement;
+        new (): HTMLKulShowcaseMessengerElement;
     };
     interface HTMLKulShowcasePhotoframeElement extends Components.KulShowcasePhotoframe, HTMLStencilElement {
     }
@@ -2080,6 +2148,7 @@ declare global {
         "kul-image": HTMLKulImageElement;
         "kul-lazy": HTMLKulLazyElement;
         "kul-list": HTMLKulListElement;
+        "kul-messenger": HTMLKulMessengerElement;
         "kul-photoframe": HTMLKulPhotoframeElement;
         "kul-progressbar": HTMLKulProgressbarElement;
         "kul-showcase": HTMLKulShowcaseElement;
@@ -2107,6 +2176,7 @@ declare global {
         "kul-showcase-kultheme": HTMLKulShowcaseKulthemeElement;
         "kul-showcase-lazy": HTMLKulShowcaseLazyElement;
         "kul-showcase-list": HTMLKulShowcaseListElement;
+        "kul-showcase-messenger": HTMLKulShowcaseMessengerElement;
         "kul-showcase-photoframe": HTMLKulShowcasePhotoframeElement;
         "kul-showcase-progressbar": HTMLKulShowcaseProgressbarElement;
         "kul-showcase-spinner": HTMLKulShowcaseSpinnerElement;
@@ -2356,6 +2426,11 @@ declare namespace LocalJSX {
          */
         "kulEndpointUrl"?: string;
         /**
+          * Sets the layout of the chat.
+          * @default ""
+         */
+        "kulLayout"?: KulChatLayout;
+        /**
           * The maximum amount of tokens allowed in the LLM's answer.
           * @default ""
          */
@@ -2432,6 +2507,11 @@ declare namespace LocalJSX {
           * @default "javascript"
          */
         "kulLanguage"?: string;
+        /**
+          * Whether to preserve spaces or not. When missing it is set automatically.
+          * @default undefined
+         */
+        "kulPreserveSpaces"?: boolean;
         /**
           * Enables customization of the component's style.
           * @default "" - No custom style applied by default.
@@ -2583,6 +2663,22 @@ declare namespace LocalJSX {
          */
         "onKul-list-event"?: (event: KulListCustomEvent<KulListEventPayload>) => void;
     }
+    interface KulMessenger {
+        /**
+          * The data of the messenger.
+          * @default []
+         */
+        "kulData"?: KulMessengerDataset;
+        /**
+          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Describes event emitted.
+         */
+        "onKul-messenger-event"?: (event: KulMessengerCustomEvent<KulEventPayload>) => void;
+    }
     interface KulPhotoframe {
         /**
           * Html attributes of the picture before the component enters the viewport.
@@ -2703,6 +2799,8 @@ declare namespace LocalJSX {
     interface KulShowcaseLazy {
     }
     interface KulShowcaseList {
+    }
+    interface KulShowcaseMessenger {
     }
     interface KulShowcasePhotoframe {
     }
@@ -3019,6 +3117,7 @@ declare namespace LocalJSX {
         "kul-image": KulImage;
         "kul-lazy": KulLazy;
         "kul-list": KulList;
+        "kul-messenger": KulMessenger;
         "kul-photoframe": KulPhotoframe;
         "kul-progressbar": KulProgressbar;
         "kul-showcase": KulShowcase;
@@ -3046,6 +3145,7 @@ declare namespace LocalJSX {
         "kul-showcase-kultheme": KulShowcaseKultheme;
         "kul-showcase-lazy": KulShowcaseLazy;
         "kul-showcase-list": KulShowcaseList;
+        "kul-showcase-messenger": KulShowcaseMessenger;
         "kul-showcase-photoframe": KulShowcasePhotoframe;
         "kul-showcase-progressbar": KulShowcaseProgressbar;
         "kul-showcase-spinner": KulShowcaseSpinner;
@@ -3084,6 +3184,7 @@ declare module "@stencil/core" {
             "kul-image": LocalJSX.KulImage & JSXBase.HTMLAttributes<HTMLKulImageElement>;
             "kul-lazy": LocalJSX.KulLazy & JSXBase.HTMLAttributes<HTMLKulLazyElement>;
             "kul-list": LocalJSX.KulList & JSXBase.HTMLAttributes<HTMLKulListElement>;
+            "kul-messenger": LocalJSX.KulMessenger & JSXBase.HTMLAttributes<HTMLKulMessengerElement>;
             "kul-photoframe": LocalJSX.KulPhotoframe & JSXBase.HTMLAttributes<HTMLKulPhotoframeElement>;
             "kul-progressbar": LocalJSX.KulProgressbar & JSXBase.HTMLAttributes<HTMLKulProgressbarElement>;
             "kul-showcase": LocalJSX.KulShowcase & JSXBase.HTMLAttributes<HTMLKulShowcaseElement>;
@@ -3111,6 +3212,7 @@ declare module "@stencil/core" {
             "kul-showcase-kultheme": LocalJSX.KulShowcaseKultheme & JSXBase.HTMLAttributes<HTMLKulShowcaseKulthemeElement>;
             "kul-showcase-lazy": LocalJSX.KulShowcaseLazy & JSXBase.HTMLAttributes<HTMLKulShowcaseLazyElement>;
             "kul-showcase-list": LocalJSX.KulShowcaseList & JSXBase.HTMLAttributes<HTMLKulShowcaseListElement>;
+            "kul-showcase-messenger": LocalJSX.KulShowcaseMessenger & JSXBase.HTMLAttributes<HTMLKulShowcaseMessengerElement>;
             "kul-showcase-photoframe": LocalJSX.KulShowcasePhotoframe & JSXBase.HTMLAttributes<HTMLKulShowcasePhotoframeElement>;
             "kul-showcase-progressbar": LocalJSX.KulShowcaseProgressbar & JSXBase.HTMLAttributes<HTMLKulShowcaseProgressbarElement>;
             "kul-showcase-spinner": LocalJSX.KulShowcaseSpinner & JSXBase.HTMLAttributes<HTMLKulShowcaseSpinnerElement>;
