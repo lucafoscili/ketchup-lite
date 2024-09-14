@@ -284,7 +284,6 @@ export class KulCode {
         );
         const isLikelyTextual =
             this.kulLanguage.toLowerCase() === 'text' ||
-            this.kulLanguage.toLowerCase() === 'markdown' ||
             this.kulLanguage.toLowerCase() === 'doc' ||
             this.kulLanguage.toLowerCase() === '';
         const shouldPreserveSpace =
