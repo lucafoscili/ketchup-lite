@@ -4,6 +4,7 @@ import { KulMessengerDataset } from '../../../kul-messenger/kul-messenger-declar
 import { DOC_STYLES } from '../../kul-showcase-data';
 import { SHOWCASE_DOC } from '../../kul-showcase-utils';
 import { MessengerData } from './kul-showcase-messenger-declarations';
+import { FREYA, THOR } from '../../assets/mock-ups/messenger';
 
 const component = 'messenger';
 
@@ -21,7 +22,7 @@ const kulData: KulMessengerDataset = {
                     },
                     id: 'avatar',
                 },
-                { id: 'biography' },
+                { id: 'biography', value: THOR },
                 { id: 'chat' },
                 { id: 'location' },
                 { id: 'outfit' },
@@ -43,7 +44,7 @@ const kulData: KulMessengerDataset = {
                     id: 'avatar',
                     value: 'avatar',
                 },
-                { id: 'biography' },
+                { id: 'biography', value: FREYA },
                 { id: 'chat' },
                 { id: 'location' },
                 { id: 'outfit' },

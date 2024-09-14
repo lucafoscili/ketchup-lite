@@ -4,13 +4,13 @@ import { KulMessengerAdapter } from '../kul-messenger-declarations';
 export const prepGrid = (adapter: KulMessengerAdapter) => {
     const avatars: VNode[] = [];
 
-    const characters = adapter.get.characters();
+    const characters = adapter.get.character.list();
     characters.forEach((c) => {
         avatars.push(
             <div
                 class="selection-grid__portrait"
                 onClick={() => {
-                    adapter.set.currentCharacter(c);
+                    adapter.set.character.current(c);
                 }}
             >
                 <kul-image

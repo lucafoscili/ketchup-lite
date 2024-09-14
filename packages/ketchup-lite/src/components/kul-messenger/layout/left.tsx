@@ -4,8 +4,8 @@ import { KulMessengerAdapter } from '../kul-messenger-declarations';
 export const prepLeft = (adapter: KulMessengerAdapter) => {
     return (
         <div class="messenger__left">
-            <div class="avatar">{prepAvatar(adapter)}</div>
-            <div class="biography">{prepBiography(adapter)}</div>
+            <div class="messenger__avatar">{prepAvatar(adapter)}</div>
+            <div class="messenger__biography">{prepBiography(adapter)}</div>
         </div>
     );
 };

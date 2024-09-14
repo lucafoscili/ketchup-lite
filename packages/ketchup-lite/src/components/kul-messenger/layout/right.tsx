@@ -4,9 +4,9 @@ import { KulMessengerAdapter } from '../kul-messenger-declarations';
 export const prepRight = (adapter: KulMessengerAdapter) => {
     return (
         <div class="messenger__right">
-            <div class="outfit">{prepOutfit(adapter)}</div>
-            <div class="location">{prepLocation(adapter)}</div>
-            <div class="style">{prepStyle(adapter)}</div>
+            <div class="messenger__outfit">{prepOutfit(adapter)}</div>
+            <div class="messenger__location">{prepLocation(adapter)}</div>
+            <div class="messenger__style">{prepStyle(adapter)}</div>
         </div>
     );
 };

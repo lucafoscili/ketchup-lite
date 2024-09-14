@@ -1,18 +1,36 @@
 import { KulDataDataset, KulDataNode } from '../../components';
+import { KulChatState } from '../kul-chat/kul-chat-declarations';
 
 export interface KulMessengerAdapter {
     get: {
         avatar: (character?: KulMessengerCharacterNode) => string;
         biography: (character?: KulMessengerCharacterNode) => string;
-        characters: () => KulMessengerCharacterNode[];
+        character: {
+            current: () => KulMessengerCharacterNode;
+            history: (character?: KulMessengerCharacterNode) => KulChatState[];
+            list: () => KulMessengerCharacterNode[];
+            next: (
+                character?: KulMessengerCharacterNode
+            ) => KulMessengerCharacterNode;
+            previous: (
+                character?: KulMessengerCharacterNode
+            ) => KulMessengerCharacterNode;
+        };
         comps: () => void;
-        currentCharacter: () => KulMessengerCharacterNode;
         image: (type: KulMessengerImages) => string;
         name: (character?: KulMessengerCharacterNode) => string;
     };
     set: {
+        character: {
+            current: (character?: KulMessengerCharacterNode) => void;
+            history: (
+                history: KulChatState[],
+                character?: KulMessengerCharacterNode
+            ) => void;
+            next: (character?: KulMessengerCharacterNode) => void;
+            previous: (character?: KulMessengerCharacterNode) => void;
+        };
         comps: () => void;
-        currentCharacter: (character: KulMessengerCharacterNode) => void;
     };
 }
 
@@ -47,6 +65,10 @@ export interface KulMessengerDataset extends KulDataDataset {
 
 export type KulMessengerEvent = 'ready';
 
+export interface KulMessengerHistory {
+    [index: `character_${string}`]: KulChatState[];
+}
+
 export type KulMessengerImages = 'avatar' | 'location' | 'outfit' | 'style';
 
 export interface KulMessengerLocationNode extends KulDataNode {
@@ -55,33 +77,6 @@ export interface KulMessengerLocationNode extends KulDataNode {
 
 export interface KulMessengerOutfitNode extends KulDataNode {
     id: 'outfit';
-}
-
-export interface KulMessengerNavigation extends KulDataNode {
-    children: [
-        KulMessengerNavigationPreviousTab,
-        KulMessengerCharacterNode,
-        KulMessengerNavigationNextTab,
-    ];
-    id: 'navigation';
-}
-
-export interface KulMessengerNavigationCharacterTab extends KulDataNode {
-    icon: 'account';
-    id: 'char_name';
-    value: string;
-}
-
-export interface KulMessengerNavigationNextTab extends KulDataNode {
-    icon: 'chevron_right';
-    id: 'next';
-    value: 'Next';
-}
-
-export interface KulMessengerNavigationPreviousTab extends KulDataNode {
-    icon: 'chevron_left';
-    id: 'previous';
-    value: 'Previous';
 }
 
 export enum KulMessengerProps {

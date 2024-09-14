@@ -17,6 +17,7 @@ import {
     KulMessengerCharacterNode,
     KulMessengerImages,
     KulMessengerDataset,
+    KulMessengerHistory,
 } from './kul-messenger-declarations';
 import type { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -27,6 +28,10 @@ import { prepLeft } from './layout/left';
 import { prepCenter } from './layout/center';
 import { prepRight } from './layout/right';
 import { prepGrid } from './layout/grid';
+import {
+    KulChatHistory,
+    KulChatState,
+} from '../kul-chat/kul-chat-declarations';
 
 @Component({
     tag: 'kul-messenger',
@@ -54,9 +59,13 @@ export class KulMessenger {
         startTime: performance.now(),
     };
     /**
-     * Debug information.
+     * Node representing the current active character.
      */
     @State() currentCharacter: KulMessengerCharacterNode;
+    /**
+     * Node containing the history of this session's chats.
+     */
+    @State() history: KulMessengerHistory = {};
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -158,9 +167,39 @@ export class KulMessenger {
                     return 'You know nothing about this character...';
                 }
             },
-            characters: () => this.kulData.nodes || [],
+            character: {
+                next: (character = this.currentCharacter) => {
+                    if (!this.#hasCharacters()) {
+                        return;
+                    }
+                    const nodes = this.kulData.nodes;
+                    const currentIdx = nodes.findIndex(
+                        (n) => n.id === character.id
+                    );
+                    const nextIdx = (currentIdx + 1) % nodes.length;
+
+                    return nodes[nextIdx];
+                },
+                current: () => this.currentCharacter,
+                history: (character = this.currentCharacter) => {
+                    return this.history[character.id];
+                },
+                list: () => this.kulData.nodes || [],
+                previous: (character = this.currentCharacter) => {
+                    if (!this.#hasCharacters()) {
+                        return;
+                    }
+                    const nodes = this.kulData.nodes;
+                    const currentIdx = nodes.findIndex(
+                        (n) => n.id === character.id
+                    );
+                    const prevIdx =
+                        (currentIdx + nodes.length - 1) % nodes.length;
+
+                    return nodes[prevIdx];
+                },
+            },
             comps: () => {},
-            currentCharacter: () => this.currentCharacter,
             image: (
                 type: KulMessengerImages,
                 character = this.currentCharacter
@@ -185,12 +224,40 @@ export class KulMessenger {
                 character.value || character.id || character.description || '?',
         },
         set: {
-            comps: () => {},
-            currentCharacter: (character: KulMessengerCharacterNode) => {
-                this.currentCharacter = character;
+            character: {
+                current: (character: KulMessengerCharacterNode) => {
+                    this.currentCharacter = character;
+                },
+                history: async (
+                    history: KulChatState[],
+                    character = this.currentCharacter
+                ) => {
+                    this.history[character.id] = history;
+                },
+                next: (character = this.currentCharacter) => {
+                    if (!this.#hasCharacters()) {
+                        return;
+                    }
+                    const nextC = this.#adapter.get.character.next(character);
+                    this.#adapter.set.character.current(nextC);
+                },
+                previous: (character = this.currentCharacter) => {
+                    if (!this.#hasCharacters()) {
+                        return;
+                    }
+                    const previousC =
+                        this.#adapter.get.character.previous(character);
+                    this.#adapter.set.character.current(previousC);
+                },
             },
+            comps: () => {},
         },
     };
+
+    #hasCharacters() {
+        const nodes = this.kulData.nodes || [];
+        return !!nodes.length;
+    }
 
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
@@ -225,7 +292,7 @@ export class KulMessenger {
                     {this.currentCharacter ? (
                         <div class="messenger">
                             {prepLeft(this.#adapter)}
-                            {prepCenter()}
+                            {prepCenter(this.#adapter)}
                             {prepRight(this.#adapter)}
                         </div>
                     ) : (
