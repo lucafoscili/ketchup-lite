@@ -33,6 +33,8 @@ export interface KulChatEventPayload extends KulEventPayload {
 
 export type KulChatHistory = KulChatChoiceMessage[];
 
+export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
+
 export enum KulChatProps {
     kulEndpointUrl = 'URL of the endpoint where the LLM is hosted.',
     kulMaxTokens = "Maximum number of tokens allowed in the LLM's answer.",

@@ -68,16 +68,24 @@
     padding: var(--kul_chat_padding);
   }
 
-  &--ready {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  &--bottom-textarea {
+    grid-template-areas:
+      'chat'
+      'spinner'
+      'query';
+  }
+
+  &--top-textarea {
+    grid-template-areas:
+      'query'
+      'chat'
+      'spinner';
   }
 }
 
 .query-area {
   box-sizing: border-box;
+  grid-area: query;
   max-width: 100%;
   width: 100%;
 }
@@ -85,6 +93,7 @@
 .chat-area {
   align-content: start;
   display: grid;
+  grid-area: chat;
   grid-gap: var(--kul_chat_grid_gap);
   grid-template-columns: 1fr;
   overflow: auto;
@@ -95,6 +104,7 @@
 }
 
 .spinner {
+  grid-area: spinner;
   height: var(--kul_chat_spinner_size);
   margin: auto;
   width: var(--kul_chat_spinner_size);
