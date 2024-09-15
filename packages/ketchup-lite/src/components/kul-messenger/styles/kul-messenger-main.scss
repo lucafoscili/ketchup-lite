@@ -1,19 +1,11 @@
 :host {
   /**
-   * @prop --kul-messenger-backdrop-filter: Sets the backdrop filter of the messenger.
-   * Defaults to blur(3.5px).
-   */
-  --kul_messenger_backdrop_filter: var(
-    --kul-messenger-backdrop-filter,
-    blur(3.5px)
-  );
-  /**
   * @prop --kul-messenger-background-color: Sets the background color.
   * Defaults to var(--kul-background-color).
   */
   --kul_messenger_background_color: var(
     --kul-messenger-background-color,
-    var(--kul-background-color)
+    rgba(var(--kul-background-color-rgb), 0.375)
   );
   /**
   * @prop --kul-messenger-font-size: Sets the font size of the component.
@@ -33,7 +25,6 @@
   );
 
   box-sizing: border-box;
-  backdrop-filter: var(--kul_messenger_backdrop_filter);
   background-color: var(--kul_messenger_background_color);
   color: var(--kul_messenger_text_color);
   display: block;
@@ -50,15 +41,15 @@
 .messenger {
   & {
     display: grid;
-    grid-template-columns: 15% 70% 15%;
-    position: relative;
+    grid-template-columns: 1fr 3fr 1fr;
     height: 100%;
+    position: relative;
     width: 100%;
   }
 
   &__left {
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: minmax(auto, 40%) minmax(auto, 1fr);
     height: 100%;
     overflow: auto;
   }
@@ -67,11 +58,12 @@
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100%;
+    overflow: auto;
   }
 
   &__right {
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: minmax(10%, 25%) auto 1fr;
     height: 100%;
   }
 
@@ -83,13 +75,51 @@
     --kul-chat-padding: 16px 8px 0 8px;
     --kul-chat-buttons-padding: 8px 0 0 0;
   }
+
+  &__options {
+    &__active {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    &__filters {
+      padding: 16px 0;
+    }
+
+    &__list {
+      display: grid;
+    }
+
+    &__title {
+      background: var(--kul-title-background-color);
+      color: var(--kul-title-color);
+      letter-spacing: 3px;
+      padding: 8px;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    &__section {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      height: 100%;
+    }
+
+    &__outfit,
+    &__location,
+    &__style {
+      min-width: 25%;
+    }
+  }
 }
 
 .selection-grid {
   display: grid;
-  height: 100%;
-  width: 100%;
   grid-template-columns: repeat(4, 1fr);
+  height: 100%;
+  overflow: auto;
+  width: 100%;
 
   &__portrait {
     & {

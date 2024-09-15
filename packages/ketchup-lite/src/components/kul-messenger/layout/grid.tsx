@@ -14,12 +14,12 @@ export const prepGrid = (adapter: KulMessengerAdapter) => {
                 }}
             >
                 <kul-image
-                    class={'selection-grid__avatar'}
-                    kulValue={adapter.get.avatar(c)}
+                    class={'selection-grid__avatar kul-cover'}
+                    kulValue={adapter.get.image.asCover('avatars', c)}
                 ></kul-image>
                 <div class="selection-grid__name">
                     <div class="selection-grid__label">
-                        {adapter.get.name(c)}
+                        {adapter.get.character.name(c)}
                     </div>
                 </div>
             </div>

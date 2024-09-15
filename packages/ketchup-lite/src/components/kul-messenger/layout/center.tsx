@@ -1,10 +1,10 @@
 import { h } from '@stencil/core';
 import {
     KulChatEventPayload,
-    KulDataDataset,
     KulTabbarEventPayload,
 } from '../../../components';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
+import { NAV_DATASET } from './constant';
 
 export const prepCenter = (adapter: KulMessengerAdapter) => {
     return (
@@ -16,31 +16,9 @@ export const prepCenter = (adapter: KulMessengerAdapter) => {
 };
 
 const prepNavigation = (adapter: KulMessengerAdapter) => {
-    const navDataset: KulDataDataset = {
-        nodes: [
-            {
-                description: 'Previous character',
-                icon: 'chevron_left',
-                id: 'previous',
-                value: '',
-            },
-            {
-                description: 'Character selection',
-                icon: 'account',
-                id: 'character_list',
-                value: 'Character list',
-            },
-            {
-                description: 'Next character',
-                icon: 'chevron_right',
-                id: 'next',
-                value: '',
-            },
-        ],
-    };
     return (
         <kul-tabbar
-            kulData={navDataset}
+            kulData={NAV_DATASET}
             onKul-tabbar-event={tabbarEventHandler.bind(
                 tabbarEventHandler,
                 adapter
@@ -63,7 +41,7 @@ const prepChat = (adapter: KulMessengerAdapter) => {
     - Do not provide insights or predictions about events outside the scope of the character's knowledge or personal experiences.
 
     Character Biography:
-    ${adapter.get.biography()}
+    ${adapter.get.character.biography()}
 
     Begin your performance...
     `;

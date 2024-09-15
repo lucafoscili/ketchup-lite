@@ -11,14 +11,19 @@ export const prepLeft = (adapter: KulMessengerAdapter) => {
 };
 
 const prepAvatar = (adapter: KulMessengerAdapter) => {
-    return <kul-image kulValue={adapter.get.image('avatar')}></kul-image>;
+    return (
+        <kul-image
+            class="kul-cover"
+            kulValue={adapter.get.image.asCover('avatars')}
+        ></kul-image>
+    );
 };
 
 const prepBiography = (adapter: KulMessengerAdapter) => {
     return (
         <kul-code
             kulLanguage="markdown"
-            kulValue={adapter.get.biography()}
+            kulValue={adapter.get.character.biography()}
         ></kul-code>
     );
 };

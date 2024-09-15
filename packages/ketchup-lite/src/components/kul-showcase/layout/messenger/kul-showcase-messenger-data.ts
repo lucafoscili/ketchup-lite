@@ -13,20 +13,119 @@ const kulData: KulMessengerDataset = {
         {
             children: [
                 {
-                    cells: {
-                        kulImage: {
-                            shape: 'image',
-                            kulValue: getAssetPath('./assets/media/Thor.webp'),
-                            value: getAssetPath('./assets/media/Thor.webp'),
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/Thor.webp'
+                                    ),
+                                },
+                            },
+                            description: 'Portrait of Thor',
+                            id: 'avatar_0',
+                            value: 'Avatar',
                         },
-                    },
-                    id: 'avatar',
+                    ],
+                    id: 'avatars',
+                    value: 0,
                 },
                 { id: 'biography', value: THOR },
-                { id: 'chat' },
-                { id: 'location' },
-                { id: 'outfit' },
-                { id: 'style' },
+                { id: 'chat', value: '' },
+                {
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/asgard.jpg'
+                                    ),
+                                },
+                            },
+                            id: 'location_0',
+                            value: 'Asgard',
+                        },
+                    ],
+                    id: 'locations',
+                    value: 0,
+                },
+                {
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/ac_armor.jpg'
+                                    ),
+                                },
+                            },
+                            description: 'Viking inspired runic armor',
+                            id: 'outfit_0',
+                            value: 'AC Armor',
+                        },
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/electric armor.jpg'
+                                    ),
+                                },
+                            },
+                            description: 'Armor emitting lightning',
+                            id: 'outfit_1',
+                            value: 'Electric Armor',
+                        },
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/marvel_armor.jpg'
+                                    ),
+                                },
+                            },
+                            description: 'Armor used by Thor in Marvel comics',
+                            id: 'outfit_2',
+                            value: 'Marvel Armor',
+                        },
+                    ],
+                    id: 'outfits',
+                    value: 0,
+                },
+                {
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/artwork.jpg'
+                                    ),
+                                },
+                            },
+                            id: 'style_0',
+                            value: 'Artwork',
+                        },
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/photorealistic.jpg'
+                                    ),
+                                },
+                            },
+                            id: 'style_1',
+                            value: 'Photorealistic',
+                        },
+                    ],
+                    id: 'styles',
+                    value: 0,
+                },
             ],
             id: 'character_Thor',
             value: 'Thor',
@@ -34,21 +133,92 @@ const kulData: KulMessengerDataset = {
         {
             children: [
                 {
-                    cells: {
-                        kulImage: {
-                            shape: 'image',
-                            kulValue: getAssetPath('./assets/media/Freya.webp'),
-                            value: getAssetPath('./assets/media/Freya.webp'),
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/Freya.webp'
+                                    ),
+                                },
+                            },
+                            id: 'avatar_0',
+                            value: 'Avatar',
                         },
-                    },
-                    id: 'avatar',
-                    value: 'avatar',
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/freya.png'
+                                    ),
+                                },
+                            },
+                            id: 'avatar_1',
+                            value: 'Avatar',
+                        },
+                    ],
+                    id: 'avatars',
+                    value: 1,
                 },
                 { id: 'biography', value: FREYA },
-                { id: 'chat' },
-                { id: 'location' },
-                { id: 'outfit' },
-                { id: 'style' },
+                { id: 'chat', value: '' },
+                {
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/asgard.jpg'
+                                    ),
+                                },
+                            },
+                            id: 'location_freya_0',
+                            value: 'Asgard',
+                        },
+                    ],
+                    id: 'locations',
+                    value: 0,
+                },
+                {
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/asgard.jpg'
+                                    ),
+                                },
+                            },
+                            id: 'outfit_0',
+                            value: 'Valkirye armor',
+                        },
+                    ],
+                    id: 'outfits',
+                    value: 0,
+                },
+                {
+                    children: [
+                        {
+                            cells: {
+                                kulImage: {
+                                    shape: 'image',
+                                    value: getAssetPath(
+                                        './assets/media/freya.png'
+                                    ),
+                                },
+                            },
+                            description: 'Hyperrealistic digital painting',
+                            id: 'style_0',
+                            value: 'Artwork',
+                        },
+                    ],
+                    id: 'styles',
+                    value: 0,
+                },
             ],
             id: 'character_Freya',
             value: 'Freya',

@@ -20,7 +20,7 @@ import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
+import { KulMessengerDataset, KulMessengerHistory } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -42,7 +42,7 @@ export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
+export { KulMessengerDataset, KulMessengerHistory } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -780,6 +780,11 @@ export namespace Components {
           * @default ""
          */
         "kulStyle": string;
+        /**
+          * Loads the initial history of the chats.
+          * @default ""
+         */
+        "kulValue": KulMessengerHistory;
         /**
           * This method is used to trigger a new render of the component.
          */
@@ -2674,6 +2679,11 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
+        /**
+          * Loads the initial history of the chats.
+          * @default ""
+         */
+        "kulValue"?: KulMessengerHistory;
         /**
           * Describes event emitted.
          */
