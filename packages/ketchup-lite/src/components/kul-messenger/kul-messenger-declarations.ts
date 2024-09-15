@@ -119,7 +119,7 @@ export interface KulMessengerCovers {
 
 // Dataset Node
 export interface KulMessengerDataset extends KulDataDataset {
-    nodes: KulMessengerCharacterNode[];
+    nodes?: KulMessengerCharacterNode[];
 }
 
 // Messenger Event

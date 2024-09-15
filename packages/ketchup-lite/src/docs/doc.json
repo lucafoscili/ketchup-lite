@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-15T20:00:24",
+  "timestamp": "2024-09-15T20:06:44",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -11949,7 +11949,7 @@
       "path": "src/components/kul-list/kul-list-declarations.ts"
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
-      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes: KulMessengerCharacterNode[];\n}",
+      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
