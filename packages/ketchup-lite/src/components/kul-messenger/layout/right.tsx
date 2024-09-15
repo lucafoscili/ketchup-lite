@@ -59,16 +59,15 @@ const prepList = (adapter: KulMessengerAdapter) => {
     for (let index = 0; index < IMAGE_TYPE_IDS.length; index++) {
         const type = IMAGE_TYPE_IDS[index];
         if (options[type]) {
-            const images = imagesGetter(type).children.map((node) => (
-                <kul-image kulValue={node.value}></kul-image>
+            const images = imagesGetter(type).map((node) => (
+                <kul-image
+                    class="kul-cover"
+                    kulValue={node.cells.kulImage.value}
+                ></kul-image>
             ));
-            const title = type
-                .split(' ')
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(' ');
             elements.push(
                 <div class="messenger__options__section">
-                    <div class="messenger__options__title">{title}</div>
+                    <div class="messenger__options__title">{type}</div>
                     <div class="messenger__options__images">{images}</div>
                 </div>
             );

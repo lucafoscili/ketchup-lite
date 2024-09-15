@@ -65,6 +65,7 @@
     display: grid;
     grid-template-rows: minmax(10%, 25%) auto 1fr;
     height: 100%;
+    overflow: auto;
   }
 
   &__biography {
@@ -83,12 +84,19 @@
       width: 100%;
     }
 
+    &__outfit,
+    &__location,
+    &__style {
+      min-width: 25%;
+    }
+
     &__filters {
       padding: 16px 0;
     }
 
     &__list {
       display: grid;
+      overflow: auto;
     }
 
     &__title {
@@ -96,8 +104,11 @@
       color: var(--kul-title-color);
       letter-spacing: 3px;
       padding: 8px;
+      position: sticky;
       text-align: center;
       text-transform: uppercase;
+      top: 0;
+      z-index: 1;
     }
 
     &__section {
@@ -106,10 +117,11 @@
       height: 100%;
     }
 
-    &__outfit,
-    &__location,
-    &__style {
-      min-width: 25%;
+    &__images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: auto;
+      width: 100%;
     }
   }
 }

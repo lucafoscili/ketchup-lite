@@ -18,7 +18,7 @@ import {
     KulMessengerDataset,
     KulMessengerHistory,
     KulMessengerImageRootNodesIds,
-    KulMessengerImageNodes,
+    KulMessengerImageNodeTypeMap,
 } from './kul-messenger-declarations';
 import type { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -233,14 +233,20 @@ export class KulMessenger {
                         }
                     }
                 },
-                byType: (
-                    type: KulMessengerImageRootNodesIds,
+                byType: <T extends KulMessengerImageRootNodesIds>(
+                    type: T,
                     character = this.currentCharacter
-                ) => {
-                    for (const child of character.children) {
-                        if (child.id === type) {
-                            return child;
-                        }
+                ): KulMessengerImageNodeTypeMap[T]['children'][number][] => {
+                    const node = character.children.find(
+                        (child) => child.id === type
+                    ) as KulMessengerImageNodeTypeMap[T];
+
+                    if (node) {
+                        return node.children as unknown as KulMessengerImageNodeTypeMap[T]['children'][number][];
+                    } else {
+                        throw new Error(
+                            `Child node with id '${type}' not found`
+                        );
                     }
                 },
                 options: () => {
