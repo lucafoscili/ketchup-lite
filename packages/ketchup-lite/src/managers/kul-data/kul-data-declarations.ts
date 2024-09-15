@@ -1,13 +1,11 @@
-import {
-    KulBadgePropsInterface,
-    KulImagePropsInterface,
-} from '../../components';
+import { KulBadgePropsInterface } from '../../components/kul-badge/kul-badge-declarations';
 import { KulButtonPropsInterface } from '../../components/kul-button/kul-button-declarations';
 import {
     KulChatHistory,
     KulChatPropsInterface,
 } from '../../components/kul-chat/kul-chat-declarations';
 import { KulCodePropsInterface } from '../../components/kul-code/kul-code-declarations';
+import { KulImagePropsInterface } from '../../components/kul-image/kul-image-declarations';
 import { GenericMap } from '../../types/GenericTypes';
 
 export interface KulDataCell {

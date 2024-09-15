@@ -143,7 +143,7 @@ export class KulChat {
     kulEvent: EventEmitter<KulChatEventPayload>;
 
     onKulEvent(
-        e: Event | CustomEvent<KulChatEventPayload>,
+        e: Event | CustomEvent,
         eventType: KulChatEvent,
         message?: KulChatChoiceMessage
     ) {
