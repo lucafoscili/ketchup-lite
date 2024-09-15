@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-15T18:13:06",
+  "timestamp": "2024-09-15T19:18:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -4116,9 +4116,8 @@
                 "id": "global::Promise"
               },
               "KulDebugComponentInfo": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugComponentInfo"
+                "location": "global",
+                "id": "global::KulDebugComponentInfo"
               }
             },
             "return": "Promise<KulDebugComponentInfo>"
@@ -4384,9 +4383,8 @@
                 "id": "global::Promise"
               },
               "KulDebugComponentInfo": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugComponentInfo"
+                "location": "global",
+                "id": "global::KulDebugComponentInfo"
               }
             },
             "return": "Promise<KulDebugComponentInfo>"
@@ -5121,9 +5119,8 @@
                 "id": "global::Promise"
               },
               "KulDebugComponentInfo": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugComponentInfo"
+                "location": "global",
+                "id": "global::KulDebugComponentInfo"
               }
             },
             "return": "Promise<KulDebugComponentInfo>"
@@ -6217,9 +6214,8 @@
                 "id": "global::Promise"
               },
               "KulDebugComponentInfo": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugComponentInfo"
+                "location": "global",
+                "id": "global::KulDebugComponentInfo"
               }
             },
             "return": "Promise<KulDebugComponentInfo>"
@@ -8793,9 +8789,8 @@
                 "id": "global::Promise"
               },
               "KulDebugComponentInfo": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugComponentInfo"
+                "location": "global",
+                "id": "global::KulDebugComponentInfo"
               }
             },
             "return": "Promise<KulDebugComponentInfo>"
@@ -9789,9 +9784,8 @@
                 "id": "global::Promise"
               },
               "KulDebugComponentInfo": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugComponentInfo"
+                "location": "global",
+                "id": "global::KulDebugComponentInfo"
               }
             },
             "return": "Promise<KulDebugComponentInfo>"
@@ -11086,13 +11080,13 @@
             "resolved": "KulDataDataset",
             "references": {
               "KulDataDataset": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDataDataset"
+                "location": "global",
+                "id": "global::KulDataDataset"
               }
             }
           },
           "mutable": true,
+          "attr": "kul-data",
           "reflectToAttr": false,
           "docs": "The actual data of the tree.",
           "docsTags": [
@@ -11906,11 +11900,6 @@
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
-    "src/components.d.ts::KulDebugComponentInfo": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "src/components.d.ts"
-    },
     "src/components/kul-badge/kul-badge-declarations.ts::KulBadgePropsInterface": {
       "declaration": "export interface KulBadgePropsInterface {\n    kulImageProps?: KulImagePropsInterface;\n    kulLabel?: string;\n    kulStyle?: string;\n}",
       "docstring": "",
@@ -11970,11 +11959,6 @@
       "declaration": "export interface KulTextfieldEventPayload extends KulEventPayload {\n    inputValue?: string;\n    value?: string;\n}",
       "docstring": "",
       "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
-    },
-    "src/components.d.ts::KulDataDataset": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "src/components.d.ts"
     },
     "src/components/kul-tree/kul-tree-declarations.ts::KulTreeEventPayload": {
       "declaration": "export interface KulTreeEventPayload extends KulEventPayload {\n    node?: KulDataNode;\n}",

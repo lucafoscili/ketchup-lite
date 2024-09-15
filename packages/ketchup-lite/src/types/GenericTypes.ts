@@ -50,6 +50,7 @@ export enum KulDataCyAttributes {
     SHAPE = 'shape',
     SHOWCASE_GRID_WRAPPER = 'wrapper',
 }
+
 export interface KulEventPayload {
     comp: unknown;
     eventType: KulEventType;
