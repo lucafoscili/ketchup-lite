@@ -26,6 +26,10 @@ export interface KulMessengerAdapter {
                 character?: KulMessengerCharacterNode
             ) => KulMessengerImageNodeTypeMap[T]['children'][number][];
             options: () => KulMessengerOptionsState;
+            root: <T extends KulMessengerImageRootNodesIds>(
+                type: T,
+                character?: KulMessengerCharacterNode
+            ) => KulMessengerImageNodeTypeMap[T];
         };
     };
     set: {

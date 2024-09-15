@@ -257,6 +257,18 @@ export class KulMessenger {
                         styles: this.styles,
                     };
                 },
+                root: <T extends KulMessengerImageRootNodesIds>(
+                    type: T,
+                    character = this.currentCharacter
+                ) => {
+                    const node = character.children.find((n) => n.id === type);
+                    if (!node) {
+                        throw new Error(
+                            `Child node with id '${type}' not found`
+                        );
+                    }
+                    return node as KulMessengerImageNodeTypeMap[T];
+                },
             },
         },
         set: {

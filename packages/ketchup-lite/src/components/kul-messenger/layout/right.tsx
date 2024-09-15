@@ -74,9 +74,10 @@ const prepList = (adapter: KulMessengerAdapter) => {
     for (let index = 0; index < IMAGE_TYPE_IDS.length; index++) {
         const type = IMAGE_TYPE_IDS[index];
         if (options[type]) {
-            const images = imagesGetter(type).map((node) => (
+            const activeIndex = adapter.get.image.root(type).value;
+            const images = imagesGetter(type).map((node, j) => (
                 <kul-image
-                    class="kul-cover"
+                    class={`messenger__options__image ${activeIndex === j ? 'messenger__options__image--selected' : ''} kul-cover`}
                     kulValue={node.cells.kulImage.value}
                 ></kul-image>
             ));
