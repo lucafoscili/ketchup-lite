@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-11T19:01:11",
+  "timestamp": "2024-09-15T20:25:45",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -643,6 +643,7 @@
         "kul-showcase-kultheme",
         "kul-showcase-lazy",
         "kul-showcase-list",
+        "kul-showcase-messenger",
         "kul-showcase-photoframe",
         "kul-showcase-progressbar",
         "kul-showcase-spinner",
@@ -729,6 +730,9 @@
           "kul-article"
         ],
         "kul-showcase-list": [
+          "kul-article"
+        ],
+        "kul-showcase-messenger": [
           "kul-article"
         ],
         "kul-showcase-photoframe": [
@@ -2688,6 +2692,44 @@
           "required": false
         },
         {
+          "name": "kulLayout",
+          "type": "\"bottom-textarea\" | \"top-textarea\"",
+          "complexType": {
+            "original": "KulChatLayout",
+            "resolved": "\"bottom-textarea\" | \"top-textarea\"",
+            "references": {
+              "KulChatLayout": {
+                "location": "import",
+                "path": "./kul-chat-declarations",
+                "id": "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-layout",
+          "reflectToAttr": true,
+          "docs": "Sets the layout of the chat.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "'top-textarea'",
+          "values": [
+            {
+              "value": "bottom-textarea",
+              "type": "string"
+            },
+            {
+              "value": "top-textarea",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "kulMaxTokens",
           "type": "number",
           "complexType": {
@@ -2851,15 +2893,15 @@
         },
         {
           "name": "kulValue",
-          "type": "KulChatState[]",
+          "type": "KulChatChoiceMessage[]",
           "complexType": {
-            "original": "KulChatState[]",
-            "resolved": "KulChatState[]",
+            "original": "KulChatHistory",
+            "resolved": "KulChatChoiceMessage[]",
             "references": {
-              "KulChatState": {
+              "KulChatHistory": {
                 "location": "import",
                 "path": "./kul-chat-declarations",
-                "id": "src/components/kul-chat/kul-chat-declarations.ts::KulChatState"
+                "id": "src/components/kul-chat/kul-chat-declarations.ts::KulChatHistory"
               }
             }
           },
@@ -2875,7 +2917,7 @@
           "default": "[]",
           "values": [
             {
-              "type": "KulChatState[]"
+              "type": "KulChatChoiceMessage[]"
             }
           ],
           "optional": false,
@@ -3109,6 +3151,11 @@
           "docs": "Sets the border-radius for elements. Defaults to 8px."
         },
         {
+          "name": "--kul-chat-buttons-padding",
+          "annotation": "prop",
+          "docs": "Sets the chat controls' padding. Defaults to 1em 0."
+        },
+        {
           "name": "--kul-chat-grid-gap",
           "annotation": "prop",
           "docs": "Sets the gap between grid elements. Defaults to 16px."
@@ -3147,6 +3194,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-messenger",
         "kul-showcase-chat"
       ],
       "dependencies": [
@@ -3177,6 +3225,9 @@
         ],
         "kul-code": [
           "kul-button"
+        ],
+        "kul-messenger": [
+          "kul-chat"
         ],
         "kul-showcase-chat": [
           "kul-chat"
@@ -3613,10 +3664,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-messenger",
         "kul-showcase-chip"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "kul-messenger": [
+          "kul-chip"
+        ],
         "kul-showcase-chip": [
           "kul-chip"
         ]
@@ -3680,6 +3735,32 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulPreserveSpaces",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-preserve-spaces",
+          "reflectToAttr": true,
+          "docs": "Whether to preserve spaces or not. When missing it is set automatically.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "undefined"
+            }
+          ],
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -3928,6 +4009,7 @@
       "parts": [],
       "dependents": [
         "kul-chat",
+        "kul-messenger",
         "kul-showcase-code"
       ],
       "dependencies": [
@@ -3949,6 +4031,9 @@
           "kul-image"
         ],
         "kul-chat": [
+          "kul-code"
+        ],
+        "kul-messenger": [
           "kul-code"
         ],
         "kul-showcase-code": [
@@ -4786,6 +4871,7 @@
         "kul-button",
         "kul-card",
         "kul-chat",
+        "kul-messenger",
         "kul-showcase-image",
         "kul-tabbar",
         "kul-toast",
@@ -4810,6 +4896,9 @@
           "kul-image"
         ],
         "kul-chat": [
+          "kul-image"
+        ],
+        "kul-messenger": [
           "kul-image"
         ],
         "kul-showcase-image": [
@@ -5719,6 +5808,290 @@
         ],
         "kul-showcase-list": [
           "kul-list"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-messenger/kul-messenger.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-messenger",
+      "readme": "# kul-messenger\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulData",
+          "type": "KulMessengerDataset",
+          "complexType": {
+            "original": "KulMessengerDataset",
+            "resolved": "KulMessengerDataset",
+            "references": {
+              "KulMessengerDataset": {
+                "location": "import",
+                "path": "./kul-messenger-declarations",
+                "id": "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The data of the messenger.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "[]"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "KulMessengerDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-style",
+          "reflectToAttr": false,
+          "docs": "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugComponentInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugComponentInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugComponentInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugComponentInfo"
+              }
+            },
+            "return": "Promise<KulDebugComponentInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugComponentInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "List of props as object, each key will be a prop."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When provided and true, the result will be the list of props with their description."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When provided and true, the result will be the list of props with their description."
+            }
+          ],
+          "docs": "Used to retrieve component's props values.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When provided and true, the result will be the list of props with their description."
+            },
+            {
+              "name": "returns",
+              "text": "List of props as object, each key will be a prop."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "reset",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "reset() => Promise<void>",
+          "parameters": [],
+          "docs": "Resets the states of the component.",
+          "docsTags": []
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-messenger-event",
+          "detail": "KulEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
+            "references": {
+              "KulEventPayload": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-messenger-background-color",
+          "annotation": "prop",
+          "docs": "Sets the background color. Defaults to var(--kul-background-color)."
+        },
+        {
+          "name": "--kul-messenger-font-size",
+          "annotation": "prop",
+          "docs": "Sets the font size of the component. Defaults to var(--kul-font-size)."
+        },
+        {
+          "name": "--kul-messenger-text-color",
+          "annotation": "prop",
+          "docs": "Sets the color of text. Defaults to var(--kul-text-color)."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-messenger"
+      ],
+      "dependencies": [
+        "kul-image",
+        "kul-code",
+        "kul-tabbar",
+        "kul-chat",
+        "kul-chip"
+      ],
+      "dependencyGraph": {
+        "kul-messenger": [
+          "kul-image",
+          "kul-code",
+          "kul-tabbar",
+          "kul-chat",
+          "kul-chip"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
+        "kul-chat": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-code",
+          "kul-textfield"
+        ],
+        "kul-showcase-messenger": [
+          "kul-messenger"
         ]
       }
     },
@@ -7569,6 +7942,85 @@
         "kul-showcase-list": [
           "kul-list",
           "kul-article"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/layout/messenger/kul-showcase-messenger.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-messenger",
+      "readme": "# kul-showcase-messenger\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-messenger",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-messenger": [
+          "kul-messenger",
+          "kul-article"
+        ],
+        "kul-messenger": [
+          "kul-image",
+          "kul-code",
+          "kul-tabbar",
+          "kul-chat",
+          "kul-chip"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
+        "kul-chat": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-code",
+          "kul-textfield"
         ]
       }
     },
@@ -9600,6 +10052,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-messenger",
         "kul-showcase-tabbar"
       ],
       "dependencies": [
@@ -9615,6 +10068,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-messenger": [
+          "kul-tabbar"
         ],
         "kul-showcase-tabbar": [
           "kul-tabbar"
@@ -11423,7 +11879,7 @@
       "path": "src/components/kul-button/kul-button-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataShapesMap": {
-      "declaration": "{\n    [K in KulDataShapes]?: Array<\n        {\n            [P in K]: K extends 'badge'\n                ? Partial<KulBadgePropsInterface>\n                : K extends 'button'\n                  ? Partial<KulButtonPropsInterface>\n                  : K extends 'code'\n                    ? Partial<KulCodePropsInterface>\n                    : K extends 'image'\n                      ? Partial<KulImagePropsInterface>\n                      : string;\n        }[K]\n    >;\n}",
+      "declaration": "{\n    [K in KulDataShapes]?: Array<\n        {\n            [P in K]: K extends 'badge'\n                ? Partial<KulBadgePropsInterface>\n                : K extends 'button'\n                  ? Partial<KulButtonPropsInterface>\n                  : K extends 'chat'\n                    ? Partial<KulChatPropsInterface>\n                    : K extends 'code'\n                      ? Partial<KulCodePropsInterface>\n                      : K extends 'image'\n                        ? Partial<KulImagePropsInterface>\n                        : string;\n        }[K]\n    >;\n}",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
@@ -11442,8 +11898,13 @@
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
-    "src/components/kul-chat/kul-chat-declarations.ts::KulChatState": {
-      "declaration": "export type KulChatState = 'connecting' | 'offline' | 'ready';",
+    "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
+      "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
+      "docstring": "",
+      "path": "src/components/kul-chat/kul-chat-declarations.ts"
+    },
+    "src/components/kul-chat/kul-chat-declarations.ts::KulChatHistory": {
+      "declaration": "interface Array<T> {\n    /**\n     * Gets or sets the length of the array. This is a number one higher than the highest index in the array.\n     */\n    length: number;\n    /**\n     * Returns a string representation of an array.\n     */\n    toString(): string;\n    /**\n     * Returns a string representation of an array. The elements are converted to string using their toLocaleString methods.\n     */\n    toLocaleString(): string;\n    /**\n     * Removes the last element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    pop(): T | undefined;\n    /**\n     * Appends new elements to the end of an array, and returns the new length of the array.\n     * @param items New elements to add to the array.\n     */\n    push(...items: T[]): number;\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: ConcatArray<T>[]): T[];\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: (T | ConcatArray<T>)[]): T[];\n    /**\n     * Adds all the elements of an array into a string, separated by the specified separator string.\n     * @param separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.\n     */\n    join(separator?: string): string;\n    /**\n     * Reverses the elements in an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     */\n    reverse(): T[];\n    /**\n     * Removes the first element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    shift(): T | undefined;\n    /**\n     * Returns a copy of a section of an array.\n     * For both start and end, a negative index can be used to indicate an offset from the end of the array.\n     * For example, -2 refers to the second to last element of the array.\n     * @param start The beginning index of the specified portion of the array.\n     * If start is undefined, then the slice begins at index 0.\n     * @param end The end index of the specified portion of the array. This is exclusive of the element at the index 'end'.\n     * If end is undefined, then the slice extends to the end of the array.\n     */\n    slice(start?: number, end?: number): T[];\n    /**\n     * Sorts an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     * @param compareFn Function used to determine the order of the elements. It is expected to return\n     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive\n     * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.\n     * ```ts\n     * [11,2,22,1].sort((a, b) => a - b)\n     * ```\n     */\n    sort(compareFn?: (a: T, b: T) => number): this;\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount?: number): T[];\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @param items Elements to insert into the array in place of the deleted elements.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount: number, ...items: T[]): T[];\n    /**\n     * Inserts new elements at the start of an array, and returns the new length of the array.\n     * @param items Elements to insert at the start of the array.\n     */\n    unshift(...items: T[]): number;\n    /**\n     * Returns the index of the first occurrence of a value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0.\n     */\n    indexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Returns the index of the last occurrence of a specified value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin searching backward. If fromIndex is omitted, the search starts at the last index in the array.\n     */\n    lastIndexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): this is S[];\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Determines whether the specified callback function returns true for any element of an array.\n     * @param predicate A function that accepts up to three arguments. The some method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value true, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Performs the specified action for each element in an array.\n     * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.\n     * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;\n    /**\n     * Calls a defined callback function on each element of an array, and returns an array that contains the results.\n     * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n\n    [n: number]: T;\n}",
       "docstring": "",
       "path": "src/components/kul-chat/kul-chat-declarations.ts"
     },
@@ -11486,6 +11947,11 @@
       "declaration": "export interface KulListEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
       "docstring": "",
       "path": "src/components/kul-list/kul-list-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
+      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
     "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
       "declaration": "export interface KulPhotoframeEventPayload extends KulEventPayload {\n    isPlaceholder?: boolean;\n}",

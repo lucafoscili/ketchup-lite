@@ -26,7 +26,7 @@ export class KulHeader {
     /**
      * References the root HTML element of the component (<kul-header>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulHeaderElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */

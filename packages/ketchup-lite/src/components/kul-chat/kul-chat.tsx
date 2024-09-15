@@ -16,6 +16,7 @@ import {
     KulChatEvent,
     KulChatEventPayload,
     KulChatHistory,
+    KulChatLayout,
     KulChatProps,
     KulChatSendArguments,
     KulChatState,
@@ -72,6 +73,12 @@ export class KulChat {
      */
     @Prop({ mutable: true }) kulEndpointUrl = 'http://localhost:5001';
     /**
+     * Sets the layout of the chat.
+     * @default ""
+     */
+    @Prop({ mutable: true, reflect: true }) kulLayout: KulChatLayout =
+        'top-textarea';
+    /**
      * The maximum amount of tokens allowed in the LLM's answer.
      * @default ""
      */
@@ -106,7 +113,7 @@ export class KulChat {
      * Sets the initial history of the chat.
      * @default ""
      */
-    @Prop({ mutable: true }) kulValue: KulChatState[] = [];
+    @Prop({ mutable: true }) kulValue: KulChatHistory = [];
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -135,10 +142,7 @@ export class KulChat {
     })
     kulEvent: EventEmitter<KulChatEventPayload>;
 
-    onKulEvent(
-        e: Event | CustomEvent<KulChatEventPayload>,
-        eventType: KulChatEvent
-    ) {
+    onKulEvent(e: Event | CustomEvent, eventType: KulChatEvent) {
         this.kulEvent.emit({
             comp: this,
             eventType,
@@ -539,7 +543,9 @@ export class KulChat {
                     </style>
                 )}
                 <div id={KUL_WRAPPER_ID}>
-                    <div class={`wrapper ${this.state}`}>
+                    <div
+                        class={`wrapper wrapper--${this.kulLayout} wrapper--${this.state}`}
+                    >
                         {this.state === 'ready'
                             ? this.#prepReady()
                             : this.state === 'connecting'

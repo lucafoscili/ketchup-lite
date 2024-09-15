@@ -220,8 +220,7 @@ export class KulChip {
                 }
             }
         });
-
-        await this.refresh();
+        this.selectedNodes = nodesToAdd;
     }
     /**
      * This method is used to trigger a new render of the component.

@@ -1,0 +1,11 @@
+:host {
+  --template-columns: 1fr;
+
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+.comp-wrapper {
+  max-height: 80dvh;
+}

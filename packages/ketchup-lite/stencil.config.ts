@@ -30,6 +30,7 @@ export const config: Config = {
                 'kul-showcase-image',
                 'kul-showcase-lazy',
                 'kul-showcase-list',
+                'kul-showcase-messenger',
                 'kul-showcase-photoframe',
                 'kul-showcase-spinner',
                 'kul-showcase-splash',
@@ -73,5 +74,5 @@ export const config: Config = {
             injectGlobalPaths: ['src/style/global.scss'],
         }),
     ],
-    sourceMap: false,
+    sourceMap: true,
 };

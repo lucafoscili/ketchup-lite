@@ -103,6 +103,7 @@ Type: `Promise<void>`
  - [kul-showcase-kultheme](../kul-showcase/framework/theme)
  - [kul-showcase-lazy](../kul-showcase/components/lazy)
  - [kul-showcase-list](../kul-showcase/components/list)
+ - [kul-showcase-messenger](../kul-showcase/layout/messenger)
  - [kul-showcase-photoframe](../kul-showcase/components/photoframe)
  - [kul-showcase-progressbar](../kul-showcase/components/progressbar)
  - [kul-showcase-spinner](../kul-showcase/components/spinner)
@@ -142,6 +143,7 @@ graph TD;
   kul-showcase-kultheme --> kul-article
   kul-showcase-lazy --> kul-article
   kul-showcase-list --> kul-article
+  kul-showcase-messenger --> kul-article
   kul-showcase-photoframe --> kul-article
   kul-showcase-progressbar --> kul-article
   kul-showcase-spinner --> kul-article

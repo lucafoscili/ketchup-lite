@@ -68,6 +68,11 @@ export class KulCode {
      */
     @Prop({ mutable: true, reflect: true }) kulLanguage = 'javascript';
     /**
+     * Whether to preserve spaces or not. When missing it is set automatically.
+     * @default undefined
+     */
+    @Prop({ mutable: true, reflect: true }) kulPreserveSpaces: boolean;
+    /**
      * Enables customization of the component's style.
      * @default "" - No custom style applied by default.
      */
@@ -83,7 +88,7 @@ export class KulCode {
     /*-------------------------------------------------*/
 
     #copyTimeoutId: NodeJS.Timeout;
-    #el: HTMLPreElement;
+    #el: HTMLPreElement | HTMLDivElement;
     #kulManager = kulManagerInstance();
 
     /*-------------------------------------------------*/
@@ -274,6 +279,16 @@ export class KulCode {
     }
 
     render() {
+        const isPreserveSpaceMissing = !!(
+            this.kulPreserveSpaces !== true && this.kulPreserveSpaces !== false
+        );
+        const isLikelyTextual =
+            this.kulLanguage.toLowerCase() === 'text' ||
+            this.kulLanguage.toLowerCase() === 'doc' ||
+            this.kulLanguage.toLowerCase() === '';
+        const shouldPreserveSpace =
+            this.kulPreserveSpaces ||
+            (isPreserveSpaceMissing && !isLikelyTextual);
         return (
             <Host>
                 {this.kulStyle && (
@@ -295,17 +310,31 @@ export class KulCode {
                                 ) => this.#copy(e)}
                             ></kul-button>
                         </div>
-                        <pre
-                            class={'language-' + this.kulLanguage}
-                            key={this.value}
-                            ref={(el: HTMLPreElement) => {
-                                if (el) {
-                                    this.#el = el;
-                                }
-                            }}
-                        >
-                            <code>{this.value}</code>
-                        </pre>
+                        {shouldPreserveSpace ? (
+                            <pre
+                                class={'body language-' + this.kulLanguage}
+                                key={this.value}
+                                ref={(el) => {
+                                    if (el) {
+                                        this.#el = el;
+                                    }
+                                }}
+                            >
+                                <code>{this.value}</code>
+                            </pre>
+                        ) : (
+                            <div
+                                class={'body language-' + this.kulLanguage}
+                                key={this.value}
+                                ref={(el) => {
+                                    if (el) {
+                                        this.#el = el;
+                                    }
+                                }}
+                            >
+                                {this.value}
+                            </div>
+                        )}
                     </div>
                 </div>
             </Host>

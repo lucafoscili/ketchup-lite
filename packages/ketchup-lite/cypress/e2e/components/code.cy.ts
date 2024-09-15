@@ -49,6 +49,7 @@ describe('Methods', () => {
         cy.checkPropsInterface(codeTag, {
             kulFormat: null,
             kulLanguage: null,
+            kulPreserveSpaces: null,
             kulStyle: null,
             kulValue: null,
         } as Required<KulCodePropsInterface>);
