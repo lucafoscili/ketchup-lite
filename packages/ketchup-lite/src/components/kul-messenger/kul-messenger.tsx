@@ -401,7 +401,7 @@ export class KulMessenger {
     }
 
     render() {
-        if (this.#hasNodes()) {
+        if (!this.#hasNodes()) {
             return;
         }
 
