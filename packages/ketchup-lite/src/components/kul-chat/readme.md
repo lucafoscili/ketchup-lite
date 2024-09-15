@@ -17,7 +17,7 @@
 | `kulStyle`           | `kul-style`            | Enables customization of the component's style.                           | `string`                              | `''`                                                                                    |
 | `kulSystem`          | `kul-system`           | System message for the LLM.                                               | `string`                              | `'You are a helpful and cheerful assistant eager to help the user out with his tasks.'` |
 | `kulTemperature`     | `kul-temperature`      | Sets the creative boundaries of the LLM.                                  | `number`                              | `0.7`                                                                                   |
-| `kulValue`           | --                     | Sets the initial history of the chat.                                     | `KulChatState[]`                      | `[]`                                                                                    |
+| `kulValue`           | --                     | Sets the initial history of the chat.                                     | `KulChatChoiceMessage[]`              | `[]`                                                                                    |
 
 
 ## Events
@@ -108,6 +108,7 @@ Type: `Promise<void>`
 | ----------------------------- | ---------------------------------------------------------------- |
 | `--kul-chat-blur-radius`      | Sets the blur radius for backdrop filters. Defaults to 3.5px.    |
 | `--kul-chat-border-radius`    | Sets the border-radius for elements. Defaults to 8px.            |
+| `--kul-chat-buttons-padding`  | Sets the chat controls' padding. Defaults to 1em 0.              |
 | `--kul-chat-grid-gap`         | Sets the gap between grid elements. Defaults to 16px.            |
 | `--kul-chat-margin-bottom-em` | Sets the margin bottom in em units. Defaults to 1em.             |
 | `--kul-chat-margin-top-em`    | Sets the margin top in em units. Defaults to 1.25em.             |

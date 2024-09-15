@@ -63,7 +63,6 @@ Type: `Promise<void>`
 
 | Name                               | Description                                                            |
 | ---------------------------------- | ---------------------------------------------------------------------- |
-| `--kul-messenger-backdrop-filter`  | Sets the backdrop filter of the messenger. Defaults to blur(3.5px).    |
 | `--kul-messenger-background-color` | Sets the background color. Defaults to var(--kul-background-color).    |
 | `--kul-messenger-font-size`        | Sets the font size of the component. Defaults to var(--kul-font-size). |
 | `--kul-messenger-text-color`       | Sets the color of text. Defaults to var(--kul-text-color).             |
@@ -81,6 +80,7 @@ Type: `Promise<void>`
 - [kul-code](../kul-code)
 - [kul-tabbar](../kul-tabbar)
 - [kul-chat](../kul-chat)
+- [kul-chip](../kul-chip)
 
 ### Graph
 ```mermaid
@@ -89,6 +89,7 @@ graph TD;
   kul-messenger --> kul-code
   kul-messenger --> kul-tabbar
   kul-messenger --> kul-chat
+  kul-messenger --> kul-chip
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image

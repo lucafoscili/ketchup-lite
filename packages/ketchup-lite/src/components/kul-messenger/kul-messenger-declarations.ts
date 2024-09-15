@@ -194,14 +194,12 @@ export interface KulMessengerOutfitsNode
 export enum KulMessengerProps {
     kulData = 'The actual data of the component.',
     kulStyle = 'Custom style of the component.',
-    kulValue = 'This method is used to trigger a new render of the component.',
 }
 
 // Messenger Props Interface
 export interface KulMessengerPropsInterface {
     kulData?: KulMessengerDataset;
     kulStyle?: string;
-    kulValue?: KulMessengerHistory;
 }
 
 // Style Node

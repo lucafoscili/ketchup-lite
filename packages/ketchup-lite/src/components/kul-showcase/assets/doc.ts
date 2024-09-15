@@ -727,7 +727,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulValue",
         docs: "Sets the initial history of the chat.",
-        type: "KulChatState[]",
+        type: "KulChatChoiceMessage[]",
       },
     ],
     styles: [
@@ -738,6 +738,10 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-chat-border-radius",
         docs: "Sets the border-radius for elements. Defaults to 8px.",
+      },
+      {
+        name: "--kul-chat-buttons-padding",
+        docs: "Sets the chat controls' padding. Defaults to 1em 0.",
       },
       {
         name: "--kul-chat-grid-gap",
@@ -1518,10 +1522,6 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
     styles: [
-      {
-        name: "--kul-messenger-backdrop-filter",
-        docs: "Sets the backdrop filter of the messenger. Defaults to blur(3.5px).",
-      },
       {
         name: "--kul-messenger-background-color",
         docs: "Sets the background color. Defaults to var(--kul-background-color).",

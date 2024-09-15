@@ -32,6 +32,7 @@ graph TD;
   kul-messenger --> kul-code
   kul-messenger --> kul-tabbar
   kul-messenger --> kul-chat
+  kul-messenger --> kul-chip
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
