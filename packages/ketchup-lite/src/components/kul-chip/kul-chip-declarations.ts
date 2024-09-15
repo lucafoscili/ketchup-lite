@@ -17,6 +17,8 @@ export interface KulChipEventArguments {
     node?: KulDataNode;
 }
 
+export interface KulChipDataset extends KulDataDataset {}
+
 export interface KulChipEventPayload extends KulEventPayload {
     node: KulDataNode;
 }

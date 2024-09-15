@@ -7,12 +7,13 @@
 
 ## Properties
 
-| Property      | Attribute      | Description                                       | Type      | Default        |
-| ------------- | -------------- | ------------------------------------------------- | --------- | -------------- |
-| `kulFormat`   | `kul-format`   | Automatically formats the value.                  | `boolean` | `true`         |
-| `kulLanguage` | `kul-language` | Sets the language of the snippet.                 | `string`  | `'javascript'` |
-| `kulStyle`    | `kul-style`    | Enables customization of the component's style.   | `string`  | `''`           |
-| `kulValue`    | `kul-value`    | String containing the snippet of code to display. | `string`  | `''`           |
+| Property            | Attribute             | Description                                                              | Type      | Default        |
+| ------------------- | --------------------- | ------------------------------------------------------------------------ | --------- | -------------- |
+| `kulFormat`         | `kul-format`          | Automatically formats the value.                                         | `boolean` | `true`         |
+| `kulLanguage`       | `kul-language`        | Sets the language of the snippet.                                        | `string`  | `'javascript'` |
+| `kulPreserveSpaces` | `kul-preserve-spaces` | Whether to preserve spaces or not. When missing it is set automatically. | `boolean` | `undefined`    |
+| `kulStyle`          | `kul-style`           | Enables customization of the component's style.                          | `string`  | `''`           |
+| `kulValue`          | `kul-value`           | String containing the snippet of code to display.                        | `string`  | `''`           |
 
 
 ## Events
@@ -83,6 +84,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [kul-chat](../kul-chat)
+ - [kul-messenger](../kul-messenger)
  - [kul-showcase-code](../kul-showcase/components/code)
 
 ### Depends on
@@ -99,6 +101,7 @@ graph TD;
   kul-image --> kul-badge
   kul-badge --> kul-image
   kul-chat --> kul-code
+  kul-messenger --> kul-code
   kul-showcase-code --> kul-code
   style kul-code fill:#f9f,stroke:#333,stroke-width:4px
 ```

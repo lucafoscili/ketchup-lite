@@ -5,30 +5,20 @@
      */
   --kul_chat_blur_radius: var(--kul-chat-blur-radius, 3.5px);
   /**
-     * @prop --kul-chat-padding: Sets the default padding for various elements.
-     * Defaults to 18px.
+     * @prop --kul-chat-border-radius: Sets the border-radius for elements.
+     * Defaults to 8px.
      */
-  --kul_chat_padding: var(--kul-chat-padding, 18px);
+  --kul_chat_border_radius: var(--kul-chat-border-radius, 8px);
+  /**
+     * @prop --kul-chat-buttons-padding: Sets the chat controls' padding.
+     * Defaults to 1em 0.
+     */
+  --kul_chat_buttons_padding: var(--kul-chat-buttons-padding, 1em 0);
   /**
      * @prop --kul-chat-grid-gap: Sets the gap between grid elements.
      * Defaults to 16px.
      */
   --kul_chat_grid_gap: var(--kul-chat-grid-gap, 16px);
-  /**
-     * @prop --kul-chat-title-font-size: Sets the font size for titles.
-     * Defaults to 2em.
-     */
-  --kul_chat_title_font_size: var(--kul-chat-title-font-size, 2em);
-  /**
-     * @prop --kul-chat-small-font-size: Sets the font size for small text elements.
-     * Defaults to 0.875em.
-     */
-  --kul-chat_small_font_size: var(--kul-chat-small-font-size, 0.875em);
-  /**
-     * @prop --kul-chat-spinner-size: Sets the size of the spinner.
-     * Defaults to 48px.
-     */
-  --kul_chat_spinner_size: var(--kul-chat-spinner-size, 48px);
   /**
      * @prop --kul-chat-margin-top-em: Sets the margin top in em units.
      * Defaults to 1.25em.
@@ -40,10 +30,25 @@
      */
   --kul_chat_margin_bottom: var(--kul-chat-margin-bottom-em, 1em);
   /**
-     * @prop --kul-chat-border-radius: Sets the border-radius for elements.
-     * Defaults to 8px.
+     * @prop --kul-chat-padding: Sets the default padding for various elements.
+     * Defaults to 18px.
      */
-  --kul_chat_border_radius: var(--kul-chat-border-radius, 8px);
+  --kul_chat_padding: var(--kul-chat-padding, 18px);
+  /**
+     * @prop --kul-chat-small-font-size: Sets the font size for small text elements.
+     * Defaults to 0.875em.
+     */
+  --kul-chat_small_font_size: var(--kul-chat-small-font-size, 0.875em);
+  /**
+     * @prop --kul-chat-spinner-size: Sets the size of the spinner.
+     * Defaults to 48px.
+     */
+  --kul_chat_spinner_size: var(--kul-chat-spinner-size, 48px);
+  /**
+     * @prop --kul-chat-title-font-size: Sets the font size for titles.
+     * Defaults to 2em.
+     */
+  --kul_chat_title_font_size: var(--kul-chat-title-font-size, 2em);
 
   color: var(--kul-text-color);
   display: block;
@@ -62,22 +67,32 @@
     backdrop-filter: blur(var(--kul_chat_blur_radius));
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: auto 1fr auto;
     height: 100%;
     margin: auto;
     padding: var(--kul_chat_padding);
   }
 
-  &--ready {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
+  &--bottom-textarea {
+    align-content: center;
+    grid-template-areas:
+      'chat'
+      'spinner'
+      'query';
+    grid-template-rows: 1fr minmax(25%, auto) auto;
+  }
+
+  &--top-textarea {
+    grid-template-areas:
+      'query'
+      'chat'
+      'spinner';
+    grid-template-rows: auto 1fr auto;
   }
 }
 
 .query-area {
   box-sizing: border-box;
+  grid-area: query;
   max-width: 100%;
   width: 100%;
 }
@@ -85,6 +100,7 @@
 .chat-area {
   align-content: start;
   display: grid;
+  grid-area: chat;
   grid-gap: var(--kul_chat_grid_gap);
   grid-template-columns: 1fr;
   overflow: auto;
@@ -95,6 +111,7 @@
 }
 
 .spinner {
+  grid-area: spinner;
   height: var(--kul_chat_spinner_size);
   margin: auto;
   width: var(--kul_chat_spinner_size);
@@ -117,7 +134,7 @@
   align-items: center;
   display: flex;
   justify-content: space-evenly;
-  padding: 1em 0;
+  padding: var(--kul_chat_buttons_padding);
 }
 
 .stt {

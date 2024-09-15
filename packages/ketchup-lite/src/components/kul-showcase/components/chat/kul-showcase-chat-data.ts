@@ -83,7 +83,7 @@ export const CHAT_DOC: KulArticleDataset = {
                                     children: [
                                         {
                                             cells: {
-                                                kulChat: {
+                                                kulCode: {
                                                     shape: 'code',
                                                     kulLanguage: 'markup',
                                                     value: '<kul-chat kul-endpoint-url="http://localhost:5001"></kul-chat>',

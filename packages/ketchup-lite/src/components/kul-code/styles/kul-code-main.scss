@@ -167,12 +167,15 @@ pre::selection {
   background: var(--kul_code_selection_background_color);
 }
 
+.body {
+  padding: 1.75em 1em;
+}
+
 pre {
   box-sizing: border-box;
   margin: 0;
   min-height: calc(100% - 36px);
   overflow: auto;
-  padding: 1.75em 1em;
 }
 
 :not(pre) > code {

@@ -4,7 +4,6 @@ import { KulBadgeEvent } from '../components/kul-badge/kul-badge-declarations';
 import { KulButtonEvent } from '../components/kul-button/kul-button-declarations';
 import { KulCardEvent } from '../components/kul-card/kul-card-declarations';
 import { KulCodeEvent } from '../components/kul-code/kul-code-declarations';
-import { KulDebugComponentInfo } from '../components';
 import { KulImageEvent } from '../components/kul-image/kul-image-declarations';
 import { KulSpinnerEvent } from '../components/kul-spinner/kul-spinner-declarations';
 import { KulSplashEvent } from '../components/kul-splash/kul-splash-declarations';
@@ -22,6 +21,7 @@ import { KulAccordionEvent } from '../components/kul-accordion/kul-accordion-dec
 import { KulChatEvent } from '../components/kul-chat/kul-chat-declarations';
 import { KulListEvent } from '../components/kul-list/kul-list-declarations';
 import { KulProgressbarEvent } from '../components/kul-progressbar/kul-progressbar-declarations';
+import { KulDebugComponentInfo } from '../managers/kul-debug/kul-debug-declarations';
 
 export interface GenericMap {
     [index: string]: string;
@@ -50,6 +50,7 @@ export enum KulDataCyAttributes {
     SHAPE = 'shape',
     SHOWCASE_GRID_WRAPPER = 'wrapper',
 }
+
 export interface KulEventPayload {
     comp: unknown;
     eventType: KulEventType;

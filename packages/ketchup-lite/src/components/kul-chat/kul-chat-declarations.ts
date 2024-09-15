@@ -1,5 +1,4 @@
-import { KulEventPayload } from '../../components';
-
+import { KulEventPayload } from '../../../src/types/GenericTypes';
 export interface KulChatChoice {
     index: number;
     message: KulChatChoiceMessage;
@@ -33,6 +32,8 @@ export interface KulChatEventPayload extends KulEventPayload {
 
 export type KulChatHistory = KulChatChoiceMessage[];
 
+export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
+
 export enum KulChatProps {
     kulEndpointUrl = 'URL of the endpoint where the LLM is hosted.',
     kulMaxTokens = "Maximum number of tokens allowed in the LLM's answer.",
@@ -52,7 +53,7 @@ export interface KulChatPropsInterface {
     kulStyle?: string;
     kulSystem?: string;
     kulTemperature?: number;
-    kulValue?: KulChatState[];
+    kulValue?: KulChatHistory;
 }
 
 export interface KulChatSendArguments {

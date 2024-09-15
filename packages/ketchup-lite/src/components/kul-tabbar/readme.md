@@ -105,6 +105,7 @@ The newly set value.
 
 ### Used by
 
+ - [kul-messenger](../kul-messenger)
  - [kul-showcase-tabbar](../kul-showcase/components/tabbar)
 
 ### Depends on
@@ -118,6 +119,7 @@ graph TD;
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-messenger --> kul-tabbar
   kul-showcase-tabbar --> kul-tabbar
   style kul-tabbar fill:#f9f,stroke:#333,stroke-width:4px
 ```
