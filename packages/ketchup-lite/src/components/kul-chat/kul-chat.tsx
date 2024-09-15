@@ -142,18 +142,13 @@ export class KulChat {
     })
     kulEvent: EventEmitter<KulChatEventPayload>;
 
-    onKulEvent(
-        e: Event | CustomEvent,
-        eventType: KulChatEvent,
-        message?: KulChatChoiceMessage
-    ) {
+    onKulEvent(e: Event | CustomEvent, eventType: KulChatEvent) {
         this.kulEvent.emit({
             comp: this,
             eventType,
             id: this.rootElement.id,
             originalEvent: e,
             history: JSON.stringify(this.history) || '',
-            message,
         });
     }
 
@@ -481,7 +476,7 @@ export class KulChat {
         const llmMessage = await send(sendArgs);
         if (llmMessage) {
             const cb = () => this.history.push(llmMessage);
-            this.#updateHistory(cb, llmMessage);
+            this.#updateHistory(cb);
             this.#disableInteractivity(false);
             await this.#textarea.setValue('');
             this.#spinnerBar.kulActive = false;
@@ -493,9 +488,9 @@ export class KulChat {
         }
     }
 
-    #updateHistory(cb: () => unknown, message?: KulChatChoiceMessage) {
+    #updateHistory(cb: () => unknown) {
         cb();
-        this.onKulEvent(new CustomEvent('update'), 'update', message);
+        this.onKulEvent(new CustomEvent('update'), 'update');
     }
 
     /*-------------------------------------------------*/

@@ -149,6 +149,21 @@ export class KulMessenger {
     async refresh(): Promise<void> {
         forceUpdate(this);
     }
+    /**
+     * Resets the states of the component.
+     */
+    @Method()
+    async reset(): Promise<void> {
+        this.covers = {};
+        this.currentCharacter = null;
+        this.history = {};
+        this.avatars = false;
+        this.locations = false;
+        this.outfits = false;
+        this.styles = false;
+
+        this.#initStates();
+    }
 
     /*-------------------------------------------------*/
     /*           P r i v a t e   M e t h o d s         */
@@ -337,6 +352,10 @@ export class KulMessenger {
         return !!nodes.length;
     }
 
+    #hasNodes() {
+        return !!this.kulData?.nodes?.length;
+    }
+
     #initStates() {
         const imageRootGetter = this.#adapter.get.image.root;
         for (let index = 0; index < this.kulData.nodes.length; index++) {
@@ -363,7 +382,7 @@ export class KulMessenger {
 
     componentWillLoad() {
         this.#kulManager.theme.register(this);
-        if (this.kulData?.nodes?.length) {
+        if (this.#hasNodes()) {
             this.#initStates();
         }
     }
@@ -382,6 +401,10 @@ export class KulMessenger {
     }
 
     render() {
+        if (this.#hasNodes()) {
+            return;
+        }
+
         return (
             <Host>
                 {this.kulStyle ? (

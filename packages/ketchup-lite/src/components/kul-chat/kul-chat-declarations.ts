@@ -28,7 +28,6 @@ export type KulChatEvent = 'update' | 'ready';
 export interface KulChatEventPayload extends KulEventPayload {
     eventType: KulChatEvent;
     history: string;
-    message?: KulChatChoiceMessage;
 }
 
 export type KulChatHistory = KulChatChoiceMessage[];

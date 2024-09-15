@@ -16,6 +16,7 @@ import { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./c
 import { XAXisComponentOption, YAXisComponentOption } from "echarts";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
+import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
@@ -37,6 +38,7 @@ export { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./c
 export { XAXisComponentOption, YAXisComponentOption } from "echarts";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
+export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
@@ -534,7 +536,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -569,7 +571,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -649,7 +651,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -782,13 +784,17 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Resets the states of the component.
+         */
+        "reset": () => Promise<void>;
     }
     interface KulPhotoframe {
         /**
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -964,7 +970,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -1111,7 +1117,7 @@ export namespace Components {
           * Retrieves the debug information reflecting the current state of the component.
           * @returns A promise that resolves to a KulDebugComponentInfo object containing debug information.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
         /**
           * Retrieves the properties of the component, with optional descriptions.
           * @param descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
@@ -1301,7 +1307,7 @@ export namespace Components {
           * The actual data of the tree.
           * @default null
          */
-        "kulData": KulDataDataset;
+        "kulData": KulDataDataset1;
         /**
           * When true, displays a text field which enables filtering the dataset of the tree.
           * @default null
@@ -3043,7 +3049,7 @@ declare namespace LocalJSX {
           * The actual data of the tree.
           * @default null
          */
-        "kulData"?: KulDataDataset;
+        "kulData"?: KulDataDataset1;
         /**
           * When true, displays a text field which enables filtering the dataset of the tree.
           * @default null

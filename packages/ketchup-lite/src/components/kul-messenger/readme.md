@@ -58,6 +58,16 @@ Type: `Promise<void>`
 
 
 
+### `reset() => Promise<void>`
+
+Resets the states of the component.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## CSS Custom Properties
 

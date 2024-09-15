@@ -1508,6 +1508,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "reset",
+        docs: "Resets the states of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
     ],
     props: [
       {
