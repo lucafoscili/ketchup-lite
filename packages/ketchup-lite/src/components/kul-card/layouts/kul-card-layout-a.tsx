@@ -1,8 +1,8 @@
 import { h, VNode } from '@stencil/core';
-import { KulDataShapesMap } from '../../../components';
 import { KulCard } from './../kul-card';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
+import { KulDataShapesMap } from '../../../managers/kul-data/kul-data-declarations';
 import { KulCardCSSClasses } from './../kul-card-declarations';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
 import { getShapes } from '../helpers/shapes';

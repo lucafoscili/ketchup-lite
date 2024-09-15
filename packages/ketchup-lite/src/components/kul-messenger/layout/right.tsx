@@ -1,10 +1,13 @@
 import { h } from '@stencil/core';
 import {
     KulMessengerAdapter,
+    KulMessengerImageChildNode,
     KulMessengerImageRootNodesIds,
 } from '../kul-messenger-declarations';
 import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
+import { KulEventPayload } from '../../../types/GenericTypes';
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constant';
+import { KulChip } from '../../kul-chip/kul-chip';
 
 export const prepRight = (adapter: KulMessengerAdapter) => {
     return (
@@ -60,6 +63,7 @@ const prepFilters = (adapter: KulMessengerAdapter) => {
     }
     return (
         <kul-chip
+            key={'filter_' + adapter.get.character.name()}
             kulData={FILTER_DATASET}
             kulStyling="filter"
             onKul-chip-event={chipEventHandler.bind(chipEventHandler, adapter)}
@@ -74,11 +78,17 @@ const prepList = (adapter: KulMessengerAdapter) => {
     for (let index = 0; index < IMAGE_TYPE_IDS.length; index++) {
         const type = IMAGE_TYPE_IDS[index];
         if (options[type]) {
-            const activeIndex = adapter.get.image.root(type).value;
+            const activeIndex = adapter.get.image.coverIndex(type);
             const images = imagesGetter(type).map((node, j) => (
                 <kul-image
                     class={`messenger__options__image ${activeIndex === j ? 'messenger__options__image--selected' : ''} kul-cover`}
                     kulValue={node.cells.kulImage.value}
+                    onKul-image-event={imageEventHandler.bind(
+                        imageEventHandler,
+                        adapter,
+                        node,
+                        j
+                    )}
                 ></kul-image>
             ));
             elements.push(
@@ -92,11 +102,34 @@ const prepList = (adapter: KulMessengerAdapter) => {
     return elements;
 };
 
+const imageEventHandler = (
+    adapter: KulMessengerAdapter,
+    node: KulMessengerImageChildNode,
+    index: number,
+    e: CustomEvent<KulEventPayload>
+) => {
+    const { eventType } = e.detail;
+    const coverSetter = adapter.set.image.cover;
+
+    switch (eventType) {
+        case 'click':
+            if (node.id.includes('avatar')) {
+                coverSetter('avatars', index);
+            } else if (node.id.includes('location')) {
+                coverSetter('locations', index);
+            } else if (node.id.includes('outfit')) {
+                coverSetter('outfits', index);
+            } else {
+                coverSetter('styles', index);
+            }
+    }
+};
+
 const chipEventHandler = async (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChipEventPayload>
 ) => {
-    const { eventType, node } = e.detail;
+    const { comp, eventType, node } = e.detail;
     const optionsGetter = adapter.get.image.options;
     const optionsSetter = adapter.set.image.options;
 
@@ -116,5 +149,18 @@ const chipEventHandler = async (
                     optionsSetter('styles', !optionsGetter().styles);
                     break;
             }
+            break;
+        case 'ready':
+            const options = adapter.get.image.options();
+            const nodes: string[] = [];
+            for (const key in options) {
+                if (Object.prototype.hasOwnProperty.call(options, key)) {
+                    const option = options[key];
+                    if (option) {
+                        nodes.push(key);
+                    }
+                }
+            }
+            requestAnimationFrame(() => (comp as KulChip).selectNodes(nodes));
     }
 };

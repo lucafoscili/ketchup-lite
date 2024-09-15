@@ -113,7 +113,7 @@ export class KulChat {
      * Sets the initial history of the chat.
      * @default ""
      */
-    @Prop({ mutable: true }) kulValue: KulChatState[] = [];
+    @Prop({ mutable: true }) kulValue: KulChatHistory = [];
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -144,7 +144,8 @@ export class KulChat {
 
     onKulEvent(
         e: Event | CustomEvent<KulChatEventPayload>,
-        eventType: KulChatEvent
+        eventType: KulChatEvent,
+        message?: KulChatChoiceMessage
     ) {
         this.kulEvent.emit({
             comp: this,
@@ -152,6 +153,7 @@ export class KulChat {
             id: this.rootElement.id,
             originalEvent: e,
             history: JSON.stringify(this.history) || '',
+            message,
         });
     }
 
@@ -479,7 +481,7 @@ export class KulChat {
         const llmMessage = await send(sendArgs);
         if (llmMessage) {
             const cb = () => this.history.push(llmMessage);
-            this.#updateHistory(cb);
+            this.#updateHistory(cb, llmMessage);
             this.#disableInteractivity(false);
             await this.#textarea.setValue('');
             this.#spinnerBar.kulActive = false;
@@ -491,9 +493,9 @@ export class KulChat {
         }
     }
 
-    #updateHistory(cb: () => unknown) {
+    #updateHistory(cb: () => unknown, message?: KulChatChoiceMessage) {
         cb();
-        this.onKulEvent(new CustomEvent('update'), 'update');
+        this.onKulEvent(new CustomEvent('update'), 'update', message);
     }
 
     /*-------------------------------------------------*/

@@ -3,6 +3,10 @@ import {
     KulImagePropsInterface,
 } from '../../components';
 import { KulButtonPropsInterface } from '../../components/kul-button/kul-button-declarations';
+import {
+    KulChatHistory,
+    KulChatPropsInterface,
+} from '../../components/kul-chat/kul-chat-declarations';
 import { KulCodePropsInterface } from '../../components/kul-code/kul-code-declarations';
 import { GenericMap } from '../../types/GenericTypes';
 
@@ -21,6 +25,11 @@ export interface KulDataButtonCell
         KulButtonPropsInterface {
     shape: 'button';
     value: string;
+}
+
+export interface KulDataChatCell extends KulDataCell, KulChatPropsInterface {
+    shape: 'chat';
+    value: KulChatHistory;
 }
 
 export interface KulDataCodeCell extends KulDataCell, KulCodePropsInterface {
@@ -47,6 +56,7 @@ type KulDataCellType =
     | KulDataCell
     | KulDataBadgeCell
     | KulDataButtonCell
+    | KulDataChatCell
     | KulDataCodeCell
     | KulDataImageCell
     | KulDataNumberCell
@@ -56,6 +66,7 @@ export interface KulDataCellContainer {
     [index: string]: KulDataCellType;
     ['kulBadge']?: KulDataBadgeCell;
     ['kulButton']?: KulDataButtonCell;
+    ['kulChat']?: KulDataChatCell;
     ['kulCode']?: KulDataCodeCell;
     ['kulImage']?: KulDataImageCell;
     ['kulNumber']?: KulDataNumberCell;
@@ -67,6 +78,7 @@ export interface KulDataColumn {
         | string
         | 'kulBadge'
         | 'kulButton'
+        | 'kulChat'
         | 'kulCode'
         | 'kulImage'
         | 'kulNumber'
@@ -100,6 +112,7 @@ export interface KulDataNode {
 export type KulDataShapes =
     | 'badge'
     | 'button'
+    | 'chat'
     | 'code'
     | 'image'
     | 'number'
@@ -112,11 +125,13 @@ export type KulDataShapesMap = {
                 ? Partial<KulBadgePropsInterface>
                 : K extends 'button'
                   ? Partial<KulButtonPropsInterface>
-                  : K extends 'code'
-                    ? Partial<KulCodePropsInterface>
-                    : K extends 'image'
-                      ? Partial<KulImagePropsInterface>
-                      : string;
+                  : K extends 'chat'
+                    ? Partial<KulChatPropsInterface>
+                    : K extends 'code'
+                      ? Partial<KulCodePropsInterface>
+                      : K extends 'image'
+                        ? Partial<KulImagePropsInterface>
+                        : string;
         }[K]
     >;
 };

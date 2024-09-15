@@ -1,5 +1,4 @@
-import { KulEventPayload } from '../../components';
-
+import { KulEventPayload } from '../../../src/types/GenericTypes';
 export interface KulChatChoice {
     index: number;
     message: KulChatChoiceMessage;
@@ -29,6 +28,7 @@ export type KulChatEvent = 'update' | 'ready';
 export interface KulChatEventPayload extends KulEventPayload {
     eventType: KulChatEvent;
     history: string;
+    message?: KulChatChoiceMessage;
 }
 
 export type KulChatHistory = KulChatChoiceMessage[];
@@ -54,7 +54,7 @@ export interface KulChatPropsInterface {
     kulStyle?: string;
     kulSystem?: string;
     kulTemperature?: number;
-    kulValue?: KulChatState[];
+    kulValue?: KulChatHistory;
 }
 
 export interface KulChatSendArguments {

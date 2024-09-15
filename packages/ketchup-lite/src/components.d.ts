@@ -14,13 +14,13 @@ import { KulImagePropsInterface } from "./components/kul-image/kul-image-declara
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 import { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 import { XAXisComponentOption, YAXisComponentOption } from "echarts";
-import { KulChatEventPayload, KulChatLayout, KulChatState } from "./components/kul-chat/kul-chat-declarations";
+import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMessengerDataset, KulMessengerHistory } from "./components/kul-messenger/kul-messenger-declarations";
+import { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -36,13 +36,13 @@ export { KulImagePropsInterface } from "./components/kul-image/kul-image-declara
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 export { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 export { XAXisComponentOption, YAXisComponentOption } from "echarts";
-export { KulChatEventPayload, KulChatLayout, KulChatState } from "./components/kul-chat/kul-chat-declarations";
+export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMessengerDataset, KulMessengerHistory } from "./components/kul-messenger/kul-messenger-declarations";
+export { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -427,7 +427,7 @@ export namespace Components {
           * Sets the initial history of the chat.
           * @default ""
          */
-        "kulValue": KulChatState[];
+        "kulValue": KulChatHistory;
         /**
           * Triggers a re-render of the component to reflect any state changes.
          */
@@ -763,7 +763,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -780,11 +780,6 @@ export namespace Components {
           * @default ""
          */
         "kulStyle": string;
-        /**
-          * Loads the initial history of the chats.
-          * @default ""
-         */
-        "kulValue": KulMessengerHistory;
         /**
           * This method is used to trigger a new render of the component.
          */
@@ -2469,7 +2464,7 @@ declare namespace LocalJSX {
           * Sets the initial history of the chat.
           * @default ""
          */
-        "kulValue"?: KulChatState[];
+        "kulValue"?: KulChatHistory;
         /**
           * Describes event emitted.
          */
@@ -2679,11 +2674,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Loads the initial history of the chats.
-          * @default ""
-         */
-        "kulValue"?: KulMessengerHistory;
         /**
           * Describes event emitted.
          */

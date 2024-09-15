@@ -1,10 +1,8 @@
 import { h } from '@stencil/core';
-import {
-    KulChatEventPayload,
-    KulTabbarEventPayload,
-} from '../../../components';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { NAV_DATASET } from './constant';
+import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
+import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
 
 export const prepCenter = (adapter: KulMessengerAdapter) => {
     return (
@@ -46,13 +44,14 @@ const prepChat = (adapter: KulMessengerAdapter) => {
     Begin your performance...
     `;
     const history = adapter.get.character.history();
+    const historyJ = JSON.parse(history);
     return (
         <kul-chat
             key={adapter.get.character.current().id}
             onKul-chat-event={chatEventHandler.bind(chatEventHandler, adapter)}
             kulLayout="bottom-textarea"
             kulSystem={system}
-            kulValue={history}
+            kulValue={historyJ}
         ></kul-chat>
     );
 };
@@ -81,6 +80,6 @@ const chatEventHandler = (
     const { eventType, history } = e.detail;
     switch (eventType) {
         case 'update':
-            adapter.set.character.history(JSON.parse(history));
+            adapter.set.character.history(history);
     }
 };
