@@ -20,18 +20,33 @@ export const prepRight = (adapter: KulMessengerAdapter) => {
 
 const prepOptions = (adapter: KulMessengerAdapter) => {
     return [
-        <kul-image
-            class={'messenger__options__outfit kul-cover'}
-            kulValue={adapter.get.image.asCover('outfits')}
-        ></kul-image>,
-        <kul-image
-            class={'messenger__options__style kul-cover'}
-            kulValue={adapter.get.image.asCover('styles')}
-        ></kul-image>,
-        <kul-image
-            class={'messenger__options__location kul-cover'}
-            kulValue={adapter.get.image.asCover('locations')}
-        ></kul-image>,
+        <div class="messenger__options__outfit">
+            <kul-image
+                class={'kul-cover'}
+                kulValue={adapter.get.image.asCover('outfits')}
+            ></kul-image>
+            <div class="messenger__options__name">
+                <div class="messenger__options__label">Outfit</div>
+            </div>
+        </div>,
+        <div class="messenger__options__location">
+            <kul-image
+                class={'kul-cover'}
+                kulValue={adapter.get.image.asCover('locations')}
+            ></kul-image>
+            <div class="messenger__options__name">
+                <div class="messenger__options__label">Location</div>
+            </div>
+        </div>,
+        <div class="messenger__options__style">
+            <kul-image
+                class={'kul-cover'}
+                kulValue={adapter.get.image.asCover('styles')}
+            ></kul-image>
+            <div class="messenger__options__name">
+                <div class="messenger__options__label">Style</div>
+            </div>
+        </div>,
     ];
 };
 

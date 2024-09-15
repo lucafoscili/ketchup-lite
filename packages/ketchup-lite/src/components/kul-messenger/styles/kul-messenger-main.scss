@@ -63,7 +63,7 @@
 
   &__right {
     display: grid;
-    grid-template-rows: minmax(10%, 25%) auto 1fr;
+    grid-template-rows: minmax(10%, auto) auto 1fr;
     height: 100%;
     overflow: auto;
   }
@@ -79,15 +79,15 @@
 
   &__options {
     &__active {
-      display: flex;
-      justify-content: center;
-      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
     }
 
     &__outfit,
     &__location,
     &__style {
       min-width: 25%;
+      position: relative;
     }
 
     &__filters {
@@ -97,6 +97,17 @@
     &__list {
       display: grid;
       overflow: auto;
+    }
+
+    &__name {
+      background: rgba(var(--kul-title-background-color-rgb), 0.75);
+      bottom: 0;
+      box-sizing: border-box;
+      overflow: hidden;
+      padding: 4px;
+      position: absolute;
+      text-align: center;
+      width: 100%;
     }
 
     &__title {
