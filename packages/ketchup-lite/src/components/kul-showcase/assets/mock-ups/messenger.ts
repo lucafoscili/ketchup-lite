@@ -1,4 +1,12 @@
-export const FREYA = `
+import { getAssetPath } from '@stencil/core';
+import {
+    KulMessengerAvatarNode,
+    KulMessengerLocationNode,
+    KulMessengerOutfitNode,
+    KulMessengerStyleNode,
+} from '../../../kul-messenger/kul-messenger-declarations';
+
+export const FREYA_BIO = `
 # Freya - Norse Goddess of Love, Beauty, and War
 
 Freya is one of the most prominent goddesses in Norse mythology, associated with love, beauty, fertility, war, death, prosperity, and magic. She is considered one of the most important deities in the Norse pantheon.
@@ -34,7 +42,108 @@ Freya is one of the most prominent goddesses in Norse mythology, associated with
 Freya embodies the complex nature of feminine power in Norse mythology, combining attributes of love, war, and fertility. Her enduring presence in Norse literature and cultural heritage testifies to her significance as a multifaceted goddess.
 `;
 
-export const THOR = `
+export const FREYA_AVATARS: KulMessengerAvatarNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/avatar_freya.png'),
+            },
+        },
+        description: 'Freya dressed for war',
+        id: 'avatar_0',
+        value: 'Freya',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/avatar_freya_2.png'),
+            },
+        },
+        description: 'Freya during a ceremony',
+        id: 'avatar_1',
+        value: 'Freya',
+    },
+];
+
+export const FREYA_LOCATIONS: KulMessengerLocationNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/location_lake.png'),
+            },
+        },
+        description:
+            'Lake at night, the sky feats a beautiful aurora borealis.',
+        id: 'location_0',
+        value: 'Northern lake',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/location_armory.png'),
+            },
+        },
+        description: 'Armory of Asgard.',
+        id: 'location_1',
+        value: "Asgard's armory",
+    },
+];
+
+export const FREYA_OUTFITS: KulMessengerOutfitNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/outfit_armor_2.png'),
+            },
+        },
+        description: 'Regal armor made of gold and engraved.',
+        id: 'outfit_0',
+        value: 'Golden armor',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/outfit_dress.png'),
+            },
+        },
+        description: 'Elegant summer dress fit for a goddess',
+        id: 'outfit_1',
+        value: 'Elegant summer dress',
+    },
+];
+
+export const FREYA_STYLES: KulMessengerStyleNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/style_photorealistic.png'),
+            },
+        },
+        description: 'Photorealistic image.',
+        id: 'style_0',
+        value: 'Photorealistic',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/style_anime.png'),
+            },
+        },
+        description: 'Anime styled image.',
+        id: 'style_1',
+        value: 'Anime',
+    },
+];
+
+export const THOR_BIO = `
 # Thor: The Mighty God of Thunder
 
 Thor is one of the most iconic figures in Norse mythology, known as the god of thunder and lightning. He is a powerful deity revered for his strength, courage, and protection of humanity.
@@ -73,3 +182,127 @@ Thor is one of the most iconic figures in Norse mythology, known as the god of t
 
 As one of the most prominent gods in Norse mythology, Thor remains a significant cultural figure, inspiring artistic works and appearing in modern popular culture. His association with thunder and strength has made him a lasting symbol in Germanic cultures.
 `;
+
+export const THOR_AVATARS: KulMessengerAvatarNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/avatar_thor.png'),
+            },
+        },
+        description: 'Thor with Mjollnir',
+        id: 'avatar_0',
+        value: 'Thor',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/avatar_thor_2.png'),
+            },
+        },
+        description: 'Thor in the land of fire',
+        id: 'avatar_1',
+        value: 'Thor',
+    },
+];
+
+export const THOR_LOCATIONS: KulMessengerLocationNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/location_asgard_halls.png'),
+            },
+        },
+        description: 'The halls of the Palace of Asgard',
+        id: 'location_0',
+        value: "Asgard's Palace",
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath(
+                    './assets/media/location_bifrost_bridge.png'
+                ),
+            },
+        },
+        description: 'The portal to other realms.',
+        id: 'location_1',
+        value: 'Bifrost Bridge',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/location_forest.png'),
+            },
+        },
+        description: 'A misteryous forest on Earth.',
+        id: 'location_2',
+        value: 'Forest',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/location_armory.png'),
+            },
+        },
+        description: 'Armory of Asgard.',
+        id: 'location_3',
+        value: "Asgard's armory",
+    },
+];
+
+export const THOR_OUTFITS: KulMessengerOutfitNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/outfit_armor.png'),
+            },
+        },
+        description: 'Regal armor made of gold and engraved.',
+        id: 'outfit_0',
+        value: 'Golden armor',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/outfit_armor_3.png'),
+            },
+        },
+        description: 'Armor made of steel.',
+        id: 'outfit_1',
+        value: 'Steel armor',
+    },
+];
+
+export const THOR_STYLES: KulMessengerStyleNode[] = [
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/style_comic.png'),
+            },
+        },
+        description: 'Comic image.',
+        id: 'style_0',
+        value: 'Comic',
+    },
+    {
+        cells: {
+            kulImage: {
+                shape: 'image',
+                value: getAssetPath('./assets/media/style_painting.png'),
+            },
+        },
+        description: 'Painting styled image.',
+        id: 'style_1',
+        value: 'Painting',
+    },
+];
