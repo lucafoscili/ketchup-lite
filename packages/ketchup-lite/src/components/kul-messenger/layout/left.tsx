@@ -12,10 +12,10 @@ export const prepLeft = (adapter: KulMessengerAdapter) => {
 
 const prepAvatar = (adapter: KulMessengerAdapter) => {
     return (
-        <kul-image
-            class="kul-cover"
-            kulValue={adapter.get.image.asCover('avatars')}
-        ></kul-image>
+        <img
+            class="messenger__avatar__image"
+            src={adapter.get.image.asCover('avatars')}
+        />
     );
 };
 

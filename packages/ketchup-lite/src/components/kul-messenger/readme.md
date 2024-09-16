@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                                                   | Type                  | Default |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------- | --------------------- | ------- |
-| `kulData`  | --          | The data of the messenger.                                                                                    | `KulMessengerDataset` | `null`  |
-| `kulStyle` | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`              | `''`    |
+| Property   | Attribute   | Description                                                                                                   | Type                         | Default |
+| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------- | ---------------------------- | ------- |
+| `kulData`  | --          | The data of the messenger.                                                                                    | `KulMessengerDataset`        | `null`  |
+| `kulStyle` | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`                     | `''`    |
+| `kulValue` | --          | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `KulMessengerInitialization` | `null`  |
 
 
 ## Events
@@ -86,26 +87,26 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [kul-image](../kul-image)
 - [kul-code](../kul-code)
 - [kul-tabbar](../kul-tabbar)
 - [kul-chat](../kul-chat)
+- [kul-image](../kul-image)
 - [kul-chip](../kul-chip)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-messenger --> kul-image
   kul-messenger --> kul-code
   kul-messenger --> kul-tabbar
   kul-messenger --> kul-chat
+  kul-messenger --> kul-image
   kul-messenger --> kul-chip
-  kul-image --> kul-spinner
-  kul-image --> kul-badge
-  kul-badge --> kul-image
   kul-code --> kul-button
   kul-button --> kul-image
   kul-button --> kul-list
+  kul-image --> kul-spinner
+  kul-image --> kul-badge
+  kul-badge --> kul-image
   kul-tabbar --> kul-image
   kul-chat --> kul-button
   kul-chat --> kul-spinner

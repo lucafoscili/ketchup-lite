@@ -794,7 +794,7 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "(descriptions?: boolean) => Promise<GenericObject>",
       },
       {
-        name: "getSelected",
+        name: "getSelectedNodes",
         docs: "Returns the selected nodes.",
         returns: {
           type: "Promise<Set<KulDataNode>>",
@@ -812,7 +812,7 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<void>",
       },
       {
-        name: "selectNodes",
+        name: "setSelectedNodes",
         docs: "Selects one or more nodes in the chip component.",
         returns: {
           type: "Promise<void>",
@@ -1528,6 +1528,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "kulStyle",
         docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
         type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+        type: "KulMessengerInitialization",
       },
     ],
     styles: [

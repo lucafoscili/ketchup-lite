@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import {
     KulMessengerAdapter,
+    KulMessengerFilters,
     KulMessengerImageChildNode,
     KulMessengerImageRootNodesIds,
 } from '../kul-messenger-declarations';
@@ -73,23 +74,27 @@ const prepFilters = (adapter: KulMessengerAdapter) => {
 
 const prepList = (adapter: KulMessengerAdapter) => {
     const elements = [];
-    const options = adapter.get.image.options();
+    const filters = adapter.get.image.filters();
     const imagesGetter = adapter.get.image.byType;
     for (let index = 0; index < IMAGE_TYPE_IDS.length; index++) {
         const type = IMAGE_TYPE_IDS[index];
-        if (options[type]) {
+        if (filters[type]) {
             const activeIndex = adapter.get.image.coverIndex(type);
             const images = imagesGetter(type).map((node, j) => (
-                <kul-image
-                    class={`messenger__options__image ${activeIndex === j ? 'messenger__options__image--selected' : ''} kul-cover`}
-                    kulValue={node.cells.kulImage.value}
-                    onKul-image-event={imageEventHandler.bind(
+                <div
+                    class={`messenger__options__image-wrapper  ${activeIndex === j ? 'messenger__options__image-wrapper--selected' : ''}`}
+                    onClick={imageEventHandler.bind(
                         imageEventHandler,
                         adapter,
                         node,
                         j
                     )}
-                ></kul-image>
+                >
+                    <img
+                        class={`messenger__options__image`}
+                        src={node.cells.kulImage.value}
+                    />
+                </div>
             ));
             elements.push(
                 <div class="messenger__options__section">
@@ -105,62 +110,54 @@ const prepList = (adapter: KulMessengerAdapter) => {
 const imageEventHandler = (
     adapter: KulMessengerAdapter,
     node: KulMessengerImageChildNode,
-    index: number,
-    e: CustomEvent<KulEventPayload>
+    index: number
 ) => {
-    const { eventType } = e.detail;
     const coverSetter = adapter.set.image.cover;
 
-    switch (eventType) {
-        case 'click':
-            if (node.id.includes('avatar')) {
-                coverSetter('avatars', index);
-            } else if (node.id.includes('location')) {
-                coverSetter('locations', index);
-            } else if (node.id.includes('outfit')) {
-                coverSetter('outfits', index);
-            } else {
-                coverSetter('styles', index);
-            }
+    if (node.id.includes('avatar')) {
+        coverSetter('avatars', index);
+    } else if (node.id.includes('location')) {
+        coverSetter('locations', index);
+    } else if (node.id.includes('outfit')) {
+        coverSetter('outfits', index);
+    } else {
+        coverSetter('styles', index);
     }
 };
 
-const chipEventHandler = async (
+const chipEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChipEventPayload>
 ) => {
-    const { comp, eventType, node } = e.detail;
-    const optionsGetter = adapter.get.image.options;
-    const optionsSetter = adapter.set.image.options;
+    const { comp, eventType, selectedNodes } = e.detail;
+    const filtersSetter = adapter.set.image.filters;
 
     switch (eventType) {
         case 'click':
-            switch (node.id as KulMessengerImageRootNodesIds) {
-                case 'avatars':
-                    optionsSetter('avatars', !optionsGetter().avatars);
-                    break;
-                case 'locations':
-                    optionsSetter('locations', !optionsGetter().locations);
-                    break;
-                case 'outfits':
-                    optionsSetter('outfits', !optionsGetter().outfits);
-                    break;
-                case 'styles':
-                    optionsSetter('styles', !optionsGetter().styles);
-                    break;
-            }
+            const newFilters: KulMessengerFilters = {
+                avatars: false,
+                locations: false,
+                outfits: false,
+                styles: false,
+            };
+            Array.from(selectedNodes).forEach((n) => {
+                newFilters[n.id] = true;
+            });
+            filtersSetter(newFilters);
             break;
         case 'ready':
-            const options = adapter.get.image.options();
+            const filters = adapter.get.image.filters();
             const nodes: string[] = [];
-            for (const key in options) {
-                if (Object.prototype.hasOwnProperty.call(options, key)) {
-                    const option = options[key];
+            for (const key in filters) {
+                if (Object.prototype.hasOwnProperty.call(filters, key)) {
+                    const option = filters[key];
                     if (option) {
                         nodes.push(key);
                     }
                 }
             }
-            requestAnimationFrame(() => (comp as KulChip).selectNodes(nodes));
+            requestAnimationFrame(() =>
+                (comp as KulChip).setSelectedNodes(nodes)
+            );
     }
 };

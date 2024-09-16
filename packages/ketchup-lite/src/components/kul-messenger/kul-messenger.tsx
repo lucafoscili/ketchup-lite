@@ -20,6 +20,8 @@ import {
     KulMessengerImageRootNodesIds,
     KulMessengerImageNodeTypeMap,
     KulMessengerCovers,
+    KulMessengerInitialization,
+    KulMessengerFilters,
 } from './kul-messenger-declarations';
 import type { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -69,12 +71,9 @@ export class KulMessenger {
      */
     @State() covers: KulMessengerCovers = {};
     /**
-     * Available options' list visibility flags.
+     * Node containing the history of this session's chats.
      */
-    @State() avatars = false;
-    @State() locations = false;
-    @State() outfits = false;
-    @State() styles = false;
+    @State() filters: KulMessengerFilters = {};
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -90,6 +89,11 @@ export class KulMessenger {
      * @default ""
      */
     @Prop() kulStyle: string = '';
+    /**
+     * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+     * @default ""
+     */
+    @Prop() kulValue: KulMessengerInitialization = null;
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -156,11 +160,13 @@ export class KulMessenger {
     async reset(): Promise<void> {
         this.covers = {};
         this.currentCharacter = null;
+        this.filters = {
+            avatars: false,
+            locations: false,
+            outfits: false,
+            styles: false,
+        };
         this.history = {};
-        this.avatars = false;
-        this.locations = false;
-        this.outfits = false;
-        this.styles = false;
 
         this.#initStates();
     }
@@ -184,6 +190,20 @@ export class KulMessenger {
                         return 'You know nothing about this character...';
                     }
                 },
+                byId: (id: string) => {
+                    return this.kulData.nodes.find((n) => {
+                        n.id === id;
+                    });
+                },
+                current: () => this.currentCharacter,
+                history: (character = this.currentCharacter) => {
+                    return this.history[character.id];
+                },
+                name: (character = this.currentCharacter) =>
+                    character.value ||
+                    character.id ||
+                    character.description ||
+                    '?',
                 next: (character = this.currentCharacter) => {
                     if (!this.#hasCharacters()) {
                         return;
@@ -196,16 +216,7 @@ export class KulMessenger {
 
                     return nodes[nextIdx];
                 },
-                current: () => this.currentCharacter,
-                history: (character = this.currentCharacter) => {
-                    return this.history[character.id];
-                },
                 list: () => this.kulData.nodes || [],
-                name: (character = this.currentCharacter) =>
-                    character.value ||
-                    character.id ||
-                    character.description ||
-                    '?',
                 previous: (character = this.currentCharacter) => {
                     if (!this.#hasCharacters()) {
                         return;
@@ -266,14 +277,7 @@ export class KulMessenger {
                 ) => {
                     return this.covers[character.id][type];
                 },
-                options: () => {
-                    return {
-                        avatars: this.avatars,
-                        locations: this.locations,
-                        outfits: this.outfits,
-                        styles: this.styles,
-                    };
-                },
+                filters: () => this.filters,
                 root: <T extends KulMessengerImageRootNodesIds>(
                     type: T,
                     character = this.currentCharacter
@@ -324,25 +328,8 @@ export class KulMessenger {
                     this.covers[character.id][type] = value;
                     this.refresh();
                 },
-                options: (
-                    type: KulMessengerImageRootNodesIds,
-                    value: boolean
-                ) => {
-                    switch (type) {
-                        case 'avatars':
-                            this.avatars = value;
-                            break;
-                        case 'locations':
-                            this.locations = value;
-                            break;
-                        case 'outfits':
-                            this.outfits = value;
-                            break;
-                        case 'styles':
-                            this.styles = value;
-                            break;
-                    }
-                },
+                filters: (filters: KulMessengerFilters) =>
+                    (this.filters = filters),
             },
         },
     };
@@ -373,6 +360,20 @@ export class KulMessenger {
                     .value || [];
             this.covers[character.id] = covers;
             this.history[character.id] = JSON.stringify(history);
+        }
+        if (this.kulValue) {
+            const currentCharacter = this.kulValue.currentCharacter;
+            const filters = this.kulValue.filters;
+            for (const key in filters) {
+                if (Object.prototype.hasOwnProperty.call(filters, key)) {
+                    const filter = filters[key];
+                    this[key] = filter;
+                }
+            }
+            if (currentCharacter) {
+                this.currentCharacter =
+                    this.#adapter.get.character.byId(currentCharacter);
+            }
         }
     }
 

@@ -20,7 +20,7 @@ import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
+import { KulMessengerDataset, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -42,7 +42,7 @@ export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMessengerDataset } from "./components/kul-messenger/kul-messenger-declarations";
+export { KulMessengerDataset, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -453,7 +453,7 @@ export namespace Components {
           * Returns the selected nodes.
           * @returns Selected nodes.
          */
-        "getSelected": () => Promise<Set<KulDataNode>>;
+        "getSelectedNodes": () => Promise<Set<KulDataNode>>;
         /**
           * The data of the chip list.
           * @default []
@@ -483,7 +483,7 @@ export namespace Components {
           * @param nodes - An array of KulDataNode objects or node IDs to be selected.
           * @returns
          */
-        "selectNodes": (nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>;
+        "setSelectedNodes": (nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>;
     }
     interface KulCode {
         /**
@@ -780,6 +780,11 @@ export namespace Components {
           * @default ""
          */
         "kulStyle": string;
+        /**
+          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * @default ""
+         */
+        "kulValue": KulMessengerInitialization;
         /**
           * This method is used to trigger a new render of the component.
          */
@@ -2678,6 +2683,11 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
+        /**
+          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * @default ""
+         */
+        "kulValue"?: KulMessengerInitialization;
         /**
           * Describes event emitted.
          */

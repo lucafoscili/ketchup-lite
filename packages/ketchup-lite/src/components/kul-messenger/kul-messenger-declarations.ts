@@ -6,6 +6,7 @@ export interface KulMessengerAdapter {
     get: {
         character: {
             biography: (character?: KulMessengerCharacterNode) => string;
+            byId: (id: string) => KulMessengerCharacterNode;
             current: () => KulMessengerCharacterNode;
             history: (character?: KulMessengerCharacterNode) => string;
             list: () => KulMessengerCharacterNode[];
@@ -30,7 +31,7 @@ export interface KulMessengerAdapter {
                 type: KulMessengerImageRootNodesIds,
                 character?: KulMessengerCharacterNode
             ) => number;
-            options: () => KulMessengerOptionsState;
+            filters: () => KulMessengerFilters;
             root: <T extends KulMessengerImageRootNodesIds>(
                 type: T,
                 character?: KulMessengerCharacterNode
@@ -53,10 +54,7 @@ export interface KulMessengerAdapter {
                 value: number,
                 character?: KulMessengerCharacterNode
             ) => void;
-            options: (
-                type: KulMessengerImageRootNodesIds,
-                value: boolean
-            ) => void;
+            filters: (filter: KulMessengerFilters) => void;
         };
     };
 }
@@ -125,6 +123,13 @@ export interface KulMessengerDataset extends KulDataDataset {
 // Messenger Event
 export type KulMessengerEvent = 'ready';
 
+export interface KulMessengerFilters {
+    avatars?: boolean;
+    locations?: boolean;
+    outfits?: boolean;
+    styles?: boolean;
+}
+
 // Messenger History
 export interface KulMessengerHistory {
     [index: `character_${string}`]: string;
@@ -157,6 +162,12 @@ export type KulMessengerImageNodeTypeMap = {
 // Image Root Node ID Types
 export type KulMessengerImageRootNodesIds = keyof KulMessengerImageNodeTypeMap;
 
+// Initializes the component state
+export interface KulMessengerInitialization {
+    currentCharacter?: string;
+    filters?: KulMessengerFilters;
+}
+
 // Location Node
 export interface KulMessengerLocationNode extends KulMessengerBaseNode<never> {
     id: `location_${string}`;
@@ -167,14 +178,6 @@ export interface KulMessengerLocationsNode
     extends KulMessengerBaseNode<KulMessengerLocationNode> {
     id: 'locations';
     value: number;
-}
-
-// Options State for Messenger Images
-export interface KulMessengerOptionsState {
-    avatars: boolean;
-    locations: boolean;
-    outfits: boolean;
-    styles: boolean;
 }
 
 // Outfit Node
