@@ -6,6 +6,7 @@ export const prepGrid = (adapter: KulMessengerAdapter) => {
 
     const characters = adapter.get.character.list();
     characters.forEach((c) => {
+        const image = adapter.get.image.asCover('avatars', c);
         avatars.push(
             <div
                 class="selection-grid__portrait"
@@ -15,7 +16,8 @@ export const prepGrid = (adapter: KulMessengerAdapter) => {
             >
                 <img
                     class={'selection-grid__image'}
-                    src={adapter.get.image.asCover('avatars', c)}
+                    src={image.value}
+                    title={image.title || ''}
                 />
                 <div class="selection-grid__name">
                     <div class="selection-grid__label">

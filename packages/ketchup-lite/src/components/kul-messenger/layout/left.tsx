@@ -11,10 +11,13 @@ export const prepLeft = (adapter: KulMessengerAdapter) => {
 };
 
 const prepAvatar = (adapter: KulMessengerAdapter) => {
+    const image = adapter.get.image.asCover('avatars');
     return (
         <img
+            alt={image.title || ''}
             class="messenger__avatar__image"
-            src={adapter.get.image.asCover('avatars')}
+            src={image.value}
+            title={image.title || ''}
         />
     );
 };

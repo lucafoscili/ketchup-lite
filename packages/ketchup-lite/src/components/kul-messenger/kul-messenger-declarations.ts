@@ -22,7 +22,11 @@ export interface KulMessengerAdapter {
             asCover: (
                 type: KulMessengerImageRootNodesIds,
                 character?: KulMessengerCharacterNode
-            ) => string;
+            ) => {
+                node?: KulMessengerImageChildNode;
+                title?: string;
+                value: string;
+            };
             byType: <T extends KulMessengerImageRootNodesIds>(
                 type: T,
                 character?: KulMessengerCharacterNode
@@ -36,6 +40,7 @@ export interface KulMessengerAdapter {
                 type: T,
                 character?: KulMessengerCharacterNode
             ) => KulMessengerImageNodeTypeMap[T];
+            title: (node: KulMessengerImageChildNode) => string;
         };
     };
     set: {
@@ -171,6 +176,7 @@ export interface KulMessengerInitialization {
 // Location Node
 export interface KulMessengerLocationNode extends KulMessengerBaseNode<never> {
     id: `location_${string}`;
+    value: string;
 }
 
 // Locations Node

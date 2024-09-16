@@ -22,6 +22,7 @@ import {
     KulMessengerCovers,
     KulMessengerInitialization,
     KulMessengerFilters,
+    KulMessengerImageChildNode,
 } from './kul-messenger-declarations';
 import type { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -32,6 +33,12 @@ import { prepLeft } from './layout/left';
 import { prepCenter } from './layout/center';
 import { prepRight } from './layout/right';
 import { prepGrid } from './layout/grid';
+import {
+    AVATAR_COVER,
+    LOCATION_COVER,
+    OUTFIT_COVER,
+    STYLE_COVER,
+} from './layout/constant';
 
 @Component({
     tag: 'kul-messenger',
@@ -241,17 +248,22 @@ export class KulMessenger {
                             (n) => n.id === type
                         );
                         const index = this.covers[character.id][type];
-                        return root.children[index].cells.kulImage.value;
+                        const node = root.children[index];
+                        return {
+                            node: root.children[index],
+                            title: this.#adapter.get.image.title(node),
+                            value: node.cells.kulImage.value,
+                        };
                     } catch (error) {
                         switch (type) {
                             case 'avatars':
-                                return 'portrait';
+                                return { value: AVATAR_COVER };
                             case 'locations':
-                                return 'landscape';
+                                return { value: LOCATION_COVER };
                             case 'outfits':
-                                return 'loyalty';
+                                return { value: OUTFIT_COVER };
                             case 'styles':
-                                return 'style';
+                                return { value: STYLE_COVER };
                         }
                     }
                 },
@@ -289,6 +301,17 @@ export class KulMessenger {
                         );
                     }
                     return node as KulMessengerImageNodeTypeMap[T];
+                },
+                title: (node: KulMessengerImageChildNode) => {
+                    const title = node.value || '';
+                    const description = node.description || '';
+                    return title && description
+                        ? `${title} - ${description}`
+                        : description
+                          ? description
+                          : title
+                            ? title
+                            : '';
                 },
             },
         },

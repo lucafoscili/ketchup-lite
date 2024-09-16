@@ -6,7 +6,6 @@ import {
     KulMessengerImageRootNodesIds,
 } from '../kul-messenger-declarations';
 import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
-import { KulEventPayload } from '../../../types/GenericTypes';
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constant';
 import { KulChip } from '../../kul-chip/kul-chip';
 
@@ -23,30 +22,39 @@ export const prepRight = (adapter: KulMessengerAdapter) => {
 };
 
 const prepOptions = (adapter: KulMessengerAdapter) => {
+    const locationImage = adapter.get.image.asCover('locations');
+    const outfitImage = adapter.get.image.asCover('outfits');
+    const styleImage = adapter.get.image.asCover('styles');
     return [
-        <div class="messenger__options__outfit">
-            <kul-image
-                class={'kul-cover'}
-                kulValue={adapter.get.image.asCover('outfits')}
-            ></kul-image>
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__outfit"
+                alt={styleImage.title || 'No outfit selected.'}
+                src={outfitImage.value}
+                title={outfitImage.title || 'No outfit selected.'}
+            ></img>
             <div class="messenger__options__name">
                 <div class="messenger__options__label">Outfit</div>
             </div>
         </div>,
-        <div class="messenger__options__location">
-            <kul-image
-                class={'kul-cover'}
-                kulValue={adapter.get.image.asCover('locations')}
-            ></kul-image>
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__location"
+                alt={styleImage.title || 'No location selected.'}
+                src={locationImage.value}
+                title={locationImage.title || 'No location selected.'}
+            ></img>
             <div class="messenger__options__name">
                 <div class="messenger__options__label">Location</div>
             </div>
         </div>,
-        <div class="messenger__options__style">
-            <kul-image
-                class={'kul-cover'}
-                kulValue={adapter.get.image.asCover('styles')}
-            ></kul-image>
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__style"
+                alt={styleImage.title || 'No style selected.'}
+                src={styleImage.value}
+                title={styleImage.title || 'No style selected.'}
+            ></img>
             <div class="messenger__options__name">
                 <div class="messenger__options__label">Style</div>
             </div>
@@ -60,7 +68,7 @@ const prepFilters = (adapter: KulMessengerAdapter) => {
         filter.icon = adapter.get.image.asCover(
             filter.id as KulMessengerImageRootNodesIds,
             null
-        );
+        ).value;
     }
     return (
         <kul-chip
@@ -91,8 +99,10 @@ const prepList = (adapter: KulMessengerAdapter) => {
                     )}
                 >
                     <img
+                        alt={adapter.get.image.title(node)}
                         class={`messenger__options__image`}
                         src={node.cells.kulImage.value}
+                        title={adapter.get.image.title(node)}
                     />
                 </div>
             ));
