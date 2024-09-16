@@ -320,6 +320,16 @@ export class KulMessenger {
                             : '';
                 },
             },
+            messenger: {
+                config: () => {
+                    return {
+                        currentCharacter: this.currentCharacter.id,
+                        filters: this.filters,
+                    };
+                },
+                data: () => this.kulData,
+                history: () => this.history,
+            },
         },
         set: {
             character: {
@@ -360,6 +370,54 @@ export class KulMessenger {
                 },
                 filters: (filters: KulMessengerFilters) =>
                     (this.filters = filters),
+            },
+            messenger: {
+                data: async () => {
+                    if (!this.#hasNodes()) {
+                        return;
+                    }
+                    for (
+                        let index = 0;
+                        index < this.kulData.nodes.length;
+                        index++
+                    ) {
+                        const character = this.kulData.nodes[index];
+                        const id = character.id;
+                        const chat = character.children.find(
+                            (n) => n.id === 'chat'
+                        );
+                        const avatars = this.#adapter.get.image.root('avatars');
+                        const locations =
+                            this.#adapter.get.image.root('locations');
+                        const outfits = this.#adapter.get.image.root('outfits');
+                        const styles = this.#adapter.get.image.root('styles');
+                        if (this.history[id] && chat) {
+                            const historyJson = JSON.parse(this.history[id]);
+                            try {
+                                chat.cells.kulChat.value = historyJson;
+                            } catch (error) {
+                                chat.cells = {
+                                    kulChat: {
+                                        shape: 'chat',
+                                        value: historyJson,
+                                    },
+                                };
+                            }
+                        }
+                        if (this.covers[id] && avatars) {
+                            avatars.value = this.covers[id].avatars;
+                        }
+                        if (this.covers[id] && locations) {
+                            locations.value = this.covers[id].locations;
+                        }
+                        if (this.covers[id] && outfits) {
+                            outfits.value = this.covers[id].outfits;
+                        }
+                        if (this.covers[id] && styles) {
+                            styles.value = this.covers[id].styles;
+                        }
+                    }
+                },
             },
         },
     };

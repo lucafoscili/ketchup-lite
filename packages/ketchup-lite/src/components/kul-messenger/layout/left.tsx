@@ -1,6 +1,8 @@
 import { Fragment, h } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { MENU_DATASET } from './constant';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
 
 export const prepLeft = (adapter: KulMessengerAdapter) => {
     return (
@@ -51,6 +53,10 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
                     kulIcon="save"
                     kulLabel="save"
                     kulStyling="flat"
+                    onKul-button-event={buttonClickHandler.bind(
+                        buttonClickHandler,
+                        adapter
+                    )}
                 ></kul-button>
             </div>
         </Fragment>
@@ -64,4 +70,70 @@ const prepBiography = (adapter: KulMessengerAdapter) => {
             kulValue={adapter.get.character.biography()}
         ></kul-code>
     );
+};
+
+const buttonClickHandler = async (
+    adapter: KulMessengerAdapter,
+    e: CustomEvent<KulButtonEventPayload>
+) => {
+    const { eventType, originalEvent } = e.detail;
+    switch (eventType) {
+        case 'click':
+            adapter.set.messenger.data();
+            break;
+        case 'kul-event':
+            listClickHandler(
+                adapter,
+                originalEvent as CustomEvent<KulListEventPayload>
+            );
+            break;
+    }
+};
+
+const listClickHandler = async (
+    adapter: KulMessengerAdapter,
+    e: CustomEvent<KulListEventPayload>
+) => {
+    const { eventType, node } = e.detail;
+    let strJson = '';
+    switch (eventType) {
+        case 'click':
+            switch (node.id) {
+                case 'full_history':
+                    strJson = JSON.stringify(
+                        adapter.get.messenger.history(),
+                        null,
+                        2
+                    );
+                    break;
+                case 'history':
+                    strJson = adapter.get.character.history();
+                    break;
+                case 'kulData':
+                    strJson = JSON.stringify(
+                        adapter.get.messenger.data(),
+                        null,
+                        2
+                    );
+                    break;
+                case 'settings':
+                    strJson = JSON.stringify(
+                        adapter.get.messenger.config(),
+                        null,
+                        2
+                    );
+                    break;
+            }
+            const url = window.URL.createObjectURL(
+                new Blob([strJson], {
+                    type: 'application/json',
+                })
+            );
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', node.id + '.json');
+            document.body.appendChild(link);
+            link.click();
+            link.parentNode.removeChild(link);
+    }
 };

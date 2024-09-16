@@ -44,6 +44,11 @@ export interface KulMessengerAdapter {
             ) => KulMessengerImageNodeTypeMap[T];
             title: (node: KulMessengerImageChildNode) => string;
         };
+        messenger: {
+            config: () => KulMessengerInitialization;
+            data: () => KulMessengerDataset;
+            history: () => KulMessengerHistory;
+        };
     };
     set: {
         character: {
@@ -64,6 +69,7 @@ export interface KulMessengerAdapter {
             ) => void;
             filters: (filter: KulMessengerFilters) => void;
         };
+        messenger: { data: () => Promise<void> };
     };
 }
 
