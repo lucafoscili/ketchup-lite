@@ -78,7 +78,7 @@
       'chat'
       'spinner'
       'query';
-    grid-template-rows: 1fr minmax(25%, auto) auto;
+    grid-template-rows: 1fr auto auto;
   }
 
   &--top-textarea {
