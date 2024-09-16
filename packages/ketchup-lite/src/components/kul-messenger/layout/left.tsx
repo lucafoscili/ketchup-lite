@@ -3,6 +3,9 @@ import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { MENU_DATASET } from './constant';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
+import { KulButton } from '../../kul-button/kul-button';
+
+let TIMEOUT: NodeJS.Timeout;
 
 export const prepLeft = (adapter: KulMessengerAdapter) => {
     return (
@@ -51,13 +54,20 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
                 <kul-button
                     kulData={MENU_DATASET}
                     kulIcon="save"
-                    kulLabel="save"
+                    kulLabel="Save"
                     kulStyling="flat"
                     onKul-button-event={buttonClickHandler.bind(
                         buttonClickHandler,
                         adapter
                     )}
-                ></kul-button>
+                >
+                    <kul-spinner
+                        kulActive={true}
+                        kulDimensions="0.6em"
+                        kulLayout={4}
+                        slot="spinner"
+                    ></kul-spinner>
+                </kul-button>
             </div>
         </Fragment>
     );
@@ -76,10 +86,29 @@ const buttonClickHandler = async (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulButtonEventPayload>
 ) => {
-    const { eventType, originalEvent } = e.detail;
+    const { comp, eventType, originalEvent } = e.detail;
+    const button = comp as KulButton;
     switch (eventType) {
         case 'click':
-            adapter.set.messenger.data();
+            button.kulLabel = 'Saving...';
+            button.kulShowSpinner = true;
+            adapter.set.messenger.data().then(() => {
+                requestAnimationFrame(() => {
+                    button.kulIcon = 'check';
+                    button.kulLabel = 'Saved!';
+                    button.kulShowSpinner = false;
+
+                    if (TIMEOUT) {
+                        clearTimeout(TIMEOUT);
+                    }
+
+                    TIMEOUT = setTimeout(() => {
+                        button.kulIcon = 'save';
+                        button.kulLabel = 'Save';
+                        TIMEOUT = null;
+                    }, 1000);
+                });
+            });
             break;
         case 'kul-event':
             listClickHandler(
