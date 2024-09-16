@@ -131,7 +131,7 @@ export class KulMessenger {
 
     onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
         const initialization: KulMessengerInitialization = {
-            currentCharacter: this.currentCharacter.id,
+            currentCharacter: this.currentCharacter?.id,
             filters: this.filters,
         };
         this.kulEvent.emit({
