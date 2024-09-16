@@ -28,17 +28,19 @@
 graph TD;
   kul-showcase-messenger --> kul-messenger
   kul-showcase-messenger --> kul-article
+  kul-messenger --> kul-image
+  kul-messenger --> kul-button
+  kul-messenger --> kul-spinner
   kul-messenger --> kul-code
   kul-messenger --> kul-tabbar
   kul-messenger --> kul-chat
-  kul-messenger --> kul-image
   kul-messenger --> kul-chip
-  kul-code --> kul-button
-  kul-button --> kul-image
-  kul-button --> kul-list
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-button --> kul-image
+  kul-button --> kul-list
+  kul-code --> kul-button
   kul-tabbar --> kul-image
   kul-chat --> kul-button
   kul-chat --> kul-spinner

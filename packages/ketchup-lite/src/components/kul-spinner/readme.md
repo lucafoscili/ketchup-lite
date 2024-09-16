@@ -78,6 +78,7 @@ Type: `Promise<void>`
 
  - [kul-chat](../kul-chat)
  - [kul-image](../kul-image)
+ - [kul-messenger](../kul-messenger)
  - [kul-showcase-button](../kul-showcase/components/button)
  - [kul-showcase-spinner](../kul-showcase/components/spinner)
  - [kul-showcase-splash](../kul-showcase/components/splash)
@@ -87,6 +88,7 @@ Type: `Promise<void>`
 graph TD;
   kul-chat --> kul-spinner
   kul-image --> kul-spinner
+  kul-messenger --> kul-spinner
   kul-showcase-button --> kul-spinner
   kul-showcase-spinner --> kul-spinner
   kul-showcase-splash --> kul-spinner

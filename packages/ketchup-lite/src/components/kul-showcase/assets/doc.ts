@@ -1545,6 +1545,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets the font size of the component. Defaults to var(--kul-font-size).",
       },
       {
+        name: "--kul-messenger-name-background-color",
+        docs: "Sets the color of text. Defaults to rgba(var(--kul-title-background-color-rgb), 0.75).",
+      },
+      {
         name: "--kul-messenger-text-color",
         docs: "Sets the color of text. Defaults to var(--kul-text-color).",
       },
