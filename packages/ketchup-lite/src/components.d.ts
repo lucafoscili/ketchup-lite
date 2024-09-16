@@ -20,7 +20,7 @@ import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMessengerDataset, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
+import { KulMessengerDataset, KulMessengerEventPayload, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -42,7 +42,7 @@ export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMessengerDataset, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
+export { KulMessengerDataset, KulMessengerEventPayload, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -1729,7 +1729,7 @@ declare global {
         new (): HTMLKulListElement;
     };
     interface HTMLKulMessengerElementEventMap {
-        "kul-messenger-event": KulEventPayload;
+        "kul-messenger-event": KulMessengerEventPayload;
     }
     interface HTMLKulMessengerElement extends Components.KulMessenger, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulMessengerElementEventMap>(type: K, listener: (this: HTMLKulMessengerElement, ev: KulMessengerCustomEvent<HTMLKulMessengerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2691,7 +2691,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-messenger-event"?: (event: KulMessengerCustomEvent<KulEventPayload>) => void;
+        "onKul-messenger-event"?: (event: KulMessengerCustomEvent<KulMessengerEventPayload>) => void;
     }
     interface KulPhotoframe {
         /**

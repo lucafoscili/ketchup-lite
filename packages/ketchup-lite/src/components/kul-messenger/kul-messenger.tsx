@@ -23,8 +23,9 @@ import {
     KulMessengerInitialization,
     KulMessengerFilters,
     KulMessengerImageChildNode,
+    KulMessengerEventPayload,
 } from './kul-messenger-declarations';
-import type { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
@@ -126,14 +127,19 @@ export class KulMessenger {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulMessengerEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
+        const initialization: KulMessengerInitialization = {
+            currentCharacter: this.currentCharacter.id,
+            filters: this.filters,
+        };
         this.kulEvent.emit({
             comp: this,
             id: this.rootElement.id,
             originalEvent: e,
             eventType,
+            initialization,
         });
     }
 
@@ -416,6 +422,7 @@ export class KulMessenger {
                         if (this.covers[id] && styles) {
                             styles.value = this.covers[id].styles;
                         }
+                        this.onKulEvent(new CustomEvent('save'), 'save');
                     }
                 },
             },

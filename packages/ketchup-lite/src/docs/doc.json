@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-16T19:30:47",
+  "timestamp": "2024-09-16T20:15:19",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5819,6 +5819,7 @@
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
+      "readme": "# kul-messenger\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6044,16 +6045,16 @@
       "events": [
         {
           "event": "kul-messenger-event",
-          "detail": "KulEventPayload",
+          "detail": "KulMessengerEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulMessengerEventPayload",
+            "resolved": "KulMessengerEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulMessengerEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-messenger-declarations",
+                "id": "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload"
               }
             }
           },
@@ -12005,6 +12006,11 @@
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerInitialization": {
       "declaration": "export interface KulMessengerInitialization {\n    currentCharacter?: string;\n    filters?: KulMessengerFilters;\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
+      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    initialization: KulMessengerInitialization;\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },

@@ -1,3 +1,4 @@
+import type { KulEventPayload } from '../../types/GenericTypes';
 import {
     KulDataDataset,
     KulDataNode,
@@ -135,7 +136,11 @@ export interface KulMessengerDataset extends KulDataDataset {
 }
 
 // Messenger Event
-export type KulMessengerEvent = 'ready';
+export type KulMessengerEvent = 'ready' | 'save';
+
+export interface KulMessengerEventPayload extends KulEventPayload {
+    initialization: KulMessengerInitialization;
+}
 
 export interface KulMessengerFilters {
     avatars?: boolean;
