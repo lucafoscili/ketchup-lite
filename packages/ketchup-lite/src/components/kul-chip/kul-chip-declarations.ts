@@ -21,6 +21,7 @@ export interface KulChipDataset extends KulDataDataset {}
 
 export interface KulChipEventPayload extends KulEventPayload {
     node: KulDataNode;
+    selectedNodes: Set<KulDataNode>;
 }
 
 export enum KulChipProps {
