@@ -422,8 +422,8 @@ export class KulMessenger {
                         if (this.covers[id] && styles) {
                             styles.value = this.covers[id].styles;
                         }
-                        this.onKulEvent(new CustomEvent('save'), 'save');
                     }
+                    this.onKulEvent(new CustomEvent('save'), 'save');
                 },
             },
         },
