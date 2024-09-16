@@ -2,6 +2,7 @@ import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 export interface KulMessengerAdapter {
     get: {
         character: {
@@ -17,6 +18,7 @@ export interface KulMessengerAdapter {
             previous: (
                 character?: KulMessengerCharacterNode
             ) => KulMessengerCharacterNode;
+            status: () => KulChatStatus;
         };
         image: {
             asCover: (
@@ -52,6 +54,7 @@ export interface KulMessengerAdapter {
             ) => void;
             next: (character?: KulMessengerCharacterNode) => void;
             previous: (character?: KulMessengerCharacterNode) => void;
+            status: (status: KulChatStatus) => void;
         };
         image: {
             cover: (

@@ -80,10 +80,11 @@ const chatEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChatEventPayload>
 ) => {
-    const { eventType, history } = e.detail;
+    const { eventType, history, status } = e.detail;
     switch (eventType) {
         case 'update':
             adapter.set.character.history(history);
+            adapter.set.character.status(status);
     }
 };
 

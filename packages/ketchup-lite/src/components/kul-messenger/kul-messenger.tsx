@@ -39,6 +39,7 @@ import {
     OUTFIT_COVER,
     STYLE_COVER,
 } from './layout/constant';
+import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 
 @Component({
     tag: 'kul-messenger',
@@ -74,13 +75,17 @@ export class KulMessenger {
      */
     @State() history: KulMessengerHistory = {};
     /**
-     * Node containing the history of this session's chats.
+     * State for the options' covers.
      */
     @State() covers: KulMessengerCovers = {};
     /**
-     * Node containing the history of this session's chats.
+     * State of options' filters.
      */
     @State() filters: KulMessengerFilters = {};
+    /**
+     * Node containing the history of this session's chats.
+     */
+    @State() status: KulChatStatus = 'offline';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -237,6 +242,7 @@ export class KulMessenger {
 
                     return nodes[prevIdx];
                 },
+                status: () => this.status,
             },
             image: {
                 asCover: (
@@ -341,6 +347,7 @@ export class KulMessenger {
                         this.#adapter.get.character.previous(character);
                     this.#adapter.set.character.current(previousC);
                 },
+                status: (status: KulChatStatus) => (this.status = status),
             },
             image: {
                 cover: (

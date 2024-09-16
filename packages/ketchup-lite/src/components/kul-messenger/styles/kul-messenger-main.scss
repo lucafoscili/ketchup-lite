@@ -16,6 +16,14 @@
     var(--kul-font-size)
   );
   /**
+  * @prop --kul-messenger-name-background-color: Sets the color of text.
+  * Defaults to rgba(var(--kul-title-background-color-rgb), 0.75).
+  */
+  --kul_messenger_name_background_color: var(
+    --kul-messenger-name-background-color,
+    rgba(var(--kul-title-background-color-rgb), 0.75)
+  );
+  /**
   * @prop --kul-messenger-text-color: Sets the color of text.
   * Defaults to var(--kul-text-color).
   */
@@ -70,10 +78,39 @@
   }
 
   &__avatar {
+    & {
+      position: relative;
+    }
+
     &__image {
       display: block;
       height: 100%;
       object-fit: cover;
+      width: 100%;
+    }
+
+    &__label {
+      display: flex;
+    }
+
+    &__status {
+      padding-right: 8px;
+    }
+
+    &__name {
+      align-items: center;
+      background-color: var(--kul_messenger_name_background_color);
+      backdrop-filter: blur(5px);
+      box-sizing: border-box;
+      display: flex;
+      height: 50px;
+      justify-content: space-between;
+      left: 0;
+      letter-spacing: 5px;
+      padding-left: 12px;
+      position: absolute;
+      text-transform: uppercase;
+      top: 0;
       width: 100%;
     }
   }
@@ -117,7 +154,7 @@
     }
 
     &__name {
-      background: rgba(var(--kul-title-background-color-rgb), 0.75);
+      background: var(--kul_messenger_name_background_color);
       bottom: 0;
       box-sizing: border-box;
       overflow: hidden;

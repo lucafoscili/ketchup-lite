@@ -37,6 +37,37 @@ export const FILTER_DATASET: KulDataDataset = {
     ],
 };
 
+export const MENU_DATASET: KulDataDataset = {
+    nodes: [
+        {
+            children: [
+                {
+                    description:
+                        'Download the starting Ketchup Lite JSON used as dataset.',
+                    icon: 'download',
+                    id: 'download',
+                    value: 'Download characters',
+                },
+                {
+                    description: 'Download the history of the chats.',
+                    icon: 'history',
+                    id: 'history',
+                    value: 'Download history',
+                },
+                {
+                    description:
+                        'Emits the "save" event, which includes the current settings.',
+                    icon: 'save',
+                    id: 'save',
+                    value: 'Save',
+                },
+            ],
+            id: 'root',
+            value: '',
+        },
+    ],
+};
+
 export const IMAGE_TYPE_IDS: KulMessengerImageRootNodesIds[] = [
     'avatars',
     'locations',

@@ -28,6 +28,7 @@ export type KulChatEvent = 'update' | 'ready';
 export interface KulChatEventPayload extends KulEventPayload {
     eventType: KulChatEvent;
     history: string;
+    status: KulChatStatus;
 }
 
 export type KulChatHistory = KulChatChoiceMessage[];
@@ -65,7 +66,7 @@ export interface KulChatSendArguments {
     url: string;
 }
 
-export type KulChatState = 'connecting' | 'offline' | 'ready';
+export type KulChatStatus = 'connecting' | 'offline' | 'ready';
 
 export interface KulChatUsage {
     usage: KulChatUsageTokens;
