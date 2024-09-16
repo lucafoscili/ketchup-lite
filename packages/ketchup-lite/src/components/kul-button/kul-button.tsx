@@ -593,7 +593,7 @@ export class KulButton {
                 (this.kulLabel === null || this.kulLabel === undefined))
         );
 
-        if (!this.kulLabel && !this.kulIcon) {
+        if (!this.kulLabel && !this.kulIcon && !this.kulData) {
             this.#kulManager.debug.logMessage(
                 this,
                 'Empty button.',
