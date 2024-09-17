@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-16T20:15:19",
+  "timestamp": "2024-09-17T12:19:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5825,6 +5825,33 @@
       "usage": {},
       "props": [
         {
+          "name": "kulAutosave",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-autosave",
+          "reflectToAttr": false,
+          "docs": "Automatically saves the dataset when a chat updates.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "kulData",
           "type": "KulMessengerDataset",
           "complexType": {
@@ -5885,21 +5912,21 @@
         },
         {
           "name": "kulValue",
-          "type": "KulMessengerInitialization",
+          "type": "KulMessengerConfig",
           "complexType": {
-            "original": "KulMessengerInitialization",
-            "resolved": "KulMessengerInitialization",
+            "original": "KulMessengerConfig",
+            "resolved": "KulMessengerConfig",
             "references": {
-              "KulMessengerInitialization": {
+              "KulMessengerConfig": {
                 "location": "import",
                 "path": "./kul-messenger-declarations",
-                "id": "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerInitialization"
+                "id": "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig"
               }
             }
           },
           "mutable": false,
           "reflectToAttr": false,
-          "docs": "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+          "docs": "Sets the initial configuration, including active character and filters.",
           "docsTags": [
             {
               "name": "default",
@@ -5909,7 +5936,7 @@
           "default": "null",
           "values": [
             {
-              "type": "KulMessengerInitialization"
+              "type": "KulMessengerConfig"
             }
           ],
           "optional": false,
@@ -12004,13 +12031,13 @@
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
-    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerInitialization": {
-      "declaration": "export interface KulMessengerInitialization {\n    currentCharacter?: string;\n    filters?: KulMessengerFilters;\n}",
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig": {
+      "declaration": "export interface KulMessengerConfig {\n    currentCharacter?: string;\n    filters?: KulMessengerFilters;\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
-      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    initialization: KulMessengerInitialization;\n}",
+      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    initialization: KulMessengerConfig;\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },

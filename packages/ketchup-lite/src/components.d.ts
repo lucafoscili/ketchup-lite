@@ -20,7 +20,7 @@ import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMessengerDataset, KulMessengerEventPayload, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
+import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -42,7 +42,7 @@ export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugCom
 export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMessengerDataset, KulMessengerEventPayload, KulMessengerInitialization } from "./components/kul-messenger/kul-messenger-declarations";
+export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
@@ -771,6 +771,11 @@ export namespace Components {
          */
         "getProps": (descriptions?: boolean) => Promise<GenericObject>;
         /**
+          * Automatically saves the dataset when a chat updates.
+          * @default true
+         */
+        "kulAutosave": boolean;
+        /**
           * The data of the messenger.
           * @default []
          */
@@ -781,10 +786,10 @@ export namespace Components {
          */
         "kulStyle": string;
         /**
-          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * Sets the initial configuration, including active character and filters.
           * @default ""
          */
-        "kulValue": KulMessengerInitialization;
+        "kulValue": KulMessengerConfig;
         /**
           * This method is used to trigger a new render of the component.
          */
@@ -2674,6 +2679,11 @@ declare namespace LocalJSX {
     }
     interface KulMessenger {
         /**
+          * Automatically saves the dataset when a chat updates.
+          * @default true
+         */
+        "kulAutosave"?: boolean;
+        /**
           * The data of the messenger.
           * @default []
          */
@@ -2684,10 +2694,10 @@ declare namespace LocalJSX {
          */
         "kulStyle"?: string;
         /**
-          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * Sets the initial configuration, including active character and filters.
           * @default ""
          */
-        "kulValue"?: KulMessengerInitialization;
+        "kulValue"?: KulMessengerConfig;
         /**
           * Describes event emitted.
          */

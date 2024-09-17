@@ -67,6 +67,7 @@
     display: grid;
     grid-template-rows: auto 1fr;
     height: 100%;
+    overflow: auto;
   }
 
   &__right {
@@ -122,6 +123,8 @@
   &__chat {
     --kul-chat-padding: 16px 8px 0 8px;
     --kul-chat-buttons-padding: 8px 0 0 0;
+
+    overflow: auto;
   }
 
   &__options {

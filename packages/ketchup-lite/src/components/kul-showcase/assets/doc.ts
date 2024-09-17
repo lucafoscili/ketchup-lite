@@ -1520,6 +1520,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     ],
     props: [
       {
+        name: "kulAutosave",
+        docs: "Automatically saves the dataset when a chat updates.",
+        type: "boolean",
+      },
+      {
         name: "kulData",
         docs: "The data of the messenger.",
         type: "KulMessengerDataset",
@@ -1531,8 +1536,8 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulValue",
-        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
-        type: "KulMessengerInitialization",
+        docs: "Sets the initial configuration, including active character and filters.",
+        type: "KulMessengerConfig",
       },
     ],
     styles: [

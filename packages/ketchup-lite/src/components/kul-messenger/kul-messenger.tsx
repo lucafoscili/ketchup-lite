@@ -20,7 +20,7 @@ import {
     KulMessengerImageRootNodesIds,
     KulMessengerImageNodeTypeMap,
     KulMessengerCovers,
-    KulMessengerInitialization,
+    KulMessengerConfig,
     KulMessengerFilters,
     KulMessengerImageChildNode,
     KulMessengerEventPayload,
@@ -93,6 +93,11 @@ export class KulMessenger {
     /*-------------------------------------------------*/
 
     /**
+     * Automatically saves the dataset when a chat updates.
+     * @default true
+     */
+    @Prop({ mutable: true }) kulAutosave = true;
+    /**
      * The data of the messenger.
      * @default []
      */
@@ -103,10 +108,10 @@ export class KulMessenger {
      */
     @Prop() kulStyle: string = '';
     /**
-     * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+     * Sets the initial configuration, including active character and filters.
      * @default ""
      */
-    @Prop() kulValue: KulMessengerInitialization = null;
+    @Prop() kulValue: KulMessengerConfig = null;
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -130,7 +135,7 @@ export class KulMessenger {
     kulEvent: EventEmitter<KulMessengerEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
-        const initialization: KulMessengerInitialization = {
+        const initialization: KulMessengerConfig = {
             currentCharacter: this.currentCharacter?.id,
             filters: this.filters,
         };
@@ -208,11 +213,8 @@ export class KulMessenger {
                         return 'You know nothing about this character...';
                     }
                 },
-                byId: (id: string) => {
-                    return this.kulData.nodes.find((n) => {
-                        n.id === id;
-                    });
-                },
+                byId: (id: string) =>
+                    this.kulData.nodes.find((n) => n.id === id),
                 current: () => this.currentCharacter,
                 history: (character = this.currentCharacter) => {
                     return this.history[character.id];
@@ -462,7 +464,7 @@ export class KulMessenger {
             for (const key in filters) {
                 if (Object.prototype.hasOwnProperty.call(filters, key)) {
                     const filter = filters[key];
-                    this[key] = filter;
+                    this.filters[key] = filter;
                 }
             }
             if (currentCharacter) {
