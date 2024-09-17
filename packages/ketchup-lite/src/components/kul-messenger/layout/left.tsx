@@ -60,6 +60,7 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
                         buttonClickHandler,
                         adapter
                     )}
+                    title="Update the dataset with current settings."
                 >
                     <kul-spinner
                         kulActive={true}

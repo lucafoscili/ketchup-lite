@@ -1,5 +1,29 @@
 :host {
   /**
+  * @prop --kul-messenger-active-options-name-padding: Sets the padding of active options' names.
+  * Defaults to 4px.
+  */
+  --kul_messenger_active_options_name_padding: var(
+    --kul-messenger-active-options-name-padding,
+    4px
+  );
+  /**
+  * @prop --kul-messenger-avatar-name-padding: Sets the padding of the avatar's name.
+  * Defaults to 12px.
+  */
+  --kul_messenger_avatar_name_padding: var(
+    --kul-messenger-avatar-name-padding,
+    12px
+  );
+  /**
+  * @prop --kul-messenger-backdrop-filter: Sets the backdrop filter.
+  * Defaults to 5px.
+  */
+  --kul_messenger_backdrop_filter: var(
+    --kul-messenger-backdrop-filter,
+    blur(5px)
+  );
+  /**
   * @prop --kul-messenger-background-color: Sets the background color.
   * Defaults to var(--kul-background-color).
   */
@@ -24,6 +48,32 @@
     rgba(var(--kul-title-background-color-rgb), 0.75)
   );
   /**
+   * @prop --kul-messenger-letter-spacing: Sets the letter spacing.
+   * Defaults to 5px.
+   */
+  --kul_messenger_letter_spacing: var(--kul-messenger-letter-spacing, 5px);
+  /**
+   * @prop --kul-messenger-name-height: Sets the height of the character's name.
+   * Defaults to 50px.
+   */
+  --kul_messenger_name_height: var(--kul-messenger-avatar-height, 50px);
+  /**
+   * @prop --kul-messenger-nav-box-shadow: Sets the box shadow of the messenger's navigation bar.
+   * Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375).
+   */
+  --kul_messenger_nav_box_shadow: var(
+    --kul-messenger-nav-box-shadow,
+    0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375)
+  );
+  /**
+   * @prop --kul-messenger-options-title-padding: Sets the padding of titles.
+   * Defaults to 8px.
+   */
+  --kul_messenger_options_title_padding: var(
+    --kul-messenger-options-title-padding,
+    8px
+  );
+  /**
   * @prop --kul-messenger-text-color: Sets the color of text.
   * Defaults to var(--kul-text-color).
   */
@@ -31,6 +81,11 @@
     --kul-messenger-text-color,
     var(--kul-text-color)
   );
+  /**
+   * @prop --kul-messenger-transition: Sets the transition effect.
+   * Defaults to 125ms ease-out.
+   */
+  --kul_messenger_transition: var(--kul-messenger-transition, 125ms ease-out);
 
   box-sizing: border-box;
   background-color: var(--kul_messenger_background_color);
@@ -70,6 +125,10 @@
     overflow: auto;
   }
 
+  &__navigation {
+    box-shadow: var(--kul_messenger_nav_box_shadow);
+  }
+
   &__right {
     display: grid;
     grid-template-rows: minmax(10%, auto) auto 1fr;
@@ -100,14 +159,14 @@
     &__name {
       align-items: center;
       background-color: var(--kul_messenger_name_background_color);
-      backdrop-filter: blur(5px);
+      backdrop-filter: var(--kul_messenger_backdrop_filter);
       box-sizing: border-box;
       display: flex;
-      height: 50px;
+      height: var(--kul_messenger_name_height);
       justify-content: space-between;
       left: 0;
-      letter-spacing: 5px;
-      padding-left: 12px;
+      letter-spacing: var(--kul_messenger_letter_spacing);
+      padding-left: var(--kul_messenger_avatar_name_padding);
       position: absolute;
       text-transform: uppercase;
       top: 0;
@@ -160,7 +219,7 @@
       bottom: 0;
       box-sizing: border-box;
       overflow: hidden;
-      padding: 4px;
+      padding: var(--kul_messenger_active_options_name_padding);
       position: absolute;
       text-align: center;
       width: 100%;
@@ -169,9 +228,9 @@
     &__title {
       background: var(--kul-title-background-color);
       color: var(--kul-title-color);
-      letter-spacing: 3px;
+      letter-spacing: var(--kul_messenger_letter_spacing);
       overflow: hidden;
-      padding: 8px;
+      padding: var(--kul_messenger_options_title_padding);
       position: sticky;
       text-align: center;
       text-overflow: ellipsis;
@@ -206,8 +265,8 @@
         position: absolute;
         top: 0;
         transition:
-          background-color 125ms ease-out,
-          box-shadow 125ms ease-out;
+          background-color var(--kul_messenger_transition),
+          box-shadow var(--kul_messenger_transition);
         width: 100%;
       }
 
@@ -221,8 +280,8 @@
         background-color: rgba(var(--kul-title-background-color-rgb), 0.875);
         content: 'Current';
         cursor: default;
-        font-size: 0.875em;
-        letter-spacing: 3px;
+        font-size: 0.775em;
+        letter-spacing: var(--kul_messenger_letter_spacing);
         overflow: hidden;
         position: absolute;
         text-align: center;
@@ -294,7 +353,7 @@
       pointer-events: none;
       position: absolute;
       top: 0;
-      transition: background-color 125ms ease;
+      transition: background-color var(--kul_messenger_transition);
       width: 100%;
     }
   }
@@ -306,16 +365,16 @@
       background-color: var(--kul_messenger_name_background_color);
       bottom: 0;
       display: flex;
-      height: 50px;
+      height: var(--kul_messenger_name_height);
       left: 0;
       position: absolute;
-      transition: background-color 125ms ease;
+      transition: background-color var(--kul_messenger_transition);
       width: 100%;
     }
   }
 
   &__label {
-    letter-spacing: 5px;
+    letter-spacing: var(--kul_messenger_letter_spacing);
     overflow: hidden;
     text-align: center;
     text-overflow: ellipsis;

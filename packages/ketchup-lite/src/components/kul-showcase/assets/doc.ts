@@ -748,12 +748,20 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets the gap between grid elements. Defaults to 16px.",
       },
       {
-        name: "--kul-chat-margin-bottom-em",
-        docs: "Sets the margin bottom in em units. Defaults to 1em.",
+        name: "--kul-chat-inner-padding",
+        docs: "Sets the padding of the inner chat grid. Defaults to 0 16px.",
       },
       {
-        name: "--kul-chat-margin-top-em",
-        docs: "Sets the margin top in em units. Defaults to 1.25em.",
+        name: "--kul-chat-margin-bottom",
+        docs: "Sets the bottom margin of the chat area. Defaults to 16px.",
+      },
+      {
+        name: "--kul-chat-margin-top",
+        docs: "Sets the top margin of the chat area. Defaults to 16px.",
+      },
+      {
+        name: "--kul-chat-outer-grid-gap",
+        docs: "Sets the gap between the outer grid's elements. Defaults to 12px.",
       },
       {
         name: "--kul-chat-padding",
@@ -1542,6 +1550,18 @@ export const KUL_DOC: KulShowcaseDoc = {
     ],
     styles: [
       {
+        name: "--kul-messenger-active-options-name-padding",
+        docs: "Sets the padding of active options' names. Defaults to 4px.",
+      },
+      {
+        name: "--kul-messenger-avatar-name-padding",
+        docs: "Sets the padding of the avatar's name. Defaults to 12px.",
+      },
+      {
+        name: "--kul-messenger-backdrop-filter",
+        docs: "Sets the backdrop filter. Defaults to 5px.",
+      },
+      {
         name: "--kul-messenger-background-color",
         docs: "Sets the background color. Defaults to var(--kul-background-color).",
       },
@@ -1550,12 +1570,32 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets the font size of the component. Defaults to var(--kul-font-size).",
       },
       {
+        name: "--kul-messenger-letter-spacing",
+        docs: "Sets the letter spacing. Defaults to 5px.",
+      },
+      {
         name: "--kul-messenger-name-background-color",
         docs: "Sets the color of text. Defaults to rgba(var(--kul-title-background-color-rgb), 0.75).",
       },
       {
+        name: "--kul-messenger-name-height",
+        docs: "Sets the height of the character's name. Defaults to 50px.",
+      },
+      {
+        name: "--kul-messenger-nav-box-shadow",
+        docs: "Sets the box shadow of the messenger's navigation bar. Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375).",
+      },
+      {
+        name: "--kul-messenger-options-title-padding",
+        docs: "Sets the padding of titles. Defaults to 8px.",
+      },
+      {
         name: "--kul-messenger-text-color",
         docs: "Sets the color of text. Defaults to var(--kul-text-color).",
+      },
+      {
+        name: "--kul-messenger-transition",
+        docs: "Sets the transition effect. Defaults to 125ms ease-out.",
       },
     ],
   },

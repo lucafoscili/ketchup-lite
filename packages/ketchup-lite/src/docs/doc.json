@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-17T12:19:11",
+  "timestamp": "2024-09-17T16:20:21",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -3165,14 +3165,24 @@
           "docs": "Sets the gap between grid elements. Defaults to 16px."
         },
         {
-          "name": "--kul-chat-margin-bottom-em",
+          "name": "--kul-chat-inner-padding",
           "annotation": "prop",
-          "docs": "Sets the margin bottom in em units. Defaults to 1em."
+          "docs": "Sets the padding of the inner chat grid. Defaults to 0 16px."
         },
         {
-          "name": "--kul-chat-margin-top-em",
+          "name": "--kul-chat-margin-bottom",
           "annotation": "prop",
-          "docs": "Sets the margin top in em units. Defaults to 1.25em."
+          "docs": "Sets the bottom margin of the chat area. Defaults to 16px."
+        },
+        {
+          "name": "--kul-chat-margin-top",
+          "annotation": "prop",
+          "docs": "Sets the top margin of the chat area. Defaults to 16px."
+        },
+        {
+          "name": "--kul-chat-outer-grid-gap",
+          "annotation": "prop",
+          "docs": "Sets the gap between the outer grid's elements. Defaults to 12px."
         },
         {
           "name": "--kul-chat-padding",
@@ -6094,6 +6104,21 @@
       "listeners": [],
       "styles": [
         {
+          "name": "--kul-messenger-active-options-name-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of active options' names. Defaults to 4px."
+        },
+        {
+          "name": "--kul-messenger-avatar-name-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of the avatar's name. Defaults to 12px."
+        },
+        {
+          "name": "--kul-messenger-backdrop-filter",
+          "annotation": "prop",
+          "docs": "Sets the backdrop filter. Defaults to 5px."
+        },
+        {
           "name": "--kul-messenger-background-color",
           "annotation": "prop",
           "docs": "Sets the background color. Defaults to var(--kul-background-color)."
@@ -6104,14 +6129,39 @@
           "docs": "Sets the font size of the component. Defaults to var(--kul-font-size)."
         },
         {
+          "name": "--kul-messenger-letter-spacing",
+          "annotation": "prop",
+          "docs": "Sets the letter spacing. Defaults to 5px."
+        },
+        {
           "name": "--kul-messenger-name-background-color",
           "annotation": "prop",
           "docs": "Sets the color of text. Defaults to rgba(var(--kul-title-background-color-rgb), 0.75)."
         },
         {
+          "name": "--kul-messenger-name-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the character's name. Defaults to 50px."
+        },
+        {
+          "name": "--kul-messenger-nav-box-shadow",
+          "annotation": "prop",
+          "docs": "Sets the box shadow of the messenger's navigation bar. Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375)."
+        },
+        {
+          "name": "--kul-messenger-options-title-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of titles. Defaults to 8px."
+        },
+        {
           "name": "--kul-messenger-text-color",
           "annotation": "prop",
           "docs": "Sets the color of text. Defaults to var(--kul-text-color)."
+        },
+        {
+          "name": "--kul-messenger-transition",
+          "annotation": "prop",
+          "docs": "Sets the transition effect. Defaults to 125ms ease-out."
         }
       ],
       "slots": [],
