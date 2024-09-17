@@ -38,7 +38,6 @@ export interface KulMessengerAdapter {
                 type: KulMessengerImageRootNodesIds,
                 character?: KulMessengerCharacterNode
             ) => number;
-            filters: () => KulMessengerFilters;
             root: <T extends KulMessengerImageRootNodesIds>(
                 type: T,
                 character?: KulMessengerCharacterNode
@@ -49,6 +48,7 @@ export interface KulMessengerAdapter {
             config: () => KulMessengerConfig;
             data: () => KulMessengerDataset;
             history: () => KulMessengerHistory;
+            ui: () => KulMessengerUI;
         };
     };
     set: {
@@ -68,9 +68,17 @@ export interface KulMessengerAdapter {
                 value: number,
                 character?: KulMessengerCharacterNode
             ) => void;
-            filters: (filter: KulMessengerFilters) => void;
         };
-        messenger: { data: () => Promise<void> };
+        messenger: {
+            ui: {
+                filters: (filter: KulMessengerFilters) => void;
+                panel: (
+                    panel: KulMessengerPanelsValue,
+                    value?: boolean
+                ) => boolean;
+            };
+            data: () => Promise<void>;
+        };
     };
 }
 
@@ -139,7 +147,7 @@ export interface KulMessengerDataset extends KulDataDataset {
 export type KulMessengerEvent = 'ready' | 'save';
 
 export interface KulMessengerEventPayload extends KulEventPayload {
-    initialization: KulMessengerConfig;
+    config: KulMessengerConfig;
 }
 
 export interface KulMessengerFilters {
@@ -183,8 +191,8 @@ export type KulMessengerImageRootNodesIds = keyof KulMessengerImageNodeTypeMap;
 
 // Initializes the component state
 export interface KulMessengerConfig {
-    currentCharacter?: string;
-    filters?: KulMessengerFilters;
+    currentCharacter: string;
+    ui: KulMessengerUI;
 }
 
 // Location Node
@@ -213,6 +221,13 @@ export interface KulMessengerOutfitsNode
     value: number;
 }
 
+export interface KulMessengerPanels {
+    isLeftCollapsed: boolean;
+    isRightCollapsed: boolean;
+}
+
+export type KulMessengerPanelsValue = 'left' | 'right';
+
 // Messenger Props Enum
 export enum KulMessengerProps {
     kulAutosave = 'Automatically saves the dataset when a chat updates.',
@@ -240,4 +255,9 @@ export interface KulMessengerStylesNode
     extends KulMessengerBaseNode<KulMessengerStyleNode> {
     id: 'styles';
     value: number;
+}
+
+export interface KulMessengerUI {
+    filters: KulMessengerFilters;
+    panels: KulMessengerPanels;
 }

@@ -24,6 +24,8 @@ import {
     KulMessengerFilters,
     KulMessengerImageChildNode,
     KulMessengerEventPayload,
+    KulMessengerUI,
+    KulMessengerPanelsValue,
 } from './kul-messenger-declarations';
 import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -82,7 +84,18 @@ export class KulMessenger {
     /**
      * State of options' filters.
      */
-    @State() filters: KulMessengerFilters = {};
+    @State() ui: KulMessengerUI = {
+        filters: {
+            avatars: false,
+            locations: false,
+            outfits: false,
+            styles: false,
+        },
+        panels: {
+            isLeftCollapsed: false,
+            isRightCollapsed: false,
+        },
+    };
     /**
      * Node containing the history of this session's chats.
      */
@@ -135,16 +148,16 @@ export class KulMessenger {
     kulEvent: EventEmitter<KulMessengerEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
-        const initialization: KulMessengerConfig = {
+        const config: KulMessengerConfig = {
             currentCharacter: this.currentCharacter?.id,
-            filters: this.filters,
+            ui: this.ui,
         };
         this.kulEvent.emit({
             comp: this,
             id: this.rootElement.id,
             originalEvent: e,
             eventType,
-            initialization,
+            config,
         });
     }
 
@@ -183,11 +196,14 @@ export class KulMessenger {
     async reset(): Promise<void> {
         this.covers = {};
         this.currentCharacter = null;
-        this.filters = {
-            avatars: false,
-            locations: false,
-            outfits: false,
-            styles: false,
+        this.ui = {
+            filters: {
+                avatars: false,
+                locations: false,
+                outfits: false,
+                styles: false,
+            },
+            panels: { isLeftCollapsed: false, isRightCollapsed: false },
         };
         this.history = {};
 
@@ -303,7 +319,6 @@ export class KulMessenger {
                 ) => {
                     return this.covers[character.id][type];
                 },
-                filters: () => this.filters,
                 root: <T extends KulMessengerImageRootNodesIds>(
                     type: T,
                     character = this.currentCharacter
@@ -332,11 +347,12 @@ export class KulMessenger {
                 config: () => {
                     return {
                         currentCharacter: this.currentCharacter.id,
-                        filters: this.filters,
+                        ui: this.ui,
                     };
                 },
                 data: () => this.kulData,
                 history: () => this.history,
+                ui: () => this.ui,
             },
         },
         set: {
@@ -376,8 +392,6 @@ export class KulMessenger {
                     this.covers[character.id][type] = value;
                     this.refresh();
                 },
-                filters: (filters: KulMessengerFilters) =>
-                    (this.filters = filters),
             },
             messenger: {
                 data: async () => {
@@ -427,6 +441,29 @@ export class KulMessenger {
                     }
                     this.onKulEvent(new CustomEvent('save'), 'save');
                 },
+                ui: {
+                    filters: (filters: KulMessengerFilters) => {
+                        this.ui.filters = filters;
+                        this.refresh();
+                    },
+                    panel: (
+                        panel: KulMessengerPanelsValue,
+                        value = panel === 'left'
+                            ? !this.ui.panels.isLeftCollapsed
+                            : !this.ui.panels.isRightCollapsed
+                    ) => {
+                        switch (panel) {
+                            case 'left':
+                                this.ui.panels.isLeftCollapsed = value;
+                                break;
+                            case 'right':
+                                this.ui.panels.isRightCollapsed = value;
+                                break;
+                        }
+                        this.refresh();
+                        return value;
+                    },
+                },
             },
         },
     };
@@ -460,16 +497,23 @@ export class KulMessenger {
         }
         if (this.kulValue) {
             const currentCharacter = this.kulValue.currentCharacter;
-            const filters = this.kulValue.filters;
-            for (const key in filters) {
-                if (Object.prototype.hasOwnProperty.call(filters, key)) {
-                    const filter = filters[key];
-                    this.filters[key] = filter;
-                }
-            }
+            const filters = this.kulValue.ui.filters;
+            const panels = this.kulValue.ui.panels;
             if (currentCharacter) {
                 this.currentCharacter =
                     this.#adapter.get.character.byId(currentCharacter);
+            }
+            for (const key in filters) {
+                if (Object.prototype.hasOwnProperty.call(filters, key)) {
+                    const filter = filters[key];
+                    this.ui.filters[key] = filter;
+                }
+            }
+            for (const key in panels) {
+                if (Object.prototype.hasOwnProperty.call(panels, key)) {
+                    const panel = panels[key];
+                    this.ui.panels[key] = panel;
+                }
             }
         }
     }

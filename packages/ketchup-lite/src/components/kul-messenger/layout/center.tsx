@@ -1,16 +1,62 @@
 import { h } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
-import { NAV_DATASET } from './constant';
+import {
+    LEFT_EXPANDER_ICON,
+    NAV_DATASET,
+    RIGHT_EXPANDER_ICON,
+} from './constant';
 import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
 import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulButton } from '../../kul-button/kul-button';
 
 export const prepCenter = (adapter: KulMessengerAdapter) => {
+    const buttons = prepExpanderButtons(adapter);
     return (
         <div class="messenger__center">
+            <div class="messenger__expander messenger__expander--left">
+                {buttons.left}
+            </div>
             <div class="messenger__navigation">{prepNavigation(adapter)}</div>
             <div class="messenger__chat">{prepChat(adapter)}</div>
+            <div class="messenger__expander messenger__expander--right">
+                {buttons.right}
+            </div>
         </div>
     );
+};
+
+const prepExpanderButtons = (adapter: KulMessengerAdapter) => {
+    const left = (
+        <kul-button
+            class="kul-full-height"
+            id="left"
+            kulIcon={LEFT_EXPANDER_ICON}
+            kulStyling="flat"
+            onKul-button-event={expanderEventHandler.bind(
+                expanderEventHandler,
+                adapter
+            )}
+            title="Expand/collapse this section"
+        ></kul-button>
+    );
+    const right = (
+        <kul-button
+            class="kul-full-height"
+            id="right"
+            kulIcon={RIGHT_EXPANDER_ICON}
+            kulStyling="flat"
+            onKul-button-event={expanderEventHandler.bind(
+                expanderEventHandler,
+                adapter
+            )}
+            title="Expand/collapse this section"
+        ></kul-button>
+    );
+    return {
+        left,
+        right,
+    };
 };
 
 const prepNavigation = (adapter: KulMessengerAdapter) => {
@@ -85,6 +131,32 @@ const chatEventHandler = (
         case 'update':
             adapter.set.character.history(history);
             adapter.set.character.status(status);
+    }
+};
+
+const expanderEventHandler = (
+    adapter: KulMessengerAdapter,
+    e: CustomEvent<KulButtonEventPayload>
+) => {
+    const { comp, eventType } = e.detail;
+    const button = comp as KulButton;
+
+    switch (eventType) {
+        case 'click':
+            switch (button.rootElement.id) {
+                case 'left':
+                    const newLeft = adapter.set.messenger.ui.panel('left');
+                    button.kulIcon = newLeft
+                        ? RIGHT_EXPANDER_ICON
+                        : LEFT_EXPANDER_ICON;
+                    break;
+                case 'right':
+                    const newRight = adapter.set.messenger.ui.panel('right');
+                    button.kulIcon = newRight
+                        ? LEFT_EXPANDER_ICON
+                        : RIGHT_EXPANDER_ICON;
+                    break;
+            }
     }
 };
 
