@@ -51,8 +51,10 @@ describe('Methods', () => {
 
     it(`getProps: check keys against Kul${messengerCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(messengerTag, {
+            kulAutosave: null,
             kulData: null,
             kulStyle: null,
+            kulValue: null,
         } as Required<KulMessengerPropsInterface>);
     });
 });
