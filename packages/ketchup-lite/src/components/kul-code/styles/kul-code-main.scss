@@ -90,6 +90,7 @@
 #kul-component,
 .container {
   height: 100%;
+  overflow: auto;
   position: relative;
   width: 100%;
 }
@@ -168,7 +169,7 @@ pre::selection {
 }
 
 .body {
-  padding: 1.75em 1em;
+  white-space: pre-line;
 }
 
 pre {

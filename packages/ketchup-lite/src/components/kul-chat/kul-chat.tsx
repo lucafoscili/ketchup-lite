@@ -19,7 +19,7 @@ import {
     KulChatLayout,
     KulChatProps,
     KulChatSendArguments,
-    KulChatState,
+    KulChatStatus,
 } from './kul-chat-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
@@ -61,7 +61,7 @@ export class KulChat {
     /**
      * State of the component.
      */
-    @State() state: KulChatState = 'connecting';
+    @State() status: KulChatStatus = 'connecting';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -149,6 +149,7 @@ export class KulChat {
             id: this.rootElement.id,
             originalEvent: e,
             history: JSON.stringify(this.history) || '',
+            status: this.status,
         });
     }
 
@@ -216,20 +217,21 @@ export class KulChat {
     /*-------------------------------------------------*/
 
     async #checkLLMStatus() {
-        if (this.state === 'offline') {
-            this.state = 'connecting';
+        if (this.status === 'offline') {
+            this.status = 'connecting';
         }
         try {
             const response = await fetch(this.kulEndpointUrl);
 
             if (!response.ok) {
-                this.state = 'offline';
+                this.status = 'offline';
             } else {
-                this.state = 'ready';
+                this.status = 'ready';
             }
         } catch (error) {
-            this.state = 'offline';
+            this.status = 'offline';
         }
+        this.onKulEvent(new CustomEvent('update'), 'update');
     }
 
     #disableInteractivity = (status: boolean) => {
@@ -544,11 +546,11 @@ export class KulChat {
                 )}
                 <div id={KUL_WRAPPER_ID}>
                     <div
-                        class={`wrapper wrapper--${this.kulLayout} wrapper--${this.state}`}
+                        class={`wrapper wrapper--${this.kulLayout} wrapper--${this.status}`}
                     >
-                        {this.state === 'ready'
+                        {this.status === 'ready'
                             ? this.#prepReady()
-                            : this.state === 'connecting'
+                            : this.status === 'connecting'
                               ? this.#prepConnecting()
                               : this.#prepError()}
                     </div>

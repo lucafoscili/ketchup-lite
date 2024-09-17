@@ -20,8 +20,12 @@ import {
     KulMessengerImageRootNodesIds,
     KulMessengerImageNodeTypeMap,
     KulMessengerCovers,
+    KulMessengerConfig,
+    KulMessengerFilters,
+    KulMessengerImageChildNode,
+    KulMessengerEventPayload,
 } from './kul-messenger-declarations';
-import type { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
@@ -30,6 +34,13 @@ import { prepLeft } from './layout/left';
 import { prepCenter } from './layout/center';
 import { prepRight } from './layout/right';
 import { prepGrid } from './layout/grid';
+import {
+    AVATAR_COVER,
+    LOCATION_COVER,
+    OUTFIT_COVER,
+    STYLE_COVER,
+} from './layout/constant';
+import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 
 @Component({
     tag: 'kul-messenger',
@@ -65,21 +76,27 @@ export class KulMessenger {
      */
     @State() history: KulMessengerHistory = {};
     /**
-     * Node containing the history of this session's chats.
+     * State for the options' covers.
      */
     @State() covers: KulMessengerCovers = {};
     /**
-     * Available options' list visibility flags.
+     * State of options' filters.
      */
-    @State() avatars = false;
-    @State() locations = false;
-    @State() outfits = false;
-    @State() styles = false;
+    @State() filters: KulMessengerFilters = {};
+    /**
+     * Node containing the history of this session's chats.
+     */
+    @State() status: KulChatStatus = 'offline';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
     /*-------------------------------------------------*/
 
+    /**
+     * Automatically saves the dataset when a chat updates.
+     * @default true
+     */
+    @Prop({ mutable: true }) kulAutosave = true;
     /**
      * The data of the messenger.
      * @default []
@@ -90,6 +107,11 @@ export class KulMessenger {
      * @default ""
      */
     @Prop() kulStyle: string = '';
+    /**
+     * Sets the initial configuration, including active character and filters.
+     * @default ""
+     */
+    @Prop() kulValue: KulMessengerConfig = null;
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -110,14 +132,19 @@ export class KulMessenger {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulMessengerEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
+        const initialization: KulMessengerConfig = {
+            currentCharacter: this.currentCharacter?.id,
+            filters: this.filters,
+        };
         this.kulEvent.emit({
             comp: this,
             id: this.rootElement.id,
             originalEvent: e,
             eventType,
+            initialization,
         });
     }
 
@@ -156,11 +183,13 @@ export class KulMessenger {
     async reset(): Promise<void> {
         this.covers = {};
         this.currentCharacter = null;
+        this.filters = {
+            avatars: false,
+            locations: false,
+            outfits: false,
+            styles: false,
+        };
         this.history = {};
-        this.avatars = false;
-        this.locations = false;
-        this.outfits = false;
-        this.styles = false;
 
         this.#initStates();
     }
@@ -184,6 +213,17 @@ export class KulMessenger {
                         return 'You know nothing about this character...';
                     }
                 },
+                byId: (id: string) =>
+                    this.kulData.nodes.find((n) => n.id === id),
+                current: () => this.currentCharacter,
+                history: (character = this.currentCharacter) => {
+                    return this.history[character.id];
+                },
+                name: (character = this.currentCharacter) =>
+                    character.value ||
+                    character.id ||
+                    character.description ||
+                    '?',
                 next: (character = this.currentCharacter) => {
                     if (!this.#hasCharacters()) {
                         return;
@@ -196,16 +236,7 @@ export class KulMessenger {
 
                     return nodes[nextIdx];
                 },
-                current: () => this.currentCharacter,
-                history: (character = this.currentCharacter) => {
-                    return this.history[character.id];
-                },
                 list: () => this.kulData.nodes || [],
-                name: (character = this.currentCharacter) =>
-                    character.value ||
-                    character.id ||
-                    character.description ||
-                    '?',
                 previous: (character = this.currentCharacter) => {
                     if (!this.#hasCharacters()) {
                         return;
@@ -219,6 +250,7 @@ export class KulMessenger {
 
                     return nodes[prevIdx];
                 },
+                status: () => this.status,
             },
             image: {
                 asCover: (
@@ -230,17 +262,22 @@ export class KulMessenger {
                             (n) => n.id === type
                         );
                         const index = this.covers[character.id][type];
-                        return root.children[index].cells.kulImage.value;
+                        const node = root.children[index];
+                        return {
+                            node: root.children[index],
+                            title: this.#adapter.get.image.title(node),
+                            value: node.cells.kulImage.value,
+                        };
                     } catch (error) {
                         switch (type) {
                             case 'avatars':
-                                return 'portrait';
+                                return { value: AVATAR_COVER };
                             case 'locations':
-                                return 'landscape';
+                                return { value: LOCATION_COVER };
                             case 'outfits':
-                                return 'loyalty';
+                                return { value: OUTFIT_COVER };
                             case 'styles':
-                                return 'style';
+                                return { value: STYLE_COVER };
                         }
                     }
                 },
@@ -266,14 +303,7 @@ export class KulMessenger {
                 ) => {
                     return this.covers[character.id][type];
                 },
-                options: () => {
-                    return {
-                        avatars: this.avatars,
-                        locations: this.locations,
-                        outfits: this.outfits,
-                        styles: this.styles,
-                    };
-                },
+                filters: () => this.filters,
                 root: <T extends KulMessengerImageRootNodesIds>(
                     type: T,
                     character = this.currentCharacter
@@ -286,6 +316,27 @@ export class KulMessenger {
                     }
                     return node as KulMessengerImageNodeTypeMap[T];
                 },
+                title: (node: KulMessengerImageChildNode) => {
+                    const title = node.value || '';
+                    const description = node.description || '';
+                    return title && description
+                        ? `${title} - ${description}`
+                        : description
+                          ? description
+                          : title
+                            ? title
+                            : '';
+                },
+            },
+            messenger: {
+                config: () => {
+                    return {
+                        currentCharacter: this.currentCharacter.id,
+                        filters: this.filters,
+                    };
+                },
+                data: () => this.kulData,
+                history: () => this.history,
             },
         },
         set: {
@@ -314,6 +365,7 @@ export class KulMessenger {
                         this.#adapter.get.character.previous(character);
                     this.#adapter.set.character.current(previousC);
                 },
+                status: (status: KulChatStatus) => (this.status = status),
             },
             image: {
                 cover: (
@@ -324,24 +376,56 @@ export class KulMessenger {
                     this.covers[character.id][type] = value;
                     this.refresh();
                 },
-                options: (
-                    type: KulMessengerImageRootNodesIds,
-                    value: boolean
-                ) => {
-                    switch (type) {
-                        case 'avatars':
-                            this.avatars = value;
-                            break;
-                        case 'locations':
-                            this.locations = value;
-                            break;
-                        case 'outfits':
-                            this.outfits = value;
-                            break;
-                        case 'styles':
-                            this.styles = value;
-                            break;
+                filters: (filters: KulMessengerFilters) =>
+                    (this.filters = filters),
+            },
+            messenger: {
+                data: async () => {
+                    if (!this.#hasNodes()) {
+                        return;
                     }
+                    for (
+                        let index = 0;
+                        index < this.kulData.nodes.length;
+                        index++
+                    ) {
+                        const character = this.kulData.nodes[index];
+                        const id = character.id;
+                        const chat = character.children.find(
+                            (n) => n.id === 'chat'
+                        );
+                        const avatars = this.#adapter.get.image.root('avatars');
+                        const locations =
+                            this.#adapter.get.image.root('locations');
+                        const outfits = this.#adapter.get.image.root('outfits');
+                        const styles = this.#adapter.get.image.root('styles');
+                        if (this.history[id] && chat) {
+                            const historyJson = JSON.parse(this.history[id]);
+                            try {
+                                chat.cells.kulChat.value = historyJson;
+                            } catch (error) {
+                                chat.cells = {
+                                    kulChat: {
+                                        shape: 'chat',
+                                        value: historyJson,
+                                    },
+                                };
+                            }
+                        }
+                        if (this.covers[id] && avatars) {
+                            avatars.value = this.covers[id].avatars;
+                        }
+                        if (this.covers[id] && locations) {
+                            locations.value = this.covers[id].locations;
+                        }
+                        if (this.covers[id] && outfits) {
+                            outfits.value = this.covers[id].outfits;
+                        }
+                        if (this.covers[id] && styles) {
+                            styles.value = this.covers[id].styles;
+                        }
+                    }
+                    this.onKulEvent(new CustomEvent('save'), 'save');
                 },
             },
         },
@@ -373,6 +457,20 @@ export class KulMessenger {
                     .value || [];
             this.covers[character.id] = covers;
             this.history[character.id] = JSON.stringify(history);
+        }
+        if (this.kulValue) {
+            const currentCharacter = this.kulValue.currentCharacter;
+            const filters = this.kulValue.filters;
+            for (const key in filters) {
+                if (Object.prototype.hasOwnProperty.call(filters, key)) {
+                    const filter = filters[key];
+                    this.filters[key] = filter;
+                }
+            }
+            if (currentCharacter) {
+                this.currentCharacter =
+                    this.#adapter.get.character.byId(currentCharacter);
+            }
         }
     }
 

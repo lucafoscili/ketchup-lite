@@ -162,6 +162,7 @@ export class KulChip {
             id: this.rootElement.id,
             originalEvent: e,
             node,
+            selectedNodes: this.selectedNodes,
         });
     }
 
@@ -191,7 +192,7 @@ export class KulChip {
      * @returns {Promise<KulChipNode[]>} Selected nodes.
      */
     @Method()
-    async getSelected(): Promise<Set<KulDataNode>> {
+    async getSelectedNodes(): Promise<Set<KulDataNode>> {
         return this.selectedNodes;
     }
     /**
@@ -200,7 +201,7 @@ export class KulChip {
      * @returns {Promise<void>}
      */
     @Method()
-    async selectNodes(
+    async setSelectedNodes(
         nodes: (KulDataNode[] | string[]) & Array<any>
     ): Promise<void> {
         const nodesToAdd: Set<KulDataNode> = new Set();

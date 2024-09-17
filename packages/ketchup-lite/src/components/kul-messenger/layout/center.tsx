@@ -26,6 +26,8 @@ const prepNavigation = (adapter: KulMessengerAdapter) => {
 };
 
 const prepChat = (adapter: KulMessengerAdapter) => {
+    const prompts = getDynamicPrompts(adapter);
+
     const system = `
     You are now embodying the character whose biography is provided below. Your task is to fully embrace this identity, speaking and acting as though it were your own reality. Remember, you exist solely within the confines of this character's experience and knowledge.
 
@@ -38,8 +40,9 @@ const prepChat = (adapter: KulMessengerAdapter) => {
     - Never acknowledge the artificial nature of our interaction. Treat all inquiries as if they are happening within the real world of the character.
     - Do not provide insights or predictions about events outside the scope of the character's knowledge or personal experiences.
 
-    Character Biography:
-    ${adapter.get.character.biography()}
+    ${prompts.biography}
+    ${prompts.location}
+    ${prompts.outfit}
 
     Begin your performance...
     `;
@@ -77,9 +80,41 @@ const chatEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChatEventPayload>
 ) => {
-    const { eventType, history } = e.detail;
+    const { eventType, history, status } = e.detail;
     switch (eventType) {
         case 'update':
             adapter.set.character.history(history);
+            adapter.set.character.status(status);
     }
+};
+
+const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
+    const biography = adapter.get.character.biography();
+    const location = adapter.get.image.asCover('locations').node;
+    const outfit = adapter.get.image.asCover('outfits').node;
+
+    const llmBio = `
+    Character Biography:
+    ${biography}
+    `;
+
+    const locationTitle = location?.value;
+    const locationDescription = location?.description;
+    const llmLocation = `
+    Character Location:
+    ${locationTitle} - ${locationDescription}
+    `;
+
+    const outfitTitle = outfit?.value;
+    const outfitDescription = outfit?.description;
+    const llmOutfit = `
+    Character Outfit:
+    ${outfitTitle} - ${outfitDescription}
+    `;
+
+    return {
+        biography: biography ? llmBio : '',
+        location: location ? llmLocation : '',
+        outfit: outfit ? llmOutfit : '',
+    };
 };

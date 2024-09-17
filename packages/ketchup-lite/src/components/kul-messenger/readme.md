@@ -7,17 +7,19 @@
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                                                   | Type                  | Default |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------- | --------------------- | ------- |
-| `kulData`  | --          | The data of the messenger.                                                                                    | `KulMessengerDataset` | `null`  |
-| `kulStyle` | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`              | `''`    |
+| Property      | Attribute      | Description                                                                                                   | Type                  | Default |
+| ------------- | -------------- | ------------------------------------------------------------------------------------------------------------- | --------------------- | ------- |
+| `kulAutosave` | `kul-autosave` | Automatically saves the dataset when a chat updates.                                                          | `boolean`             | `true`  |
+| `kulData`     | --             | The data of the messenger.                                                                                    | `KulMessengerDataset` | `null`  |
+| `kulStyle`    | `kul-style`    | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`              | `''`    |
+| `kulValue`    | --             | Sets the initial configuration, including active character and filters.                                       | `KulMessengerConfig`  | `null`  |
 
 
 ## Events
 
-| Event                 | Description              | Type                           |
-| --------------------- | ------------------------ | ------------------------------ |
-| `kul-messenger-event` | Describes event emitted. | `CustomEvent<KulEventPayload>` |
+| Event                 | Description              | Type                                    |
+| --------------------- | ------------------------ | --------------------------------------- |
+| `kul-messenger-event` | Describes event emitted. | `CustomEvent<KulMessengerEventPayload>` |
 
 
 ## Methods
@@ -71,11 +73,20 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                               | Description                                                            |
-| ---------------------------------- | ---------------------------------------------------------------------- |
-| `--kul-messenger-background-color` | Sets the background color. Defaults to var(--kul-background-color).    |
-| `--kul-messenger-font-size`        | Sets the font size of the component. Defaults to var(--kul-font-size). |
-| `--kul-messenger-text-color`       | Sets the color of text. Defaults to var(--kul-text-color).             |
+| Name                                          | Description                                                                                                                |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `--kul-messenger-active-options-name-padding` | Sets the padding of active options' names. Defaults to 4px.                                                                |
+| `--kul-messenger-avatar-name-padding`         | Sets the padding of the avatar's name. Defaults to 12px.                                                                   |
+| `--kul-messenger-backdrop-filter`             | Sets the backdrop filter. Defaults to 5px.                                                                                 |
+| `--kul-messenger-background-color`            | Sets the background color. Defaults to var(--kul-background-color).                                                        |
+| `--kul-messenger-font-size`                   | Sets the font size of the component. Defaults to var(--kul-font-size).                                                     |
+| `--kul-messenger-letter-spacing`              | Sets the letter spacing. Defaults to 5px.                                                                                  |
+| `--kul-messenger-name-background-color`       | Sets the color of text. Defaults to rgba(var(--kul-title-background-color-rgb), 0.75).                                     |
+| `--kul-messenger-name-height`                 | Sets the height of the character's name. Defaults to 50px.                                                                 |
+| `--kul-messenger-nav-box-shadow`              | Sets the box shadow of the messenger's navigation bar. Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375). |
+| `--kul-messenger-options-title-padding`       | Sets the padding of titles. Defaults to 8px.                                                                               |
+| `--kul-messenger-text-color`                  | Sets the color of text. Defaults to var(--kul-text-color).                                                                 |
+| `--kul-messenger-transition`                  | Sets the transition effect. Defaults to 125ms ease-out.                                                                    |
 
 
 ## Dependencies
@@ -87,6 +98,8 @@ Type: `Promise<void>`
 ### Depends on
 
 - [kul-image](../kul-image)
+- [kul-button](../kul-button)
+- [kul-spinner](../kul-spinner)
 - [kul-code](../kul-code)
 - [kul-tabbar](../kul-tabbar)
 - [kul-chat](../kul-chat)
@@ -96,6 +109,8 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   kul-messenger --> kul-image
+  kul-messenger --> kul-button
+  kul-messenger --> kul-spinner
   kul-messenger --> kul-code
   kul-messenger --> kul-tabbar
   kul-messenger --> kul-chat
@@ -103,9 +118,9 @@ graph TD;
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-code --> kul-button
   kul-button --> kul-image
   kul-button --> kul-list
+  kul-code --> kul-button
   kul-tabbar --> kul-image
   kul-chat --> kul-button
   kul-chat --> kul-spinner

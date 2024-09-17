@@ -50,7 +50,7 @@ Type: `Promise<GenericObject<unknown>>`
 
 Chip of props as object, each key will be a prop.
 
-### `getSelected() => Promise<Set<KulDataNode>>`
+### `getSelectedNodes() => Promise<Set<KulDataNode>>`
 
 Returns the selected nodes.
 
@@ -70,7 +70,7 @@ Type: `Promise<void>`
 
 
 
-### `selectNodes(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>`
+### `setSelectedNodes(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>`
 
 Selects one or more nodes in the chip component.
 

@@ -20,15 +20,25 @@
      */
   --kul_chat_grid_gap: var(--kul-chat-grid-gap, 16px);
   /**
-     * @prop --kul-chat-margin-top-em: Sets the margin top in em units.
-     * Defaults to 1.25em.
+     * @prop --kul-chat-inner-padding: Sets the padding of the inner chat grid.
+     * Defaults to 0 16px.
      */
-  --kul_chat_margin_top: var(--kul-chat-margin-top-em, 1.25em);
+  --kul_chat_inner_padding: var(--kul-chat-inner-padding, 0 16px);
   /**
-     * @prop --kul-chat-margin-bottom-em: Sets the margin bottom in em units.
-     * Defaults to 1em.
+     * @prop --kul-chat-margin-bottom: Sets the bottom margin of the chat area.
+     * Defaults to 16px.
      */
-  --kul_chat_margin_bottom: var(--kul-chat-margin-bottom-em, 1em);
+  --kul_chat_margin_bottom: var(--kul-chat-margin-bottom, 16px);
+  /**
+     * @prop --kul-chat-margin-top: Sets the top margin of the chat area.
+     * Defaults to 16px.
+     */
+  --kul_chat_margin_top: var(--kul-chat-margin-top, 16px);
+  /**
+     * @prop --kul-chat-outer-grid-gap: Sets the gap between the outer grid's elements.
+     * Defaults to 12px.
+     */
+  --kul_chat_outer_grid_gap: var(--kul-chat-outer-grid-gap, 12px);
   /**
      * @prop --kul-chat-padding: Sets the default padding for various elements.
      * Defaults to 18px.
@@ -74,6 +84,7 @@
 
   &--bottom-textarea {
     align-content: center;
+    grid-gap: var(--kul_chat_outer_grid_gap);
     grid-template-areas:
       'chat'
       'spinner'
@@ -82,6 +93,7 @@
   }
 
   &--top-textarea {
+    grid-gap: var(--kul_chat_outer_grid_gap);
     grid-template-areas:
       'query'
       'chat'
@@ -94,17 +106,21 @@
   box-sizing: border-box;
   grid-area: query;
   max-width: 100%;
+  padding: var(--kul_chat_inner_padding);
   width: 100%;
 }
 
 .chat-area {
   align-content: start;
+  box-sizing: border-box;
   display: grid;
   grid-area: chat;
   grid-gap: var(--kul_chat_grid_gap);
   grid-template-columns: 1fr;
-  overflow: auto;
+  margin-bottom: var(--kul_chat_margin_top);
   margin-top: var(--kul_chat_margin_top);
+  overflow: auto;
+  padding: var(--kul_chat_inner_padding);
   white-space: pre-line;
   width: 100%;
   word-break: normal;

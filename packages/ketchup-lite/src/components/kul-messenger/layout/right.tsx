@@ -1,11 +1,11 @@
 import { h } from '@stencil/core';
 import {
     KulMessengerAdapter,
+    KulMessengerFilters,
     KulMessengerImageChildNode,
     KulMessengerImageRootNodesIds,
 } from '../kul-messenger-declarations';
 import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
-import { KulEventPayload } from '../../../types/GenericTypes';
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constant';
 import { KulChip } from '../../kul-chip/kul-chip';
 
@@ -22,30 +22,39 @@ export const prepRight = (adapter: KulMessengerAdapter) => {
 };
 
 const prepOptions = (adapter: KulMessengerAdapter) => {
+    const locationImage = adapter.get.image.asCover('locations');
+    const outfitImage = adapter.get.image.asCover('outfits');
+    const styleImage = adapter.get.image.asCover('styles');
     return [
-        <div class="messenger__options__outfit">
-            <kul-image
-                class={'kul-cover'}
-                kulValue={adapter.get.image.asCover('outfits')}
-            ></kul-image>
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__outfit"
+                alt={styleImage.title || 'No outfit selected.'}
+                src={outfitImage.value}
+                title={outfitImage.title || 'No outfit selected.'}
+            ></img>
             <div class="messenger__options__name">
                 <div class="messenger__options__label">Outfit</div>
             </div>
         </div>,
-        <div class="messenger__options__location">
-            <kul-image
-                class={'kul-cover'}
-                kulValue={adapter.get.image.asCover('locations')}
-            ></kul-image>
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__location"
+                alt={styleImage.title || 'No location selected.'}
+                src={locationImage.value}
+                title={locationImage.title || 'No location selected.'}
+            ></img>
             <div class="messenger__options__name">
                 <div class="messenger__options__label">Location</div>
             </div>
         </div>,
-        <div class="messenger__options__style">
-            <kul-image
-                class={'kul-cover'}
-                kulValue={adapter.get.image.asCover('styles')}
-            ></kul-image>
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__style"
+                alt={styleImage.title || 'No style selected.'}
+                src={styleImage.value}
+                title={styleImage.title || 'No style selected.'}
+            ></img>
             <div class="messenger__options__name">
                 <div class="messenger__options__label">Style</div>
             </div>
@@ -59,7 +68,7 @@ const prepFilters = (adapter: KulMessengerAdapter) => {
         filter.icon = adapter.get.image.asCover(
             filter.id as KulMessengerImageRootNodesIds,
             null
-        );
+        ).value;
     }
     return (
         <kul-chip
@@ -73,23 +82,29 @@ const prepFilters = (adapter: KulMessengerAdapter) => {
 
 const prepList = (adapter: KulMessengerAdapter) => {
     const elements = [];
-    const options = adapter.get.image.options();
+    const filters = adapter.get.image.filters();
     const imagesGetter = adapter.get.image.byType;
     for (let index = 0; index < IMAGE_TYPE_IDS.length; index++) {
         const type = IMAGE_TYPE_IDS[index];
-        if (options[type]) {
+        if (filters[type]) {
             const activeIndex = adapter.get.image.coverIndex(type);
             const images = imagesGetter(type).map((node, j) => (
-                <kul-image
-                    class={`messenger__options__image ${activeIndex === j ? 'messenger__options__image--selected' : ''} kul-cover`}
-                    kulValue={node.cells.kulImage.value}
-                    onKul-image-event={imageEventHandler.bind(
+                <div
+                    class={`messenger__options__image-wrapper  ${activeIndex === j ? 'messenger__options__image-wrapper--selected' : ''}`}
+                    onClick={imageEventHandler.bind(
                         imageEventHandler,
                         adapter,
                         node,
                         j
                     )}
-                ></kul-image>
+                >
+                    <img
+                        alt={adapter.get.image.title(node)}
+                        class={`messenger__options__image`}
+                        src={node.cells.kulImage.value}
+                        title={adapter.get.image.title(node)}
+                    />
+                </div>
             ));
             elements.push(
                 <div class="messenger__options__section">
@@ -105,62 +120,54 @@ const prepList = (adapter: KulMessengerAdapter) => {
 const imageEventHandler = (
     adapter: KulMessengerAdapter,
     node: KulMessengerImageChildNode,
-    index: number,
-    e: CustomEvent<KulEventPayload>
+    index: number
 ) => {
-    const { eventType } = e.detail;
     const coverSetter = adapter.set.image.cover;
 
-    switch (eventType) {
-        case 'click':
-            if (node.id.includes('avatar')) {
-                coverSetter('avatars', index);
-            } else if (node.id.includes('location')) {
-                coverSetter('locations', index);
-            } else if (node.id.includes('outfit')) {
-                coverSetter('outfits', index);
-            } else {
-                coverSetter('styles', index);
-            }
+    if (node.id.includes('avatar')) {
+        coverSetter('avatars', index);
+    } else if (node.id.includes('location')) {
+        coverSetter('locations', index);
+    } else if (node.id.includes('outfit')) {
+        coverSetter('outfits', index);
+    } else {
+        coverSetter('styles', index);
     }
 };
 
-const chipEventHandler = async (
+const chipEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChipEventPayload>
 ) => {
-    const { comp, eventType, node } = e.detail;
-    const optionsGetter = adapter.get.image.options;
-    const optionsSetter = adapter.set.image.options;
+    const { comp, eventType, selectedNodes } = e.detail;
+    const filtersSetter = adapter.set.image.filters;
 
     switch (eventType) {
         case 'click':
-            switch (node.id as KulMessengerImageRootNodesIds) {
-                case 'avatars':
-                    optionsSetter('avatars', !optionsGetter().avatars);
-                    break;
-                case 'locations':
-                    optionsSetter('locations', !optionsGetter().locations);
-                    break;
-                case 'outfits':
-                    optionsSetter('outfits', !optionsGetter().outfits);
-                    break;
-                case 'styles':
-                    optionsSetter('styles', !optionsGetter().styles);
-                    break;
-            }
+            const newFilters: KulMessengerFilters = {
+                avatars: false,
+                locations: false,
+                outfits: false,
+                styles: false,
+            };
+            Array.from(selectedNodes).forEach((n) => {
+                newFilters[n.id] = true;
+            });
+            filtersSetter(newFilters);
             break;
         case 'ready':
-            const options = adapter.get.image.options();
+            const filters = adapter.get.image.filters();
             const nodes: string[] = [];
-            for (const key in options) {
-                if (Object.prototype.hasOwnProperty.call(options, key)) {
-                    const option = options[key];
+            for (const key in filters) {
+                if (Object.prototype.hasOwnProperty.call(filters, key)) {
+                    const option = filters[key];
                     if (option) {
                         nodes.push(key);
                     }
                 }
             }
-            requestAnimationFrame(() => (comp as KulChip).selectNodes(nodes));
+            requestAnimationFrame(() =>
+                (comp as KulChip).setSelectedNodes(nodes)
+            );
     }
 };

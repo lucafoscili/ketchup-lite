@@ -22,6 +22,7 @@ import { KulChatEvent } from '../components/kul-chat/kul-chat-declarations';
 import { KulListEvent } from '../components/kul-list/kul-list-declarations';
 import { KulProgressbarEvent } from '../components/kul-progressbar/kul-progressbar-declarations';
 import { KulDebugComponentInfo } from '../managers/kul-debug/kul-debug-declarations';
+import { KulMessengerEvent } from '../components/kul-messenger/kul-messenger-declarations';
 
 export interface GenericMap {
     [index: string]: string;
@@ -72,6 +73,7 @@ export type KulEventType =
     | KulImageEvent
     | KulLazyEvent
     | KulListEvent
+    | KulMessengerEvent
     | KulPhotoframeEvent
     | KulProgressbarEvent
     | KulSpinnerEvent

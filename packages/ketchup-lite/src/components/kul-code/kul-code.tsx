@@ -285,6 +285,8 @@ export class KulCode {
         const isLikelyTextual =
             this.kulLanguage.toLowerCase() === 'text' ||
             this.kulLanguage.toLowerCase() === 'doc' ||
+            this.kulLanguage.toLowerCase() === 'markdown' ||
+            this.kulLanguage.toLowerCase() === 'css' ||
             this.kulLanguage.toLowerCase() === '';
         const shouldPreserveSpace =
             this.kulPreserveSpaces ||
@@ -312,7 +314,7 @@ export class KulCode {
                         </div>
                         {shouldPreserveSpace ? (
                             <pre
-                                class={'body language-' + this.kulLanguage}
+                                class={'language-' + this.kulLanguage}
                                 key={this.value}
                                 ref={(el) => {
                                     if (el) {

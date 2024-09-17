@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-15T20:25:45",
+  "timestamp": "2024-09-17T16:27:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -1749,6 +1749,7 @@
         "kul-card",
         "kul-chat",
         "kul-code",
+        "kul-messenger",
         "kul-showcase",
         "kul-showcase-button",
         "kul-showcase-splash",
@@ -1777,6 +1778,9 @@
           "kul-button"
         ],
         "kul-code": [
+          "kul-button"
+        ],
+        "kul-messenger": [
           "kul-button"
         ],
         "kul-showcase": [
@@ -3161,14 +3165,24 @@
           "docs": "Sets the gap between grid elements. Defaults to 16px."
         },
         {
-          "name": "--kul-chat-margin-bottom-em",
+          "name": "--kul-chat-inner-padding",
           "annotation": "prop",
-          "docs": "Sets the margin bottom in em units. Defaults to 1em."
+          "docs": "Sets the padding of the inner chat grid. Defaults to 0 16px."
         },
         {
-          "name": "--kul-chat-margin-top-em",
+          "name": "--kul-chat-margin-bottom",
           "annotation": "prop",
-          "docs": "Sets the margin top in em units. Defaults to 1.25em."
+          "docs": "Sets the bottom margin of the chat area. Defaults to 16px."
+        },
+        {
+          "name": "--kul-chat-margin-top",
+          "annotation": "prop",
+          "docs": "Sets the top margin of the chat area. Defaults to 16px."
+        },
+        {
+          "name": "--kul-chat-outer-grid-gap",
+          "annotation": "prop",
+          "docs": "Sets the gap between the outer grid's elements. Defaults to 12px."
         },
         {
           "name": "--kul-chat-padding",
@@ -3458,7 +3472,7 @@
           ]
         },
         {
-          "name": "getSelected",
+          "name": "getSelectedNodes",
           "returns": {
             "type": "Promise<Set<KulDataNode>>",
             "docs": "Selected nodes."
@@ -3483,7 +3497,7 @@
             },
             "return": "Promise<Set<KulDataNode>>"
           },
-          "signature": "getSelected() => Promise<Set<KulDataNode>>",
+          "signature": "getSelectedNodes() => Promise<Set<KulDataNode>>",
           "parameters": [],
           "docs": "Returns the selected nodes.",
           "docsTags": [
@@ -3516,7 +3530,7 @@
           "docsTags": []
         },
         {
-          "name": "selectNodes",
+          "name": "setSelectedNodes",
           "returns": {
             "type": "Promise<void>",
             "docs": ""
@@ -3551,7 +3565,7 @@
             },
             "return": "Promise<void>"
           },
-          "signature": "selectNodes(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>",
+          "signature": "setSelectedNodes(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>",
           "parameters": [
             {
               "name": "nodes",
@@ -5821,6 +5835,33 @@
       "usage": {},
       "props": [
         {
+          "name": "kulAutosave",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-autosave",
+          "reflectToAttr": false,
+          "docs": "Automatically saves the dataset when a chat updates.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "kulData",
           "type": "KulMessengerDataset",
           "complexType": {
@@ -5874,6 +5915,38 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulValue",
+          "type": "KulMessengerConfig",
+          "complexType": {
+            "original": "KulMessengerConfig",
+            "resolved": "KulMessengerConfig",
+            "references": {
+              "KulMessengerConfig": {
+                "location": "import",
+                "path": "./kul-messenger-declarations",
+                "id": "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig"
+              }
+            }
+          },
+          "mutable": false,
+          "reflectToAttr": false,
+          "docs": "Sets the initial configuration, including active character and filters.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "KulMessengerConfig"
             }
           ],
           "optional": false,
@@ -6009,16 +6082,16 @@
       "events": [
         {
           "event": "kul-messenger-event",
-          "detail": "KulEventPayload",
+          "detail": "KulMessengerEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulMessengerEventPayload",
+            "resolved": "KulMessengerEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulMessengerEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-messenger-declarations",
+                "id": "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload"
               }
             }
           },
@@ -6031,6 +6104,21 @@
       "listeners": [],
       "styles": [
         {
+          "name": "--kul-messenger-active-options-name-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of active options' names. Defaults to 4px."
+        },
+        {
+          "name": "--kul-messenger-avatar-name-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of the avatar's name. Defaults to 12px."
+        },
+        {
+          "name": "--kul-messenger-backdrop-filter",
+          "annotation": "prop",
+          "docs": "Sets the backdrop filter. Defaults to 5px."
+        },
+        {
           "name": "--kul-messenger-background-color",
           "annotation": "prop",
           "docs": "Sets the background color. Defaults to var(--kul-background-color)."
@@ -6041,9 +6129,39 @@
           "docs": "Sets the font size of the component. Defaults to var(--kul-font-size)."
         },
         {
+          "name": "--kul-messenger-letter-spacing",
+          "annotation": "prop",
+          "docs": "Sets the letter spacing. Defaults to 5px."
+        },
+        {
+          "name": "--kul-messenger-name-background-color",
+          "annotation": "prop",
+          "docs": "Sets the color of text. Defaults to rgba(var(--kul-title-background-color-rgb), 0.75)."
+        },
+        {
+          "name": "--kul-messenger-name-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the character's name. Defaults to 50px."
+        },
+        {
+          "name": "--kul-messenger-nav-box-shadow",
+          "annotation": "prop",
+          "docs": "Sets the box shadow of the messenger's navigation bar. Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375)."
+        },
+        {
+          "name": "--kul-messenger-options-title-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of titles. Defaults to 8px."
+        },
+        {
           "name": "--kul-messenger-text-color",
           "annotation": "prop",
           "docs": "Sets the color of text. Defaults to var(--kul-text-color)."
+        },
+        {
+          "name": "--kul-messenger-transition",
+          "annotation": "prop",
+          "docs": "Sets the transition effect. Defaults to 125ms ease-out."
         }
       ],
       "slots": [],
@@ -6053,6 +6171,8 @@
       ],
       "dependencies": [
         "kul-image",
+        "kul-button",
+        "kul-spinner",
         "kul-code",
         "kul-tabbar",
         "kul-chat",
@@ -6061,6 +6181,8 @@
       "dependencyGraph": {
         "kul-messenger": [
           "kul-image",
+          "kul-button",
+          "kul-spinner",
           "kul-code",
           "kul-tabbar",
           "kul-chat",
@@ -6073,12 +6195,12 @@
         "kul-badge": [
           "kul-image"
         ],
-        "kul-code": [
-          "kul-button"
-        ],
         "kul-button": [
           "kul-image",
           "kul-list"
+        ],
+        "kul-code": [
+          "kul-button"
         ],
         "kul-tabbar": [
           "kul-image"
@@ -7993,6 +8115,8 @@
         ],
         "kul-messenger": [
           "kul-image",
+          "kul-button",
+          "kul-spinner",
           "kul-code",
           "kul-tabbar",
           "kul-chat",
@@ -8005,12 +8129,12 @@
         "kul-badge": [
           "kul-image"
         ],
-        "kul-code": [
-          "kul-button"
-        ],
         "kul-button": [
           "kul-image",
           "kul-list"
+        ],
+        "kul-code": [
+          "kul-button"
         ],
         "kul-tabbar": [
           "kul-image"
@@ -8938,6 +9062,7 @@
       "dependents": [
         "kul-chat",
         "kul-image",
+        "kul-messenger",
         "kul-showcase-button",
         "kul-showcase-spinner",
         "kul-showcase-splash"
@@ -8948,6 +9073,9 @@
           "kul-spinner"
         ],
         "kul-image": [
+          "kul-spinner"
+        ],
+        "kul-messenger": [
           "kul-spinner"
         ],
         "kul-showcase-button": [
@@ -11909,7 +12037,7 @@
       "path": "src/components/kul-chat/kul-chat-declarations.ts"
     },
     "src/components/kul-chat/kul-chat-declarations.ts::KulChatEventPayload": {
-      "declaration": "export interface KulChatEventPayload extends KulEventPayload {\n    eventType: KulChatEvent;\n    history: string;\n}",
+      "declaration": "export interface KulChatEventPayload extends KulEventPayload {\n    eventType: KulChatEvent;\n    history: string;\n    status: KulChatStatus;\n}",
       "docstring": "",
       "path": "src/components/kul-chat/kul-chat-declarations.ts"
     },
@@ -11919,7 +12047,7 @@
       "path": "src/components/kul-chip/kul-chip-declarations.ts"
     },
     "src/components/kul-chip/kul-chip-declarations.ts::KulChipEventPayload": {
-      "declaration": "export interface KulChipEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
+      "declaration": "export interface KulChipEventPayload extends KulEventPayload {\n    node: KulDataNode;\n    selectedNodes: Set<KulDataNode>;\n}",
       "docstring": "",
       "path": "src/components/kul-chip/kul-chip-declarations.ts"
     },
@@ -11950,6 +12078,16 @@
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
       "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig": {
+      "declaration": "export interface KulMessengerConfig {\n    currentCharacter?: string;\n    filters?: KulMessengerFilters;\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
+      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    initialization: KulMessengerConfig;\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },

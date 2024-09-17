@@ -1,11 +1,14 @@
+import type { KulEventPayload } from '../../types/GenericTypes';
 import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 export interface KulMessengerAdapter {
     get: {
         character: {
             biography: (character?: KulMessengerCharacterNode) => string;
+            byId: (id: string) => KulMessengerCharacterNode;
             current: () => KulMessengerCharacterNode;
             history: (character?: KulMessengerCharacterNode) => string;
             list: () => KulMessengerCharacterNode[];
@@ -16,12 +19,17 @@ export interface KulMessengerAdapter {
             previous: (
                 character?: KulMessengerCharacterNode
             ) => KulMessengerCharacterNode;
+            status: () => KulChatStatus;
         };
         image: {
             asCover: (
                 type: KulMessengerImageRootNodesIds,
                 character?: KulMessengerCharacterNode
-            ) => string;
+            ) => {
+                node?: KulMessengerImageChildNode;
+                title?: string;
+                value: string;
+            };
             byType: <T extends KulMessengerImageRootNodesIds>(
                 type: T,
                 character?: KulMessengerCharacterNode
@@ -30,11 +38,17 @@ export interface KulMessengerAdapter {
                 type: KulMessengerImageRootNodesIds,
                 character?: KulMessengerCharacterNode
             ) => number;
-            options: () => KulMessengerOptionsState;
+            filters: () => KulMessengerFilters;
             root: <T extends KulMessengerImageRootNodesIds>(
                 type: T,
                 character?: KulMessengerCharacterNode
             ) => KulMessengerImageNodeTypeMap[T];
+            title: (node: KulMessengerImageChildNode) => string;
+        };
+        messenger: {
+            config: () => KulMessengerConfig;
+            data: () => KulMessengerDataset;
+            history: () => KulMessengerHistory;
         };
     };
     set: {
@@ -46,6 +60,7 @@ export interface KulMessengerAdapter {
             ) => void;
             next: (character?: KulMessengerCharacterNode) => void;
             previous: (character?: KulMessengerCharacterNode) => void;
+            status: (status: KulChatStatus) => void;
         };
         image: {
             cover: (
@@ -53,11 +68,9 @@ export interface KulMessengerAdapter {
                 value: number,
                 character?: KulMessengerCharacterNode
             ) => void;
-            options: (
-                type: KulMessengerImageRootNodesIds,
-                value: boolean
-            ) => void;
+            filters: (filter: KulMessengerFilters) => void;
         };
+        messenger: { data: () => Promise<void> };
     };
 }
 
@@ -123,7 +136,18 @@ export interface KulMessengerDataset extends KulDataDataset {
 }
 
 // Messenger Event
-export type KulMessengerEvent = 'ready';
+export type KulMessengerEvent = 'ready' | 'save';
+
+export interface KulMessengerEventPayload extends KulEventPayload {
+    initialization: KulMessengerConfig;
+}
+
+export interface KulMessengerFilters {
+    avatars?: boolean;
+    locations?: boolean;
+    outfits?: boolean;
+    styles?: boolean;
+}
 
 // Messenger History
 export interface KulMessengerHistory {
@@ -157,9 +181,16 @@ export type KulMessengerImageNodeTypeMap = {
 // Image Root Node ID Types
 export type KulMessengerImageRootNodesIds = keyof KulMessengerImageNodeTypeMap;
 
+// Initializes the component state
+export interface KulMessengerConfig {
+    currentCharacter?: string;
+    filters?: KulMessengerFilters;
+}
+
 // Location Node
 export interface KulMessengerLocationNode extends KulMessengerBaseNode<never> {
     id: `location_${string}`;
+    value: string;
 }
 
 // Locations Node
@@ -167,14 +198,6 @@ export interface KulMessengerLocationsNode
     extends KulMessengerBaseNode<KulMessengerLocationNode> {
     id: 'locations';
     value: number;
-}
-
-// Options State for Messenger Images
-export interface KulMessengerOptionsState {
-    avatars: boolean;
-    locations: boolean;
-    outfits: boolean;
-    styles: boolean;
 }
 
 // Outfit Node
@@ -192,14 +215,18 @@ export interface KulMessengerOutfitsNode
 
 // Messenger Props Enum
 export enum KulMessengerProps {
+    kulAutosave = 'Automatically saves the dataset when a chat updates.',
     kulData = 'The actual data of the component.',
     kulStyle = 'Custom style of the component.',
+    kulValue = 'Sets the initial configuration, including active character and filters.',
 }
 
 // Messenger Props Interface
 export interface KulMessengerPropsInterface {
+    kulAutosave?: boolean;
     kulData?: KulMessengerDataset;
     kulStyle?: string;
+    kulValue?: KulMessengerConfig;
 }
 
 // Style Node
