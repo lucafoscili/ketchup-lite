@@ -8,8 +8,11 @@ import { KulButton } from '../../kul-button/kul-button';
 let TIMEOUT: NodeJS.Timeout;
 
 export const prepLeft = (adapter: KulMessengerAdapter) => {
+    const isCollapsed = adapter.get.messenger.ui().panels.isLeftCollapsed;
     return (
-        <div class="messenger__left">
+        <div
+            class={`messenger__left ${isCollapsed ? 'messenger__left--collapsed' : ''}`}
+        >
             <div class="messenger__avatar">{prepAvatar(adapter)}</div>
             <div class="messenger__biography">{prepBiography(adapter)}</div>
         </div>

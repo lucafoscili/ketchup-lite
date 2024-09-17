@@ -10,8 +10,11 @@ import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constant';
 import { KulChip } from '../../kul-chip/kul-chip';
 
 export const prepRight = (adapter: KulMessengerAdapter) => {
+    const isCollapsed = adapter.get.messenger.ui().panels.isRightCollapsed;
     return (
-        <div class="messenger__right">
+        <div
+            class={`messenger__right ${isCollapsed ? 'messenger__right--collapsed' : ''}`}
+        >
             <div class="messenger__options__active">{prepOptions(adapter)}</div>
             <div class="messenger__options__filters">
                 {prepFilters(adapter)}
@@ -82,7 +85,7 @@ const prepFilters = (adapter: KulMessengerAdapter) => {
 
 const prepList = (adapter: KulMessengerAdapter) => {
     const elements = [];
-    const filters = adapter.get.image.filters();
+    const filters = adapter.get.messenger.ui().filters;
     const imagesGetter = adapter.get.image.byType;
     for (let index = 0; index < IMAGE_TYPE_IDS.length; index++) {
         const type = IMAGE_TYPE_IDS[index];
@@ -140,7 +143,7 @@ const chipEventHandler = (
     e: CustomEvent<KulChipEventPayload>
 ) => {
     const { comp, eventType, selectedNodes } = e.detail;
-    const filtersSetter = adapter.set.image.filters;
+    const filtersSetter = adapter.set.messenger.ui.filters;
 
     switch (eventType) {
         case 'click':
@@ -156,7 +159,7 @@ const chipEventHandler = (
             filtersSetter(newFilters);
             break;
         case 'ready':
-            const filters = adapter.get.image.filters();
+            const filters = adapter.get.messenger.ui().filters;
             const nodes: string[] = [];
             for (const key in filters) {
                 if (Object.prototype.hasOwnProperty.call(filters, key)) {

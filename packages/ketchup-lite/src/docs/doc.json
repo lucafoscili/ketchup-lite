@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-17T16:27:07",
+  "timestamp": "2024-09-17T21:53:00",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5829,7 +5829,7 @@
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
-      "readme": "# kul-messenger\r\n\r\n\r\n\r",
+      "readme": "# kul-messenger\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12082,12 +12082,12 @@
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig": {
-      "declaration": "export interface KulMessengerConfig {\n    currentCharacter?: string;\n    filters?: KulMessengerFilters;\n}",
+      "declaration": "export interface KulMessengerConfig {\n    currentCharacter: string;\n    ui: KulMessengerUI;\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
-      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    initialization: KulMessengerConfig;\n}",
+      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    config: KulMessengerConfig;\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },

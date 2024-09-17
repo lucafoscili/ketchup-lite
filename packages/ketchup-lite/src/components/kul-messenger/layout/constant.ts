@@ -1,6 +1,9 @@
 import { KulDataDataset } from '../../../managers/kul-data/kul-data-declarations';
 import { KulMessengerImageRootNodesIds } from '../kul-messenger-declarations';
 
+export const LEFT_EXPANDER_ICON = 'chevron_left';
+export const RIGHT_EXPANDER_ICON = 'chevron_right';
+
 export const AVATAR_COVER = 'portrait';
 export const LOCATION_COVER = 'landscape';
 export const OUTFIT_COVER = 'loyalty';
@@ -86,7 +89,7 @@ export const NAV_DATASET: KulDataDataset = {
     nodes: [
         {
             description: 'Previous character',
-            icon: 'chevron_left',
+            icon: LEFT_EXPANDER_ICON,
             id: 'previous',
             value: '',
         },
@@ -98,7 +101,7 @@ export const NAV_DATASET: KulDataDataset = {
         },
         {
             description: 'Next character',
-            icon: 'chevron_right',
+            icon: RIGHT_EXPANDER_ICON,
             id: 'next',
             value: '',
         },
