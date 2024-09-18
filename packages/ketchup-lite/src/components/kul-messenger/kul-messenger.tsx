@@ -97,9 +97,13 @@ export class KulMessenger {
         },
     };
     /**
-     * Node containing the history of this session's chats.
+     * Signals to the widget when the dataset is being saved.
      */
-    @State() status: KulChatStatus = 'offline';
+    @State() saveInProgress = false;
+    /**
+     * Tracks the connection status towards the LLM endpoint.
+     */
+    @State() connectionStatus: KulChatStatus = 'offline';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -215,6 +219,7 @@ export class KulMessenger {
     /*-------------------------------------------------*/
 
     #adapter: KulMessengerAdapter = {
+        components: { saveButton: null },
         get: {
             character: {
                 biography: (character = this.currentCharacter) => {
@@ -232,9 +237,8 @@ export class KulMessenger {
                 byId: (id: string) =>
                     this.kulData.nodes.find((n) => n.id === id),
                 current: () => this.currentCharacter,
-                history: (character = this.currentCharacter) => {
-                    return this.history[character.id];
-                },
+                history: (character = this.currentCharacter) =>
+                    this.history[character.id],
                 name: (character = this.currentCharacter) =>
                     character.value ||
                     character.id ||
@@ -266,13 +270,9 @@ export class KulMessenger {
 
                     return nodes[prevIdx];
                 },
-                status: () => this.status,
             },
             image: {
-                asCover: (
-                    type: KulMessengerImageRootNodesIds,
-                    character = this.currentCharacter
-                ) => {
+                asCover: (type, character = this.currentCharacter) => {
                     try {
                         const root = character.children.find(
                             (n) => n.id === type
@@ -313,10 +313,7 @@ export class KulMessenger {
                         );
                     }
                 },
-                coverIndex: (
-                    type: KulMessengerImageRootNodesIds,
-                    character = this.currentCharacter
-                ) => {
+                coverIndex: (type, character = this.currentCharacter) => {
                     return this.covers[character.id][type];
                 },
                 root: <T extends KulMessengerImageRootNodesIds>(
@@ -331,7 +328,7 @@ export class KulMessenger {
                     }
                     return node as KulMessengerImageNodeTypeMap[T];
                 },
-                title: (node: KulMessengerImageChildNode) => {
+                title: (node) => {
                     const title = node.value || '';
                     const description = node.description || '';
                     return title && description
@@ -352,19 +349,27 @@ export class KulMessenger {
                 },
                 data: () => this.kulData,
                 history: () => this.history,
+                status: {
+                    connection: () => this.connectionStatus,
+                    save: {
+                        button: () => this.#adapter.components.saveButton,
+                        inProgress: () => this.saveInProgress,
+                    },
+                },
                 ui: () => this.ui,
             },
         },
         set: {
             character: {
-                current: (character: KulMessengerCharacterNode) => {
+                current: (character) => {
                     this.currentCharacter = character;
                 },
-                history: (
-                    history: string,
-                    character = this.currentCharacter
-                ) => {
+                history: (history, character = this.currentCharacter) => {
                     this.history[character.id] = history;
+
+                    if (this.kulAutosave) {
+                        this.#adapter.set.messenger.data();
+                    }
                 },
                 next: (character = this.currentCharacter) => {
                     if (!this.#hasCharacters()) {
@@ -381,7 +386,6 @@ export class KulMessenger {
                         this.#adapter.get.character.previous(character);
                     this.#adapter.set.character.current(previousC);
                 },
-                status: (status: KulChatStatus) => (this.status = status),
             },
             image: {
                 cover: (
@@ -394,60 +398,44 @@ export class KulMessenger {
                 },
             },
             messenger: {
-                data: async () => {
+                data: () => {
                     if (!this.#hasNodes()) {
                         return;
                     }
-                    for (
-                        let index = 0;
-                        index < this.kulData.nodes.length;
-                        index++
-                    ) {
-                        const character = this.kulData.nodes[index];
-                        const id = character.id;
-                        const chat = character.children.find(
-                            (n) => n.id === 'chat'
-                        );
-                        const avatars = this.#adapter.get.image.root('avatars');
-                        const locations =
-                            this.#adapter.get.image.root('locations');
-                        const outfits = this.#adapter.get.image.root('outfits');
-                        const styles = this.#adapter.get.image.root('styles');
-                        if (this.history[id] && chat) {
-                            const historyJson = JSON.parse(this.history[id]);
-                            try {
-                                chat.cells.kulChat.value = historyJson;
-                            } catch (error) {
-                                chat.cells = {
-                                    kulChat: {
-                                        shape: 'chat',
-                                        value: historyJson,
-                                    },
-                                };
-                            }
-                        }
-                        if (this.covers[id] && avatars) {
-                            avatars.value = this.covers[id].avatars;
-                        }
-                        if (this.covers[id] && locations) {
-                            locations.value = this.covers[id].locations;
-                        }
-                        if (this.covers[id] && outfits) {
-                            outfits.value = this.covers[id].outfits;
-                        }
-                        if (this.covers[id] && styles) {
-                            styles.value = this.covers[id].styles;
-                        }
-                    }
-                    this.onKulEvent(new CustomEvent('save'), 'save');
+                    this.saveInProgress = true;
+
+                    this.#save().then(() => {
+                        requestAnimationFrame(() => {
+                            const button = this.#adapter.components.saveButton;
+                            button.kulIcon = 'check';
+                            button.kulLabel = 'Saved!';
+                            button.kulShowSpinner = false;
+                        });
+
+                        setTimeout(() => {
+                            requestAnimationFrame(
+                                () => (this.saveInProgress = false)
+                            );
+                        }, 1000);
+                    });
+                },
+                status: {
+                    connection: (status: KulChatStatus) =>
+                        (this.connectionStatus = status),
+                    save: {
+                        button: (button: HTMLKulButtonElement) =>
+                            (this.#adapter.components.saveButton = button),
+                        inProgress: (value: boolean) =>
+                            (this.saveInProgress = value),
+                    },
                 },
                 ui: {
-                    filters: (filters: KulMessengerFilters) => {
+                    filters: (filters) => {
                         this.ui.filters = filters;
                         this.refresh();
                     },
                     panel: (
-                        panel: KulMessengerPanelsValue,
+                        panel,
                         value = panel === 'left'
                             ? !this.ui.panels.isLeftCollapsed
                             : !this.ui.panels.isRightCollapsed
@@ -516,6 +504,44 @@ export class KulMessenger {
                 }
             }
         }
+    }
+
+    async #save() {
+        for (let index = 0; index < this.kulData.nodes.length; index++) {
+            const character = this.kulData.nodes[index];
+            const id = character.id;
+            const chat = character.children.find((n) => n.id === 'chat');
+            const avatars = this.#adapter.get.image.root('avatars');
+            const locations = this.#adapter.get.image.root('locations');
+            const outfits = this.#adapter.get.image.root('outfits');
+            const styles = this.#adapter.get.image.root('styles');
+            if (this.history[id] && chat) {
+                const historyJson = JSON.parse(this.history[id]);
+                try {
+                    chat.cells.kulChat.value = historyJson;
+                } catch (error) {
+                    chat.cells = {
+                        kulChat: {
+                            shape: 'chat',
+                            value: historyJson,
+                        },
+                    };
+                }
+            }
+            if (this.covers[id] && avatars) {
+                avatars.value = this.covers[id].avatars;
+            }
+            if (this.covers[id] && locations) {
+                locations.value = this.covers[id].locations;
+            }
+            if (this.covers[id] && outfits) {
+                outfits.value = this.covers[id].outfits;
+            }
+            if (this.covers[id] && styles) {
+                styles.value = this.covers[id].styles;
+            }
+        }
+        this.onKulEvent(new CustomEvent('save'), 'save');
     }
 
     /*-------------------------------------------------*/
