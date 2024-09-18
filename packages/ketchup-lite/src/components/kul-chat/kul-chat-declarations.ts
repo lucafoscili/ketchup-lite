@@ -23,7 +23,7 @@ export interface KulChatCompletionObject {
     choices: KulChatCompletionChoice[];
 }
 
-export type KulChatEvent = 'update' | 'ready';
+export type KulChatEvent = 'polling' | 'ready' | 'update';
 
 export interface KulChatEventPayload extends KulEventPayload {
     eventType: KulChatEvent;
