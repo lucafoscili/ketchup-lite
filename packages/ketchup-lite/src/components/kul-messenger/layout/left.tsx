@@ -1,7 +1,10 @@
 import { Fragment, h } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { MENU_DATASET } from './constant';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import {
+    KulButtonEventPayload,
+    KulButtonPropsInterface,
+} from '../../kul-button/kul-button-declarations';
 import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
 import { KulButton } from '../../kul-button/kul-button';
 
@@ -21,7 +24,7 @@ export const prepLeft = (adapter: KulMessengerAdapter) => {
 
 const prepAvatar = (adapter: KulMessengerAdapter) => {
     const image = adapter.get.image.asCover('avatars');
-    const status = adapter.get.character.status();
+    const status = adapter.get.messenger.status.connection();
     return (
         <Fragment>
             <img
@@ -54,26 +57,40 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
                     ></kul-image>
                     {adapter.get.character.name()}
                 </div>
-                <kul-button
-                    kulData={MENU_DATASET}
-                    kulIcon="save"
-                    kulLabel="Save"
-                    kulStyling="flat"
-                    onKul-button-event={buttonClickHandler.bind(
-                        buttonClickHandler,
-                        adapter
-                    )}
-                    title="Update the dataset with current settings."
-                >
-                    <kul-spinner
-                        kulActive={true}
-                        kulDimensions="0.6em"
-                        kulLayout={4}
-                        slot="spinner"
-                    ></kul-spinner>
-                </kul-button>
+                {prepSaveButton(adapter)}
             </div>
         </Fragment>
+    );
+};
+
+const prepSaveButton = (adapter: KulMessengerAdapter) => {
+    const saveInProgress = adapter.get.messenger.status.save.inProgress();
+    const props: KulButtonPropsInterface = {
+        kulIcon: saveInProgress ? '' : 'save',
+        kulLabel: saveInProgress ? 'Saving...' : 'Save',
+        kulShowSpinner: saveInProgress ? true : false,
+    };
+    return (
+        <kul-button
+            {...props}
+            kulData={MENU_DATASET}
+            kulStyling="flat"
+            onKul-button-event={buttonClickHandler.bind(
+                buttonClickHandler,
+                adapter
+            )}
+            ref={(el) => {
+                adapter.set.messenger.status.save.button(el);
+            }}
+            title="Update the dataset with current settings."
+        >
+            <kul-spinner
+                kulActive={true}
+                kulDimensions="0.6em"
+                kulLayout={4}
+                slot="spinner"
+            ></kul-spinner>
+        </kul-button>
     );
 };
 
@@ -90,29 +107,14 @@ const buttonClickHandler = async (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulButtonEventPayload>
 ) => {
-    const { comp, eventType, originalEvent } = e.detail;
-    const button = comp as KulButton;
+    const { eventType, originalEvent } = e.detail;
     switch (eventType) {
         case 'click':
-            button.kulLabel = 'Saving...';
-            button.kulShowSpinner = true;
-            adapter.set.messenger.data().then(() => {
-                requestAnimationFrame(() => {
-                    button.kulIcon = 'check';
-                    button.kulLabel = 'Saved!';
-                    button.kulShowSpinner = false;
-
-                    if (TIMEOUT) {
-                        clearTimeout(TIMEOUT);
-                    }
-
-                    TIMEOUT = setTimeout(() => {
-                        button.kulIcon = 'save';
-                        button.kulLabel = 'Save';
-                        TIMEOUT = null;
-                    }, 1000);
-                });
-            });
+            const saveInProgress =
+                adapter.get.messenger.status.save.inProgress();
+            if (!saveInProgress) {
+                adapter.set.messenger.data();
+            }
             break;
         case 'kul-event':
             listClickHandler(

@@ -231,7 +231,7 @@ export class KulChat {
         } catch (error) {
             this.status = 'offline';
         }
-        this.onKulEvent(new CustomEvent('update'), 'update');
+        this.onKulEvent(new CustomEvent('polling'), 'polling');
     }
 
     #disableInteractivity = (status: boolean) => {

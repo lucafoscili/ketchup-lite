@@ -5,6 +5,7 @@ import {
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 export interface KulMessengerAdapter {
+    components: { saveButton: HTMLKulButtonElement };
     get: {
         character: {
             biography: (character?: KulMessengerCharacterNode) => string;
@@ -19,7 +20,6 @@ export interface KulMessengerAdapter {
             previous: (
                 character?: KulMessengerCharacterNode
             ) => KulMessengerCharacterNode;
-            status: () => KulChatStatus;
         };
         image: {
             asCover: (
@@ -48,6 +48,13 @@ export interface KulMessengerAdapter {
             config: () => KulMessengerConfig;
             data: () => KulMessengerDataset;
             history: () => KulMessengerHistory;
+            status: {
+                connection: () => KulChatStatus;
+                save: {
+                    button: () => HTMLKulButtonElement;
+                    inProgress: () => boolean;
+                };
+            };
             ui: () => KulMessengerUI;
         };
     };
@@ -60,7 +67,6 @@ export interface KulMessengerAdapter {
             ) => void;
             next: (character?: KulMessengerCharacterNode) => void;
             previous: (character?: KulMessengerCharacterNode) => void;
-            status: (status: KulChatStatus) => void;
         };
         image: {
             cover: (
@@ -70,6 +76,14 @@ export interface KulMessengerAdapter {
             ) => void;
         };
         messenger: {
+            data: () => void;
+            status: {
+                connection: (status: KulChatStatus) => void;
+                save: {
+                    button: (button: HTMLKulButtonElement) => void;
+                    inProgress: (value: boolean) => void;
+                };
+            };
             ui: {
                 filters: (filter: KulMessengerFilters) => void;
                 panel: (
@@ -77,7 +91,6 @@ export interface KulMessengerAdapter {
                     value?: boolean
                 ) => boolean;
             };
-            data: () => Promise<void>;
         };
     };
 }

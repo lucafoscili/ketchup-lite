@@ -149,7 +149,7 @@
 
   &__right {
     display: grid;
-    grid-template-rows: minmax(10%, auto) auto 1fr;
+    grid-template-rows: 40% auto 1fr;
     height: 100%;
     overflow: auto;
     transition: height var(--kul_messenger_transition);
@@ -237,6 +237,7 @@
     }
 
     &__wrapper {
+      overflow: hidden;
       position: relative;
     }
 
@@ -253,6 +254,15 @@
       padding: 16px 0;
     }
 
+    &__label {
+      font-size: 0.8em;
+      letter-spacing: var(--kul_messenger_letter_spacing);
+      overflow: hidden;
+      text-align: center;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+    }
+
     &__list {
       display: grid;
       overflow: auto;
@@ -265,7 +275,6 @@
       overflow: hidden;
       padding: var(--kul_messenger_active_options_name_padding);
       position: absolute;
-      text-align: center;
       width: 100%;
     }
 

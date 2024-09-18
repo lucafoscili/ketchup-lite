@@ -128,9 +128,12 @@ const chatEventHandler = (
 ) => {
     const { eventType, history, status } = e.detail;
     switch (eventType) {
+        case 'polling':
+            adapter.set.messenger.status.connection(status);
+            break;
         case 'update':
             adapter.set.character.history(history);
-            adapter.set.character.status(status);
+            break;
     }
 };
 

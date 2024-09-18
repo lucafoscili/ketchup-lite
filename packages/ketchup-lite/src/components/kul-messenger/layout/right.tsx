@@ -37,7 +37,9 @@ const prepOptions = (adapter: KulMessengerAdapter) => {
                 title={outfitImage.title || 'No outfit selected.'}
             ></img>
             <div class="messenger__options__name">
-                <div class="messenger__options__label">Outfit</div>
+                <div class="messenger__options__label" title="Active outfit.">
+                    Outfit
+                </div>
             </div>
         </div>,
         <div class="messenger__options__wrapper">
@@ -48,7 +50,9 @@ const prepOptions = (adapter: KulMessengerAdapter) => {
                 title={locationImage.title || 'No location selected.'}
             ></img>
             <div class="messenger__options__name">
-                <div class="messenger__options__label">Location</div>
+                <div class="messenger__options__label" title="Active location.">
+                    Location
+                </div>
             </div>
         </div>,
         <div class="messenger__options__wrapper">
@@ -59,7 +63,9 @@ const prepOptions = (adapter: KulMessengerAdapter) => {
                 title={styleImage.title || 'No style selected.'}
             ></img>
             <div class="messenger__options__name">
-                <div class="messenger__options__label">Style</div>
+                <div class="messenger__options__label" title="Active style.">
+                    Style
+                </div>
             </div>
         </div>,
     ];
