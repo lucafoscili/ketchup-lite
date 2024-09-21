@@ -401,8 +401,7 @@ export class KulButton {
             [`button--${buttonStyling}`]: true,
             'button--no-label':
                 !this.kulLabel || this.kulLabel === ' ' ? true : false,
-            'button--with-spinner':
-                this.kulShowSpinner && !this.kulDisabled ? true : false,
+            'button--with-spinner': this.kulShowSpinner,
         };
 
         const labelClassName: Record<string, boolean> = {
@@ -454,8 +453,7 @@ export class KulButton {
             'button--disabled': this.kulDisabled ? true : false,
             'icon-button--on': this.kulToggable && isOn ? true : false,
             toggable: this.kulToggable ? true : false,
-            'icon-button--with-spinner':
-                this.kulShowSpinner && !this.kulDisabled ? true : false,
+            'icon-button--with-spinner': this.kulShowSpinner ? true : false,
         };
 
         const styleSpinnerContainer: Record<string, string> = {

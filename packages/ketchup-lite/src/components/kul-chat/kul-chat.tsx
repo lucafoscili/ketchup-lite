@@ -12,6 +12,7 @@ import {
     VNode,
 } from '@stencil/core';
 import {
+    KulChatAdapter,
     KulChatChoiceMessage,
     KulChatEvent,
     KulChatEventPayload,
@@ -28,6 +29,8 @@ import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declar
 import { GenericObject } from '../../types/GenericTypes';
 import { speechToText } from './helpers/speechToText';
 import { send } from './helpers/send';
+import { prepButtons, prepInputArea } from './layout/input';
+import { prepChat } from './layout/chat';
 
 @Component({
     tag: 'kul-chat',
@@ -119,13 +122,8 @@ export class KulChat {
     /*       I n t e r n a l   V a r i a b l e s       */
     /*-------------------------------------------------*/
 
-    #clearButton: HTMLKulButtonElement;
     #kulManager = kulManagerInstance();
-    #spinnerBar: HTMLKulSpinnerElement;
     #statusinterval: NodeJS.Timeout;
-    #sttButton: HTMLKulButtonElement;
-    #submitButton: HTMLKulButtonElement;
-    #textarea: HTMLKulTextfieldElement;
 
     /*-------------------------------------------------*/
     /*                   E v e n t s                   */
@@ -216,6 +214,99 @@ export class KulChat {
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
 
+    #adapter: KulChatAdapter = {
+        actions: {
+            delete: (m) => {
+                const index = this.history.indexOf(m);
+                if (index !== -1) {
+                    const cb = () => this.history.splice(index, 1);
+                    this.#updateHistory(cb);
+                    this.refresh();
+                }
+            },
+            disableInteractivity: (shouldDisable) => {
+                this.#adapter.components.buttons.send.kulShowSpinner =
+                    shouldDisable;
+                this.#adapter.components.textarea.kulDisabled = shouldDisable;
+                this.#adapter.components.buttons.stt.kulDisabled =
+                    shouldDisable;
+            },
+            regenerate: (m) => {
+                const index = this.history.indexOf(m);
+                if (index !== -1) {
+                    const cb = () =>
+                        (this.history = this.history.slice(0, index + 1));
+                    this.#updateHistory(cb);
+                    this.#sendPrompt();
+                }
+            },
+            send: (prompt) => {
+                const newMessage: KulChatChoiceMessage = {
+                    role: 'user',
+                    content: prompt,
+                };
+                const cb = () => (this.history = [...this.history, newMessage]);
+                this.#updateHistory(cb);
+                this.#sendPrompt();
+            },
+            stt: () =>
+                speechToText(
+                    this.#kulManager,
+                    this.#adapter.get.ui.textarea(),
+                    this.#adapter.get.ui.button.stt()
+                ),
+        },
+        components: {
+            buttons: {
+                clear: null,
+                send: null,
+                settings: null,
+                stt: null,
+            },
+            spinner: null,
+            textarea: null,
+        },
+        get: {
+            history: () => this.history,
+            status: () => this.status,
+            ui: {
+                button: {
+                    clear: () => this.#adapter.components.buttons.clear,
+                    send: () => this.#adapter.components.buttons.send,
+                    settings: () => this.#adapter.components.buttons.settings,
+                    stt: () => this.#adapter.components.buttons.stt,
+                },
+                spinner: () => this.#adapter.components.spinner,
+                textarea: () => this.#adapter.components.textarea,
+            },
+        },
+        set: {
+            status: (status) => (this.status = status),
+            ui: {
+                button: {
+                    clear: (button) => {
+                        this.#adapter.components.buttons.clear = button;
+                    },
+                    send: (button) => {
+                        this.#adapter.components.buttons.send = button;
+                    },
+                    settings: (button) => {
+                        this.#adapter.components.buttons.settings = button;
+                    },
+                    stt: (button) => {
+                        this.#adapter.components.buttons.stt = button;
+                    },
+                },
+                spinner: (spinner) => {
+                    this.#adapter.components.spinner = spinner;
+                },
+                textarea: (textarea) => {
+                    this.#adapter.components.textarea = textarea;
+                },
+            },
+        },
+    };
+
     async #checkLLMStatus() {
         if (this.status === 'offline') {
             this.status = 'connecting';
@@ -233,78 +324,6 @@ export class KulChat {
         }
         this.onKulEvent(new CustomEvent('polling'), 'polling');
     }
-
-    #disableInteractivity = (status: boolean) => {
-        this.#clearButton.kulDisabled = status;
-        this.#textarea.kulDisabled = status;
-        this.#sttButton.kulDisabled = status;
-        this.#submitButton.kulShowSpinner = status;
-    };
-
-    #prepChat = () => {
-        const nodes: VNode[] = [];
-
-        if (this.history?.length > 0) {
-            this.history.forEach((m) => {
-                const cssClass = 'kul-slim toolbar__button';
-                nodes.push(
-                    <div
-                        class={`message-container message-container--${m.role}`}
-                    >
-                        <div class={m.role}>{this.#prepMessage(m)}</div>
-                        <div class="toolbar">
-                            <kul-button
-                                class={cssClass + ' kul-danger'}
-                                kulIcon="delete"
-                                onClick={() => {
-                                    const index = this.history.indexOf(m);
-                                    if (index !== -1) {
-                                        const cb = () =>
-                                            this.history.splice(index, 1);
-                                        this.#updateHistory(cb);
-                                        this.refresh();
-                                    }
-                                }}
-                                title="Remove this message from history."
-                            ></kul-button>
-                            <kul-button
-                                class={cssClass}
-                                kulIcon="content_copy"
-                                onClick={() => {
-                                    navigator.clipboard.writeText(m.content);
-                                }}
-                                title="Copy text to clipboard."
-                            ></kul-button>
-                            {m.role === 'user' ? (
-                                <kul-button
-                                    class={cssClass}
-                                    kulIcon="refresh"
-                                    onClick={() => {
-                                        const index = this.history.indexOf(m);
-                                        if (index !== -1) {
-                                            const cb = () =>
-                                                (this.history =
-                                                    this.history.slice(
-                                                        0,
-                                                        index + 1
-                                                    ));
-                                            this.#updateHistory(cb);
-                                            this.#sendPrompt();
-                                        }
-                                    }}
-                                    title="Regenerate answer to this question."
-                                ></kul-button>
-                            ) : null}
-                        </div>
-                    </div>
-                );
-            });
-        } else {
-            nodes.push(<div class="empty">Your chat history is empty!</div>);
-        }
-
-        return nodes;
-    };
 
     #prepConnecting: () => VNode[] = () => {
         return [
@@ -332,131 +351,20 @@ export class KulChat {
         ];
     };
 
-    #prepMessage = (message: KulChatChoiceMessage): VNode[] => {
-        const elements: VNode[] = [];
-        const messageContent = message.content;
-
-        const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
-        let lastIndex = 0;
-
-        let match: RegExpExecArray | null;
-        while ((match = codeBlockRegex.exec(messageContent)) !== null) {
-            if (match.index > lastIndex) {
-                const textPart = messageContent.slice(lastIndex, match.index);
-                elements.push(<div class="paragraph">{textPart}</div>);
-            }
-
-            const language = match[1] ? match[1].trim() : 'text';
-            const codePart = match[2].trim();
-
-            elements.push(
-                <kul-code
-                    class={'code'}
-                    kulLanguage={language}
-                    kulValue={codePart}
-                ></kul-code>
-            );
-
-            lastIndex = match.index + match[0].length;
-        }
-
-        if (lastIndex < messageContent.length) {
-            const remainingText = messageContent.slice(lastIndex);
-            elements.push(<div class="paragraph">{remainingText}</div>);
-        }
-
-        return elements;
-    };
-
     #prepReady() {
         return [
             <div class="query-area">
-                <kul-textfield
-                    kulLabel="What's on your mind?"
-                    kulStyling={'textarea'}
-                    ref={(el) => {
-                        if (el) {
-                            this.#textarea = el;
-                        }
-                    }}
-                ></kul-textfield>
-                <div class="buttons">
-                    <kul-button
-                        kulIcon="clear"
-                        kulLabel="Clear"
-                        onClick={() => {
-                            this.#textarea.setValue('');
-                        }}
-                        kulStyling={'flat'}
-                        ref={(el) => {
-                            if (el) {
-                                this.#clearButton = el;
-                            }
-                        }}
-                    ></kul-button>
-                    <kul-button
-                        class="stt"
-                        kulIcon="keyboard_voice"
-                        onClick={() => {
-                            speechToText(
-                                this.#kulManager,
-                                this.#textarea,
-                                this.#sttButton
-                            );
-                        }}
-                        ref={(el) => {
-                            if (el) {
-                                this.#sttButton = el;
-                            }
-                        }}
-                        kulStyling={'icon'}
-                    >
-                        <kul-spinner
-                            kulActive={true}
-                            kulDimensions="0.6em"
-                            kulLayout={6}
-                            slot="spinner"
-                        ></kul-spinner>
-                    </kul-button>
-                    <kul-button
-                        kulIcon="check"
-                        kulLabel="Send"
-                        onClick={async () => {
-                            const value = await this.#textarea.getValue();
-                            if (value) {
-                                const newMessage: KulChatChoiceMessage = {
-                                    role: 'user',
-                                    content: value,
-                                };
-                                const cb = () =>
-                                    (this.history = [
-                                        ...this.history,
-                                        newMessage,
-                                    ]);
-                                this.#updateHistory(cb);
-                                this.#sendPrompt();
-                            }
-                        }}
-                        ref={(el) => {
-                            if (el) {
-                                this.#submitButton = el;
-                            }
-                        }}
-                    >
-                        <kul-spinner
-                            kulActive={true}
-                            kulDimensions="0.6em"
-                            slot="spinner"
-                        ></kul-spinner>
-                    </kul-button>
-                </div>
+                {prepInputArea(this.#adapter)}
+                {prepButtons(this.#adapter)}
             </div>,
-            <div class={`chat-area`}>{this.#prepChat()}</div>,
+            <div class={`chat-area`}>{prepChat(this.#adapter)}</div>,
             <div class="spinner-bar-wrapper">
                 <kul-spinner
                     kulBarVariant={true}
                     ref={(el) => {
-                        if (el) this.#spinnerBar = el;
+                        if (el) {
+                            this.#adapter.components.spinner = el;
+                        }
                     }}
                 ></kul-spinner>
             </div>,
@@ -464,9 +372,11 @@ export class KulChat {
     }
 
     async #sendPrompt() {
-        this.#spinnerBar.kulActive = true;
+        const disabler = this.#adapter.actions.disableInteractivity;
+        const textarea = this.#adapter.get.ui.textarea();
+        this.#adapter.components.spinner.kulActive = true;
+        requestAnimationFrame(() => disabler(true));
 
-        this.#disableInteractivity(true);
         const sendArgs: KulChatSendArguments = {
             history: this.history,
             max_tokens: this.kulMaxTokens,
@@ -475,15 +385,16 @@ export class KulChat {
             temperature: this.kulTemperature,
             url: this.kulEndpointUrl,
         };
+
         const llmMessage = await send(sendArgs);
         if (llmMessage) {
             const cb = () => this.history.push(llmMessage);
             this.#updateHistory(cb);
-            this.#disableInteractivity(false);
-            await this.#textarea.setValue('');
-            this.#spinnerBar.kulActive = false;
             await this.refresh();
-            this.#textarea.setFocus();
+            disabler(false);
+            this.#adapter.get.ui.spinner().kulActive = false;
+            await textarea.setValue('');
+            await textarea.setFocus();
         } else {
             const cb = () => this.history.pop();
             this.#updateHistory(cb);

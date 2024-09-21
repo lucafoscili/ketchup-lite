@@ -102,6 +102,11 @@
   }
 }
 
+.input-area {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
 .query-area {
   box-sizing: border-box;
   grid-area: query;
@@ -155,11 +160,6 @@
 
 .stt {
   padding: 0 1em;
-}
-
-.user {
-  display: flex;
-  justify-content: end;
 }
 
 .user,

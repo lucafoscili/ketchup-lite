@@ -1,4 +1,50 @@
 import { KulEventPayload } from '../../../src/types/GenericTypes';
+export interface KulChatAdapter {
+    actions: {
+        delete: (message: KulChatChoiceMessage) => void;
+        disableInteractivity: (shouldDisable: boolean) => void;
+        regenerate: (message: KulChatChoiceMessage) => void;
+        send: (prompt: string) => void;
+        stt: () => void;
+    };
+    components: {
+        buttons: {
+            clear: HTMLKulButtonElement;
+            send: HTMLKulButtonElement;
+            settings: HTMLKulButtonElement;
+            stt: HTMLKulButtonElement;
+        };
+        spinner: HTMLKulSpinnerElement;
+        textarea: HTMLKulTextfieldElement;
+    };
+    get: {
+        history: () => KulChatHistory;
+        status: (status: KulChatStatus) => void;
+        ui: {
+            button: {
+                clear: () => HTMLKulButtonElement;
+                send: () => HTMLKulButtonElement;
+                settings: () => HTMLKulButtonElement;
+                stt: () => HTMLKulButtonElement;
+            };
+            spinner: () => HTMLKulSpinnerElement;
+            textarea: () => HTMLKulTextfieldElement;
+        };
+    };
+    set: {
+        status: (status: KulChatStatus) => void;
+        ui: {
+            button: {
+                clear: (button: HTMLKulButtonElement) => void;
+                send: (button: HTMLKulButtonElement) => void;
+                settings: (button: HTMLKulButtonElement) => void;
+                stt: (button: HTMLKulButtonElement) => void;
+            };
+            spinner: (spinner: HTMLKulSpinnerElement) => void;
+            textarea: (textarea: HTMLKulTextfieldElement) => void;
+        };
+    };
+}
 export interface KulChatChoice {
     index: number;
     message: KulChatChoiceMessage;
@@ -37,6 +83,7 @@ export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
 
 export enum KulChatProps {
     kulEndpointUrl = 'URL of the endpoint where the LLM is hosted.',
+    kulLayout = 'Sets the layout of the chat.',
     kulMaxTokens = "Maximum number of tokens allowed in the LLM's answer.",
     kulPollingInterval = 'How often the component checks whether the LLM endpoint is online or not.',
     kulSeed = "Seed value for the LLM's answer generation.",
@@ -48,6 +95,7 @@ export enum KulChatProps {
 
 export interface KulChatPropsInterface {
     kulEndpointUrl?: string;
+    kulLayout?: KulChatLayout;
     kulMaxTokens?: number;
     kulPollingInterval?: number;
     kulSeed?: number;

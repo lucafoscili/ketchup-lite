@@ -6,6 +6,10 @@ import { ChatData } from './kul-showcase-chat-declarations';
 const component = 'chat';
 
 export const CHAT_EXAMPLES: ChatData = {
+    bottomLayout: {
+        ['data-description']: 'Chat with textarea below',
+        kulLayout: 'bottom-textarea',
+    },
     simple: {
         ['data-description']: 'Simple chat component',
     },
