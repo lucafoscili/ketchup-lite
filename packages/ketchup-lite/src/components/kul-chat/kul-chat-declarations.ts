@@ -23,6 +23,7 @@ export interface KulChatAdapter {
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: () => KulChatChoiceMessage;
+            view: () => KulChatView;
         };
         ui: {
             button: {
@@ -39,6 +40,7 @@ export interface KulChatAdapter {
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: (message: KulChatChoiceMessage) => void;
+            view: (view: KulChatView) => void;
         };
         ui: {
             button: {
@@ -132,3 +134,5 @@ export interface KulChatUsageTokens {
     completion_tokens: number;
     total_tokens: number;
 }
+
+export type KulChatView = 'chat' | 'settings';

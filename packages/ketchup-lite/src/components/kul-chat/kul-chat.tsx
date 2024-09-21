@@ -4,6 +4,7 @@ import {
     Event,
     EventEmitter,
     forceUpdate,
+    Fragment,
     h,
     Host,
     Method,
@@ -21,6 +22,7 @@ import {
     KulChatProps,
     KulChatSendArguments,
     KulChatStatus,
+    KulChatView,
 } from './kul-chat-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
@@ -29,8 +31,8 @@ import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declar
 import { GenericObject } from '../../types/GenericTypes';
 import { speechToText } from './helpers/speechToText';
 import { send } from './helpers/send';
-import { prepButtons, prepInputArea } from './layout/input';
-import { prepChat } from './layout/chat';
+import { prepSettings } from './settings/settings';
+import { prepChat } from './chat/chat';
 
 @Component({
     tag: 'kul-chat',
@@ -69,6 +71,10 @@ export class KulChat {
      * State of the connection.
      */
     @State() status: KulChatStatus = 'connecting';
+    /**
+     * State of the connection.
+     */
+    @State() view: KulChatView = 'chat';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -275,6 +281,7 @@ export class KulChat {
             status: {
                 connection: () => this.status,
                 toolbarMessage: () => this.toolbarMessage,
+                view: () => this.view,
             },
             ui: {
                 button: {
@@ -291,6 +298,7 @@ export class KulChat {
             status: {
                 connection: (status) => (this.status = status),
                 toolbarMessage: (element) => (this.toolbarMessage = element),
+                view: (view) => (this.view = view),
             },
             ui: {
                 button: {
@@ -362,23 +370,9 @@ export class KulChat {
     };
 
     #prepReady() {
-        return [
-            <div class="query-area">
-                {prepInputArea(this.#adapter)}
-                {prepButtons(this.#adapter)}
-            </div>,
-            <div class={`chat-area`}>{prepChat(this.#adapter)}</div>,
-            <div class="spinner-bar-wrapper">
-                <kul-spinner
-                    kulBarVariant={true}
-                    ref={(el) => {
-                        if (el) {
-                            this.#adapter.components.spinner = el;
-                        }
-                    }}
-                ></kul-spinner>
-            </div>,
-        ];
+        const chat = prepChat(this.#adapter);
+        const settings = prepSettings(this.#adapter);
+        return this.view === 'chat' ? chat : settings;
     }
 
     async #sendPrompt() {
@@ -467,7 +461,7 @@ export class KulChat {
                 )}
                 <div id={KUL_WRAPPER_ID}>
                     <div
-                        class={`wrapper wrapper--${this.kulLayout} wrapper--${this.status}`}
+                        class={`chat chat--${this.kulLayout} chat--${this.status}`}
                     >
                         {this.status === 'ready'
                             ? this.#prepReady()

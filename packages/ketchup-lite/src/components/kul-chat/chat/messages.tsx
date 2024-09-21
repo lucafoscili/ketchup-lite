@@ -1,7 +1,7 @@
 import { h, VNode } from '@stencil/core';
 import { KulChatAdapter, KulChatChoiceMessage } from '../kul-chat-declarations';
 
-export const prepChat = (adapter: KulChatAdapter) => {
+export const prepMessages = (adapter: KulChatAdapter) => {
     const elements: VNode[] = [];
     const history = adapter.get.history();
     const toolbarMessage = adapter.get.status.toolbarMessage();
@@ -10,20 +10,26 @@ export const prepChat = (adapter: KulChatAdapter) => {
         history.forEach((m) => {
             const element = (
                 <div
-                    class={`message-container message-container--${m.role}`}
+                    class={`chat__messages__container chat__messages__container--${m.role}`}
                     onPointerEnter={() => adapter.set.status.toolbarMessage(m)}
                     onPointerLeave={() =>
                         adapter.set.status.toolbarMessage(null)
                     }
                 >
-                    <div class={m.role}>{prepContent(m)}</div>
+                    <div
+                        class={`chat__messages__content chat__messages__content--${m.role}`}
+                    >
+                        {prepContent(m)}
+                    </div>
                     {m === toolbarMessage ? prepToolbar(adapter, m) : null}
                 </div>
             );
             elements.push(element);
         });
     } else {
-        elements.push(<div class="empty">Your chat history is empty!</div>);
+        elements.push(
+            <div class="chat__messages__empty">Your chat history is empty!</div>
+        );
     }
 
     return elements;
@@ -33,9 +39,9 @@ export const prepToolbar = (
     adapter: KulChatAdapter,
     m: KulChatChoiceMessage
 ) => {
-    const cssClass = 'kul-slim toolbar__button';
+    const cssClass = 'chat__messages__toolbar__button kul-slim';
     return (
-        <div class="toolbar">
+        <div class="chat__messages__toolbar">
             <kul-button
                 class={cssClass + ' kul-danger'}
                 kulIcon="delete"

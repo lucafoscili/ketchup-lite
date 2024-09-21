@@ -4,11 +4,15 @@ import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations'
 
 export const prepInputArea = (adapter: KulChatAdapter) => {
     return (
-        <div class="input-area">
+        <div class="chat__request__input">
             <kul-button
                 class="kul-full-height"
                 kulIcon="settings"
                 kulStyling="flat"
+                onKul-button-event={settingsEventHandler.bind(
+                    settingsEventHandler,
+                    adapter
+                )}
                 ref={(el) => {
                     if (el) {
                         adapter.set.ui.button.settings(el);
@@ -30,9 +34,8 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
 
 export const prepButtons = (adapter: KulChatAdapter) => {
     return (
-        <div class="buttons">
+        <div class="chat__request__buttons">
             <kul-button
-                kulIcon="clear"
                 kulLabel="Clear"
                 kulStyling={'flat'}
                 onKul-button-event={clearEventHandler.bind(
@@ -46,7 +49,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                 }}
             ></kul-button>
             <kul-button
-                class="stt"
+                class="chat__request__buttons__stt"
                 kulIcon="keyboard_voice"
                 kulStyling={'icon'}
                 onKul-button-event={sttEventHandler.bind(
@@ -116,6 +119,19 @@ const sendEventHandler = async (
             if (value) {
                 adapter.actions.send(value);
             }
+            break;
+    }
+};
+
+const settingsEventHandler = (
+    adapter: KulChatAdapter,
+    e: CustomEvent<KulButtonEventPayload>
+) => {
+    const { eventType } = e.detail;
+
+    switch (eventType) {
+        case 'click':
+            adapter.set.status.view('settings');
             break;
     }
 };
