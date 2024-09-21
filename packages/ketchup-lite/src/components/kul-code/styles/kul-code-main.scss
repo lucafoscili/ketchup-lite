@@ -169,6 +169,7 @@ pre::selection {
 }
 
 .body {
+  padding: 1em;
   white-space: pre-line;
 }
 
@@ -178,6 +179,7 @@ pre {
   min-height: calc(100% - 36px);
   overflow: auto;
   padding: 1.75em 1em;
+  white-space: pre-wrap;
 }
 
 :not(pre) > code {
