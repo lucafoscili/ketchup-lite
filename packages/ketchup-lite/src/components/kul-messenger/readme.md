@@ -122,11 +122,11 @@ graph TD;
   kul-button --> kul-list
   kul-code --> kul-button
   kul-tabbar --> kul-image
-  kul-chat --> kul-button
   kul-chat --> kul-spinner
   kul-chat --> kul-image
-  kul-chat --> kul-code
   kul-chat --> kul-textfield
+  kul-chat --> kul-button
+  kul-chat --> kul-code
   kul-showcase-messenger --> kul-messenger
   style kul-messenger fill:#f9f,stroke:#333,stroke-width:4px
 ```

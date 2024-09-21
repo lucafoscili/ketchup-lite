@@ -283,6 +283,13 @@ export class KulChat {
                 toolbarMessage: () => this.toolbarMessage,
                 view: () => this.view,
             },
+            props: {
+                endpointUrl: () => this.kulEndpointUrl,
+                maxTokens: () => this.kulMaxTokens,
+                pollingInterval: () => this.kulPollingInterval,
+                system: () => this.kulSystem,
+                temperature: () => this.kulTemperature,
+            },
             ui: {
                 button: {
                     clear: () => this.#adapter.components.buttons.clear,
@@ -295,6 +302,13 @@ export class KulChat {
             },
         },
         set: {
+            props: {
+                endpointUrl: (value) => (this.kulEndpointUrl = value),
+                maxTokens: (value) => (this.kulMaxTokens = value),
+                pollingInterval: (value) => (this.kulPollingInterval = value),
+                system: (value) => (this.kulSystem = value),
+                temperature: (value) => (this.kulTemperature = value),
+            },
             status: {
                 connection: (status) => (this.status = status),
                 toolbarMessage: (element) => (this.toolbarMessage = element),

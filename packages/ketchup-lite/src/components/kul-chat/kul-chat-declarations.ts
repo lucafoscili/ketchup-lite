@@ -20,6 +20,13 @@ export interface KulChatAdapter {
     };
     get: {
         history: () => KulChatHistory;
+        props: {
+            endpointUrl: () => string;
+            maxTokens: () => number;
+            pollingInterval: () => number;
+            system: () => string;
+            temperature: () => number;
+        };
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: () => KulChatChoiceMessage;
@@ -37,6 +44,13 @@ export interface KulChatAdapter {
         };
     };
     set: {
+        props: {
+            endpointUrl: (value: string) => void;
+            maxTokens: (value: number) => void;
+            pollingInterval: (value: number) => void;
+            system: (value: string) => void;
+            temperature: (value: number) => void;
+        };
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: (message: KulChatChoiceMessage) => void;

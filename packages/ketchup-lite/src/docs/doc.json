@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-18T19:53:28",
+  "timestamp": "2024-09-21T23:40:34",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -1390,7 +1390,7 @@
           "name": "kulType",
           "type": "\"button\" | \"reset\" | \"submit\"",
           "complexType": {
-            "original": "| 'button'\r\n        | 'reset'\r\n        | 'submit'",
+            "original": "| 'button'\n        | 'reset'\n        | 'submit'",
             "resolved": "\"button\" | \"reset\" | \"submit\"",
             "references": {}
           },
@@ -2663,7 +2663,6 @@
       "filePath": "src/components/kul-chat/kul-chat.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chat",
-      "readme": "# kul-chat\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -3212,23 +3211,19 @@
         "kul-showcase-chat"
       ],
       "dependencies": [
-        "kul-button",
         "kul-spinner",
         "kul-image",
-        "kul-code",
-        "kul-textfield"
+        "kul-textfield",
+        "kul-button",
+        "kul-code"
       ],
       "dependencyGraph": {
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+          "kul-textfield",
+          "kul-button",
+          "kul-code"
         ],
         "kul-image": [
           "kul-spinner",
@@ -3236,6 +3231,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-code": [
           "kul-button"
@@ -6206,11 +6205,11 @@
           "kul-image"
         ],
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
+          "kul-textfield",
+          "kul-button",
+          "kul-code"
         ],
         "kul-showcase-messenger": [
           "kul-messenger"
@@ -7435,15 +7434,11 @@
           "kul-article"
         ],
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+          "kul-textfield",
+          "kul-button",
+          "kul-code"
         ],
         "kul-image": [
           "kul-spinner",
@@ -7451,6 +7446,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-code": [
           "kul-button"
@@ -8140,11 +8139,11 @@
           "kul-image"
         ],
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
+          "kul-textfield",
+          "kul-button",
+          "kul-code"
         ]
       }
     },
