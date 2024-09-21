@@ -454,7 +454,7 @@ export class KulButton {
             'button--disabled': this.kulDisabled ? true : false,
             'icon-button--on': this.kulToggable && isOn ? true : false,
             toggable: this.kulToggable ? true : false,
-            'button--with-spinner':
+            'icon-button--with-spinner':
                 this.kulShowSpinner && !this.kulDisabled ? true : false,
         };
 
@@ -481,14 +481,13 @@ export class KulButton {
                 type={this.kulType ? this.kulType : 'button'}
             >
                 {this.#prepRipple()}
-                {!this.kulShowSpinner || this.kulDisabled ? (
-                    <kul-image
-                        {...image}
-                        kulValue={
-                            this.kulToggable && !isOn ? iconOff : this.kulIcon
-                        }
-                    />
-                ) : null}
+                <kul-image
+                    class="icon-button__icon"
+                    {...image}
+                    kulValue={
+                        this.kulToggable && !isOn ? iconOff : this.kulIcon
+                    }
+                />
                 {this.#prepSpinner()}
             </button>,
             this.#renderDropdown(image, 'icon'),
