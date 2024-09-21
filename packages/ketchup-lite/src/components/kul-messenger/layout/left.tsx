@@ -1,6 +1,6 @@
 import { Fragment, h } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
-import { MENU_DATASET } from './constant';
+import { MENU_DATASET } from './constants';
 import {
     KulButtonEventPayload,
     KulButtonPropsInterface,
@@ -72,6 +72,7 @@ const prepSaveButton = (adapter: KulMessengerAdapter) => {
     };
     return (
         <kul-button
+            class={'kul-full-height'}
             {...props}
             kulData={MENU_DATASET}
             kulStyling="flat"

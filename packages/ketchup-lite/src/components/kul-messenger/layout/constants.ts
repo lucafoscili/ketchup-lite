@@ -49,24 +49,10 @@ export const MENU_DATASET: KulDataDataset = {
                         'Download the Ketchup Lite JSON, used as a dataset.',
                     icon: 'download',
                     id: 'kulData',
-                    value: 'Download characters',
+                    value: 'Download dataset',
                 },
                 {
-                    description:
-                        'Download the chat history with this character.',
-                    icon: 'history',
-                    id: 'history',
-                    value: 'Download history',
-                },
-                {
-                    description:
-                        'Download the chat history for all characters.',
-                    icon: 'people',
-                    id: 'full_history',
-                    value: 'Download complete history',
-                },
-                {
-                    description: 'Download the widget configuration.',
+                    description: 'Download the current configuration settings.',
                     icon: 'settings',
                     id: 'settings',
                     value: 'Download configuration',

@@ -4,7 +4,7 @@ import {
     LEFT_EXPANDER_ICON,
     NAV_DATASET,
     RIGHT_EXPANDER_ICON,
-} from './constant';
+} from './constants';
 import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
 import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';

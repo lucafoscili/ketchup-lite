@@ -41,7 +41,7 @@ import {
     LOCATION_COVER,
     OUTFIT_COVER,
     STYLE_COVER,
-} from './layout/constant';
+} from './layout/constants';
 import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 
 @Component({

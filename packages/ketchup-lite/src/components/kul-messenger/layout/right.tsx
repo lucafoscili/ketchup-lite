@@ -6,7 +6,7 @@ import {
     KulMessengerImageRootNodesIds,
 } from '../kul-messenger-declarations';
 import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
-import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constant';
+import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constants';
 import { KulChip } from '../../kul-chip/kul-chip';
 
 export const prepRight = (adapter: KulMessengerAdapter) => {
