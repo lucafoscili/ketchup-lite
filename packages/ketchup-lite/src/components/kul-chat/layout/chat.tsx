@@ -1,56 +1,62 @@
-import { Fragment, h, VNode } from '@stencil/core';
+import { h, VNode } from '@stencil/core';
 import { KulChatAdapter, KulChatChoiceMessage } from '../kul-chat-declarations';
 
 export const prepChat = (adapter: KulChatAdapter) => {
-    const nodes: VNode[] = [];
+    const elements: VNode[] = [];
     const history = adapter.get.history();
+    const toolbarMessage = adapter.get.status.toolbarMessage();
 
     if (history?.length > 0) {
         history.forEach((m) => {
-            nodes.push(
-                <div class={`message-container message-container--${m.role}`}>
-                    {prepMessage(adapter, m)}
+            const element = (
+                <div
+                    class={`message-container message-container--${m.role}`}
+                    onPointerEnter={() => adapter.set.status.toolbarMessage(m)}
+                    onPointerLeave={() =>
+                        adapter.set.status.toolbarMessage(null)
+                    }
+                >
+                    <div class={m.role}>{prepContent(m)}</div>
+                    {m === toolbarMessage ? prepToolbar(adapter, m) : null}
                 </div>
             );
+            elements.push(element);
         });
     } else {
-        nodes.push(<div class="empty">Your chat history is empty!</div>);
+        elements.push(<div class="empty">Your chat history is empty!</div>);
     }
 
-    return nodes;
+    return elements;
 };
 
-export const prepMessage = (
+export const prepToolbar = (
     adapter: KulChatAdapter,
     m: KulChatChoiceMessage
 ) => {
     const cssClass = 'kul-slim toolbar__button';
     return (
-        <Fragment>
-            <div class={m.role}>{prepContent(m)}</div>
-            <div class="toolbar">
-                <kul-button
-                    class={cssClass + ' kul-danger'}
-                    kulIcon="delete"
-                    onClick={() => adapter.actions.delete(m)}
-                    title="Remove this message from history."
-                ></kul-button>
+        <div class="toolbar">
+            <kul-button
+                class={cssClass + ' kul-danger'}
+                kulIcon="delete"
+                onClick={() => adapter.actions.delete(m)}
+                title="Remove this message from history."
+            ></kul-button>
+            <kul-button
+                class={cssClass}
+                kulIcon="content_copy"
+                onClick={() => navigator.clipboard.writeText(m.content)}
+                title="Copy text to clipboard."
+            ></kul-button>
+            {m.role === 'user' ? (
                 <kul-button
                     class={cssClass}
-                    kulIcon="content_copy"
-                    onClick={() => navigator.clipboard.writeText(m.content)}
-                    title="Copy text to clipboard."
+                    kulIcon="refresh"
+                    onClick={() => adapter.actions.regenerate(m)}
+                    title="Regenerate answer to this question."
                 ></kul-button>
-                {m.role === 'user' ? (
-                    <kul-button
-                        class={cssClass}
-                        kulIcon="refresh"
-                        onClick={() => adapter.actions.regenerate(m)}
-                        title="Regenerate answer to this question."
-                    ></kul-button>
-                ) : null}
-            </div>
-        </Fragment>
+            ) : null}
+        </div>
     );
 };
 

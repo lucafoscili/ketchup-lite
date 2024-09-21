@@ -1,3 +1,4 @@
+import { VNode } from '@stencil/core';
 import { KulEventPayload } from '../../../src/types/GenericTypes';
 export interface KulChatAdapter {
     actions: {
@@ -19,7 +20,10 @@ export interface KulChatAdapter {
     };
     get: {
         history: () => KulChatHistory;
-        status: (status: KulChatStatus) => void;
+        status: {
+            connection: (status: KulChatStatus) => void;
+            toolbarMessage: () => KulChatChoiceMessage;
+        };
         ui: {
             button: {
                 clear: () => HTMLKulButtonElement;
@@ -32,7 +36,10 @@ export interface KulChatAdapter {
         };
     };
     set: {
-        status: (status: KulChatStatus) => void;
+        status: {
+            connection: (status: KulChatStatus) => void;
+            toolbarMessage: (message: KulChatChoiceMessage) => void;
+        };
         ui: {
             button: {
                 clear: (button: HTMLKulButtonElement) => void;

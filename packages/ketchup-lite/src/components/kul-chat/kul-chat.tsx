@@ -62,7 +62,11 @@ export class KulChat {
      */
     @State() history: KulChatHistory = [];
     /**
-     * State of the component.
+     * Message currently hovered (to display toolbar)
+     */
+    @State() toolbarMessage: KulChatChoiceMessage;
+    /**
+     * State of the connection.
      */
     @State() status: KulChatStatus = 'connecting';
 
@@ -268,7 +272,10 @@ export class KulChat {
         },
         get: {
             history: () => this.history,
-            status: () => this.status,
+            status: {
+                connection: () => this.status,
+                toolbarMessage: () => this.toolbarMessage,
+            },
             ui: {
                 button: {
                     clear: () => this.#adapter.components.buttons.clear,
@@ -281,7 +288,10 @@ export class KulChat {
             },
         },
         set: {
-            status: (status) => (this.status = status),
+            status: {
+                connection: (status) => (this.status = status),
+                toolbarMessage: (element) => (this.toolbarMessage = element),
+            },
             ui: {
                 button: {
                     clear: (button) => {
