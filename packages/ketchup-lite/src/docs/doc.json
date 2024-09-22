@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-22T08:43:38",
+  "timestamp": "2024-09-22T12:58:44",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -1390,7 +1390,7 @@
           "name": "kulType",
           "type": "\"button\" | \"reset\" | \"submit\"",
           "complexType": {
-            "original": "| 'button'\n        | 'reset'\n        | 'submit'",
+            "original": "| 'button'\r\n        | 'reset'\r\n        | 'submit'",
             "resolved": "\"button\" | \"reset\" | \"submit\"",
             "references": {}
           },
@@ -2663,7 +2663,7 @@
       "filePath": "src/components/kul-chat/kul-chat.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chat",
-      "readme": "# kul-chat\n\n\n",
+      "readme": "# kul-chat\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5829,7 +5829,7 @@
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
-      "readme": "# kul-messenger\n\n\n",
+      "readme": "# kul-messenger\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
