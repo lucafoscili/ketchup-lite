@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-18T19:53:28",
+  "timestamp": "2024-09-22T14:44:43",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -2663,11 +2663,37 @@
       "filePath": "src/components/kul-chat/kul-chat.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chat",
-      "readme": "# kul-chat\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "kulContextWindow",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-context-window",
+          "reflectToAttr": false,
+          "docs": "How many tokens the context window can handle, used to calculate the occupied space.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "8192",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "kulEndpointUrl",
           "type": "string",
@@ -3212,23 +3238,21 @@
         "kul-showcase-chat"
       ],
       "dependencies": [
-        "kul-button",
         "kul-spinner",
         "kul-image",
-        "kul-code",
-        "kul-textfield"
+        "kul-button",
+        "kul-textfield",
+        "kul-progressbar",
+        "kul-code"
       ],
       "dependencyGraph": {
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+          "kul-button",
+          "kul-textfield",
+          "kul-progressbar",
+          "kul-code"
         ],
         "kul-image": [
           "kul-spinner",
@@ -3236,6 +3260,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-code": [
           "kul-button"
@@ -5829,7 +5857,7 @@
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
-      "readme": "# kul-messenger\n\n\n",
+      "readme": "# kul-messenger\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6206,11 +6234,12 @@
           "kul-image"
         ],
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
+          "kul-button",
+          "kul-textfield",
+          "kul-progressbar",
+          "kul-code"
         ],
         "kul-showcase-messenger": [
           "kul-messenger"
@@ -6850,10 +6879,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-chat",
         "kul-showcase-progressbar"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "kul-chat": [
+          "kul-progressbar"
+        ],
         "kul-showcase-progressbar": [
           "kul-progressbar"
         ]
@@ -7435,15 +7468,12 @@
           "kul-article"
         ],
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+          "kul-button",
+          "kul-textfield",
+          "kul-progressbar",
+          "kul-code"
         ],
         "kul-image": [
           "kul-spinner",
@@ -7451,6 +7481,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-code": [
           "kul-button"
@@ -8140,11 +8174,12 @@
           "kul-image"
         ],
         "kul-chat": [
-          "kul-button",
           "kul-spinner",
           "kul-image",
-          "kul-code",
-          "kul-textfield"
+          "kul-button",
+          "kul-textfield",
+          "kul-progressbar",
+          "kul-code"
         ]
       }
     },

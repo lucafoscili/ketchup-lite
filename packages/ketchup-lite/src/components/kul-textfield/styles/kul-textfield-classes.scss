@@ -1,12 +1,13 @@
-/*-------------------------------------------------*/
-/*        C o m p o n e n t   C l a s s e s        */
-/*-------------------------------------------------*/
-/* $kul-class-danger                               */
-/* $kul-class-info                                 */
-/* $kul-class-warning                              */
-/* $kul-class-secondary                            */
-/* $kul-class-success                              */
-/*-------------------------------------------------*/
+:host(.#{$kul-class-full-height}) {
+  & {
+    height: 100%;
+  }
+
+  #kul-component,
+  .textfield {
+    height: 100%;
+  }
+}
 
 :host(.#{$kul-class-danger}) {
   --kul-textfield-primary-color: var(--kul-danger-color);

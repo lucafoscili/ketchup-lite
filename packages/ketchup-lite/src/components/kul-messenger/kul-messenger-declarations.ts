@@ -3,13 +3,20 @@ import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
-import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
+import {
+    KulChatPropsInterface,
+    KulChatStatus,
+} from '../kul-chat/kul-chat-declarations';
+
 export interface KulMessengerAdapter {
     components: { saveButton: HTMLKulButtonElement };
     get: {
         character: {
             biography: (character?: KulMessengerCharacterNode) => string;
             byId: (id: string) => KulMessengerCharacterNode;
+            chat: (
+                character?: KulMessengerCharacterNode
+            ) => KulChatPropsInterface;
             current: () => KulMessengerCharacterNode;
             history: (character?: KulMessengerCharacterNode) => string;
             list: () => KulMessengerCharacterNode[];
@@ -51,7 +58,6 @@ export interface KulMessengerAdapter {
             status: {
                 connection: () => KulChatStatus;
                 save: {
-                    button: () => HTMLKulButtonElement;
                     inProgress: () => boolean;
                 };
             };
@@ -60,6 +66,10 @@ export interface KulMessengerAdapter {
     };
     set: {
         character: {
+            chat: (
+                chat: KulChatPropsInterface,
+                character?: KulMessengerCharacterNode
+            ) => void;
             current: (character?: KulMessengerCharacterNode) => void;
             history: (
                 history: string,
@@ -80,7 +90,6 @@ export interface KulMessengerAdapter {
             status: {
                 connection: (status: KulChatStatus) => void;
                 save: {
-                    button: (button: HTMLKulButtonElement) => void;
                     inProgress: (value: boolean) => void;
                 };
             };
@@ -136,6 +145,10 @@ export interface KulMessengerCharacterNode
     ];
     id: `character_${string}`;
     value: string;
+}
+
+export interface KulMessengerChat {
+    [index: `character_${string}`]: KulChatPropsInterface;
 }
 
 // Chat Node

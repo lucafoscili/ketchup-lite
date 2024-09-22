@@ -685,6 +685,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     ],
     props: [
       {
+        name: "kulContextWindow",
+        docs: "How many tokens the context window can handle, used to calculate the occupied space.",
+        type: "number",
+      },
+      {
         name: "kulEndpointUrl",
         docs: "Enables customization of the component's style.",
         type: "string",

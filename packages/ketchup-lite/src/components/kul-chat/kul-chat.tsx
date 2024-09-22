@@ -4,6 +4,7 @@ import {
     Event,
     EventEmitter,
     forceUpdate,
+    Fragment,
     h,
     Host,
     Method,
@@ -12,6 +13,7 @@ import {
     VNode,
 } from '@stencil/core';
 import {
+    KulChatAdapter,
     KulChatChoiceMessage,
     KulChatEvent,
     KulChatEventPayload,
@@ -20,6 +22,8 @@ import {
     KulChatProps,
     KulChatSendArguments,
     KulChatStatus,
+    KulChatUsage,
+    KulChatView,
 } from './kul-chat-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
@@ -28,6 +32,8 @@ import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declar
 import { GenericObject } from '../../types/GenericTypes';
 import { speechToText } from './helpers/speechToText';
 import { send } from './helpers/send';
+import { prepSettings } from './settings/settings';
+import { prepChat } from './chat/chat';
 
 @Component({
     tag: 'kul-chat',
@@ -59,14 +65,31 @@ export class KulChat {
      */
     @State() history: KulChatHistory = [];
     /**
-     * State of the component.
+     * State of the connection.
      */
     @State() status: KulChatStatus = 'connecting';
+    /**
+     * Message currently hovered (to display toolbar)
+     */
+    @State() toolbarMessage: KulChatChoiceMessage;
+    /**
+     * State of the connection.
+     */
+    @State() usage: KulChatUsage;
+    /**
+     * State of the connection.
+     */
+    @State() view: KulChatView = 'chat';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
     /*-------------------------------------------------*/
 
+    /**
+     * How many tokens the context window can handle, used to calculate the occupied space.
+     * @default ""
+     */
+    @Prop({ mutable: true }) kulContextWindow = 8192;
     /**
      * Enables customization of the component's style.
      * @default "" - No custom style applied by default.
@@ -119,13 +142,8 @@ export class KulChat {
     /*       I n t e r n a l   V a r i a b l e s       */
     /*-------------------------------------------------*/
 
-    #clearButton: HTMLKulButtonElement;
     #kulManager = kulManagerInstance();
-    #spinnerBar: HTMLKulSpinnerElement;
     #statusinterval: NodeJS.Timeout;
-    #sttButton: HTMLKulButtonElement;
-    #submitButton: HTMLKulButtonElement;
-    #textarea: HTMLKulTextfieldElement;
 
     /*-------------------------------------------------*/
     /*                   E v e n t s                   */
@@ -216,6 +234,130 @@ export class KulChat {
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
 
+    #adapter: KulChatAdapter = {
+        actions: {
+            delete: (m) => {
+                const index = this.history.indexOf(m);
+                if (index !== -1) {
+                    const cb = () => this.history.splice(index, 1);
+                    this.#updateHistory(cb);
+                    this.refresh();
+                }
+            },
+            disableInteractivity: (shouldDisable) => {
+                this.#adapter.components.buttons.send.kulShowSpinner =
+                    shouldDisable;
+                this.#adapter.components.textarea.kulDisabled = shouldDisable;
+                this.#adapter.components.buttons.stt.kulDisabled =
+                    shouldDisable;
+            },
+            regenerate: (m) => {
+                const index = this.history.indexOf(m);
+                if (index !== -1) {
+                    const cb = () =>
+                        (this.history = this.history.slice(0, index + 1));
+                    this.#updateHistory(cb);
+                    this.#sendPrompt();
+                }
+            },
+            send: (prompt) => {
+                const newMessage: KulChatChoiceMessage = {
+                    role: 'user',
+                    content: prompt,
+                };
+                const cb = () => (this.history = [...this.history, newMessage]);
+                this.#updateHistory(cb);
+                this.#sendPrompt();
+            },
+            stt: () =>
+                speechToText(
+                    this.#kulManager,
+                    this.#adapter.get.ui.textarea(),
+                    this.#adapter.get.ui.button.stt()
+                ),
+        },
+        components: {
+            buttons: {
+                clear: null,
+                send: null,
+                settings: null,
+                stt: null,
+            },
+            spinner: null,
+            textarea: null,
+        },
+        emit: {
+            event: (eventType, e = new CustomEvent(eventType)) => {
+                this.onKulEvent(e, eventType);
+            },
+        },
+        get: {
+            history: () => this.history,
+            status: {
+                connection: () => this.status,
+                toolbarMessage: () => this.toolbarMessage,
+                usage: () => this.usage,
+                view: () => this.view,
+            },
+            props: {
+                contextWindow: () => this.kulContextWindow,
+                endpointUrl: () => this.kulEndpointUrl,
+                maxTokens: () => this.kulMaxTokens,
+                pollingInterval: () => this.kulPollingInterval,
+                system: () => this.kulSystem,
+                temperature: () => this.kulTemperature,
+            },
+            ui: {
+                button: {
+                    clear: () => this.#adapter.components.buttons.clear,
+                    send: () => this.#adapter.components.buttons.send,
+                    settings: () => this.#adapter.components.buttons.settings,
+                    stt: () => this.#adapter.components.buttons.stt,
+                },
+                spinner: () => this.#adapter.components.spinner,
+                textarea: () => this.#adapter.components.textarea,
+            },
+        },
+        set: {
+            props: {
+                contextWindow: (value) => (this.kulContextWindow = value),
+                endpointUrl: (value) => (this.kulEndpointUrl = value),
+                maxTokens: (value) => (this.kulMaxTokens = value),
+                pollingInterval: (value) => (this.kulPollingInterval = value),
+                system: (value) => (this.kulSystem = value),
+                temperature: (value) => (this.kulTemperature = value),
+            },
+            status: {
+                connection: (status) => (this.status = status),
+                toolbarMessage: (element) => (this.toolbarMessage = element),
+                usage: (usage) => (this.usage = usage),
+                view: (view) => (this.view = view),
+            },
+            ui: {
+                button: {
+                    clear: (button) => {
+                        this.#adapter.components.buttons.clear = button;
+                    },
+                    send: (button) => {
+                        this.#adapter.components.buttons.send = button;
+                    },
+                    settings: (button) => {
+                        this.#adapter.components.buttons.settings = button;
+                    },
+                    stt: (button) => {
+                        this.#adapter.components.buttons.stt = button;
+                    },
+                },
+                spinner: (spinner) => {
+                    this.#adapter.components.spinner = spinner;
+                },
+                textarea: (textarea) => {
+                    this.#adapter.components.textarea = textarea;
+                },
+            },
+        },
+    };
+
     async #checkLLMStatus() {
         if (this.status === 'offline') {
             this.status = 'connecting';
@@ -234,239 +376,60 @@ export class KulChat {
         this.onKulEvent(new CustomEvent('polling'), 'polling');
     }
 
-    #disableInteractivity = (status: boolean) => {
-        this.#clearButton.kulDisabled = status;
-        this.#textarea.kulDisabled = status;
-        this.#sttButton.kulDisabled = status;
-        this.#submitButton.kulShowSpinner = status;
-    };
-
-    #prepChat = () => {
-        const nodes: VNode[] = [];
-
-        if (this.history?.length > 0) {
-            this.history.forEach((m) => {
-                const cssClass = 'kul-slim toolbar__button';
-                nodes.push(
-                    <div
-                        class={`message-container message-container--${m.role}`}
-                    >
-                        <div class={m.role}>{this.#prepMessage(m)}</div>
-                        <div class="toolbar">
-                            <kul-button
-                                class={cssClass + ' kul-danger'}
-                                kulIcon="delete"
-                                onClick={() => {
-                                    const index = this.history.indexOf(m);
-                                    if (index !== -1) {
-                                        const cb = () =>
-                                            this.history.splice(index, 1);
-                                        this.#updateHistory(cb);
-                                        this.refresh();
-                                    }
-                                }}
-                                title="Remove this message from history."
-                            ></kul-button>
-                            <kul-button
-                                class={cssClass}
-                                kulIcon="content_copy"
-                                onClick={() => {
-                                    navigator.clipboard.writeText(m.content);
-                                }}
-                                title="Copy text to clipboard."
-                            ></kul-button>
-                            {m.role === 'user' ? (
-                                <kul-button
-                                    class={cssClass}
-                                    kulIcon="refresh"
-                                    onClick={() => {
-                                        const index = this.history.indexOf(m);
-                                        if (index !== -1) {
-                                            const cb = () =>
-                                                (this.history =
-                                                    this.history.slice(
-                                                        0,
-                                                        index + 1
-                                                    ));
-                                            this.#updateHistory(cb);
-                                            this.#sendPrompt();
-                                        }
-                                    }}
-                                    title="Regenerate answer to this question."
-                                ></kul-button>
-                            ) : null}
-                        </div>
-                    </div>
-                );
-            });
-        } else {
-            nodes.push(<div class="empty">Your chat history is empty!</div>);
-        }
-
-        return nodes;
-    };
-
     #prepConnecting: () => VNode[] = () => {
-        return [
-            <div class="spinner">
-                <kul-spinner
-                    kulActive={true}
-                    kulLayout={6}
-                    kulDimensions="7px"
-                />
-            </div>,
-            <div class="title">Just a moment.</div>,
-            <div class="text">Contacting your LLM endpoint...</div>,
-        ];
+        return (
+            <Fragment>
+                <div class="spinner">
+                    <kul-spinner
+                        kulActive={true}
+                        kulLayout={6}
+                        kulDimensions="7px"
+                    />
+                </div>
+                <div class="chat__title">Just a moment.</div>
+                <div class="chat__text">Contacting your LLM endpoint...</div>
+            </Fragment>
+        );
     };
 
-    #prepError: () => VNode[] = () => {
-        return [
-            <kul-image
-                kulValue="hotel"
-                kulSizeX="4em"
-                kulSizeY="4em"
-            ></kul-image>,
-            <div class="title">Zzz...</div>,
-            <div class="text">The LLM endpoint seems to be offline!</div>,
-        ];
-    };
-
-    #prepMessage = (message: KulChatChoiceMessage): VNode[] => {
-        const elements: VNode[] = [];
-        const messageContent = message.content;
-
-        const codeBlockRegex = /```(\w+)?\n([\s\S]*?)```/g;
-        let lastIndex = 0;
-
-        let match: RegExpExecArray | null;
-        while ((match = codeBlockRegex.exec(messageContent)) !== null) {
-            if (match.index > lastIndex) {
-                const textPart = messageContent.slice(lastIndex, match.index);
-                elements.push(<div class="paragraph">{textPart}</div>);
-            }
-
-            const language = match[1] ? match[1].trim() : 'text';
-            const codePart = match[2].trim();
-
-            elements.push(
-                <kul-code
-                    class={'code'}
-                    kulLanguage={language}
-                    kulValue={codePart}
-                ></kul-code>
-            );
-
-            lastIndex = match.index + match[0].length;
-        }
-
-        if (lastIndex < messageContent.length) {
-            const remainingText = messageContent.slice(lastIndex);
-            elements.push(<div class="paragraph">{remainingText}</div>);
-        }
-
-        return elements;
-    };
-
-    #prepReady() {
-        return [
-            <div class="query-area">
-                <kul-textfield
-                    kulLabel="What's on your mind?"
-                    kulStyling={'textarea'}
-                    ref={(el) => {
-                        if (el) {
-                            this.#textarea = el;
+    #prepOffline: () => VNode[] = () => {
+        return (
+            <Fragment>
+                <div class="chat__error">
+                    <kul-image
+                        kulValue="hotel"
+                        kulSizeX="4em"
+                        kulSizeY="4em"
+                    ></kul-image>
+                    <div class="chat__title">Zzz...</div>
+                    <div class="chat__text">
+                        The LLM endpoint seems to be offline!
+                    </div>
+                </div>
+                <kul-button
+                    class="chat__config kul-full-width"
+                    kulIcon="wrench"
+                    kulLabel="Configuration"
+                    kulStyling="flat"
+                    onKul-button-event={(e) => {
+                        const { eventType } = e.detail;
+                        switch (eventType) {
+                            case 'click':
+                                this.#adapter.set.status.view('settings');
+                                break;
                         }
                     }}
-                ></kul-textfield>
-                <div class="buttons">
-                    <kul-button
-                        kulIcon="clear"
-                        kulLabel="Clear"
-                        onClick={() => {
-                            this.#textarea.setValue('');
-                        }}
-                        kulStyling={'flat'}
-                        ref={(el) => {
-                            if (el) {
-                                this.#clearButton = el;
-                            }
-                        }}
-                    ></kul-button>
-                    <kul-button
-                        class="stt"
-                        kulIcon="keyboard_voice"
-                        onClick={() => {
-                            speechToText(
-                                this.#kulManager,
-                                this.#textarea,
-                                this.#sttButton
-                            );
-                        }}
-                        ref={(el) => {
-                            if (el) {
-                                this.#sttButton = el;
-                            }
-                        }}
-                        kulStyling={'icon'}
-                    >
-                        <kul-spinner
-                            kulActive={true}
-                            kulDimensions="0.6em"
-                            kulLayout={6}
-                            slot="spinner"
-                        ></kul-spinner>
-                    </kul-button>
-                    <kul-button
-                        kulIcon="check"
-                        kulLabel="Send"
-                        onClick={async () => {
-                            const value = await this.#textarea.getValue();
-                            if (value) {
-                                const newMessage: KulChatChoiceMessage = {
-                                    role: 'user',
-                                    content: value,
-                                };
-                                const cb = () =>
-                                    (this.history = [
-                                        ...this.history,
-                                        newMessage,
-                                    ]);
-                                this.#updateHistory(cb);
-                                this.#sendPrompt();
-                            }
-                        }}
-                        ref={(el) => {
-                            if (el) {
-                                this.#submitButton = el;
-                            }
-                        }}
-                    >
-                        <kul-spinner
-                            kulActive={true}
-                            kulDimensions="0.6em"
-                            slot="spinner"
-                        ></kul-spinner>
-                    </kul-button>
-                </div>
-            </div>,
-            <div class={`chat-area`}>{this.#prepChat()}</div>,
-            <div class="spinner-bar-wrapper">
-                <kul-spinner
-                    kulBarVariant={true}
-                    ref={(el) => {
-                        if (el) this.#spinnerBar = el;
-                    }}
-                ></kul-spinner>
-            </div>,
-        ];
-    }
+                ></kul-button>
+            </Fragment>
+        );
+    };
 
     async #sendPrompt() {
-        this.#spinnerBar.kulActive = true;
+        const disabler = this.#adapter.actions.disableInteractivity;
+        const textarea = this.#adapter.get.ui.textarea();
+        this.#adapter.components.spinner.kulActive = true;
+        requestAnimationFrame(() => disabler(true));
 
-        this.#disableInteractivity(true);
         const sendArgs: KulChatSendArguments = {
             history: this.history,
             max_tokens: this.kulMaxTokens,
@@ -475,15 +438,16 @@ export class KulChat {
             temperature: this.kulTemperature,
             url: this.kulEndpointUrl,
         };
-        const llmMessage = await send(sendArgs);
-        if (llmMessage) {
-            const cb = () => this.history.push(llmMessage);
+
+        const response = await send(this.#adapter, sendArgs);
+        if (response) {
+            const cb = () => this.history.push(response);
             this.#updateHistory(cb);
-            this.#disableInteractivity(false);
-            await this.#textarea.setValue('');
-            this.#spinnerBar.kulActive = false;
             await this.refresh();
-            this.#textarea.setFocus();
+            disabler(false);
+            this.#adapter.get.ui.spinner().kulActive = false;
+            await textarea.setValue('');
+            await textarea.setFocus();
         } else {
             const cb = () => this.history.pop();
             this.#updateHistory(cb);
@@ -546,13 +510,15 @@ export class KulChat {
                 )}
                 <div id={KUL_WRAPPER_ID}>
                     <div
-                        class={`wrapper wrapper--${this.kulLayout} wrapper--${this.status}`}
+                        class={`${this.view} ${this.view}--${this.kulLayout} ${this.view}--${this.status}`}
                     >
-                        {this.status === 'ready'
-                            ? this.#prepReady()
-                            : this.status === 'connecting'
-                              ? this.#prepConnecting()
-                              : this.#prepError()}
+                        {this.view === 'settings'
+                            ? prepSettings(this.#adapter)
+                            : this.status === 'ready'
+                              ? prepChat(this.#adapter)
+                              : this.status === 'connecting'
+                                ? this.#prepConnecting()
+                                : this.#prepOffline()}
                     </div>
                 </div>
             </Host>

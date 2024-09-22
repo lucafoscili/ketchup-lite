@@ -375,6 +375,24 @@
     }
   }
 
+  &--with-spinner {
+    & {
+      pointer-events: none;
+    }
+
+    .icon-button__icon {
+      opacity: 0;
+    }
+
+    .button__spinner-container {
+      width: 100%;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+    }
+  }
+
   &--disabled {
     opacity: 0.75;
     pointer-events: none;

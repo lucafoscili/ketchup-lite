@@ -384,6 +384,11 @@ export namespace Components {
          */
         "getProps": (descriptions?: boolean) => Promise<GenericObject>;
         /**
+          * How many tokens the context window can handle, used to calculate the occupied space.
+          * @default ""
+         */
+        "kulContextWindow": number;
+        /**
           * Enables customization of the component's style.
           * @default "" - No custom style applied by default.
          */
@@ -2434,6 +2439,11 @@ declare namespace LocalJSX {
         "onKul-chart-event"?: (event: KulChartCustomEvent<KulChartEventPayload>) => void;
     }
     interface KulChat {
+        /**
+          * How many tokens the context window can handle, used to calculate the occupied space.
+          * @default ""
+         */
+        "kulContextWindow"?: number;
         /**
           * Enables customization of the component's style.
           * @default "" - No custom style applied by default.

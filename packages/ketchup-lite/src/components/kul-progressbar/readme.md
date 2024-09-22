@@ -83,11 +83,13 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-chat](../kul-chat)
  - [kul-showcase-progressbar](../kul-showcase/components/progressbar)
 
 ### Graph
 ```mermaid
 graph TD;
+  kul-chat --> kul-progressbar
   kul-showcase-progressbar --> kul-progressbar
   style kul-progressbar fill:#f9f,stroke:#333,stroke-width:4px
 ```

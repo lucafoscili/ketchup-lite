@@ -1,14 +1,11 @@
 import { Fragment, h } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
-import { MENU_DATASET } from './constant';
+import { MENU_DATASET } from './constants';
 import {
     KulButtonEventPayload,
     KulButtonPropsInterface,
 } from '../../kul-button/kul-button-declarations';
 import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
-import { KulButton } from '../../kul-button/kul-button';
-
-let TIMEOUT: NodeJS.Timeout;
 
 export const prepLeft = (adapter: KulMessengerAdapter) => {
     const isCollapsed = adapter.get.messenger.ui().panels.isLeftCollapsed;
@@ -72,6 +69,7 @@ const prepSaveButton = (adapter: KulMessengerAdapter) => {
     };
     return (
         <kul-button
+            class={'kul-full-height'}
             {...props}
             kulData={MENU_DATASET}
             kulStyling="flat"
@@ -80,7 +78,7 @@ const prepSaveButton = (adapter: KulMessengerAdapter) => {
                 adapter
             )}
             ref={(el) => {
-                adapter.set.messenger.status.save.button(el);
+                adapter.components.saveButton = el;
             }}
             title="Update the dataset with current settings."
         >
