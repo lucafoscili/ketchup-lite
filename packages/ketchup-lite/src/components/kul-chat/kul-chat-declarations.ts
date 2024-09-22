@@ -1,4 +1,3 @@
-import { VNode } from '@stencil/core';
 import { KulEventPayload } from '../../../src/types/GenericTypes';
 export interface KulChatAdapter {
     actions: {
@@ -18,6 +17,7 @@ export interface KulChatAdapter {
         spinner: HTMLKulSpinnerElement;
         textarea: HTMLKulTextfieldElement;
     };
+    emit: { event: (eventType: KulChatEvent, e?: Event) => void };
     get: {
         history: () => KulChatHistory;
         props: {
@@ -92,7 +92,7 @@ export interface KulChatCompletionObject {
     choices: KulChatCompletionChoice[];
 }
 
-export type KulChatEvent = 'polling' | 'ready' | 'update';
+export type KulChatEvent = 'config' | 'polling' | 'ready' | 'update';
 
 export interface KulChatEventPayload extends KulEventPayload {
     eventType: KulChatEvent;

@@ -215,17 +215,33 @@
     width: 100%;
   }
 
-  &__settings {
+  &__title {
+    text-align: center;
+    font-size: var(--kul_chat_title_font_size);
+  }
+
+  &__text {
+    font-size: var(--kul_chat_small_font_size);
+    font-style: italic;
+    opacity: 0.5;
+    text-align: center;
+  }
+}
+
+.settings {
+  & {
+    display: grid;
+    grid-gap: 8px;
+    grid-template-rows: auto 1fr;
+  }
+
+  &__options {
     & {
-      display: grid;
-      grid-gap: 8px;
-      grid-template-rows: auto 1fr;
+      overflow-x: hidden;
     }
 
-    &__options {
-      &__system {
-        padding-top: 18px;
-      }
+    &__system {
+      padding-top: 18px;
     }
   }
 }

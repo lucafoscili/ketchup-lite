@@ -276,6 +276,11 @@ export class KulChat {
             spinner: null,
             textarea: null,
         },
+        emit: {
+            event: (eventType, e = new CustomEvent(eventType)) => {
+                this.onKulEvent(e, eventType);
+            },
+        },
         get: {
             history: () => this.history,
             status: {
@@ -366,8 +371,8 @@ export class KulChat {
                     kulDimensions="7px"
                 />
             </div>,
-            <div class="title">Just a moment.</div>,
-            <div class="text">Contacting your LLM endpoint...</div>,
+            <div class="chat__title">Just a moment.</div>,
+            <div class="chat__text">Contacting your LLM endpoint...</div>,
         ];
     };
 
@@ -378,8 +383,8 @@ export class KulChat {
                 kulSizeX="4em"
                 kulSizeY="4em"
             ></kul-image>,
-            <div class="title">Zzz...</div>,
-            <div class="text">The LLM endpoint seems to be offline!</div>,
+            <div class="chat__title">Zzz...</div>,
+            <div class="chat__text">The LLM endpoint seems to be offline!</div>,
         ];
     };
 
@@ -475,7 +480,7 @@ export class KulChat {
                 )}
                 <div id={KUL_WRAPPER_ID}>
                     <div
-                        class={`chat chat--${this.kulLayout} chat--${this.status}`}
+                        class={`${this.view} ${this.view}--${this.kulLayout} ${this.view}--${this.status}`}
                     >
                         {this.status === 'ready'
                             ? this.#prepReady()

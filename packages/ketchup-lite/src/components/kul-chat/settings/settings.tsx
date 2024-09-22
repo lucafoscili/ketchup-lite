@@ -14,9 +14,9 @@ export const OPTIONS_IDS = {
 export const prepSettings = (adapter: KulChatAdapter) => {
     return (
         <Fragment>
-            <div class="chat__settings">
+            <div class="settings">
                 {prepButton(adapter)}
-                <div class="chat__settings__options">
+                <div class="settings__options">
                     <kul-textfield
                         id={OPTIONS_IDS.temperature}
                         kulHtmlAttributes={{
@@ -80,7 +80,7 @@ export const prepSettings = (adapter: KulChatAdapter) => {
                     ></kul-textfield>
                     <kul-textfield
                         id={OPTIONS_IDS.system}
-                        class="chat__settings__options__system"
+                        class="settings__options__system"
                         kulLabel="System prompt"
                         kulStyling="textarea"
                         kulValue={adapter.get.props.system()}
@@ -117,6 +117,7 @@ const backEventHandler = (
 
     switch (eventType) {
         case 'click':
+            adapter.emit.event('config');
             adapter.set.status.view('chat');
             break;
     }
