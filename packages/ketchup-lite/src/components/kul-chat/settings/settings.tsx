@@ -4,6 +4,7 @@ import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations'
 import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
 
 export const OPTIONS_IDS = {
+    contextWindow: 'context-option',
     endpointUrl: 'endpoint-option',
     maxTokens: 'maxtokens-option',
     polling: 'polling-option',
@@ -48,6 +49,21 @@ const prepButton = (adapter: KulChatAdapter) => {
 const prepFields = (adapter: KulChatAdapter) => {
     return (
         <Fragment>
+            <kul-textfield
+                id={OPTIONS_IDS.contextWindow}
+                kulHtmlAttributes={{
+                    min: 10,
+                    step: 100,
+                    type: 'number',
+                }}
+                kulIcon="data_usage"
+                kulLabel="Context window length"
+                kulValue={String(adapter.get.props.contextWindow()).valueOf()}
+                onKul-textfield-event={textfieldEventHandler.bind(
+                    textfieldEventHandler,
+                    adapter
+                )}
+            ></kul-textfield>
             <kul-textfield
                 id={OPTIONS_IDS.temperature}
                 kulHtmlAttributes={{
@@ -130,6 +146,9 @@ const textfieldEventHandler = (
     switch (eventType) {
         case 'change':
             switch (id) {
+                case OPTIONS_IDS.contextWindow:
+                    adapter.set.props.contextWindow(parseInt(value));
+                    break;
                 case OPTIONS_IDS.endpointUrl:
                     adapter.set.props.endpointUrl(value);
                     break;

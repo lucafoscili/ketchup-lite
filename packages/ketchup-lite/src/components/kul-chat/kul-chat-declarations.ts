@@ -21,6 +21,7 @@ export interface KulChatAdapter {
     get: {
         history: () => KulChatHistory;
         props: {
+            contextWindow: () => number;
             endpointUrl: () => string;
             maxTokens: () => number;
             pollingInterval: () => number;
@@ -30,6 +31,7 @@ export interface KulChatAdapter {
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: () => KulChatChoiceMessage;
+            usage: () => KulChatUsage;
             view: () => KulChatView;
         };
         ui: {
@@ -45,6 +47,7 @@ export interface KulChatAdapter {
     };
     set: {
         props: {
+            contextWindow: (value: number) => void;
             endpointUrl: (value: string) => void;
             maxTokens: (value: number) => void;
             pollingInterval: (value: number) => void;
@@ -54,6 +57,7 @@ export interface KulChatAdapter {
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: (message: KulChatChoiceMessage) => void;
+            usage: (usage: KulChatUsage) => void;
             view: (view: KulChatView) => void;
         };
         ui: {
@@ -79,17 +83,13 @@ export interface KulChatChoiceMessage {
     tool_calls?: unknown[];
 }
 
-export interface KulChatCompletionChoice {
-    choice: KulChatChoice;
-}
-
 export interface KulChatCompletionObject {
     id: string;
     object: string;
     created: number;
     model: string;
     usage: KulChatUsage;
-    choices: KulChatCompletionChoice[];
+    choices: KulChatChoice[];
 }
 
 export type KulChatEvent = 'config' | 'polling' | 'ready' | 'update';
@@ -105,6 +105,7 @@ export type KulChatHistory = KulChatChoiceMessage[];
 export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
 
 export enum KulChatProps {
+    kulContextWindow = 'How many tokens the context window can handle, used to calculate the occupied space.',
     kulEndpointUrl = 'URL of the endpoint where the LLM is hosted.',
     kulLayout = 'Sets the layout of the chat.',
     kulMaxTokens = "Maximum number of tokens allowed in the LLM's answer.",
@@ -117,6 +118,7 @@ export enum KulChatProps {
 }
 
 export interface KulChatPropsInterface {
+    kulContextWindow?: number;
     kulEndpointUrl?: string;
     kulLayout?: KulChatLayout;
     kulMaxTokens?: number;
@@ -140,10 +142,6 @@ export interface KulChatSendArguments {
 export type KulChatStatus = 'connecting' | 'offline' | 'ready';
 
 export interface KulChatUsage {
-    usage: KulChatUsageTokens;
-}
-
-export interface KulChatUsageTokens {
     prompt_tokens: number;
     completion_tokens: number;
     total_tokens: number;

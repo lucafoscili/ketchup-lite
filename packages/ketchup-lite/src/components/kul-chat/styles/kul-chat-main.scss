@@ -119,8 +119,30 @@
     width: 100%;
 
     &__input {
-      display: grid;
-      grid-template-columns: auto 1fr;
+      & {
+        display: grid;
+        grid-template-areas:
+          'textarea button'
+          'progressbar button';
+        grid-template-columns: 1fr auto;
+      }
+
+      &__button {
+        --kul-button-padding: 0 1em;
+
+        grid-area: button;
+      }
+
+      &__progressbar {
+        --kul-progressbar-height: 1.75em;
+
+        grid-area: progressbar;
+      }
+
+      &__textarea {
+        grid-area: textarea;
+        overflow-x: hidden;
+      }
     }
 
     &__buttons {

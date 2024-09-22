@@ -46,6 +46,7 @@ graph TD;
   kul-chat --> kul-image
   kul-chat --> kul-button
   kul-chat --> kul-textfield
+  kul-chat --> kul-progressbar
   kul-chat --> kul-code
   style kul-showcase-messenger fill:#f9f,stroke:#333,stroke-width:4px
 ```

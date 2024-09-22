@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-22T12:58:44",
+  "timestamp": "2024-09-22T14:44:43",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -2663,11 +2663,37 @@
       "filePath": "src/components/kul-chat/kul-chat.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chat",
-      "readme": "# kul-chat\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
+        {
+          "name": "kulContextWindow",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-context-window",
+          "reflectToAttr": false,
+          "docs": "How many tokens the context window can handle, used to calculate the occupied space.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "8192",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
         {
           "name": "kulEndpointUrl",
           "type": "string",
@@ -3216,6 +3242,7 @@
         "kul-image",
         "kul-button",
         "kul-textfield",
+        "kul-progressbar",
         "kul-code"
       ],
       "dependencyGraph": {
@@ -3224,6 +3251,7 @@
           "kul-image",
           "kul-button",
           "kul-textfield",
+          "kul-progressbar",
           "kul-code"
         ],
         "kul-image": [
@@ -6210,6 +6238,7 @@
           "kul-image",
           "kul-button",
           "kul-textfield",
+          "kul-progressbar",
           "kul-code"
         ],
         "kul-showcase-messenger": [
@@ -6850,10 +6879,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-chat",
         "kul-showcase-progressbar"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "kul-chat": [
+          "kul-progressbar"
+        ],
         "kul-showcase-progressbar": [
           "kul-progressbar"
         ]
@@ -7439,6 +7472,7 @@
           "kul-image",
           "kul-button",
           "kul-textfield",
+          "kul-progressbar",
           "kul-code"
         ],
         "kul-image": [
@@ -8144,6 +8178,7 @@
           "kul-image",
           "kul-button",
           "kul-textfield",
+          "kul-progressbar",
           "kul-code"
         ]
       }

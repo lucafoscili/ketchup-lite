@@ -47,6 +47,7 @@ describe('Methods', () => {
 
     it(`getProps: check keys against Kul${chatCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(chatTag, {
+            kulContextWindow: null,
             kulEndpointUrl: null,
             kulLayout: null,
             kulMaxTokens: null,

@@ -22,6 +22,7 @@ import {
     KulChatProps,
     KulChatSendArguments,
     KulChatStatus,
+    KulChatUsage,
     KulChatView,
 } from './kul-chat-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -64,13 +65,17 @@ export class KulChat {
      */
     @State() history: KulChatHistory = [];
     /**
+     * State of the connection.
+     */
+    @State() status: KulChatStatus = 'connecting';
+    /**
      * Message currently hovered (to display toolbar)
      */
     @State() toolbarMessage: KulChatChoiceMessage;
     /**
      * State of the connection.
      */
-    @State() status: KulChatStatus = 'connecting';
+    @State() usage: KulChatUsage;
     /**
      * State of the connection.
      */
@@ -80,6 +85,11 @@ export class KulChat {
     /*                    P r o p s                    */
     /*-------------------------------------------------*/
 
+    /**
+     * How many tokens the context window can handle, used to calculate the occupied space.
+     * @default ""
+     */
+    @Prop({ mutable: true }) kulContextWindow = 8192;
     /**
      * Enables customization of the component's style.
      * @default "" - No custom style applied by default.
@@ -286,9 +296,11 @@ export class KulChat {
             status: {
                 connection: () => this.status,
                 toolbarMessage: () => this.toolbarMessage,
+                usage: () => this.usage,
                 view: () => this.view,
             },
             props: {
+                contextWindow: () => this.kulContextWindow,
                 endpointUrl: () => this.kulEndpointUrl,
                 maxTokens: () => this.kulMaxTokens,
                 pollingInterval: () => this.kulPollingInterval,
@@ -308,6 +320,7 @@ export class KulChat {
         },
         set: {
             props: {
+                contextWindow: (value) => (this.kulContextWindow = value),
                 endpointUrl: (value) => (this.kulEndpointUrl = value),
                 maxTokens: (value) => (this.kulMaxTokens = value),
                 pollingInterval: (value) => (this.kulPollingInterval = value),
@@ -317,6 +330,7 @@ export class KulChat {
             status: {
                 connection: (status) => (this.status = status),
                 toolbarMessage: (element) => (this.toolbarMessage = element),
+                usage: (usage) => (this.usage = usage),
                 view: (view) => (this.view = view),
             },
             ui: {
@@ -425,9 +439,9 @@ export class KulChat {
             url: this.kulEndpointUrl,
         };
 
-        const llmMessage = await send(sendArgs);
-        if (llmMessage) {
-            const cb = () => this.history.push(llmMessage);
+        const response = await send(this.#adapter, sendArgs);
+        if (response) {
+            const cb = () => this.history.push(response);
             this.#updateHistory(cb);
             await this.refresh();
             disabler(false);

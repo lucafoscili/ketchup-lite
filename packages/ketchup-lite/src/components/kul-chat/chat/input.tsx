@@ -6,7 +6,7 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
     return (
         <div class="chat__request__input">
             <kul-button
-                class="kul-full-height"
+                class="chat__request__input__button kul-full-height"
                 kulIcon="settings"
                 kulStyling="flat"
                 onKul-button-event={settingsEventHandler.bind(
@@ -20,6 +20,8 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
                 }}
             ></kul-button>
             <kul-textfield
+                class="chat__request__input__textarea"
+                kulFullWidth={true}
                 kulLabel="What's on your mind?"
                 kulStyling="textarea"
                 ref={(el) => {
@@ -28,6 +30,7 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
                     }
                 }}
             ></kul-textfield>
+            {prepProgressBar(adapter)}
         </div>
     );
 };
@@ -89,6 +92,33 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                 ></kul-spinner>
             </kul-button>
         </div>
+    );
+};
+
+const prepProgressBar = (adapter: KulChatAdapter) => {
+    const currentContext = adapter.get.status.usage()?.total_tokens;
+    const maxContext = adapter.get.props?.contextWindow();
+    if (isNaN(currentContext) || isNaN(maxContext)) {
+        return;
+    }
+    const value = (currentContext / maxContext) * 100;
+    const status =
+        value > 80 ? 'kul-danger' : value > 50 ? 'kul-warning' : 'kul-success';
+    const cssClass = {
+        chat__request__input__progressbar: true,
+        [status]: true,
+        ['kul-animated']: true,
+        ['kul-striped']: true,
+    };
+    return (
+        <kul-progressbar
+            class={cssClass}
+            kulCenteredLabel={true}
+            kulIcon="data_usage"
+            kulLabel="Remaining context"
+            kulValue={value}
+            title={`Used tokens: ${currentContext}/${maxContext}`}
+        ></kul-progressbar>
     );
 };
 
