@@ -30,8 +30,8 @@ graph TD;
   kul-showcase-chat --> kul-article
   kul-chat --> kul-spinner
   kul-chat --> kul-image
-  kul-chat --> kul-textfield
   kul-chat --> kul-button
+  kul-chat --> kul-textfield
   kul-chat --> kul-code
   kul-image --> kul-spinner
   kul-image --> kul-badge

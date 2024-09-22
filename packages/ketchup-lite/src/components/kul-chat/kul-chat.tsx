@@ -363,36 +363,52 @@ export class KulChat {
     }
 
     #prepConnecting: () => VNode[] = () => {
-        return [
-            <div class="spinner">
-                <kul-spinner
-                    kulActive={true}
-                    kulLayout={6}
-                    kulDimensions="7px"
-                />
-            </div>,
-            <div class="chat__title">Just a moment.</div>,
-            <div class="chat__text">Contacting your LLM endpoint...</div>,
-        ];
+        return (
+            <Fragment>
+                <div class="spinner">
+                    <kul-spinner
+                        kulActive={true}
+                        kulLayout={6}
+                        kulDimensions="7px"
+                    />
+                </div>
+                <div class="chat__title">Just a moment.</div>
+                <div class="chat__text">Contacting your LLM endpoint...</div>
+            </Fragment>
+        );
     };
 
-    #prepError: () => VNode[] = () => {
-        return [
-            <kul-image
-                kulValue="hotel"
-                kulSizeX="4em"
-                kulSizeY="4em"
-            ></kul-image>,
-            <div class="chat__title">Zzz...</div>,
-            <div class="chat__text">The LLM endpoint seems to be offline!</div>,
-        ];
+    #prepOffline: () => VNode[] = () => {
+        return (
+            <Fragment>
+                <div class="chat__error">
+                    <kul-image
+                        kulValue="hotel"
+                        kulSizeX="4em"
+                        kulSizeY="4em"
+                    ></kul-image>
+                    <div class="chat__title">Zzz...</div>
+                    <div class="chat__text">
+                        The LLM endpoint seems to be offline!
+                    </div>
+                </div>
+                <kul-button
+                    class="chat__config kul-full-width"
+                    kulIcon="wrench"
+                    kulLabel="Configuration"
+                    kulStyling="flat"
+                    onKul-button-event={(e) => {
+                        const { eventType } = e.detail;
+                        switch (eventType) {
+                            case 'click':
+                                this.#adapter.set.status.view('settings');
+                                break;
+                        }
+                    }}
+                ></kul-button>
+            </Fragment>
+        );
     };
-
-    #prepReady() {
-        const chat = prepChat(this.#adapter);
-        const settings = prepSettings(this.#adapter);
-        return this.view === 'chat' ? chat : settings;
-    }
 
     async #sendPrompt() {
         const disabler = this.#adapter.actions.disableInteractivity;
@@ -482,11 +498,13 @@ export class KulChat {
                     <div
                         class={`${this.view} ${this.view}--${this.kulLayout} ${this.view}--${this.status}`}
                     >
-                        {this.status === 'ready'
-                            ? this.#prepReady()
-                            : this.status === 'connecting'
-                              ? this.#prepConnecting()
-                              : this.#prepError()}
+                        {this.view === 'settings'
+                            ? prepSettings(this.#adapter)
+                            : this.status === 'ready'
+                              ? prepChat(this.#adapter)
+                              : this.status === 'connecting'
+                                ? this.#prepConnecting()
+                                : this.#prepOffline()}
                     </div>
                 </div>
             </Host>

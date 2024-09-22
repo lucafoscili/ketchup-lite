@@ -101,6 +101,16 @@
     grid-template-rows: auto 1fr auto;
   }
 
+  &--offline {
+    & {
+      grid-template-rows: 1fr auto;
+    }
+
+    &__error {
+      padding: 32px;
+    }
+  }
+
   &__request {
     box-sizing: border-box;
     grid-area: request;

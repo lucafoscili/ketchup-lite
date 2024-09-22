@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-21T23:40:34",
+  "timestamp": "2024-09-22T08:43:38",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -2663,6 +2663,7 @@
       "filePath": "src/components/kul-chat/kul-chat.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chat",
+      "readme": "# kul-chat\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -3213,16 +3214,16 @@
       "dependencies": [
         "kul-spinner",
         "kul-image",
-        "kul-textfield",
         "kul-button",
+        "kul-textfield",
         "kul-code"
       ],
       "dependencyGraph": {
         "kul-chat": [
           "kul-spinner",
           "kul-image",
-          "kul-textfield",
           "kul-button",
+          "kul-textfield",
           "kul-code"
         ],
         "kul-image": [
@@ -6207,8 +6208,8 @@
         "kul-chat": [
           "kul-spinner",
           "kul-image",
-          "kul-textfield",
           "kul-button",
+          "kul-textfield",
           "kul-code"
         ],
         "kul-showcase-messenger": [
@@ -7436,8 +7437,8 @@
         "kul-chat": [
           "kul-spinner",
           "kul-image",
-          "kul-textfield",
           "kul-button",
+          "kul-textfield",
           "kul-code"
         ],
         "kul-image": [
@@ -8141,8 +8142,8 @@
         "kul-chat": [
           "kul-spinner",
           "kul-image",
-          "kul-textfield",
           "kul-button",
+          "kul-textfield",
           "kul-code"
         ]
       }

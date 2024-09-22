@@ -124,8 +124,8 @@ graph TD;
   kul-tabbar --> kul-image
   kul-chat --> kul-spinner
   kul-chat --> kul-image
-  kul-chat --> kul-textfield
   kul-chat --> kul-button
+  kul-chat --> kul-textfield
   kul-chat --> kul-code
   kul-showcase-messenger --> kul-messenger
   style kul-messenger fill:#f9f,stroke:#333,stroke-width:4px

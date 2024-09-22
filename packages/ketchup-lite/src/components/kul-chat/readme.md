@@ -131,8 +131,8 @@ Type: `Promise<void>`
 
 - [kul-spinner](../kul-spinner)
 - [kul-image](../kul-image)
-- [kul-textfield](../kul-textfield)
 - [kul-button](../kul-button)
+- [kul-textfield](../kul-textfield)
 - [kul-code](../kul-code)
 
 ### Graph
@@ -140,8 +140,8 @@ Type: `Promise<void>`
 graph TD;
   kul-chat --> kul-spinner
   kul-chat --> kul-image
-  kul-chat --> kul-textfield
   kul-chat --> kul-button
+  kul-chat --> kul-textfield
   kul-chat --> kul-code
   kul-image --> kul-spinner
   kul-image --> kul-badge
