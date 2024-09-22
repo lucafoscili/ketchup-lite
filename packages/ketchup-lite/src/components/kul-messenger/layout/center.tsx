@@ -9,6 +9,7 @@ import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations'
 import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulButton } from '../../kul-button/kul-button';
+import { KulChat } from '../../kul-chat/kul-chat';
 
 export const prepCenter = (adapter: KulMessengerAdapter) => {
     const buttons = prepExpanderButtons(adapter);
@@ -94,13 +95,15 @@ const prepChat = (adapter: KulMessengerAdapter) => {
     `;
     const history = adapter.get.character.history();
     const historyJ = JSON.parse(history);
+    const props = adapter.get.character.chat();
     return (
         <kul-chat
             key={adapter.get.character.current().id}
-            onKul-chat-event={chatEventHandler.bind(chatEventHandler, adapter)}
             kulLayout="bottom-textarea"
             kulSystem={system}
             kulValue={historyJ}
+            {...props}
+            onKul-chat-event={chatEventHandler.bind(chatEventHandler, adapter)}
         ></kul-chat>
     );
 };
@@ -126,8 +129,18 @@ const chatEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChatEventPayload>
 ) => {
-    const { eventType, history, status } = e.detail;
+    const { comp, eventType, history, status } = e.detail;
+    const chat = comp as KulChat;
     switch (eventType) {
+        case 'config':
+            adapter.set.character.chat({
+                kulEndpointUrl: chat.kulEndpointUrl,
+                kulMaxTokens: chat.kulMaxTokens,
+                kulPollingInterval: chat.kulPollingInterval,
+                kulSystem: chat.kulSystem,
+                kulTemperature: chat.kulTemperature,
+            });
+            break;
         case 'polling':
             adapter.set.messenger.status.connection(status);
             break;

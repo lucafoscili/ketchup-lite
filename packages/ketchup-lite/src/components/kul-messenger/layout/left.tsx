@@ -81,7 +81,7 @@ const prepSaveButton = (adapter: KulMessengerAdapter) => {
                 adapter
             )}
             ref={(el) => {
-                adapter.set.messenger.status.save.button(el);
+                adapter.components.saveButton = el;
             }}
             title="Update the dataset with current settings."
         >
