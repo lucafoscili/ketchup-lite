@@ -6,9 +6,6 @@ import {
     KulButtonPropsInterface,
 } from '../../kul-button/kul-button-declarations';
 import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
-import { KulButton } from '../../kul-button/kul-button';
-
-let TIMEOUT: NodeJS.Timeout;
 
 export const prepLeft = (adapter: KulMessengerAdapter) => {
     const isCollapsed = adapter.get.messenger.ui().panels.isLeftCollapsed;

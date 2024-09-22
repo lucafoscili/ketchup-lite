@@ -375,10 +375,12 @@ export class KulMessenger {
                     this.currentCharacter = character;
                 },
                 history: (history, character = this.currentCharacter) => {
-                    this.history[character.id] = history;
+                    if (this.history[character.id] !== history) {
+                        this.history[character.id] = history;
 
-                    if (this.kulAutosave) {
-                        this.#adapter.set.messenger.data();
+                        if (this.kulAutosave) {
+                            this.#adapter.set.messenger.data();
+                        }
                     }
                 },
                 next: (character = this.currentCharacter) => {
@@ -614,10 +616,7 @@ export class KulMessenger {
                 ) : undefined}
                 <div id={KUL_WRAPPER_ID}>
                     {this.currentCharacter ? (
-                        <div
-                            class="messenger"
-                            key={'messenger_' + this.currentCharacter.id}
-                        >
+                        <div class="messenger">
                             {prepLeft(this.#adapter)}
                             {prepCenter(this.#adapter)}
                             {prepRight(this.#adapter)}
