@@ -6,6 +6,7 @@ export interface KulChatAdapter {
         regenerate: (message: KulChatChoiceMessage) => void;
         send: (prompt: string) => void;
         stt: () => void;
+        updateTokenCount: () => Promise<void>;
     };
     components: {
         buttons: {
@@ -14,6 +15,7 @@ export interface KulChatAdapter {
             settings: HTMLKulButtonElement;
             stt: HTMLKulButtonElement;
         };
+        progressbar: HTMLKulProgressbarElement;
         spinner: HTMLKulSpinnerElement;
         textarea: HTMLKulTextfieldElement;
     };
@@ -34,16 +36,6 @@ export interface KulChatAdapter {
             usage: () => KulChatUsage;
             view: () => KulChatView;
         };
-        ui: {
-            button: {
-                clear: () => HTMLKulButtonElement;
-                send: () => HTMLKulButtonElement;
-                settings: () => HTMLKulButtonElement;
-                stt: () => HTMLKulButtonElement;
-            };
-            spinner: () => HTMLKulSpinnerElement;
-            textarea: () => HTMLKulTextfieldElement;
-        };
     };
     set: {
         props: {
@@ -59,16 +51,6 @@ export interface KulChatAdapter {
             toolbarMessage: (message: KulChatChoiceMessage) => void;
             usage: (usage: KulChatUsage) => void;
             view: (view: KulChatView) => void;
-        };
-        ui: {
-            button: {
-                clear: (button: HTMLKulButtonElement) => void;
-                send: (button: HTMLKulButtonElement) => void;
-                settings: (button: HTMLKulButtonElement) => void;
-                stt: (button: HTMLKulButtonElement) => void;
-            };
-            spinner: (spinner: HTMLKulSpinnerElement) => void;
-            textarea: (textarea: HTMLKulTextfieldElement) => void;
         };
     };
 }
