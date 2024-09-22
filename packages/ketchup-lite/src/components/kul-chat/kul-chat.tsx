@@ -272,9 +272,24 @@ export class KulChat {
             stt: () =>
                 speechToText(
                     this.#kulManager,
-                    this.#adapter.get.ui.textarea(),
-                    this.#adapter.get.ui.button.stt()
+                    this.#adapter.components.textarea,
+                    this.#adapter.components.buttons.stt
                 ),
+            updateTokenCount: async () => {
+                const progressbar = this.#adapter.components.progressbar;
+                if (!this.kulContextWindow || !progressbar) {
+                    return;
+                }
+                let count = 0;
+                this.history.forEach((m) => (count += m.content.length));
+                if (isNaN(count) || isNaN(this.kulContextWindow)) {
+                    return;
+                }
+                const estimated = count / 4;
+                const value = (estimated / this.kulContextWindow) * 100;
+                progressbar.kulValue = value;
+                progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
+            },
         },
         components: {
             buttons: {
@@ -283,6 +298,7 @@ export class KulChat {
                 settings: null,
                 stt: null,
             },
+            progressbar: null,
             spinner: null,
             textarea: null,
         },
@@ -307,16 +323,6 @@ export class KulChat {
                 system: () => this.kulSystem,
                 temperature: () => this.kulTemperature,
             },
-            ui: {
-                button: {
-                    clear: () => this.#adapter.components.buttons.clear,
-                    send: () => this.#adapter.components.buttons.send,
-                    settings: () => this.#adapter.components.buttons.settings,
-                    stt: () => this.#adapter.components.buttons.stt,
-                },
-                spinner: () => this.#adapter.components.spinner,
-                textarea: () => this.#adapter.components.textarea,
-            },
         },
         set: {
             props: {
@@ -332,28 +338,6 @@ export class KulChat {
                 toolbarMessage: (element) => (this.toolbarMessage = element),
                 usage: (usage) => (this.usage = usage),
                 view: (view) => (this.view = view),
-            },
-            ui: {
-                button: {
-                    clear: (button) => {
-                        this.#adapter.components.buttons.clear = button;
-                    },
-                    send: (button) => {
-                        this.#adapter.components.buttons.send = button;
-                    },
-                    settings: (button) => {
-                        this.#adapter.components.buttons.settings = button;
-                    },
-                    stt: (button) => {
-                        this.#adapter.components.buttons.stt = button;
-                    },
-                },
-                spinner: (spinner) => {
-                    this.#adapter.components.spinner = spinner;
-                },
-                textarea: (textarea) => {
-                    this.#adapter.components.textarea = textarea;
-                },
             },
         },
     };
@@ -426,7 +410,7 @@ export class KulChat {
 
     async #sendPrompt() {
         const disabler = this.#adapter.actions.disableInteractivity;
-        const textarea = this.#adapter.get.ui.textarea();
+        const textarea = this.#adapter.components.textarea;
         this.#adapter.components.spinner.kulActive = true;
         requestAnimationFrame(() => disabler(true));
 
@@ -445,7 +429,7 @@ export class KulChat {
             this.#updateHistory(cb);
             await this.refresh();
             disabler(false);
-            this.#adapter.get.ui.spinner().kulActive = false;
+            this.#adapter.components.spinner.kulActive = false;
             await textarea.setValue('');
             await textarea.setFocus();
         } else {
@@ -456,6 +440,7 @@ export class KulChat {
 
     #updateHistory(cb: () => unknown) {
         cb();
+        this.#adapter.actions.updateTokenCount();
         this.onKulEvent(new CustomEvent('update'), 'update');
     }
 

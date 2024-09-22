@@ -113,3 +113,35 @@ $kul-dd-draggable-row: 'kul-draggable-row'; // Attached to the element being dra
 ::-webkit-scrollbar-track {
   background-color: var(--kul-background-color);
 }
+
+@keyframes fade-in-block {
+  0% {
+    display: none;
+  }
+
+  1% {
+    display: block;
+    opacity: 0;
+  }
+
+  100% {
+    display: block;
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-flex {
+  0% {
+    display: none;
+  }
+
+  1% {
+    display: flex;
+    opacity: 0;
+  }
+
+  100% {
+    display: flex;
+    opacity: 1;
+  }
+}

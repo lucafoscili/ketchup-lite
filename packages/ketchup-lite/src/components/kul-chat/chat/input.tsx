@@ -15,7 +15,7 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
                 )}
                 ref={(el) => {
                     if (el) {
-                        adapter.set.ui.button.settings(el);
+                        adapter.components.buttons.settings = el;
                     }
                 }}
             ></kul-button>
@@ -26,7 +26,7 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
                 kulStyling="textarea"
                 ref={(el) => {
                     if (el) {
-                        adapter.set.ui.textarea(el);
+                        adapter.components.textarea = el;
                     }
                 }}
             ></kul-textfield>
@@ -47,7 +47,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                 )}
                 ref={(el) => {
                     if (el) {
-                        adapter.set.ui.button.clear(el);
+                        adapter.components.buttons.clear = el;
                     }
                 }}
             ></kul-button>
@@ -61,7 +61,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                 )}
                 ref={(el) => {
                     if (el) {
-                        adapter.set.ui.button.stt(el);
+                        adapter.components.buttons.stt = el;
                     }
                 }}
             >
@@ -81,7 +81,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                 )}
                 ref={(el) => {
                     if (el) {
-                        adapter.set.ui.button.send(el);
+                        adapter.components.buttons.send = el;
                     }
                 }}
             >
@@ -96,17 +96,8 @@ export const prepButtons = (adapter: KulChatAdapter) => {
 };
 
 const prepProgressBar = (adapter: KulChatAdapter) => {
-    const currentContext = adapter.get.status.usage()?.total_tokens;
-    const maxContext = adapter.get.props?.contextWindow();
-    if (isNaN(currentContext) || isNaN(maxContext)) {
-        return;
-    }
-    const value = (currentContext / maxContext) * 100;
-    const status =
-        value > 80 ? 'kul-danger' : value > 50 ? 'kul-warning' : 'kul-success';
     const cssClass = {
         chat__request__input__progressbar: true,
-        [status]: true,
         ['kul-animated']: true,
         ['kul-striped']: true,
     };
@@ -115,9 +106,12 @@ const prepProgressBar = (adapter: KulChatAdapter) => {
             class={cssClass}
             kulCenteredLabel={true}
             kulIcon="data_usage"
-            kulLabel="Remaining context"
-            kulValue={value}
-            title={`Used tokens: ${currentContext}/${maxContext}`}
+            kulLabel="Context window"
+            ref={(el) => {
+                if (el) {
+                    adapter.components.progressbar = el;
+                }
+            }}
         ></kul-progressbar>
     );
 };
@@ -130,8 +124,8 @@ const clearEventHandler = async (
 
     switch (eventType) {
         case 'click':
-            await adapter.get.ui.textarea().setValue('');
-            await adapter.get.ui.textarea().setFocus();
+            await adapter.components.textarea.setValue('');
+            await adapter.components.textarea.setFocus();
             break;
     }
 };
@@ -142,7 +136,7 @@ const sendEventHandler = async (
 ) => {
     const { eventType } = e.detail;
 
-    const value = await adapter.get.ui.textarea().getValue();
+    const value = await adapter.components.textarea.getValue();
 
     switch (eventType) {
         case 'click':
