@@ -11,6 +11,7 @@ import {
     Prop,
     State,
     VNode,
+    Watch,
 } from '@stencil/core';
 import {
     KulChatAdapter,
@@ -22,7 +23,6 @@ import {
     KulChatProps,
     KulChatSendArguments,
     KulChatStatus,
-    KulChatUsage,
     KulChatView,
 } from './kul-chat-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -72,10 +72,6 @@ export class KulChat {
      * Message currently hovered (to display toolbar)
      */
     @State() toolbarMessage: KulChatChoiceMessage;
-    /**
-     * State of the connection.
-     */
-    @State() usage: KulChatUsage;
     /**
      * State of the connection.
      */
@@ -169,6 +165,24 @@ export class KulChat {
             history: JSON.stringify(this.history) || '',
             status: this.status,
         });
+    }
+
+    /*-------------------------------------------------*/
+    /*                 W a t c h e r s                 */
+    /*-------------------------------------------------*/
+
+    @Watch('kulSystem')
+    async updateTokensCount() {
+        const progressbar = this.#adapter.components.progressbar;
+        if (!this.kulContextWindow || !progressbar) {
+            return;
+        }
+        let count = this.kulSystem ? this.kulSystem.length / 4 : 0;
+        this.history.forEach((m) => (count += m.content.length));
+        const estimated = count / 4;
+        const value = (estimated / this.kulContextWindow) * 100;
+        progressbar.kulValue = value;
+        progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
     }
 
     /*-------------------------------------------------*/
@@ -275,21 +289,7 @@ export class KulChat {
                     this.#adapter.components.textarea,
                     this.#adapter.components.buttons.stt
                 ),
-            updateTokenCount: async () => {
-                const progressbar = this.#adapter.components.progressbar;
-                if (!this.kulContextWindow || !progressbar) {
-                    return;
-                }
-                let count = 0;
-                this.history.forEach((m) => (count += m.content.length));
-                if (isNaN(count) || isNaN(this.kulContextWindow)) {
-                    return;
-                }
-                const estimated = count / 4;
-                const value = (estimated / this.kulContextWindow) * 100;
-                progressbar.kulValue = value;
-                progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
-            },
+            updateTokenCount: async () => this.updateTokensCount(),
         },
         components: {
             buttons: {
@@ -312,7 +312,6 @@ export class KulChat {
             status: {
                 connection: () => this.status,
                 toolbarMessage: () => this.toolbarMessage,
-                usage: () => this.usage,
                 view: () => this.view,
             },
             props: {
@@ -336,7 +335,6 @@ export class KulChat {
             status: {
                 connection: (status) => (this.status = status),
                 toolbarMessage: (element) => (this.toolbarMessage = element),
-                usage: (usage) => (this.usage = usage),
                 view: (view) => (this.view = view),
             },
         },

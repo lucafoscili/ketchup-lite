@@ -32,7 +32,7 @@ const prepOptions = (adapter: KulMessengerAdapter) => {
         <div class="messenger__options__wrapper">
             <img
                 class="messenger__options__outfit"
-                alt={styleImage.title || 'No outfit selected.'}
+                alt={outfitImage.title || 'No outfit selected.'}
                 src={outfitImage.value}
                 title={outfitImage.title || 'No outfit selected.'}
             ></img>
@@ -45,7 +45,7 @@ const prepOptions = (adapter: KulMessengerAdapter) => {
         <div class="messenger__options__wrapper">
             <img
                 class="messenger__options__location"
-                alt={styleImage.title || 'No location selected.'}
+                alt={locationImage.title || 'No location selected.'}
                 src={locationImage.value}
                 title={locationImage.title || 'No location selected.'}
             ></img>

@@ -1,16 +1,18 @@
 import { h } from '@stencil/core';
 import { KulChatAdapter } from '../kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulButton } from '../../kul-button/kul-button';
 
 export const prepInputArea = (adapter: KulChatAdapter) => {
     return (
         <div class="chat__request__input">
             <kul-button
                 class="chat__request__input__button kul-full-height"
+                id="settings-button"
                 kulIcon="settings"
                 kulStyling="flat"
-                onKul-button-event={settingsEventHandler.bind(
-                    settingsEventHandler,
+                onKul-button-event={buttonEventHandler.bind(
+                    buttonEventHandler,
                     adapter
                 )}
                 ref={(el) => {
@@ -39,10 +41,11 @@ export const prepButtons = (adapter: KulChatAdapter) => {
     return (
         <div class="chat__request__buttons">
             <kul-button
+                id="clear-button"
                 kulLabel="Clear"
                 kulStyling={'flat'}
-                onKul-button-event={clearEventHandler.bind(
-                    clearEventHandler,
+                onKul-button-event={buttonEventHandler.bind(
+                    buttonEventHandler,
                     adapter
                 )}
                 ref={(el) => {
@@ -52,11 +55,12 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                 }}
             ></kul-button>
             <kul-button
+                id="stt-button"
                 class="chat__request__buttons__stt"
                 kulIcon="keyboard_voice"
                 kulStyling={'icon'}
-                onKul-button-event={sttEventHandler.bind(
-                    sttEventHandler,
+                onKul-button-event={buttonEventHandler.bind(
+                    buttonEventHandler,
                     adapter
                 )}
                 ref={(el) => {
@@ -73,10 +77,11 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                 ></kul-spinner>
             </kul-button>
             <kul-button
+                id="send-button"
                 kulIcon="check"
                 kulLabel="Send"
-                onKul-button-event={sendEventHandler.bind(
-                    sendEventHandler,
+                onKul-button-event={buttonEventHandler.bind(
+                    buttonEventHandler,
                     adapter
                 )}
                 ref={(el) => {
@@ -107,6 +112,10 @@ const prepProgressBar = (adapter: KulChatAdapter) => {
             kulCenteredLabel={true}
             kulIcon="data_usage"
             kulLabel="Context window"
+            onKul-progressbar-event={progressbarEventHandler.bind(
+                progressbarEventHandler,
+                adapter
+            )}
             ref={(el) => {
                 if (el) {
                     adapter.components.progressbar = el;
@@ -116,59 +125,45 @@ const prepProgressBar = (adapter: KulChatAdapter) => {
     );
 };
 
-const clearEventHandler = async (
+const buttonEventHandler = async (
     adapter: KulChatAdapter,
     e: CustomEvent<KulButtonEventPayload>
 ) => {
-    const { eventType } = e.detail;
+    const { eventType, id } = e.detail;
+    const textarea = adapter.components.textarea;
 
     switch (eventType) {
         case 'click':
-            await adapter.components.textarea.setValue('');
-            await adapter.components.textarea.setFocus();
-            break;
-    }
-};
-
-const sendEventHandler = async (
-    adapter: KulChatAdapter,
-    e: CustomEvent<KulButtonEventPayload>
-) => {
-    const { eventType } = e.detail;
-
-    const value = await adapter.components.textarea.getValue();
-
-    switch (eventType) {
-        case 'click':
-            if (value) {
-                adapter.actions.send(value);
+            switch (id) {
+                case 'clear-button':
+                    await textarea.setValue('');
+                    await textarea.setFocus();
+                    break;
+                case 'send-button':
+                    const value = await textarea.getValue();
+                    if (value) {
+                        adapter.actions.send(value);
+                    }
+                    break;
+                case 'settings-button':
+                    adapter.set.status.view('settings');
+                    break;
+                case 'stt-button':
+                    adapter.actions.stt();
+                    break;
             }
-            break;
     }
 };
 
-const settingsEventHandler = (
+const progressbarEventHandler = async (
     adapter: KulChatAdapter,
     e: CustomEvent<KulButtonEventPayload>
 ) => {
     const { eventType } = e.detail;
 
     switch (eventType) {
-        case 'click':
-            adapter.set.status.view('settings');
-            break;
-    }
-};
-
-const sttEventHandler = (
-    adapter: KulChatAdapter,
-    e: CustomEvent<KulButtonEventPayload>
-) => {
-    const { eventType } = e.detail;
-
-    switch (eventType) {
-        case 'click':
-            adapter.actions.stt();
+        case 'ready':
+            adapter.actions.updateTokenCount();
             break;
     }
 };

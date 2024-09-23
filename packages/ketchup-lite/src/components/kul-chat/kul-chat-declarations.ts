@@ -33,7 +33,6 @@ export interface KulChatAdapter {
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: () => KulChatChoiceMessage;
-            usage: () => KulChatUsage;
             view: () => KulChatView;
         };
     };
@@ -49,7 +48,6 @@ export interface KulChatAdapter {
         status: {
             connection: (status: KulChatStatus) => void;
             toolbarMessage: (message: KulChatChoiceMessage) => void;
-            usage: (usage: KulChatUsage) => void;
             view: (view: KulChatView) => void;
         };
     };
@@ -70,7 +68,6 @@ export interface KulChatCompletionObject {
     object: string;
     created: number;
     model: string;
-    usage: KulChatUsage;
     choices: KulChatChoice[];
 }
 

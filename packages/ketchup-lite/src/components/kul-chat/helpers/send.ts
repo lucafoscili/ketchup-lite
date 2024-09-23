@@ -32,7 +32,6 @@ export const send: (
     try {
         const response = await callLLM(request, url);
         const message = response.choices?.[0]?.message?.content;
-        adapter.set.status.usage(response.usage);
         const llmMessage: KulChatChoiceMessage = {
             role: 'llm',
             content: message,
