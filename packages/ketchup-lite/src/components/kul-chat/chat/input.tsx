@@ -1,7 +1,6 @@
 import { h } from '@stencil/core';
 import { KulChatAdapter } from '../kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulButton } from '../../kul-button/kul-button';
 
 export const prepInputArea = (adapter: KulChatAdapter) => {
     return (

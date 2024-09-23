@@ -43,8 +43,6 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { textShadow } from 'html2canvas/dist/types/css/property-descriptors/text-shadow';
-import { fontFamily } from 'html2canvas/dist/types/css/property-descriptors/font-family';
 
 @Component({
     tag: 'kul-chart',

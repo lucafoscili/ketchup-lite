@@ -15,13 +15,11 @@ import {
 } from '@stencil/core';
 import {
     KulChatAdapter,
-    KulChatChoiceMessage,
     KulChatEvent,
     KulChatEventPayload,
     KulChatHistory,
     KulChatLayout,
     KulChatProps,
-    KulChatSendArguments,
     KulChatStatus,
     KulChatView,
 } from './kul-chat-declarations';
@@ -30,10 +28,12 @@ import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { GenericObject } from '../../types/GenericTypes';
-import { speechToText } from './helpers/speechToText';
-import { send } from './helpers/send';
 import { prepSettings } from './settings/settings';
 import { prepChat } from './chat/chat';
+import {
+    KulLLMChoiceMessage,
+    KulLLMRequest,
+} from '../../managers/kul-llm/kul-llm-declarations';
 
 @Component({
     tag: 'kul-chat',
@@ -71,7 +71,7 @@ export class KulChat {
     /**
      * Message currently hovered (to display toolbar)
      */
-    @State() toolbarMessage: KulChatChoiceMessage;
+    @State() toolbarMessage: KulLLMChoiceMessage;
     /**
      * State of the connection.
      */
@@ -181,8 +181,10 @@ export class KulChat {
         this.history.forEach((m) => (count += m.content.length));
         const estimated = count / 4;
         const value = (estimated / this.kulContextWindow) * 100;
-        progressbar.kulValue = value;
-        progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
+        requestAnimationFrame(() => {
+            progressbar.kulValue = value;
+            progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
+        });
     }
 
     /*-------------------------------------------------*/
@@ -275,7 +277,7 @@ export class KulChat {
                 }
             },
             send: (prompt) => {
-                const newMessage: KulChatChoiceMessage = {
+                const newMessage: KulLLMChoiceMessage = {
                     role: 'user',
                     content: prompt,
                 };
@@ -284,8 +286,7 @@ export class KulChat {
                 this.#sendPrompt();
             },
             stt: () =>
-                speechToText(
-                    this.#kulManager,
+                this.#kulManager.llm.speechToText(
                     this.#adapter.components.textarea,
                     this.#adapter.components.buttons.stt
                 ),
@@ -309,6 +310,7 @@ export class KulChat {
         },
         get: {
             history: () => this.history,
+            manager: () => this.#kulManager,
             status: {
                 connection: () => this.status,
                 toolbarMessage: () => this.toolbarMessage,
@@ -345,7 +347,9 @@ export class KulChat {
             this.status = 'connecting';
         }
         try {
-            const response = await fetch(this.kulEndpointUrl);
+            const response = await this.#kulManager.llm.poll(
+                this.kulEndpointUrl
+            );
 
             if (!response.ok) {
                 this.status = 'offline';
@@ -412,25 +416,42 @@ export class KulChat {
         this.#adapter.components.spinner.kulActive = true;
         requestAnimationFrame(() => disabler(true));
 
-        const sendArgs: KulChatSendArguments = {
-            history: this.history,
+        const request: KulLLMRequest = {
+            temperature: this.kulTemperature,
             max_tokens: this.kulMaxTokens,
             seed: this.kulSeed,
-            system: this.kulSystem,
-            temperature: this.kulTemperature,
-            url: this.kulEndpointUrl,
+            messages: this.history.map((msg) => ({
+                role: msg.role,
+                content: msg.content,
+            })),
         };
 
-        const response = await send(this.#adapter, sendArgs);
-        if (response) {
-            const cb = () => this.history.push(response);
+        if (this.kulSystem) {
+            request.messages.unshift({
+                role: 'system',
+                content: this.kulSystem,
+            });
+        }
+
+        try {
+            const response = await this.#kulManager.llm.fetch(
+                request,
+                this.kulEndpointUrl
+            );
+            const message = response.choices?.[0]?.message?.content;
+            const llmMessage: KulLLMChoiceMessage = {
+                role: 'assistant',
+                content: message,
+            };
+            const cb = () => this.history.push(llmMessage);
             this.#updateHistory(cb);
             await this.refresh();
             disabler(false);
             this.#adapter.components.spinner.kulActive = false;
             await textarea.setValue('');
             await textarea.setFocus();
-        } else {
+        } catch (error) {
+            console.error('Error calling LLM:', error);
             const cb = () => this.history.pop();
             this.#updateHistory(cb);
         }

@@ -1,5 +1,6 @@
 import { h, VNode } from '@stencil/core';
-import { KulChatAdapter, KulChatChoiceMessage } from '../kul-chat-declarations';
+import { KulChatAdapter } from '../kul-chat-declarations';
+import { KulLLMChoiceMessage } from '../../../managers/kul-llm/kul-llm-declarations';
 
 export const prepMessages = (adapter: KulChatAdapter) => {
     const elements: VNode[] = [];
@@ -37,7 +38,7 @@ export const prepMessages = (adapter: KulChatAdapter) => {
 
 export const prepToolbar = (
     adapter: KulChatAdapter,
-    m: KulChatChoiceMessage
+    m: KulLLMChoiceMessage
 ) => {
     const cssClass = 'chat__messages__toolbar__button kul-slim';
     return (
@@ -66,7 +67,7 @@ export const prepToolbar = (
     );
 };
 
-export const prepContent = (message: KulChatChoiceMessage): VNode[] => {
+export const prepContent = (message: KulLLMChoiceMessage): VNode[] => {
     const elements: VNode[] = [];
     const messageContent = message.content;
 
