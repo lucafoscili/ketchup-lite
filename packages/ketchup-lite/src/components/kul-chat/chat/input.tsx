@@ -27,7 +27,7 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
                 kulStyling="textarea"
                 ref={(el) => {
                     if (el) {
-                        adapter.components.textarea = el;
+                        adapter.components.textareas.prompt = el;
                     }
                 }}
             ></kul-textfield>
@@ -129,7 +129,7 @@ const buttonEventHandler = async (
     e: CustomEvent<KulButtonEventPayload>
 ) => {
     const { eventType, id } = e.detail;
-    const textarea = adapter.components.textarea;
+    const textarea = adapter.components.textareas.prompt;
 
     switch (eventType) {
         case 'click':

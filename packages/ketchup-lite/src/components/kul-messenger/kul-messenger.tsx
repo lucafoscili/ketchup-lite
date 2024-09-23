@@ -24,6 +24,7 @@ import {
     KulMessengerEventPayload,
     KulMessengerUI,
     KulMessengerChat,
+    KulMessengerOptions,
 } from './kul-messenger-declarations';
 import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -97,6 +98,13 @@ export class KulMessenger {
             locations: false,
             outfits: false,
             styles: false,
+            timeframes: false,
+        },
+        options: {
+            locations: true,
+            outfits: true,
+            styles: true,
+            timeframes: true,
         },
         panels: {
             isLeftCollapsed: false,
@@ -214,6 +222,13 @@ export class KulMessenger {
                 locations: false,
                 outfits: false,
                 styles: false,
+                timeframes: false,
+            },
+            options: {
+                locations: true,
+                outfits: true,
+                styles: true,
+                timeframes: true,
             },
             panels: {
                 isLeftCollapsed: false,
@@ -245,8 +260,7 @@ export class KulMessenger {
                         return 'You know nothing about this character...';
                     }
                 },
-                byId: (id: string) =>
-                    this.kulData.nodes.find((n) => n.id === id),
+                byId: (id) => this.kulData.nodes.find((n) => n.id === id),
                 chat: (character = this.currentCharacter) =>
                     this.chat[character.id],
                 current: () => this.currentCharacter,
@@ -375,10 +389,8 @@ export class KulMessenger {
         },
         set: {
             character: {
-                chat: (
-                    chat: KulChatPropsInterface,
-                    character = this.currentCharacter
-                ) => (this.chat[character.id] = chat),
+                chat: (chat, character = this.currentCharacter) =>
+                    (this.chat[character.id] = chat),
                 current: (character) => {
                     this.currentCharacter = character;
                 },
@@ -408,11 +420,7 @@ export class KulMessenger {
                 },
             },
             image: {
-                cover: (
-                    type: KulMessengerImageRootNodesIds,
-                    value: number,
-                    character = this.currentCharacter
-                ) => {
+                cover: (type, value, character = this.currentCharacter) => {
                     this.covers[character.id][type] = value;
                     this.refresh();
                 },
@@ -440,11 +448,9 @@ export class KulMessenger {
                     });
                 },
                 status: {
-                    connection: (status: KulChatStatus) =>
-                        (this.connectionStatus = status),
+                    connection: (status) => (this.connectionStatus = status),
                     save: {
-                        inProgress: (value: boolean) =>
-                            (this.saveInProgress = value),
+                        inProgress: (value) => (this.saveInProgress = value),
                     },
                 },
                 ui: {
@@ -454,6 +460,10 @@ export class KulMessenger {
                     },
                     filters: (filters) => {
                         this.ui.filters = filters;
+                        this.refresh();
+                    },
+                    options: (value, type) => {
+                        this.ui.options[type] = value;
                         this.refresh();
                     },
                     panel: (

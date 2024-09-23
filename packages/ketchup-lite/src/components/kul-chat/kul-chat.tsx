@@ -174,6 +174,7 @@ export class KulChat {
     @Watch('kulSystem')
     async updateTokensCount() {
         const progressbar = this.#adapter.components.progressbar;
+        const system = this.#adapter.components.textareas.system;
         if (!this.kulContextWindow || !progressbar) {
             return;
         }
@@ -182,8 +183,13 @@ export class KulChat {
         const estimated = count / 4;
         const value = (estimated / this.kulContextWindow) * 100;
         requestAnimationFrame(() => {
-            progressbar.kulValue = value;
-            progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
+            if (progressbar) {
+                progressbar.kulValue = value;
+                progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
+            }
+            if (system) {
+                system.setValue(this.kulSystem);
+            }
         });
     }
 
@@ -263,7 +269,8 @@ export class KulChat {
             disableInteractivity: (shouldDisable) => {
                 this.#adapter.components.buttons.send.kulShowSpinner =
                     shouldDisable;
-                this.#adapter.components.textarea.kulDisabled = shouldDisable;
+                this.#adapter.components.textareas.prompt.kulDisabled =
+                    shouldDisable;
                 this.#adapter.components.buttons.stt.kulDisabled =
                     shouldDisable;
             },
@@ -287,7 +294,7 @@ export class KulChat {
             },
             stt: () =>
                 this.#kulManager.llm.speechToText(
-                    this.#adapter.components.textarea,
+                    this.#adapter.components.textareas.prompt,
                     this.#adapter.components.buttons.stt
                 ),
             updateTokenCount: async () => this.updateTokensCount(),
@@ -301,7 +308,7 @@ export class KulChat {
             },
             progressbar: null,
             spinner: null,
-            textarea: null,
+            textareas: { prompt: null, system: null },
         },
         emit: {
             event: (eventType, e = new CustomEvent(eventType)) => {
@@ -412,7 +419,7 @@ export class KulChat {
 
     async #sendPrompt() {
         const disabler = this.#adapter.actions.disableInteractivity;
-        const textarea = this.#adapter.components.textarea;
+        const textarea = this.#adapter.components.textareas.prompt;
         this.#adapter.components.spinner.kulActive = true;
         requestAnimationFrame(() => disabler(true));
 

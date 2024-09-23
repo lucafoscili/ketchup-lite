@@ -182,6 +182,7 @@ const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
     const location = adapter.get.image.asCover('locations').node;
     const outfit = adapter.get.image.asCover('outfits').node;
     const timeframe = adapter.get.image.asCover('timeframes').node;
+    const isEnabled = adapter.get.messenger.ui().options;
 
     const llmBio = `
     Character Biography:
@@ -211,8 +212,8 @@ const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
 
     return {
         biography: biography ? llmBio : '',
-        location: location ? llmLocation : '',
-        outfit: outfit ? llmOutfit : '',
-        timeframe: timeframe ? llmTimeframe : '',
+        location: location && isEnabled.locations ? llmLocation : '',
+        outfit: outfit && isEnabled.outfits ? llmOutfit : '',
+        timeframe: timeframe && isEnabled.timeframes ? llmTimeframe : '',
     };
 };

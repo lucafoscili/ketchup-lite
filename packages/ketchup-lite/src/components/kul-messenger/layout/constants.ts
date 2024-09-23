@@ -1,5 +1,8 @@
 import { KulDataDataset } from '../../../managers/kul-data/kul-data-declarations';
-import { KulMessengerImageRootNodesIds } from '../kul-messenger-declarations';
+import {
+    KulMessengerImageRootNodesIds,
+    KulMessengerOptionRootNodesIds,
+} from '../kul-messenger-declarations';
 
 export const LEFT_EXPANDER_ICON = 'chevron_left';
 export const RIGHT_EXPANDER_ICON = 'chevron_right';
@@ -71,7 +74,7 @@ export const MENU_DATASET: KulDataDataset = {
     ],
 };
 
-export const OPTION_TYPE_IDS: KulMessengerImageRootNodesIds[] = [
+export const OPTION_TYPE_IDS: KulMessengerOptionRootNodesIds[] = [
     'locations',
     'outfits',
     'styles',

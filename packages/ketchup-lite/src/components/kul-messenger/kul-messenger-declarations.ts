@@ -96,6 +96,10 @@ export interface KulMessengerAdapter {
             ui: {
                 customization: (value: boolean) => void;
                 filters: (filter: KulMessengerFilters) => void;
+                options: (
+                    value: boolean,
+                    type: KulMessengerOptionRootNodesIds
+                ) => void;
                 panel: (
                     panel: KulMessengerPanelsValue,
                     value?: boolean
@@ -169,12 +173,8 @@ export interface KulMessengerEventPayload extends KulEventPayload {
     config: KulMessengerConfig;
 }
 
-export interface KulMessengerFilters {
-    avatars?: boolean;
-    locations?: boolean;
-    outfits?: boolean;
-    styles?: boolean;
-    timeframes?: boolean;
+export interface KulMessengerFilters extends KulMessengerOptions {
+    avatars: boolean;
 }
 
 export interface KulMessengerHistory {
@@ -222,6 +222,23 @@ export interface KulMessengerLocationsNode
     id: 'locations';
     value: number;
 }
+
+export type KulMessengerOptionNodeTypeMap = {
+    locations: KulMessengerLocationsNode;
+    outfits: KulMessengerOutfitsNode;
+    styles: KulMessengerStylesNode;
+    timeframes: KulMessengerTimeframesNode;
+};
+
+export interface KulMessengerOptions {
+    locations: boolean;
+    outfits: boolean;
+    styles: boolean;
+    timeframes: boolean;
+}
+
+export type KulMessengerOptionRootNodesIds =
+    keyof KulMessengerOptionNodeTypeMap;
 
 export interface KulMessengerOutfitNode extends KulMessengerBaseNode<never> {
     id: `outfit_${string}`;
@@ -280,5 +297,6 @@ export interface KulMessengerTimeframesNode
 export interface KulMessengerUI {
     customization: boolean;
     filters: KulMessengerFilters;
+    options: KulMessengerOptions;
     panels: KulMessengerPanels;
 }

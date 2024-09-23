@@ -19,7 +19,10 @@ export interface KulChatAdapter {
         };
         progressbar: HTMLKulProgressbarElement;
         spinner: HTMLKulSpinnerElement;
-        textarea: HTMLKulTextfieldElement;
+        textareas: {
+            prompt: HTMLKulTextfieldElement;
+            system: HTMLKulTextfieldElement;
+        };
     };
     emit: { event: (eventType: KulChatEvent, e?: Event) => void };
     get: {
