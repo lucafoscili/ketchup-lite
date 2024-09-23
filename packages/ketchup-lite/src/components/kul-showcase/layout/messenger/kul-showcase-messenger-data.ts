@@ -45,6 +45,11 @@ const kulData: KulMessengerDataset = {
                     id: 'styles',
                     value: 0,
                 },
+                {
+                    children: [],
+                    id: 'timeframes',
+                    value: null,
+                },
             ],
             id: 'character_Thor',
             value: 'Thor',
@@ -72,6 +77,11 @@ const kulData: KulMessengerDataset = {
                     children: FREYA_STYLES,
                     id: 'styles',
                     value: 0,
+                },
+                {
+                    children: [],
+                    id: 'timeframes',
+                    value: null,
                 },
             ],
             id: 'character_Freya',

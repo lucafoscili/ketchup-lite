@@ -39,6 +39,7 @@ import {
     LOCATION_COVER,
     OUTFIT_COVER,
     STYLE_COVER,
+    TIMEFRAME_COVER,
 } from './layout/constants';
 import {
     KulChatPropsInterface,
@@ -306,6 +307,8 @@ export class KulMessenger {
                                 return { value: OUTFIT_COVER };
                             case 'styles':
                                 return { value: STYLE_COVER };
+                            case 'timeframes':
+                                return { value: TIMEFRAME_COVER };
                         }
                     }
                 },
@@ -495,6 +498,7 @@ export class KulMessenger {
                 locations: imageRootGetter('locations', character).value || 0,
                 outfits: imageRootGetter('outfits', character).value || 0,
                 styles: imageRootGetter('styles', character).value || 0,
+                timeframes: imageRootGetter('timeframes', character).value || 0,
             };
             const chat = character.children?.find((n) => n.id === 'chat');
             this.chat[character.id] = {};

@@ -6,7 +6,7 @@ import {
     KulMessengerImageRootNodesIds,
 } from '../kul-messenger-declarations';
 import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
-import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constants';
+import { FILTER_DATASET, IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from './constants';
 import { KulChip } from '../../kul-chip/kul-chip';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 
@@ -115,50 +115,36 @@ const prepList = (adapter: KulMessengerAdapter) => {
 };
 
 const prepOptions = (adapter: KulMessengerAdapter) => {
-    const locationImage = adapter.get.image.asCover('locations');
-    const outfitImage = adapter.get.image.asCover('outfits');
-    const styleImage = adapter.get.image.asCover('styles');
-    return [
-        <div class="messenger__options__wrapper">
-            <img
-                class="messenger__options__outfit"
-                alt={outfitImage.title || 'No outfit selected.'}
-                src={outfitImage.value}
-                title={outfitImage.title || 'No outfit selected.'}
-            ></img>
-            <div class="messenger__options__name">
-                <div class="messenger__options__label" title="Active outfit.">
-                    Outfit
+    return OPTION_TYPE_IDS.map((options) => {
+        const image = adapter.get.image.asCover(options);
+        const option = options.slice(0, -1);
+        return (
+            <div class="messenger__options__wrapper">
+                {image.node ? (
+                    <img
+                        class={`messenger__options__cover`}
+                        alt={image.title}
+                        src={image.value}
+                        title={image.title}
+                    ></img>
+                ) : (
+                    <kul-image
+                        class={`messenger__options__placeholder`}
+                        kulValue={image.value}
+                        title={`No ${option} selected.`}
+                    ></kul-image>
+                )}
+                <div class="messenger__options__name">
+                    <div
+                        class="messenger__options__label"
+                        title={`Active ${option}.`}
+                    >
+                        {option}
+                    </div>
                 </div>
             </div>
-        </div>,
-        <div class="messenger__options__wrapper">
-            <img
-                class="messenger__options__location"
-                alt={locationImage.title || 'No location selected.'}
-                src={locationImage.value}
-                title={locationImage.title || 'No location selected.'}
-            ></img>
-            <div class="messenger__options__name">
-                <div class="messenger__options__label" title="Active location.">
-                    Location
-                </div>
-            </div>
-        </div>,
-        <div class="messenger__options__wrapper">
-            <img
-                class="messenger__options__style"
-                alt={styleImage.title || 'No style selected.'}
-                src={styleImage.value}
-                title={styleImage.title || 'No style selected.'}
-            ></img>
-            <div class="messenger__options__name">
-                <div class="messenger__options__label" title="Active style.">
-                    Style
-                </div>
-            </div>
-        </div>,
-    ];
+        );
+    });
 };
 
 const buttonEventHandler = (
@@ -195,8 +181,10 @@ const imageEventHandler = (
         coverSetter('locations', index);
     } else if (node.id.includes('outfit')) {
         coverSetter('outfits', index);
-    } else {
+    } else if (node.id.includes('style')) {
         coverSetter('styles', index);
+    } else {
+        coverSetter('timeframes', index);
     }
 };
 
@@ -214,6 +202,7 @@ const chipEventHandler = (
                 locations: false,
                 outfits: false,
                 styles: false,
+                timeframes: false,
             };
             Array.from(selectedNodes).forEach((n) => {
                 newFilters[n.id] = true;

@@ -88,8 +88,9 @@ const prepChat = (adapter: KulMessengerAdapter) => {
     - Do not provide insights or predictions about events outside the scope of the character's knowledge or personal experiences.
 
     ${prompts.biography}
-    ${prompts.location}
     ${prompts.outfit}
+    ${prompts.location}
+    ${prompts.timeframe}
 
     Begin your performance...
     `;
@@ -180,6 +181,7 @@ const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
     const biography = adapter.get.character.biography();
     const location = adapter.get.image.asCover('locations').node;
     const outfit = adapter.get.image.asCover('outfits').node;
+    const timeframe = adapter.get.image.asCover('timeframes').node;
 
     const llmBio = `
     Character Biography:
@@ -200,9 +202,17 @@ const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
     ${outfitTitle} - ${outfitDescription}
     `;
 
+    const timeframeTitle = timeframe?.value;
+    const timeframeDescription = timeframe?.description;
+    const llmTimeframe = `
+    Current timeframe:
+    ${timeframeTitle} - ${timeframeDescription}
+    `;
+
     return {
         biography: biography ? llmBio : '',
         location: location ? llmLocation : '',
         outfit: outfit ? llmOutfit : '',
+        timeframe: timeframe ? llmTimeframe : '',
     };
 };
