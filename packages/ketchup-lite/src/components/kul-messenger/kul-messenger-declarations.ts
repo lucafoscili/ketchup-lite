@@ -94,6 +94,7 @@ export interface KulMessengerAdapter {
                 };
             };
             ui: {
+                customization: (value: boolean) => void;
                 filters: (filter: KulMessengerFilters) => void;
                 panel: (
                     panel: KulMessengerPanelsValue,
@@ -284,6 +285,7 @@ export interface KulMessengerStylesNode
 }
 
 export interface KulMessengerUI {
+    customization: boolean;
     filters: KulMessengerFilters;
     panels: KulMessengerPanels;
 }

@@ -1,4 +1,4 @@
-import { h } from '@stencil/core';
+import { Fragment, h } from '@stencil/core';
 import {
     KulMessengerAdapter,
     KulMessengerFilters,
@@ -8,67 +8,55 @@ import {
 import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from './constants';
 import { KulChip } from '../../kul-chip/kul-chip';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 
 export const prepRight = (adapter: KulMessengerAdapter) => {
-    const isCollapsed = adapter.get.messenger.ui().panels.isRightCollapsed;
+    const ui = adapter.get.messenger.ui();
+    const className = {
+        messenger__right: true,
+        'messenger__right--collapsed': ui.panels.isRightCollapsed,
+        'messenger__right--customization': ui.customization,
+    };
     return (
-        <div
-            class={`messenger__right ${isCollapsed ? 'messenger__right--collapsed' : ''}`}
-        >
-            <div class="messenger__options__active">{prepOptions(adapter)}</div>
-            <div class="messenger__options__filters">
-                {prepFilters(adapter)}
-            </div>
-            <div class="messenger__options__list">{prepList(adapter)}</div>
+        <div class={className}>
+            {ui.customization ? (
+                <Fragment>
+                    <div class="messenger__options__filters">
+                        {prepFilters(adapter)}
+                        <div class="messenger__options__list">
+                            {prepList(adapter)}
+                        </div>
+                    </div>
+                    <kul-button
+                        class="kul-full-width"
+                        id="customization-right-button"
+                        kulIcon="arrow_back"
+                        kulLabel="Back"
+                        onKul-button-event={buttonEventHandler.bind(
+                            buttonEventHandler,
+                            adapter
+                        )}
+                    ></kul-button>
+                </Fragment>
+            ) : (
+                <Fragment>
+                    <div class="messenger__options__active">
+                        {prepOptions(adapter)}
+                    </div>
+                    <kul-button
+                        class="kul-full-width"
+                        id="active-right-button"
+                        kulIcon="auto-fix"
+                        kulLabel="Customize"
+                        onKul-button-event={buttonEventHandler.bind(
+                            buttonEventHandler,
+                            adapter
+                        )}
+                    ></kul-button>
+                </Fragment>
+            )}
         </div>
     );
-};
-
-const prepOptions = (adapter: KulMessengerAdapter) => {
-    const locationImage = adapter.get.image.asCover('locations');
-    const outfitImage = adapter.get.image.asCover('outfits');
-    const styleImage = adapter.get.image.asCover('styles');
-    return [
-        <div class="messenger__options__wrapper">
-            <img
-                class="messenger__options__outfit"
-                alt={outfitImage.title || 'No outfit selected.'}
-                src={outfitImage.value}
-                title={outfitImage.title || 'No outfit selected.'}
-            ></img>
-            <div class="messenger__options__name">
-                <div class="messenger__options__label" title="Active outfit.">
-                    Outfit
-                </div>
-            </div>
-        </div>,
-        <div class="messenger__options__wrapper">
-            <img
-                class="messenger__options__location"
-                alt={locationImage.title || 'No location selected.'}
-                src={locationImage.value}
-                title={locationImage.title || 'No location selected.'}
-            ></img>
-            <div class="messenger__options__name">
-                <div class="messenger__options__label" title="Active location.">
-                    Location
-                </div>
-            </div>
-        </div>,
-        <div class="messenger__options__wrapper">
-            <img
-                class="messenger__options__style"
-                alt={styleImage.title || 'No style selected.'}
-                src={styleImage.value}
-                title={styleImage.title || 'No style selected.'}
-            ></img>
-            <div class="messenger__options__name">
-                <div class="messenger__options__label" title="Active style.">
-                    Style
-                </div>
-            </div>
-        </div>,
-    ];
 };
 
 const prepFilters = (adapter: KulMessengerAdapter) => {
@@ -124,6 +112,74 @@ const prepList = (adapter: KulMessengerAdapter) => {
         }
     }
     return elements;
+};
+
+const prepOptions = (adapter: KulMessengerAdapter) => {
+    const locationImage = adapter.get.image.asCover('locations');
+    const outfitImage = adapter.get.image.asCover('outfits');
+    const styleImage = adapter.get.image.asCover('styles');
+    return [
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__outfit"
+                alt={outfitImage.title || 'No outfit selected.'}
+                src={outfitImage.value}
+                title={outfitImage.title || 'No outfit selected.'}
+            ></img>
+            <div class="messenger__options__name">
+                <div class="messenger__options__label" title="Active outfit.">
+                    Outfit
+                </div>
+            </div>
+        </div>,
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__location"
+                alt={locationImage.title || 'No location selected.'}
+                src={locationImage.value}
+                title={locationImage.title || 'No location selected.'}
+            ></img>
+            <div class="messenger__options__name">
+                <div class="messenger__options__label" title="Active location.">
+                    Location
+                </div>
+            </div>
+        </div>,
+        <div class="messenger__options__wrapper">
+            <img
+                class="messenger__options__style"
+                alt={styleImage.title || 'No style selected.'}
+                src={styleImage.value}
+                title={styleImage.title || 'No style selected.'}
+            ></img>
+            <div class="messenger__options__name">
+                <div class="messenger__options__label" title="Active style.">
+                    Style
+                </div>
+            </div>
+        </div>,
+    ];
+};
+
+const buttonEventHandler = (
+    adapter: KulMessengerAdapter,
+    e: CustomEvent<KulButtonEventPayload>
+) => {
+    const { eventType, id } = e.detail;
+    const customizationSetter = adapter.set.messenger.ui.customization;
+
+    switch (eventType) {
+        case 'click':
+            switch (id) {
+                case 'active-right-button':
+                    customizationSetter(true);
+                    break;
+                case 'customization-right-button':
+                    customizationSetter(false);
+                    break;
+            }
+            break;
+    }
 };
 
 const imageEventHandler = (

@@ -90,6 +90,7 @@ export class KulMessenger {
      * State of options' filters.
      */
     @State() ui: KulMessengerUI = {
+        customization: false,
         filters: {
             avatars: false,
             locations: false,
@@ -206,13 +207,17 @@ export class KulMessenger {
         this.covers = {};
         this.currentCharacter = null;
         this.ui = {
+            customization: false,
             filters: {
                 avatars: false,
                 locations: false,
                 outfits: false,
                 styles: false,
             },
-            panels: { isLeftCollapsed: false, isRightCollapsed: false },
+            panels: {
+                isLeftCollapsed: false,
+                isRightCollapsed: false,
+            },
         };
         this.history = {};
 
@@ -440,6 +445,10 @@ export class KulMessenger {
                     },
                 },
                 ui: {
+                    customization: (value) => {
+                        this.ui.customization = value;
+                        this.refresh();
+                    },
                     filters: (filters) => {
                         this.ui.filters = filters;
                         this.refresh();

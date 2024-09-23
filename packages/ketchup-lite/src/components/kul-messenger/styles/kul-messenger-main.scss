@@ -149,7 +149,7 @@
 
   &__right {
     display: grid;
-    grid-template-rows: 40% auto 1fr;
+    grid-template-rows: 1fr auto;
     height: 100%;
     overflow: auto;
     transition: height var(--kul_messenger_transition);
@@ -157,6 +157,10 @@
     &--collapsed {
       overflow: hidden;
       width: 0;
+    }
+
+    &--customization {
+      grid-template-rows: 1fr auto;
     }
   }
 
@@ -233,7 +237,8 @@
   &__options {
     &__active {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
     }
 
     &__wrapper {
@@ -251,6 +256,8 @@
     }
 
     &__filters {
+      display: grid;
+      grid-template-rows: auto 1fr;
       padding: 16px 0;
     }
 
