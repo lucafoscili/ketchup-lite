@@ -732,7 +732,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulValue",
         docs: "Sets the initial history of the chat.",
-        type: "KulChatChoiceMessage[]",
+        type: "KulLLMChoiceMessage[]",
       },
     ],
     styles: [

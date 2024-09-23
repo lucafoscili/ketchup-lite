@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-22T23:38:51",
+  "timestamp": "2024-09-23T23:39:03",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -2924,10 +2924,10 @@
         },
         {
           "name": "kulValue",
-          "type": "KulChatChoiceMessage[]",
+          "type": "KulLLMChoiceMessage[]",
           "complexType": {
             "original": "KulChatHistory",
-            "resolved": "KulChatChoiceMessage[]",
+            "resolved": "KulLLMChoiceMessage[]",
             "references": {
               "KulChatHistory": {
                 "location": "import",
@@ -2948,7 +2948,7 @@
           "default": "[]",
           "values": [
             {
-              "type": "KulChatChoiceMessage[]"
+              "type": "KulLLMChoiceMessage[]"
             }
           ],
           "optional": false,
