@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-22T23:38:51",
+  "timestamp": "2024-09-24T18:15:55",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -2924,10 +2924,10 @@
         },
         {
           "name": "kulValue",
-          "type": "KulChatChoiceMessage[]",
+          "type": "KulLLMChoiceMessage[]",
           "complexType": {
             "original": "KulChatHistory",
-            "resolved": "KulChatChoiceMessage[]",
+            "resolved": "KulLLMChoiceMessage[]",
             "references": {
               "KulChatHistory": {
                 "location": "import",
@@ -2948,7 +2948,7 @@
           "default": "[]",
           "values": [
             {
-              "type": "KulChatChoiceMessage[]"
+              "type": "KulLLMChoiceMessage[]"
             }
           ],
           "optional": false,
@@ -3169,7 +3169,13 @@
           "docsTags": []
         }
       ],
-      "listeners": [],
+      "listeners": [
+        {
+          "event": "keydown",
+          "capture": false,
+          "passive": false
+        }
+      ],
       "styles": [
         {
           "name": "--kul-chat-blur-radius",
@@ -6153,6 +6159,11 @@
           "docs": "Sets the background color. Defaults to var(--kul-background-color)."
         },
         {
+          "name": "--kul-messenger-customization-title-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of customization panel titles. Defaults to 8px 12px."
+        },
+        {
           "name": "--kul-messenger-font-size",
           "annotation": "prop",
           "docs": "Sets the font size of the component. Defaults to var(--kul-font-size)."
@@ -6178,11 +6189,6 @@
           "docs": "Sets the box shadow of the messenger's navigation bar. Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375)."
         },
         {
-          "name": "--kul-messenger-options-title-padding",
-          "annotation": "prop",
-          "docs": "Sets the padding of titles. Defaults to 8px."
-        },
-        {
           "name": "--kul-messenger-text-color",
           "annotation": "prop",
           "docs": "Sets the color of text. Defaults to var(--kul-text-color)."
@@ -6205,7 +6211,8 @@
         "kul-code",
         "kul-tabbar",
         "kul-chat",
-        "kul-chip"
+        "kul-chip",
+        "kul-textfield"
       ],
       "dependencyGraph": {
         "kul-messenger": [
@@ -6215,7 +6222,8 @@
           "kul-code",
           "kul-tabbar",
           "kul-chat",
-          "kul-chip"
+          "kul-chip",
+          "kul-textfield"
         ],
         "kul-image": [
           "kul-spinner",
@@ -8155,7 +8163,8 @@
           "kul-code",
           "kul-tabbar",
           "kul-chat",
-          "kul-chip"
+          "kul-chip",
+          "kul-textfield"
         ],
         "kul-image": [
           "kul-spinner",
@@ -10681,6 +10690,28 @@
           "docsTags": []
         },
         {
+          "name": "setBlur",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setBlur() => Promise<void>",
+          "parameters": [],
+          "docs": "Blurs the input element.",
+          "docsTags": []
+        },
+        {
           "name": "setFocus",
           "returns": {
             "type": "Promise<void>",
@@ -10699,7 +10730,7 @@
           },
           "signature": "setFocus() => Promise<void>",
           "parameters": [],
-          "docs": "",
+          "docs": "Focuses the input element.",
           "docsTags": []
         },
         {
@@ -10849,6 +10880,7 @@
       "parts": [],
       "dependents": [
         "kul-chat",
+        "kul-messenger",
         "kul-showcase-debug",
         "kul-showcase-textfield",
         "kul-tree"
@@ -10856,6 +10888,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "kul-chat": [
+          "kul-textfield"
+        ],
+        "kul-messenger": [
           "kul-textfield"
         ],
         "kul-showcase-debug": [

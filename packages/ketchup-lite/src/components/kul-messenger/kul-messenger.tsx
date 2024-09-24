@@ -30,20 +30,20 @@ import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { prepLeft } from './layout/left';
-import { prepCenter } from './layout/center';
-import { prepRight } from './layout/right';
-import { prepGrid } from './layout/grid';
+import { prepLeft } from './messenger/left';
+import { prepCenter } from './messenger/center';
+import { prepRight } from './messenger/right';
+import { prepGrid } from './selection-grid/selection-grid';
 import {
     AVATAR_COVER,
+    CLEAN_COMPONENTS,
+    CLEAN_UI_JSON,
     LOCATION_COVER,
     OUTFIT_COVER,
     STYLE_COVER,
-} from './layout/constants';
-import {
-    KulChatPropsInterface,
-    KulChatStatus,
-} from '../kul-chat/kul-chat-declarations';
+    TIMEFRAME_COVER,
+} from './kul-messenger-constants';
+import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 
 @Component({
     tag: 'kul-messenger',
@@ -89,18 +89,7 @@ export class KulMessenger {
     /**
      * State of options' filters.
      */
-    @State() ui: KulMessengerUI = {
-        filters: {
-            avatars: false,
-            locations: false,
-            outfits: false,
-            styles: false,
-        },
-        panels: {
-            isLeftCollapsed: false,
-            isRightCollapsed: false,
-        },
-    };
+    @State() ui: KulMessengerUI = CLEAN_UI_JSON;
     /**
      * Signals to the widget when the dataset is being saved.
      */
@@ -205,15 +194,7 @@ export class KulMessenger {
     async reset(): Promise<void> {
         this.covers = {};
         this.currentCharacter = null;
-        this.ui = {
-            filters: {
-                avatars: false,
-                locations: false,
-                outfits: false,
-                styles: false,
-            },
-            panels: { isLeftCollapsed: false, isRightCollapsed: false },
-        };
+        this.ui = CLEAN_UI_JSON;
         this.history = {};
 
         this.#initStates();
@@ -224,7 +205,7 @@ export class KulMessenger {
     /*-------------------------------------------------*/
 
     #adapter: KulMessengerAdapter = {
-        components: { saveButton: null },
+        components: CLEAN_COMPONENTS,
         get: {
             character: {
                 biography: (character = this.currentCharacter) => {
@@ -239,8 +220,7 @@ export class KulMessenger {
                         return 'You know nothing about this character...';
                     }
                 },
-                byId: (id: string) =>
-                    this.kulData.nodes.find((n) => n.id === id),
+                byId: (id) => this.kulData.nodes.find((n) => n.id === id),
                 chat: (character = this.currentCharacter) =>
                     this.chat[character.id],
                 current: () => this.currentCharacter,
@@ -301,6 +281,8 @@ export class KulMessenger {
                                 return { value: OUTFIT_COVER };
                             case 'styles':
                                 return { value: STYLE_COVER };
+                            case 'timeframes':
+                                return { value: TIMEFRAME_COVER };
                         }
                     }
                 },
@@ -367,10 +349,8 @@ export class KulMessenger {
         },
         set: {
             character: {
-                chat: (
-                    chat: KulChatPropsInterface,
-                    character = this.currentCharacter
-                ) => (this.chat[character.id] = chat),
+                chat: (chat, character = this.currentCharacter) =>
+                    (this.chat[character.id] = chat),
                 current: (character) => {
                     this.currentCharacter = character;
                 },
@@ -400,11 +380,7 @@ export class KulMessenger {
                 },
             },
             image: {
-                cover: (
-                    type: KulMessengerImageRootNodesIds,
-                    value: number,
-                    character = this.currentCharacter
-                ) => {
+                cover: (type, value, character = this.currentCharacter) => {
                     this.covers[character.id][type] = value;
                     this.refresh();
                 },
@@ -432,16 +408,26 @@ export class KulMessenger {
                     });
                 },
                 status: {
-                    connection: (status: KulChatStatus) =>
-                        (this.connectionStatus = status),
+                    connection: (status) => (this.connectionStatus = status),
                     save: {
-                        inProgress: (value: boolean) =>
-                            (this.saveInProgress = value),
+                        inProgress: (value) => (this.saveInProgress = value),
                     },
                 },
                 ui: {
+                    customization: (value) => {
+                        this.ui.customization = value;
+                        this.refresh();
+                    },
+                    editing: (value, type) => {
+                        this.ui.editing[type] = value;
+                        this.refresh();
+                    },
                     filters: (filters) => {
                         this.ui.filters = filters;
+                        this.refresh();
+                    },
+                    options: (value, type) => {
+                        this.ui.options[type] = value;
                         this.refresh();
                     },
                     panel: (
@@ -486,6 +472,7 @@ export class KulMessenger {
                 locations: imageRootGetter('locations', character).value || 0,
                 outfits: imageRootGetter('outfits', character).value || 0,
                 styles: imageRootGetter('styles', character).value || 0,
+                timeframes: imageRootGetter('timeframes', character).value || 0,
             };
             const chat = character.children?.find((n) => n.id === 'chat');
             this.chat[character.id] = {};

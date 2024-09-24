@@ -1,0 +1,118 @@
+.messenger {
+  &__customization {
+    &__title {
+      align-items: center;
+      background: var(--kul-title-background-color);
+      color: var(--kul-title-color);
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: var(--kul_messenger_letter_spacing);
+      overflow: hidden;
+      position: sticky;
+      text-align: center;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      top: -1px;
+      z-index: 1;
+    }
+
+    &__label {
+      overflow: hidden;
+      padding: var(--kul_messenger_customization_title_padding);
+      text-overflow: ellipsis;
+    }
+
+    &__section {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      height: 100%;
+    }
+
+    &__add {
+      --kul-button-border-radius: 0;
+    }
+
+    &__images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: auto;
+      width: 100%;
+    }
+
+    &__image-wrapper {
+      & {
+        position: relative;
+      }
+
+      &:after {
+        box-shadow: none;
+        content: '';
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition:
+          background-color var(--kul_messenger_transition),
+          box-shadow var(--kul_messenger_transition);
+        width: 100%;
+      }
+
+      &:hover:not(&--selected):after {
+        box-shadow: inset 0 0 5px 3px var(--kul-primary-color, white);
+        pointer-events: none;
+      }
+
+      &--selected:after {
+        align-content: center;
+        background-color: rgba(var(--kul-title-background-color-rgb), 0.875);
+        content: 'Current';
+        cursor: default;
+        font-size: 0.775em;
+        letter-spacing: var(--kul_messenger_letter_spacing);
+        overflow: hidden;
+        position: absolute;
+        text-align: center;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+      }
+    }
+
+    &__image {
+      & {
+        animation: fade-in-block 250ms ease-in;
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        min-height: 256px;
+        object-fit: cover;
+        width: 100%;
+      }
+    }
+
+    &__edit {
+      &__label {
+        background: var(--kul-title-background-color);
+        color: var(--kul-title-color);
+        display: flex;
+        justify-content: center;
+        letter-spacing: var(--kul_messenger_letter_spacing);
+        overflow: hidden;
+        padding: var(--kul_messenger_customization_title_padding);
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        top: -1px;
+        z-index: 1;
+      }
+
+      &__confirm {
+        display: flex;
+        justify-content: center;
+        padding-top: 16px;
+      }
+
+      &__button {
+        margin: 0 4px;
+      }
+    }
+  }
+}

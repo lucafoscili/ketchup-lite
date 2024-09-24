@@ -18,7 +18,7 @@
 | `kulStyle`           | `kul-style`            | Enables customization of the component's style.                                      | `string`                              | `''`                                                                                    |
 | `kulSystem`          | `kul-system`           | System message for the LLM.                                                          | `string`                              | `'You are a helpful and cheerful assistant eager to help the user out with his tasks.'` |
 | `kulTemperature`     | `kul-temperature`      | Sets the creative boundaries of the LLM.                                             | `number`                              | `0.7`                                                                                   |
-| `kulValue`           | --                     | Sets the initial history of the chat.                                                | `KulChatChoiceMessage[]`              | `[]`                                                                                    |
+| `kulValue`           | --                     | Sets the initial history of the chat.                                                | `KulLLMChoiceMessage[]`               | `[]`                                                                                    |
 
 
 ## Events

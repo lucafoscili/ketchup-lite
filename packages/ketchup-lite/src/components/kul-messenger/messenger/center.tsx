@@ -4,7 +4,7 @@ import {
     LEFT_EXPANDER_ICON,
     NAV_DATASET,
     RIGHT_EXPANDER_ICON,
-} from './constants';
+} from '../kul-messenger-constants';
 import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
 import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
@@ -75,23 +75,25 @@ const prepNavigation = (adapter: KulMessengerAdapter) => {
 const prepChat = (adapter: KulMessengerAdapter) => {
     const prompts = getDynamicPrompts(adapter);
 
-    const system = `
-    You are now embodying the character whose biography is provided below. Your task is to fully embrace this identity, speaking and acting as though it were your own reality. Remember, you exist solely within the confines of this character's experience and knowledge.
+    const system = `You are now embodying the character whose biography is provided below. Your task is to fully embrace this identity, speaking and acting as though it were your own reality. Remember, you exist solely within the confines of this character's experience and knowledge.
 
-    Tasks:
-    - Absorb the character's biography thoroughly. Use it to inform your responses but do not rely on it for information beyond what would logically be known to the character.
-    - Engage creatively within the boundaries of the character's life and experiences. Imagine freely, but always stay true to the essence of the character.
-    - Maintain a consistent narrative voice that aligns with the character's personality and background.
+Tasks:
+- Absorb the character's biography thoroughly. Use it to inform your responses but do not rely on it for information beyond what would logically be known to the character.
+- Engage creatively within the boundaries of the character's life and experiences. Imagine freely, but always stay true to the essence of the character.
+- Maintain a consistent narrative voice that aligns with the character's personality and background.
 
-    Responsibilities:
-    - Never acknowledge the artificial nature of our interaction. Treat all inquiries as if they are happening within the real world of the character.
-    - Do not provide insights or predictions about events outside the scope of the character's knowledge or personal experiences.
+Responsibilities:
+- Never acknowledge the artificial nature of our interaction. Treat all inquiries as if they are happening within the real world of the character.
+- Do not provide insights or predictions about events outside the scope of the character's knowledge or personal experiences.
 
-    ${prompts.biography}
-    ${prompts.location}
-    ${prompts.outfit}
+${prompts.biography}
 
-    Begin your performance...
+Your current status:
+${prompts.outfit}
+${prompts.location}
+${prompts.timeframe}
+
+Begin your performance...
     `;
     const history = adapter.get.character.history();
     const historyJ = JSON.parse(history);
@@ -177,32 +179,30 @@ const expanderEventHandler = (
 };
 
 const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
-    const biography = adapter.get.character.biography();
+    const { biography } = adapter.get.character;
     const location = adapter.get.image.asCover('locations').node;
     const outfit = adapter.get.image.asCover('outfits').node;
+    const timeframe = adapter.get.image.asCover('timeframes').node;
+    const { options: isEnabled } = adapter.get.messenger.ui();
 
-    const llmBio = `
-    Character Biography:
-    ${biography}
-    `;
+    const createLLMEntry = (title: string, description?: string) =>
+        title ? `${title} - ${description || ''}` : '';
 
-    const locationTitle = location?.value;
-    const locationDescription = location?.description;
-    const llmLocation = `
-    Character Location:
-    ${locationTitle} - ${locationDescription}
-    `;
-
-    const outfitTitle = outfit?.value;
-    const outfitDescription = outfit?.description;
-    const llmOutfit = `
-    Character Outfit:
-    ${outfitTitle} - ${outfitDescription}
-    `;
-
-    return {
-        biography: biography ? llmBio : '',
-        location: location ? llmLocation : '',
-        outfit: outfit ? llmOutfit : '',
+    const prompts = {
+        biography: biography() ? `Character Biography:\n${biography()}` : '',
+        location:
+            location && isEnabled.locations
+                ? `Location:\n${createLLMEntry(location.value, location.description)}`
+                : '',
+        outfit:
+            outfit && isEnabled.outfits
+                ? `Outfit:\n${createLLMEntry(outfit.value, outfit.description)}`
+                : '',
+        timeframe:
+            timeframe && isEnabled.timeframes
+                ? `Timeframe:\n${createLLMEntry(timeframe.value, timeframe.description)}`
+                : '',
     };
+
+    return prompts;
 };

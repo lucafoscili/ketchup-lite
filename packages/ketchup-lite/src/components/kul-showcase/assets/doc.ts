@@ -732,7 +732,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulValue",
         docs: "Sets the initial history of the chat.",
-        type: "KulChatChoiceMessage[]",
+        type: "KulLLMChoiceMessage[]",
       },
     ],
     styles: [
@@ -1571,6 +1571,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets the background color. Defaults to var(--kul-background-color).",
       },
       {
+        name: "--kul-messenger-customization-title-padding",
+        docs: "Sets the padding of customization panel titles. Defaults to 8px 12px.",
+      },
+      {
         name: "--kul-messenger-font-size",
         docs: "Sets the font size of the component. Defaults to var(--kul-font-size).",
       },
@@ -1589,10 +1593,6 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-messenger-nav-box-shadow",
         docs: "Sets the box shadow of the messenger's navigation bar. Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375).",
-      },
-      {
-        name: "--kul-messenger-options-title-padding",
-        docs: "Sets the padding of titles. Defaults to 8px.",
       },
       {
         name: "--kul-messenger-text-color",
@@ -2406,8 +2406,17 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<void>",
       },
       {
+        name: "setBlur",
+        docs: "Blurs the input element.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
         name: "setFocus",
-        docs: "",
+        docs: "Focuses the input element.",
         returns: {
           type: "Promise<void>",
           docs: "",

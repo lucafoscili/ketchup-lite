@@ -1,0 +1,80 @@
+.selection-grid {
+  & {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+  }
+
+  &__image {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &__portrait {
+    & {
+      --kul_messenger_name_background_color: rgba(
+        var(--kul-background-color-rgb),
+        0.375
+      );
+      --kul_messenger_portrait_foredrop_color: rgba(
+        var(--kul-background-color-rgb),
+        0.275
+      );
+
+      cursor: pointer;
+      overflow: auto;
+      position: relative;
+    }
+
+    &:hover {
+      --kul_messenger_name_background_color: rgba(
+        var(--kul-background-color-rgb),
+        0.775
+      );
+      --kul_messenger_portrait_foredrop_color: rgba(
+        var(--kul-background-color-rgb),
+        0
+      );
+    }
+
+    &:after {
+      background: var(--kul_messenger_portrait_foredrop_color);
+      content: '';
+      height: 100%;
+      left: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      transition: background-color var(--kul_messenger_transition);
+      width: 100%;
+    }
+  }
+
+  &__name {
+    & {
+      align-items: center;
+      backdrop-filter: blur(5px);
+      background-color: var(--kul_messenger_name_background_color);
+      bottom: 0;
+      display: flex;
+      height: var(--kul_messenger_name_height);
+      left: 0;
+      position: absolute;
+      transition: background-color var(--kul_messenger_transition);
+      width: 100%;
+    }
+  }
+
+  &__label {
+    letter-spacing: var(--kul_messenger_letter_spacing);
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    width: 100%;
+  }
+}

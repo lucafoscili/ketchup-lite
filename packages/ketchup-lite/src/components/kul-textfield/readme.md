@@ -76,9 +76,19 @@ Type: `Promise<void>`
 
 
 
+### `setBlur() => Promise<void>`
+
+Blurs the input element.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `setFocus() => Promise<void>`
 
-
+Focuses the input element.
 
 #### Returns
 
@@ -129,6 +139,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [kul-chat](../kul-chat)
+ - [kul-messenger](../kul-messenger)
  - [kul-showcase-debug](../kul-showcase/utilities/debug)
  - [kul-showcase-textfield](../kul-showcase/components/textfield)
  - [kul-tree](../kul-tree)
@@ -137,6 +148,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   kul-chat --> kul-textfield
+  kul-messenger --> kul-textfield
   kul-showcase-debug --> kul-textfield
   kul-showcase-textfield --> kul-textfield
   kul-tree --> kul-textfield

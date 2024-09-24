@@ -27,6 +27,11 @@ export const prepSettings = (adapter: KulChatAdapter) => {
                     textfieldEventHandler,
                     adapter
                 )}
+                ref={(el) => {
+                    if (el) {
+                        adapter.components.textareas.system = el;
+                    }
+                }}
             ></kul-textfield>
         </Fragment>
     );

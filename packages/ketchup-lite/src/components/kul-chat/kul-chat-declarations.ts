@@ -1,10 +1,12 @@
 import { KulEventPayload } from '../../../src/types/GenericTypes';
+import { KulLLMChoiceMessage } from '../../managers/kul-llm/kul-llm-declarations';
+import { KulManager } from '../../managers/kul-manager/kul-manager';
 export interface KulChatAdapter {
     actions: {
-        delete: (message: KulChatChoiceMessage) => void;
+        delete: (message: KulLLMChoiceMessage) => void;
         disableInteractivity: (shouldDisable: boolean) => void;
-        regenerate: (message: KulChatChoiceMessage) => void;
-        send: (prompt: string) => void;
+        regenerate: (message: KulLLMChoiceMessage) => void;
+        send: () => void;
         stt: () => void;
         updateTokenCount: () => Promise<void>;
     };
@@ -17,11 +19,15 @@ export interface KulChatAdapter {
         };
         progressbar: HTMLKulProgressbarElement;
         spinner: HTMLKulSpinnerElement;
-        textarea: HTMLKulTextfieldElement;
+        textareas: {
+            prompt: HTMLKulTextfieldElement;
+            system: HTMLKulTextfieldElement;
+        };
     };
     emit: { event: (eventType: KulChatEvent, e?: Event) => void };
     get: {
         history: () => KulChatHistory;
+        manager: () => KulManager;
         props: {
             contextWindow: () => number;
             endpointUrl: () => string;
@@ -32,8 +38,7 @@ export interface KulChatAdapter {
         };
         status: {
             connection: (status: KulChatStatus) => void;
-            toolbarMessage: () => KulChatChoiceMessage;
-            usage: () => KulChatUsage;
+            toolbarMessage: () => KulLLMChoiceMessage;
             view: () => KulChatView;
         };
     };
@@ -48,30 +53,10 @@ export interface KulChatAdapter {
         };
         status: {
             connection: (status: KulChatStatus) => void;
-            toolbarMessage: (message: KulChatChoiceMessage) => void;
-            usage: (usage: KulChatUsage) => void;
+            toolbarMessage: (message: KulLLMChoiceMessage) => void;
             view: (view: KulChatView) => void;
         };
     };
-}
-export interface KulChatChoice {
-    index: number;
-    message: KulChatChoiceMessage;
-    finish_reason: string;
-}
-export interface KulChatChoiceMessage {
-    role: string;
-    content: string;
-    tool_calls?: unknown[];
-}
-
-export interface KulChatCompletionObject {
-    id: string;
-    object: string;
-    created: number;
-    model: string;
-    usage: KulChatUsage;
-    choices: KulChatChoice[];
 }
 
 export type KulChatEvent = 'config' | 'polling' | 'ready' | 'update';
@@ -82,7 +67,7 @@ export interface KulChatEventPayload extends KulEventPayload {
     status: KulChatStatus;
 }
 
-export type KulChatHistory = KulChatChoiceMessage[];
+export type KulChatHistory = KulLLMChoiceMessage[];
 
 export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
 
@@ -112,21 +97,6 @@ export interface KulChatPropsInterface {
     kulValue?: KulChatHistory;
 }
 
-export interface KulChatSendArguments {
-    history: KulChatHistory;
-    max_tokens: number;
-    seed: number;
-    system: string;
-    temperature: number;
-    url: string;
-}
-
 export type KulChatStatus = 'connecting' | 'offline' | 'ready';
-
-export interface KulChatUsage {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
-}
 
 export type KulChatView = 'chat' | 'settings';
