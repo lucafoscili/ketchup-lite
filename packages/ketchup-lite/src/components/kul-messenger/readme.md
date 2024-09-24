@@ -79,12 +79,12 @@ Type: `Promise<void>`
 | `--kul-messenger-avatar-name-padding`         | Sets the padding of the avatar's name. Defaults to 12px.                                                                   |
 | `--kul-messenger-backdrop-filter`             | Sets the backdrop filter. Defaults to 5px.                                                                                 |
 | `--kul-messenger-background-color`            | Sets the background color. Defaults to var(--kul-background-color).                                                        |
+| `--kul-messenger-customization-title-padding` | Sets the padding of customization panel titles. Defaults to 8px 12px.                                                      |
 | `--kul-messenger-font-size`                   | Sets the font size of the component. Defaults to var(--kul-font-size).                                                     |
 | `--kul-messenger-letter-spacing`              | Sets the letter spacing. Defaults to 5px.                                                                                  |
 | `--kul-messenger-name-background-color`       | Sets the color of text. Defaults to rgba(var(--kul-title-background-color-rgb), 0.75).                                     |
 | `--kul-messenger-name-height`                 | Sets the height of the character's name. Defaults to 50px.                                                                 |
 | `--kul-messenger-nav-box-shadow`              | Sets the box shadow of the messenger's navigation bar. Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375). |
-| `--kul-messenger-options-title-padding`       | Sets the padding of titles. Defaults to 8px.                                                                               |
 | `--kul-messenger-text-color`                  | Sets the color of text. Defaults to var(--kul-text-color).                                                                 |
 | `--kul-messenger-transition`                  | Sets the transition effect. Defaults to 125ms ease-out.                                                                    |
 
@@ -104,6 +104,7 @@ Type: `Promise<void>`
 - [kul-tabbar](../kul-tabbar)
 - [kul-chat](../kul-chat)
 - [kul-chip](../kul-chip)
+- [kul-textfield](../kul-textfield)
 
 ### Graph
 ```mermaid
@@ -115,6 +116,7 @@ graph TD;
   kul-messenger --> kul-tabbar
   kul-messenger --> kul-chat
   kul-messenger --> kul-chip
+  kul-messenger --> kul-textfield
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
