@@ -207,7 +207,15 @@ export class KulTextfield {
     @Method()
     async refresh(): Promise<void> {
         forceUpdate(this);
-    } /**
+    }
+    /**
+     * Blurs the input element.
+     */
+    @Method()
+    async setBlur(): Promise<void> {
+        this.#input.blur();
+    }
+    /**
      * Focuses the input element.
      */
     @Method()

@@ -1246,6 +1246,13 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Blurs the input element.
+         */
+        "setBlur": () => Promise<void>;
+        /**
+          * Focuses the input element.
+         */
         "setFocus": () => Promise<void>;
         /**
           * Sets the component's state.
