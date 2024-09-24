@@ -7,6 +7,7 @@ import {
     Fragment,
     h,
     Host,
+    Listen,
     Method,
     Prop,
     State,
@@ -168,6 +169,25 @@ export class KulChat {
     }
 
     /*-------------------------------------------------*/
+    /*                L i s t e n e r s                */
+    /*-------------------------------------------------*/
+
+    @Listen('keydown')
+    listenKeydown(e: KeyboardEvent) {
+        switch (e.key) {
+            case 'Enter':
+                if (e.ctrlKey) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    this.#adapter.actions.send();
+                }
+                break;
+            default:
+                e.stopPropagation();
+        }
+    }
+
+    /*-------------------------------------------------*/
     /*                 W a t c h e r s                 */
     /*-------------------------------------------------*/
 
@@ -184,6 +204,11 @@ export class KulChat {
         const value = (estimated / this.kulContextWindow) * 100;
         requestAnimationFrame(() => {
             if (progressbar) {
+                if (value > 90) {
+                    progressbar.classList.add('kul-danger');
+                } else {
+                    progressbar.classList.remove('kul-danger');
+                }
                 progressbar.kulValue = value;
                 progressbar.title = `Estimated tokens used: ${estimated}/${this.kulContextWindow}`;
             }
@@ -283,14 +308,20 @@ export class KulChat {
                     this.#sendPrompt();
                 }
             },
-            send: (prompt) => {
-                const newMessage: KulLLMChoiceMessage = {
-                    role: 'user',
-                    content: prompt,
-                };
-                const cb = () => (this.history = [...this.history, newMessage]);
-                this.#updateHistory(cb);
-                this.#sendPrompt();
+            send: async () => {
+                const textarea = this.#adapter.components.textareas.prompt;
+                await textarea.setBlur();
+                const prompt = await textarea.getValue();
+                if (prompt) {
+                    const newMessage: KulLLMChoiceMessage = {
+                        role: 'user',
+                        content: prompt,
+                    };
+                    const cb = () =>
+                        (this.history = [...this.history, newMessage]);
+                    this.#updateHistory(cb);
+                    this.#sendPrompt();
+                }
             },
             stt: () =>
                 this.#kulManager.llm.speechToText(

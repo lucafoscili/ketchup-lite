@@ -1,6 +1,7 @@
 import { h } from '@stencil/core';
 import { KulChatAdapter } from '../kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulEventPayload } from '../../../components';
 
 export const prepInputArea = (adapter: KulChatAdapter) => {
     return (
@@ -52,6 +53,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                         adapter.components.buttons.clear = el;
                     }
                 }}
+                title="Clear the textarea."
             ></kul-button>
             <kul-button
                 id="stt-button"
@@ -67,6 +69,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                         adapter.components.buttons.stt = el;
                     }
                 }}
+                title="Activate Speech To Text with your browser's API (if supported)."
             >
                 <kul-spinner
                     kulActive={true}
@@ -88,6 +91,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
                         adapter.components.buttons.send = el;
                     }
                 }}
+                title="Send your prompt (CTRL+Enter)."
             >
                 <kul-spinner
                     kulActive={true}
@@ -139,10 +143,7 @@ const buttonEventHandler = async (
                     await textarea.setFocus();
                     break;
                 case 'send-button':
-                    const value = await textarea.getValue();
-                    if (value) {
-                        adapter.actions.send(value);
-                    }
+                    adapter.actions.send();
                     break;
                 case 'settings-button':
                     adapter.set.status.view('settings');
@@ -156,7 +157,7 @@ const buttonEventHandler = async (
 
 const progressbarEventHandler = async (
     adapter: KulChatAdapter,
-    e: CustomEvent<KulButtonEventPayload>
+    e: CustomEvent<KulEventPayload>
 ) => {
     const { eventType } = e.detail;
 

@@ -6,7 +6,7 @@ export interface KulChatAdapter {
         delete: (message: KulLLMChoiceMessage) => void;
         disableInteractivity: (shouldDisable: boolean) => void;
         regenerate: (message: KulLLMChoiceMessage) => void;
-        send: (prompt: string) => void;
+        send: () => void;
         stt: () => void;
         updateTokenCount: () => Promise<void>;
     };
