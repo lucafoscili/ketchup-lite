@@ -1,6 +1,6 @@
 import { Fragment, h } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
-import { MENU_DATASET } from './constants';
+import { MENU_DATASET } from '../kul-messenger-constants';
 import {
     KulButtonEventPayload,
     KulButtonPropsInterface,
@@ -30,8 +30,8 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
                 src={image.value}
                 title={image.title || ''}
             />
-            <div class="messenger__avatar__name">
-                <div class="messenger__avatar__label">
+            <div class="messenger__avatar__name-wrapper">
+                <div class="messenger__avatar__name">
                     <kul-image
                         class="messenger__avatar__status"
                         kulColor={
@@ -52,7 +52,9 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
                                   : 'Contacting this character...'
                         }
                     ></kul-image>
-                    {adapter.get.character.name()}
+                    <div class="messenger__avatar__label">
+                        {adapter.get.character.name()}
+                    </div>
                 </div>
                 {prepSaveButton(adapter)}
             </div>

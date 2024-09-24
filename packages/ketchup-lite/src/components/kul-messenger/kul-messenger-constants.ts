@@ -1,8 +1,70 @@
-import { KulDataDataset } from '../../../managers/kul-data/kul-data-declarations';
+import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import {
+    KulMessengerComponents,
     KulMessengerImageRootNodesIds,
     KulMessengerOptionRootNodesIds,
-} from '../kul-messenger-declarations';
+    KulMessengerUI,
+} from './kul-messenger-declarations';
+
+const CLEAN_UI: KulMessengerUI = {
+    customization: false,
+    editing: {
+        avatars: false,
+        locations: false,
+        outfits: false,
+        styles: false,
+        timeframes: false,
+    },
+    filters: {
+        avatars: false,
+        locations: false,
+        outfits: false,
+        styles: false,
+        timeframes: false,
+    },
+    options: {
+        locations: true,
+        outfits: true,
+        styles: true,
+        timeframes: true,
+    },
+    panels: {
+        isLeftCollapsed: false,
+        isRightCollapsed: false,
+    },
+};
+
+export const CLEAN_UI_JSON = JSON.parse(JSON.stringify(CLEAN_UI));
+export const CLEAN_COMPONENTS: KulMessengerComponents = {
+    editing: {
+        avatars: {
+            descriptionTextarea: null,
+            titleTextarea: null,
+            imageUrlTextarea: null,
+        },
+        locations: {
+            descriptionTextarea: null,
+            titleTextarea: null,
+            imageUrlTextarea: null,
+        },
+        outfits: {
+            descriptionTextarea: null,
+            titleTextarea: null,
+            imageUrlTextarea: null,
+        },
+        styles: {
+            descriptionTextarea: null,
+            titleTextarea: null,
+            imageUrlTextarea: null,
+        },
+        timeframes: {
+            descriptionTextarea: null,
+            titleTextarea: null,
+            imageUrlTextarea: null,
+        },
+    },
+    saveButton: null,
+};
 
 export const LEFT_EXPANDER_ICON = 'chevron_left';
 export const RIGHT_EXPANDER_ICON = 'chevron_right';

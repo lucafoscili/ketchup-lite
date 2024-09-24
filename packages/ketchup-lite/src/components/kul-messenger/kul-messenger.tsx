@@ -24,28 +24,26 @@ import {
     KulMessengerEventPayload,
     KulMessengerUI,
     KulMessengerChat,
-    KulMessengerOptions,
 } from './kul-messenger-declarations';
 import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { prepLeft } from './layout/left';
-import { prepCenter } from './layout/center';
-import { prepRight } from './layout/right';
-import { prepGrid } from './layout/grid';
+import { prepLeft } from './messenger/left';
+import { prepCenter } from './messenger/center';
+import { prepRight } from './messenger/right';
+import { prepGrid } from './selection-grid/selection-grid';
 import {
     AVATAR_COVER,
+    CLEAN_COMPONENTS,
+    CLEAN_UI_JSON,
     LOCATION_COVER,
     OUTFIT_COVER,
     STYLE_COVER,
     TIMEFRAME_COVER,
-} from './layout/constants';
-import {
-    KulChatPropsInterface,
-    KulChatStatus,
-} from '../kul-chat/kul-chat-declarations';
+} from './kul-messenger-constants';
+import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 
 @Component({
     tag: 'kul-messenger',
@@ -91,26 +89,7 @@ export class KulMessenger {
     /**
      * State of options' filters.
      */
-    @State() ui: KulMessengerUI = {
-        customization: false,
-        filters: {
-            avatars: false,
-            locations: false,
-            outfits: false,
-            styles: false,
-            timeframes: false,
-        },
-        options: {
-            locations: true,
-            outfits: true,
-            styles: true,
-            timeframes: true,
-        },
-        panels: {
-            isLeftCollapsed: false,
-            isRightCollapsed: false,
-        },
-    };
+    @State() ui: KulMessengerUI = CLEAN_UI_JSON;
     /**
      * Signals to the widget when the dataset is being saved.
      */
@@ -215,26 +194,7 @@ export class KulMessenger {
     async reset(): Promise<void> {
         this.covers = {};
         this.currentCharacter = null;
-        this.ui = {
-            customization: false,
-            filters: {
-                avatars: false,
-                locations: false,
-                outfits: false,
-                styles: false,
-                timeframes: false,
-            },
-            options: {
-                locations: true,
-                outfits: true,
-                styles: true,
-                timeframes: true,
-            },
-            panels: {
-                isLeftCollapsed: false,
-                isRightCollapsed: false,
-            },
-        };
+        this.ui = CLEAN_UI_JSON;
         this.history = {};
 
         this.#initStates();
@@ -245,7 +205,7 @@ export class KulMessenger {
     /*-------------------------------------------------*/
 
     #adapter: KulMessengerAdapter = {
-        components: { saveButton: null },
+        components: CLEAN_COMPONENTS,
         get: {
             character: {
                 biography: (character = this.currentCharacter) => {
@@ -456,6 +416,10 @@ export class KulMessenger {
                 ui: {
                     customization: (value) => {
                         this.ui.customization = value;
+                        this.refresh();
+                    },
+                    editing: (value, type) => {
+                        this.ui.editing[type] = value;
                         this.refresh();
                     },
                     filters: (filters) => {

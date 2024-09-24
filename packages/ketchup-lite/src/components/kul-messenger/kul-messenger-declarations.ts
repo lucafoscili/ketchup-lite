@@ -9,7 +9,7 @@ import {
 } from '../kul-chat/kul-chat-declarations';
 
 export interface KulMessengerAdapter {
-    components: { saveButton: HTMLKulButtonElement };
+    components: KulMessengerComponents;
     get: {
         character: {
             biography: (character?: KulMessengerCharacterNode) => string;
@@ -95,6 +95,10 @@ export interface KulMessengerAdapter {
             };
             ui: {
                 customization: (value: boolean) => void;
+                editing: (
+                    value: boolean,
+                    type: KulMessengerImageRootNodesIds
+                ) => void;
                 filters: (filter: KulMessengerFilters) => void;
                 options: (
                     value: boolean,
@@ -157,6 +161,13 @@ export interface KulMessengerChatNode extends KulMessengerBaseNode<never> {
     value: string;
 }
 
+export interface KulMessengerComponents {
+    editing: {
+        [K in KulMessengerImageRootNodesIds]: KulMessengerImageEditComponents;
+    };
+    saveButton: HTMLKulButtonElement;
+}
+
 export interface KulMessengerCovers {
     [index: `character_${string}`]: {
         [K in KulMessengerImageRootNodesIds]: number;
@@ -190,6 +201,12 @@ export type KulMessengerImageChildNode =
 
 export type KulMessengerImageChildrenNodes = KulMessengerImageChildNode[];
 
+export interface KulMessengerImageEditComponents {
+    descriptionTextarea: HTMLKulTextfieldElement;
+    titleTextarea: HTMLKulTextfieldElement;
+    imageUrlTextarea: HTMLKulTextfieldElement;
+}
+
 export type KulMessengerImageRootNodes =
     | KulMessengerAvatarsNode
     | KulMessengerLocationsNode
@@ -204,6 +221,12 @@ export type KulMessengerImageNodeTypeMap = {
     styles: KulMessengerStylesNode;
     timeframes: KulMessengerTimeframesNode;
 };
+
+export type KulMessengerImageNodesPrefixes =
+    `${'avatar' | 'location' | 'outfit' | 'style' | 'timeframe'}_`;
+
+export type KulMessengerImageNodesIds =
+    `${'avatar' | 'location' | 'outfit' | 'style' | 'timeframe'}_${string}`;
 
 export type KulMessengerImageRootNodesIds = keyof KulMessengerImageNodeTypeMap;
 
@@ -289,13 +312,14 @@ export interface KulMessengerTimeframeNode extends KulMessengerBaseNode<never> {
 }
 
 export interface KulMessengerTimeframesNode
-    extends KulMessengerBaseNode<KulMessengerStyleNode> {
+    extends KulMessengerBaseNode<KulMessengerTimeframeNode> {
     id: 'timeframes';
     value: number;
 }
 
 export interface KulMessengerUI {
     customization: boolean;
+    editing: KulMessengerFilters;
     filters: KulMessengerFilters;
     options: KulMessengerOptions;
     panels: KulMessengerPanels;
