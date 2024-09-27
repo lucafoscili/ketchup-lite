@@ -28,6 +28,16 @@
       height: 100%;
     }
 
+    &__actions {
+      background-color: rgba(var(--kul-title-background-color-rgb), 0.875);
+      bottom: 0;
+      display: flex;
+      left: 0;
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
+    }
+
     &__add {
       --kul-button-border-radius: 0;
     }

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-24T18:15:55",
+  "timestamp": "2024-09-27T21:36:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5864,7 +5864,7 @@
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
-      "readme": "# kul-messenger\r\n\r\n\r\n\r",
+      "readme": "# kul-messenger\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12037,10 +12037,15 @@
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
-    "src/types/GenericTypes.ts::KulEventPayload": {
-      "declaration": "export interface KulEventPayload {\n    comp: unknown;\n    eventType: KulEventType;\n    id: string;\n    originalEvent: Event;\n}",
+    "src/components/kul-button/kul-button-declarations.ts::KulButtonStyling": {
+      "declaration": "export type KulButtonStyling =\n    | 'flat'\n    | 'floating'\n    | 'icon'\n    | 'outlined'\n    | 'raised';",
       "docstring": "",
-      "path": "src/types/GenericTypes.ts"
+      "path": "src/components/kul-button/kul-button-declarations.ts"
+    },
+    "src/components/kul-button/kul-button-declarations.ts::KulButtonEventPayload": {
+      "declaration": "export interface KulButtonEventPayload extends KulEventPayload {\n    eventType: KulButtonEvent;\n    value: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-button/kul-button-declarations.ts"
     },
     "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugComponentInfo": {
       "declaration": "export interface KulDebugComponentInfo {\n    endTime: number;\n    renderCount: number;\n    renderEnd: number;\n    renderStart: number;\n    startTime: number;\n}",
@@ -12052,50 +12057,10 @@
       "docstring": "",
       "path": "src/types/GenericTypes.ts"
     },
-    "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
-      "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
-      "docstring": "",
-      "path": "src/components/kul-article/kul-article-declarations.ts"
-    },
-    "src/components/kul-image/kul-image-declarations.ts::KulImagePropsInterface": {
-      "declaration": "export interface KulImagePropsInterface {\n    kulBadgeProps?: KulBadgePropsInterface;\n    kulColor?: string;\n    kulShowSpinner?: boolean;\n    kulSizeX?: string;\n    kulSizeY?: string;\n    kulStyle?: string;\n    kulValue?: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-image/kul-image-declarations.ts"
-    },
-    "src/components/kul-button/kul-button-declarations.ts::KulButtonStyling": {
-      "declaration": "export type KulButtonStyling =\n    | 'flat'\n    | 'floating'\n    | 'icon'\n    | 'outlined'\n    | 'raised';",
-      "docstring": "",
-      "path": "src/components/kul-button/kul-button-declarations.ts"
-    },
-    "src/components/kul-button/kul-button-declarations.ts::KulButtonEventPayload": {
-      "declaration": "export interface KulButtonEventPayload extends KulEventPayload {\n    eventType: KulButtonEvent;\n    value: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-button/kul-button-declarations.ts"
-    },
     "src/components/kul-button/kul-button-declarations.ts::KulButtonState": {
       "declaration": "export type KulButtonState = 'off' | 'on';",
       "docstring": "",
       "path": "src/components/kul-button/kul-button-declarations.ts"
-    },
-    "src/managers/kul-data/kul-data-declarations.ts::KulDataShapesMap": {
-      "declaration": "{\n    [K in KulDataShapes]?: Array<\n        {\n            [P in K]: K extends 'badge'\n                ? Partial<KulBadgePropsInterface>\n                : K extends 'button'\n                  ? Partial<KulButtonPropsInterface>\n                  : K extends 'chat'\n                    ? Partial<KulChatPropsInterface>\n                    : K extends 'code'\n                      ? Partial<KulCodePropsInterface>\n                      : K extends 'image'\n                        ? Partial<KulImagePropsInterface>\n                        : string;\n        }[K]\n    >;\n}",
-      "docstring": "",
-      "path": "src/managers/kul-data/kul-data-declarations.ts"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candle'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload extends KulEventPayload {\r\n    column: KulDataColumn;\r\n    node: KulDataNode;\r\n    x: number | string;\r\n    y: number | string;\r\n}",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
       "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
@@ -12127,6 +12092,56 @@
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
+      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig": {
+      "declaration": "export interface KulMessengerConfig {\n    currentCharacter: string;\n    ui: KulMessengerUI;\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
+      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    config: KulMessengerConfig;\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/types/GenericTypes.ts::KulEventPayload": {
+      "declaration": "export interface KulEventPayload {\n    comp: unknown;\n    eventType: KulEventType;\n    id: string;\n    originalEvent: Event;\n}",
+      "docstring": "",
+      "path": "src/types/GenericTypes.ts"
+    },
+    "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
+      "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-article/kul-article-declarations.ts"
+    },
+    "src/components/kul-image/kul-image-declarations.ts::KulImagePropsInterface": {
+      "declaration": "export interface KulImagePropsInterface {\n    kulBadgeProps?: KulBadgePropsInterface;\n    kulColor?: string;\n    kulShowSpinner?: boolean;\n    kulSizeX?: string;\n    kulSizeY?: string;\n    kulStyle?: string;\n    kulValue?: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-image/kul-image-declarations.ts"
+    },
+    "src/managers/kul-data/kul-data-declarations.ts::KulDataShapesMap": {
+      "declaration": "{\n    [K in KulDataShapes]?: Array<\n        {\n            [P in K]: K extends 'badge'\n                ? Partial<KulBadgePropsInterface>\n                : K extends 'button'\n                  ? Partial<KulButtonPropsInterface>\n                  : K extends 'chat'\n                    ? Partial<KulChatPropsInterface>\n                    : K extends 'code'\n                      ? Partial<KulCodePropsInterface>\n                      : K extends 'image'\n                        ? Partial<KulImagePropsInterface>\n                        : string;\n        }[K]\n    >;\n}",
+      "docstring": "",
+      "path": "src/managers/kul-data/kul-data-declarations.ts"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
+      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
+      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candle'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
+      "declaration": "export interface KulChartEventPayload extends KulEventPayload {\r\n    column: KulDataColumn;\r\n    node: KulDataNode;\r\n    x: number | string;\r\n    y: number | string;\r\n}",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
     "src/components.d.ts::KulDebugComponentInfo": {
       "declaration": "any",
       "docstring": "",
@@ -12146,21 +12161,6 @@
       "declaration": "export interface KulListEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
       "docstring": "",
       "path": "src/components/kul-list/kul-list-declarations.ts"
-    },
-    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
-      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
-      "docstring": "",
-      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
-    },
-    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig": {
-      "declaration": "export interface KulMessengerConfig {\n    currentCharacter: string;\n    ui: KulMessengerUI;\n}",
-      "docstring": "",
-      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
-    },
-    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
-      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    config: KulMessengerConfig;\n}",
-      "docstring": "",
-      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
     "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
       "declaration": "export interface KulPhotoframeEventPayload extends KulEventPayload {\n    isPlaceholder?: boolean;\n}",
