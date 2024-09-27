@@ -75,16 +75,6 @@ myButton.addEventListener("kul-button-event", (e) => {
 });
 ```
 
-## Roadmap
-
-- [x] Basic CI/CD pipeline setup.
-- [x] Development of basic components and functions.
-- [x] First npm package release.
-- [ ] Add a showcase playground for each component.
-- [ ] Improve and expand documentation and showcase.
-- [ ] Add new components (i.e.: carousel).
-- [ ] Enhance existing components with more features, particularly focusing on `kulData` management.
-
 ## Documentation
 
 For detailed information about each component, including available properties, events, and methods, please refer to the [showcase](https://www.lucafoscili.com/ketchup-lite).
@@ -105,4 +95,3 @@ Special thanks to the following libraries and frameworks that make this project 
 - [Stencil](https://stenciljs.com/) for building fast web apps using Web Components.
 - [Echarts](https://echarts.apache.org/) for providing data visualization components.
 - [Ketchup](https://github.com/smeup/ketchup) for the original project from which Ketchup Lite is derived.
-  
