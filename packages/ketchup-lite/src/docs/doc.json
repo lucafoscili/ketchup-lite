@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-27T20:05:43",
+  "timestamp": "2024-09-27T21:36:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5864,6 +5864,7 @@
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
+      "readme": "# kul-messenger\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
