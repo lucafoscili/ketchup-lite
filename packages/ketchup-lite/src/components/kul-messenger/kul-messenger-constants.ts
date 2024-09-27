@@ -1,8 +1,9 @@
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import {
-    KulMessengerComponents,
-    KulMessengerImageRootNodesIds,
-    KulMessengerOptionRootNodesIds,
+    KulMessengerAdapterComponents,
+    KulMessengerImageRootIds,
+    KulMessengerImageTypes,
+    KulMessengerOptionTypes,
     KulMessengerUI,
 } from './kul-messenger-declarations';
 
@@ -35,32 +36,37 @@ const CLEAN_UI: KulMessengerUI = {
 };
 
 export const CLEAN_UI_JSON = JSON.parse(JSON.stringify(CLEAN_UI));
-export const CLEAN_COMPONENTS: KulMessengerComponents = {
+export const CLEAN_COMPONENTS: KulMessengerAdapterComponents = {
     editing: {
         avatars: {
             descriptionTextarea: null,
-            titleTextarea: null,
+            idTextfield: null,
             imageUrlTextarea: null,
+            titleTextarea: null,
         },
         locations: {
             descriptionTextarea: null,
-            titleTextarea: null,
+            idTextfield: null,
             imageUrlTextarea: null,
+            titleTextarea: null,
         },
         outfits: {
             descriptionTextarea: null,
-            titleTextarea: null,
+            idTextfield: null,
             imageUrlTextarea: null,
+            titleTextarea: null,
         },
         styles: {
             descriptionTextarea: null,
-            titleTextarea: null,
+            idTextfield: null,
             imageUrlTextarea: null,
+            titleTextarea: null,
         },
         timeframes: {
             descriptionTextarea: null,
-            titleTextarea: null,
+            idTextfield: null,
             imageUrlTextarea: null,
+            titleTextarea: null,
         },
     },
     saveButton: null,
@@ -136,17 +142,15 @@ export const MENU_DATASET: KulDataDataset = {
     ],
 };
 
-export const OPTION_TYPE_IDS: KulMessengerOptionRootNodesIds[] = [
+export const OPTION_TYPE_IDS: KulMessengerOptionTypes[] = [
     'locations',
     'outfits',
     'styles',
     'timeframes',
 ];
 
-export const IMAGE_TYPE_IDS: KulMessengerImageRootNodesIds[] = [
-    'avatars',
-    ...OPTION_TYPE_IDS,
-];
+export const IMAGE_TYPE_IDS: KulMessengerImageRootIds<KulMessengerImageTypes>[] =
+    ['avatars', ...OPTION_TYPE_IDS];
 
 export const NAV_DATASET: KulDataDataset = {
     nodes: [

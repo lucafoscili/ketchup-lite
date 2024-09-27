@@ -17,13 +17,19 @@ import {
     KulMessengerCharacterNode,
     KulMessengerDataset,
     KulMessengerHistory,
-    KulMessengerImageRootNodesIds,
-    KulMessengerImageNodeTypeMap,
     KulMessengerCovers,
     KulMessengerConfig,
     KulMessengerEventPayload,
     KulMessengerUI,
     KulMessengerChat,
+    KulMessengerEditingStatus,
+    KulMessengerBaseChildNode,
+    KulMessengerChildIds,
+    KulMessengerBaseRootNode,
+    KulMessengerImageTypes,
+    KulMessengerPrefix,
+    KulMessengerChildTypes,
+    KulMessengerUnionChildIds,
 } from './kul-messenger-declarations';
 import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -71,33 +77,51 @@ export class KulMessenger {
         startTime: performance.now(),
     };
     /**
-     * Node representing the current active character.
-     */
-    @State() currentCharacter: KulMessengerCharacterNode;
-    /**
      * Map of chat components with their characters.
      */
     @State() chat: KulMessengerChat = {};
+    /**
+     * Tracks the connection status towards the LLM endpoint.
+     */
+    @State() connectionStatus: KulChatStatus = 'offline';
     /**
      * State for the options' covers.
      */
     @State() covers: KulMessengerCovers = {};
     /**
+     * Node representing the current active character.
+     */
+    @State() currentCharacter: KulMessengerCharacterNode;
+    /**
+     * Node representing the current active character.
+     */
+    @State() editingStatus: KulMessengerEditingStatus<KulMessengerImageTypes> =
+        {
+            avatars: null,
+            locations: null,
+            outfits: null,
+            styles: null,
+            timeframes: null,
+        };
+    /**
      * History of this session's chats.
      */
     @State() history: KulMessengerHistory = {};
     /**
-     * State of options' filters.
+     * Option currently hovered in the customization panel.
      */
-    @State() ui: KulMessengerUI = CLEAN_UI_JSON;
+    @State()
+    hoveredCustomizationOption: KulMessengerBaseChildNode<
+        KulMessengerChildIds<KulMessengerUnionChildIds>
+    >;
     /**
      * Signals to the widget when the dataset is being saved.
      */
     @State() saveInProgress = false;
     /**
-     * Tracks the connection status towards the LLM endpoint.
+     * State of options' filters.
      */
-    @State() connectionStatus: KulChatStatus = 'offline';
+    @State() ui: KulMessengerUI = CLEAN_UI_JSON;
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -205,6 +229,18 @@ export class KulMessenger {
     /*-------------------------------------------------*/
 
     #adapter: KulMessengerAdapter = {
+        actions: {
+            delete: {
+                option: (node, type) => {
+                    const root = this.#adapter.get.image.root(type);
+                    const idx = root.children.indexOf(node);
+                    if (idx !== -1) {
+                        delete root.children[idx];
+                    }
+                    this.refresh();
+                },
+            },
+        },
         components: CLEAN_COMPONENTS,
         get: {
             character: {
@@ -226,6 +262,7 @@ export class KulMessenger {
                 current: () => this.currentCharacter,
                 history: (character = this.currentCharacter) =>
                     this.history[character.id],
+                list: () => this.kulData.nodes || [],
                 name: (character = this.currentCharacter) =>
                     character.value ||
                     character.id ||
@@ -243,7 +280,6 @@ export class KulMessenger {
 
                     return nodes[nextIdx];
                 },
-                list: () => this.kulData.nodes || [],
                 previous: (character = this.currentCharacter) => {
                     if (!this.#hasCharacters()) {
                         return;
@@ -267,8 +303,12 @@ export class KulMessenger {
                         const index = this.covers[character.id][type];
                         const node = root.children[index];
                         return {
-                            node: root.children[index],
-                            title: this.#adapter.get.image.title(node),
+                            node: root.children[
+                                index
+                            ] as KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+                            title: this.#adapter.get.image.title(
+                                node as KulMessengerBaseChildNode<KulMessengerUnionChildIds>
+                            ),
                             value: node.cells.kulImage.value,
                         };
                     } catch (error) {
@@ -286,40 +326,59 @@ export class KulMessenger {
                         }
                     }
                 },
-                byType: <T extends KulMessengerImageRootNodesIds>(
-                    type: T,
-                    character = this.currentCharacter
-                ): KulMessengerImageNodeTypeMap[T]['children'][number][] => {
+                byType: (type, character = this.currentCharacter) => {
                     const node = character.children.find(
                         (child) => child.id === type
-                    ) as KulMessengerImageNodeTypeMap[T];
+                    );
 
-                    if (node) {
-                        return node.children as unknown as KulMessengerImageNodeTypeMap[T]['children'][number][];
+                    if (node?.children) {
+                        return node.children as KulMessengerBaseChildNode<KulMessengerUnionChildIds>[];
                     } else {
-                        throw new Error(
-                            `Child node with id '${type}' not found`
-                        );
+                        return [];
                     }
                 },
                 coverIndex: (type, character = this.currentCharacter) => {
                     return this.covers[character.id][type];
                 },
-                root: <T extends KulMessengerImageRootNodesIds>(
-                    type: T,
-                    character = this.currentCharacter
-                ) => {
-                    const node = character.children.find((n) => n.id === type);
-                    if (!node) {
-                        throw new Error(
-                            `Child node with id '${type}' not found`
-                        );
+                newId: (type) => {
+                    const images = this.#adapter.get.image.byType(type);
+                    let index = 0;
+                    let prefix: KulMessengerPrefix<KulMessengerChildTypes>;
+                    let nodeId: KulMessengerChildIds<KulMessengerUnionChildIds>;
+                    switch (type) {
+                        case 'avatars':
+                            prefix = 'avatar_';
+                            break;
+                        case 'locations':
+                            prefix = 'location_';
+                            break;
+                        case 'outfits':
+                            prefix = 'outfit_';
+                            break;
+                        case 'styles':
+                            prefix = 'style_';
+                            break;
+                        case 'timeframes':
+                            prefix = 'timeframe_';
+                            break;
+                        default:
+                            throw new Error(`Unknown image type: ${type}`);
                     }
-                    return node as KulMessengerImageNodeTypeMap[T];
+                    do {
+                        nodeId =
+                            `${prefix}${index.toString()}` as KulMessengerChildIds<KulMessengerUnionChildIds>;
+                        index++;
+                    } while (images.some((node) => node.id === nodeId));
+
+                    return nodeId;
+                },
+                root: (type, character = this.currentCharacter) => {
+                    const node = character.children.find((n) => n.id === type);
+                    return node as KulMessengerBaseRootNode<KulMessengerImageTypes>;
                 },
                 title: (node) => {
-                    const title = node.value || '';
-                    const description = node.description || '';
+                    const title = node?.value || '';
+                    const description = node?.description || '';
                     return title && description
                         ? `${title} - ${description}`
                         : description
@@ -340,6 +399,9 @@ export class KulMessenger {
                 history: () => this.history,
                 status: {
                     connection: () => this.connectionStatus,
+                    editing: () => this.editingStatus,
+                    hoveredCustomizationOption: () =>
+                        this.hoveredCustomizationOption,
                     save: {
                         inProgress: () => this.saveInProgress,
                     },
@@ -409,6 +471,9 @@ export class KulMessenger {
                 },
                 status: {
                     connection: (status) => (this.connectionStatus = status),
+                    editing: (type, id) => (this.editingStatus[type] = id),
+                    hoveredCustomizationOption: (node) =>
+                        (this.hoveredCustomizationOption = node),
                     save: {
                         inProgress: (value) => (this.saveInProgress = value),
                     },
@@ -418,9 +483,30 @@ export class KulMessenger {
                         this.ui.customization = value;
                         this.refresh();
                     },
-                    editing: (value, type) => {
+                    editing: async (value, type, node = null) => {
                         this.ui.editing[type] = value;
-                        this.refresh();
+                        this.editingStatus[type] = node
+                            ? node.id
+                            : this.#adapter.get.image.newId(type);
+                        if (!node) {
+                            this.refresh();
+                        } else {
+                            await this.refresh();
+                            requestAnimationFrame(() => {
+                                const comps =
+                                    this.#adapter.components.editing[type];
+                                const hasImage = node?.cells?.kulImage?.value;
+                                comps.descriptionTextarea.setValue(
+                                    node.description
+                                );
+                                comps.titleTextarea.setValue(node.value);
+                                if (hasImage) {
+                                    comps.imageUrlTextarea.setValue(
+                                        node.cells.kulImage.value
+                                    );
+                                }
+                            });
+                        }
                     },
                     filters: (filters) => {
                         this.ui.filters = filters;
@@ -462,31 +548,49 @@ export class KulMessenger {
     }
 
     #initStates() {
-        const imageRootGetter = this.#adapter.get.image.root;
-        for (let index = 0; index < this.kulData.nodes.length; index++) {
-            const character = this.kulData.nodes[index];
-            const covers: {
-                [K in KulMessengerImageRootNodesIds]: number;
-            } = {
-                avatars: imageRootGetter('avatars', character).value || 0,
-                locations: imageRootGetter('locations', character).value || 0,
-                outfits: imageRootGetter('outfits', character).value || 0,
-                styles: imageRootGetter('styles', character).value || 0,
-                timeframes: imageRootGetter('timeframes', character).value || 0,
-            };
-            const chat = character.children?.find((n) => n.id === 'chat');
-            this.chat[character.id] = {};
-            const chatCell = chat?.cells?.kulChat;
-            if (chatCell) {
-                const characterChat = this.chat[character.id];
-                characterChat.kulEndpointUrl = chatCell.kulEndpointUrl;
-                characterChat.kulMaxTokens = chatCell.kulMaxTokens;
-                characterChat.kulPollingInterval = chatCell.kulPollingInterval;
-                characterChat.kulTemperature = chatCell.kulTemperature;
+        if (this.#hasNodes) {
+            const imageRootGetter = this.#adapter.get.image.root;
+            for (let index = 0; index < this.kulData.nodes.length; index++) {
+                const character = this.kulData.nodes[index];
+                const covers: KulMessengerCovers = {
+                    [character.id]: {
+                        avatars:
+                            Number(
+                                imageRootGetter('avatars', character).value
+                            ).valueOf() || 0,
+                        locations:
+                            Number(
+                                imageRootGetter('locations', character).value
+                            ).valueOf() || 0,
+                        outfits:
+                            Number(
+                                imageRootGetter('outfits', character).value
+                            ).valueOf() || 0,
+                        styles:
+                            Number(
+                                imageRootGetter('styles', character).value
+                            ).valueOf() || 0,
+                        timeframes:
+                            Number(
+                                imageRootGetter('timeframes', character).value
+                            ).valueOf() || 0,
+                    },
+                };
+                const chat = character.children?.find((n) => n.id === 'chat');
+                this.chat[character.id] = {};
+                const chatCell = chat?.cells?.kulChat;
+                if (chatCell) {
+                    const characterChat = this.chat[character.id];
+                    characterChat.kulEndpointUrl = chatCell.kulEndpointUrl;
+                    characterChat.kulMaxTokens = chatCell.kulMaxTokens;
+                    characterChat.kulPollingInterval =
+                        chatCell.kulPollingInterval;
+                    characterChat.kulTemperature = chatCell.kulTemperature;
+                }
+                const history = chatCell?.kulValue || chatCell?.value || [];
+                this.history[character.id] = JSON.stringify(history);
+                Object.assign(this.covers, covers);
             }
-            const history = chatCell?.kulValue || chatCell?.value || [];
-            this.history[character.id] = JSON.stringify(history);
-            this.covers[character.id] = covers;
         }
         if (this.kulValue) {
             const currentCharacter = this.kulValue.currentCharacter;
@@ -571,9 +675,7 @@ export class KulMessenger {
 
     componentWillLoad() {
         this.#kulManager.theme.register(this);
-        if (this.#hasNodes()) {
-            this.#initStates();
-        }
+        this.#initStates();
     }
 
     componentDidLoad() {
