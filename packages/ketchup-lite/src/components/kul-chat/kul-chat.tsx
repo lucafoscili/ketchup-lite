@@ -29,8 +29,8 @@ import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { GenericObject } from '../../types/GenericTypes';
-import { prepSettings } from './settings/settings';
-import { prepChat } from './chat/chat';
+import { prepSettings } from './settings/kul-chat-settings';
+import { prepChat } from './chat/kul-chat-chat';
 import {
     KulLLMChoiceMessage,
     KulLLMRequest,

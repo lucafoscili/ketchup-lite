@@ -7,22 +7,25 @@ import {
     KulChatPropsInterface,
     KulChatStatus,
 } from '../kul-chat/kul-chat-declarations';
+import { KulMessenger } from './kul-messenger';
 /*-------------------------------------------------*/
 /*                  A d a p t e r                  */
 /*-------------------------------------------------*/
 export interface KulMessengerAdapter {
     actions: KulMessengerAdapterActions;
     components: KulMessengerAdapterComponents;
-    get: {
-        character: KulMessengerAdapterGetCharacter;
-        image: KulMessengerAdapterGetImage;
-        messenger: KulMessengerAdapterGetMessenger;
-    };
-    set: {
-        character: KulMessengerAdapterSetCharacter;
-        image: KulMessengerAdapterSetImage;
-        messenger: KulMessengerAdapterSetMessenger;
-    };
+    get: KulMessengerAdapterGetters;
+    set: KulMessengerAdapterSetters;
+}
+export interface KulMessengerAdapterGetters {
+    character: KulMessengerAdapterGetCharacter;
+    image: KulMessengerAdapterGetImage;
+    messenger: KulMessengerAdapterGetMessenger;
+}
+export interface KulMessengerAdapterSetters {
+    character: KulMessengerAdapterSetCharacter;
+    image: KulMessengerAdapterSetImage;
+    messenger: KulMessengerAdapterSetMessenger;
 }
 export interface KulMessengerAdapterActions {
     delete: {
@@ -31,11 +34,13 @@ export interface KulMessengerAdapterActions {
             type: KulMessengerImageTypes
         ) => void;
     };
+    save: () => Promise<void>;
 }
 export interface KulMessengerAdapterComponents {
     editing: {
         [K in KulMessengerImageTypes]: KulMessengerImageEditComponents;
     };
+    messenger: KulMessenger;
     saveButton: HTMLKulButtonElement;
 }
 export interface KulMessengerAdapterGetCharacter {

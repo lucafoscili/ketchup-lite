@@ -69,6 +69,7 @@ export const CLEAN_COMPONENTS: KulMessengerAdapterComponents = {
             titleTextarea: null,
         },
     },
+    messenger: null,
     saveButton: null,
 };
 

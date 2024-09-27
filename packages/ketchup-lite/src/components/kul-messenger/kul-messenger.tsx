@@ -25,10 +25,7 @@ import {
     KulMessengerEditingStatus,
     KulMessengerBaseChildNode,
     KulMessengerChildIds,
-    KulMessengerBaseRootNode,
     KulMessengerImageTypes,
-    KulMessengerPrefix,
-    KulMessengerChildTypes,
     KulMessengerUnionChildIds,
 } from './kul-messenger-declarations';
 import type { GenericObject } from '../../types/GenericTypes';
@@ -36,20 +33,14 @@ import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { prepLeft } from './messenger/left';
-import { prepCenter } from './messenger/center';
-import { prepRight } from './messenger/right';
-import { prepGrid } from './selection-grid/selection-grid';
-import {
-    AVATAR_COVER,
-    CLEAN_COMPONENTS,
-    CLEAN_UI_JSON,
-    LOCATION_COVER,
-    OUTFIT_COVER,
-    STYLE_COVER,
-    TIMEFRAME_COVER,
-} from './kul-messenger-constants';
+import { prepLeft } from './layout/kul-messenger-left';
+import { prepCenter } from './layout/kul-messenger-center';
+import { prepRight } from './layout/kul-messenger-right';
+import { prepGrid } from './selection-grid/kul-messenger-selection-grid';
+import { CLEAN_COMPONENTS, CLEAN_UI_JSON } from './kul-messenger-constants';
 import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
+import { getters } from './helpers/kul-messenger-getters';
+import { setters } from './helpers/kul-messenger-setters';
 
 @Component({
     tag: 'kul-messenger',
@@ -240,302 +231,11 @@ export class KulMessenger {
                     this.refresh();
                 },
             },
+            save: async () => this.#save(),
         },
-        components: CLEAN_COMPONENTS,
-        get: {
-            character: {
-                biography: (character = this.currentCharacter) => {
-                    try {
-                        const bio = character.children.find(
-                            (n) => n.id === 'biography'
-                        ).value;
-                        return bio
-                            ? this.#kulManager.data.cell.stringify(bio)
-                            : 'You know nothing about this character...';
-                    } catch (error) {
-                        return 'You know nothing about this character...';
-                    }
-                },
-                byId: (id) => this.kulData.nodes.find((n) => n.id === id),
-                chat: (character = this.currentCharacter) =>
-                    this.chat[character.id],
-                current: () => this.currentCharacter,
-                history: (character = this.currentCharacter) =>
-                    this.history[character.id],
-                list: () => this.kulData.nodes || [],
-                name: (character = this.currentCharacter) =>
-                    character.value ||
-                    character.id ||
-                    character.description ||
-                    '?',
-                next: (character = this.currentCharacter) => {
-                    if (!this.#hasCharacters()) {
-                        return;
-                    }
-                    const nodes = this.kulData.nodes;
-                    const currentIdx = nodes.findIndex(
-                        (n) => n.id === character.id
-                    );
-                    const nextIdx = (currentIdx + 1) % nodes.length;
-
-                    return nodes[nextIdx];
-                },
-                previous: (character = this.currentCharacter) => {
-                    if (!this.#hasCharacters()) {
-                        return;
-                    }
-                    const nodes = this.kulData.nodes;
-                    const currentIdx = nodes.findIndex(
-                        (n) => n.id === character.id
-                    );
-                    const prevIdx =
-                        (currentIdx + nodes.length - 1) % nodes.length;
-
-                    return nodes[prevIdx];
-                },
-            },
-            image: {
-                asCover: (type, character = this.currentCharacter) => {
-                    try {
-                        const root = character.children.find(
-                            (n) => n.id === type
-                        );
-                        const index = this.covers[character.id][type];
-                        const node = root.children[index];
-                        return {
-                            node: root.children[
-                                index
-                            ] as KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
-                            title: this.#adapter.get.image.title(
-                                node as KulMessengerBaseChildNode<KulMessengerUnionChildIds>
-                            ),
-                            value: node.cells.kulImage.value,
-                        };
-                    } catch (error) {
-                        switch (type) {
-                            case 'avatars':
-                                return { value: AVATAR_COVER };
-                            case 'locations':
-                                return { value: LOCATION_COVER };
-                            case 'outfits':
-                                return { value: OUTFIT_COVER };
-                            case 'styles':
-                                return { value: STYLE_COVER };
-                            case 'timeframes':
-                                return { value: TIMEFRAME_COVER };
-                        }
-                    }
-                },
-                byType: (type, character = this.currentCharacter) => {
-                    const node = character.children.find(
-                        (child) => child.id === type
-                    );
-
-                    if (node?.children) {
-                        return node.children as KulMessengerBaseChildNode<KulMessengerUnionChildIds>[];
-                    } else {
-                        return [];
-                    }
-                },
-                coverIndex: (type, character = this.currentCharacter) => {
-                    return this.covers[character.id][type];
-                },
-                newId: (type) => {
-                    const images = this.#adapter.get.image.byType(type);
-                    let index = 0;
-                    let prefix: KulMessengerPrefix<KulMessengerChildTypes>;
-                    let nodeId: KulMessengerChildIds<KulMessengerUnionChildIds>;
-                    switch (type) {
-                        case 'avatars':
-                            prefix = 'avatar_';
-                            break;
-                        case 'locations':
-                            prefix = 'location_';
-                            break;
-                        case 'outfits':
-                            prefix = 'outfit_';
-                            break;
-                        case 'styles':
-                            prefix = 'style_';
-                            break;
-                        case 'timeframes':
-                            prefix = 'timeframe_';
-                            break;
-                        default:
-                            throw new Error(`Unknown image type: ${type}`);
-                    }
-                    do {
-                        nodeId =
-                            `${prefix}${index.toString()}` as KulMessengerChildIds<KulMessengerUnionChildIds>;
-                        index++;
-                    } while (images.some((node) => node.id === nodeId));
-
-                    return nodeId;
-                },
-                root: (type, character = this.currentCharacter) => {
-                    const node = character.children.find((n) => n.id === type);
-                    return node as KulMessengerBaseRootNode<KulMessengerImageTypes>;
-                },
-                title: (node) => {
-                    const title = node?.value || '';
-                    const description = node?.description || '';
-                    return title && description
-                        ? `${title} - ${description}`
-                        : description
-                          ? description
-                          : title
-                            ? title
-                            : '';
-                },
-            },
-            messenger: {
-                config: () => {
-                    return {
-                        currentCharacter: this.currentCharacter.id,
-                        ui: this.ui,
-                    };
-                },
-                data: () => this.kulData,
-                history: () => this.history,
-                status: {
-                    connection: () => this.connectionStatus,
-                    editing: () => this.editingStatus,
-                    hoveredCustomizationOption: () =>
-                        this.hoveredCustomizationOption,
-                    save: {
-                        inProgress: () => this.saveInProgress,
-                    },
-                },
-                ui: () => this.ui,
-            },
-        },
-        set: {
-            character: {
-                chat: (chat, character = this.currentCharacter) =>
-                    (this.chat[character.id] = chat),
-                current: (character) => {
-                    this.currentCharacter = character;
-                },
-                history: (history, character = this.currentCharacter) => {
-                    if (this.history[character.id] !== history) {
-                        this.history[character.id] = history;
-
-                        if (this.kulAutosave) {
-                            this.#adapter.set.messenger.data();
-                        }
-                    }
-                },
-                next: (character = this.currentCharacter) => {
-                    if (!this.#hasCharacters()) {
-                        return;
-                    }
-                    const nextC = this.#adapter.get.character.next(character);
-                    this.#adapter.set.character.current(nextC);
-                },
-                previous: (character = this.currentCharacter) => {
-                    if (!this.#hasCharacters()) {
-                        return;
-                    }
-                    const previousC =
-                        this.#adapter.get.character.previous(character);
-                    this.#adapter.set.character.current(previousC);
-                },
-            },
-            image: {
-                cover: (type, value, character = this.currentCharacter) => {
-                    this.covers[character.id][type] = value;
-                    this.refresh();
-                },
-            },
-            messenger: {
-                data: () => {
-                    if (!this.#hasNodes()) {
-                        return;
-                    }
-                    this.saveInProgress = true;
-
-                    this.#save().then(() => {
-                        requestAnimationFrame(() => {
-                            const button = this.#adapter.components.saveButton;
-                            button.kulIcon = 'check';
-                            button.kulLabel = 'Saved!';
-                            button.kulShowSpinner = false;
-                        });
-
-                        setTimeout(() => {
-                            requestAnimationFrame(
-                                () => (this.saveInProgress = false)
-                            );
-                        }, 1000);
-                    });
-                },
-                status: {
-                    connection: (status) => (this.connectionStatus = status),
-                    editing: (type, id) => (this.editingStatus[type] = id),
-                    hoveredCustomizationOption: (node) =>
-                        (this.hoveredCustomizationOption = node),
-                    save: {
-                        inProgress: (value) => (this.saveInProgress = value),
-                    },
-                },
-                ui: {
-                    customization: (value) => {
-                        this.ui.customization = value;
-                        this.refresh();
-                    },
-                    editing: async (value, type, node = null) => {
-                        this.ui.editing[type] = value;
-                        this.editingStatus[type] = node
-                            ? node.id
-                            : this.#adapter.get.image.newId(type);
-                        if (!node) {
-                            this.refresh();
-                        } else {
-                            await this.refresh();
-                            requestAnimationFrame(() => {
-                                const comps =
-                                    this.#adapter.components.editing[type];
-                                const hasImage = node?.cells?.kulImage?.value;
-                                comps.descriptionTextarea.setValue(
-                                    node.description
-                                );
-                                comps.titleTextarea.setValue(node.value);
-                                if (hasImage) {
-                                    comps.imageUrlTextarea.setValue(
-                                        node.cells.kulImage.value
-                                    );
-                                }
-                            });
-                        }
-                    },
-                    filters: (filters) => {
-                        this.ui.filters = filters;
-                        this.refresh();
-                    },
-                    options: (value, type) => {
-                        this.ui.options[type] = value;
-                        this.refresh();
-                    },
-                    panel: (
-                        panel,
-                        value = panel === 'left'
-                            ? !this.ui.panels.isLeftCollapsed
-                            : !this.ui.panels.isRightCollapsed
-                    ) => {
-                        switch (panel) {
-                            case 'left':
-                                this.ui.panels.isLeftCollapsed = value;
-                                break;
-                            case 'right':
-                                this.ui.panels.isRightCollapsed = value;
-                                break;
-                        }
-                        this.refresh();
-                        return value;
-                    },
-                },
-            },
-        },
+        components: { ...CLEAN_COMPONENTS, messenger: this },
+        get: null,
+        set: null,
     };
 
     #hasCharacters() {
@@ -675,6 +375,12 @@ export class KulMessenger {
 
     componentWillLoad() {
         this.#kulManager.theme.register(this);
+        this.#adapter.get = getters(
+            this.#adapter,
+            this.#kulManager,
+            this.#hasCharacters()
+        );
+        this.#adapter.set = setters(this.#adapter, this.#hasCharacters());
         this.#initStates();
     }
 

@@ -1,8 +1,8 @@
 import { Fragment, h } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { prepOptions } from '../options/active';
-import { prepFilters, prepList } from '../options/customization';
+import { prepOptions } from '../options/kul-messenger-active';
+import { prepFilters, prepList } from '../options/kul-messenger-customization';
 
 export const prepRight = (adapter: KulMessengerAdapter) => {
     const ui = adapter.get.messenger.ui();

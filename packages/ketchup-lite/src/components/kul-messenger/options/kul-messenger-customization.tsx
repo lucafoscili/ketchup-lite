@@ -6,7 +6,6 @@ import {
     KulMessengerBaseChildNode,
     KulMessengerBaseRootNode,
     KulMessengerChildIds,
-    KulMessengerChildTypes,
     KulMessengerFilters,
     KulMessengerImageRootIds,
     KulMessengerImageTypes,
