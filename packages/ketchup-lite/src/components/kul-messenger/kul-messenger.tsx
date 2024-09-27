@@ -37,7 +37,11 @@ import { prepLeft } from './layout/kul-messenger-left';
 import { prepCenter } from './layout/kul-messenger-center';
 import { prepRight } from './layout/kul-messenger-right';
 import { prepGrid } from './selection-grid/kul-messenger-selection-grid';
-import { CLEAN_COMPONENTS, CLEAN_UI_JSON } from './kul-messenger-constants';
+import {
+    CLEAN_COMPONENTS,
+    CLEAN_UI_JSON,
+    IMAGE_TYPE_IDS,
+} from './kul-messenger-constants';
 import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 import { getters } from './helpers/kul-messenger-getters';
 import { setters } from './helpers/kul-messenger-setters';
@@ -87,13 +91,9 @@ export class KulMessenger {
      * Node representing the current active character.
      */
     @State() editingStatus: KulMessengerEditingStatus<KulMessengerImageTypes> =
-        {
-            avatars: null,
-            locations: null,
-            outfits: null,
-            styles: null,
-            timeframes: null,
-        };
+        IMAGE_TYPE_IDS.reduce(() => {
+            return null;
+        }, {});
     /**
      * History of this session's chats.
      */
@@ -253,28 +253,16 @@ export class KulMessenger {
             for (let index = 0; index < this.kulData.nodes.length; index++) {
                 const character = this.kulData.nodes[index];
                 const covers: KulMessengerCovers = {
-                    [character.id]: {
-                        avatars:
-                            Number(
-                                imageRootGetter('avatars', character).value
-                            ).valueOf() || 0,
-                        locations:
-                            Number(
-                                imageRootGetter('locations', character).value
-                            ).valueOf() || 0,
-                        outfits:
-                            Number(
-                                imageRootGetter('outfits', character).value
-                            ).valueOf() || 0,
-                        styles:
-                            Number(
-                                imageRootGetter('styles', character).value
-                            ).valueOf() || 0,
-                        timeframes:
-                            Number(
-                                imageRootGetter('timeframes', character).value
-                            ).valueOf() || 0,
-                    },
+                    [character.id]: IMAGE_TYPE_IDS.reduce(
+                        (acc, type) => {
+                            acc[type] =
+                                Number(
+                                    imageRootGetter(type, character).value
+                                ).valueOf() || 0;
+                            return acc;
+                        },
+                        {} as KulMessengerCovers[typeof character.id]
+                    ),
                 };
                 const chat = character.children?.find((n) => n.id === 'chat');
                 this.chat[character.id] = {};
@@ -345,22 +333,12 @@ export class KulMessenger {
                 }
             };
             const saveCovers = () => {
-                const avatars = this.#adapter.get.image.root('avatars');
-                const locations = this.#adapter.get.image.root('locations');
-                const outfits = this.#adapter.get.image.root('outfits');
-                const styles = this.#adapter.get.image.root('styles');
-                if (this.covers[id] && avatars) {
-                    avatars.value = this.covers[id].avatars;
-                }
-                if (this.covers[id] && locations) {
-                    locations.value = this.covers[id].locations;
-                }
-                if (this.covers[id] && outfits) {
-                    outfits.value = this.covers[id].outfits;
-                }
-                if (this.covers[id] && styles) {
-                    styles.value = this.covers[id].styles;
-                }
+                IMAGE_TYPE_IDS.forEach((type) => {
+                    const root = this.#adapter.get.image.root(type);
+                    if (this.covers[id] && root) {
+                        root.value = this.covers[id][type];
+                    }
+                });
             };
 
             saveChat();

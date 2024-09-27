@@ -11,7 +11,11 @@ import {
     KulMessengerImageTypes,
     KulMessengerUnionChildIds,
 } from '../kul-messenger-declarations';
-import { FILTER_DATASET, IMAGE_TYPE_IDS } from '../kul-messenger-constants';
+import {
+    CHILD_ROOT_MAP,
+    FILTER_DATASET,
+    IMAGE_TYPE_IDS,
+} from '../kul-messenger-constants';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 
 export const prepFilters = (adapter: KulMessengerAdapter) => {
@@ -237,38 +241,40 @@ const buttonEventHandler = async <
     const { eventType } = e.detail;
     const editingSetter = adapter.set.messenger.ui.editing;
 
-    switch (eventType) {
-        case 'click':
-            switch (action) {
-                case 'add':
-                    editingSetter(true, type);
-                    break;
-                case 'cancel':
-                    editingSetter(false, type);
-                    break;
-                case 'confirm':
-                    const titleTextarea =
-                        adapter.components.editing[type].titleTextarea;
-                    const value = await titleTextarea.getValue();
-                    titleTextarea.classList.remove('kul-danger');
-                    if (value) {
-                        createNode(adapter, type);
-                        editingSetter(false, type);
-                    } else {
-                        titleTextarea.classList.add('kul-danger');
-                        titleTextarea.kulHelper = {
-                            value: 'This field is mandatory',
-                        };
-                    }
-                    break;
-                case 'delete':
-                    adapter.actions.delete.option(node, type);
-                    break;
-                case 'edit':
-                    editingSetter(true, type, node);
-                    break;
+    if (eventType === 'click') {
+        const handleEditing = (enabled: boolean) =>
+            editingSetter(enabled, type);
+
+        switch (action) {
+            case 'add':
+                handleEditing(true);
+                break;
+            case 'cancel':
+                handleEditing(false);
+                break;
+            case 'confirm': {
+                const titleTextarea =
+                    adapter.components.editing[type].titleTextarea;
+                const value = await titleTextarea.getValue();
+                titleTextarea.classList.remove('kul-danger');
+                if (value) {
+                    createNode(adapter, type);
+                    handleEditing(false);
+                } else {
+                    titleTextarea.classList.add('kul-danger');
+                    titleTextarea.kulHelper = {
+                        value: 'This field is mandatory',
+                    };
+                }
+                break;
             }
-            break;
+            case 'delete':
+                adapter.actions.delete.option(node, type);
+                break;
+            case 'edit':
+                handleEditing(true);
+                break;
+        }
     }
 };
 
@@ -317,16 +323,12 @@ const imageEventHandler = <T extends KulMessengerUnionChildIds>(
 ) => {
     const coverSetter = adapter.set.image.cover;
 
-    if (node.id.includes('avatar')) {
-        coverSetter('avatars', index);
-    } else if (node.id.includes('location')) {
-        coverSetter('locations', index);
-    } else if (node.id.includes('outfit')) {
-        coverSetter('outfits', index);
-    } else if (node.id.includes('style')) {
-        coverSetter('styles', index);
-    } else {
-        coverSetter('timeframes', index);
+    const matchedType = Object.keys(CHILD_ROOT_MAP).find((key) =>
+        node.id.includes(key)
+    ) as keyof typeof CHILD_ROOT_MAP;
+
+    if (matchedType) {
+        coverSetter(CHILD_ROOT_MAP[matchedType], index);
     }
 };
 
@@ -347,7 +349,7 @@ const createNode = async <
     const imageUrl = await editing[type].imageUrlTextarea.getValue();
     const description = await editing[type].descriptionTextarea.getValue();
 
-    const existingImage = images.find((i) => i.id === id);
+    const existingImage = images?.find((i) => i.id === id);
     if (existingImage) {
         existingImage.description = description;
         existingImage.cells.kulImage.value = imageUrl;

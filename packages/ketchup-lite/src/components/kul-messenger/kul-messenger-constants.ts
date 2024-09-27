@@ -1,6 +1,7 @@
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import {
     KulMessengerAdapterComponents,
+    KulMessengerChildTypes,
     KulMessengerImageRootIds,
     KulMessengerImageTypes,
     KulMessengerOptionTypes,
@@ -141,6 +142,17 @@ export const MENU_DATASET: KulDataDataset = {
             value: '',
         },
     ],
+};
+
+export const CHILD_ROOT_MAP: Record<
+    KulMessengerChildTypes,
+    KulMessengerImageTypes
+> = {
+    avatar: 'avatars',
+    location: 'locations',
+    outfit: 'outfits',
+    style: 'styles',
+    timeframe: 'timeframes',
 };
 
 export const OPTION_TYPE_IDS: KulMessengerOptionTypes[] = [
