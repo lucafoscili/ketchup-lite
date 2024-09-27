@@ -196,9 +196,6 @@ export class KulCard {
     componentWillLoad() {
         this.#kulManager.language.register(this);
         this.#kulManager.theme.register(this);
-        if (this.kulData) {
-            this.shapes = this.#kulManager.data.extract.shapes(this.kulData);
-        }
         this.registerListeners();
     }
 
@@ -208,6 +205,9 @@ export class KulCard {
     }
 
     componentWillRender() {
+        if (this.kulData) {
+            this.shapes = this.#kulManager.data.extract.shapes(this.kulData);
+        }
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
 
