@@ -11,6 +11,7 @@ import { GenericMap } from '../../types/GenericTypes';
 export interface KulDataCell {
     value: unknown;
     shape?: KulDataShapes;
+    htmlProps?: Partial<HTMLElement>;
 }
 
 export interface KulDataBadgeCell extends KulDataCell, KulBadgePropsInterface {
