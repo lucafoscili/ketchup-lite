@@ -1163,7 +1163,7 @@ export namespace Components {
           * Sets the initial selected node's index.
           * @default null
          */
-        "kulValue": number;
+        "kulValue": number | string;
         /**
           * Triggers a re-render of the component to reflect any state changes.
          */
@@ -2978,7 +2978,7 @@ declare namespace LocalJSX {
           * Sets the initial selected node's index.
           * @default null
          */
-        "kulValue"?: number;
+        "kulValue"?: number | string;
         /**
           * Describes events emitted.
          */

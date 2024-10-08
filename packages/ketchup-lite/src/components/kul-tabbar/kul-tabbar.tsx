@@ -82,7 +82,7 @@ export class KulTabbar {
      * Sets the initial selected node's index.
      * @default null
      */
-    @Prop({ mutable: true, reflect: true }) kulValue: number = null;
+    @Prop({ mutable: false, reflect: true }) kulValue: number | string = 0;
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -204,8 +204,30 @@ export class KulTabbar {
     /*-------------------------------------------------*/
 
     componentWillLoad() {
-        if (this.kulValue !== null) {
-            this.value = this.kulData[this.kulValue];
+        try {
+            if (this.kulValue !== null) {
+                if (typeof this.kulValue === 'number') {
+                    this.value = {
+                        index: this.kulValue,
+                        node: this.kulData.nodes[this.kulValue],
+                    };
+                }
+                if (typeof this.kulValue === 'string') {
+                    const node = this.kulData.nodes.find(
+                        (node) => node.id === this.kulValue
+                    );
+                    this.value = {
+                        index: this.kulData.nodes.indexOf(node),
+                        node,
+                    };
+                }
+            }
+        } catch (error) {
+            this.#kulManager.debug.logMessage(
+                this,
+                'Something went wrong while setting the initial selected value.',
+                'warning'
+            );
         }
 
         this.#kulManager.theme.register(this);
