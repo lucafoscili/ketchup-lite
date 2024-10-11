@@ -18,7 +18,11 @@ import type {
     KulEventPayload,
 } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulImageEvent, KulImageProps } from './kul-image-declarations';
+import {
+    KulImageEvent,
+    KulImageEventPayload,
+    KulImageProps,
+} from './kul-image-declarations';
 import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
 import { getProps } from '../../utils/componentUtils';
 import {
@@ -118,7 +122,7 @@ export class KulImage {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulImageEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulImageEvent) {
         this.kulEvent.emit({

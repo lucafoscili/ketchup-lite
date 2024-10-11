@@ -102,7 +102,13 @@ export class KulProgressbar {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<
+        KulEventPayload<
+            KulProgressbar,
+            KulProgressbarEvent,
+            Event | CustomEvent
+        >
+    >;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulProgressbarEvent) {
         this.kulEvent.emit({

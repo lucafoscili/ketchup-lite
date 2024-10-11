@@ -105,7 +105,9 @@ export class KulSpinner {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<
+        KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent>
+    >;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulSpinnerEvent) {
         this.kulEvent.emit({

@@ -1,7 +1,16 @@
+import { KulEventPayload } from '../../components';
 import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
+import { KulImage } from './kul-image';
 
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulImageEvent = 'click' | 'load' | 'ready';
-
+export interface KulImageEventPayload
+    extends KulEventPayload<KulImage, KulImageEvent, Event | CustomEvent> {}
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulImageProps {
     kulBadgeProps = 'Sets the props to show a badge.',
     kulColor = 'The color of the icon, defaults to the CSS variable --kul-icon-color.',
@@ -11,7 +20,6 @@ export enum KulImageProps {
     kulStyle = 'Custom style of the component.',
     kulValue = 'Defines the source URL of the image. This property is used to set the image resource that the component should display.',
 }
-
 export interface KulImagePropsInterface {
     kulBadgeProps?: KulBadgePropsInterface;
     kulColor?: string;

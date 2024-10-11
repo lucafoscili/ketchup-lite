@@ -189,7 +189,7 @@ export class KulChip {
     }
     /**
      * Returns the selected nodes.
-     * @returns {Promise<KulChipNode[]>} Selected nodes.
+     * @returns {Promise<KulDataNode[]>} Selected nodes.
      */
     @Method()
     async getSelectedNodes(): Promise<Set<KulDataNode>> {

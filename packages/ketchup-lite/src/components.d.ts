@@ -6,47 +6,65 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { KulDataDataset, KulDataNode, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
-import { GenericObject, KulEventPayload } from "./types/GenericTypes";
+import { KulAccordionEventPayload } from "./components/kul-accordion/kul-accordion-declarations";
 import { KulDebugComponentInfo } from "./managers/kul-debug/kul-debug-declarations";
+import { GenericObject, KulEventPayload } from "./types/GenericTypes";
 import { Event } from "@stencil/core";
-import { KulArticleDataset } from "./components/kul-article/kul-article-declarations";
-import { KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
+import { KulArticleDataset, KulArticleEventPayload } from "./components/kul-article/kul-article-declarations";
+import { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
+import { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
+import { KulCardEventPayload } from "./components/kul-card/kul-card-declarations";
 import { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 import { XAXisComponentOption, YAXisComponentOption } from "echarts";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
+import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
+import { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 import { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
-import { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
-import { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
+import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
+import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
+import { KulProgressbarEvent } from "./components/kul-progressbar/kul-progressbar-declarations";
+import { KulSpinnerEvent } from "./components/kul-spinner/kul-spinner-declarations";
+import { KulSplashEvent } from "./components/kul-splash/kul-splash-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
 import { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
+import { KulToastEvent } from "./components/kul-toast/kul-toast-declarations";
 import { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
 import { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
 export { KulDataDataset, KulDataNode, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
-export { GenericObject, KulEventPayload } from "./types/GenericTypes";
+export { KulAccordionEventPayload } from "./components/kul-accordion/kul-accordion-declarations";
 export { KulDebugComponentInfo } from "./managers/kul-debug/kul-debug-declarations";
+export { GenericObject, KulEventPayload } from "./types/GenericTypes";
 export { Event } from "@stencil/core";
-export { KulArticleDataset } from "./components/kul-article/kul-article-declarations";
-export { KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
+export { KulArticleDataset, KulArticleEventPayload } from "./components/kul-article/kul-article-declarations";
+export { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
+export { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
+export { KulCardEventPayload } from "./components/kul-card/kul-card-declarations";
 export { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 export { XAXisComponentOption, YAXisComponentOption } from "echarts";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
+export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
+export { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 export { KulDataDataset as KulDataDataset1, KulDebugComponentInfo as KulDebugComponentInfo1 } from "./components";
-export { KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
-export { KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
+export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
+export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
+export { KulProgressbarEvent } from "./components/kul-progressbar/kul-progressbar-declarations";
+export { KulSpinnerEvent } from "./components/kul-spinner/kul-spinner-declarations";
+export { KulSplashEvent } from "./components/kul-splash/kul-splash-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
 export { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
+export { KulToastEvent } from "./components/kul-toast/kul-toast-declarations";
 export { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
 export { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
 export namespace Components {
@@ -1163,7 +1181,7 @@ export namespace Components {
           * Sets the initial selected node's index.
           * @default null
          */
-        "kulValue": number;
+        "kulValue": number | string;
         /**
           * Triggers a re-render of the component to reflect any state changes.
          */
@@ -1508,7 +1526,7 @@ export interface KulUploadCustomEvent<T> extends CustomEvent<T> {
 }
 declare global {
     interface HTMLKulAccordionElementEventMap {
-        "kul-accordion-event": KulEventPayload;
+        "kul-accordion-event": KulAccordionEventPayload;
     }
     interface HTMLKulAccordionElement extends Components.KulAccordion, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulAccordionElementEventMap>(type: K, listener: (this: HTMLKulAccordionElement, ev: KulAccordionCustomEvent<HTMLKulAccordionElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1525,7 +1543,7 @@ declare global {
         new (): HTMLKulAccordionElement;
     };
     interface HTMLKulArticleElementEventMap {
-        "kul-article-event": KulEventPayload;
+        "kul-article-event": KulArticleEventPayload;
     }
     interface HTMLKulArticleElement extends Components.KulArticle, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulArticleElementEventMap>(type: K, listener: (this: HTMLKulArticleElement, ev: KulArticleCustomEvent<HTMLKulArticleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1542,7 +1560,7 @@ declare global {
         new (): HTMLKulArticleElement;
     };
     interface HTMLKulBadgeElementEventMap {
-        "kul-badge-event": KulEventPayload;
+        "kul-badge-event": KulBadgeEventPayload;
     }
     interface HTMLKulBadgeElement extends Components.KulBadge, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulBadgeElementEventMap>(type: K, listener: (this: HTMLKulBadgeElement, ev: KulBadgeCustomEvent<HTMLKulBadgeElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1576,7 +1594,7 @@ declare global {
         new (): HTMLKulButtonElement;
     };
     interface HTMLKulCardElementEventMap {
-        "kul-card-event": KulEventPayload;
+        "kul-card-event": KulCardEventPayload;
     }
     interface HTMLKulCardElement extends Components.KulCard, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulCardElementEventMap>(type: K, listener: (this: HTMLKulCardElement, ev: KulCardCustomEvent<HTMLKulCardElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1644,7 +1662,7 @@ declare global {
         new (): HTMLKulChipElement;
     };
     interface HTMLKulCodeElementEventMap {
-        "kul-code-event": KulEventPayload;
+        "kul-code-event": KulCodeEventPayload;
     }
     interface HTMLKulCodeElement extends Components.KulCode, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulCodeElementEventMap>(type: K, listener: (this: HTMLKulCodeElement, ev: KulCodeCustomEvent<HTMLKulCodeElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1661,7 +1679,7 @@ declare global {
         new (): HTMLKulCodeElement;
     };
     interface HTMLKulDrawerElementEventMap {
-        "kul-drawer-event": KulEventPayload;
+        "kul-drawer-event": KulDrawerEventPayload;
     }
     interface HTMLKulDrawerElement extends Components.KulDrawer, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulDrawerElementEventMap>(type: K, listener: (this: HTMLKulDrawerElement, ev: KulDrawerCustomEvent<HTMLKulDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1678,7 +1696,7 @@ declare global {
         new (): HTMLKulDrawerElement;
     };
     interface HTMLKulHeaderElementEventMap {
-        "kul-header-event": KulEventPayload;
+        "kul-header-event": KulHeaderEventPayload;
     }
     interface HTMLKulHeaderElement extends Components.KulHeader, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulHeaderElementEventMap>(type: K, listener: (this: HTMLKulHeaderElement, ev: KulHeaderCustomEvent<HTMLKulHeaderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1695,7 +1713,7 @@ declare global {
         new (): HTMLKulHeaderElement;
     };
     interface HTMLKulImageElementEventMap {
-        "kul-image-event": KulEventPayload;
+        "kul-image-event": KulImageEventPayload;
     }
     interface HTMLKulImageElement extends Components.KulImage, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulImageElementEventMap>(type: K, listener: (this: HTMLKulImageElement, ev: KulImageCustomEvent<HTMLKulImageElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1712,7 +1730,7 @@ declare global {
         new (): HTMLKulImageElement;
     };
     interface HTMLKulLazyElementEventMap {
-        "kul-lazy-event": KulEventPayload;
+        "kul-lazy-event": KulLazyEventPayload;
     }
     interface HTMLKulLazyElement extends Components.KulLazy, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulLazyElementEventMap>(type: K, listener: (this: HTMLKulLazyElement, ev: KulLazyCustomEvent<HTMLKulLazyElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1780,7 +1798,11 @@ declare global {
         new (): HTMLKulPhotoframeElement;
     };
     interface HTMLKulProgressbarElementEventMap {
-        "kul-progressbar-event": KulEventPayload;
+        "kul-progressbar-event": KulEventPayload<
+            KulProgressbar,
+            KulProgressbarEvent,
+            Event | CustomEvent
+        >;
     }
     interface HTMLKulProgressbarElement extends Components.KulProgressbar, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulProgressbarElementEventMap>(type: K, listener: (this: HTMLKulProgressbarElement, ev: KulProgressbarCustomEvent<HTMLKulProgressbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -1797,7 +1819,7 @@ declare global {
         new (): HTMLKulProgressbarElement;
     };
     interface HTMLKulShowcaseElementEventMap {
-        "kul-showcase-event": KulEventPayload;
+        "kul-showcase-event": KulShowcaseEventPayload;
     }
     interface HTMLKulShowcaseElement extends Components.KulShowcase, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulShowcaseElementEventMap>(type: K, listener: (this: HTMLKulShowcaseElement, ev: KulShowcaseCustomEvent<HTMLKulShowcaseElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2024,7 +2046,7 @@ declare global {
         new (): HTMLKulShowcaseUploadElement;
     };
     interface HTMLKulSpinnerElementEventMap {
-        "kul-spinner-event": KulEventPayload;
+        "kul-spinner-event": KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent>;
     }
     interface HTMLKulSpinnerElement extends Components.KulSpinner, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulSpinnerElementEventMap>(type: K, listener: (this: HTMLKulSpinnerElement, ev: KulSpinnerCustomEvent<HTMLKulSpinnerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2041,7 +2063,7 @@ declare global {
         new (): HTMLKulSpinnerElement;
     };
     interface HTMLKulSplashElementEventMap {
-        "kul-splash-event": KulEventPayload;
+        "kul-splash-event": KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent>;
     }
     interface HTMLKulSplashElement extends Components.KulSplash, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulSplashElementEventMap>(type: K, listener: (this: HTMLKulSplashElement, ev: KulSplashCustomEvent<HTMLKulSplashElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2109,7 +2131,7 @@ declare global {
         new (): HTMLKulTextfieldElement;
     };
     interface HTMLKulToastElementEventMap {
-        "kul-toast-event": KulEventPayload;
+        "kul-toast-event": KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent>;
     }
     interface HTMLKulToastElement extends Components.KulToast, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulToastElementEventMap>(type: K, listener: (this: HTMLKulToastElement, ev: KulToastCustomEvent<HTMLKulToastElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2243,7 +2265,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-accordion-event"?: (event: KulAccordionCustomEvent<KulEventPayload>) => void;
+        "onKul-accordion-event"?: (event: KulAccordionCustomEvent<KulAccordionEventPayload>) => void;
     }
     interface KulArticle {
         /**
@@ -2259,7 +2281,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-article-event"?: (event: KulArticleCustomEvent<KulEventPayload>) => void;
+        "onKul-article-event"?: (event: KulArticleCustomEvent<KulArticleEventPayload>) => void;
     }
     interface KulBadge {
         /**
@@ -2280,7 +2302,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-badge-event"?: (event: KulBadgeCustomEvent<KulEventPayload>) => void;
+        "onKul-badge-event"?: (event: KulBadgeCustomEvent<KulBadgeEventPayload>) => void;
     }
     interface KulButton {
         /**
@@ -2385,7 +2407,7 @@ declare namespace LocalJSX {
         /**
           * Triggered when an event is fired.
          */
-        "onKul-card-event"?: (event: KulCardCustomEvent<KulEventPayload>) => void;
+        "onKul-card-event"?: (event: KulCardCustomEvent<KulCardEventPayload>) => void;
     }
     interface KulChart {
         /**
@@ -2556,7 +2578,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-code-event"?: (event: KulCodeCustomEvent<KulEventPayload>) => void;
+        "onKul-code-event"?: (event: KulCodeCustomEvent<KulCodeEventPayload>) => void;
     }
     interface KulDrawer {
         /**
@@ -2567,7 +2589,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted by the component.
          */
-        "onKul-drawer-event"?: (event: KulDrawerCustomEvent<KulEventPayload>) => void;
+        "onKul-drawer-event"?: (event: KulDrawerCustomEvent<KulDrawerEventPayload>) => void;
     }
     interface KulHeader {
         /**
@@ -2578,7 +2600,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-header-event"?: (event: KulHeaderCustomEvent<KulEventPayload>) => void;
+        "onKul-header-event"?: (event: KulHeaderCustomEvent<KulHeaderEventPayload>) => void;
     }
     interface KulImage {
         /**
@@ -2620,7 +2642,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-image-event"?: (event: KulImageCustomEvent<KulEventPayload>) => void;
+        "onKul-image-event"?: (event: KulImageCustomEvent<KulImageEventPayload>) => void;
     }
     interface KulLazy {
         /**
@@ -2651,7 +2673,7 @@ declare namespace LocalJSX {
         /**
           * Describes the component's events.
          */
-        "onKul-lazy-event"?: (event: KulLazyCustomEvent<KulEventPayload>) => void;
+        "onKul-lazy-event"?: (event: KulLazyCustomEvent<KulLazyEventPayload>) => void;
     }
     interface KulList {
         /**
@@ -2780,7 +2802,11 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-progressbar-event"?: (event: KulProgressbarCustomEvent<KulEventPayload>) => void;
+        "onKul-progressbar-event"?: (event: KulProgressbarCustomEvent<KulEventPayload<
+            KulProgressbar,
+            KulProgressbarEvent,
+            Event | CustomEvent
+        >>) => void;
     }
     interface KulShowcase {
         /**
@@ -2791,7 +2817,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-showcase-event"?: (event: KulShowcaseCustomEvent<KulEventPayload>) => void;
+        "onKul-showcase-event"?: (event: KulShowcaseCustomEvent<KulShowcaseEventPayload>) => void;
     }
     interface KulShowcaseAccordion {
     }
@@ -2904,7 +2930,7 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        "onKul-spinner-event"?: (event: KulSpinnerCustomEvent<KulEventPayload>) => void;
+        "onKul-spinner-event"?: (event: KulSpinnerCustomEvent<KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent>>) => void;
     }
     interface KulSplash {
         /**
@@ -2920,7 +2946,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-splash-event"?: (event: KulSplashCustomEvent<KulEventPayload>) => void;
+        "onKul-splash-event"?: (event: KulSplashCustomEvent<KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent>>) => void;
     }
     interface KulSwitch {
         /**
@@ -2978,7 +3004,7 @@ declare namespace LocalJSX {
           * Sets the initial selected node's index.
           * @default null
          */
-        "kulValue"?: number;
+        "kulValue"?: number | string;
         /**
           * Describes events emitted.
          */
@@ -3074,7 +3100,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-toast-event"?: (event: KulToastCustomEvent<KulEventPayload>) => void;
+        "onKul-toast-event"?: (event: KulToastCustomEvent<KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent>>) => void;
     }
     interface KulTree {
         /**

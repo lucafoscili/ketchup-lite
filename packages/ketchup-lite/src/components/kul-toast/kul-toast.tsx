@@ -117,7 +117,9 @@ export class KulToast {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<
+        KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent>
+    >;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulToastEvent) {
         this.kulEvent.emit({

@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                                                           | Type             | Default |
-| ----------- | ------------ | --------------------------------------------------------------------- | ---------------- | ------- |
-| `kulData`   | --           | Actual data of the component.                                         | `KulDataDataset` | `null`  |
-| `kulRipple` | `kul-ripple` | When set to true, the pointerdown event will trigger a ripple effect. | `boolean`        | `true`  |
-| `kulStyle`  | `kul-style`  | Custom style of the component.                                        | `string`         | `''`    |
-| `kulValue`  | `kul-value`  | Sets the initial selected node's index.                               | `number`         | `null`  |
+| Property    | Attribute    | Description                                                           | Type               | Default |
+| ----------- | ------------ | --------------------------------------------------------------------- | ------------------ | ------- |
+| `kulData`   | --           | Actual data of the component.                                         | `KulDataDataset`   | `null`  |
+| `kulRipple` | `kul-ripple` | When set to true, the pointerdown event will trigger a ripple effect. | `boolean`          | `true`  |
+| `kulStyle`  | `kul-style`  | Custom style of the component.                                        | `string`           | `''`    |
+| `kulValue`  | `kul-value`  | Sets the initial selected node's index.                               | `number \| string` | `0`     |
 
 
 ## Events

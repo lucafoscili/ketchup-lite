@@ -1,6 +1,11 @@
 import { KulEventPayload } from '../../../src/types/GenericTypes';
 import { KulLLMChoiceMessage } from '../../managers/kul-llm/kul-llm-declarations';
 import { KulManager } from '../../managers/kul-manager/kul-manager';
+import { KulChat } from './kul-chat';
+
+/*-------------------------------------------------*/
+/*                  A d a p t e r                  */
+/*-------------------------------------------------*/
 export interface KulChatAdapter {
     actions: {
         delete: (message: KulLLMChoiceMessage) => void;
@@ -58,19 +63,18 @@ export interface KulChatAdapter {
         };
     };
 }
-
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulChatEvent = 'config' | 'polling' | 'ready' | 'update';
-
-export interface KulChatEventPayload extends KulEventPayload {
-    eventType: KulChatEvent;
+export interface KulChatEventPayload
+    extends KulEventPayload<KulChat, KulChatEvent, Event | CustomEvent> {
     history: string;
     status: KulChatStatus;
 }
-
-export type KulChatHistory = KulLLMChoiceMessage[];
-
-export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
-
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulChatProps {
     kulContextWindow = 'How many tokens the context window can handle, used to calculate the occupied space.',
     kulEndpointUrl = 'URL of the endpoint where the LLM is hosted.',
@@ -83,7 +87,6 @@ export enum KulChatProps {
     kulTemperature = 'Sets the creative boundaries of the LLM.',
     kulValue = 'Initial history of the chat.',
 }
-
 export interface KulChatPropsInterface {
     kulContextWindow?: number;
     kulEndpointUrl?: string;
@@ -96,7 +99,10 @@ export interface KulChatPropsInterface {
     kulTemperature?: number;
     kulValue?: KulChatHistory;
 }
-
+export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
+/*-------------------------------------------------*/
+/*                    S t a t e                    */
+/*-------------------------------------------------*/
+export type KulChatHistory = KulLLMChoiceMessage[];
 export type KulChatStatus = 'connecting' | 'offline' | 'ready';
-
 export type KulChatView = 'chat' | 'settings';

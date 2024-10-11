@@ -1,4 +1,21 @@
+import { KulEventPayload } from '../../components';
+import { KulProgressbar } from './kul-progressbar';
+
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulProgressbarEvent = 'ready';
+export interface KulProgressbarEventPayload
+    extends KulEventPayload<
+        KulProgressbar,
+        KulProgressbarEvent,
+        Event | CustomEvent
+    > {
+    isPlaceholder?: boolean;
+}
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulProgressbarProps {
     kulCenteredLabel = "Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed.",
     kulIcon = 'Specifies an icon to replace the label.',

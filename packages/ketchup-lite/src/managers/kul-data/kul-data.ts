@@ -108,17 +108,25 @@ export class KulData {
             const prefix = 'kul';
             const shapeProps = {};
             for (const prop in cell) {
-                if (prop === 'shape') {
-                    continue;
-                }
-                if (prop.indexOf(prefix) === 0) {
-                    shapeProps[prop] = cell[prop];
-                } else {
-                    const prefixedProp =
-                        prefix + prop.charAt(0).toUpperCase() + prop.slice(1);
-                    if (!shapeProps[prefixedProp]) {
-                        shapeProps[prefixedProp] = cell[prop];
-                    }
+                switch (prop) {
+                    case 'htmlProps':
+                        Object.assign(shapeProps, cell[prop]);
+                        break;
+                    case 'shape':
+                        break;
+                    default:
+                        if (prop.indexOf(prefix) === 0) {
+                            shapeProps[prop] = cell[prop];
+                        } else {
+                            const prefixedProp =
+                                prefix +
+                                prop.charAt(0).toUpperCase() +
+                                prop.slice(1);
+                            if (!shapeProps[prefixedProp]) {
+                                shapeProps[prefixedProp] = cell[prop];
+                            }
+                        }
+                        break;
                 }
             }
             return shapeProps;

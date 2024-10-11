@@ -13,7 +13,11 @@ import {
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDrawerEvent, KulDrawerProps } from './kul-drawer-declarations';
+import {
+    KulDrawerEvent,
+    KulDrawerEventPayload,
+    KulDrawerProps,
+} from './kul-drawer-declarations';
 import { KulDebugComponentInfo } from '../../components';
 import { getProps } from '../../utils/componentUtils';
 
@@ -77,7 +81,7 @@ export class KulDrawer {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulDrawerEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulDrawerEvent) {
         this.kulEvent.emit({

@@ -53,7 +53,7 @@ export class KulChart {
     /**
      * References the root HTML element of the component (<kul-chart>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulChartElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */

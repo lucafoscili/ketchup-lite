@@ -5,23 +5,22 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
+import { KulChart } from './kul-chart';
 
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulChartEvent = 'click' | 'ready';
-
-export interface KulChartEventPayload extends KulEventPayload {
+export interface KulChartEventPayload
+    extends KulEventPayload<KulChart, KulChartEvent, Event | CustomEvent> {
     column: KulDataColumn;
     node: KulDataNode;
     x: number | string;
     y: number | string;
 }
-
-export type KulChartLegendPlacement =
-    | 'bottom'
-    | 'left'
-    | 'hidden'
-    | 'right'
-    | 'top';
-
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulChartProps {
     kulAxis = 'Sets the axis of the chart.',
     kulColors = "Overrides theme's colors.",
@@ -35,7 +34,6 @@ export enum KulChartProps {
     kulXAxis = 'Customization options for the x Axis.',
     kulYAxis = 'Customization options for the y Axis.',
 }
-
 export interface KulChartPropsInterface {
     kulAxis?: string;
     kulColors?: string[];
@@ -49,7 +47,6 @@ export interface KulChartPropsInterface {
     kulXAxis?: XAXisComponentOption;
     kulYAxis?: YAXisComponentOption;
 }
-
 export type KulChartType =
     | 'area'
     | 'bar'
@@ -64,3 +61,9 @@ export type KulChartType =
     | 'radar'
     | 'sankey'
     | 'scatter';
+export type KulChartLegendPlacement =
+    | 'bottom'
+    | 'left'
+    | 'hidden'
+    | 'right'
+    | 'top';
