@@ -73,7 +73,6 @@ export class KulData {
                             cell.shape !== 'text' &&
                             cell.shape !== 'number'
                         ) {
-                            const shapeProps = {};
                             if (!shapes[cell.shape]) {
                                 shapes[cell.shape] = [];
                             }

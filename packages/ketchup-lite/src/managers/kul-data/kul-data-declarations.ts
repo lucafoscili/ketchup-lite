@@ -6,6 +6,7 @@ import {
 } from '../../components/kul-chat/kul-chat-declarations';
 import { KulCodePropsInterface } from '../../components/kul-code/kul-code-declarations';
 import { KulImagePropsInterface } from '../../components/kul-image/kul-image-declarations';
+import { KulSwitchPropsInterface } from '../../components/kul-switch/kul-switch-declarations';
 import { GenericMap } from '../../types/GenericTypes';
 
 export interface KulDataCell {
@@ -45,6 +46,11 @@ export interface KulDataNumberCell extends KulDataCell {
     value: number;
 }
 
+export interface KulDataSwitchCell extends KulDataCell {
+    shape: 'switch';
+    value: boolean;
+}
+
 export interface KulDataTextCell extends KulDataCell {
     shape: 'text';
     value: string;
@@ -58,6 +64,7 @@ type KulDataCellType =
     | KulDataCodeCell
     | KulDataImageCell
     | KulDataNumberCell
+    | KulDataSwitchCell
     | KulDataTextCell;
 
 export interface KulDataCellContainer {
@@ -68,6 +75,7 @@ export interface KulDataCellContainer {
     ['kulCode']?: KulDataCodeCell;
     ['kulImage']?: KulDataImageCell;
     ['kulNumber']?: KulDataNumberCell;
+    ['kulSwitch']?: KulDataSwitchCell;
     ['kulText']?: KulDataTextCell;
 }
 
@@ -114,6 +122,7 @@ export type KulDataShapes =
     | 'code'
     | 'image'
     | 'number'
+    | 'switch'
     | 'text';
 
 export type KulDataShapesMap = {
@@ -129,7 +138,9 @@ export type KulDataShapesMap = {
                       ? Partial<KulCodePropsInterface>
                       : K extends 'image'
                         ? Partial<KulImagePropsInterface>
-                        : string;
+                        : K extends 'switch'
+                          ? Partial<KulSwitchPropsInterface>
+                          : string;
         }[K]
     >;
 };
