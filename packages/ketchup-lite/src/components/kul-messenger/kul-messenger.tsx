@@ -55,7 +55,7 @@ export class KulMessenger {
     /**
      * References the root HTML element of the component (<kul-messenger>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulMessengerElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */

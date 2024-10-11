@@ -38,7 +38,7 @@ export class KulTabbar {
     /**
      * References the root HTML element of the component (<kul-tabbar>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulTabbarElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */

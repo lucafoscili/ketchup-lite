@@ -12,7 +12,7 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import type { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataDataset,
@@ -23,6 +23,7 @@ import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulAccordionEvent,
+    KulAccordionEventPayload,
     KulAccordionProps,
 } from './kul-accordion-declarations';
 
@@ -101,7 +102,7 @@ export class KulAccordion {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulAccordionEventPayload>;
 
     onKulEvent(
         e: Event | CustomEvent,
@@ -147,6 +148,14 @@ export class KulAccordion {
     @Method()
     async getProps(descriptions?: boolean): Promise<GenericObject> {
         return getProps(this, KulAccordionProps, descriptions);
+    }
+    /**
+     * Returns the selected nodes.
+     * @returns {Promise<KulDataNode[]>} Selected nodes.
+     */
+    @Method()
+    async getSelectedNodes(): Promise<Set<KulDataNode>> {
+        return this.selectedNodes;
     }
     /**
      * This method is used to trigger a new render of the component.

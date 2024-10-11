@@ -8,6 +8,7 @@ import {
     KulChatStatus,
 } from '../kul-chat/kul-chat-declarations';
 import { KulMessenger } from './kul-messenger';
+
 /*-------------------------------------------------*/
 /*                  A d a p t e r                  */
 /*-------------------------------------------------*/
@@ -333,7 +334,12 @@ export type KulMessengerPanelsValue = 'left' | 'right';
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulMessengerEvent = 'ready' | 'save';
-export interface KulMessengerEventPayload extends KulEventPayload {
+export interface KulMessengerEventPayload
+    extends KulEventPayload<
+        KulMessenger,
+        KulMessengerEvent,
+        Event | CustomEvent
+    > {
     config: KulMessengerConfig;
 }
 /*-------------------------------------------------*/

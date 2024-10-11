@@ -3,18 +3,23 @@ import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulTree } from './kul-tree';
 
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
+export type KulTreeEvent = 'click' | 'kul-event' | 'pointerdown' | 'ready';
+export interface KulTreeEventPayload
+    extends KulEventPayload<KulTree, KulTreeEvent, Event | CustomEvent> {
+    node?: KulDataNode;
+}
 export interface KulTreeEventArguments {
     expansion?: boolean;
     node?: KulDataNode;
 }
-
-export interface KulTreeEventPayload extends KulEventPayload {
-    node?: KulDataNode;
-}
-
-export type KulTreeEvent = 'click' | 'kul-event' | 'pointerdown' | 'ready';
-
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulTreeProps {
     kulAccordionLayout = 'When enabled, the first level of depth will create an accordion-style appearance for nodes.',
     kulData = 'Actual data of the tree.',
@@ -24,7 +29,6 @@ export enum KulTreeProps {
     kulSelectable = 'When true, nodes can be selected.',
     kulStyle = 'Custom style of the component.',
 }
-
 export interface KulTreePropsInterface {
     kulAccordionLayout?: boolean;
     kulData?: KulDataDataset;

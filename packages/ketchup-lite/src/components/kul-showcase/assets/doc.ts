@@ -2329,7 +2329,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulValue",
         docs: "Sets the initial selected node's index.",
-        type: "number",
+        type: "number | string",
       },
     ],
     styles: [

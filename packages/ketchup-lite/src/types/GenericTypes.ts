@@ -1,44 +1,183 @@
-import { ComponentInterface } from '@stencil/core';
-import { KulArticleEvent } from '../components/kul-article/kul-article-declarations';
-import { KulBadgeEvent } from '../components/kul-badge/kul-badge-declarations';
-import { KulButtonEvent } from '../components/kul-button/kul-button-declarations';
-import { KulCardEvent } from '../components/kul-card/kul-card-declarations';
-import { KulCodeEvent } from '../components/kul-code/kul-code-declarations';
-import { KulImageEvent } from '../components/kul-image/kul-image-declarations';
-import { KulSpinnerEvent } from '../components/kul-spinner/kul-spinner-declarations';
-import { KulSplashEvent } from '../components/kul-splash/kul-splash-declarations';
-import { KulUploadEvent } from '../components/kul-upload/kul-upload-declarations';
-import { KulToastEvent } from '../components/kul-toast/kul-toast-declarations';
-import { KulDrawerEvent } from '../components/kul-drawer/kul-drawer-declarations';
-import { KulTextfieldEvent } from '../components/kul-textfield/kul-textfield-declarations';
-import { KulChartEvent } from '../components/kul-chart/kul-chart-declarations';
-import { KulHeaderEvent } from '../components/kul-header/kul-header-declarations';
-import { KulLazyEvent } from '../components/kul-lazy/kul-lazy-declarations';
-import { KulPhotoframeEvent } from '../components/kul-photoframe/kul-photoframe-declarations';
-import { KulTabbarEvent } from '../components/kul-tabbar/kul-tabbar-declarations';
-import { KulTreeEvent } from '../components/kul-tree/kul-tree-declarations';
-import { KulAccordionEvent } from '../components/kul-accordion/kul-accordion-declarations';
-import { KulChatEvent } from '../components/kul-chat/kul-chat-declarations';
-import { KulListEvent } from '../components/kul-list/kul-list-declarations';
-import { KulProgressbarEvent } from '../components/kul-progressbar/kul-progressbar-declarations';
+import {
+    KulArticleEvent,
+    KulArticleProps,
+} from '../components/kul-article/kul-article-declarations';
+import {
+    KulBadgeEvent,
+    KulBadgeProps,
+} from '../components/kul-badge/kul-badge-declarations';
+import {
+    KulButtonEvent,
+    KulButtonProps,
+} from '../components/kul-button/kul-button-declarations';
+import {
+    KulCardEvent,
+    KulCardProps,
+} from '../components/kul-card/kul-card-declarations';
+import {
+    KulCodeEvent,
+    KulCodeProps,
+} from '../components/kul-code/kul-code-declarations';
+import {
+    KulImageEvent,
+    KulImageProps,
+} from '../components/kul-image/kul-image-declarations';
+import {
+    KulSpinnerEvent,
+    KulSpinnerProps,
+} from '../components/kul-spinner/kul-spinner-declarations';
+import {
+    KulSplashEvent,
+    KulSplashProps,
+} from '../components/kul-splash/kul-splash-declarations';
+import {
+    KulUploadEvent,
+    KulUploadProps,
+} from '../components/kul-upload/kul-upload-declarations';
+import {
+    KulToastEvent,
+    KulToastProps,
+} from '../components/kul-toast/kul-toast-declarations';
+import {
+    KulDrawerEvent,
+    KulDrawerProps,
+} from '../components/kul-drawer/kul-drawer-declarations';
+import {
+    KulTextfieldEvent,
+    KulTextfieldProps,
+} from '../components/kul-textfield/kul-textfield-declarations';
+import {
+    KulChartEvent,
+    KulChartProps,
+} from '../components/kul-chart/kul-chart-declarations';
+import {
+    KulHeaderEvent,
+    KulHeaderProps,
+} from '../components/kul-header/kul-header-declarations';
+import {
+    KulLazyEvent,
+    KulLazyProps,
+} from '../components/kul-lazy/kul-lazy-declarations';
+import {
+    KulPhotoframeEvent,
+    KulPhotoframeProps,
+} from '../components/kul-photoframe/kul-photoframe-declarations';
+import {
+    KulTabbarEvent,
+    KulTabbarProps,
+} from '../components/kul-tabbar/kul-tabbar-declarations';
+import {
+    KulTreeEvent,
+    KulTreeProps,
+} from '../components/kul-tree/kul-tree-declarations';
+import {
+    KulAccordionEvent,
+    KulAccordionProps,
+} from '../components/kul-accordion/kul-accordion-declarations';
+import {
+    KulChatEvent,
+    KulChatProps,
+} from '../components/kul-chat/kul-chat-declarations';
+import {
+    KulListEvent,
+    KulListProps,
+} from '../components/kul-list/kul-list-declarations';
+import {
+    KulProgressbarEvent,
+    KulProgressbarProps,
+} from '../components/kul-progressbar/kul-progressbar-declarations';
 import { KulDebugComponentInfo } from '../managers/kul-debug/kul-debug-declarations';
-import { KulMessengerEvent } from '../components/kul-messenger/kul-messenger-declarations';
+import {
+    KulMessengerEvent,
+    KulMessengerProps,
+} from '../components/kul-messenger/kul-messenger-declarations';
+import {
+    KulSwitchEvent,
+    KulSwitchProps,
+} from '../components/kul-switch/kul-switch-declarations';
+import {
+    KulChipEvent,
+    KulChipProps,
+} from '../components/kul-chip/kul-chip-declarations';
 
 export interface GenericMap {
     [index: string]: string;
 }
-
 export interface GenericObject<T = unknown> {
     [index: string]: T;
 }
 
-export interface KulComponent extends ComponentInterface {
+export type KulComponentName =
+    | 'KulAccordion'
+    | 'KulArticle'
+    | 'KulBadge'
+    | 'KulButton'
+    | 'KulCard'
+    | 'KulChart'
+    | 'KulChat'
+    | 'KulChip'
+    | 'KulCode'
+    | 'KulDrawer'
+    | 'KulHeader'
+    | 'KulImage'
+    | 'KulLazy'
+    | 'KulList'
+    | 'KulMessenger'
+    | 'KulPhotoframe'
+    | 'KulProgressbar'
+    | 'KulSpinner'
+    | 'KulSplash'
+    | 'KulSwitch'
+    | 'KulTabbar'
+    | 'KulTextfield'
+    | 'KulToast'
+    | 'KulTree'
+    | 'KulUpload';
+
+export type ComponentElementMap = {
+    KulAccordion: HTMLKulAccordionElement;
+    KulArticle: HTMLKulArticleElement;
+    KulBadge: HTMLKulBadgeElement;
+    KulButton: HTMLKulButtonElement;
+    KulCard: HTMLKulCardElement;
+    KulChart: HTMLKulChartElement;
+    KulChat: HTMLKulChatElement;
+    KulChip: HTMLKulChipElement;
+    KulCode: HTMLKulCodeElement;
+    KulDrawer: HTMLKulDrawerElement;
+    KulHeader: HTMLKulHeaderElement;
+    KulImage: HTMLKulImageElement;
+    KulLazy: HTMLKulLazyElement;
+    KulList: HTMLKulListElement;
+    KulMessenger: HTMLKulMessengerElement;
+    KulPhotoframe: HTMLKulPhotoframeElement;
+    KulProgressbar: HTMLKulProgressbarElement;
+    KulSpinner: HTMLKulSpinnerElement;
+    KulSplash: HTMLKulSplashElement;
+    KulSwitch: HTMLKulSwitchElement;
+    KulTabbar: HTMLKulTabbarElement;
+    KulTextfield: HTMLKulTextfieldElement;
+    KulToast: HTMLKulToastElement;
+    KulTree: HTMLKulTreeElement;
+    KulUpload: HTMLKulUploadElement;
+};
+interface KulComponentCommon {
     getDebugInfo: () => Promise<KulDebugComponentInfo>;
     getProps: (descriptions?: boolean) => Promise<GenericObject>;
     kulStyle: string;
     refresh: () => Promise<void>;
-    rootElement: unknown;
 }
+
+export interface KulComponent<T extends KulComponentName>
+    extends KulComponentCommon {
+    rootElement: ComponentElementMap[T];
+}
+
+export type KulComponentRootElement = ComponentElementMap[KulComponentName];
+
+export type ActualComponentClasses = {
+    [K in KulComponentName]: ComponentElementMap[K];
+}[KulComponentName];
 
 export enum KulDataCyAttributes {
     BUTTON = 'button',
@@ -52,38 +191,74 @@ export enum KulDataCyAttributes {
     SHOWCASE_GRID_WRAPPER = 'wrapper',
 }
 
-export interface KulEventPayload {
-    comp: unknown;
-    eventType: KulEventType;
+export type ComponentEventMap = {
+    KulAccordion: KulAccordionEvent;
+    KulArticle: KulArticleEvent;
+    KulBadge: KulBadgeEvent;
+    KulButton: KulButtonEvent;
+    KulCard: KulCardEvent;
+    KulChart: KulChartEvent;
+    KulChat: KulChatEvent;
+    KulChip: KulChipEvent;
+    KulCode: KulCodeEvent;
+    KulDrawer: KulDrawerEvent;
+    KulHeader: KulHeaderEvent;
+    KulImage: KulImageEvent;
+    KulLazy: KulLazyEvent;
+    KulList: KulListEvent;
+    KulMessenger: KulMessengerEvent;
+    KulPhotoframe: KulPhotoframeEvent;
+    KulProgressbar: KulProgressbarEvent;
+    KulSpinner: KulSpinnerEvent;
+    KulSplash: KulSplashEvent;
+    KulSwitch: KulSwitchEvent;
+    KulTabbar: KulTabbarEvent;
+    KulTextfield: KulTextfieldEvent;
+    KulToast: KulToastEvent;
+    KulTree: KulTreeEvent;
+    KulUpload: KulUploadEvent;
+};
+
+export type ComponentPropsMap = {
+    KulAccordion: KulAccordionProps;
+    KulArticle: KulArticleProps;
+    KulBadge: KulBadgeProps;
+    KulButton: KulButtonProps;
+    KulCard: KulCardProps;
+    KulChart: KulChartProps;
+    KulChat: KulChatProps;
+    KulChip: KulChipProps;
+    KulCode: KulCodeProps;
+    KulDrawer: KulDrawerProps;
+    KulHeader: KulHeaderProps;
+    KulImage: KulImageProps;
+    KulLazy: KulLazyProps;
+    KulList: KulListProps;
+    KulMessenger: KulMessengerProps;
+    KulPhotoframe: KulPhotoframeProps;
+    KulProgressbar: KulProgressbarProps;
+    KulSpinner: KulSpinnerProps;
+    KulSplash: KulSplashProps;
+    KulSwitch: KulSwitchProps;
+    KulTabbar: KulTabbarProps;
+    KulTextfield: KulTextfieldProps;
+    KulToast: KulToastProps;
+    KulTree: KulTreeProps;
+    KulUpload: KulUploadProps;
+};
+
+type ExtractComponentName<C> = C extends KulComponent<infer N> ? N : never;
+
+export type KulEventType<C extends KulComponent<KulComponentName>> =
+    ComponentEventMap[ExtractComponentName<C>];
+
+export interface KulEventPayload<
+    C extends KulComponent<KulComponentName>,
+    T extends KulEventType<C>,
+    E extends Event | CustomEvent,
+> {
+    comp: C;
+    eventType: T;
     id: string;
-    originalEvent: Event;
-}
-
-export type KulEventType =
-    | KulArticleEvent
-    | KulAccordionEvent
-    | KulBadgeEvent
-    | KulButtonEvent
-    | KulCardEvent
-    | KulChatEvent
-    | KulChartEvent
-    | KulCodeEvent
-    | KulDrawerEvent
-    | KulHeaderEvent
-    | KulImageEvent
-    | KulLazyEvent
-    | KulListEvent
-    | KulMessengerEvent
-    | KulPhotoframeEvent
-    | KulProgressbarEvent
-    | KulSpinnerEvent
-    | KulSplashEvent
-    | KulTabbarEvent
-    | KulTextfieldEvent
-    | KulToastEvent
-    | KulTreeEvent
-    | KulUploadEvent;
-
-export interface ResizableKulComponent extends KulComponent {
-    resizeCallback: () => {};
+    originalEvent: E;
 }

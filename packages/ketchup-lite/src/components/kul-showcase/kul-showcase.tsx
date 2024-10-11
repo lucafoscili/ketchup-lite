@@ -28,7 +28,13 @@ import {
     KUL_SHOWCASE_LAYOUT,
     KUL_SHOWCASE_UTILITIES,
 } from './kul-showcase-data';
-import { KulCardCustomEvent, KulDataDataset } from '../../components';
+import {
+    KulCardCustomEvent,
+    KulCardEvent,
+    KulDataDataset,
+} from '../../components';
+import { KulCard } from '../kul-card/kul-card';
+import { KulCardEventPayload } from '../kul-card/kul-card-declarations';
 
 @Component({
     assetsDirs: ['assets/media'],
@@ -106,7 +112,7 @@ export class KulShowcase {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulShowcaseEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulShowcaseEvents) {
         this.kulEvent.emit({
@@ -193,7 +199,7 @@ export class KulShowcase {
                 ],
             };
             const onEvent: (
-                event: KulCardCustomEvent<KulEventPayload>
+                event: KulCardCustomEvent<KulCardEventPayload>
             ) => void = (e) => {
                 if (e.detail.eventType === 'click') {
                     switch (type) {

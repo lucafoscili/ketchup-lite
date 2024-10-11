@@ -12,9 +12,9 @@
 
 ## Events
 
-| Event              | Description              | Type                           |
-| ------------------ | ------------------------ | ------------------------------ |
-| `kul-header-event` | Describes event emitted. | `CustomEvent<KulEventPayload>` |
+| Event              | Description              | Type                                 |
+| ------------------ | ------------------------ | ------------------------------------ |
+| `kul-header-event` | Describes event emitted. | `CustomEvent<KulHeaderEventPayload>` |
 
 
 ## Methods

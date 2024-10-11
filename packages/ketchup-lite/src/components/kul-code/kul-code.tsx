@@ -11,12 +11,16 @@ import {
     Prop,
     State,
 } from '@stencil/core';
-import { KulCodeEvent, KulCodeProps } from './kul-code-declarations';
+import {
+    KulCodeEvent,
+    KulCodeEventPayload,
+    KulCodeProps,
+} from './kul-code-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import { GenericObject } from '../../types/GenericTypes';
 import { KulButton } from '../kul-button/kul-button';
 import { KulButtonEventPayload } from '../kul-button/kul-button-declarations';
 import Prism from 'prismjs';
@@ -104,7 +108,7 @@ export class KulCode {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulCodeEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulCodeEvent) {
         this.kulEvent.emit({

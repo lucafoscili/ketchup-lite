@@ -14,9 +14,9 @@
 
 ## Events
 
-| Event              | Description                               | Type                           |
-| ------------------ | ----------------------------------------- | ------------------------------ |
-| `kul-drawer-event` | Describes event emitted by the component. | `CustomEvent<KulEventPayload>` |
+| Event              | Description                               | Type                                 |
+| ------------------ | ----------------------------------------- | ------------------------------------ |
+| `kul-drawer-event` | Describes event emitted by the component. | `CustomEvent<KulDrawerEventPayload>` |
 
 
 ## Methods

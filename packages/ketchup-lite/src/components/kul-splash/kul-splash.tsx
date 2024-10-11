@@ -88,7 +88,9 @@ export class KulSplash {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<
+        KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent>
+    >;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulSplashEvent) {
         this.kulEvent.emit({

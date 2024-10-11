@@ -16,9 +16,9 @@
 
 ## Events
 
-| Event                 | Description              | Type                           |
-| --------------------- | ------------------------ | ------------------------------ |
-| `kul-accordion-event` | Describes event emitted. | `CustomEvent<KulEventPayload>` |
+| Event                 | Description              | Type                                    |
+| --------------------- | ------------------------ | --------------------------------------- |
+| `kul-accordion-event` | Describes event emitted. | `CustomEvent<KulAccordionEventPayload>` |
 
 
 ## Methods
