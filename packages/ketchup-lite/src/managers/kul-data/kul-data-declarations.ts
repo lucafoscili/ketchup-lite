@@ -16,22 +16,53 @@ export interface KulDataBaseCell {
     htmlProps?: Partial<HTMLStencilElement>;
 }
 export type KulDataCell<T extends KulDataShapes> = T extends 'badge'
-    ? KulBadgePropsInterface & KulDataBaseCell & { value: string }
+    ? Partial<KulBadgePropsInterface> & {
+          shape: 'badge';
+          value: string;
+          htmlProps?: Partial<HTMLKulBadgeElement>;
+      }
     : T extends 'button'
-      ? KulButtonPropsInterface & KulDataBaseCell & { value: string }
+      ? Partial<KulButtonPropsInterface> & {
+            shape: 'button';
+            value: string;
+            htmlProps?: Partial<HTMLKulButtonElement>;
+        }
       : T extends 'chat'
-        ? KulChatPropsInterface & KulDataBaseCell & { value: KulChatHistory }
+        ? Partial<KulChatPropsInterface> & {
+              shape: 'chat';
+              value: KulChatHistory;
+              htmlProps?: Partial<HTMLKulChatElement>;
+          }
         : T extends 'code'
-          ? KulCodePropsInterface & KulDataBaseCell & { value: string }
+          ? Partial<KulCodePropsInterface> & {
+                shape: 'code';
+                value: string;
+                htmlProps?: Partial<HTMLKulCodeElement>;
+            }
           : T extends 'image'
-            ? KulImagePropsInterface & KulDataBaseCell & { value: string }
+            ? Partial<KulImagePropsInterface> & {
+                  shape: 'image';
+                  value: string;
+                  htmlProps?: Partial<HTMLKulImageElement>;
+              }
             : T extends 'switch'
-              ? KulSwitchPropsInterface & KulDataBaseCell & { value: boolean }
+              ? Partial<KulSwitchPropsInterface> & {
+                    shape: 'switch';
+                    value: boolean;
+                    htmlProps?: Partial<HTMLKulSwitchElement>;
+                }
               : T extends 'number'
-                ? KulDataBaseCell & { value: number }
+                ? {
+                      shape: 'number';
+                      value: number;
+                  }
                 : T extends 'text'
-                  ? KulDataBaseCell & { value: string }
+                  ? {
+                        shape: 'text';
+                        value: string;
+                    }
                   : KulDataBaseCell;
+
 export interface KulDataCellContainer {
     [index: string]: KulDataCell<KulDataShapes>;
 }
