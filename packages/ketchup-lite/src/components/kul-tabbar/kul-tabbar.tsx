@@ -234,11 +234,6 @@ export class KulTabbar {
     }
 
     componentDidLoad() {
-        if (this.#rippleSurface?.length) {
-            this.#rippleSurface.forEach((el) => {
-                this.#kulManager.theme.ripple.setup(el);
-            });
-        }
         if (this.#scrollArea) {
             this.#kulManager.scrollOnHover.register(this.#scrollArea);
         }
@@ -247,6 +242,11 @@ export class KulTabbar {
     }
 
     componentWillRender() {
+        if (this.#rippleSurface?.length) {
+            this.#rippleSurface.forEach((el) => {
+                this.#kulManager.theme.ripple.setup(el);
+            });
+        }
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
 
