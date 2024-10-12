@@ -14,9 +14,9 @@
 
 ## Events
 
-| Event                | Description              | Type                           |
-| -------------------- | ------------------------ | ------------------------------ |
-| `kul-showcase-event` | Describes event emitted. | `CustomEvent<KulEventPayload>` |
+| Event                | Description              | Type                                   |
+| -------------------- | ------------------------ | -------------------------------------- |
+| `kul-showcase-event` | Describes event emitted. | `CustomEvent<KulShowcaseEventPayload>` |
 
 
 ## Methods

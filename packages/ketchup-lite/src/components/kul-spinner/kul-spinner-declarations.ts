@@ -1,5 +1,15 @@
-export type KulSpinnerEvent = 'ready';
+import { KulEventPayload } from '../../types/GenericTypes';
+import { KulSpinner } from './kul-spinner';
 
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
+export type KulSpinnerEvent = 'ready';
+export interface KulSpinnerEventPayload
+    extends KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent> {}
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulSpinnerProps {
     kulActive = 'Specifies if the spinner is animating.',
     kulBarVariant = 'Controls if the component displays as a bar or a spinner.',
@@ -10,7 +20,6 @@ export enum KulSpinnerProps {
     kulLayout = 'Selects the spinner layout.',
     kulStyle = 'Sets a custom style for the component.',
 }
-
 export interface KulSpinnerPropsInterface {
     kulActive: boolean;
     kulBarVariant: boolean;

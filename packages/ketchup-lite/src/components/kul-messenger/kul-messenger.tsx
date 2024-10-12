@@ -45,6 +45,7 @@ import {
 import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
 import { getters } from './helpers/kul-messenger-getters';
 import { setters } from './helpers/kul-messenger-setters';
+import { KulDataCell } from '../../managers/kul-data/kul-data-declarations';
 
 @Component({
     tag: 'kul-messenger',
@@ -55,7 +56,7 @@ export class KulMessenger {
     /**
      * References the root HTML element of the component (<kul-messenger>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulMessengerElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */
@@ -266,7 +267,7 @@ export class KulMessenger {
                 };
                 const chat = character.children?.find((n) => n.id === 'chat');
                 this.chat[character.id] = {};
-                const chatCell = chat?.cells?.kulChat;
+                const chatCell = chat?.cells?.kulChat as KulDataCell<'chat'>;
                 if (chatCell) {
                     const characterChat = this.chat[character.id];
                     characterChat.kulEndpointUrl = chatCell.kulEndpointUrl;
@@ -322,14 +323,13 @@ export class KulMessenger {
                             },
                         };
                     }
-                    chatNode.cells.kulChat.kulEndpointUrl =
-                        chatComp.kulEndpointUrl;
-                    chatNode.cells.kulChat.kulMaxTokens = chatComp.kulMaxTokens;
-                    chatNode.cells.kulChat.kulPollingInterval =
-                        chatComp.kulPollingInterval;
-                    chatNode.cells.kulChat.kulSystem = chatComp.kulSystem;
-                    chatNode.cells.kulChat.kulTemperature =
-                        chatComp.kulTemperature;
+                    const chatCell = chatNode.cells
+                        .kulChat as KulDataCell<'chat'>;
+                    chatCell.kulEndpointUrl = chatComp.kulEndpointUrl;
+                    chatCell.kulMaxTokens = chatComp.kulMaxTokens;
+                    chatCell.kulPollingInterval = chatComp.kulPollingInterval;
+                    chatCell.kulSystem = chatComp.kulSystem;
+                    chatCell.kulTemperature = chatComp.kulTemperature;
                 }
             };
             const saveCovers = () => {

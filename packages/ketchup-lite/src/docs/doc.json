@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-09-27T21:36:33",
+  "timestamp": "2024-10-12T16:15:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -184,6 +184,42 @@
           ]
         },
         {
+          "name": "getSelectedNodes",
+          "returns": {
+            "type": "Promise<Set<KulDataNode>>",
+            "docs": "Selected nodes."
+          },
+          "complexType": {
+            "signature": "() => Promise<Set<KulDataNode>>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "Set": {
+                "location": "global",
+                "id": "global::Set"
+              },
+              "KulDataNode": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataNode"
+              }
+            },
+            "return": "Promise<Set<KulDataNode>>"
+          },
+          "signature": "getSelectedNodes() => Promise<Set<KulDataNode>>",
+          "parameters": [],
+          "docs": "Returns the selected nodes.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "Selected nodes."
+            }
+          ]
+        },
+        {
           "name": "refresh",
           "returns": {
             "type": "Promise<void>",
@@ -263,16 +299,16 @@
       "events": [
         {
           "event": "kul-accordion-event",
-          "detail": "KulEventPayload",
+          "detail": "KulAccordionEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulAccordionEventPayload",
+            "resolved": "KulAccordionEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulAccordionEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-accordion-declarations",
+                "id": "src/components/kul-accordion/kul-accordion-declarations.ts::KulAccordionEventPayload"
               }
             }
           },
@@ -548,16 +584,16 @@
       "events": [
         {
           "event": "kul-article-event",
-          "detail": "KulEventPayload",
+          "detail": "KulArticleEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulArticleEventPayload",
+            "resolved": "KulArticleEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulArticleEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-article-declarations",
+                "id": "src/components/kul-article/kul-article-declarations.ts::KulArticleEventPayload"
               }
             }
           },
@@ -583,6 +619,36 @@
           "name": "--kul-article-content-font-size",
           "annotation": "prop",
           "docs": "Sets the font size for .content elements. Defaults to var(--kul-font-size)"
+        },
+        {
+          "name": "--kul-article-h1-color",
+          "annotation": "prop",
+          "docs": "Sets the color for <h1> elements. Defaults to var(--kul-text-color)"
+        },
+        {
+          "name": "--kul-article-h1-font-family",
+          "annotation": "prop",
+          "docs": "Sets the font family for <h1> elements. Defaults to var(--kul-font-family)"
+        },
+        {
+          "name": "--kul-article-h1-font-size",
+          "annotation": "prop",
+          "docs": "Sets the font size for <h1> elements. Defaults to calc(var(--kul-font-size) * 1.25)"
+        },
+        {
+          "name": "--kul-article-h2-color",
+          "annotation": "prop",
+          "docs": "Sets the color for <h2> elements. Defaults to var(--kul-text-color)"
+        },
+        {
+          "name": "--kul-article-h2-font-family",
+          "annotation": "prop",
+          "docs": "Sets the font family for <h2> elements. Defaults to var(--kul-font-family)"
+        },
+        {
+          "name": "--kul-article-h2-font-size",
+          "annotation": "prop",
+          "docs": "Sets the font size for <h2> elements. Defaults to calc(var(--kul-font-size) * 1.125)"
         },
         {
           "name": "--kul-article-h3-color",
@@ -970,16 +1036,16 @@
       "events": [
         {
           "event": "kul-badge-event",
-          "detail": "KulEventPayload",
+          "detail": "KulBadgeEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulBadgeEventPayload",
+            "resolved": "KulBadgeEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulBadgeEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-badge-declarations",
+                "id": "src/components/kul-badge/kul-badge-declarations.ts::KulBadgeEventPayload"
               }
             }
           },
@@ -1596,7 +1662,7 @@
             "parameters": [
               {
                 "name": "value",
-                "type": "\"on\" | \"off\"",
+                "type": "\"off\" | \"on\"",
                 "docs": "- The new state to be set on the component."
               }
             ],
@@ -1617,7 +1683,7 @@
           "parameters": [
             {
               "name": "value",
-              "type": "\"on\" | \"off\"",
+              "type": "\"off\" | \"on\"",
               "docs": "- The new state to be set on the component."
             }
           ],
@@ -2086,16 +2152,16 @@
       "events": [
         {
           "event": "kul-card-event",
-          "detail": "KulEventPayload",
+          "detail": "KulCardEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulCardEventPayload",
+            "resolved": "KulCardEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulCardEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-card-declarations",
+                "id": "src/components/kul-card/kul-card-declarations.ts::KulCardEventPayload"
               }
             }
           },
@@ -3977,16 +4043,16 @@
       "events": [
         {
           "event": "kul-code-event",
-          "detail": "KulEventPayload",
+          "detail": "KulCodeEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulCodeEventPayload",
+            "resolved": "KulCodeEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulCodeEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-code-declarations",
+                "id": "src/components/kul-code/kul-code-declarations.ts::KulCodeEventPayload"
               }
             }
           },
@@ -4327,16 +4393,16 @@
       "events": [
         {
           "event": "kul-drawer-event",
-          "detail": "KulEventPayload",
+          "detail": "KulDrawerEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulDrawerEventPayload",
+            "resolved": "KulDrawerEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulDrawerEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-drawer-declarations",
+                "id": "src/components/kul-drawer/kul-drawer-declarations.ts::KulDrawerEventPayload"
               }
             }
           },
@@ -4524,16 +4590,16 @@
       "events": [
         {
           "event": "kul-header-event",
-          "detail": "KulEventPayload",
+          "detail": "KulHeaderEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulHeaderEventPayload",
+            "resolved": "KulHeaderEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulHeaderEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-header-declarations",
+                "id": "src/components/kul-header/kul-header-declarations.ts::KulHeaderEventPayload"
               }
             }
           },
@@ -4892,16 +4958,16 @@
       "events": [
         {
           "event": "kul-image-event",
-          "detail": "KulEventPayload",
+          "detail": "KulImageEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulImageEventPayload",
+            "resolved": "KulImageEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulImageEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-image-declarations",
+                "id": "src/components/kul-image/kul-image-declarations.ts::KulImageEventPayload"
               }
             }
           },
@@ -5261,16 +5327,16 @@
       "events": [
         {
           "event": "kul-lazy-event",
-          "detail": "KulEventPayload",
+          "detail": "KulLazyEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulLazyEventPayload",
+            "resolved": "KulLazyEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulLazyEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-lazy-declarations",
+                "id": "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyEventPayload"
               }
             }
           },
@@ -6400,8 +6466,8 @@
               },
               "KulDebugComponentInfo": {
                 "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugComponentInfo"
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugComponentInfo"
               }
             },
             "return": "Promise<KulDebugComponentInfo>"
@@ -6813,16 +6879,16 @@
       "events": [
         {
           "event": "kul-progressbar-event",
-          "detail": "KulEventPayload",
+          "detail": "KulProgressbarEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulProgressbarEventPayload",
+            "resolved": "KulProgressbarEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulProgressbarEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-progressbar-declarations",
+                "id": "src/components/kul-progressbar/kul-progressbar-declarations.ts::KulProgressbarEventPayload"
               }
             }
           },
@@ -7045,16 +7111,16 @@
       "events": [
         {
           "event": "kul-showcase-event",
-          "detail": "KulEventPayload",
+          "detail": "KulShowcaseEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulShowcaseEventPayload",
+            "resolved": "KulShowcaseEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulShowcaseEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-showcase-declarations",
+                "id": "src/components/kul-showcase/kul-showcase-declarations.ts::KulShowcaseEventPayload"
               }
             }
           },
@@ -9075,16 +9141,16 @@
       "events": [
         {
           "event": "kul-spinner-event",
-          "detail": "KulEventPayload",
+          "detail": "KulSpinnerEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulSpinnerEventPayload",
+            "resolved": "KulSpinnerEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulSpinnerEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-spinner-declarations",
+                "id": "src/components/kul-spinner/kul-spinner-declarations.ts::KulSpinnerEventPayload"
               }
             }
           },
@@ -9344,16 +9410,16 @@
       "events": [
         {
           "event": "kul-splash-event",
-          "detail": "KulEventPayload",
+          "detail": "KulSplashEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulSplashEventPayload",
+            "resolved": "KulSplashEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulSplashEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-splash-declarations",
+                "id": "src/components/kul-splash/kul-splash-declarations.ts::KulSplashEventPayload"
               }
             }
           },
@@ -9736,7 +9802,7 @@
             "parameters": [
               {
                 "name": "value",
-                "type": "\"on\" | \"off\"",
+                "type": "\"off\" | \"on\"",
                 "docs": "- The new state to be set on the component."
               }
             ],
@@ -9757,7 +9823,7 @@
           "parameters": [
             {
               "name": "value",
-              "type": "\"on\" | \"off\"",
+              "type": "\"off\" | \"on\"",
               "docs": "- The new state to be set on the component."
             }
           ],
@@ -9942,13 +10008,13 @@
         },
         {
           "name": "kulValue",
-          "type": "number",
+          "type": "number | string",
           "complexType": {
-            "original": "number",
-            "resolved": "number",
+            "original": "number | string",
+            "resolved": "number | string",
             "references": {}
           },
-          "mutable": true,
+          "mutable": false,
           "attr": "kul-value",
           "reflectToAttr": true,
           "docs": "Sets the initial selected node's index.",
@@ -9958,10 +10024,13 @@
               "text": "null"
             }
           ],
-          "default": "null",
+          "default": "0",
           "values": [
             {
               "type": "number"
+            },
+            {
+              "type": "string"
             }
           ],
           "optional": false,
@@ -10930,7 +10999,7 @@
               "text": "() => void"
             }
           ],
-          "default": "() => {\n        const e = new CustomEvent('unmount');\n        this.onKulEvent(e, 'unmount');\n        this.kulEvent.emit({\n            comp: this,\n            eventType: 'unmount',\n            id: this.rootElement.id,\n            originalEvent: e,\n        });\n        this.rootElement.remove();\n    }",
+          "default": "() => {\r\n        const e = new CustomEvent('unmount');\r\n        this.onKulEvent(e, 'unmount');\r\n        this.kulEvent.emit({\r\n            comp: this,\r\n            eventType: 'unmount',\r\n            id: this.rootElement.id,\r\n            originalEvent: e,\r\n        });\r\n        this.rootElement.remove();\r\n    }",
           "values": [
             {
               "type": "() => void"
@@ -10962,7 +11031,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'clear' }"
             }
           ],
-          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'clear',\n    }",
+          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'clear',\r\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -10994,7 +11063,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'info' }"
             }
           ],
-          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'info',\n    }",
+          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'info',\r\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -11192,16 +11261,16 @@
       "events": [
         {
           "event": "kul-toast-event",
-          "detail": "KulEventPayload",
+          "detail": "KulToastEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload",
-            "resolved": "KulEventPayload",
+            "original": "KulToastEventPayload",
+            "resolved": "KulToastEventPayload",
             "references": {
-              "KulEventPayload": {
+              "KulToastEventPayload": {
                 "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::KulEventPayload"
+                "path": "./kul-toast-declarations",
+                "id": "src/components/kul-toast/kul-toast-declarations.ts::KulToastEventPayload"
               }
             }
           },
@@ -12032,20 +12101,15 @@
     }
   ],
   "typeLibrary": {
-    "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset": {
-      "declaration": "export interface KulDataDataset {\n    columns?: KulDataColumn[];\n    nodes?: KulDataNode[];\n}",
+    "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
+      "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
       "docstring": "",
-      "path": "src/managers/kul-data/kul-data-declarations.ts"
+      "path": "src/components/kul-article/kul-article-declarations.ts"
     },
-    "src/components/kul-button/kul-button-declarations.ts::KulButtonStyling": {
-      "declaration": "export type KulButtonStyling =\n    | 'flat'\n    | 'floating'\n    | 'icon'\n    | 'outlined'\n    | 'raised';",
+    "src/components/kul-article/kul-article-declarations.ts::KulArticleEventPayload": {
+      "declaration": "export interface KulArticleEventPayload\n    extends KulEventPayload<KulArticle, KulArticleEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/components/kul-button/kul-button-declarations.ts"
-    },
-    "src/components/kul-button/kul-button-declarations.ts::KulButtonEventPayload": {
-      "declaration": "export interface KulButtonEventPayload extends KulEventPayload {\n    eventType: KulButtonEvent;\n    value: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-button/kul-button-declarations.ts"
+      "path": "src/components/kul-article/kul-article-declarations.ts"
     },
     "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugComponentInfo": {
       "declaration": "export interface KulDebugComponentInfo {\n    endTime: number;\n    renderCount: number;\n    renderEnd: number;\n    renderStart: number;\n    startTime: number;\n}",
@@ -12057,135 +12121,95 @@
       "docstring": "",
       "path": "src/types/GenericTypes.ts"
     },
-    "src/components/kul-button/kul-button-declarations.ts::KulButtonState": {
-      "declaration": "export type KulButtonState = 'off' | 'on';",
+    "src/components/kul-badge/kul-badge-declarations.ts::KulBadgePropsInterface": {
+      "declaration": "export interface KulBadgePropsInterface {\n    kulImageProps?: KulImagePropsInterface;\n    kulLabel?: string;\n    kulStyle?: string;\n}",
       "docstring": "",
-      "path": "src/components/kul-button/kul-button-declarations.ts"
+      "path": "src/components/kul-badge/kul-badge-declarations.ts"
     },
-    "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
-      "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
+    "src/components/kul-image/kul-image-declarations.ts::KulImageEventPayload": {
+      "declaration": "export interface KulImageEventPayload\n    extends KulEventPayload<KulImage, KulImageEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/components/kul-chat/kul-chat-declarations.ts"
+      "path": "src/components/kul-image/kul-image-declarations.ts"
     },
-    "src/components/kul-chat/kul-chat-declarations.ts::KulChatHistory": {
-      "declaration": "interface Array<T> {\n    /**\n     * Gets or sets the length of the array. This is a number one higher than the highest index in the array.\n     */\n    length: number;\n    /**\n     * Returns a string representation of an array.\n     */\n    toString(): string;\n    /**\n     * Returns a string representation of an array. The elements are converted to string using their toLocaleString methods.\n     */\n    toLocaleString(): string;\n    /**\n     * Removes the last element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    pop(): T | undefined;\n    /**\n     * Appends new elements to the end of an array, and returns the new length of the array.\n     * @param items New elements to add to the array.\n     */\n    push(...items: T[]): number;\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: ConcatArray<T>[]): T[];\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: (T | ConcatArray<T>)[]): T[];\n    /**\n     * Adds all the elements of an array into a string, separated by the specified separator string.\n     * @param separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.\n     */\n    join(separator?: string): string;\n    /**\n     * Reverses the elements in an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     */\n    reverse(): T[];\n    /**\n     * Removes the first element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    shift(): T | undefined;\n    /**\n     * Returns a copy of a section of an array.\n     * For both start and end, a negative index can be used to indicate an offset from the end of the array.\n     * For example, -2 refers to the second to last element of the array.\n     * @param start The beginning index of the specified portion of the array.\n     * If start is undefined, then the slice begins at index 0.\n     * @param end The end index of the specified portion of the array. This is exclusive of the element at the index 'end'.\n     * If end is undefined, then the slice extends to the end of the array.\n     */\n    slice(start?: number, end?: number): T[];\n    /**\n     * Sorts an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     * @param compareFn Function used to determine the order of the elements. It is expected to return\n     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive\n     * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.\n     * ```ts\n     * [11,2,22,1].sort((a, b) => a - b)\n     * ```\n     */\n    sort(compareFn?: (a: T, b: T) => number): this;\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount?: number): T[];\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @param items Elements to insert into the array in place of the deleted elements.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount: number, ...items: T[]): T[];\n    /**\n     * Inserts new elements at the start of an array, and returns the new length of the array.\n     * @param items Elements to insert at the start of the array.\n     */\n    unshift(...items: T[]): number;\n    /**\n     * Returns the index of the first occurrence of a value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0.\n     */\n    indexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Returns the index of the last occurrence of a specified value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin searching backward. If fromIndex is omitted, the search starts at the last index in the array.\n     */\n    lastIndexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): this is S[];\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Determines whether the specified callback function returns true for any element of an array.\n     * @param predicate A function that accepts up to three arguments. The some method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value true, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Performs the specified action for each element in an array.\n     * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.\n     * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;\n    /**\n     * Calls a defined callback function on each element of an array, and returns an array that contains the results.\n     * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n\n    [n: number]: T;\n}",
+    "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset": {
+      "declaration": "export interface KulDataDataset {\n    columns?: KulDataColumn[];\n    nodes?: KulDataNode[];\n}",
       "docstring": "",
-      "path": "src/components/kul-chat/kul-chat-declarations.ts"
+      "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
-    "src/components/kul-chat/kul-chat-declarations.ts::KulChatEventPayload": {
-      "declaration": "export interface KulChatEventPayload extends KulEventPayload {\n    eventType: KulChatEvent;\n    history: string;\n    status: KulChatStatus;\n}",
+    "src/components/kul-list/kul-list-declarations.ts::KulListEventPayload": {
+      "declaration": "export interface KulListEventPayload\n    extends KulEventPayload<KulList, KulListEvent, Event | CustomEvent> {\n    node: KulDataNode;\n}",
       "docstring": "",
-      "path": "src/components/kul-chat/kul-chat-declarations.ts"
-    },
-    "src/components/kul-chip/kul-chip-declarations.ts::KulChipStyling": {
-      "declaration": "export type KulChipStyling = 'choice' | 'filter' | 'input' | 'standard';",
-      "docstring": "",
-      "path": "src/components/kul-chip/kul-chip-declarations.ts"
-    },
-    "src/components/kul-chip/kul-chip-declarations.ts::KulChipEventPayload": {
-      "declaration": "export interface KulChipEventPayload extends KulEventPayload {\n    node: KulDataNode;\n    selectedNodes: Set<KulDataNode>;\n}",
-      "docstring": "",
-      "path": "src/components/kul-chip/kul-chip-declarations.ts"
+      "path": "src/components/kul-list/kul-list-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataNode": {
       "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: unknown;\n}",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
-    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
-      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
+    "src/components/kul-button/kul-button-declarations.ts::KulButtonStyling": {
+      "declaration": "export type KulButtonStyling =\n    | 'flat'\n    | 'floating'\n    | 'icon'\n    | 'outlined'\n    | 'raised';",
       "docstring": "",
-      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+      "path": "src/components/kul-button/kul-button-declarations.ts"
     },
-    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig": {
-      "declaration": "export interface KulMessengerConfig {\n    currentCharacter: string;\n    ui: KulMessengerUI;\n}",
+    "src/components/kul-button/kul-button-declarations.ts::KulButtonEventPayload": {
+      "declaration": "export interface KulButtonEventPayload\n    extends KulEventPayload<KulButton, KulButtonEvent, Event | CustomEvent> {\n    value: string;\n}",
       "docstring": "",
-      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+      "path": "src/components/kul-button/kul-button-declarations.ts"
     },
-    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
-      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    config: KulMessengerConfig;\n}",
+    "src/components/kul-button/kul-button-declarations.ts::KulButtonState": {
+      "declaration": "export type KulButtonState = 'off' | 'on';",
       "docstring": "",
-      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+      "path": "src/components/kul-button/kul-button-declarations.ts"
     },
-    "src/types/GenericTypes.ts::KulEventPayload": {
-      "declaration": "export interface KulEventPayload {\n    comp: unknown;\n    eventType: KulEventType;\n    id: string;\n    originalEvent: Event;\n}",
+    "src/components/kul-card/kul-card-declarations.ts::KulCardEventPayload": {
+      "declaration": "export interface KulCardEventPayload\n    extends KulEventPayload<KulCard, KulCardEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/types/GenericTypes.ts"
-    },
-    "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
-      "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
-      "docstring": "",
-      "path": "src/components/kul-article/kul-article-declarations.ts"
-    },
-    "src/components/kul-image/kul-image-declarations.ts::KulImagePropsInterface": {
-      "declaration": "export interface KulImagePropsInterface {\n    kulBadgeProps?: KulBadgePropsInterface;\n    kulColor?: string;\n    kulShowSpinner?: boolean;\n    kulSizeX?: string;\n    kulSizeY?: string;\n    kulStyle?: string;\n    kulValue?: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-image/kul-image-declarations.ts"
+      "path": "src/components/kul-card/kul-card-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataShapesMap": {
-      "declaration": "{\n    [K in KulDataShapes]?: Array<\n        {\n            [P in K]: K extends 'badge'\n                ? Partial<KulBadgePropsInterface>\n                : K extends 'button'\n                  ? Partial<KulButtonPropsInterface>\n                  : K extends 'chat'\n                    ? Partial<KulChatPropsInterface>\n                    : K extends 'code'\n                      ? Partial<KulCodePropsInterface>\n                      : K extends 'image'\n                        ? Partial<KulImagePropsInterface>\n                        : string;\n        }[K]\n    >;\n}",
+      "declaration": "{\n    [K in KulDataShapes]?: Partial<KulDataCell<K>>[];\n}",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
+    "src/components/kul-code/kul-code-declarations.ts::KulCodeEventPayload": {
+      "declaration": "export interface KulCodeEventPayload\n    extends KulEventPayload<KulCode, KulCodeEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+      "path": "src/components/kul-code/kul-code-declarations.ts"
     },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candle'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
+    "src/components/kul-spinner/kul-spinner-declarations.ts::KulSpinnerEventPayload": {
+      "declaration": "export interface KulSpinnerEventPayload\n    extends KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload extends KulEventPayload {\r\n    column: KulDataColumn;\r\n    node: KulDataNode;\r\n    x: number | string;\r\n    y: number | string;\r\n}",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+      "path": "src/components/kul-spinner/kul-spinner-declarations.ts"
     },
     "src/components.d.ts::KulDebugComponentInfo": {
       "declaration": "any",
       "docstring": "",
       "path": "src/components.d.ts"
     },
-    "src/components/kul-badge/kul-badge-declarations.ts::KulBadgePropsInterface": {
-      "declaration": "export interface KulBadgePropsInterface {\n    kulImageProps?: KulImagePropsInterface;\n    kulLabel?: string;\n    kulStyle?: string;\n}",
+    "src/components/kul-splash/kul-splash-declarations.ts::KulSplashEventPayload": {
+      "declaration": "export interface KulSplashEventPayload\n    extends KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/components/kul-badge/kul-badge-declarations.ts"
+      "path": "src/components/kul-splash/kul-splash-declarations.ts"
     },
-    "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyRenderMode": {
-      "declaration": "export type KulLazyRenderMode = 'both' | 'props' | 'viewport';",
+    "src/components/kul-upload/kul-upload-declarations.ts::KulUploadEventPayload": {
+      "declaration": "export interface KulUploadEventPayload\n    extends KulEventPayload<KulUpload, KulUploadEvent, Event | CustomEvent> {\n    selectedFiles: File[];\n}",
       "docstring": "",
-      "path": "src/components/kul-lazy/kul-lazy-declarations.ts"
+      "path": "src/components/kul-upload/kul-upload-declarations.ts"
     },
-    "src/components/kul-list/kul-list-declarations.ts::KulListEventPayload": {
-      "declaration": "export interface KulListEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
+    "src/components/kul-image/kul-image-declarations.ts::KulImagePropsInterface": {
+      "declaration": "export interface KulImagePropsInterface {\n    kulBadgeProps?: KulBadgePropsInterface;\n    kulColor?: string;\n    kulShowSpinner?: boolean;\n    kulSizeX?: string;\n    kulSizeY?: string;\n    kulStyle?: string;\n    kulValue?: string;\n}",
       "docstring": "",
-      "path": "src/components/kul-list/kul-list-declarations.ts"
+      "path": "src/components/kul-image/kul-image-declarations.ts"
     },
-    "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
-      "declaration": "export interface KulPhotoframeEventPayload extends KulEventPayload {\n    isPlaceholder?: boolean;\n}",
+    "src/components/kul-toast/kul-toast-declarations.ts::KulToastEventPayload": {
+      "declaration": "export interface KulToastEventPayload\n    extends KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/components/kul-photoframe/kul-photoframe-declarations.ts"
+      "path": "src/components/kul-toast/kul-toast-declarations.ts"
     },
-    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchEventPayload": {
-      "declaration": "export interface KulSwitchEventPayload extends KulEventPayload {\n    value: string;\n}",
+    "src/components/kul-drawer/kul-drawer-declarations.ts::KulDrawerEventPayload": {
+      "declaration": "export interface KulDrawerEventPayload\n    extends KulEventPayload<KulDrawer, KulDrawerEvent, Event | CustomEvent> {}",
       "docstring": "",
-      "path": "src/components/kul-switch/kul-switch-declarations.ts"
-    },
-    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchState": {
-      "declaration": "export type KulSwitchState = 'off' | 'on';",
-      "docstring": "",
-      "path": "src/components/kul-switch/kul-switch-declarations.ts"
-    },
-    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarEventPayload": {
-      "declaration": "export interface KulTabbarEventPayload extends KulEventPayload {\n    index?: number;\n    node?: KulDataNode;\n}",
-      "docstring": "",
-      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
-    },
-    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarState": {
-      "declaration": "export interface KulTabbarState {\n    index?: number;\n    node?: KulDataNode;\n}",
-      "docstring": "",
-      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
+      "path": "src/components/kul-drawer/kul-drawer-declarations.ts"
     },
     "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldHelper": {
       "declaration": "export interface KulTextfieldHelper {\n    showWhenFocused?: boolean;\n    value: string;\n}",
@@ -12198,9 +12222,54 @@
       "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
     },
     "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldEventPayload": {
-      "declaration": "export interface KulTextfieldEventPayload extends KulEventPayload {\n    inputValue?: string;\n    value?: string;\n}",
+      "declaration": "export interface KulTextfieldEventPayload\n    extends KulEventPayload<\n        KulTextfield,\n        KulTextfieldEvent,\n        Event | CustomEvent\n    > {\n    inputValue?: string;\n    value?: string;\n}",
       "docstring": "",
       "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
+      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
+      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candle'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
+      "declaration": "export interface KulChartEventPayload\r\n    extends KulEventPayload<KulChart, KulChartEvent, Event | CustomEvent> {\r\n    column: KulDataColumn;\r\n    node: KulDataNode;\r\n    x: number | string;\r\n    y: number | string;\r\n}",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-header/kul-header-declarations.ts::KulHeaderEventPayload": {
+      "declaration": "export interface KulHeaderEventPayload\n    extends KulEventPayload<KulHeader, KulHeaderEvent, Event | CustomEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-header/kul-header-declarations.ts"
+    },
+    "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyRenderMode": {
+      "declaration": "export type KulLazyRenderMode = 'both' | 'props' | 'viewport';",
+      "docstring": "",
+      "path": "src/components/kul-lazy/kul-lazy-declarations.ts"
+    },
+    "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyEventPayload": {
+      "declaration": "export interface KulLazyEventPayload\n    extends KulEventPayload<KulLazy, KulLazyEvent, Event | CustomEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-lazy/kul-lazy-declarations.ts"
+    },
+    "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
+      "declaration": "export interface KulPhotoframeEventPayload\n    extends KulEventPayload<\n        KulPhotoframe,\n        KulPhotoframeEvent,\n        Event | CustomEvent\n    > {\n    isPlaceholder?: boolean;\n}",
+      "docstring": "",
+      "path": "src/components/kul-photoframe/kul-photoframe-declarations.ts"
+    },
+    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarEventPayload": {
+      "declaration": "export interface KulTabbarEventPayload\n    extends KulEventPayload<KulTabbar, KulTabbarEvent, Event | CustomEvent> {\n    index?: number;\n    node?: KulDataNode;\n}",
+      "docstring": "",
+      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
+    },
+    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarState": {
+      "declaration": "export interface KulTabbarState {\n    index?: number;\n    node?: KulDataNode;\n}",
+      "docstring": "",
+      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
     },
     "src/components.d.ts::KulDataDataset": {
       "declaration": "any",
@@ -12208,14 +12277,79 @@
       "path": "src/components.d.ts"
     },
     "src/components/kul-tree/kul-tree-declarations.ts::KulTreeEventPayload": {
-      "declaration": "export interface KulTreeEventPayload extends KulEventPayload {\n    node?: KulDataNode;\n}",
+      "declaration": "export interface KulTreeEventPayload\n    extends KulEventPayload<KulTree, KulTreeEvent, Event | CustomEvent> {\n    node?: KulDataNode;\n}",
       "docstring": "",
       "path": "src/components/kul-tree/kul-tree-declarations.ts"
     },
-    "src/components/kul-upload/kul-upload-declarations.ts::KulUploadEventPayload": {
-      "declaration": "export interface KulUploadEventPayload extends KulEventPayload {\n    selectedFiles: File[];\n}",
+    "src/components/kul-accordion/kul-accordion-declarations.ts::KulAccordionEventPayload": {
+      "declaration": "export interface KulAccordionEventPayload\n    extends KulEventPayload<\n        KulAccordion,\n        KulAccordionEvent,\n        Event | CustomEvent\n    > {}",
       "docstring": "",
-      "path": "src/components/kul-upload/kul-upload-declarations.ts"
+      "path": "src/components/kul-accordion/kul-accordion-declarations.ts"
+    },
+    "src/components/kul-progressbar/kul-progressbar-declarations.ts::KulProgressbarEventPayload": {
+      "declaration": "export interface KulProgressbarEventPayload\n    extends KulEventPayload<\n        KulProgressbar,\n        KulProgressbarEvent,\n        Event | CustomEvent\n    > {\n    isPlaceholder?: boolean;\n}",
+      "docstring": "",
+      "path": "src/components/kul-progressbar/kul-progressbar-declarations.ts"
+    },
+    "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
+      "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
+      "docstring": "",
+      "path": "src/components/kul-chat/kul-chat-declarations.ts"
+    },
+    "src/components/kul-chat/kul-chat-declarations.ts::KulChatHistory": {
+      "declaration": "interface Array<T> {\n    /**\n     * Gets or sets the length of the array. This is a number one higher than the highest index in the array.\n     */\n    length: number;\n    /**\n     * Returns a string representation of an array.\n     */\n    toString(): string;\n    /**\n     * Returns a string representation of an array. The elements are converted to string using their toLocaleString methods.\n     */\n    toLocaleString(): string;\n    /**\n     * Removes the last element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    pop(): T | undefined;\n    /**\n     * Appends new elements to the end of an array, and returns the new length of the array.\n     * @param items New elements to add to the array.\n     */\n    push(...items: T[]): number;\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: ConcatArray<T>[]): T[];\n    /**\n     * Combines two or more arrays.\n     * This method returns a new array without modifying any existing arrays.\n     * @param items Additional arrays and/or items to add to the end of the array.\n     */\n    concat(...items: (T | ConcatArray<T>)[]): T[];\n    /**\n     * Adds all the elements of an array into a string, separated by the specified separator string.\n     * @param separator A string used to separate one element of the array from the next in the resulting string. If omitted, the array elements are separated with a comma.\n     */\n    join(separator?: string): string;\n    /**\n     * Reverses the elements in an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     */\n    reverse(): T[];\n    /**\n     * Removes the first element from an array and returns it.\n     * If the array is empty, undefined is returned and the array is not modified.\n     */\n    shift(): T | undefined;\n    /**\n     * Returns a copy of a section of an array.\n     * For both start and end, a negative index can be used to indicate an offset from the end of the array.\n     * For example, -2 refers to the second to last element of the array.\n     * @param start The beginning index of the specified portion of the array.\n     * If start is undefined, then the slice begins at index 0.\n     * @param end The end index of the specified portion of the array. This is exclusive of the element at the index 'end'.\n     * If end is undefined, then the slice extends to the end of the array.\n     */\n    slice(start?: number, end?: number): T[];\n    /**\n     * Sorts an array in place.\n     * This method mutates the array and returns a reference to the same array.\n     * @param compareFn Function used to determine the order of the elements. It is expected to return\n     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive\n     * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.\n     * ```ts\n     * [11,2,22,1].sort((a, b) => a - b)\n     * ```\n     */\n    sort(compareFn?: (a: T, b: T) => number): this;\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount?: number): T[];\n    /**\n     * Removes elements from an array and, if necessary, inserts new elements in their place, returning the deleted elements.\n     * @param start The zero-based location in the array from which to start removing elements.\n     * @param deleteCount The number of elements to remove.\n     * @param items Elements to insert into the array in place of the deleted elements.\n     * @returns An array containing the elements that were deleted.\n     */\n    splice(start: number, deleteCount: number, ...items: T[]): T[];\n    /**\n     * Inserts new elements at the start of an array, and returns the new length of the array.\n     * @param items Elements to insert at the start of the array.\n     */\n    unshift(...items: T[]): number;\n    /**\n     * Returns the index of the first occurrence of a value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin the search. If fromIndex is omitted, the search starts at index 0.\n     */\n    indexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Returns the index of the last occurrence of a specified value in an array, or -1 if it is not present.\n     * @param searchElement The value to locate in the array.\n     * @param fromIndex The array index at which to begin searching backward. If fromIndex is omitted, the search starts at the last index in the array.\n     */\n    lastIndexOf(searchElement: T, fromIndex?: number): number;\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): this is S[];\n    /**\n     * Determines whether all the members of an array satisfy the specified test.\n     * @param predicate A function that accepts up to three arguments. The every method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value false, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Determines whether the specified callback function returns true for any element of an array.\n     * @param predicate A function that accepts up to three arguments. The some method calls\n     * the predicate function for each element in the array until the predicate returns a value\n     * which is coercible to the Boolean value true, or until the end of the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function.\n     * If thisArg is omitted, undefined is used as the this value.\n     */\n    some(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean;\n    /**\n     * Performs the specified action for each element in an array.\n     * @param callbackfn  A function that accepts up to three arguments. forEach calls the callbackfn function one time for each element in the array.\n     * @param thisArg  An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;\n    /**\n     * Calls a defined callback function on each element of an array, and returns an array that contains the results.\n     * @param callbackfn A function that accepts up to three arguments. The map method calls the callbackfn function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the callbackfn function. If thisArg is omitted, undefined is used as the this value.\n     */\n    map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter<S extends T>(predicate: (value: T, index: number, array: T[]) => value is S, thisArg?: any): S[];\n    /**\n     * Returns the elements of an array that meet the condition specified in a callback function.\n     * @param predicate A function that accepts up to three arguments. The filter method calls the predicate function one time for each element in the array.\n     * @param thisArg An object to which the this keyword can refer in the predicate function. If thisArg is omitted, undefined is used as the this value.\n     */\n    filter(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): T[];\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduce method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduce<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T;\n    reduceRight(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T, initialValue: T): T;\n    /**\n     * Calls the specified callback function for all the elements in an array, in descending order. The return value of the callback function is the accumulated result, and is provided as an argument in the next call to the callback function.\n     * @param callbackfn A function that accepts up to four arguments. The reduceRight method calls the callbackfn function one time for each element in the array.\n     * @param initialValue If initialValue is specified, it is used as the initial value to start the accumulation. The first call to the callbackfn function provides this value as an argument instead of an array value.\n     */\n    reduceRight<U>(callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U, initialValue: U): U;\n\n    [n: number]: T;\n}",
+      "docstring": "",
+      "path": "src/components/kul-chat/kul-chat-declarations.ts"
+    },
+    "src/components/kul-chat/kul-chat-declarations.ts::KulChatEventPayload": {
+      "declaration": "export interface KulChatEventPayload\n    extends KulEventPayload<KulChat, KulChatEvent, Event | CustomEvent> {\n    history: string;\n    status: KulChatStatus;\n}",
+      "docstring": "",
+      "path": "src/components/kul-chat/kul-chat-declarations.ts"
+    },
+    "src/components/kul-chip/kul-chip-declarations.ts::KulChipStyling": {
+      "declaration": "export type KulChipStyling = 'choice' | 'filter' | 'input' | 'standard';",
+      "docstring": "",
+      "path": "src/components/kul-chip/kul-chip-declarations.ts"
+    },
+    "src/components/kul-chip/kul-chip-declarations.ts::KulChipEventPayload": {
+      "declaration": "export interface KulChipEventPayload\n    extends KulEventPayload<KulChip, KulChipEvent, Event | CustomEvent> {\n    node: KulDataNode;\n    selectedNodes: Set<KulDataNode>;\n}",
+      "docstring": "",
+      "path": "src/components/kul-chip/kul-chip-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
+      "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerConfig": {
+      "declaration": "export interface KulMessengerConfig {\n    currentCharacter: string;\n    ui: KulMessengerUI;\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
+      "declaration": "export interface KulMessengerEventPayload\n    extends KulEventPayload<\n        KulMessenger,\n        KulMessengerEvent,\n        Event | CustomEvent\n    > {\n    config: KulMessengerConfig;\n}",
+      "docstring": "",
+      "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
+    },
+    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchEventPayload": {
+      "declaration": "export interface KulSwitchEventPayload\n    extends KulEventPayload<KulSwitch, KulSwitchEvent, Event | CustomEvent> {\n    value: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-switch/kul-switch-declarations.ts"
+    },
+    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchState": {
+      "declaration": "export type KulSwitchState = 'off' | 'on';",
+      "docstring": "",
+      "path": "src/components/kul-switch/kul-switch-declarations.ts"
+    },
+    "src/components/kul-badge/kul-badge-declarations.ts::KulBadgeEventPayload": {
+      "declaration": "export interface KulBadgeEventPayload\n    extends KulEventPayload<KulBadge, KulBadgeEvent, Event | CustomEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-badge/kul-badge-declarations.ts"
+    },
+    "src/components/kul-showcase/kul-showcase-declarations.ts::KulShowcaseEventPayload": {
+      "declaration": "export interface KulShowcaseEventPayload\n    extends KulEventPayload<\n        KulShowcase,\n        KulShowcaseEvent,\n        Event | CustomEvent\n    > {}",
+      "docstring": "",
+      "path": "src/components/kul-showcase/kul-showcase-declarations.ts"
     }
   }
 }

@@ -15,6 +15,7 @@ import {
 import {
     KulArticleDataset,
     KulArticleEvent,
+    KulArticleEventPayload,
     KulArticleNode,
     KulArticleProps,
 } from './kul-article-declarations';
@@ -89,7 +90,7 @@ export class KulArticle {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulArticleEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulArticleEvent) {
         this.kulEvent.emit({

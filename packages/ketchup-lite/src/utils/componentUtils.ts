@@ -1,4 +1,9 @@
-import { GenericMap, GenericObject, KulComponent } from '../types/GenericTypes';
+import {
+    GenericMap,
+    GenericObject,
+    KulComponent,
+    KulComponentName,
+} from '../types/GenericTypes';
 
 /**
  * Retrieves component's prop values based on a list and option to include descriptions.
@@ -8,7 +13,7 @@ import { GenericMap, GenericObject, KulComponent } from '../types/GenericTypes';
  * @returns {GenericObject} - An object with prop keys and values, or keys and descriptions based on the `descriptions` parameter.
  */
 export function getProps(
-    comp: KulComponent,
+    comp: KulComponent<KulComponentName>,
     list: GenericMap,
     descriptions?: boolean
 ): GenericObject {

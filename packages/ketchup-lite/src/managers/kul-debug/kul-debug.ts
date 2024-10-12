@@ -1,5 +1,5 @@
 import type { KulDom } from '../kul-manager/kul-manager-declarations';
-import type { KulComponent } from '../../types/GenericTypes';
+import type { KulComponent, KulComponentName } from '../../types/GenericTypes';
 import {
     KulDebugCategory,
     KulDebugLifecycles,
@@ -440,12 +440,12 @@ export class KulDebug {
                 this.logs[index].message.indexOf('Render #') > -1
                     ? 'Render'
                     : this.logs[index].message.indexOf('Component ready') > -1
-                    ? 'Load'
-                    : this.logs[index].message.indexOf('Size changed') > -1
-                    ? 'Resize'
-                    : 'Misc';
+                      ? 'Load'
+                      : this.logs[index].message.indexOf('Size changed') > -1
+                        ? 'Resize'
+                        : 'Misc';
             const isComponent: boolean = !!(this.logs[index]
-                .element as KulComponent);
+                .element as KulComponent<KulComponentName>);
             if (!printLog[type]) {
                 printLog[type] = [];
             }
@@ -455,7 +455,8 @@ export class KulDebug {
                     'LLL:ms'
                 ),
                 element: isComponent
-                    ? (this.logs[index].element as KulComponent)
+                    ? (this.logs[index]
+                          .element as KulComponent<KulComponentName>)
                     : this.logs[index].id,
                 message: isComponent
                     ? this.logs[index].id + this.logs[index].message
@@ -615,7 +616,7 @@ export class KulDebug {
      * @param {KulDebugCategory} category - The type of console message, defaults to log but warning and error can be used as well.
      */
     logMessage(
-        comp: KulComponent | string,
+        comp: KulComponent<KulComponentName> | string,
         message: string,
         category?: KulDebugCategory
     ): void {
@@ -694,7 +695,7 @@ export class KulDebug {
      * @param {boolean} didLoad - Must be set to false when called inside a componentWillLoad() lifecycle hook and true when called inside componentDidLoad().
      */
     async updateDebugInfo(
-        comp: KulComponent,
+        comp: KulComponent<KulComponentName>,
         lifecycle: KulDebugLifecycles
     ): Promise<void> {
         switch (lifecycle) {

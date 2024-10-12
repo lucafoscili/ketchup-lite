@@ -16,6 +16,7 @@ import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulProgressbarEvent,
+    KulProgressbarEventPayload,
     KulProgressbarProps,
 } from './kul-progressbar-declarations';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
@@ -102,7 +103,7 @@ export class KulProgressbar {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulProgressbarEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulProgressbarEvent) {
         this.kulEvent.emit({

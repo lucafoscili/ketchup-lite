@@ -213,6 +213,9 @@
 
   &__value {
     margin: 0 0 0 0.5em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: pre;
     width: 100%;
   }
 }

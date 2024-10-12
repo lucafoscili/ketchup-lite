@@ -21,9 +21,9 @@
 
 ## Events
 
-| Event               | Description | Type                           |
-| ------------------- | ----------- | ------------------------------ |
-| `kul-spinner-event` |             | `CustomEvent<KulEventPayload>` |
+| Event               | Description | Type                                  |
+| ------------------- | ----------- | ------------------------------------- |
+| `kul-spinner-event` |             | `CustomEvent<KulSpinnerEventPayload>` |
 
 
 ## Methods

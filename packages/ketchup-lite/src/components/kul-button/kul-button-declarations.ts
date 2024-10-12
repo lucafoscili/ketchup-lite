@@ -1,11 +1,10 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
+import { KulButton } from './kul-button';
 
-export interface KulButtonEventPayload extends KulEventPayload {
-    eventType: KulButtonEvent;
-    value: string;
-}
-
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulButtonEvent =
     | 'blur'
     | 'click'
@@ -13,7 +12,13 @@ export type KulButtonEvent =
     | 'kul-event'
     | 'pointerdown'
     | 'ready';
-
+export interface KulButtonEventPayload
+    extends KulEventPayload<KulButton, KulButtonEvent, Event | CustomEvent> {
+    value: string;
+}
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulButtonProps {
     kulData = 'Actual data of the button, used to render dropdown buttons.',
     kulDisabled = 'When true, the component is disabled.',
@@ -29,7 +34,6 @@ export enum KulButtonProps {
     kulType = 'Defines the button type attribute.',
     kulValue = 'If true, the button is marked as checked.',
 }
-
 export interface KulButtonPropsInterface {
     kulData?: KulDataDataset;
     kulDisabled?: boolean;
@@ -45,12 +49,13 @@ export interface KulButtonPropsInterface {
     kulType?: 'button' | 'submit' | 'reset';
     kulValue?: boolean;
 }
-
-export type KulButtonState = 'off' | 'on';
-
 export type KulButtonStyling =
     | 'flat'
     | 'floating'
     | 'icon'
     | 'outlined'
     | 'raised';
+/*-------------------------------------------------*/
+/*                    S t a t e                    */
+/*-------------------------------------------------*/
+export type KulButtonState = 'off' | 'on';

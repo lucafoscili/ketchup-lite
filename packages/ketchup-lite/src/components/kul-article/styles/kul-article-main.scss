@@ -24,6 +24,48 @@
     var(--kul-font-size)
   );
   /**
+   * @prop --kul-article-h1-color: Sets the color for <h1> elements.
+   * Defaults to var(--kul-text-color)
+   */
+  --kul_article_h1_color: var(--kul-article-h1-color, var(--kul-text-color));
+  /**
+   * @prop --kul-article-h1-font-family: Sets the font family for <h1> elements.
+   * Defaults to var(--kul-font-family)
+   */
+  --kul_article_h1_font_family: var(
+    --kul-article-h1-font-family,
+    var(--kul-font-family)
+  );
+  /**
+   * @prop --kul-article-h1-font-size: Sets the font size for <h1> elements.
+   * Defaults to calc(var(--kul-font-size) * 1.25)
+   */
+  --kul_article_h1_font_size: var(
+    --kul-article-h1-font-size,
+    calc(var(--kul-font-size) * 1.25)
+  );
+  /**
+   * @prop --kul-article-h2-color: Sets the color for <h2> elements.
+   * Defaults to var(--kul-text-color)
+   */
+  --kul_article_h2_color: var(--kul-article-h2-color, var(--kul-text-color));
+  /**
+   * @prop --kul-article-h2-font-family: Sets the font family for <h2> elements.
+   * Defaults to var(--kul-font-family)
+   */
+  --kul_article_h2_font_family: var(
+    --kul-article-h2-font-family,
+    var(--kul-font-family)
+  );
+  /**
+   * @prop --kul-article-h2-font-size: Sets the font size for <h2> elements.
+   * Defaults to calc(var(--kul-font-size) * 1.125)
+   */
+  --kul_article_h2_font_size: var(
+    --kul-article-h2-font-size,
+    calc(var(--kul-font-size) * 1.125)
+  );
+  /**
    * @prop --kul-article-h3-color: Sets the color for <h3> elements.
    * Defaults to var(--kul-text-color)
    */
@@ -89,6 +131,9 @@
 }
 
 h1 {
+  color: var(--kul_article_h1_color);
+  font-family: var(--kul_article_h1_font_family);
+  font-size: var(--kul_article_h1_font_size);
   font-size: 2.375em;
   font-weight: 600;
   line-height: 1.2;
@@ -97,6 +142,9 @@ h1 {
 }
 
 h2 {
+  color: var(--kul_article_h2_color);
+  font-family: var(--kul_article_h2_font_family);
+  font-size: var(--kul_article_h2_font_size);
   font-size: 2em;
   font-weight: 500;
   line-height: 1.2;

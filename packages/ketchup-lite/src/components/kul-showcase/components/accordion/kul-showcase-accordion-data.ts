@@ -1,6 +1,6 @@
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { DOC_STYLES } from '../../kul-showcase-data';
-import { KulDataDataset } from '../../../../components';
+import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 import { AccordionData } from './kul-showcase-accordion-declarations';
 import { SHOWCASE_DOC } from '../../kul-showcase-utils';
 

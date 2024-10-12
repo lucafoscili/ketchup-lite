@@ -38,7 +38,7 @@ export class KulTabbar {
     /**
      * References the root HTML element of the component (<kul-tabbar>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulTabbarElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */
@@ -82,7 +82,7 @@ export class KulTabbar {
      * Sets the initial selected node's index.
      * @default null
      */
-    @Prop({ mutable: true, reflect: true }) kulValue: number = null;
+    @Prop({ mutable: false, reflect: true }) kulValue: number | string = 0;
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -204,19 +204,36 @@ export class KulTabbar {
     /*-------------------------------------------------*/
 
     componentWillLoad() {
-        if (this.kulValue !== null) {
-            this.value = this.kulData[this.kulValue];
+        try {
+            if (this.kulValue !== null) {
+                if (typeof this.kulValue === 'number') {
+                    this.value = {
+                        index: this.kulValue,
+                        node: this.kulData.nodes[this.kulValue],
+                    };
+                }
+                if (typeof this.kulValue === 'string') {
+                    const node = this.kulData.nodes.find(
+                        (node) => node.id === this.kulValue
+                    );
+                    this.value = {
+                        index: this.kulData.nodes.indexOf(node),
+                        node,
+                    };
+                }
+            }
+        } catch (error) {
+            this.#kulManager.debug.logMessage(
+                this,
+                'Something went wrong while setting the initial selected value.',
+                'warning'
+            );
         }
 
         this.#kulManager.theme.register(this);
     }
 
     componentDidLoad() {
-        if (this.#rippleSurface?.length) {
-            this.#rippleSurface.forEach((el) => {
-                this.#kulManager.theme.ripple.setup(el);
-            });
-        }
         if (this.#scrollArea) {
             this.#kulManager.scrollOnHover.register(this.#scrollArea);
         }
@@ -225,6 +242,11 @@ export class KulTabbar {
     }
 
     componentWillRender() {
+        if (this.#rippleSurface?.length) {
+            this.#rippleSurface.forEach((el) => {
+                this.#kulManager.theme.ripple.setup(el);
+            });
+        }
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
 

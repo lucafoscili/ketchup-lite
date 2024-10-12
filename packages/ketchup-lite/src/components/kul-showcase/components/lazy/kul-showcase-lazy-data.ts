@@ -8,12 +8,12 @@ const component = 'lazy';
 
 export const LAZY_EXAMPLES: LazyData = {
     simple: {
-        ['data-description']: 'Simple tab bar',
+        ['data-description']: 'Simple lazy with button',
         kulComponentName: 'kul-button',
         kulComponentProps: { kulLabel: 'Button' } as KulButtonPropsInterface,
     },
     style: {
-        ['data-description']: 'Tab bar with custom style',
+        ['data-description']: 'Simple lazy with button and custom style',
         'data-dynamic': 'custom',
         kulComponentName: 'kul-button',
         kulComponentProps: { kulLabel: 'Button' } as KulButtonPropsInterface,

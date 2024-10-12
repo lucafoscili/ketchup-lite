@@ -14,6 +14,7 @@ import {
     KulDataNode,
     KulDataNodeDrilldownInfo,
     KulDataNodeOperations,
+    KulDataShapes,
     KulDataShapesMap,
 } from './kul-data-declarations';
 
@@ -57,7 +58,16 @@ export class KulData {
                 return;
             }
 
-            const shapes: KulDataShapesMap = {};
+            const shapes: KulDataShapesMap = {
+                badge: [],
+                button: [],
+                chat: [],
+                code: [],
+                image: [],
+                number: [],
+                switch: [],
+                text: [],
+            };
             const nodes = dataset.nodes;
 
             const browseCells = (node: KulDataNode) => {
@@ -68,23 +78,47 @@ export class KulData {
                 for (const key in cells) {
                     if (Object.prototype.hasOwnProperty.call(cells, key)) {
                         const cell = cells[key];
-                        if (
-                            cell.shape &&
-                            cell.shape !== 'text' &&
-                            cell.shape !== 'number'
-                        ) {
-                            const shapeProps = {};
-                            if (!shapes[cell.shape]) {
-                                shapes[cell.shape] = [];
-                            }
-                            shapes[cell.shape].push(
-                                this.extract.singleShape(cell)
-                            );
-                        } else {
-                            if (!shapes.text) {
-                                shapes.text = [];
-                            }
-                            shapes.text.push(cell.value.toString());
+                        const extracted = this.extract.singleShape(cell);
+                        switch (cell.shape) {
+                            case 'badge':
+                                shapes.badge.push(
+                                    extracted as KulDataCell<'badge'>
+                                );
+                                break;
+                            case 'button':
+                                shapes.button.push(
+                                    extracted as KulDataCell<'button'>
+                                );
+                                break;
+                            case 'chat':
+                                shapes.chat.push(
+                                    extracted as KulDataCell<'chat'>
+                                );
+                                break;
+                            case 'code':
+                                shapes.code.push(
+                                    extracted as KulDataCell<'code'>
+                                );
+                                break;
+                            case 'image':
+                                shapes.image.push(
+                                    extracted as KulDataCell<'image'>
+                                );
+                                break;
+                            case 'switch':
+                                shapes.switch.push(
+                                    extracted as KulDataCell<'switch'>
+                                );
+                                break;
+                            case 'number':
+                                shapes.number.push(
+                                    cell as KulDataCell<'number'>
+                                );
+                                break;
+                            case 'text':
+                            default:
+                                shapes.text.push(cell);
+                                break;
                         }
                     }
                 }
@@ -105,21 +139,29 @@ export class KulData {
             }
             return shapes;
         },
-        singleShape: (cell: KulDataCell) => {
+        singleShape: <T extends KulDataShapes>(cell: KulDataCell<T>) => {
             const prefix = 'kul';
-            const shapeProps = {};
+            const shapeProps: Partial<KulDataCell<T>> = {};
             for (const prop in cell) {
-                if (prop === 'shape') {
-                    continue;
-                }
-                if (prop.indexOf(prefix) === 0) {
-                    shapeProps[prop] = cell[prop];
-                } else {
-                    const prefixedProp =
-                        prefix + prop.charAt(0).toUpperCase() + prop.slice(1);
-                    if (!shapeProps[prefixedProp]) {
-                        shapeProps[prefixedProp] = cell[prop];
-                    }
+                switch (prop) {
+                    case 'htmlProps':
+                        Object.assign(shapeProps, cell[prop]);
+                        break;
+                    case 'shape':
+                        break;
+                    default:
+                        if (prop.indexOf(prefix) === 0) {
+                            shapeProps[prop] = cell[prop];
+                        } else {
+                            const prefixedProp =
+                                prefix +
+                                prop.charAt(0).toUpperCase() +
+                                prop.slice(1);
+                            if (!shapeProps[prefixedProp]) {
+                                shapeProps[prefixedProp] = cell[prop];
+                            }
+                        }
+                        break;
                 }
             }
             return shapeProps;

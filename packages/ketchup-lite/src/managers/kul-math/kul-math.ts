@@ -5,7 +5,7 @@ import 'numeral/locales/fr';
 import 'numeral/locales/it';
 import 'numeral/locales/pl';
 import 'numeral/locales/ru';
-import { KulComponent } from '../../types/GenericTypes';
+import { KulComponent, KulComponentName } from '../../types/GenericTypes';
 import { KulDom } from '../kul-manager/kul-manager-declarations';
 import {
     KulMathFormulas,
@@ -36,7 +36,7 @@ export class KulMath {
         },
     };
     locale: KulMathLocales;
-    managedComponents: Set<KulComponent>;
+    managedComponents: Set<KulComponent<KulComponentName>['rootElement']>;
     numbers: KulMathNumbers = {
         toLocaleString(value: string): string {
             const maximumFractionDigits: number = 14;

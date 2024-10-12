@@ -1,4 +1,4 @@
-import { GenericObject } from '../../../../components';
+import { GenericObject } from '../../../../types/GenericTypes';
 import { KulDrawerPropsInterface } from '../../../kul-drawer/kul-drawer-declarations';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 

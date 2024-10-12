@@ -14,6 +14,7 @@ import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulLazyEvent,
+    KulLazyEventPayload,
     KulLazyProps,
     KulLazyRenderMode,
 } from './kul-lazy-declarations';
@@ -104,7 +105,7 @@ export class KulLazy {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulLazyEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulLazyEvent) {
         this.kulEvent.emit({

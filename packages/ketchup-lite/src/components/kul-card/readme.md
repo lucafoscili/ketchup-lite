@@ -18,9 +18,9 @@
 
 ## Events
 
-| Event            | Description                       | Type                           |
-| ---------------- | --------------------------------- | ------------------------------ |
-| `kul-card-event` | Triggered when an event is fired. | `CustomEvent<KulEventPayload>` |
+| Event            | Description                       | Type                               |
+| ---------------- | --------------------------------- | ---------------------------------- |
+| `kul-card-event` | Triggered when an event is fired. | `CustomEvent<KulCardEventPayload>` |
 
 
 ## Methods

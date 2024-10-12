@@ -11,13 +11,13 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import type {
-    GenericMap,
-    GenericObject,
-    KulEventPayload,
-} from '../../types/GenericTypes';
+import type { GenericMap, GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulCardProps, KulCardEvent } from './kul-card-declarations';
+import {
+    KulCardProps,
+    KulCardEvent,
+    KulCardEventPayload,
+} from './kul-card-declarations';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
@@ -109,7 +109,7 @@ export class KulCard {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulCardEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulCardEvent): void {
         this.kulEvent.emit({

@@ -1,7 +1,7 @@
 import { h } from '@stencil/core';
 import { KulChatAdapter } from '../kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulEventPayload } from '../../../components';
+import { KulProgressbarEventPayload } from '../../kul-progressbar/kul-progressbar-declarations';
 
 export const prepInputArea = (adapter: KulChatAdapter) => {
     return (
@@ -157,7 +157,7 @@ const buttonEventHandler = async (
 
 const progressbarEventHandler = async (
     adapter: KulChatAdapter,
-    e: CustomEvent<KulEventPayload>
+    e: CustomEvent<KulProgressbarEventPayload>
 ) => {
     const { eventType } = e.detail;
 

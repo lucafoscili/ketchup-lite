@@ -8,7 +8,7 @@ import 'dayjs/locale/it';
 import 'dayjs/locale/pl';
 import 'dayjs/locale/ru';
 import 'dayjs/locale/zh';
-import { KulComponent } from '../../types/GenericTypes';
+import { KulComponent, KulComponentName } from '../../types/GenericTypes';
 import {
     KulDateTimeFormatOptionsMonth,
     KulDatesFormats,
@@ -23,7 +23,7 @@ import {
 export class KulDates {
     dayjs: Function;
     locale: KulDatesLocales;
-    managedComponents: Set<KulComponent>;
+    managedComponents: Set<KulComponent<KulComponentName>['rootElement']>;
     /**
      * Initializes KulDates.
      */
@@ -92,7 +92,7 @@ export class KulDates {
      */
     getLocales(): Array<KulDatesLocales> {
         const items: Array<KulDatesLocales> = Object.keys(KulDatesLocales)
-            .map((key) => KulDatesLocales[key])
+            .map((key) => KulDatesLocales[key as keyof typeof KulDatesLocales])
             .filter((value) => typeof value === 'string');
         return items;
     }

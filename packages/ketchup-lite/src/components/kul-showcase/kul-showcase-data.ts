@@ -1,4 +1,5 @@
-import { KulArticleDataset, KulDataDataset } from '../../components';
+import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
+import { KulArticleDataset } from '../kul-article/kul-article-declarations';
 
 export const COMPONENTS = [
     'accordion',

@@ -1,5 +1,15 @@
-export type KulLazyEvent = 'kul-event' | 'load' | 'ready';
+import { KulEventPayload } from '../../types/GenericTypes';
+import { KulLazy } from './kul-lazy';
 
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
+export type KulLazyEvent = 'kul-event' | 'load' | 'ready';
+export interface KulLazyEventPayload
+    extends KulEventPayload<KulLazy, KulLazyEvent, Event | CustomEvent> {}
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulLazyProps {
     kulComponentName = 'Sets the tag name of the component to be lazy loaded.',
     kulComponentProps = 'Sets the data of the component to be lazy loaded.',
@@ -7,7 +17,6 @@ export enum KulLazyProps {
     kulShowPlaceholder = 'Displays an animated SVG placeholder until the component is loaded.',
     kulStyle = 'Custom style of the component.',
 }
-
 export interface KulLazyPropsInterface {
     kulComponentName?: string;
     kulComponentProps?: unknown;
@@ -15,5 +24,4 @@ export interface KulLazyPropsInterface {
     kulShowPlaceholder?: boolean;
     kulStyle?: string;
 }
-
 export type KulLazyRenderMode = 'both' | 'props' | 'viewport';

@@ -1,16 +1,22 @@
 import { KulEventPayload } from '../../types/GenericTypes';
+import { KulSwitch } from './kul-switch';
 
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulSwitchEvent =
     | 'blur'
     | 'change'
     | 'focus'
     | 'pointerdown'
     | 'ready';
-
-export interface KulSwitchEventPayload extends KulEventPayload {
+export interface KulSwitchEventPayload
+    extends KulEventPayload<KulSwitch, KulSwitchEvent, Event | CustomEvent> {
     value: string;
 }
-
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulSwitchProps {
     kulDisabled = 'When true, the component is disabled.',
     kulLabel = 'Defines text to display along with the switch.',
@@ -19,7 +25,6 @@ export enum KulSwitchProps {
     kulStyle = 'Sets a custom CSS style for the component.',
     kulValue = 'If true, the button is marked as checked.',
 }
-
 export interface KulSwitchPropsInterface {
     kulDisabled?: boolean;
     kulLabel?: string;
@@ -28,5 +33,7 @@ export interface KulSwitchPropsInterface {
     kulStyle?: string;
     kulValue?: boolean;
 }
-
+/*-------------------------------------------------*/
+/*                    S t a t e                    */
+/*-------------------------------------------------*/
 export type KulSwitchState = 'off' | 'on';

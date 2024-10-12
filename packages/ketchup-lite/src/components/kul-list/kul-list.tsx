@@ -37,7 +37,7 @@ export class KulList {
     /**
      * References the root HTML element of the component (<kul-list>).
      */
-    @Element() rootElement: HTMLElement;
+    @Element() rootElement: HTMLKulListElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */

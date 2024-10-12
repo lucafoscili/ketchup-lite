@@ -80,7 +80,7 @@ Sets the component's state.
 
 | Name    | Type            | Description                                 |
 | ------- | --------------- | ------------------------------------------- |
-| `value` | `"on" \| "off"` | - The new state to be set on the component. |
+| `value` | `"off" \| "on"` | - The new state to be set on the component. |
 
 #### Returns
 

@@ -1,5 +1,14 @@
+import { KulEventPayload } from '../../types/GenericTypes';
+import { KulCode } from './kul-code';
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulCodeEvent = 'ready';
-
+export interface KulCodeEventPayload
+    extends KulEventPayload<KulCode, KulCodeEvent, Event | CustomEvent> {}
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulCodeProps {
     kulFormat = 'Automatically formats the value.',
     kulLanguage = 'Sets the language of the snippet.',
@@ -7,7 +16,6 @@ export enum KulCodeProps {
     kulStyle = 'Custom style of the component.',
     kulValue = 'String containing the snippet of code to display.',
 }
-
 export interface KulCodePropsInterface {
     kulFormat?: boolean;
     kulLanguage?: string;

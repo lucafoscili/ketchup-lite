@@ -16,9 +16,9 @@
 
 ## Events
 
-| Event                 | Description              | Type                           |
-| --------------------- | ------------------------ | ------------------------------ |
-| `kul-accordion-event` | Describes event emitted. | `CustomEvent<KulEventPayload>` |
+| Event                 | Description              | Type                                    |
+| --------------------- | ------------------------ | --------------------------------------- |
+| `kul-accordion-event` | Describes event emitted. | `CustomEvent<KulAccordionEventPayload>` |
 
 
 ## Methods
@@ -48,6 +48,16 @@ Used to retrieve component's properties and descriptions.
 Type: `Promise<GenericObject<unknown>>`
 
 Promise resolved with an object containing the component's properties.
+
+### `getSelectedNodes() => Promise<Set<KulDataNode>>`
+
+Returns the selected nodes.
+
+#### Returns
+
+Type: `Promise<Set<KulDataNode>>`
+
+Selected nodes.
 
 ### `refresh() => Promise<void>`
 

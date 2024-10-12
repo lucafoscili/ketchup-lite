@@ -21,16 +21,16 @@ export function getLayoutA(component: KulCard, shapes: KulDataShapesMap = {}) {
     const cover: VNode = images.length ? images[coverIndex] : null;
 
     const titleIndex = 0;
-    const title = text.length ? shapes.text[titleIndex] : null;
+    const title = text.length ? shapes.text[titleIndex].value : null;
 
     const subtitleIndex = 1;
     const subtitle =
-        text.length > subtitleIndex ? shapes.text[subtitleIndex] : null;
+        text.length > subtitleIndex ? shapes.text[subtitleIndex].value : null;
 
     const descriptionIndex = 2;
     const description =
         text.length > descriptionIndex
-            ? shapes.text[descriptionIndex]
+            ? shapes.text[descriptionIndex].value
             : undefined;
     return (
         <div

@@ -3,7 +3,11 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
+import { KulList } from './kul-list';
 
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulListEvent =
     | 'blur'
     | 'click'
@@ -11,11 +15,13 @@ export type KulListEvent =
     | 'pointerdown'
     | 'ready'
     | 'delete';
-
-export interface KulListEventPayload extends KulEventPayload {
+export interface KulListEventPayload
+    extends KulEventPayload<KulList, KulListEvent, Event | CustomEvent> {
     node: KulDataNode;
 }
-
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulListProps {
     kulData = 'The actual data of the list.',
     kulEmptyLabel = 'Text displayed when the list is empty.',
@@ -25,7 +31,6 @@ export enum KulListProps {
     kulSelectable = 'Defines whether items are selectable or not.',
     kulStyle = 'Custom style of the component.',
 }
-
 export interface KulListPropsInterface {
     kulData?: KulDataDataset;
     kulEmptyLabel?: string;

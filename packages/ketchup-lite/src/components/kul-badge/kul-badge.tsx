@@ -10,7 +10,11 @@ import {
     Prop,
     State,
 } from '@stencil/core';
-import { KulBadgeEvent, KulBadgeProps } from './kul-badge-declarations';
+import {
+    KulBadgeEvent,
+    KulBadgeEventPayload,
+    KulBadgeProps,
+} from './kul-badge-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
 import { getProps } from '../../utils/componentUtils';
@@ -84,7 +88,7 @@ export class KulBadge {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulEventPayload>;
+    kulEvent: EventEmitter<KulBadgeEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulBadgeEvent) {
         this.kulEvent.emit({
