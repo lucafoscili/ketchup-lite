@@ -15,6 +15,10 @@ import {
     KulCardProps,
 } from '../components/kul-card/kul-card-declarations';
 import {
+    KulChatEvent,
+    KulChatProps,
+} from '../components/kul-chat/kul-chat-declarations';
+import {
     KulCodeEvent,
     KulCodeProps,
 } from '../components/kul-code/kul-code-declarations';
@@ -74,10 +78,6 @@ import {
     KulAccordionEvent,
     KulAccordionProps,
 } from '../components/kul-accordion/kul-accordion-declarations';
-import {
-    KulChatEvent,
-    KulChatProps,
-} from '../components/kul-chat/kul-chat-declarations';
 import {
     KulListEvent,
     KulListProps,
@@ -168,18 +168,14 @@ interface KulComponentCommon {
     kulStyle: string;
     refresh: () => Promise<void>;
 }
-
 export interface KulComponent<T extends KulComponentName>
     extends KulComponentCommon {
     rootElement: ComponentElementMap[T];
 }
-
 export type KulComponentRootElement = ComponentElementMap[KulComponentName];
-
 export type ActualComponentClasses = {
     [K in KulComponentName]: ComponentElementMap[K];
 }[KulComponentName];
-
 export enum KulDataCyAttributes {
     BUTTON = 'button',
     CHECK = 'check',
@@ -191,7 +187,6 @@ export enum KulDataCyAttributes {
     SHAPE = 'shape',
     SHOWCASE_GRID_WRAPPER = 'wrapper',
 }
-
 export type ComponentEventMap = {
     KulAccordion: KulAccordionEvent;
     KulArticle: KulArticleEvent;
@@ -219,7 +214,6 @@ export type ComponentEventMap = {
     KulTree: KulTreeEvent;
     KulUpload: KulUploadEvent;
 };
-
 export type ComponentPropsMap = {
     KulAccordion: KulAccordionProps;
     KulArticle: KulArticleProps;
@@ -247,12 +241,9 @@ export type ComponentPropsMap = {
     KulTree: KulTreeProps;
     KulUpload: KulUploadProps;
 };
-
 type ExtractComponentName<C> = C extends KulComponent<infer N> ? N : never;
-
 export type KulEventType<C extends KulComponent<KulComponentName>> =
     ComponentEventMap[ExtractComponentName<C>];
-
 export interface KulEventPayload<
     C extends KulComponent<KulComponentName>,
     T extends KulEventType<C>,

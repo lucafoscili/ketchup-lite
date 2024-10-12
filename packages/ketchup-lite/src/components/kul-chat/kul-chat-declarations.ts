@@ -1,4 +1,4 @@
-import { KulEventPayload } from '../../../src/types/GenericTypes';
+import { KulEventPayload } from '../../types/GenericTypes';
 import { KulLLMChoiceMessage } from '../../managers/kul-llm/kul-llm-declarations';
 import { KulManager } from '../../managers/kul-manager/kul-manager';
 import { KulChat } from './kul-chat';
