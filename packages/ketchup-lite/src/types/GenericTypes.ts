@@ -162,6 +162,7 @@ export type ComponentElementMap = {
     KulUpload: HTMLKulUploadElement;
 };
 interface KulComponentCommon {
+    debugInfo: KulDebugComponentInfo;
     getDebugInfo: () => Promise<KulDebugComponentInfo>;
     getProps: (descriptions?: boolean) => Promise<GenericObject>;
     kulStyle: string;

@@ -1,5 +1,5 @@
 import type { KulDom } from '../kul-manager/kul-manager-declarations';
-import { KulComponent } from '../../types/GenericTypes';
+import { KulComponent, KulComponentName } from '../../types/GenericTypes';
 import { KulDebugCategory } from '../kul-debug/kul-debug-declarations';
 import {
     KulLanguageDecode,
@@ -19,7 +19,7 @@ const dom: KulDom = document.documentElement as KulDom;
  */
 export class KulLanguage {
     list: KulLanguageJSON;
-    managedComponents: Set<KulComponent>;
+    managedComponents: Set<KulComponent<KulComponentName>['rootElement']>;
     name: string;
     /**
      * Initializes KulLanguage.

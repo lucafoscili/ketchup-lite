@@ -13,7 +13,11 @@ import {
 } from '@stencil/core';
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulSpinnerEvent, KulSpinnerProps } from './kul-spinner-declarations';
+import {
+    KulSpinnerEvent,
+    KulSpinnerEventPayload,
+    KulSpinnerProps,
+} from './kul-spinner-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KulDebugComponentInfo } from '../../components';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
@@ -105,9 +109,7 @@ export class KulSpinner {
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<
-        KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent>
-    >;
+    kulEvent: EventEmitter<KulSpinnerEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulSpinnerEvent) {
         this.kulEvent.emit({

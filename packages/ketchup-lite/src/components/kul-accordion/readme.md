@@ -49,6 +49,16 @@ Type: `Promise<GenericObject<unknown>>`
 
 Promise resolved with an object containing the component's properties.
 
+### `getSelectedNodes() => Promise<Set<KulDataNode>>`
+
+Returns the selected nodes.
+
+#### Returns
+
+Type: `Promise<Set<KulDataNode>>`
+
+Selected nodes.
+
 ### `refresh() => Promise<void>`
 
 This method is used to trigger a new render of the component.

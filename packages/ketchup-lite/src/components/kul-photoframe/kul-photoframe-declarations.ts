@@ -1,4 +1,4 @@
-import { GenericObject, KulEventPayload } from '../../components';
+import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 import { KulPhotoframe } from './kul-photoframe';
 
 /*-------------------------------------------------*/

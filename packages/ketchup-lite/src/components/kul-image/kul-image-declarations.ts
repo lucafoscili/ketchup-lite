@@ -1,4 +1,4 @@
-import { KulEventPayload } from '../../components';
+import { KulEventPayload } from '../../types/GenericTypes';
 import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
 import { KulImage } from './kul-image';
 

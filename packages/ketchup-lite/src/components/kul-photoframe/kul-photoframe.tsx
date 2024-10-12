@@ -16,7 +16,7 @@ import {
     KulPhotoframeEvent,
     KulPhotoframeProps,
 } from './kul-photoframe-declarations';
-import { KulDebugComponentInfo } from '../../components';
+import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { getProps } from '../../utils/componentUtils';

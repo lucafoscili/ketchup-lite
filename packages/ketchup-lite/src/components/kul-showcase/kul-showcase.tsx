@@ -11,12 +11,13 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import { GenericObject } from '../../types/GenericTypes';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
-    KulShowcaseEvents,
+    KulShowcaseEvent,
+    KulShowcaseEventPayload,
     KulShowcaseProps,
     KulShowcaseTitle,
 } from './kul-showcase-declarations';
@@ -28,12 +29,7 @@ import {
     KUL_SHOWCASE_LAYOUT,
     KUL_SHOWCASE_UTILITIES,
 } from './kul-showcase-data';
-import {
-    KulCardCustomEvent,
-    KulCardEvent,
-    KulDataDataset,
-} from '../../components';
-import { KulCard } from '../kul-card/kul-card';
+import { KulCardCustomEvent, KulDataDataset } from '../../components';
 import { KulCardEventPayload } from '../kul-card/kul-card-declarations';
 
 @Component({
@@ -114,7 +110,7 @@ export class KulShowcase {
     })
     kulEvent: EventEmitter<KulShowcaseEventPayload>;
 
-    onKulEvent(e: Event | CustomEvent, eventType: KulShowcaseEvents) {
+    onKulEvent(e: Event | CustomEvent, eventType: KulShowcaseEvent) {
         this.kulEvent.emit({
             comp: this,
             eventType,
@@ -190,7 +186,11 @@ export class KulShowcase {
                     {
                         cells: {
                             icon: { shape: 'image', value: node.icon },
-                            text1: { value: node.value },
+                            text1: {
+                                value: this.#kulManager.data.cell.stringify(
+                                    node.value
+                                ),
+                            },
                             text2: { value: '' },
                             text3: { value: node.description },
                         },

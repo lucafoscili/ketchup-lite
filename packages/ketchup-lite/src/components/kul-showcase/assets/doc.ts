@@ -21,6 +21,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "(descriptions?: boolean) => Promise<GenericObject>",
       },
       {
+        name: "getSelectedNodes",
+        docs: "Returns the selected nodes.",
+        returns: {
+          type: "Promise<Set<KulDataNode>>",
+          docs: "Selected nodes.",
+        },
+        signature: "() => Promise<Set<KulDataNode>>",
+      },
+      {
         name: "refresh",
         docs: "This method is used to trigger a new render of the component.",
         returns: {
@@ -173,6 +182,30 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-article-content-font-size",
         docs: "Sets the font size for .content elements. Defaults to var(--kul-font-size)",
+      },
+      {
+        name: "--kul-article-h1-color",
+        docs: "Sets the color for <h1> elements. Defaults to var(--kul-text-color)",
+      },
+      {
+        name: "--kul-article-h1-font-family",
+        docs: "Sets the font family for <h1> elements. Defaults to var(--kul-font-family)",
+      },
+      {
+        name: "--kul-article-h1-font-size",
+        docs: "Sets the font size for <h1> elements. Defaults to calc(var(--kul-font-size) * 1.25)",
+      },
+      {
+        name: "--kul-article-h2-color",
+        docs: "Sets the color for <h2> elements. Defaults to var(--kul-text-color)",
+      },
+      {
+        name: "--kul-article-h2-font-family",
+        docs: "Sets the font family for <h2> elements. Defaults to var(--kul-font-family)",
+      },
+      {
+        name: "--kul-article-h2-font-size",
+        docs: "Sets the font size for <h2> elements. Defaults to calc(var(--kul-font-size) * 1.125)",
       },
       {
         name: "--kul-article-h3-color",

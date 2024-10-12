@@ -3,6 +3,7 @@ import type {
     GenericMap,
     GenericObject,
     KulComponent,
+    KulComponentName,
 } from '../../types/GenericTypes';
 import { getAssetPath } from '@stencil/core';
 import {
@@ -27,7 +28,7 @@ export class KulTheme {
     cssVars: Partial<KulThemeCSSVariables>;
     isDarkTheme: boolean;
     list: KulThemeJSON;
-    managedComponents: Set<KulComponent>;
+    managedComponents: Set<KulComponent<KulComponentName>>;
     name: string;
     styleTag: HTMLStyleElement;
     /**
@@ -112,7 +113,7 @@ export class KulTheme {
      */
     private customStyle(): void {
         this.managedComponents.forEach(function (comp) {
-            if (comp.isConnected) {
+            if (comp.rootElement.isConnected) {
                 comp.refresh();
             }
         });
@@ -267,14 +268,14 @@ export class KulTheme {
      * @param comp - The component calling this function.
      * @returns {string} Combined customStyle.
      */
-    setKulStyle(comp: KulComponent): string {
+    setKulStyle(comp: KulComponent<KulComponentName>): string {
         const styles: GenericObject = this.list[this.name].customStyles;
         let completeStyle = '';
         if (styles && styles[masterCustomStyle]) {
             completeStyle += styles[masterCustomStyle];
         }
-        if (styles && styles[comp.tagName]) {
-            completeStyle += ' ' + styles[comp.tagName];
+        if (styles && styles[comp.rootElement.tagName]) {
+            completeStyle += ' ' + styles[comp.rootElement.tagName];
         }
         if (comp.kulStyle) {
             completeStyle += ' ' + comp.kulStyle;

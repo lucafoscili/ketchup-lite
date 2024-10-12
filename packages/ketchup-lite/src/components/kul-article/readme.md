@@ -61,17 +61,23 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                                | Description                                                                    |
-| ----------------------------------- | ------------------------------------------------------------------------------ |
-| `--kul-article-content-color`       | Sets the color for .content elements. Defaults to var(--kul-text-color)        |
-| `--kul-article-content-font-family` | Sets the font family for .content elements. Defaults to var(--kul-font-family) |
-| `--kul-article-content-font-size`   | Sets the font size for .content elements. Defaults to var(--kul-font-size)     |
-| `--kul-article-h3-color`            | Sets the color for <h3> elements. Defaults to var(--kul-text-color)            |
-| `--kul-article-h3-font-family`      | Sets the font family for <h3> elements. Defaults to var(--kul-font-family)     |
-| `--kul-article-h3-font-size`        | Sets the font size for <h3> elements. Defaults to 1.5em                        |
-| `--kul-article-margin`              | Sets the margin of the article tag. Defaults to automatic.                     |
-| `--kul-article-max-width`           | Sets the max-width of the article tag. Defaults to 1200px.                     |
-| `--kul-article-padding`             | Sets the padding of the article tag. Defaults to 40px.                         |
+| Name                                | Description                                                                          |
+| ----------------------------------- | ------------------------------------------------------------------------------------ |
+| `--kul-article-content-color`       | Sets the color for .content elements. Defaults to var(--kul-text-color)              |
+| `--kul-article-content-font-family` | Sets the font family for .content elements. Defaults to var(--kul-font-family)       |
+| `--kul-article-content-font-size`   | Sets the font size for .content elements. Defaults to var(--kul-font-size)           |
+| `--kul-article-h1-color`            | Sets the color for <h1> elements. Defaults to var(--kul-text-color)                  |
+| `--kul-article-h1-font-family`      | Sets the font family for <h1> elements. Defaults to var(--kul-font-family)           |
+| `--kul-article-h1-font-size`        | Sets the font size for <h1> elements. Defaults to calc(var(--kul-font-size) * 1.25)  |
+| `--kul-article-h2-color`            | Sets the color for <h2> elements. Defaults to var(--kul-text-color)                  |
+| `--kul-article-h2-font-family`      | Sets the font family for <h2> elements. Defaults to var(--kul-font-family)           |
+| `--kul-article-h2-font-size`        | Sets the font size for <h2> elements. Defaults to calc(var(--kul-font-size) * 1.125) |
+| `--kul-article-h3-color`            | Sets the color for <h3> elements. Defaults to var(--kul-text-color)                  |
+| `--kul-article-h3-font-family`      | Sets the font family for <h3> elements. Defaults to var(--kul-font-family)           |
+| `--kul-article-h3-font-size`        | Sets the font size for <h3> elements. Defaults to 1.5em                              |
+| `--kul-article-margin`              | Sets the margin of the article tag. Defaults to automatic.                           |
+| `--kul-article-max-width`           | Sets the max-width of the article tag. Defaults to 1200px.                           |
+| `--kul-article-padding`             | Sets the padding of the article tag. Defaults to 40px.                               |
 
 
 ## Dependencies

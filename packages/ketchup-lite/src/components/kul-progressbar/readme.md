@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event                   | Description              | Type                                                                               |
-| ----------------------- | ------------------------ | ---------------------------------------------------------------------------------- |
-| `kul-progressbar-event` | Describes event emitted. | `CustomEvent<KulEventPayload<KulProgressbar, "ready", Event \| CustomEvent<any>>>` |
+| Event                   | Description              | Type                                      |
+| ----------------------- | ------------------------ | ----------------------------------------- |
+| `kul-progressbar-event` | Describes event emitted. | `CustomEvent<KulProgressbarEventPayload>` |
 
 
 ## Methods

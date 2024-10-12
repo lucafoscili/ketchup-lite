@@ -64,6 +64,7 @@ const prepNavigation = (adapter: KulMessengerAdapter) => {
     return (
         <kul-tabbar
             kulData={NAV_DATASET}
+            kulValue={1}
             onKul-tabbar-event={tabbarEventHandler.bind(
                 tabbarEventHandler,
                 adapter

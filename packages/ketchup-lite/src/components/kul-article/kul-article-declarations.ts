@@ -1,8 +1,8 @@
-import { KulEventPayload } from '../../components';
 import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulEventPayload } from '../../types/GenericTypes';
 import { KulArticle } from './kul-article';
 
 /*-------------------------------------------------*/

@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event             | Description              | Type                                                                               |
-| ----------------- | ------------------------ | ---------------------------------------------------------------------------------- |
-| `kul-toast-event` | Describes event emitted. | `CustomEvent<KulEventPayload<KulToast, KulToastEvent, Event \| CustomEvent<any>>>` |
+| Event             | Description              | Type                                |
+| ----------------- | ------------------------ | ----------------------------------- |
+| `kul-toast-event` | Describes event emitted. | `CustomEvent<KulToastEventPayload>` |
 
 
 ## Methods

@@ -1,4 +1,4 @@
-import { KulEventPayload } from '../../components';
+import { KulEventPayload } from '../../types/GenericTypes';
 import { KulCode } from './kul-code';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */

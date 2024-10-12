@@ -2,7 +2,7 @@ import {
     GenericMap,
     GenericObject,
     KulComponent,
-    KulComponentClassNames,
+    KulComponentName,
 } from '../types/GenericTypes';
 
 /**
@@ -13,7 +13,7 @@ import {
  * @returns {GenericObject} - An object with prop keys and values, or keys and descriptions based on the `descriptions` parameter.
  */
 export function getProps(
-    comp: KulComponent<KulComponentClassNames>,
+    comp: KulComponent<KulComponentName>,
     list: GenericMap,
     descriptions?: boolean
 ): GenericObject {

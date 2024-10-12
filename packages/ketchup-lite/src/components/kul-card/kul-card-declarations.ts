@@ -1,5 +1,6 @@
-import { KulDataDataset, KulEventPayload } from '../../components';
+import { KulEventPayload } from '../../types/GenericTypes';
 import { KulCard } from './kul-card';
+import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */

@@ -1,3 +1,4 @@
+import { HTMLStencilElement } from '@stencil/core/internal';
 import { KulBadgePropsInterface } from '../../components/kul-badge/kul-badge-declarations';
 import { KulButtonPropsInterface } from '../../components/kul-button/kul-button-declarations';
 import {
@@ -9,103 +10,45 @@ import { KulImagePropsInterface } from '../../components/kul-image/kul-image-dec
 import { KulSwitchPropsInterface } from '../../components/kul-switch/kul-switch-declarations';
 import { GenericMap } from '../../types/GenericTypes';
 
-export interface KulDataCell {
-    value: unknown;
+export interface KulDataBaseCell {
+    value: string;
     shape?: KulDataShapes;
-    htmlProps?: Partial<HTMLElement>;
+    htmlProps?: Partial<HTMLStencilElement>;
 }
-
-export interface KulDataBadgeCell extends KulDataCell, KulBadgePropsInterface {
-    shape: 'badge';
-    value: string;
-}
-
-export interface KulDataButtonCell
-    extends KulDataCell,
-        KulButtonPropsInterface {
-    shape: 'button';
-    value: string;
-}
-
-export interface KulDataChatCell extends KulDataCell, KulChatPropsInterface {
-    shape: 'chat';
-    value: KulChatHistory;
-}
-
-export interface KulDataCodeCell extends KulDataCell, KulCodePropsInterface {
-    shape: 'code';
-    value: string;
-}
-
-export interface KulDataImageCell extends KulDataCell, KulImagePropsInterface {
-    shape: 'image';
-    value: string;
-}
-
-export interface KulDataNumberCell extends KulDataCell {
-    shape: 'number';
-    value: number;
-}
-
-export interface KulDataSwitchCell extends KulDataCell {
-    shape: 'switch';
-    value: boolean;
-}
-
-export interface KulDataTextCell extends KulDataCell {
-    shape: 'text';
-    value: string;
-}
-
-type KulDataCellType =
-    | KulDataCell
-    | KulDataBadgeCell
-    | KulDataButtonCell
-    | KulDataChatCell
-    | KulDataCodeCell
-    | KulDataImageCell
-    | KulDataNumberCell
-    | KulDataSwitchCell
-    | KulDataTextCell;
-
+export type KulDataCell<T extends KulDataShapes> = T extends 'badge'
+    ? KulBadgePropsInterface & KulDataBaseCell & { value: string }
+    : T extends 'button'
+      ? KulButtonPropsInterface & KulDataBaseCell & { value: string }
+      : T extends 'chat'
+        ? KulChatPropsInterface & KulDataBaseCell & { value: KulChatHistory }
+        : T extends 'code'
+          ? KulCodePropsInterface & KulDataBaseCell & { value: string }
+          : T extends 'image'
+            ? KulImagePropsInterface & KulDataBaseCell & { value: string }
+            : T extends 'switch'
+              ? KulSwitchPropsInterface & KulDataBaseCell & { value: boolean }
+              : T extends 'number'
+                ? KulDataBaseCell & { value: number }
+                : T extends 'text'
+                  ? KulDataBaseCell & { value: string }
+                  : KulDataBaseCell;
 export interface KulDataCellContainer {
-    [index: string]: KulDataCellType;
-    ['kulBadge']?: KulDataBadgeCell;
-    ['kulButton']?: KulDataButtonCell;
-    ['kulChat']?: KulDataChatCell;
-    ['kulCode']?: KulDataCodeCell;
-    ['kulImage']?: KulDataImageCell;
-    ['kulNumber']?: KulDataNumberCell;
-    ['kulSwitch']?: KulDataSwitchCell;
-    ['kulText']?: KulDataTextCell;
+    [index: string]: KulDataCell<KulDataShapes>;
 }
-
 export interface KulDataColumn {
-    id:
-        | string
-        | 'kulBadge'
-        | 'kulButton'
-        | 'kulChat'
-        | 'kulCode'
-        | 'kulImage'
-        | 'kulNumber'
-        | 'kulText';
+    id: KulDataShapes | string;
     title: string;
 }
-
 export interface KulDataComponentBaseProps {
     kulStyle?: string;
 }
-
 export interface KulDataDataset {
     columns?: KulDataColumn[];
     nodes?: KulDataNode[];
 }
-
 export type KulDataDynamicComponentProps = {
     [K in `kul${Capitalize<string>}`]?: any;
 };
-
 export interface KulDataNode {
     id: string;
     cells?: KulDataCellContainer;
@@ -115,7 +58,6 @@ export interface KulDataNode {
     icon?: string;
     value?: unknown;
 }
-
 export type KulDataShapes =
     | 'badge'
     | 'button'
@@ -125,27 +67,9 @@ export type KulDataShapes =
     | 'number'
     | 'switch'
     | 'text';
-
 export type KulDataShapesMap = {
-    [K in KulDataShapes]?: Array<
-        {
-            [P in K]: K extends 'badge'
-                ? Partial<KulBadgePropsInterface>
-                : K extends 'button'
-                  ? Partial<KulButtonPropsInterface>
-                  : K extends 'chat'
-                    ? Partial<KulChatPropsInterface>
-                    : K extends 'code'
-                      ? Partial<KulCodePropsInterface>
-                      : K extends 'image'
-                        ? Partial<KulImagePropsInterface>
-                        : K extends 'switch'
-                          ? Partial<KulSwitchPropsInterface>
-                          : string;
-        }[K]
-    >;
+    [K in KulDataShapes]?: Partial<KulDataCell<K>>[];
 };
-
 export interface KulDataNodeOperations {
     exists: (dataset: KulDataDataset) => boolean;
     filter: (
@@ -169,19 +93,16 @@ export interface KulDataNodeOperations {
     ) => KulDataNode[];
     toStream: (nodes: KulDataNode[]) => KulDataNode[];
 }
-
 export interface KulDataNodeDrilldownInfo {
     maxChildren?: number;
     maxDepth?: number;
 }
-
 export interface KulDataFindCellFilters {
     columns?: string[];
     range?: KulDataFilterRange;
     value?: string;
 }
-
 export interface KulDataFilterRange {
-    min?: number | string | String;
-    max?: number | string | String;
+    min?: number | string;
+    max?: number | string;
 }

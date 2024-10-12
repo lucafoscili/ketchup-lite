@@ -8,7 +8,7 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { KulDataDataset, KulDataNode, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
 import { KulAccordionEventPayload } from "./components/kul-accordion/kul-accordion-declarations";
 import { KulDebugComponentInfo } from "./managers/kul-debug/kul-debug-declarations";
-import { GenericObject, KulEventPayload } from "./types/GenericTypes";
+import { GenericObject } from "./types/GenericTypes";
 import { Event } from "@stencil/core";
 import { KulArticleDataset, KulArticleEventPayload } from "./components/kul-article/kul-article-declarations";
 import { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
@@ -27,19 +27,20 @@ import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/ku
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
-import { KulProgressbarEvent } from "./components/kul-progressbar/kul-progressbar-declarations";
-import { KulSpinnerEvent } from "./components/kul-spinner/kul-spinner-declarations";
-import { KulSplashEvent } from "./components/kul-splash/kul-splash-declarations";
+import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
+import { KulShowcaseEventPayload } from "./components/kul-showcase/kul-showcase-declarations";
+import { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
+import { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
 import { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
-import { KulToastEvent } from "./components/kul-toast/kul-toast-declarations";
+import { KulToastEventPayload } from "./components/kul-toast/kul-toast-declarations";
 import { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
 import { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
 export { KulDataDataset, KulDataNode, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
 export { KulAccordionEventPayload } from "./components/kul-accordion/kul-accordion-declarations";
 export { KulDebugComponentInfo } from "./managers/kul-debug/kul-debug-declarations";
-export { GenericObject, KulEventPayload } from "./types/GenericTypes";
+export { GenericObject } from "./types/GenericTypes";
 export { Event } from "@stencil/core";
 export { KulArticleDataset, KulArticleEventPayload } from "./components/kul-article/kul-article-declarations";
 export { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
@@ -58,13 +59,14 @@ export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/ku
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
-export { KulProgressbarEvent } from "./components/kul-progressbar/kul-progressbar-declarations";
-export { KulSpinnerEvent } from "./components/kul-spinner/kul-spinner-declarations";
-export { KulSplashEvent } from "./components/kul-splash/kul-splash-declarations";
+export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
+export { KulShowcaseEventPayload } from "./components/kul-showcase/kul-showcase-declarations";
+export { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
+export { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
 export { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
-export { KulToastEvent } from "./components/kul-toast/kul-toast-declarations";
+export { KulToastEventPayload } from "./components/kul-toast/kul-toast-declarations";
 export { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
 export { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
 export namespace Components {
@@ -80,6 +82,11 @@ export namespace Components {
           * @returns Promise resolved with an object containing the component's properties.
          */
         "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Returns the selected nodes.
+          * @returns Selected nodes.
+         */
+        "getSelectedNodes": () => Promise<Set<KulDataNode>>;
         /**
           * Actual data of the accordion.
           * @default null
@@ -827,7 +834,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugComponentInfo1>;
+        "getDebugInfo": () => Promise<KulDebugComponentInfo>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -1798,11 +1805,7 @@ declare global {
         new (): HTMLKulPhotoframeElement;
     };
     interface HTMLKulProgressbarElementEventMap {
-        "kul-progressbar-event": KulEventPayload<
-            KulProgressbar,
-            KulProgressbarEvent,
-            Event | CustomEvent
-        >;
+        "kul-progressbar-event": KulProgressbarEventPayload;
     }
     interface HTMLKulProgressbarElement extends Components.KulProgressbar, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulProgressbarElementEventMap>(type: K, listener: (this: HTMLKulProgressbarElement, ev: KulProgressbarCustomEvent<HTMLKulProgressbarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2046,7 +2049,7 @@ declare global {
         new (): HTMLKulShowcaseUploadElement;
     };
     interface HTMLKulSpinnerElementEventMap {
-        "kul-spinner-event": KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent>;
+        "kul-spinner-event": KulSpinnerEventPayload;
     }
     interface HTMLKulSpinnerElement extends Components.KulSpinner, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulSpinnerElementEventMap>(type: K, listener: (this: HTMLKulSpinnerElement, ev: KulSpinnerCustomEvent<HTMLKulSpinnerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2063,7 +2066,7 @@ declare global {
         new (): HTMLKulSpinnerElement;
     };
     interface HTMLKulSplashElementEventMap {
-        "kul-splash-event": KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent>;
+        "kul-splash-event": KulSplashEventPayload;
     }
     interface HTMLKulSplashElement extends Components.KulSplash, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulSplashElementEventMap>(type: K, listener: (this: HTMLKulSplashElement, ev: KulSplashCustomEvent<HTMLKulSplashElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2131,7 +2134,7 @@ declare global {
         new (): HTMLKulTextfieldElement;
     };
     interface HTMLKulToastElementEventMap {
-        "kul-toast-event": KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent>;
+        "kul-toast-event": KulToastEventPayload;
     }
     interface HTMLKulToastElement extends Components.KulToast, HTMLStencilElement {
         addEventListener<K extends keyof HTMLKulToastElementEventMap>(type: K, listener: (this: HTMLKulToastElement, ev: KulToastCustomEvent<HTMLKulToastElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -2802,11 +2805,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-progressbar-event"?: (event: KulProgressbarCustomEvent<KulEventPayload<
-            KulProgressbar,
-            KulProgressbarEvent,
-            Event | CustomEvent
-        >>) => void;
+        "onKul-progressbar-event"?: (event: KulProgressbarCustomEvent<KulProgressbarEventPayload>) => void;
     }
     interface KulShowcase {
         /**
@@ -2930,7 +2929,7 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        "onKul-spinner-event"?: (event: KulSpinnerCustomEvent<KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent>>) => void;
+        "onKul-spinner-event"?: (event: KulSpinnerCustomEvent<KulSpinnerEventPayload>) => void;
     }
     interface KulSplash {
         /**
@@ -2946,7 +2945,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-splash-event"?: (event: KulSplashCustomEvent<KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent>>) => void;
+        "onKul-splash-event"?: (event: KulSplashCustomEvent<KulSplashEventPayload>) => void;
     }
     interface KulSwitch {
         /**
@@ -3100,7 +3099,7 @@ declare namespace LocalJSX {
         /**
           * Describes event emitted.
          */
-        "onKul-toast-event"?: (event: KulToastCustomEvent<KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent>>) => void;
+        "onKul-toast-event"?: (event: KulToastCustomEvent<KulToastEventPayload>) => void;
     }
     interface KulTree {
         /**

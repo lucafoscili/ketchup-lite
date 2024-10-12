@@ -1,7 +1,7 @@
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { TabbarData } from './kul-showcase-tabbar-declarations';
 import { DOC_STYLES } from '../../kul-showcase-data';
-import { KulDataDataset } from '../../../../components';
+import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 import { SHOWCASE_DOC } from '../../kul-showcase-utils';
 
 const component = 'tabbar';

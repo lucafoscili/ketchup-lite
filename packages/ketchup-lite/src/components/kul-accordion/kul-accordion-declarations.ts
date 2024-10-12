@@ -1,5 +1,5 @@
-import { KulEventPayload } from '../../components';
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
+import { KulEventPayload } from '../../types/GenericTypes';
 import { KulAccordion } from './kul-accordion';
 
 /*-------------------------------------------------*/

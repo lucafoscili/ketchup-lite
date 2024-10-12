@@ -1,7 +1,8 @@
 import { h, VNode } from '@stencil/core';
-import { KulImagePropsInterface } from '../../../components';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
 import { KulButtonPropsInterface } from '../../kul-button/kul-button-declarations';
+import { KulDataCell } from '../../../managers/kul-data/kul-data-declarations';
+import { KulImagePropsInterface } from '../../kul-image/kul-image-declarations';
 
 export const getShapes = {
     buttons: (
@@ -40,10 +41,10 @@ export const getShapes = {
         }
         return r;
     },
-    text: (text: string[]) => {
+    text: (text: Partial<KulDataCell<'text'>>[]) => {
         const r: VNode[] = [];
         for (let index = 0; text && index < text.length; index++) {
-            const t = text[index];
+            const t = text[index].value;
             r.push(<div id={`text${index}`}>{t}</div>);
         }
         return text;
