@@ -58,11 +58,32 @@ export type KulDataCell<T extends KulDataShapes> = T extends 'badge'
                   }
                 : T extends 'text'
                   ? {
-                        shape: 'text';
+                        shape?: 'text';
                         value: string;
                     }
                   : KulDataBaseCell;
-
+export type KulCellNameToShape = {
+    kulBadge: 'badge';
+    kulButton: 'button';
+    kulChat: 'chat';
+    kulCode: 'code';
+    kulImage: 'image';
+    kulSwitch: 'switch';
+    kulNumber: 'number';
+    kulText: 'text';
+};
+export type KulDataCellFromName<T extends keyof KulCellNameToShape> =
+    KulDataCell<KulCellNameToShape[T]>;
+export interface KulDataCellContainer {
+    kulBadge?: KulDataCellFromName<'kulBadge'>;
+    kulButton?: KulDataCellFromName<'kulButton'>;
+    kulChat?: KulDataCellFromName<'kulChat'>;
+    kulCode?: KulDataCellFromName<'kulCode'>;
+    kulImage?: KulDataCellFromName<'kulImage'>;
+    kulSwitch?: KulDataCellFromName<'kulSwitch'>;
+    kulNumber?: KulDataCellFromName<'kulNumber'>;
+    kulText?: KulDataCellFromName<'kulText'>;
+}
 export interface KulDataCellContainer {
     [index: string]: KulDataCell<KulDataShapes>;
 }
