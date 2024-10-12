@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-11T15:40:36",
+  "timestamp": "2024-09-27T21:36:33",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -263,16 +263,16 @@
       "events": [
         {
           "event": "kul-accordion-event",
-          "detail": "KulAccordionEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulAccordionEventPayload",
-            "resolved": "KulAccordionEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulAccordionEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-accordion-declarations",
-                "id": "src/components/kul-accordion/kul-accordion-declarations.ts::KulAccordionEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -548,16 +548,16 @@
       "events": [
         {
           "event": "kul-article-event",
-          "detail": "KulArticleEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulArticleEventPayload",
-            "resolved": "KulArticleEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulArticleEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-article-declarations",
-                "id": "src/components/kul-article/kul-article-declarations.ts::KulArticleEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -970,16 +970,16 @@
       "events": [
         {
           "event": "kul-badge-event",
-          "detail": "KulBadgeEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulBadgeEventPayload",
-            "resolved": "KulBadgeEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulBadgeEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-badge-declarations",
-                "id": "src/components/kul-badge/kul-badge-declarations.ts::KulBadgeEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -1596,7 +1596,7 @@
             "parameters": [
               {
                 "name": "value",
-                "type": "\"off\" | \"on\"",
+                "type": "\"on\" | \"off\"",
                 "docs": "- The new state to be set on the component."
               }
             ],
@@ -1617,7 +1617,7 @@
           "parameters": [
             {
               "name": "value",
-              "type": "\"off\" | \"on\"",
+              "type": "\"on\" | \"off\"",
               "docs": "- The new state to be set on the component."
             }
           ],
@@ -2086,16 +2086,16 @@
       "events": [
         {
           "event": "kul-card-event",
-          "detail": "KulCardEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulCardEventPayload",
-            "resolved": "KulCardEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulCardEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-card-declarations",
-                "id": "src/components/kul-card/kul-card-declarations.ts::KulCardEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -3977,16 +3977,16 @@
       "events": [
         {
           "event": "kul-code-event",
-          "detail": "KulCodeEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulCodeEventPayload",
-            "resolved": "KulCodeEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulCodeEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-code-declarations",
-                "id": "src/components/kul-code/kul-code-declarations.ts::KulCodeEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -4327,16 +4327,16 @@
       "events": [
         {
           "event": "kul-drawer-event",
-          "detail": "KulDrawerEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulDrawerEventPayload",
-            "resolved": "KulDrawerEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulDrawerEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-drawer-declarations",
-                "id": "src/components/kul-drawer/kul-drawer-declarations.ts::KulDrawerEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -4524,16 +4524,16 @@
       "events": [
         {
           "event": "kul-header-event",
-          "detail": "KulHeaderEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulHeaderEventPayload",
-            "resolved": "KulHeaderEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulHeaderEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-header-declarations",
-                "id": "src/components/kul-header/kul-header-declarations.ts::KulHeaderEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -4892,16 +4892,16 @@
       "events": [
         {
           "event": "kul-image-event",
-          "detail": "KulImageEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulImageEventPayload",
-            "resolved": "KulImageEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulImageEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-image-declarations",
-                "id": "src/components/kul-image/kul-image-declarations.ts::KulImageEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -5261,16 +5261,16 @@
       "events": [
         {
           "event": "kul-lazy-event",
-          "detail": "KulLazyEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulLazyEventPayload",
-            "resolved": "KulLazyEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulLazyEventPayload": {
+              "KulEventPayload": {
                 "location": "import",
-                "path": "./kul-lazy-declarations",
-                "id": "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyEventPayload"
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -5864,7 +5864,7 @@
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
-      "readme": "# kul-messenger\r\n\r\n\r\n\r",
+      "readme": "# kul-messenger\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6813,34 +6813,16 @@
       "events": [
         {
           "event": "kul-progressbar-event",
-          "detail": "KulEventPayload<KulProgressbar, \"ready\", Event | CustomEvent<any>>",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload<\r\n            KulProgressbar,\r\n            KulProgressbarEvent,\r\n            Event | CustomEvent\r\n        >",
-            "resolved": "KulEventPayload<KulProgressbar, \"ready\", Event | CustomEvent<any>>",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
               "KulEventPayload": {
                 "location": "import",
                 "path": "../../types/GenericTypes",
                 "id": "src/types/GenericTypes.ts::KulEventPayload"
-              },
-              "KulProgressbar": {
-                "location": "global",
-                "id": "global::KulProgressbar"
-              },
-              "KulProgressbarEvent": {
-                "location": "import",
-                "path": "./kul-progressbar-declarations",
-                "id": "src/components/kul-progressbar/kul-progressbar-declarations.ts::KulProgressbarEvent"
-              },
-              "Event": {
-                "location": "import",
-                "path": "@stencil/core",
-                "id": ""
-              },
-              "CustomEvent": {
-                "location": "global",
-                "id": "global::CustomEvent"
               }
             }
           },
@@ -7063,15 +7045,16 @@
       "events": [
         {
           "event": "kul-showcase-event",
-          "detail": "KulShowcaseEventPayload",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulShowcaseEventPayload",
-            "resolved": "KulShowcaseEventPayload",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
-              "KulShowcaseEventPayload": {
-                "location": "global",
-                "id": "global::KulShowcaseEventPayload"
+              "KulEventPayload": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::KulEventPayload"
               }
             }
           },
@@ -7403,7 +7386,7 @@
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
-      "readme": "# kul-showcase-chart\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-chart\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8035,7 +8018,7 @@
       "filePath": "src/components/kul-showcase/components/lazy/kul-showcase-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-lazy",
-      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-lazy\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8083,7 +8066,7 @@
       "filePath": "src/components/kul-showcase/components/list/kul-showcase-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-list",
-      "readme": "# kul-showcase-list\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-list\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8214,7 +8197,7 @@
       "filePath": "src/components/kul-showcase/components/photoframe/kul-showcase-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-photoframe",
-      "readme": "# kul-showcase-photoframe\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-photoframe\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9092,34 +9075,16 @@
       "events": [
         {
           "event": "kul-spinner-event",
-          "detail": "KulEventPayload<KulSpinner, \"ready\", Event | CustomEvent<any>>",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload<KulSpinner, KulSpinnerEvent, Event | CustomEvent>",
-            "resolved": "KulEventPayload<KulSpinner, \"ready\", Event | CustomEvent<any>>",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
               "KulEventPayload": {
                 "location": "import",
                 "path": "../../types/GenericTypes",
                 "id": "src/types/GenericTypes.ts::KulEventPayload"
-              },
-              "KulSpinner": {
-                "location": "global",
-                "id": "global::KulSpinner"
-              },
-              "KulSpinnerEvent": {
-                "location": "import",
-                "path": "./kul-spinner-declarations",
-                "id": "src/components/kul-spinner/kul-spinner-declarations.ts::KulSpinnerEvent"
-              },
-              "Event": {
-                "location": "import",
-                "path": "@stencil/core",
-                "id": ""
-              },
-              "CustomEvent": {
-                "location": "global",
-                "id": "global::CustomEvent"
               }
             }
           },
@@ -9379,34 +9344,16 @@
       "events": [
         {
           "event": "kul-splash-event",
-          "detail": "KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent<any>>",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent>",
-            "resolved": "KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent<any>>",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
               "KulEventPayload": {
                 "location": "import",
                 "path": "../../types/GenericTypes",
                 "id": "src/types/GenericTypes.ts::KulEventPayload"
-              },
-              "KulSplash": {
-                "location": "global",
-                "id": "global::KulSplash"
-              },
-              "KulSplashEvent": {
-                "location": "import",
-                "path": "./kul-splash-declarations",
-                "id": "src/components/kul-splash/kul-splash-declarations.ts::KulSplashEvent"
-              },
-              "Event": {
-                "location": "import",
-                "path": "@stencil/core",
-                "id": ""
-              },
-              "CustomEvent": {
-                "location": "global",
-                "id": "global::CustomEvent"
               }
             }
           },
@@ -9789,7 +9736,7 @@
             "parameters": [
               {
                 "name": "value",
-                "type": "\"off\" | \"on\"",
+                "type": "\"on\" | \"off\"",
                 "docs": "- The new state to be set on the component."
               }
             ],
@@ -9810,7 +9757,7 @@
           "parameters": [
             {
               "name": "value",
-              "type": "\"off\" | \"on\"",
+              "type": "\"on\" | \"off\"",
               "docs": "- The new state to be set on the component."
             }
           ],
@@ -9995,13 +9942,13 @@
         },
         {
           "name": "kulValue",
-          "type": "number | string",
+          "type": "number",
           "complexType": {
-            "original": "number | string",
-            "resolved": "number | string",
+            "original": "number",
+            "resolved": "number",
             "references": {}
           },
-          "mutable": false,
+          "mutable": true,
           "attr": "kul-value",
           "reflectToAttr": true,
           "docs": "Sets the initial selected node's index.",
@@ -10011,13 +9958,10 @@
               "text": "null"
             }
           ],
-          "default": "0",
+          "default": "null",
           "values": [
             {
               "type": "number"
-            },
-            {
-              "type": "string"
             }
           ],
           "optional": false,
@@ -10986,7 +10930,7 @@
               "text": "() => void"
             }
           ],
-          "default": "() => {\r\n        const e = new CustomEvent('unmount');\r\n        this.onKulEvent(e, 'unmount');\r\n        this.kulEvent.emit({\r\n            comp: this,\r\n            eventType: 'unmount',\r\n            id: this.rootElement.id,\r\n            originalEvent: e,\r\n        });\r\n        this.rootElement.remove();\r\n    }",
+          "default": "() => {\n        const e = new CustomEvent('unmount');\n        this.onKulEvent(e, 'unmount');\n        this.kulEvent.emit({\n            comp: this,\n            eventType: 'unmount',\n            id: this.rootElement.id,\n            originalEvent: e,\n        });\n        this.rootElement.remove();\n    }",
           "values": [
             {
               "type": "() => void"
@@ -11018,7 +10962,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'clear' }"
             }
           ],
-          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'clear',\r\n    }",
+          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'clear',\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -11050,7 +10994,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'info' }"
             }
           ],
-          "default": "{\r\n        kulSizeX: '18px',\r\n        kulSizeY: '18px',\r\n        kulValue: 'info',\r\n    }",
+          "default": "{\n        kulSizeX: '18px',\n        kulSizeY: '18px',\n        kulValue: 'info',\n    }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -11248,34 +11192,16 @@
       "events": [
         {
           "event": "kul-toast-event",
-          "detail": "KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent<any>>",
+          "detail": "KulEventPayload",
           "bubbles": true,
           "complexType": {
-            "original": "KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent>",
-            "resolved": "KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent<any>>",
+            "original": "KulEventPayload",
+            "resolved": "KulEventPayload",
             "references": {
               "KulEventPayload": {
                 "location": "import",
                 "path": "../../types/GenericTypes",
                 "id": "src/types/GenericTypes.ts::KulEventPayload"
-              },
-              "KulToast": {
-                "location": "global",
-                "id": "global::KulToast"
-              },
-              "KulToastEvent": {
-                "location": "import",
-                "path": "./kul-toast-declarations",
-                "id": "src/components/kul-toast/kul-toast-declarations.ts::KulToastEvent"
-              },
-              "Event": {
-                "location": "import",
-                "path": "@stencil/core",
-                "id": ""
-              },
-              "CustomEvent": {
-                "location": "global",
-                "id": "global::CustomEvent"
               }
             }
           },
@@ -12106,15 +12032,20 @@
     }
   ],
   "typeLibrary": {
-    "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
-      "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
+    "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset": {
+      "declaration": "export interface KulDataDataset {\n    columns?: KulDataColumn[];\n    nodes?: KulDataNode[];\n}",
       "docstring": "",
-      "path": "src/components/kul-article/kul-article-declarations.ts"
+      "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
-    "src/components/kul-article/kul-article-declarations.ts::KulArticleEventPayload": {
-      "declaration": "export interface KulArticleEventPayload\n    extends KulEventPayload<KulArticle, KulArticleEvent, Event | CustomEvent> {}",
+    "src/components/kul-button/kul-button-declarations.ts::KulButtonStyling": {
+      "declaration": "export type KulButtonStyling =\n    | 'flat'\n    | 'floating'\n    | 'icon'\n    | 'outlined'\n    | 'raised';",
       "docstring": "",
-      "path": "src/components/kul-article/kul-article-declarations.ts"
+      "path": "src/components/kul-button/kul-button-declarations.ts"
+    },
+    "src/components/kul-button/kul-button-declarations.ts::KulButtonEventPayload": {
+      "declaration": "export interface KulButtonEventPayload extends KulEventPayload {\n    eventType: KulButtonEvent;\n    value: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-button/kul-button-declarations.ts"
     },
     "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugComponentInfo": {
       "declaration": "export interface KulDebugComponentInfo {\n    endTime: number;\n    renderCount: number;\n    renderEnd: number;\n    renderStart: number;\n    startTime: number;\n}",
@@ -12126,165 +12057,10 @@
       "docstring": "",
       "path": "src/types/GenericTypes.ts"
     },
-    "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset": {
-      "declaration": "export interface KulDataDataset {\n    columns?: KulDataColumn[];\n    nodes?: KulDataNode[];\n}",
-      "docstring": "",
-      "path": "src/managers/kul-data/kul-data-declarations.ts"
-    },
-    "src/components/kul-list/kul-list-declarations.ts::KulListEventPayload": {
-      "declaration": "export interface KulListEventPayload\n    extends KulEventPayload<KulList, KulListEvent, Event | CustomEvent> {\n    node: KulDataNode;\n}",
-      "docstring": "",
-      "path": "src/components/kul-list/kul-list-declarations.ts"
-    },
-    "src/managers/kul-data/kul-data-declarations.ts::KulDataNode": {
-      "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: unknown;\n}",
-      "docstring": "",
-      "path": "src/managers/kul-data/kul-data-declarations.ts"
-    },
-    "src/components/kul-button/kul-button-declarations.ts::KulButtonStyling": {
-      "declaration": "export type KulButtonStyling =\n    | 'flat'\n    | 'floating'\n    | 'icon'\n    | 'outlined'\n    | 'raised';",
-      "docstring": "",
-      "path": "src/components/kul-button/kul-button-declarations.ts"
-    },
-    "src/components/kul-button/kul-button-declarations.ts::KulButtonEventPayload": {
-      "declaration": "export interface KulButtonEventPayload\n    extends KulEventPayload<KulButton, KulButtonEvent, Event | CustomEvent> {\n    value: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-button/kul-button-declarations.ts"
-    },
     "src/components/kul-button/kul-button-declarations.ts::KulButtonState": {
       "declaration": "export type KulButtonState = 'off' | 'on';",
       "docstring": "",
       "path": "src/components/kul-button/kul-button-declarations.ts"
-    },
-    "src/components/kul-card/kul-card-declarations.ts::KulCardEventPayload": {
-      "declaration": "export interface KulCardEventPayload\n    extends KulEventPayload<KulCard, KulCardEvent, Event | CustomEvent> {}",
-      "docstring": "",
-      "path": "src/components/kul-card/kul-card-declarations.ts"
-    },
-    "src/managers/kul-data/kul-data-declarations.ts::KulDataShapesMap": {
-      "declaration": "{\n    [K in KulDataShapes]?: Array<\n        {\n            [P in K]: K extends 'badge'\n                ? Partial<KulBadgePropsInterface>\n                : K extends 'button'\n                  ? Partial<KulButtonPropsInterface>\n                  : K extends 'chat'\n                    ? Partial<KulChatPropsInterface>\n                    : K extends 'code'\n                      ? Partial<KulCodePropsInterface>\n                      : K extends 'image'\n                        ? Partial<KulImagePropsInterface>\n                        : string;\n        }[K]\n    >;\n}",
-      "docstring": "",
-      "path": "src/managers/kul-data/kul-data-declarations.ts"
-    },
-    "src/components/kul-code/kul-code-declarations.ts::KulCodeEventPayload": {
-      "declaration": "export interface KulCodeEventPayload\n    extends KulEventPayload<KulCode, KulCodeEvent, Event | CustomEvent> {}",
-      "docstring": "",
-      "path": "src/components/kul-code/kul-code-declarations.ts"
-    },
-    "src/types/GenericTypes.ts::KulEventPayload": {
-      "declaration": "export interface KulEventPayload<\n    C extends KulComponent<KulComponentName>,\n    T extends KulEventType<C>,\n    E extends Event | CustomEvent,\n> {\n    comp: C;\n    eventType: T;\n    id: string;\n    originalEvent: E;\n}",
-      "docstring": "",
-      "path": "src/types/GenericTypes.ts"
-    },
-    "src/components/kul-spinner/kul-spinner-declarations.ts::KulSpinnerEvent": {
-      "declaration": "\"ready\"",
-      "docstring": "",
-      "path": "src/components/kul-spinner/kul-spinner-declarations.ts"
-    },
-    "src/components.d.ts::KulDebugComponentInfo": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "src/components.d.ts"
-    },
-    "src/components/kul-splash/kul-splash-declarations.ts::KulSplashEvent": {
-      "declaration": "export type KulSplashEvent = 'ready' | 'unmount';",
-      "docstring": "",
-      "path": "src/components/kul-splash/kul-splash-declarations.ts"
-    },
-    "src/components/kul-upload/kul-upload-declarations.ts::KulUploadEventPayload": {
-      "declaration": "export interface KulUploadEventPayload\n    extends KulEventPayload<KulUpload, KulUploadEvent, Event | CustomEvent> {\n    selectedFiles: File[];\n}",
-      "docstring": "",
-      "path": "src/components/kul-upload/kul-upload-declarations.ts"
-    },
-    "src/components/kul-image/kul-image-declarations.ts::KulImagePropsInterface": {
-      "declaration": "export interface KulImagePropsInterface {\n    kulBadgeProps?: KulBadgePropsInterface;\n    kulColor?: string;\n    kulShowSpinner?: boolean;\n    kulSizeX?: string;\n    kulSizeY?: string;\n    kulStyle?: string;\n    kulValue?: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-image/kul-image-declarations.ts"
-    },
-    "src/components/kul-toast/kul-toast-declarations.ts::KulToastEvent": {
-      "declaration": "export type KulToastEvent = 'ready' | 'unmount';",
-      "docstring": "",
-      "path": "src/components/kul-toast/kul-toast-declarations.ts"
-    },
-    "src/components/kul-drawer/kul-drawer-declarations.ts::KulDrawerEventPayload": {
-      "declaration": "export interface KulDrawerEventPayload\n    extends KulEventPayload<KulDrawer, KulDrawerEvent, Event | CustomEvent> {}",
-      "docstring": "",
-      "path": "src/components/kul-drawer/kul-drawer-declarations.ts"
-    },
-    "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldHelper": {
-      "declaration": "export interface KulTextfieldHelper {\n    showWhenFocused?: boolean;\n    value: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
-    },
-    "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldStyling": {
-      "declaration": "export type KulTextfieldStyling = 'flat' | 'outlined' | 'raised' | 'textarea';",
-      "docstring": "",
-      "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
-    },
-    "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldEventPayload": {
-      "declaration": "export interface KulTextfieldEventPayload\n    extends KulEventPayload<\n        KulTextfield,\n        KulTextfieldEvent,\n        Event | CustomEvent\n    > {\n    inputValue?: string;\n    value?: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candle'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload\r\n    extends KulEventPayload<KulChart, KulChartEvent, Event | CustomEvent> {\r\n    column: KulDataColumn;\r\n    node: KulDataNode;\r\n    x: number | string;\r\n    y: number | string;\r\n}",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-header/kul-header-declarations.ts::KulHeaderEventPayload": {
-      "declaration": "export interface KulHeaderEventPayload\n    extends KulEventPayload<KulHeader, KulHeaderEvent, Event | CustomEvent> {}",
-      "docstring": "",
-      "path": "src/components/kul-header/kul-header-declarations.ts"
-    },
-    "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyRenderMode": {
-      "declaration": "export type KulLazyRenderMode = 'both' | 'props' | 'viewport';",
-      "docstring": "",
-      "path": "src/components/kul-lazy/kul-lazy-declarations.ts"
-    },
-    "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyEventPayload": {
-      "declaration": "export interface KulLazyEventPayload\n    extends KulEventPayload<KulLazy, KulLazyEvent, Event | CustomEvent> {}",
-      "docstring": "",
-      "path": "src/components/kul-lazy/kul-lazy-declarations.ts"
-    },
-    "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
-      "declaration": "export interface KulPhotoframeEventPayload\n    extends KulEventPayload<\n        KulPhotoframe,\n        KulPhotoframeEvent,\n        Event | CustomEvent\n    > {\n    isPlaceholder?: boolean;\n}",
-      "docstring": "",
-      "path": "src/components/kul-photoframe/kul-photoframe-declarations.ts"
-    },
-    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarEventPayload": {
-      "declaration": "export interface KulTabbarEventPayload\n    extends KulEventPayload<KulTabbar, KulTabbarEvent, Event | CustomEvent> {\n    index?: number;\n    node?: KulDataNode;\n}",
-      "docstring": "",
-      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
-    },
-    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarState": {
-      "declaration": "export interface KulTabbarState {\n    index?: number;\n    node?: KulDataNode;\n}",
-      "docstring": "",
-      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
-    },
-    "src/components.d.ts::KulDataDataset": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "src/components.d.ts"
-    },
-    "src/components/kul-tree/kul-tree-declarations.ts::KulTreeEventPayload": {
-      "declaration": "export interface KulTreeEventPayload\n    extends KulEventPayload<KulTree, KulTreeEvent, Event | CustomEvent> {\n    node?: KulDataNode;\n}",
-      "docstring": "",
-      "path": "src/components/kul-tree/kul-tree-declarations.ts"
-    },
-    "src/components/kul-accordion/kul-accordion-declarations.ts::KulAccordionEventPayload": {
-      "declaration": "export interface KulAccordionEventPayload\n    extends KulEventPayload<\n        KulAccordion,\n        KulAccordionEvent,\n        Event | CustomEvent\n    > {}",
-      "docstring": "",
-      "path": "src/components/kul-accordion/kul-accordion-declarations.ts"
     },
     "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
       "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
@@ -12297,14 +12073,9 @@
       "path": "src/components/kul-chat/kul-chat-declarations.ts"
     },
     "src/components/kul-chat/kul-chat-declarations.ts::KulChatEventPayload": {
-      "declaration": "export interface KulChatEventPayload\n    extends KulEventPayload<KulChat, KulChatEvent, Event | CustomEvent> {\n    history: string;\n    status: KulChatStatus;\n}",
+      "declaration": "export interface KulChatEventPayload extends KulEventPayload {\n    eventType: KulChatEvent;\n    history: string;\n    status: KulChatStatus;\n}",
       "docstring": "",
       "path": "src/components/kul-chat/kul-chat-declarations.ts"
-    },
-    "src/components/kul-progressbar/kul-progressbar-declarations.ts::KulProgressbarEvent": {
-      "declaration": "\"ready\"",
-      "docstring": "",
-      "path": "src/components/kul-progressbar/kul-progressbar-declarations.ts"
     },
     "src/components/kul-chip/kul-chip-declarations.ts::KulChipStyling": {
       "declaration": "export type KulChipStyling = 'choice' | 'filter' | 'input' | 'standard';",
@@ -12312,9 +12083,14 @@
       "path": "src/components/kul-chip/kul-chip-declarations.ts"
     },
     "src/components/kul-chip/kul-chip-declarations.ts::KulChipEventPayload": {
-      "declaration": "export interface KulChipEventPayload\n    extends KulEventPayload<KulChip, KulChipEvent, Event | CustomEvent> {\n    node: KulDataNode;\n    selectedNodes: Set<KulDataNode>;\n}",
+      "declaration": "export interface KulChipEventPayload extends KulEventPayload {\n    node: KulDataNode;\n    selectedNodes: Set<KulDataNode>;\n}",
       "docstring": "",
       "path": "src/components/kul-chip/kul-chip-declarations.ts"
+    },
+    "src/managers/kul-data/kul-data-declarations.ts::KulDataNode": {
+      "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: unknown;\n}",
+      "docstring": "",
+      "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerDataset": {
       "declaration": "export interface KulMessengerDataset extends KulDataDataset {\n    nodes?: KulMessengerCharacterNode[];\n}",
@@ -12327,12 +12103,72 @@
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
     "src/components/kul-messenger/kul-messenger-declarations.ts::KulMessengerEventPayload": {
-      "declaration": "export interface KulMessengerEventPayload\n    extends KulEventPayload<\n        KulMessenger,\n        KulMessengerEvent,\n        Event | CustomEvent\n    > {\n    config: KulMessengerConfig;\n}",
+      "declaration": "export interface KulMessengerEventPayload extends KulEventPayload {\n    config: KulMessengerConfig;\n}",
       "docstring": "",
       "path": "src/components/kul-messenger/kul-messenger-declarations.ts"
     },
+    "src/types/GenericTypes.ts::KulEventPayload": {
+      "declaration": "export interface KulEventPayload {\n    comp: unknown;\n    eventType: KulEventType;\n    id: string;\n    originalEvent: Event;\n}",
+      "docstring": "",
+      "path": "src/types/GenericTypes.ts"
+    },
+    "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
+      "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-article/kul-article-declarations.ts"
+    },
+    "src/components/kul-image/kul-image-declarations.ts::KulImagePropsInterface": {
+      "declaration": "export interface KulImagePropsInterface {\n    kulBadgeProps?: KulBadgePropsInterface;\n    kulColor?: string;\n    kulShowSpinner?: boolean;\n    kulSizeX?: string;\n    kulSizeY?: string;\n    kulStyle?: string;\n    kulValue?: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-image/kul-image-declarations.ts"
+    },
+    "src/managers/kul-data/kul-data-declarations.ts::KulDataShapesMap": {
+      "declaration": "{\n    [K in KulDataShapes]?: Array<\n        {\n            [P in K]: K extends 'badge'\n                ? Partial<KulBadgePropsInterface>\n                : K extends 'button'\n                  ? Partial<KulButtonPropsInterface>\n                  : K extends 'chat'\n                    ? Partial<KulChatPropsInterface>\n                    : K extends 'code'\n                      ? Partial<KulCodePropsInterface>\n                      : K extends 'image'\n                        ? Partial<KulImagePropsInterface>\n                        : string;\n        }[K]\n    >;\n}",
+      "docstring": "",
+      "path": "src/managers/kul-data/kul-data-declarations.ts"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
+      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
+      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candle'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
+      "declaration": "export interface KulChartEventPayload extends KulEventPayload {\r\n    column: KulDataColumn;\r\n    node: KulDataNode;\r\n    x: number | string;\r\n    y: number | string;\r\n}",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components.d.ts::KulDebugComponentInfo": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "src/components.d.ts"
+    },
+    "src/components/kul-badge/kul-badge-declarations.ts::KulBadgePropsInterface": {
+      "declaration": "export interface KulBadgePropsInterface {\n    kulImageProps?: KulImagePropsInterface;\n    kulLabel?: string;\n    kulStyle?: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-badge/kul-badge-declarations.ts"
+    },
+    "src/components/kul-lazy/kul-lazy-declarations.ts::KulLazyRenderMode": {
+      "declaration": "export type KulLazyRenderMode = 'both' | 'props' | 'viewport';",
+      "docstring": "",
+      "path": "src/components/kul-lazy/kul-lazy-declarations.ts"
+    },
+    "src/components/kul-list/kul-list-declarations.ts::KulListEventPayload": {
+      "declaration": "export interface KulListEventPayload extends KulEventPayload {\n    node: KulDataNode;\n}",
+      "docstring": "",
+      "path": "src/components/kul-list/kul-list-declarations.ts"
+    },
+    "src/components/kul-photoframe/kul-photoframe-declarations.ts::KulPhotoframeEventPayload": {
+      "declaration": "export interface KulPhotoframeEventPayload extends KulEventPayload {\n    isPlaceholder?: boolean;\n}",
+      "docstring": "",
+      "path": "src/components/kul-photoframe/kul-photoframe-declarations.ts"
+    },
     "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchEventPayload": {
-      "declaration": "export interface KulSwitchEventPayload\n    extends KulEventPayload<KulSwitch, KulSwitchEvent, Event | CustomEvent> {\n    value: string;\n}",
+      "declaration": "export interface KulSwitchEventPayload extends KulEventPayload {\n    value: string;\n}",
       "docstring": "",
       "path": "src/components/kul-switch/kul-switch-declarations.ts"
     },
@@ -12341,20 +12177,45 @@
       "docstring": "",
       "path": "src/components/kul-switch/kul-switch-declarations.ts"
     },
-    "src/components/kul-badge/kul-badge-declarations.ts::KulBadgePropsInterface": {
-      "declaration": "export interface KulBadgePropsInterface {\n    kulImageProps?: KulImagePropsInterface;\n    kulLabel?: string;\n    kulStyle?: string;\n}",
+    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarEventPayload": {
+      "declaration": "export interface KulTabbarEventPayload extends KulEventPayload {\n    index?: number;\n    node?: KulDataNode;\n}",
       "docstring": "",
-      "path": "src/components/kul-badge/kul-badge-declarations.ts"
+      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
     },
-    "src/components/kul-image/kul-image-declarations.ts::KulImageEventPayload": {
-      "declaration": "export interface KulImageEventPayload\n    extends KulEventPayload<KulImage, KulImageEvent, Event | CustomEvent> {}",
+    "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarState": {
+      "declaration": "export interface KulTabbarState {\n    index?: number;\n    node?: KulDataNode;\n}",
       "docstring": "",
-      "path": "src/components/kul-image/kul-image-declarations.ts"
+      "path": "src/components/kul-tabbar/kul-tabbar-declarations.ts"
     },
-    "src/components/kul-badge/kul-badge-declarations.ts::KulBadgeEventPayload": {
-      "declaration": "export interface KulBadgeEventPayload\n    extends KulEventPayload<KulBadge, KulBadgeEvent, Event | CustomEvent> {}",
+    "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldHelper": {
+      "declaration": "export interface KulTextfieldHelper {\n    showWhenFocused?: boolean;\n    value: string;\n}",
       "docstring": "",
-      "path": "src/components/kul-badge/kul-badge-declarations.ts"
+      "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
+    },
+    "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldStyling": {
+      "declaration": "export type KulTextfieldStyling = 'flat' | 'outlined' | 'raised' | 'textarea';",
+      "docstring": "",
+      "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
+    },
+    "src/components/kul-textfield/kul-textfield-declarations.ts::KulTextfieldEventPayload": {
+      "declaration": "export interface KulTextfieldEventPayload extends KulEventPayload {\n    inputValue?: string;\n    value?: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-textfield/kul-textfield-declarations.ts"
+    },
+    "src/components.d.ts::KulDataDataset": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "src/components.d.ts"
+    },
+    "src/components/kul-tree/kul-tree-declarations.ts::KulTreeEventPayload": {
+      "declaration": "export interface KulTreeEventPayload extends KulEventPayload {\n    node?: KulDataNode;\n}",
+      "docstring": "",
+      "path": "src/components/kul-tree/kul-tree-declarations.ts"
+    },
+    "src/components/kul-upload/kul-upload-declarations.ts::KulUploadEventPayload": {
+      "declaration": "export interface KulUploadEventPayload extends KulEventPayload {\n    selectedFiles: File[];\n}",
+      "docstring": "",
+      "path": "src/components/kul-upload/kul-upload-declarations.ts"
     }
   }
 }
