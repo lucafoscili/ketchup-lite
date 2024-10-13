@@ -113,7 +113,7 @@ export class KulTheme {
      */
     private customStyle(): void {
         this.managedComponents.forEach(function (comp) {
-            if (comp.rootElement.isConnected) {
+            if (comp?.rootElement?.isConnected) {
                 comp.refresh();
             }
         });
@@ -247,21 +247,17 @@ export class KulTheme {
     };
     /**
      * Registers a KulComponent in KulTheme, in order to be properly refreshed whenever the theme changes.
-     * @param {any} comp - The component calling this function.
+     * @param {KulComponent<KulComponentName>} comp - The component calling this function.
      */
-    register(comp: any): void {
-        this.managedComponents.add(comp.rootElement ? comp.rootElement : comp);
+    register(comp: KulComponent<KulComponentName>): void {
+        this.managedComponents.add(comp);
     }
     /**
      * Unregisters a KulComponent, so it won't be refreshed when the theme changes.
-     * @param {any} comp - The component calling this function.
+     * @param {KulComponent<KulComponentName>} comp - The component calling this function.
      */
-    unregister(comp: any): void {
-        if (this.managedComponents) {
-            this.managedComponents.delete(
-                comp.rootElement ? comp.rootElement : comp
-            );
-        }
+    unregister(comp: KulComponent<KulComponentName>): void {
+        this.managedComponents?.delete(comp);
     }
     /**
      * Combines global (style every component should have), theme's and component's customStyles, returning the result.
