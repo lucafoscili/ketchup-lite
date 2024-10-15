@@ -160,35 +160,10 @@ export const CHIP_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulChip',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' component feats a tree-like data visualization with selectable or deletable nodes. ',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulChip',
+                    ' component feats a tree-like data visualization with selectable or deletable nodes.'
+                ),
                 {
                     children: [
                         {

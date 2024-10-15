@@ -5,7 +5,7 @@ import {
     KulShowcaseDocStyle,
     KulShowcaseDynamicExampleType,
 } from './kul-showcase-declarations';
-import { DOC_STYLES } from './kul-showcase-data';
+import { DOC_IDS, DOC_NODES, DOC_STYLES } from './kul-showcase-data';
 import { KulArticleNode } from '../kul-article/kul-article-declarations';
 
 export class Documentation {
@@ -125,7 +125,6 @@ export class Documentation {
                 id: '',
                 value: 'CSS Variables',
             };
-
             docStyles?.forEach((style) => {
                 const styleNode: KulArticleNode = {
                     children: [
@@ -149,6 +148,143 @@ export class Documentation {
                 wrapperNode.children.push(listNode);
             }
             return nodes;
+        },
+    };
+    create = {
+        component: {
+            overview: (componentName: string, description: string) => {
+                return {
+                    children: [
+                        {
+                            children: [
+                                {
+                                    children: [
+                                        {
+                                            id: 'content',
+                                            value: 'The ',
+                                        },
+                                        {
+                                            id: 'content',
+                                            tagName: 'strong',
+                                            value: componentName,
+                                        },
+                                        {
+                                            id: 'content',
+                                            value: description,
+                                        },
+                                    ],
+                                    id: 'content-wrapper',
+                                },
+                            ],
+                            id: 'paragraph',
+                        },
+                    ],
+                    id: 'section',
+                    value: 'Overview',
+                };
+            },
+        },
+        paragraph: {
+            asBulletListEntry: (
+                title: string,
+                children: { title: string; description: string }[]
+            ): KulArticleNode => {
+                const c = [];
+                children.forEach((child) => {
+                    c.push({
+                        id: DOC_IDS.content,
+                        value: '- ',
+                    });
+                    c.push({
+                        cssStyle: DOC_STYLES.monoPrimaryContent,
+                        id: DOC_IDS.content,
+                        tagName: 'strong',
+                        value: child.title,
+                    });
+                    c.push({
+                        id: DOC_IDS.content,
+                        value: child.description,
+                    });
+                });
+                return {
+                    children: c,
+                    cssStyle: DOC_STYLES.monoPrimaryH3Large,
+                    id: DOC_IDS.paragraph,
+                    value: title,
+                };
+            },
+            asListEntry: (
+                title: string,
+                description: string,
+                args?: { name: string; type: string; description: string }[]
+            ): KulArticleNode => {
+                const signature = (): KulArticleNode => {
+                    let value = '(';
+                    args.forEach((a, index) => {
+                        value += `${a.name}:${a.type}${index < args.length - 1 ? ',' : ''}`;
+                    });
+                    value += ')';
+                    return {
+                        id: DOC_IDS.content,
+                        tagName: 'strong',
+                        value,
+                    };
+                };
+                const params = () => {
+                    const content: KulArticleNode[] = [];
+                    args.forEach((a) => {
+                        content.push(DOC_NODES.lineBreak);
+                        content.push({
+                            id: DOC_IDS.content,
+                            value: `- `,
+                        });
+                        content.push({
+                            id: DOC_IDS.content,
+                            cssStyle: DOC_STYLES.monoPrimaryContent,
+                            tagName: 'strong',
+                            value: `${a.name} (${a.type})`,
+                        });
+                        content.push({
+                            id: DOC_IDS.content,
+                            value: `: ${a.description}`,
+                        });
+                    });
+                    return content;
+                };
+                const hasArgs = !!args?.length;
+                return {
+                    children: [
+                        {
+                            id: DOC_IDS.content,
+                            value: description,
+                        },
+                        DOC_NODES.lineBreak,
+                        ...(hasArgs && params()),
+                    ],
+                    id: DOC_IDS.paragraph,
+                    cssStyle: DOC_STYLES.monoPrimaryH3Large,
+                    value: `${title} ${hasArgs ? signature().value : '()'}`,
+                };
+            },
+            asSimpleListEntry: (
+                title: string,
+                description: string
+            ): KulArticleNode => ({
+                children: [
+                    {
+                        id: DOC_IDS.content,
+                        cssStyle: DOC_STYLES.monoPrimaryContent,
+                        tagName: 'strong',
+                        value: title.toString(),
+                    },
+                    {
+                        id: DOC_IDS.content,
+                        value: description.toString(),
+                    },
+                ],
+                id: DOC_IDS.paragraph,
+                value: '',
+            }),
         },
     };
 }

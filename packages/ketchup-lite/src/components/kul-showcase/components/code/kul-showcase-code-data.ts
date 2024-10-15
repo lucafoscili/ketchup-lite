@@ -23,35 +23,10 @@ export const CODE_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulCode',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' component is a customizable web component designed to display code snippets with syntax highlighting.',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulCode',
+                    ' component is a customizable web component designed to display code snippets with syntax highlighting.'
+                ),
                 {
                     children: [
                         {

@@ -24,35 +24,10 @@ export const LAZY_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulLazy',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: " component's main purpose is to prevent long page loading times, displaying a placeholder until it's relevant to switch to the actual component.",
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulLazy',
+                    " component's main purpose is to prevent long page loading times, displaying a placeholder until it's relevant to switch to the actual component."
+                ),
                 {
                     children: [
                         {

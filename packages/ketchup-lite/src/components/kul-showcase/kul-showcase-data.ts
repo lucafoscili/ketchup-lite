@@ -1,6 +1,8 @@
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
-import { KulArticleDataset } from '../kul-article/kul-article-declarations';
-
+import {
+    KulArticleDataset,
+    KulArticleNode,
+} from '../kul-article/kul-article-declarations';
 export const COMPONENTS = [
     'accordion',
     'article',
@@ -26,8 +28,18 @@ export const COMPONENTS = [
     'tree',
     'upload',
 ];
-
+export const DOC_IDS = {
+    content: '0.0.0.0',
+    paragraph: '0.0.0',
+    section: '0.0',
+    root: '0',
+};
 export const DOC_STYLES = {
+    hiddenSeparator: {
+        ['display']: 'block',
+        ['margin']: '1.5em 0',
+        ['width']: '100%',
+    },
     monoPrimaryContent: {
         ['--kul_article_content_color']: 'var(--kul-primary-color)',
         ['--kul_article_content_font_family']:
@@ -43,6 +55,13 @@ export const DOC_STYLES = {
         ['--kul_article_h3_font_family']: 'var(--kul-font-family-monospace)',
         ['--kul_article_h3_font_size']: 'calc(var(--kul-font-size) * 1.5)',
     },
+    separator: {
+        ['border']: '1px solid var(--kul-border-color)',
+        ['display']: 'block',
+        ['margin']: '2em auto',
+        ['opacity']: '0.375',
+        ['width']: '25%',
+    },
     underConstruction: {
         ['boxSizing']: 'border-box',
         ['display']: 'block',
@@ -55,67 +74,24 @@ export const DOC_STYLES = {
         ['width']: '100%',
     },
 };
-
-export const KUL_DOC: KulArticleDataset = {
-    nodes: [
-        {
-            id: '0',
-            value: 'Ketchup Lite',
-            children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    id: '1.5',
-                                    value: 'Ketchup Lite is a Webcomponents library written in TypeScript and Sass.',
-                                },
-                                {
-                                    id: '1.5',
-                                    value: "It's a side project on which I'm working on in my free time.",
-                                },
-                                {
-                                    children: [
-                                        {
-                                            id: '',
-                                            value: 'It is a fork stemming from the original ',
-                                        },
-                                        {
-                                            id: '',
-                                            tagName: 'strong',
-                                            value: 'Ketchup project',
-                                        },
-                                        {
-                                            id: '',
-                                            value: ', aiming to provide a streamlined and efficient set of tools for developers.',
-                                        },
-                                    ],
-                                    id: '',
-                                    value: '',
-                                },
-                            ],
-                            id: '',
-                            value: '',
-                        },
-                        {
-                            children: [
-                                {
-                                    id: '',
-                                    value: 'For more information you can visit the GitHub page of the project.',
-                                },
-                            ],
-                            id: '',
-                            value: '',
-                        },
-                    ],
-                    id: '',
-                    value: '',
-                },
-            ],
-        },
-    ],
+type NodeName = 'hiddenSeparator' | 'lineBreak' | 'separator';
+export const DOC_NODES: Record<NodeName, KulArticleNode> = {
+    hiddenSeparator: {
+        cssStyle: DOC_STYLES.hiddenSeparator,
+        id: 'content',
+        value: '',
+    },
+    lineBreak: {
+        id: 'content',
+        tagName: 'br',
+        value: '',
+    },
+    separator: {
+        cssStyle: DOC_STYLES.separator,
+        id: 'content',
+        value: '',
+    },
 };
-
 export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
     nodes: [
         {
@@ -263,7 +239,6 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
         },
     ],
 };
-
 export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
     nodes: [
         {
@@ -324,7 +299,6 @@ export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
         },
     ],
 };
-
 export const KUL_SHOWCASE_LAYOUT: KulDataDataset = {
     nodes: [
         {
@@ -348,7 +322,6 @@ export const KUL_SHOWCASE_LAYOUT: KulDataDataset = {
         },
     ],
 };
-
 export const KUL_SHOWCASE_UTILITIES: KulDataDataset = {
     nodes: [
         {
@@ -357,6 +330,65 @@ export const KUL_SHOWCASE_UTILITIES: KulDataDataset = {
             icon: 'bug',
             id: 'Debug',
             value: 'Debug',
+        },
+    ],
+};
+export const KUL_DOC: KulArticleDataset = {
+    nodes: [
+        {
+            id: '0',
+            value: 'Ketchup Lite',
+            children: [
+                {
+                    children: [
+                        {
+                            children: [
+                                {
+                                    id: '1.5',
+                                    value: 'Ketchup Lite is a Webcomponents library written in TypeScript and Sass.',
+                                },
+                                {
+                                    id: '1.5',
+                                    value: "It's a side project on which I'm working on in my free time.",
+                                },
+                                {
+                                    children: [
+                                        {
+                                            id: '',
+                                            value: 'It is a fork stemming from the original ',
+                                        },
+                                        {
+                                            id: '',
+                                            tagName: 'strong',
+                                            value: 'Ketchup project',
+                                        },
+                                        {
+                                            id: '',
+                                            value: ', aiming to provide a streamlined and efficient set of tools for developers.',
+                                        },
+                                    ],
+                                    id: '',
+                                    value: '',
+                                },
+                            ],
+                            id: '',
+                            value: '',
+                        },
+                        {
+                            children: [
+                                {
+                                    id: '',
+                                    value: 'For more information you can visit the GitHub page of the project.',
+                                },
+                            ],
+                            id: '',
+                            value: '',
+                        },
+                    ],
+                    id: '',
+                    value: '',
+                },
+            ],
         },
     ],
 };

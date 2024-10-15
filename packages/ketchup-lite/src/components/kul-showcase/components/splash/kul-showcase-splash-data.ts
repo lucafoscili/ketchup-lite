@@ -20,35 +20,10 @@ export const SPLASH_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulSplash',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' component is a versatile and customizable web component designed to render splash screens based on a JSON structure. ',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulSplash',
+                    ' component is designed to render splash screens based on a JSON structure.'
+                ),
                 {
                     children: [
                         {

@@ -225,35 +225,10 @@ export const TEXTFIELD_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulTextfield',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' component is a customizable and reusable web component to input text.',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulTextfield',
+                    ' component is a customizable and reusable web component to input text.'
+                ),
                 {
                     children: [
                         {

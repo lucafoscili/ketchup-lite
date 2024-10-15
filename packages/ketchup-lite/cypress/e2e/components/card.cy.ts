@@ -33,6 +33,14 @@ describe('Events', () => {
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 
+    it(`contextmenu`, () => {
+        cy.navigate(card);
+        const eventType: KulCardEvent = 'contextmenu';
+        cy.checkEvent(card, eventType);
+        cy.get('@eventElement').rightclick();
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
+
     it(`kul-event`, () => {
         cy.navigate(card);
         const eventType: KulCardEvent = 'kul-event';
