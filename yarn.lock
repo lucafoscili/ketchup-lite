@@ -4261,7 +4261,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ketchup-lite@1.4.2, ketchup-lite@workspace:packages/ketchup-lite":
+"ketchup-lite@npm:1.4.2":
+  version: 1.4.2
+  resolution: "ketchup-lite@npm:1.4.2"
+  dependencies:
+    dayjs: ^1.11.11
+    echarts: 5.5.1
+    numeral: ^2.0.6
+    prismjs: ^1.29.0
+  checksum: fbea54983c754fe87fe66cb59ddcfeaa35e523054626446b9c706532f38b5dadecc038e675e6e80877c87ef0b4707428cddddb9dfbee9873661f2eee9b77a20f
+  languageName: node
+  linkType: hard
+
+"ketchup-lite@workspace:packages/ketchup-lite":
   version: 0.0.0-use.local
   resolution: "ketchup-lite@workspace:packages/ketchup-lite"
   dependencies:
