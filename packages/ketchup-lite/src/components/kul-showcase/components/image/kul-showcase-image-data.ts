@@ -54,35 +54,10 @@ export const IMAGE_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulImage',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' component is a versatile and customizable web component designed to render images or icons based on a provided source or CSS variable.',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulImage',
+                    ' component is designed to render images or icons based on a provided source or CSS variable.'
+                ),
                 {
                     children: [
                         {

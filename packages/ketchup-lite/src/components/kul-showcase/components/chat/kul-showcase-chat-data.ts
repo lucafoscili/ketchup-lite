@@ -23,35 +23,10 @@ export const CHAT_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulChat',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' component lets you chat with an LLM running locally. It is designed to work along with Koboldcpp.',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulChat',
+                    ' component lets you chat with an LLM running locally. It is designed to work along with Koboldcpp.'
+                ),
                 {
                     children: [
                         {

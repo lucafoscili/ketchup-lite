@@ -63,35 +63,10 @@ export const PROGRESSBAR_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulProgressbar',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' is designed to display a progress. It can be displayed as a horizontal or as a radial bar.',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulProgressbar',
+                    ' is designed to display a progress. It can be displayed as a horizontal or as a radial bar.'
+                ),
                 {
                     children: [
                         {

@@ -110,35 +110,10 @@ export const TREE_DOC: KulArticleDataset = {
     nodes: [
         {
             children: [
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.0.0.0.0',
-                                            value: 'The ',
-                                        },
-                                        {
-                                            id: '0.0.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulTree',
-                                        },
-                                        {
-                                            id: '0.0.0.0.2',
-                                            value: ' component is a versatile and customizable web component designed to render a tree based on a JSON structure. ',
-                                        },
-                                    ],
-                                    id: '0.0.0.0',
-                                },
-                            ],
-                            id: '0.0.0',
-                        },
-                    ],
-                    id: '0.0',
-                    value: 'Overview',
-                },
+                SHOWCASE_DOC.create.component.overview(
+                    'KulTree',
+                    ' component is designed to render a tree based on a JSON structure.'
+                ),
                 {
                     children: [
                         {
