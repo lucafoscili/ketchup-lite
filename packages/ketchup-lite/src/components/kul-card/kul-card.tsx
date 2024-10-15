@@ -235,6 +235,7 @@ export class KulCard {
                 <div
                     id={KUL_WRAPPER_ID}
                     onClick={(e) => this.onKulEvent(e, 'click')}
+                    onContextMenu={(e) => this.onKulEvent(e, 'contextmenu')}
                     onPointerDown={(e) => this.onKulEvent(e, 'pointerdown')}
                 >
                     {this.getLayout()}

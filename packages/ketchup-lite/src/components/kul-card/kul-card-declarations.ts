@@ -5,7 +5,12 @@ import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulCardEvent = 'click' | 'kul-event' | 'pointerdown' | 'ready';
+export type KulCardEvent =
+    | 'click'
+    | 'contextmenu'
+    | 'kul-event'
+    | 'pointerdown'
+    | 'ready';
 export interface KulCardEventPayload
     extends KulEventPayload<KulCard, KulCardEvent, Event | CustomEvent> {}
 /*-------------------------------------------------*/
