@@ -15,7 +15,6 @@ import type {
     KulDom,
     KulManagerClickCb,
     KulManagerInitialization,
-    KulManagerStringFinderPayload,
     KulManagerUtilities,
 } from './kul-manager-declarations';
 import { KulLLM } from '../kul-llm/kul-llm';
@@ -71,32 +70,12 @@ export class KulManager {
         );
         this.utilities = {
             clickCallbacks: new Set(),
-            lastPointerDownString: null,
         };
 
         this.#setupListeners();
     }
 
     #setupListeners() {
-        document.addEventListener('pointerdown', (e) => {
-            const paths = e.composedPath() as HTMLElement[];
-            const lastString =
-                paths[0].innerText || (paths[0] as HTMLInputElement).value;
-            this.utilities.lastPointerDownString = lastString;
-            if (lastString) {
-                const e = new CustomEvent<KulManagerStringFinderPayload>(
-                    'kul-manager-stringfinder',
-                    {
-                        bubbles: true,
-                        cancelable: true,
-                        detail: {
-                            string: lastString,
-                        },
-                    }
-                );
-                document.dispatchEvent(e);
-            }
-        });
         document.addEventListener('click', (e) => {
             const paths = e.composedPath() as HTMLElement[];
             this.utilities.clickCallbacks.forEach((obj) => {
@@ -151,28 +130,6 @@ export class KulManager {
         } else {
             this.utilities.clickCallbacks.add(cb);
         }
-    }
-    /**
-     * Retrives event path from event.target
-     * @param currentEl event.target
-     * @param rootElement rootElement of component
-     * @returns
-     */
-    getEventPath(currentEl: unknown, rootElement: HTMLElement) {
-        const path: HTMLElement[] = [];
-
-        while (
-            currentEl &&
-            currentEl !== rootElement &&
-            currentEl !== document.body
-        ) {
-            path.push(currentEl as HTMLElement);
-            currentEl = (currentEl as HTMLElement).parentNode
-                ? (currentEl as HTMLElement).parentNode
-                : (currentEl as ShadowRoot).host;
-        }
-
-        return path;
     }
     /**
      * Removes the given click callback.

@@ -10,7 +10,6 @@ export interface KulDom extends HTMLHtmlElement {
 }
 export interface KulManagerUtilities {
     clickCallbacks?: Set<KulManagerClickCb>;
-    lastPointerDownString?: string;
 }
 export interface KulManagerClickCb {
     cb: () => unknown;
@@ -44,9 +43,6 @@ export interface KulManagerMathSettings {
 export interface KulManagerScrollOnHoverSettings {
     delay?: number;
     step?: number;
-}
-export interface KulManagerStringFinderPayload {
-    string: string;
 }
 export interface KulManagerThemeSettings {
     list?: KulThemeJSON;

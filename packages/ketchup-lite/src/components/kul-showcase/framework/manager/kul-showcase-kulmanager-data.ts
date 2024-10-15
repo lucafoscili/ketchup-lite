@@ -1,85 +1,87 @@
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_STYLES } from '../../kul-showcase-data';
+import { DOC_IDS, DOC_NODES } from '../../kul-showcase-data';
+import { SHOWCASE_DOC } from '../../kul-showcase-utils';
 
 export const MANAGER_DATA: KulArticleDataset = {
     nodes: [
         {
-            id: '0',
+            id: DOC_IDS.root,
             value: 'KulManager',
             children: [
                 {
-                    id: '1',
+                    id: DOC_IDS.section,
                     value: 'Overview',
                     children: [
                         {
                             children: [
                                 {
-                                    id: '1.1.1',
+                                    id: DOC_IDS.content,
                                     tagName: 'strong',
                                     value: 'KulManager',
                                 },
                                 {
-                                    id: '1.1.2',
-                                    value: ' is a Javascript class which wraps quite a few functionalities and contains other manager classes - such as the theme one.',
+                                    id: DOC_IDS.content,
+                                    value: ' is a Javascript class that incorporates various functionalities and includes other manager classes, such as the theme manager.',
                                 },
                             ],
-                            id: '1.1',
+                            id: DOC_IDS.paragraph,
                             value: '',
                         },
                         {
                             children: [
                                 {
-                                    id: '1.2.1',
+                                    id: DOC_IDS.content,
                                     tagName: 'strong',
                                     value: 'KulManager',
                                 },
                                 {
-                                    id: '1.2.2',
-                                    value: ' is automatically instanced as a singleton by the first component loaded inside the DOM.',
+                                    id: DOC_IDS.content,
+                                    value: ' is instantiated as a singleton by the first component loaded into the DOM.',
                                 },
                             ],
-                            id: '1.2',
+                            id: DOC_IDS.paragraph,
                             value: '',
                         },
                         {
                             children: [
                                 {
-                                    id: '1.3.1',
-                                    value: "There are a few default behaviors of the library which can be altered. In order to do so, it's possible to define a custom property on the ",
+                                    id: DOC_IDS.content,
+                                    value: 'Several default behaviors of the library can be modified. To achieve this, you can define a custom property on the ',
                                 },
                                 {
-                                    id: '1.3.2',
+                                    id: DOC_IDS.content,
                                     tagName: 'strong',
                                     value: 'documentElement',
                                 },
                                 {
-                                    id: '1.3.3',
-                                    value: ' named ',
+                                    id: DOC_IDS.content,
+                                    value: ' called ',
                                 },
                                 {
-                                    id: '1.3.4',
+                                    id: DOC_IDS.content,
                                     tagName: 'strong',
                                     value: 'ketchupLiteInit',
                                 },
                                 {
-                                    id: '1.3.5',
-                                    value: ' before the body of the document.',
+                                    id: DOC_IDS.content,
+                                    value: ' before the document body.',
                                 },
                             ],
-                            id: '1.3',
+                            id: DOC_IDS.paragraph,
                             value: '',
                         },
                         {
                             children: [
                                 {
-                                    id: '1.4.1',
-                                    value: "For example, let's say you wish to load Ketchup Lite with the 'Night' theme enabled.",
+                                    id: DOC_IDS.content,
+                                    value: "For instance, suppose you want to load Ketchup Lite with the 'Night' theme enabled.",
                                 },
                                 {
-                                    id: '1.4.2',
+                                    id: DOC_IDS.content,
                                     tagName: 'strong',
-                                    value: 'This is all you need to do inside a script tag contained by the head tag:',
+                                    value: 'This is all you need to do within a script tag in the head tag:',
                                 },
+                                DOC_NODES.hiddenSeparator,
                                 {
                                     cells: {
                                         kulCode: {
@@ -87,309 +89,188 @@ export const MANAGER_DATA: KulArticleDataset = {
                                             value: "const dom = document.documentElement;\ndom.ketchupLiteInit = {\n   theme: { name: 'night' },\n};",
                                         },
                                     },
-                                    id: '1.4.3',
+                                    id: DOC_IDS.content,
                                 },
                             ],
-                            id: '1.4',
+                            id: DOC_IDS.paragraph,
                             value: '',
                         },
                     ],
                 },
                 {
-                    id: '2',
+                    id: DOC_IDS.section,
                     value: 'Initialization Settings',
                     children: [
                         {
                             children: [
                                 {
-                                    id: '2.1.1',
-                                    cssStyle: DOC_STYLES.monoPrimaryContent,
-                                    tagName: 'strong',
-                                    value: 'assetsPath (string)',
-                                },
-                                {
-                                    id: '2.1.2',
-                                    value: ': sets the URL where static assets used by the library are located, such as SVGs.',
+                                    id: DOC_IDS.content,
+                                    value: 'This list includes all initialization parameters for the KulManager singleton.',
                                 },
                             ],
-                            id: '2.1',
+                            id: DOC_IDS.paragraph,
                             value: '',
                         },
+                        DOC_NODES.separator,
+                        SHOWCASE_DOC.create.paragraph.asSimpleListEntry(
+                            'assetsPath (string)',
+                            ": sets the URL where the library's static assets, such as SVGs, are stored."
+                        ),
+                        SHOWCASE_DOC.create.paragraph.asSimpleListEntry(
+                            'autoSetLocalization (boolean)',
+                            ': when true, the library automatically configures KulLanguage and KulMath locales to align with KulDates.'
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
+                            'dates',
+                            [
+                                {
+                                    title: 'locale (string)',
+                                    description:
+                                        ': sets the locale for time and date-related functionalities within the library.',
+                                },
+                            ]
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
+                            'debug',
+                            [
+                                {
+                                    title: 'active (boolean)',
+                                    description:
+                                        ': determines whether the debug mode is enabled.',
+                                },
+                                {
+                                    title: 'autoPrint (boolean)',
+                                    description:
+                                        ': specifies whether the debug widget automatically prints new logs.',
+                                },
+                                {
+                                    title: 'logLimit (number)',
+                                    description:
+                                        ': sets the maximum number of debug logs to retain.',
+                                },
+                            ]
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
+                            'language',
+                            [
+                                {
+                                    title: 'list (JSON)',
+                                    description:
+                                        ': provides a custom list of languages.',
+                                },
+                                {
+                                    title: 'name (string)',
+                                    description:
+                                        ': specifies the current language used by the library.',
+                                },
+                            ]
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
+                            'math',
+                            [
+                                {
+                                    title: 'locale (string)',
+                                    description:
+                                        ': sets the locale for mathematical and financial operations within the library.',
+                                },
+                            ]
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
+                            'scrollOnHover',
+                            [
+                                {
+                                    title: 'delay (number)',
+                                    description:
+                                        ': specifies the delay before initiating scrolling on hover.',
+                                },
+                                {
+                                    title: 'step (number)',
+                                    description:
+                                        ': sets the scrolling increment in pixels.',
+                                },
+                            ]
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
+                            'theme',
+                            [
+                                {
+                                    title: 'name (string)',
+                                    description:
+                                        ': provides a custom list of themes.',
+                                },
+                                {
+                                    title: 'step (number)',
+                                    description:
+                                        ": sets the library's initial theme.",
+                                },
+                            ]
+                        ),
+                    ],
+                },
+                {
+                    id: DOC_IDS.section,
+                    value: 'Utility functions',
+                    children: [
                         {
                             children: [
                                 {
-                                    id: '2.2.1',
-                                    cssStyle: DOC_STYLES.monoPrimaryContent,
-                                    tagName: 'strong',
-                                    value: 'autoSetLocalization (boolean)',
-                                },
-                                {
-                                    id: '2.2.2',
-                                    value: ':  when true, the library automatically sets KulLanguage and KulMath locales to KulDates.',
+                                    id: DOC_IDS.content,
+                                    value: 'KulManager provides several utility functions available for application use.',
                                 },
                             ],
-                            id: '2.2',
+                            id: DOC_IDS.paragraph,
                             value: '',
                         },
-                        {
-                            children: [
+                        DOC_NODES.separator,
+                        SHOWCASE_DOC.create.paragraph.asListEntry(
+                            'addClickCallback',
+                            'KulManager listens for click events on the document element. This utility function adds a new callback to the "click callbacks" set, which are executed when an element is located in the DOM tree of the event target.',
+                            [
                                 {
-                                    id: '2.3.1',
-                                    value: '- ',
+                                    name: 'cb',
+                                    type: 'KulManagerClickCb',
+                                    description: 'The callback to be added.',
                                 },
                                 {
-                                    cssStyle: DOC_STYLES.monoPrimaryContent,
-                                    id: '2.3.2',
-                                    tagName: 'strong',
-                                    value: 'locale(string)',
+                                    name: 'async?',
+                                    type: 'boolean',
+                                    description:
+                                        'If true, the callback is added asynchronously to prevent immediate execution if added during a click event.',
                                 },
+                            ]
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asListEntry(
+                            'removeClickCallback',
+                            'Removes the given click callback from the set of "click callbacks".',
+                            [
                                 {
-                                    id: '2.3.3',
-                                    value: ': sets the locale of the library in regard to time and dates.',
+                                    name: 'cb',
+                                    type: 'KulManagerClickCb',
+                                    description:
+                                        'The callback to remove from the set.',
                                 },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3Large,
-                            id: '2.3',
-                            value: 'dates',
-                        },
-                        {
-                            children: [
+                            ]
+                        ),
+                        DOC_NODES.hiddenSeparator,
+                        SHOWCASE_DOC.create.paragraph.asListEntry(
+                            'setLibraryLocalization',
+                            'Sets both locale and language library-wide.',
+                            [
                                 {
-                                    children: [
-                                        {
-                                            id: '2.4.1.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.4.1.2',
-                                            tagName: 'strong',
-                                            value: 'active(boolean)',
-                                        },
-                                        {
-                                            id: '2.4.1.3',
-                                            value: ': sets whether the debug is active or not.',
-                                        },
-                                    ],
-                                    id: '2.4.1',
-                                    value: '',
+                                    name: 'locale',
+                                    type: 'KulDatesLocales',
+                                    description:
+                                        'The locale to set (must be supported by the library).',
                                 },
-                                {
-                                    children: [
-                                        {
-                                            id: '2.4.2.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.4.2.2',
-                                            tagName: 'strong',
-                                            value: 'autoPrint(boolean)',
-                                        },
-                                        {
-                                            id: '2.4.2.3',
-                                            value: ': sets whether the debug widget automatically print new logs.',
-                                        },
-                                    ],
-                                    id: '2.4.2',
-                                    value: '',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            id: '2.4.3.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.4.3.2',
-                                            tagName: 'strong',
-                                            value: 'logLimit(number)',
-                                        },
-                                        {
-                                            id: '2.4.3.3',
-                                            value: ': sets the maximum number of debug logs to store.',
-                                        },
-                                    ],
-                                    id: '2.4.3',
-                                    value: '',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3Large,
-                            id: '2.4',
-                            value: 'debug',
-                        },
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '2.5.1.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.5.1.2',
-                                            tagName: 'strong',
-                                            value: 'list(JSON)',
-                                        },
-                                        {
-                                            id: '2.5.1.3',
-                                            value: ': sets a custom list of languages.',
-                                        },
-                                    ],
-                                    id: '2.5.1',
-                                    value: '',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            id: '2.5.2.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.5.2.2',
-                                            tagName: 'strong',
-                                            value: 'name(string)',
-                                        },
-                                        {
-                                            id: '2.5.2.3',
-                                            value: ": sets the library's current language.",
-                                        },
-                                    ],
-                                    id: '2.5.2',
-                                    value: '',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3Large,
-                            id: '2.6',
-                            value: 'language',
-                        },
-                        {
-                            children: [
-                                {
-                                    id: '2.3.1',
-                                    value: '- ',
-                                },
-                                {
-                                    cssStyle: DOC_STYLES.monoPrimaryContent,
-                                    id: '2.3.2',
-                                    tagName: 'strong',
-                                    value: 'locale(string)',
-                                },
-                                {
-                                    id: '2.3.3',
-                                    value: ':  sets the locale of the library in regard to math and amounts.',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3Large,
-                            id: '2.3',
-                            value: 'math',
-                        },
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '2.6.1.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.6.1.2',
-                                            tagName: 'strong',
-                                            value: 'delay(number)',
-                                        },
-                                        {
-                                            id: '2.6.1.3',
-                                            value: ': sets the delay after which the scroll on hover starts.',
-                                        },
-                                    ],
-                                    id: '2.6.1',
-                                    value: '',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            id: '2.6.2.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.6.2.2',
-                                            tagName: 'strong',
-                                            value: 'step(number)',
-                                        },
-                                        {
-                                            id: '2.6.2.3',
-                                            value: ': sets the step size in pixel of each scroll.',
-                                        },
-                                    ],
-                                    id: '2.6.2',
-                                    value: '',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3Large,
-                            id: '2.7',
-                            value: 'scrollOnHover',
-                        },
-                        {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '2.7.1.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.7.1.2',
-                                            tagName: 'strong',
-                                            value: 'list(JSON)',
-                                        },
-                                        {
-                                            id: '2.7.1.3',
-                                            value: ': sets a custom list of themes.',
-                                        },
-                                    ],
-                                    id: '2.7.1',
-                                    value: '',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            id: '2.7.2.1',
-                                            value: '- ',
-                                        },
-                                        {
-                                            cssStyle:
-                                                DOC_STYLES.monoPrimaryContent,
-                                            id: '2.7.2.2',
-                                            tagName: 'strong',
-                                            value: 'name(string)',
-                                        },
-                                        {
-                                            id: '2.7.2.3',
-                                            value: ': sets the initial theme of the library.',
-                                        },
-                                    ],
-                                    id: '2.7.2',
-                                    value: '',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3Large,
-                            id: '2.8',
-                            value: 'theme',
-                        },
+                            ]
+                        ),
                     ],
                 },
             ],
