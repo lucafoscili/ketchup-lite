@@ -151,6 +151,39 @@ export class Documentation {
         },
     };
     create = {
+        component: {
+            overview: (componentName: string, description: string) => {
+                return {
+                    children: [
+                        {
+                            children: [
+                                {
+                                    children: [
+                                        {
+                                            id: 'content',
+                                            value: 'The ',
+                                        },
+                                        {
+                                            id: 'content',
+                                            tagName: 'strong',
+                                            value: componentName,
+                                        },
+                                        {
+                                            id: 'content',
+                                            value: description,
+                                        },
+                                    ],
+                                    id: 'content-wrapper',
+                                },
+                            ],
+                            id: 'paragraph',
+                        },
+                    ],
+                    id: 'section',
+                    value: 'Overview',
+                };
+            },
+        },
         paragraph: {
             asBulletListEntry: (
                 title: string,
