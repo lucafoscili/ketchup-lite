@@ -16,6 +16,7 @@ import {
     KulCardProps,
     KulCardEvent,
     KulCardEventPayload,
+    KulCardAdapter,
 } from './kul-card-declarations';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
@@ -119,11 +120,6 @@ export class KulCard {
         });
     }
 
-    #cardEvent: EventListenerOrEventListenerObject = (e: CustomEvent) => {
-        e.stopPropagation();
-        this.onKulEvent(e, 'kul-event');
-    };
-
     /*-------------------------------------------------*/
     /*           P u b l i c   M e t h o d s           */
     /*-------------------------------------------------*/
@@ -165,17 +161,14 @@ export class KulCard {
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
 
-    /**
-     * Sets the event listeners on the sub-components, in order to properly emit the generic kul-card-event.
-     */
-    registerListeners(): void {
-        const root = this.rootElement.shadowRoot;
-        root.addEventListener('kul-badge-event', this.#cardEvent);
-        root.addEventListener('kul-button-event', this.#cardEvent);
-        root.addEventListener('kul-code-event', this.#cardEvent);
-        root.addEventListener('kul-image-event', this.#cardEvent);
-        root.addEventListener('kul-upload-event', this.#cardEvent);
-    }
+    #adapter: KulCardAdapter = {
+        actions: {
+            dispatchEvent: async (e) => {
+                this.onKulEvent(e, 'kul-event');
+            },
+        },
+        get: { card: () => this, shapes: () => this.shapes },
+    };
 
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
@@ -184,7 +177,6 @@ export class KulCard {
     componentWillLoad() {
         this.#kulManager.language.register(this);
         this.#kulManager.theme.register(this);
-        this.registerListeners();
     }
 
     componentDidLoad() {
@@ -226,10 +218,7 @@ export class KulCard {
                     onContextMenu={(e) => this.onKulEvent(e, 'contextmenu')}
                     onPointerDown={(e) => this.onKulEvent(e, 'pointerdown')}
                 >
-                    {LAYOUT_HUB[this.kulLayout.toLowerCase()](
-                        this,
-                        this.shapes
-                    )}
+                    {LAYOUT_HUB[this.kulLayout.toLowerCase()](this.#adapter)}
                 </div>
             </Host>
         );

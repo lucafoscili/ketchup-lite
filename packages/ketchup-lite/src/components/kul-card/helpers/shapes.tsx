@@ -7,10 +7,12 @@ import {
     KulDataCell,
     KulDataShapes,
 } from '../../../managers/kul-data/kul-data-declarations';
+import { KulCardAdapter } from '../kul-card-declarations';
 
 export const getShapes = {
     button: (
         buttons: Partial<KulDataCell<'button'>>[],
+        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
         defaultProps?: Partial<KulDataCell<'button'>>
     ) => {
         const r: VNode[] = [];
@@ -25,6 +27,7 @@ export const getShapes = {
                 <kul-button
                     data-cy={KulDataCyAttributes.SHAPE}
                     id={`button${index}`}
+                    onKul-button-event={(e) => eventDispatcher(e)}
                     {...toSpread}
                 ></kul-button>
             );
@@ -33,6 +36,7 @@ export const getShapes = {
     },
     chart: (
         charts: Partial<KulDataCell<'chart'>>[],
+        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
         defaultProps?: Partial<KulDataCell<'chart'>>
     ) => {
         const r: VNode[] = [];
@@ -47,6 +51,7 @@ export const getShapes = {
                 <kul-chart
                     data-cy={KulDataCyAttributes.SHAPE}
                     id={`chart${index}`}
+                    onKul-chart-event={(e) => eventDispatcher(e)}
                     {...toSpread}
                 ></kul-chart>
             );
@@ -55,6 +60,7 @@ export const getShapes = {
     },
     chip: (
         chips: Partial<KulDataCell<'chip'>>[],
+        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
         defaultProps?: Partial<KulDataCell<'chip'>>
     ) => {
         const r: VNode[] = [];
@@ -69,6 +75,7 @@ export const getShapes = {
                 <kul-chip
                     data-cy={KulDataCyAttributes.SHAPE}
                     id={`chip${index}`}
+                    onKul-chip-event={(e) => eventDispatcher(e)}
                     {...toSpread}
                 ></kul-chip>
             );
@@ -77,6 +84,7 @@ export const getShapes = {
     },
     image: (
         images: Partial<KulDataCell<'image'>>[],
+        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
         defaultProps?: Partial<KulDataCell<'image'>>
     ) => {
         const r: VNode[] = [];
@@ -91,6 +99,7 @@ export const getShapes = {
                 <kul-image
                     data-cy={KulDataCyAttributes.SHAPE}
                     id={`image${index}`}
+                    onKul-image-event={(e) => eventDispatcher(e)}
                     {...toSpread}
                 ></kul-image>
             );

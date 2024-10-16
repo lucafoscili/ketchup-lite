@@ -1,7 +1,31 @@
-import { KulEventPayload } from '../../types/GenericTypes';
+import {
+    KulComponent,
+    KulComponentName,
+    KulEventPayload,
+    KulEventType,
+} from '../../types/GenericTypes';
 import { KulCard } from './kul-card';
-import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
+import {
+    KulDataDataset,
+    KulDataShapesMap,
+} from '../../managers/kul-data/kul-data-declarations';
 
+/*-------------------------------------------------*/
+/*                  A d a p t e r                  */
+/*-------------------------------------------------*/
+export interface KulCardAdapter {
+    actions: {
+        dispatchEvent: <T extends KulComponent<KulComponentName>>(
+            e: CustomEvent<
+                KulEventPayload<T, KulEventType<T>, CustomEvent | Event>
+            >
+        ) => Promise<void>;
+    };
+    get: {
+        card: () => KulCard;
+        shapes: () => KulDataShapesMap;
+    };
+}
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/

@@ -1,18 +1,17 @@
 import { h, VNode } from '@stencil/core';
-import { KulCard } from './../kul-card';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
-import { KulDataShapesMap } from '../../../managers/kul-data/kul-data-declarations';
-import { KulCardCSSClasses } from './../kul-card-declarations';
+import { KulCardAdapter, KulCardCSSClasses } from './../kul-card-declarations';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
 import { getShapes } from '../helpers/shapes';
 
-export function getLayoutA(
-    component: KulCard,
-    shapes: KulDataShapesMap = {}
-): VNode {
-    const buttons = getShapes.button(shapes.button);
-    const images = getShapes.image(shapes.image, {
+export function getLayoutA(adapter: KulCardAdapter): VNode {
+    const card = adapter.get.card();
+    const shapes = adapter.get.shapes();
+    const eventDispatcher = adapter.actions.dispatchEvent;
+
+    const buttons = getShapes.button(shapes.button, eventDispatcher);
+    const images = getShapes.image(shapes.image, eventDispatcher, {
         htmlProps: {
             className: 'kul-cover',
         },
@@ -36,12 +35,14 @@ export function getLayoutA(
         text.length > descriptionIndex
             ? shapes.text[descriptionIndex].value
             : undefined;
+
+    const className = {
+        [`layout-${card.kulLayout}`]: true,
+        [KulCardCSSClasses.HAS_ACTIONS]: !!buttons.length,
+    };
+
     return (
-        <div
-            class={`layout-${component.kulLayout} ${
-                buttons.length ? KulCardCSSClasses.HAS_ACTIONS : ''
-            }`}
-        >
+        <div class={className}>
             <div
                 class={RIPPLE_SURFACE_CLASS}
                 data-cy={KulDataCyAttributes.RIPPLE}
