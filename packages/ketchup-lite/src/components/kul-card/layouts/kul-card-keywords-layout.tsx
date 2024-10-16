@@ -2,7 +2,7 @@ import { h, VNode } from '@stencil/core';
 import { getShapes } from '../helpers/shapes';
 import { KulCardAdapter } from '../kul-card-declarations';
 
-export function getLayoutB(adapter: KulCardAdapter): VNode {
+export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
     const eventDispatcher = adapter.actions.dispatchEvent;
@@ -28,7 +28,7 @@ export function getLayoutB(adapter: KulCardAdapter): VNode {
         })?.[0] || null;
 
     const className = {
-        [`layout-${card.kulLayout}`]: true,
+        [`${card.kulLayout}-layout`]: true,
     };
 
     return (

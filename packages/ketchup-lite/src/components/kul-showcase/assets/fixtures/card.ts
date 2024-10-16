@@ -5,27 +5,7 @@ import { KulCardLayout } from '../../../kul-card/kul-card-declarations';
 export const CARD_KULDATA_FACTORY: {
     [K in KulCardLayout]: () => KulDataDataset;
 } = {
-    a: () => {
-        return {
-            nodes: [
-                {
-                    cells: {
-                        1: { value: 'Title' },
-                        2: { value: 'Subtitle' },
-                        3: { value: 'Description' },
-                        kulImage: {
-                            shape: 'image',
-                            value: getAssetPath(
-                                `./assets/media/color_splash.jpg`
-                            ),
-                        },
-                    },
-                    id: '1',
-                },
-            ],
-        };
-    },
-    b: () => {
+    keywords: () => {
         return {
             nodes: [
                 {
@@ -147,6 +127,26 @@ export const CARD_KULDATA_FACTORY: {
                             kulStyling: 'flat',
                             shape: 'button',
                             value: '',
+                        },
+                    },
+                    id: '1',
+                },
+            ],
+        };
+    },
+    material: () => {
+        return {
+            nodes: [
+                {
+                    cells: {
+                        1: { value: 'Title' },
+                        2: { value: 'Subtitle' },
+                        3: { value: 'Description' },
+                        kulImage: {
+                            shape: 'image',
+                            value: getAssetPath(
+                                `./assets/media/color_splash.jpg`
+                            ),
                         },
                     },
                     id: '1',

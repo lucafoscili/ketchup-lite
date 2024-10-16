@@ -4,6 +4,7 @@ import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { CardExample } from './kul-showcase-card-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { KulCardLayout } from '../../../kul-card/kul-card-declarations';
 
 @Component({
     tag: 'kul-showcase-card',
@@ -52,7 +53,7 @@ export class KulShowcaseCard {
                                                 this.#dynamicExamples.push(el);
                                             }
                                         }}
-                                        kulLayout={k1}
+                                        kulLayout={k1 as KulCardLayout}
                                         {...props}
                                     ></kul-card>
                                 </div>
@@ -63,7 +64,7 @@ export class KulShowcaseCard {
                 elements.push(
                     <div class="grid-container" part="grid-container">
                         <div class="grid-title" part="grid-title">
-                            Layout {k1}
+                            {k1} layout
                         </div>
                         <div class="grid" part="grid">
                             {layoutWrapper}

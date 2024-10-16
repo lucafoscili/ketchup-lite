@@ -18,34 +18,34 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCard'> =
 const TAG_NAME: KulComponentTag<'KulCard'> = 'kul-card';
 
 export const CARD_EXAMPLES: CardData = {
-    a: {
+    keywords: {
         image: {
             ['data-description']: 'Card with custom style',
             kulSizeX: '320px',
             kulSizeY: '320px',
-            kulData: CARD_KULDATA_FACTORY.a(),
+            kulData: CARD_KULDATA_FACTORY.keywords(),
         },
         style: {
             ['data-description']: 'Card with custom style',
             ['data-dynamic']: 'custom',
             kulSizeX: '320px',
             kulSizeY: '320px',
-            kulData: CARD_KULDATA_FACTORY.a(),
+            kulData: CARD_KULDATA_FACTORY.keywords(),
         },
     },
-    b: {
+    material: {
         image: {
             ['data-description']: 'Card with custom style',
             kulSizeX: '320px',
             kulSizeY: '320px',
-            kulData: CARD_KULDATA_FACTORY.b(),
+            kulData: CARD_KULDATA_FACTORY.material(),
         },
         style: {
             ['data-description']: 'Card with custom style',
             ['data-dynamic']: 'custom',
             kulSizeX: '320px',
             kulSizeY: '320px',
-            kulData: CARD_KULDATA_FACTORY.b(),
+            kulData: CARD_KULDATA_FACTORY.material(),
         },
     },
 };

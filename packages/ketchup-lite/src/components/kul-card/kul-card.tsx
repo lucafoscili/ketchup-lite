@@ -17,6 +17,7 @@ import {
     KulCardEvent,
     KulCardEventPayload,
     KulCardAdapter,
+    KulCardLayout,
 } from './kul-card-declarations';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
@@ -71,9 +72,10 @@ export class KulCard {
     @Prop({ mutable: true }) kulData: KulDataDataset = null;
     /**
      * Sets the layout.
-     * @default "a"
+     * @default "material"
      */
-    @Prop({ mutable: true, reflect: true }) kulLayout = 'a';
+    @Prop({ mutable: true, reflect: true }) kulLayout: KulCardLayout =
+        'material';
     /**
      * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
      * @default "100%"

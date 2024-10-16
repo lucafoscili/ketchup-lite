@@ -1,7 +1,13 @@
-import { KulCardPropsInterface } from '../../../kul-card/kul-card-declarations';
+import {
+    KulCardLayout,
+    KulCardPropsInterface,
+} from '../../../kul-card/kul-card-declarations';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 
-export const CARD_CATEGORIES_KEYS = ['a', 'b'] as const;
+export const CARD_CATEGORIES_KEYS: KulCardLayout[] = [
+    'keywords',
+    'material',
+] as const;
 
 export const CARD_EXAMPLES_KEYS = ['image', 'style'] as const;
 
