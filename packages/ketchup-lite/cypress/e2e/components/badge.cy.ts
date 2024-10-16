@@ -5,7 +5,7 @@ import {
     KulBadgePropsInterface,
 } from '../../../src/components/kul-badge/kul-badge-declarations';
 import { BADGE_EXAMPLES_KEYS } from './../../../src/components/kul-showcase/components/badge/kul-showcase-badge-declarations';
-import { DynamicExampleManager } from '../../../src/components/kul-showcase/kul-showcase-utils';
+import { DynamicExampleManager } from '../../../src/components/kul-showcase/helpers/kul-showcase-dyn-sample';
 import { KulImagePropsInterface } from '../../../src/components';
 import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
