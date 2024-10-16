@@ -8,7 +8,7 @@ import { KulArticleDataset } from '../../../kul-article/kul-article-declarations
 import {
     HEADER_IFRAME_MOCK,
     HEADER_IFRAME_MOCK_STYLE,
-} from '../../assets/mock-ups/header';
+} from '../../assets/fixtures/header';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import { DOC_IDS } from '../../kul-showcase-data';
 import { HeaderData } from './kul-showcase-header-declarations';

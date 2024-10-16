@@ -31,6 +31,50 @@ export const getShapes = {
         }
         return r;
     },
+    chart: (
+        charts: Partial<KulDataCell<'chart'>>[],
+        defaultProps?: Partial<KulDataCell<'chart'>>
+    ) => {
+        const r: VNode[] = [];
+        for (let index = 0; charts && index < charts.length; index++) {
+            const props = charts[index];
+            const toSpread = {};
+            if (defaultProps) {
+                decorateSpreader(toSpread, defaultProps);
+            }
+            decorateSpreader(toSpread, props);
+            r.push(
+                <kul-chart
+                    data-cy={KulDataCyAttributes.SHAPE}
+                    id={`chart${index}`}
+                    {...toSpread}
+                ></kul-chart>
+            );
+        }
+        return r;
+    },
+    chip: (
+        chips: Partial<KulDataCell<'chip'>>[],
+        defaultProps?: Partial<KulDataCell<'chip'>>
+    ) => {
+        const r: VNode[] = [];
+        for (let index = 0; chips && index < chips.length; index++) {
+            const props = chips[index];
+            const toSpread = {};
+            if (defaultProps) {
+                decorateSpreader(toSpread, defaultProps);
+            }
+            decorateSpreader(toSpread, props);
+            r.push(
+                <kul-chip
+                    data-cy={KulDataCyAttributes.SHAPE}
+                    id={`chip${index}`}
+                    {...toSpread}
+                ></kul-chip>
+            );
+        }
+        return r;
+    },
     image: (
         images: Partial<KulDataCell<'image'>>[],
         defaultProps?: Partial<KulDataCell<'image'>>

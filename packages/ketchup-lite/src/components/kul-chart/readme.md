@@ -72,11 +72,13 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-card](../kul-card)
  - [kul-showcase-chart](../kul-showcase/components/chart)
 
 ### Graph
 ```mermaid
 graph TD;
+  kul-card --> kul-chart
   kul-showcase-chart --> kul-chart
   style kul-chart fill:#f9f,stroke:#333,stroke-width:4px
 ```

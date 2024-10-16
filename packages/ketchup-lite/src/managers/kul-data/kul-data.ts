@@ -61,7 +61,9 @@ export class KulData {
             const shapes: KulDataShapesMap = {
                 badge: [],
                 button: [],
+                chart: [],
                 chat: [],
+                chip: [],
                 code: [],
                 image: [],
                 number: [],
@@ -90,9 +92,19 @@ export class KulData {
                                     extracted as KulDataCell<'button'>
                                 );
                                 break;
+                            case 'chart':
+                                shapes.chart.push(
+                                    extracted as KulDataCell<'chart'>
+                                );
+                                break;
                             case 'chat':
                                 shapes.chat.push(
                                     extracted as KulDataCell<'chat'>
+                                );
+                                break;
+                            case 'chip':
+                                shapes.chip.push(
+                                    extracted as KulDataCell<'chip'>
                                 );
                                 break;
                             case 'code':

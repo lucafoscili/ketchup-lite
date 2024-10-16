@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-16T16:41:11",
+  "timestamp": "2024-10-16T20:26:23",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -2187,11 +2187,15 @@
       ],
       "dependencies": [
         "kul-button",
+        "kul-chart",
+        "kul-chip",
         "kul-image"
       ],
       "dependencyGraph": {
         "kul-card": [
           "kul-button",
+          "kul-chart",
+          "kul-chip",
           "kul-image"
         ],
         "kul-button": [
@@ -2716,10 +2720,14 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-card",
         "kul-showcase-chart"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "kul-card": [
+          "kul-chart"
+        ],
         "kul-showcase-chart": [
           "kul-chart"
         ]
@@ -3779,11 +3787,15 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-card",
         "kul-messenger",
         "kul-showcase-chip"
       ],
       "dependencies": [],
       "dependencyGraph": {
+        "kul-card": [
+          "kul-chip"
+        ],
         "kul-messenger": [
           "kul-chip"
         ],
@@ -7148,6 +7160,8 @@
         ],
         "kul-card": [
           "kul-button",
+          "kul-chart",
+          "kul-chip",
           "kul-image"
         ],
         "kul-button": [
@@ -7433,6 +7447,8 @@
         ],
         "kul-card": [
           "kul-button",
+          "kul-chart",
+          "kul-chip",
           "kul-image"
         ],
         "kul-button": [

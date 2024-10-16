@@ -8,7 +8,7 @@ import { KulArticleDataset } from '../../../kul-article/kul-article-declarations
 import {
     DRAWER_IFRAME_MOCK,
     DRAWER_IFRAME_MOCK_STYLE,
-} from '../../assets/mock-ups/drawer';
+} from '../../assets/fixtures/drawer';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import { DOC_IDS } from '../../kul-showcase-data';
 import { DrawerData } from './kul-showcase-drawer-declarations';

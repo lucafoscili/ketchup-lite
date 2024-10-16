@@ -52,6 +52,7 @@ export class KulShowcaseCard {
                                                 this.#dynamicExamples.push(el);
                                             }
                                         }}
+                                        kulLayout={k1}
                                         {...props}
                                     ></kul-card>
                                 </div>

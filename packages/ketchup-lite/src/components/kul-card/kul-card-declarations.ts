@@ -37,4 +37,4 @@ export interface KulCardPropsInterface {
     kulSizeY?: string;
     kulStyle?: string;
 }
-export type KulCardLayout = 'a';
+export type KulCardLayout = 'a' | 'b';

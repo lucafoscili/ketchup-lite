@@ -31,6 +31,8 @@ graph TD;
   kul-showcase-card --> kul-card
   kul-showcase-card --> kul-article
   kul-card --> kul-button
+  kul-card --> kul-chart
+  kul-card --> kul-chip
   kul-card --> kul-image
   kul-button --> kul-image
   kul-button --> kul-list

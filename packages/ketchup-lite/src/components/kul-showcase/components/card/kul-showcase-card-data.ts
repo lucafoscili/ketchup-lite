@@ -9,6 +9,7 @@ import {
     KulComponentTag,
 } from '../../../../types/GenericTypes';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { CARD_KULDATA_FACTORY } from '../../assets/fixtures/card';
 
 const COMPONENT_NAME: KulComponentName = 'KulCard';
 const EVENT_NAME: KulComponentEventName<'KulCard'> = 'kul-card-event';
@@ -22,46 +23,29 @@ export const CARD_EXAMPLES: CardData = {
             ['data-description']: 'Card with custom style',
             kulSizeX: '320px',
             kulSizeY: '320px',
-            kulData: {
-                nodes: [
-                    {
-                        cells: {
-                            1: { value: 'Title' },
-                            2: { value: 'Subtitle' },
-                            3: { value: 'Description' },
-                            kulImage: {
-                                shape: 'image',
-                                value: getAssetPath(
-                                    `./assets/media/color_splash.jpg`
-                                ),
-                            },
-                        },
-                        id: '1',
-                    },
-                ],
-            },
+            kulData: CARD_KULDATA_FACTORY.a(),
         },
         style: {
             ['data-description']: 'Card with custom style',
             ['data-dynamic']: 'custom',
             kulSizeX: '320px',
             kulSizeY: '320px',
-            kulData: {
-                nodes: [
-                    {
-                        cells: {
-                            1: { value: 'Title' },
-                            2: { value: 'Subtitle' },
-                            3: { value: 'Description' },
-                            kulImage: {
-                                shape: 'image',
-                                value: 'widgets',
-                            },
-                        },
-                        id: '1',
-                    },
-                ],
-            },
+            kulData: CARD_KULDATA_FACTORY.a(),
+        },
+    },
+    b: {
+        image: {
+            ['data-description']: 'Card with custom style',
+            kulSizeX: '320px',
+            kulSizeY: '320px',
+            kulData: CARD_KULDATA_FACTORY.b(),
+        },
+        style: {
+            ['data-description']: 'Card with custom style',
+            ['data-dynamic']: 'custom',
+            kulSizeX: '320px',
+            kulSizeY: '320px',
+            kulData: CARD_KULDATA_FACTORY.b(),
         },
     },
 };

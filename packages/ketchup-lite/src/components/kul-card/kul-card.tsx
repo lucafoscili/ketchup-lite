@@ -9,7 +9,6 @@ import {
     Method,
     Prop,
     State,
-    VNode,
 } from '@stencil/core';
 import type { GenericMap, GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -25,7 +24,7 @@ import {
     KulDataDataset,
     KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
-import { getLayoutA } from './layouts/kul-card-layout-a';
+import { LAYOUT_HUB } from './layouts/kul-card-layout-hub';
 
 @Component({
     tag: 'kul-card',
@@ -167,17 +166,6 @@ export class KulCard {
     /*-------------------------------------------------*/
 
     /**
-     * This method will return the virtual node of the card containing the core layout of the card.
-     * @returns {VNode} Virtual node of the card for the specified layout.
-     */
-    getLayout(): Promise<VNode> {
-        switch (this.kulLayout.toLowerCase()) {
-            case 'a':
-            default:
-                return getLayoutA(this, this.shapes);
-        }
-    }
-    /**
      * Sets the event listeners on the sub-components, in order to properly emit the generic kul-card-event.
      */
     registerListeners(): void {
@@ -238,7 +226,10 @@ export class KulCard {
                     onContextMenu={(e) => this.onKulEvent(e, 'contextmenu')}
                     onPointerDown={(e) => this.onKulEvent(e, 'pointerdown')}
                 >
-                    {this.getLayout()}
+                    {LAYOUT_HUB[this.kulLayout.toLowerCase()](
+                        this,
+                        this.shapes
+                    )}
                 </div>
             </Host>
         );

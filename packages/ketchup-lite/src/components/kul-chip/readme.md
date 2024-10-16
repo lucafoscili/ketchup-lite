@@ -110,12 +110,14 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-card](../kul-card)
  - [kul-messenger](../kul-messenger)
  - [kul-showcase-chip](../kul-showcase/components/chip)
 
 ### Graph
 ```mermaid
 graph TD;
+  kul-card --> kul-chip
   kul-messenger --> kul-chip
   kul-showcase-chip --> kul-chip
   style kul-chip fill:#f9f,stroke:#333,stroke-width:4px

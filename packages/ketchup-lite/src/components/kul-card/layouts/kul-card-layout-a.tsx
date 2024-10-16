@@ -7,7 +7,10 @@ import { KulCardCSSClasses } from './../kul-card-declarations';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
 import { getShapes } from '../helpers/shapes';
 
-export function getLayoutA(component: KulCard, shapes: KulDataShapesMap = {}) {
+export function getLayoutA(
+    component: KulCard,
+    shapes: KulDataShapesMap = {}
+): VNode {
     const buttons = getShapes.button(shapes.button);
     const images = getShapes.image(shapes.image, {
         htmlProps: {

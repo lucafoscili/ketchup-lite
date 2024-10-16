@@ -89,12 +89,16 @@ Type: `Promise<void>`
 ### Depends on
 
 - [kul-button](../kul-button)
+- [kul-chart](../kul-chart)
+- [kul-chip](../kul-chip)
 - [kul-image](../kul-image)
 
 ### Graph
 ```mermaid
 graph TD;
   kul-card --> kul-button
+  kul-card --> kul-chart
+  kul-card --> kul-chip
   kul-card --> kul-image
   kul-button --> kul-image
   kul-button --> kul-list

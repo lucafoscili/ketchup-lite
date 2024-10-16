@@ -16,7 +16,7 @@ import {
     THOR_LOCATIONS,
     THOR_OUTFITS,
     THOR_STYLES,
-} from '../../assets/mock-ups/messenger';
+} from '../../assets/fixtures/messenger';
 import { KulMessengerDataset } from '../../../kul-messenger/kul-messenger-declarations';
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
