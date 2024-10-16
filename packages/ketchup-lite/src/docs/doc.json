@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-15T18:37:53",
+  "timestamp": "2024-10-16T16:41:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -7709,7 +7709,7 @@
       }
     },
     {
-      "filePath": "src/components/kul-showcase/layout/drawer/kul-showcase-drawer.tsx",
+      "filePath": "src/components/kul-showcase/components/drawer/kul-showcase-drawer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-drawer",
       "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
@@ -7755,7 +7755,7 @@
       }
     },
     {
-      "filePath": "src/components/kul-showcase/layout/header/kul-showcase-header.tsx",
+      "filePath": "src/components/kul-showcase/components/header/kul-showcase-header.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-header",
       "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
@@ -8177,7 +8177,7 @@
       }
     },
     {
-      "filePath": "src/components/kul-showcase/layout/messenger/kul-showcase-messenger.tsx",
+      "filePath": "src/components/kul-showcase/components/messenger/kul-showcase-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-messenger",
       "readme": "# kul-showcase-messenger\r\n\r\n\r\n\r",

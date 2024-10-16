@@ -5,27 +5,41 @@ import {
     KulComponentTag,
 } from '../../../../types/GenericTypes';
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
+import {
+    HEADER_IFRAME_MOCK,
+    HEADER_IFRAME_MOCK_STYLE,
+} from '../../assets/mock-ups/header';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import { DOC_IDS } from '../../kul-showcase-data';
-import { UploadData } from './kul-showcase-upload-declarations';
+import { HeaderData } from './kul-showcase-header-declarations';
 
-const COMPONENT_NAME: KulComponentName = 'KulUpload';
-const EVENT_NAME: KulComponentEventName<'KulUpload'> = 'kul-upload-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulUpload'> =
-    'KulUploadEventPayload';
-const TAG_NAME: KulComponentTag<'KulUpload'> = 'kul-upload';
+const COMPONENT_NAME: KulComponentName = 'KulHeader';
+const EVENT_NAME: KulComponentEventName<'KulHeader'> = 'kul-header-event';
+const PAYLOAD_NAME: KulComponentEventPayloadName<'KulHeader'> =
+    'KulHeaderEventPayload';
+const TAG_NAME: KulComponentTag<'KulHeader'> = 'kul-header';
 
-export const UPLOAD_EXAMPLES: UploadData = {
+export const HEADER_EXAMPLES: HeaderData = {
     simple: {
-        ['data-description']: 'Simple upload component',
+        ['data-description']: 'Simple header component',
+        iframeProps: {
+            height: '100%',
+            srcDoc: HEADER_IFRAME_MOCK,
+            width: '100%',
+        },
     },
     style: {
-        ['data-description']: 'Upload component with custom style',
+        ['data-description']: 'Header with custom style',
         ['data-dynamic']: 'custom',
+        iframeProps: {
+            height: '100%',
+            srcDoc: HEADER_IFRAME_MOCK_STYLE,
+            width: '100%',
+        },
     },
 };
 
-export const UPLOAD_DOC: KulArticleDataset = {
+export const HEADER_DOC: KulArticleDataset = {
     nodes: [
         {
             id: DOC_IDS.root,
@@ -33,7 +47,7 @@ export const UPLOAD_DOC: KulArticleDataset = {
             children: [
                 SECTION_FACTORY.overview(
                     COMPONENT_NAME,
-                    'is a widget that enables uploading files'
+                    'is a simple element designed to be the header bar of an application, its content is set by a slot'
                 ),
                 SECTION_FACTORY.usage(COMPONENT_NAME, {
                     tag: TAG_NAME,
@@ -44,24 +58,9 @@ export const UPLOAD_DOC: KulArticleDataset = {
                     PAYLOAD_NAME,
                     [
                         {
-                            type: 'delete',
-                            description:
-                                'emitted when an uploaded file is removed',
-                        },
-                        {
-                            type: 'pointerdown',
-                            description:
-                                'emitted when as soon as the component is touched/clicked (before the click event)',
-                        },
-                        {
                             type: 'ready',
                             description:
                                 'emitted when the component completes its first complete lifecycle',
-                        },
-                        {
-                            type: 'upload',
-                            description:
-                                'emitted when a new file has been uploaded',
                         },
                     ],
                     EVENT_NAME

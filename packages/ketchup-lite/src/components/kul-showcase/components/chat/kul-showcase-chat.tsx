@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { CHAT_DOC, CHAT_EXAMPLES } from './kul-showcase-chat-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { ChatExample } from './kul-showcase-chat-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

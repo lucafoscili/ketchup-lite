@@ -93,7 +93,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [kul-showcase-messenger](../kul-showcase/layout/messenger)
+ - [kul-showcase-messenger](../kul-showcase/components/messenger)
 
 ### Depends on
 

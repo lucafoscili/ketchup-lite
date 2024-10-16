@@ -1,6 +1,6 @@
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
+import { PARAGRAPH_FACTORY } from '../../helpers/kul-showcase-paragraph';
 import { DOC_IDS, DOC_NODES } from '../../kul-showcase-data';
-import { SHOWCASE_DOC } from '../../kul-showcase-utils';
 
 export const MANAGER_DATA: KulArticleDataset = {
     nodes: [
@@ -112,105 +112,87 @@ export const MANAGER_DATA: KulArticleDataset = {
                             value: '',
                         },
                         DOC_NODES.separator,
-                        SHOWCASE_DOC.create.paragraph.asSimpleListEntry(
+                        PARAGRAPH_FACTORY.asSimpleListEntry(
                             'assetsPath (string)',
                             ": sets the URL where the library's static assets, such as SVGs, are stored."
                         ),
-                        SHOWCASE_DOC.create.paragraph.asSimpleListEntry(
+                        PARAGRAPH_FACTORY.asSimpleListEntry(
                             'autoSetLocalization (boolean)',
                             ': when true, the library automatically configures KulLanguage and KulMath locales to align with KulDates.'
                         ),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
-                            'dates',
-                            [
-                                {
-                                    title: 'locale (string)',
-                                    description:
-                                        ': sets the locale for time and date-related functionalities within the library.',
-                                },
-                            ]
-                        ),
+                        PARAGRAPH_FACTORY.asBulletListEntry('dates', [
+                            {
+                                title: 'locale (string)',
+                                description:
+                                    ': sets the locale for time and date-related functionalities within the library.',
+                            },
+                        ]),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
-                            'debug',
-                            [
-                                {
-                                    title: 'active (boolean)',
-                                    description:
-                                        ': determines whether the debug mode is enabled.',
-                                },
-                                {
-                                    title: 'autoPrint (boolean)',
-                                    description:
-                                        ': specifies whether the debug widget automatically prints new logs.',
-                                },
-                                {
-                                    title: 'logLimit (number)',
-                                    description:
-                                        ': sets the maximum number of debug logs to retain.',
-                                },
-                            ]
-                        ),
+                        PARAGRAPH_FACTORY.asBulletListEntry('debug', [
+                            {
+                                title: 'active (boolean)',
+                                description:
+                                    ': determines whether the debug mode is enabled.',
+                            },
+                            {
+                                title: 'autoPrint (boolean)',
+                                description:
+                                    ': specifies whether the debug widget automatically prints new logs.',
+                            },
+                            {
+                                title: 'logLimit (number)',
+                                description:
+                                    ': sets the maximum number of debug logs to retain.',
+                            },
+                        ]),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
-                            'language',
-                            [
-                                {
-                                    title: 'list (JSON)',
-                                    description:
-                                        ': provides a custom list of languages.',
-                                },
-                                {
-                                    title: 'name (string)',
-                                    description:
-                                        ': specifies the current language used by the library.',
-                                },
-                            ]
-                        ),
+                        PARAGRAPH_FACTORY.asBulletListEntry('language', [
+                            {
+                                title: 'list (JSON)',
+                                description:
+                                    ': provides a custom list of languages.',
+                            },
+                            {
+                                title: 'name (string)',
+                                description:
+                                    ': specifies the current language used by the library.',
+                            },
+                        ]),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
-                            'math',
-                            [
-                                {
-                                    title: 'locale (string)',
-                                    description:
-                                        ': sets the locale for mathematical and financial operations within the library.',
-                                },
-                            ]
-                        ),
+                        PARAGRAPH_FACTORY.asBulletListEntry('math', [
+                            {
+                                title: 'locale (string)',
+                                description:
+                                    ': sets the locale for mathematical and financial operations within the library.',
+                            },
+                        ]),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
-                            'scrollOnHover',
-                            [
-                                {
-                                    title: 'delay (number)',
-                                    description:
-                                        ': specifies the delay before initiating scrolling on hover.',
-                                },
-                                {
-                                    title: 'step (number)',
-                                    description:
-                                        ': sets the scrolling increment in pixels.',
-                                },
-                            ]
-                        ),
+                        PARAGRAPH_FACTORY.asBulletListEntry('scrollOnHover', [
+                            {
+                                title: 'delay (number)',
+                                description:
+                                    ': specifies the delay before initiating scrolling on hover.',
+                            },
+                            {
+                                title: 'step (number)',
+                                description:
+                                    ': sets the scrolling increment in pixels.',
+                            },
+                        ]),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asBulletListEntry(
-                            'theme',
-                            [
-                                {
-                                    title: 'name (string)',
-                                    description:
-                                        ': provides a custom list of themes.',
-                                },
-                                {
-                                    title: 'step (number)',
-                                    description:
-                                        ": sets the library's initial theme.",
-                                },
-                            ]
-                        ),
+                        PARAGRAPH_FACTORY.asBulletListEntry('theme', [
+                            {
+                                title: 'name (string)',
+                                description:
+                                    ': provides a custom list of themes.',
+                            },
+                            {
+                                title: 'step (number)',
+                                description:
+                                    ": sets the library's initial theme.",
+                            },
+                        ]),
                     ],
                 },
                 {
@@ -228,7 +210,7 @@ export const MANAGER_DATA: KulArticleDataset = {
                             value: '',
                         },
                         DOC_NODES.separator,
-                        SHOWCASE_DOC.create.paragraph.asListEntry(
+                        PARAGRAPH_FACTORY.asListEntry(
                             'addClickCallback',
                             'KulManager listens for click events on the document element. This utility function adds a new callback to the "click callbacks" set, which are executed when an element is located in the DOM tree of the event target.',
                             [
@@ -246,7 +228,7 @@ export const MANAGER_DATA: KulArticleDataset = {
                             ]
                         ),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asListEntry(
+                        PARAGRAPH_FACTORY.asListEntry(
                             'removeClickCallback',
                             'Removes the given click callback from the set of "click callbacks".',
                             [
@@ -259,7 +241,7 @@ export const MANAGER_DATA: KulArticleDataset = {
                             ]
                         ),
                         DOC_NODES.hiddenSeparator,
-                        SHOWCASE_DOC.create.paragraph.asListEntry(
+                        PARAGRAPH_FACTORY.asListEntry(
                             'setLibraryLocalization',
                             'Sets both locale and language library-wide.',
                             [

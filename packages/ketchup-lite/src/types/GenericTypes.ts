@@ -106,7 +106,6 @@ export interface GenericMap {
 export interface GenericObject<T = unknown> {
     [index: string]: T;
 }
-
 export type KulComponentName =
     | 'KulAccordion'
     | 'KulArticle'
@@ -133,8 +132,7 @@ export type KulComponentName =
     | 'KulToast'
     | 'KulTree'
     | 'KulUpload';
-
-export type ComponentElementMap = {
+export type KulComponentElementMap = {
     KulAccordion: HTMLKulAccordionElement;
     KulArticle: HTMLKulArticleElement;
     KulBadge: HTMLKulBadgeElement;
@@ -161,6 +159,33 @@ export type ComponentElementMap = {
     KulTree: HTMLKulTreeElement;
     KulUpload: HTMLKulUploadElement;
 };
+export type KulComponentTagMap = {
+    KulAccordion: 'kul-accordion';
+    KulArticle: 'kul-article';
+    KulBadge: 'kul-badge';
+    KulButton: 'kul-button';
+    KulCard: 'kul-card';
+    KulChart: 'kul-chart';
+    KulChat: 'kul-chat';
+    KulChip: 'kul-chip';
+    KulCode: 'kul-code';
+    KulDrawer: 'kul-drawer';
+    KulHeader: 'kul-header';
+    KulImage: 'kul-image';
+    KulLazy: 'kul-lazy';
+    KulList: 'kul-list';
+    KulMessenger: 'kul-messenger';
+    KulPhotoframe: 'kul-photoframe';
+    KulProgressbar: 'kul-progressbar';
+    KulSpinner: 'kul-spinner';
+    KulSplash: 'kul-splash';
+    KulSwitch: 'kul-switch';
+    KulTabbar: 'kul-tabbar';
+    KulTextfield: 'kul-textfield';
+    KulToast: 'kul-toast';
+    KulTree: 'kul-tree';
+    KulUpload: 'kul-upload';
+};
 interface KulComponentCommon {
     debugInfo: KulDebugComponentInfo;
     getDebugInfo: () => Promise<KulDebugComponentInfo>;
@@ -170,11 +195,17 @@ interface KulComponentCommon {
 }
 export interface KulComponent<T extends KulComponentName>
     extends KulComponentCommon {
-    rootElement: ComponentElementMap[T];
+    rootElement: KulComponentElementMap[T];
 }
-export type KulComponentRootElement = ComponentElementMap[KulComponentName];
+export type KulComponentEventPayloadName<C extends KulComponentName> =
+    `${C}EventPayload`;
+export type KulComponentEventName<C extends KulComponentName> =
+    `${KulComponentTag<C>}-event`;
+export type KulComponentRootElement<C extends KulComponentName> =
+    KulComponentElementMap[C];
+export type KulComponentTag<C extends KulComponentName> = KulComponentTagMap[C];
 export type ActualComponentClasses = {
-    [K in KulComponentName]: ComponentElementMap[K];
+    [K in KulComponentName]: KulComponentElementMap[K];
 }[KulComponentName];
 export enum KulDataCyAttributes {
     BUTTON = 'button',

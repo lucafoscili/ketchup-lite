@@ -32,11 +32,7 @@ export type KulShowcaseDynamicExampleType =
     | 'custom'
     | 'state-colors'
     | 'positions';
-export type KulShowcaseTitle =
-    | 'Components'
-    | 'Framework'
-    | 'Layout'
-    | 'Utilities';
+export type KulShowcaseTitle = 'Components' | 'Framework' | 'Utilities';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/

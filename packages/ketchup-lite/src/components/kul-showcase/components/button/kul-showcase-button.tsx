@@ -3,7 +3,7 @@ import { BUTTON_DOC, BUTTON_EXAMPLES } from './kul-showcase-button-data';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { KulButtonStyling } from '../../../kul-button/kul-button-declarations';
 import { ButtonExample } from './kul-showcase-button-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({

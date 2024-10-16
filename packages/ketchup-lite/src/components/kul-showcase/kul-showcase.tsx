@@ -26,7 +26,6 @@ import {
     KUL_DOC,
     KUL_SHOWCASE_COMPONENTS,
     KUL_SHOWCASE_FRAMEWORK,
-    KUL_SHOWCASE_LAYOUT,
     KUL_SHOWCASE_UTILITIES,
 } from './kul-showcase-data';
 import { KulCardCustomEvent, KulDataDataset } from '../../components';
@@ -68,11 +67,6 @@ export class KulShowcase {
      * @default ""
      */
     @State() currentFramework = '';
-    /**
-     * String keeping track of the current layout component being navigated by the user.
-     * @default ""
-     */
-    @State() currentLayout = '';
     /**
      * String keeping track of the current utility being accessed by the user.
      * @default ""
@@ -159,8 +153,6 @@ export class KulShowcase {
                     return this.currentComponent.toLowerCase();
                 case 'Framework':
                     return this.currentFramework.toLowerCase();
-                case 'Layout':
-                    return this.currentLayout.toLowerCase();
                 case 'Utilities':
                     return this.currentUtility.toLowerCase();
             }
@@ -176,9 +168,7 @@ export class KulShowcase {
                 ? KUL_SHOWCASE_COMPONENTS
                 : type === 'Framework'
                   ? KUL_SHOWCASE_FRAMEWORK
-                  : type === 'Layout'
-                    ? KUL_SHOWCASE_LAYOUT
-                    : KUL_SHOWCASE_UTILITIES;
+                  : KUL_SHOWCASE_UTILITIES;
 
         dataset.nodes.forEach((node) => {
             const kulData: KulDataDataset = {
@@ -218,13 +208,6 @@ export class KulShowcase {
                                 this.currentFramework
                             );
                             break;
-                        case 'Layout':
-                            this.currentLayout = node.id;
-                            console.log(
-                                `Selected layout: `,
-                                this.currentLayout
-                            );
-                            break;
                         case 'Utilities':
                             this.currentUtility = node.id;
                             console.log(
@@ -252,11 +235,9 @@ export class KulShowcase {
         const current =
             title === 'Components'
                 ? this.currentComponent
-                : title === 'Layout'
-                  ? this.currentLayout
-                  : title === 'Utilities'
-                    ? this.currentUtility
-                    : this.currentFramework;
+                : title === 'Utilities'
+                  ? this.currentUtility
+                  : this.currentFramework;
         return (
             <div class="header">
                 <h2>{current ? current : title}</h2>
@@ -268,9 +249,6 @@ export class KulShowcase {
                             switch (title) {
                                 case 'Components':
                                     this.currentComponent = '';
-                                    break;
-                                case 'Layout':
-                                    this.currentLayout = '';
                                     break;
                                 case 'Framework':
                                     this.currentFramework = '';
@@ -356,14 +334,6 @@ export class KulShowcase {
                                 {this.currentComponent
                                     ? this.#comps('Components')
                                     : this.#cards('Components')}
-                            </div>
-                        </div>
-                        <div class="section">
-                            {this.#prepHeader('Layout')}
-                            <div class="flex-wrapper flex-wrapper--responsive">
-                                {this.currentLayout
-                                    ? this.#comps('Layout')
-                                    : this.#cards('Layout')}
                             </div>
                         </div>
                         <div class="section">

@@ -5,27 +5,41 @@ import {
     KulComponentTag,
 } from '../../../../types/GenericTypes';
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
+import {
+    DRAWER_IFRAME_MOCK,
+    DRAWER_IFRAME_MOCK_STYLE,
+} from '../../assets/mock-ups/drawer';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import { DOC_IDS } from '../../kul-showcase-data';
-import { UploadData } from './kul-showcase-upload-declarations';
+import { DrawerData } from './kul-showcase-drawer-declarations';
 
-const COMPONENT_NAME: KulComponentName = 'KulUpload';
-const EVENT_NAME: KulComponentEventName<'KulUpload'> = 'kul-upload-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulUpload'> =
-    'KulUploadEventPayload';
-const TAG_NAME: KulComponentTag<'KulUpload'> = 'kul-upload';
+const COMPONENT_NAME: KulComponentName = 'KulDrawer';
+const EVENT_NAME: KulComponentEventName<'KulDrawer'> = 'kul-drawer-event';
+const PAYLOAD_NAME: KulComponentEventPayloadName<'KulDrawer'> =
+    'KulDrawerEventPayload';
+const TAG_NAME: KulComponentTag<'KulDrawer'> = 'kul-drawer';
 
-export const UPLOAD_EXAMPLES: UploadData = {
+export const DRAWER_EXAMPLES: DrawerData = {
     simple: {
-        ['data-description']: 'Simple upload component',
+        ['data-description']: 'Simple drawer component',
+        iframeProps: {
+            height: '100%',
+            srcDoc: DRAWER_IFRAME_MOCK,
+            width: '100%',
+        },
     },
     style: {
-        ['data-description']: 'Upload component with custom style',
+        ['data-description']: 'Drawer with custom style',
         ['data-dynamic']: 'custom',
+        iframeProps: {
+            height: '100%',
+            srcDoc: DRAWER_IFRAME_MOCK_STYLE,
+            width: '100%',
+        },
     },
 };
 
-export const UPLOAD_DOC: KulArticleDataset = {
+export const DRAWER_DOC: KulArticleDataset = {
     nodes: [
         {
             id: DOC_IDS.root,
@@ -33,7 +47,7 @@ export const UPLOAD_DOC: KulArticleDataset = {
             children: [
                 SECTION_FACTORY.overview(
                     COMPONENT_NAME,
-                    'is a widget that enables uploading files'
+                    'is a simple element designed to be a side menu of an application, its content is set by a slot'
                 ),
                 SECTION_FACTORY.usage(COMPONENT_NAME, {
                     tag: TAG_NAME,
@@ -44,24 +58,17 @@ export const UPLOAD_DOC: KulArticleDataset = {
                     PAYLOAD_NAME,
                     [
                         {
-                            type: 'delete',
-                            description:
-                                'emitted when an uploaded file is removed',
+                            type: 'close',
+                            description: 'emitted when the drawer gets closed',
                         },
                         {
-                            type: 'pointerdown',
-                            description:
-                                'emitted when as soon as the component is touched/clicked (before the click event)',
+                            type: 'open',
+                            description: 'emitted when the drawer gets opened',
                         },
                         {
                             type: 'ready',
                             description:
                                 'emitted when the component completes its first complete lifecycle',
-                        },
-                        {
-                            type: 'upload',
-                            description:
-                                'emitted when a new file has been uploaded',
                         },
                     ],
                     EVENT_NAME
