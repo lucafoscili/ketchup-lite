@@ -8,13 +8,14 @@ import { KulDataCyAttributes } from '../../../types/GenericTypes';
 import { getShapes } from '../helpers/shapes';
 
 export function getLayoutA(component: KulCard, shapes: KulDataShapesMap = {}) {
-    const buttons = getShapes.buttons(shapes.button);
-    const images = getShapes.image(shapes.image, [
-        {
-            kulSizeX: '100%',
-            kulSizeY: '100%',
+    const buttons = getShapes.button(shapes.button);
+    const images = getShapes.image(shapes.image, {
+        htmlProps: {
+            className: 'kul-cover',
         },
-    ]);
+        kulSizeX: '100%',
+        kulSizeY: '100%',
+    });
     const text = getShapes.text(shapes.text);
 
     const coverIndex = 0;

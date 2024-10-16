@@ -139,7 +139,6 @@ export const SECTION_FACTORY = {
         componentName: C,
         code: { data?: string; tag?: KulComponentTag<C> }
     ): KulArticleNode => {
-        const hasCodeShape = !!(code?.data || code?.tag);
         const codeShape = (type: 'json' | 'markup'): KulArticleNode => {
             return {
                 cells: {
@@ -156,6 +155,14 @@ export const SECTION_FACTORY = {
                 value: '',
             };
         };
+
+        const codeNodes: KulArticleNode[] = [];
+        if (code?.tag) {
+            codeNodes.push(codeShape('markup'));
+        }
+        if (code?.data) {
+            codeNodes.push(codeShape('json'));
+        }
 
         return {
             children: [
@@ -180,8 +187,8 @@ export const SECTION_FACTORY = {
                             id: DOC_IDS.contentWrapper,
                             value: '',
                         },
-                        hasCodeShape && {
-                            children: [codeShape('markup'), codeShape('json')],
+                        code && {
+                            children: codeNodes,
                             id: DOC_IDS.contentWrapper,
                             value: '',
                         },

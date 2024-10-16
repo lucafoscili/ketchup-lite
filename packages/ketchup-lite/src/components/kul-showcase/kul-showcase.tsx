@@ -175,7 +175,10 @@ export class KulShowcase {
                 nodes: [
                     {
                         cells: {
-                            icon: { shape: 'image', value: node.icon },
+                            icon: {
+                                shape: 'image',
+                                value: node.icon,
+                            },
                             text1: {
                                 value: this.#kulManager.data.cell.stringify(
                                     node.value
