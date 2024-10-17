@@ -58,6 +58,7 @@ describe('Events', () => {
         cy.checkEvent(card, eventType);
         cy.get('@eventElement')
             .findCyElement(KulDataCyAttributes.RIPPLE)
+            .first()
             .click();
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
