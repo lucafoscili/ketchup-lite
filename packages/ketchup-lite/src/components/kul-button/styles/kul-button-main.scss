@@ -302,6 +302,7 @@
   }
 
   &--dropdown {
+    max-width: max-content;
     min-width: unset;
     padding: 0.5em;
     position: relative;
