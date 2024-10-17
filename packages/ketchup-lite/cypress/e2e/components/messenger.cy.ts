@@ -2,7 +2,7 @@ import {
     KulMessengerProps,
     KulMessengerPropsInterface,
 } from '../../../src/components/kul-messenger/kul-messenger-declarations';
-import { MESSENGER_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/layout/messenger/kul-showcase-messenger-declarations';
+import { MESSENGER_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/messenger/kul-showcase-messenger-declarations';
 
 const messenger = 'messenger';
 const messengerCapitalized =

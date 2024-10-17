@@ -20,7 +20,7 @@ export interface KulArticleNode extends KulDataNode {
 /*-------------------------------------------------*/
 export type KulArticleEvent = 'kul-event' | 'ready';
 export interface KulArticleEventPayload
-    extends KulEventPayload<KulArticle, KulArticleEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulArticle', KulArticleEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

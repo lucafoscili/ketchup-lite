@@ -238,7 +238,7 @@ export class KulImage {
 
     render() {
         if (!this.kulValue) {
-            this.#kulManager.debug.logMessage(this, 'Empty image.');
+            this.#kulManager.debug.logs.new(this, 'Empty image.');
             return;
         }
 

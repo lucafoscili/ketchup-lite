@@ -14,7 +14,7 @@ import { KulArticleDataset, KulArticleEventPayload } from "./components/kul-arti
 import { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
 import { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
-import { KulCardEventPayload } from "./components/kul-card/kul-card-declarations";
+import { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
 import { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 import { XAXisComponentOption, YAXisComponentOption } from "echarts";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
@@ -28,7 +28,6 @@ import { KulListEventPayload } from "./components/kul-list/kul-list-declarations
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
-import { KulShowcaseEventPayload } from "./components/kul-showcase/kul-showcase-declarations";
 import { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 import { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -46,7 +45,7 @@ export { KulArticleDataset, KulArticleEventPayload } from "./components/kul-arti
 export { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
 export { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
-export { KulCardEventPayload } from "./components/kul-card/kul-card-declarations";
+export { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
 export { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
 export { XAXisComponentOption, YAXisComponentOption } from "echarts";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
@@ -60,7 +59,6 @@ export { KulListEventPayload } from "./components/kul-list/kul-list-declarations
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
-export { KulShowcaseEventPayload } from "./components/kul-showcase/kul-showcase-declarations";
 export { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 export { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -261,6 +259,14 @@ export namespace Components {
          */
         "refresh": () => Promise<void>;
         /**
+          * Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.
+          * @param label - Temporary label to display.
+          * @param icon - Temporary icon to display.
+          * @param timeout - Time in ms to wait before restoring previous values.
+          * @returns
+         */
+        "setMessage": (label?: string, icon?: string, timeout?: number) => Promise<void>;
+        /**
           * Sets the component's state.
           * @param value - The new state to be set on the component.
           * @returns
@@ -291,9 +297,9 @@ export namespace Components {
         "kulData": KulDataDataset;
         /**
           * Sets the layout.
-          * @default "a"
+          * @default "material"
          */
-        "kulLayout": string;
+        "kulLayout": KulCardLayout;
         /**
           * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
           * @default "100%"
@@ -1495,10 +1501,6 @@ export interface KulProgressbarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulProgressbarElement;
 }
-export interface KulShowcaseCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLKulShowcaseElement;
-}
 export interface KulSpinnerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulSpinnerElement;
@@ -1821,18 +1823,7 @@ declare global {
         prototype: HTMLKulProgressbarElement;
         new (): HTMLKulProgressbarElement;
     };
-    interface HTMLKulShowcaseElementEventMap {
-        "kul-showcase-event": KulShowcaseEventPayload;
-    }
     interface HTMLKulShowcaseElement extends Components.KulShowcase, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLKulShowcaseElementEventMap>(type: K, listener: (this: HTMLKulShowcaseElement, ev: KulShowcaseCustomEvent<HTMLKulShowcaseElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLKulShowcaseElementEventMap>(type: K, listener: (this: HTMLKulShowcaseElement, ev: KulShowcaseCustomEvent<HTMLKulShowcaseElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLKulShowcaseElement: {
         prototype: HTMLKulShowcaseElement;
@@ -2389,9 +2380,9 @@ declare namespace LocalJSX {
         "kulData"?: KulDataDataset;
         /**
           * Sets the layout.
-          * @default "a"
+          * @default "material"
          */
-        "kulLayout"?: string;
+        "kulLayout"?: KulCardLayout;
         /**
           * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
           * @default "100%"
@@ -2813,10 +2804,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
-        "onKul-showcase-event"?: (event: KulShowcaseCustomEvent<KulShowcaseEventPayload>) => void;
     }
     interface KulShowcaseAccordion {
     }

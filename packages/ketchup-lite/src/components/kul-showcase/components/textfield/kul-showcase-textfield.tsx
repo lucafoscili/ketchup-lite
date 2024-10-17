@@ -3,7 +3,7 @@ import {
     TEXTFIELD_DOC,
     TEXTFIELD_EXAMPLES,
 } from './kul-showcase-textfield-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { KulTextfieldStyling } from '../../../kul-textfield/kul-textfield-declarations';
 import { TextfieldExample } from './kul-showcase-textfield-declarations';

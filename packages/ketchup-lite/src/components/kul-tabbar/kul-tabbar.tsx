@@ -223,7 +223,7 @@ export class KulTabbar {
                 }
             }
         } catch (error) {
-            this.#kulManager.debug.logMessage(
+            this.#kulManager.debug.logs.new(
                 this,
                 'Something went wrong while setting the initial selected value.',
                 'warning'

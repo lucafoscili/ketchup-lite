@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { CHIP_DOC, CHIP_EXAMPLES } from './kul-showcase-chip-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { ChipExample } from './kul-showcase-chip-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

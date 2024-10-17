@@ -79,6 +79,24 @@ Type: `Promise<void>`
 
 
 
+### `setMessage(label?: string, icon?: string, timeout?: number) => Promise<void>`
+
+Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.
+
+#### Parameters
+
+| Name      | Type     | Description                                            |
+| --------- | -------- | ------------------------------------------------------ |
+| `label`   | `string` | - Temporary label to display.                          |
+| `icon`    | `string` | - Temporary icon to display.                           |
+| `timeout` | `number` | - Time in ms to wait before restoring previous values. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `setValue(value: KulButtonState) => Promise<void>`
 
 Sets the component's state.
@@ -123,7 +141,6 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [kul-card](../kul-card)
  - [kul-chat](../kul-chat)
  - [kul-code](../kul-code)
  - [kul-messenger](../kul-messenger)
@@ -145,7 +162,6 @@ graph TD;
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-card --> kul-button
   kul-chat --> kul-button
   kul-code --> kul-button
   kul-messenger --> kul-button

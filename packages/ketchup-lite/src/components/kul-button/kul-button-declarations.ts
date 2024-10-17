@@ -1,6 +1,5 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
-import { KulButton } from './kul-button';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
@@ -13,7 +12,7 @@ export type KulButtonEvent =
     | 'pointerdown'
     | 'ready';
 export interface KulButtonEventPayload
-    extends KulEventPayload<KulButton, KulButtonEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulButton', KulButtonEvent> {
     value: string;
 }
 /*-------------------------------------------------*/

@@ -218,7 +218,7 @@ export class KulChart {
             this.#chartEl = init(this.#chartContainer);
             this.#createChart();
         } else {
-            this.#kulManager.debug.logMessage(
+            this.#kulManager.debug.logs.new(
                 this,
                 "Can't intialize chart without specifiying at least 1 type.",
                 'warning'
@@ -1306,7 +1306,7 @@ export class KulChart {
         if (this.kulData && this.kulData.columns && this.kulData.nodes) {
             this.#initChart();
         } else {
-            this.#kulManager.debug.logMessage(
+            this.#kulManager.debug.logs.new(
                 this,
                 'Not enough data. (' + JSON.stringify(this.kulData) + ')',
                 'informational'

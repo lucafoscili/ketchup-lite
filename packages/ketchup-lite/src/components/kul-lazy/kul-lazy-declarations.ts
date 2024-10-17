@@ -1,12 +1,11 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulLazy } from './kul-lazy';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulLazyEvent = 'kul-event' | 'load' | 'ready';
 export interface KulLazyEventPayload
-    extends KulEventPayload<KulLazy, KulLazyEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulLazy', KulLazyEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

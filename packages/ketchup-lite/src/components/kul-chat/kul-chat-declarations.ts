@@ -1,7 +1,6 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulLLMChoiceMessage } from '../../managers/kul-llm/kul-llm-declarations';
 import { KulManager } from '../../managers/kul-manager/kul-manager';
-import { KulChat } from './kul-chat';
 
 /*-------------------------------------------------*/
 /*                  A d a p t e r                  */
@@ -68,7 +67,7 @@ export interface KulChatAdapter {
 /*-------------------------------------------------*/
 export type KulChatEvent = 'config' | 'polling' | 'ready' | 'update';
 export interface KulChatEventPayload
-    extends KulEventPayload<KulChat, KulChatEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulChat', KulChatEvent> {
     history: string;
     status: KulChatStatus;
 }

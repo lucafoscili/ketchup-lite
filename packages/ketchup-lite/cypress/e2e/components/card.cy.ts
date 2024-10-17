@@ -58,6 +58,7 @@ describe('Events', () => {
         cy.checkEvent(card, eventType);
         cy.get('@eventElement')
             .findCyElement(KulDataCyAttributes.RIPPLE)
+            .first()
             .click();
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
@@ -87,7 +88,7 @@ describe('Methods', () => {
     it(`getProps: check keys against Kul${cardCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(cardTag, {
             kulData: null,
-            kulLayoutNumber: null,
+            kulLayout: null,
             kulSizeX: null,
             kulSizeY: null,
             kulStyle: null,

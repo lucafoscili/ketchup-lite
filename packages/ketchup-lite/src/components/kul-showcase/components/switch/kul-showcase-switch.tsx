@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { SWITCH_DOC, SWITCH_EXAMPLES } from './kul-showcase-switch-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { SwitchExample } from './kul-showcase-switch-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

@@ -2,7 +2,7 @@ import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { BADGE_DOC, BADGE_EXAMPLES } from './kul-showcase-badge-data';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { BadgeExample } from './kul-showcase-badge-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({

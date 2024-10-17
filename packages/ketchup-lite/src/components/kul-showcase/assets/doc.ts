@@ -350,6 +350,16 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<void>",
       },
       {
+        name: "setMessage",
+        docs: "Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature:
+          "(label?: string, icon?: string, timeout?: number) => Promise<void>",
+      },
+      {
         name: "setValue",
         docs: "Sets the component's state.",
         returns: {
@@ -545,7 +555,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulLayout",
         docs: "Sets the layout.",
-        type: "string",
+        type: '"keywords" | "material" | "upload"',
       },
       {
         name: "kulSizeX",
@@ -1326,7 +1336,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulRenderMode",
-        docs: "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
+        docs: "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
         type: '"both" | "props" | "viewport"',
       },
       {
