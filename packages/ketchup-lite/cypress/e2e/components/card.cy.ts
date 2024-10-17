@@ -88,7 +88,7 @@ describe('Methods', () => {
     it(`getProps: check keys against Kul${cardCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(cardTag, {
             kulData: null,
-            kulLayoutNumber: null,
+            kulLayout: null,
             kulSizeX: null,
             kulSizeY: null,
             kulStyle: null,
