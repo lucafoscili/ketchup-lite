@@ -48,6 +48,21 @@ export const CARD_EXAMPLES: CardData = {
             kulData: CARD_KULDATA_FACTORY.material(),
         },
     },
+    upload: {
+        image: {
+            ['data-description']: 'Card with custom style',
+            kulSizeX: '320px',
+            kulSizeY: '320px',
+            kulData: CARD_KULDATA_FACTORY.upload(),
+        },
+        style: {
+            ['data-description']: 'Card with custom style',
+            ['data-dynamic']: 'custom',
+            kulSizeX: '320px',
+            kulSizeY: '320px',
+            kulData: CARD_KULDATA_FACTORY.upload(),
+        },
+    },
 };
 
 export const CARD_DOC: KulArticleDataset = {

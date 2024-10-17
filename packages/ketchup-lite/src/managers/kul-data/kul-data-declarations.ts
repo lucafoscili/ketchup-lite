@@ -11,6 +11,7 @@ import { KulSwitchPropsInterface } from '../../components/kul-switch/kul-switch-
 import { GenericMap } from '../../types/GenericTypes';
 import { KulChartPropsInterface } from '../../components/kul-chart/kul-chart-declarations';
 import { KulChipPropsInterface } from '../../components/kul-chip/kul-chip-declarations';
+import { KulUploadPropsInterface } from '../../components/kul-upload/kul-upload-declarations';
 
 export interface KulDataBaseCell {
     value: string;
@@ -59,23 +60,29 @@ export type KulDataCell<T extends KulDataShapes> = T extends 'badge'
                       value: string;
                       htmlProps?: Partial<HTMLKulImageElement>;
                   }
-                : T extends 'switch'
-                  ? Partial<KulSwitchPropsInterface> & {
-                        shape: 'switch';
-                        value: boolean;
-                        htmlProps?: Partial<HTMLKulSwitchElement>;
+                : T extends 'number'
+                  ? {
+                        shape: 'number';
+                        value: number;
                     }
-                  : T extends 'number'
-                    ? {
-                          shape: 'number';
-                          value: number;
+                  : T extends 'switch'
+                    ? Partial<KulSwitchPropsInterface> & {
+                          shape: 'switch';
+                          value: boolean;
+                          htmlProps?: Partial<HTMLKulSwitchElement>;
                       }
-                    : T extends 'text'
-                      ? {
-                            shape?: 'text';
+                    : T extends 'upload'
+                      ? Partial<KulUploadPropsInterface> & {
+                            shape: 'upload';
                             value: string;
+                            htmlProps?: Partial<HTMLKulUploadElement>;
                         }
-                      : KulDataBaseCell;
+                      : T extends 'text'
+                        ? {
+                              shape?: 'text';
+                              value: string;
+                          }
+                        : KulDataBaseCell;
 export type KulCellNameToShape = {
     kulBadge: 'badge';
     kulButton: 'button';
@@ -84,9 +91,10 @@ export type KulCellNameToShape = {
     kulChip: 'chip';
     kulCode: 'code';
     kulImage: 'image';
-    kulSwitch: 'switch';
     kulNumber: 'number';
+    kulSwitch: 'switch';
     kulText: 'text';
+    kulUpload: 'upload';
 };
 export type KulDataCellFromName<T extends keyof KulCellNameToShape> =
     KulDataCell<KulCellNameToShape[T]>;
@@ -101,6 +109,7 @@ export interface KulDataCellContainer {
     kulSwitch?: KulDataCellFromName<'kulSwitch'>;
     kulNumber?: KulDataCellFromName<'kulNumber'>;
     kulText?: KulDataCellFromName<'kulText'>;
+    kulUpload?: KulDataCellFromName<'kulUpload'>;
 }
 export interface KulDataCellContainer {
     [index: string]: KulDataCell<KulDataShapes>;
@@ -138,7 +147,8 @@ export type KulDataShapes =
     | 'image'
     | 'number'
     | 'switch'
-    | 'text';
+    | 'text'
+    | 'upload';
 export type KulDataShapesMap = {
     [K in KulDataShapes]?: Partial<KulDataCell<K>>[];
 };

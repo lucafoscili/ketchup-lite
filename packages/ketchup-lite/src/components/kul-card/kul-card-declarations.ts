@@ -47,16 +47,16 @@ export enum KulCardCSSClasses {
 /*-------------------------------------------------*/
 export enum KulCardProps {
     kulData = 'The actual data of the card.',
-    kulLayoutNumber = 'Sets the number of the layout.',
+    kulLayout = 'Sets the layout.',
     kulSizeX = 'The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).',
     kulSizeY = 'The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).',
     kulStyle = 'Custom style of the component.',
 }
 export interface KulCardPropsInterface {
     kulData?: KulDataDataset;
-    kulLayoutNumber?: number;
+    kulLayout?: KulCardLayout;
     kulSizeX?: string;
     kulSizeY?: string;
     kulStyle?: string;
 }
-export type KulCardLayout = 'material' | 'keywords';
+export type KulCardLayout = 'keywords' | 'material' | 'upload';

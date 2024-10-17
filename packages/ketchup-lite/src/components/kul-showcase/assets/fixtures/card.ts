@@ -154,4 +154,20 @@ export const CARD_KULDATA_FACTORY: {
             ],
         };
     },
+    upload: () => {
+        return {
+            nodes: [
+                {
+                    cells: {
+                        kulButton: { shape: 'button', value: '' },
+                        kulUpload: {
+                            shape: 'upload',
+                            value: '',
+                        },
+                    },
+                    id: '1',
+                },
+            ],
+        };
+    },
 };

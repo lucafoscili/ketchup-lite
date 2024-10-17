@@ -62,13 +62,13 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     return (
         <div class={className}>
             {chart?.element?.length && (
-                <div class="sub-1 chart">{chart.element[0]}</div>
+                <div class="section-1 chart">{chart.element[0]}</div>
             )}
             {chip?.element?.length && (
-                <div class="sub-2 chip">{chip.element[0]}</div>
+                <div class="section-2 chip">{chip.element[0]}</div>
             )}
             {button?.element?.length && (
-                <div class="sub-3 button">{button.element[0]}</div>
+                <div class="section-3 button">{button.element[0]}</div>
             )}
         </div>
     );

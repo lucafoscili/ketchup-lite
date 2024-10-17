@@ -237,13 +237,11 @@ export type KulComponentTagMap = {
     KulToast: 'kul-toast';
     KulTree: 'kul-tree';
     KulUpload: 'kul-upload';
-}; // Map component names to their respective class types
+};
 export type KulComponentType<T extends KulComponentName> =
     T extends keyof KulComponentClassMap
         ? KulComponentClassMap[T]
         : KulComponentCommon;
-
-// Your existing KulComponent interface, now dynamically typed
 export interface KulComponent<T extends KulComponentName>
     extends KulComponentCommon {
     rootElement: KulComponentElementMap[T];

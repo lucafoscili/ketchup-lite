@@ -69,6 +69,7 @@ export class KulData {
                 number: [],
                 switch: [],
                 text: [],
+                upload: [],
             };
             const nodes = dataset.nodes;
 
@@ -125,6 +126,11 @@ export class KulData {
                             case 'number':
                                 shapes.number.push(
                                     cell as KulDataCell<'number'>
+                                );
+                                break;
+                            case 'upload':
+                                shapes.upload.push(
+                                    extracted as KulDataCell<'upload'>
                                 );
                                 break;
                             case 'text':
