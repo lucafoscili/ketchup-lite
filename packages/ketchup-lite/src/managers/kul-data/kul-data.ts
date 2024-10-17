@@ -29,7 +29,7 @@ export class KulData {
         },
         stringify: (value: unknown) => {
             if (value === null || value === undefined) {
-                return String(value);
+                return String(value).valueOf();
             } else if (value instanceof Date) {
                 return value.toISOString();
             } else if (typeof value === 'object') {
@@ -40,7 +40,7 @@ export class KulData {
                     return '[object Object]';
                 }
             } else {
-                return String(value);
+                return String(value).valueOf();
             }
         },
     };

@@ -3,6 +3,7 @@ import {
     GenericObject,
     KulComponent,
     KulComponentName,
+    KulComponentRootElement,
     KulDataCyAttributes,
     KulEventPayload,
     KulEventType,
@@ -32,14 +33,31 @@ export const getShapes = <
     eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
     defaultProps?: Partial<KulDataCell<S>>,
     defaultCb?: S extends 'text' ? never : ShapeCallback<C, S>
-): VNode[] => {
-    const r: VNode[] = [];
+): {
+    element: VNode[];
+    ref: Array<HTMLDivElement | KulComponentRootElement<C>>;
+} => {
+    const r: {
+        element: VNode[];
+        ref: Array<HTMLDivElement | KulComponentRootElement<C>>;
+    } = { element: [], ref: [] };
 
     switch (shape) {
         case 'text':
             for (let index = 0; items && index < items.length; index++) {
                 const props = items[index].value;
-                r.push(<div id={`text${index}`}>{props}</div>);
+                r.element.push(
+                    <div
+                        id={`text${index}`}
+                        ref={(el) => {
+                            if (el) {
+                                r.ref.push(el);
+                            }
+                        }}
+                    >
+                        {props}
+                    </div>
+                );
             }
             return r;
 
@@ -72,10 +90,15 @@ export const getShapes = <
                     },
                 };
 
-                r.push(
+                r.element.push(
                     <TagName
                         data-cy={KulDataCyAttributes.SHAPE}
                         id={`${shape}${index}`}
+                        ref={(el: KulComponentRootElement<C>) => {
+                            if (el) {
+                                r.ref.push(el);
+                            }
+                        }}
                         {...eventHandler}
                         {...toSpread}
                     ></TagName>
