@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-17T05:42:34",
+  "timestamp": "2024-10-17T17:54:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -1972,10 +1972,10 @@
         },
         {
           "name": "kulLayout",
-          "type": "\"keywords\" | \"material\"",
+          "type": "\"keywords\" | \"material\" | \"upload\"",
           "complexType": {
             "original": "KulCardLayout",
-            "resolved": "\"keywords\" | \"material\"",
+            "resolved": "\"keywords\" | \"material\" | \"upload\"",
             "references": {
               "KulCardLayout": {
                 "location": "import",
@@ -2002,6 +2002,10 @@
             },
             {
               "value": "material",
+              "type": "string"
+            },
+            {
+              "value": "upload",
               "type": "string"
             }
           ],
@@ -5164,7 +5168,7 @@
           "mutable": false,
           "attr": "kul-render-mode",
           "reflectToAttr": false,
-          "docs": "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
+          "docs": "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
           "docsTags": [
             {
               "name": "default",
@@ -12142,7 +12146,7 @@
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
     "src/components/kul-card/kul-card-declarations.ts::KulCardLayout": {
-      "declaration": "export type KulCardLayout = 'material' | 'keywords';",
+      "declaration": "export type KulCardLayout = 'keywords' | 'material' | 'upload';",
       "docstring": "",
       "path": "src/components/kul-card/kul-card-declarations.ts"
     },

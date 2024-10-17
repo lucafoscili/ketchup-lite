@@ -555,7 +555,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulLayout",
         docs: "Sets the layout.",
-        type: '"keywords" | "material"',
+        type: '"keywords" | "material" | "upload"',
       },
       {
         name: "kulSizeX",
@@ -1336,7 +1336,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulRenderMode",
-        docs: "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
+        docs: "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
         type: '"both" | "props" | "viewport"',
       },
       {

@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                               | Type                       | Default      |
-| ----------- | ------------ | ----------------------------------------------------------------------------------------- | -------------------------- | ------------ |
-| `kulData`   | --           | The actual data of the card.                                                              | `KulDataDataset`           | `null`       |
-| `kulLayout` | `kul-layout` | Sets the layout.                                                                          | `"keywords" \| "material"` | `'material'` |
-| `kulSizeX`  | `kul-size-x` | The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).  | `string`                   | `'100%'`     |
-| `kulSizeY`  | `kul-size-y` | The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.). | `string`                   | `'100%'`     |
-| `kulStyle`  | `kul-style`  | Custom style of the component.                                                            | `string`                   | `''`         |
+| Property    | Attribute    | Description                                                                               | Type                                   | Default      |
+| ----------- | ------------ | ----------------------------------------------------------------------------------------- | -------------------------------------- | ------------ |
+| `kulData`   | --           | The actual data of the card.                                                              | `KulDataDataset`                       | `null`       |
+| `kulLayout` | `kul-layout` | Sets the layout.                                                                          | `"keywords" \| "material" \| "upload"` | `'material'` |
+| `kulSizeX`  | `kul-size-x` | The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).  | `string`                               | `'100%'`     |
+| `kulSizeY`  | `kul-size-y` | The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.). | `string`                               | `'100%'`     |
+| `kulStyle`  | `kul-style`  | Custom style of the component.                                                            | `string`                               | `''`         |
 
 
 ## Events

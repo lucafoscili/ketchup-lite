@@ -167,7 +167,7 @@ export class KulCode {
             }
             Prism.highlightElement(this.#el);
         } catch (error) {
-            this.#kulManager.debug.logMessage(
+            this.#kulManager.debug.logs.new(
                 this,
                 'Failed to highlight code:' + error,
                 'error'

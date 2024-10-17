@@ -54,10 +54,7 @@ export class KulLLM {
                     .map((result) => result[0])
                     .map((result) => result.transcript)
                     .join('');
-                kulManager.debug.logMessage(
-                    'KulChat (stt)',
-                    'STT response: ' + transcript
-                );
+                kulManager.debug.logs.new(this, 'STT response: ' + transcript);
                 textarea.setValue(transcript);
                 const isFinal = event.results[event.results.length - 1].isFinal;
                 if (isFinal) {
@@ -79,7 +76,7 @@ export class KulLLM {
         try {
             recognition.start();
         } catch (err) {
-            kulManager.debug.logMessage('KulLLM', 'Error: ' + err, 'error');
+            kulManager.debug.logs.new(this, 'Error: ' + err, 'error');
         }
     }
 }

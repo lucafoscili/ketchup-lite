@@ -516,7 +516,7 @@ export class KulChat {
                 const cb = () => (this.history = parsedValue);
                 this.#updateHistory(cb);
             } catch (error) {
-                this.#kulManager.debug.logMessage(
+                this.#kulManager.debug.logs.new(
                     this,
                     "Couldn't set value for chat history",
                     'warning'

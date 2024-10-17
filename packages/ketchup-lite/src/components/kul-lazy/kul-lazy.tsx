@@ -163,7 +163,7 @@ export class KulLazy {
         ) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    this.#kulManager.debug.logMessage(
+                    this.#kulManager.debug.logs.new(
                         this,
                         'kul-lazy entering the viewport, rendering ' +
                             this.kulComponentName +
