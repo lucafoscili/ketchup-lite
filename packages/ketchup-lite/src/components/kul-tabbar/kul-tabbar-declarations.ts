@@ -3,14 +3,13 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulTabbar } from './kul-tabbar';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulTabbarEvent = 'click' | 'pointerdown' | 'ready';
 export interface KulTabbarEventPayload
-    extends KulEventPayload<KulTabbar, KulTabbarEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulTabbar', KulTabbarEvent> {
     index?: number;
     node?: KulDataNode;
 }

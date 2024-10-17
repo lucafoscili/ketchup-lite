@@ -3,14 +3,13 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulTree } from './kul-tree';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulTreeEvent = 'click' | 'kul-event' | 'pointerdown' | 'ready';
 export interface KulTreeEventPayload
-    extends KulEventPayload<KulTree, KulTreeEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulTree', KulTreeEvent> {
     node?: KulDataNode;
 }
 export interface KulTreeEventArguments {

@@ -1,8 +1,6 @@
 import {
     Component,
     Element,
-    Event,
-    EventEmitter,
     forceUpdate,
     h,
     Host,
@@ -16,8 +14,6 @@ import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declar
 import { getProps } from '../../utils/componentUtils';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
-    KulShowcaseEvent,
-    KulShowcaseEventPayload,
     KulShowcaseProps,
     KulShowcaseTitle,
 } from './kul-showcase-declarations';
@@ -88,30 +84,6 @@ export class KulShowcase {
     /*-------------------------------------------------*/
 
     #kulManager = kulManagerInstance();
-
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
-    @Event({
-        eventName: 'kul-showcase-event',
-        composed: true,
-        cancelable: false,
-        bubbles: true,
-    })
-    kulEvent: EventEmitter<KulShowcaseEventPayload>;
-
-    onKulEvent(e: Event | CustomEvent, eventType: KulShowcaseEvent) {
-        this.kulEvent.emit({
-            comp: this,
-            eventType,
-            id: this.rootElement.id,
-            originalEvent: e,
-        });
-    }
 
     /*-------------------------------------------------*/
     /*           P u b l i c   M e t h o d s           */
@@ -295,10 +267,7 @@ export class KulShowcase {
                         {this.#kulManager.theme.setKulStyle(this)}
                     </style>
                 ) : undefined}
-                <div
-                    id={KUL_WRAPPER_ID}
-                    onClick={(e) => this.onKulEvent(e, 'click')}
-                >
+                <div id={KUL_WRAPPER_ID}>
                     <div class="showcase">
                         <kul-article kulData={KUL_DOC}></kul-article>
                         <div class="link-wrapper">

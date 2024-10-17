@@ -1,7 +1,11 @@
 import { h, VNode } from '@stencil/core';
 import {
     GenericObject,
+    KulComponent,
+    KulComponentName,
     KulDataCyAttributes,
+    KulEventPayload,
+    KulEventType,
 } from '../../../types/GenericTypes';
 import {
     KulDataCell,
@@ -9,111 +13,78 @@ import {
 } from '../../../managers/kul-data/kul-data-declarations';
 import { KulCardAdapter } from '../kul-card-declarations';
 
-export const getShapes = {
-    button: (
-        buttons: Partial<KulDataCell<'button'>>[],
-        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
-        defaultProps?: Partial<KulDataCell<'button'>>
-    ) => {
-        const r: VNode[] = [];
-        for (let index = 0; buttons && index < buttons.length; index++) {
-            const props = buttons[index];
-            const toSpread = {};
-            if (defaultProps) {
-                decorateSpreader(toSpread, defaultProps);
+type ShapeCallback<
+    C extends KulComponentName,
+    S extends KulDataShapes | 'text',
+> = S extends 'text'
+    ? never
+    : (
+          e: CustomEvent<KulEventPayload<C, KulEventType<KulComponent<C>>>>
+      ) => void;
+
+export const getShapes = <
+    C extends KulComponentName,
+    S extends KulDataShapes | 'text',
+>(
+    _component: C,
+    shape: S,
+    items: Partial<KulDataCell<S>>[],
+    eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
+    defaultProps?: Partial<KulDataCell<S>>,
+    defaultCb?: S extends 'text' ? never : ShapeCallback<C, S>
+): VNode[] => {
+    const r: VNode[] = [];
+
+    switch (shape) {
+        case 'text':
+            for (let index = 0; items && index < items.length; index++) {
+                const props = items[index].value;
+                r.push(<div id={`text${index}`}>{props}</div>);
             }
-            decorateSpreader(toSpread, props);
-            r.push(
-                <kul-button
-                    data-cy={KulDataCyAttributes.SHAPE}
-                    id={`button${index}`}
-                    onKul-button-event={(e) => eventDispatcher(e)}
-                    {...toSpread}
-                ></kul-button>
-            );
-        }
-        return r;
-    },
-    chart: (
-        charts: Partial<KulDataCell<'chart'>>[],
-        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
-        defaultProps?: Partial<KulDataCell<'chart'>>
-    ) => {
-        const r: VNode[] = [];
-        for (let index = 0; charts && index < charts.length; index++) {
-            const props = charts[index];
-            const toSpread = {};
-            if (defaultProps) {
-                decorateSpreader(toSpread, defaultProps);
+            return r;
+
+        default:
+            for (let index = 0; items && index < items.length; index++) {
+                const props = items[index];
+                const toSpread = {};
+                if (defaultProps) {
+                    decorateSpreader(
+                        toSpread,
+                        defaultProps as Partial<KulDataCell<KulDataShapes>>
+                    );
+                }
+                decorateSpreader(
+                    toSpread,
+                    props as Partial<KulDataCell<KulDataShapes>>
+                );
+
+                const TagName = 'kul-' + shape;
+                const eventHandler = {
+                    ['onKul-' + shape + '-event']: (
+                        e: CustomEvent<
+                            KulEventPayload<C, KulEventType<KulComponent<C>>>
+                        >
+                    ) => {
+                        if (defaultCb) {
+                            defaultCb(e);
+                        }
+                        eventDispatcher(e);
+                    },
+                };
+
+                r.push(
+                    <TagName
+                        data-cy={KulDataCyAttributes.SHAPE}
+                        id={`${shape}${index}`}
+                        {...eventHandler}
+                        {...toSpread}
+                    ></TagName>
+                );
             }
-            decorateSpreader(toSpread, props);
-            r.push(
-                <kul-chart
-                    data-cy={KulDataCyAttributes.SHAPE}
-                    id={`chart${index}`}
-                    onKul-chart-event={(e) => eventDispatcher(e)}
-                    {...toSpread}
-                ></kul-chart>
-            );
-        }
-        return r;
-    },
-    chip: (
-        chips: Partial<KulDataCell<'chip'>>[],
-        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
-        defaultProps?: Partial<KulDataCell<'chip'>>
-    ) => {
-        const r: VNode[] = [];
-        for (let index = 0; chips && index < chips.length; index++) {
-            const props = chips[index];
-            const toSpread = {};
-            if (defaultProps) {
-                decorateSpreader(toSpread, defaultProps);
-            }
-            decorateSpreader(toSpread, props);
-            r.push(
-                <kul-chip
-                    data-cy={KulDataCyAttributes.SHAPE}
-                    id={`chip${index}`}
-                    onKul-chip-event={(e) => eventDispatcher(e)}
-                    {...toSpread}
-                ></kul-chip>
-            );
-        }
-        return r;
-    },
-    image: (
-        images: Partial<KulDataCell<'image'>>[],
-        eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
-        defaultProps?: Partial<KulDataCell<'image'>>
-    ) => {
-        const r: VNode[] = [];
-        for (let index = 0; images && index < images.length; index++) {
-            const props = images[index];
-            const toSpread = {};
-            if (defaultProps) {
-                decorateSpreader(toSpread, defaultProps);
-            }
-            decorateSpreader(toSpread, props);
-            r.push(
-                <kul-image
-                    data-cy={KulDataCyAttributes.SHAPE}
-                    id={`image${index}`}
-                    onKul-image-event={(e) => eventDispatcher(e)}
-                    {...toSpread}
-                ></kul-image>
-            );
-        }
-        return r;
-    },
-    text: (text: Partial<KulDataCell<'text'>>[]) => {
-        const r: VNode[] = [];
-        for (let index = 0; text && index < text.length; index++) {
-            const props = text[index].value;
-            r.push(<div id={`text${index}`}>{props}</div>);
-        }
-        return text;
-    },
+            break;
+    }
+
+    return r;
 };
 
 const decorateSpreader = (

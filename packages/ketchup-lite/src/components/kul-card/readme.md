@@ -7,13 +7,13 @@
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                               | Type             | Default  |
-| ----------- | ------------ | ----------------------------------------------------------------------------------------- | ---------------- | -------- |
-| `kulData`   | --           | The actual data of the card.                                                              | `KulDataDataset` | `null`   |
-| `kulLayout` | `kul-layout` | Sets the layout.                                                                          | `string`         | `'a'`    |
-| `kulSizeX`  | `kul-size-x` | The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).  | `string`         | `'100%'` |
-| `kulSizeY`  | `kul-size-y` | The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.). | `string`         | `'100%'` |
-| `kulStyle`  | `kul-style`  | Custom style of the component.                                                            | `string`         | `''`     |
+| Property    | Attribute    | Description                                                                               | Type                       | Default      |
+| ----------- | ------------ | ----------------------------------------------------------------------------------------- | -------------------------- | ------------ |
+| `kulData`   | --           | The actual data of the card.                                                              | `KulDataDataset`           | `null`       |
+| `kulLayout` | `kul-layout` | Sets the layout.                                                                          | `"keywords" \| "material"` | `'material'` |
+| `kulSizeX`  | `kul-size-x` | The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).  | `string`                   | `'100%'`     |
+| `kulSizeY`  | `kul-size-y` | The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.). | `string`                   | `'100%'`     |
+| `kulStyle`  | `kul-style`  | Custom style of the component.                                                            | `string`                   | `''`         |
 
 
 ## Events
@@ -86,25 +86,9 @@ Type: `Promise<void>`
  - [kul-showcase](../kul-showcase)
  - [kul-showcase-card](../kul-showcase/components/card)
 
-### Depends on
-
-- [kul-button](../kul-button)
-- [kul-chart](../kul-chart)
-- [kul-chip](../kul-chip)
-- [kul-image](../kul-image)
-
 ### Graph
 ```mermaid
 graph TD;
-  kul-card --> kul-button
-  kul-card --> kul-chart
-  kul-card --> kul-chip
-  kul-card --> kul-image
-  kul-button --> kul-image
-  kul-button --> kul-list
-  kul-image --> kul-spinner
-  kul-image --> kul-badge
-  kul-badge --> kul-image
   kul-showcase --> kul-card
   kul-showcase-card --> kul-card
   style kul-card fill:#f9f,stroke:#333,stroke-width:4px

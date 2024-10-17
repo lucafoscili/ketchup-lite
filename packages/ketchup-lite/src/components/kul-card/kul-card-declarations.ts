@@ -15,10 +15,8 @@ import {
 /*-------------------------------------------------*/
 export interface KulCardAdapter {
     actions: {
-        dispatchEvent: <T extends KulComponent<KulComponentName>>(
-            e: CustomEvent<
-                KulEventPayload<T, KulEventType<T>, CustomEvent | Event>
-            >
+        dispatchEvent: <T extends KulComponentName>(
+            e: CustomEvent<KulEventPayload<T, KulEventType<KulComponent<T>>>>
         ) => Promise<void>;
     };
     get: {
@@ -36,7 +34,7 @@ export type KulCardEvent =
     | 'pointerdown'
     | 'ready';
 export interface KulCardEventPayload
-    extends KulEventPayload<KulCard, KulCardEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulCard', KulCardEvent> {}
 /*-------------------------------------------------*/
 /*                 I n t e r n a l                 */
 /*-------------------------------------------------*/

@@ -1,12 +1,11 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulDrawer } from './kul-drawer';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulDrawerEvent = 'close' | 'open' | 'ready';
 export interface KulDrawerEventPayload
-    extends KulEventPayload<KulDrawer, KulDrawerEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulDrawer', KulDrawerEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

@@ -3,7 +3,6 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulChip } from './kul-chip';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
@@ -16,7 +15,7 @@ export type KulChipEvent =
     | 'ready'
     | 'delete';
 export interface KulChipEventPayload
-    extends KulEventPayload<KulChip, KulChipEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulChip', KulChipEvent> {
     node: KulDataNode;
     selectedNodes: Set<KulDataNode>;
 }

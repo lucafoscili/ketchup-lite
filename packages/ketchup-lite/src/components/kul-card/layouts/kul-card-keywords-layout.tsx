@@ -8,21 +8,34 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     const eventDispatcher = adapter.actions.dispatchEvent;
 
     const button =
-        getShapes.button(shapes.button, eventDispatcher, {
-            htmlProps: {
-                className: 'kul-full-width',
+        getShapes(
+            'KulButton',
+            'button',
+            shapes.button,
+            eventDispatcher,
+            {
+                htmlProps: {
+                    className: 'kul-full-width',
+                },
+                kulIcon: 'content_copy',
+                kulLabel: 'Copy selected',
+                kulStyling: 'flat',
             },
-            kulIcon: 'content_copy',
-            kulLabel: 'Copy selected',
-            kulStyling: 'flat',
-        })?.[0] || null;
+            (e) => {
+                const { comp, eventType } = e.detail;
+
+                if (eventType === 'pointerdown') {
+                    comp.setMessage();
+                }
+            }
+        )?.[0] || null;
     const chart =
-        getShapes.chart(shapes.chart, eventDispatcher, {
+        getShapes('KulChart', 'chart', shapes.chart, eventDispatcher, {
             kulLegend: 'hidden',
             kulTypes: ['bar'],
         })?.[0] || null;
     const chip =
-        getShapes.chip(shapes.chip, eventDispatcher, {
+        getShapes('KulChip', 'chip', shapes.chip, eventDispatcher, {
             kulStyle: '#kul-component .chip-set { height: auto; }',
             kulStyling: 'filter',
         })?.[0] || null;

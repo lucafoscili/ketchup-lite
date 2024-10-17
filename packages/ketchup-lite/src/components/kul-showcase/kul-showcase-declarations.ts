@@ -1,5 +1,4 @@
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
-import { KulShowcase } from './kul-showcase';
 
 /*-------------------------------------------------*/
 /*                     D a t a                     */
@@ -33,16 +32,6 @@ export type KulShowcaseDynamicExampleType =
     | 'state-colors'
     | 'positions';
 export type KulShowcaseTitle = 'Components' | 'Framework' | 'Utilities';
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
-export type KulShowcaseEvent = 'click';
-export interface KulShowcaseEventPayload
-    extends KulEventPayload<
-        KulShowcase,
-        KulShowcaseEvent,
-        Event | CustomEvent
-    > {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

@@ -1,16 +1,11 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulProgressbar } from './kul-progressbar';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulProgressbarEvent = 'ready';
 export interface KulProgressbarEventPayload
-    extends KulEventPayload<
-        KulProgressbar,
-        KulProgressbarEvent,
-        Event | CustomEvent
-    > {
+    extends KulEventPayload<'KulProgressbar', KulProgressbarEvent> {
     isPlaceholder?: boolean;
 }
 /*-------------------------------------------------*/

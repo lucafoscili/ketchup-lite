@@ -1,13 +1,12 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
-import { KulToast } from './kul-toast';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulToastEvent = 'ready' | 'unmount';
 export interface KulToastEventPayload
-    extends KulEventPayload<KulToast, KulToastEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulToast', KulToastEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

@@ -1,5 +1,4 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulSwitch } from './kul-switch';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
@@ -11,7 +10,7 @@ export type KulSwitchEvent =
     | 'pointerdown'
     | 'ready';
 export interface KulSwitchEventPayload
-    extends KulEventPayload<KulSwitch, KulSwitchEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulSwitch', KulSwitchEvent> {
     value: string;
 }
 /*-------------------------------------------------*/

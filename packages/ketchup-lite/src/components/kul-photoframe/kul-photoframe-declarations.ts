@@ -1,16 +1,11 @@
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
-import { KulPhotoframe } from './kul-photoframe';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulPhotoframeEvent = 'load' | 'ready';
 export interface KulPhotoframeEventPayload
-    extends KulEventPayload<
-        KulPhotoframe,
-        KulPhotoframeEvent,
-        Event | CustomEvent
-    > {
+    extends KulEventPayload<'KulPhotoframe', KulPhotoframeEvent> {
     isPlaceholder?: boolean;
 }
 /*-------------------------------------------------*/

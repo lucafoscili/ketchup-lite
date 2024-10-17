@@ -28,7 +28,6 @@ import { KulListEventPayload } from "./components/kul-list/kul-list-declarations
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
-import { KulShowcaseEventPayload } from "./components/kul-showcase/kul-showcase-declarations";
 import { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 import { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -60,7 +59,6 @@ export { KulListEventPayload } from "./components/kul-list/kul-list-declarations
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
-export { KulShowcaseEventPayload } from "./components/kul-showcase/kul-showcase-declarations";
 export { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 export { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -1503,10 +1501,6 @@ export interface KulProgressbarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulProgressbarElement;
 }
-export interface KulShowcaseCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLKulShowcaseElement;
-}
 export interface KulSpinnerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulSpinnerElement;
@@ -1829,18 +1823,7 @@ declare global {
         prototype: HTMLKulProgressbarElement;
         new (): HTMLKulProgressbarElement;
     };
-    interface HTMLKulShowcaseElementEventMap {
-        "kul-showcase-event": KulShowcaseEventPayload;
-    }
     interface HTMLKulShowcaseElement extends Components.KulShowcase, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLKulShowcaseElementEventMap>(type: K, listener: (this: HTMLKulShowcaseElement, ev: KulShowcaseCustomEvent<HTMLKulShowcaseElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLKulShowcaseElementEventMap>(type: K, listener: (this: HTMLKulShowcaseElement, ev: KulShowcaseCustomEvent<HTMLKulShowcaseElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
     }
     var HTMLKulShowcaseElement: {
         prototype: HTMLKulShowcaseElement;
@@ -2821,10 +2804,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
-        "onKul-showcase-event"?: (event: KulShowcaseCustomEvent<KulShowcaseEventPayload>) => void;
     }
     interface KulShowcaseAccordion {
     }

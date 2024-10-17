@@ -10,15 +10,31 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
     const shapes = adapter.get.shapes();
     const eventDispatcher = adapter.actions.dispatchEvent;
 
-    const buttons = getShapes.button(shapes.button, eventDispatcher);
-    const images = getShapes.image(shapes.image, eventDispatcher, {
-        htmlProps: {
-            className: 'kul-cover',
-        },
-        kulSizeX: '100%',
-        kulSizeY: '100%',
-    });
-    const text = getShapes.text(shapes.text);
+    const buttons = getShapes(
+        'KulButton',
+        'button',
+        shapes.button,
+        eventDispatcher
+    );
+    const images = getShapes(
+        'KulImage',
+        'image',
+        shapes.image,
+        eventDispatcher,
+        {
+            htmlProps: {
+                className: 'kul-cover',
+            },
+            kulSizeX: '100%',
+            kulSizeY: '100%',
+        }
+    );
+    const text = getShapes(
+        'KulTextfield',
+        'text',
+        shapes.text,
+        eventDispatcher
+    );
 
     const coverIndex = 0;
     const cover: VNode = images.length ? images[coverIndex] : null;
