@@ -285,3 +285,13 @@ export interface KulEventPayload<
     id: string;
     originalEvent: E;
 }
+export type KulGenericEventPayload = KulEventPayload<
+    KulComponent<KulComponentName>,
+    KulEventType<KulComponent<KulComponentName>>,
+    CustomEvent | Event
+>;
+export type KulGenericComponent = KulComponent<KulComponentName>;
+export type KulGenericComponentTag = KulComponentTag<KulComponentName>;
+export type KulGenericRootElement = KulComponentRootElement<KulComponentName>;
+export type KulGenericEventType = KulEventType<KulGenericComponent>;
+export type KulGenericEvent = CustomEvent<KulGenericEventPayload>;
