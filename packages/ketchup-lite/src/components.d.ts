@@ -261,6 +261,14 @@ export namespace Components {
          */
         "refresh": () => Promise<void>;
         /**
+          * Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.
+          * @param label - Temporary label to display.
+          * @param icon - Temporary icon to display.
+          * @param timeout - Time in ms to wait before restoring previous values.
+          * @returns
+         */
+        "setMessage": (label?: string, icon?: string, timeout?: number) => Promise<void>;
+        /**
           * Sets the component's state.
           * @param value - The new state to be set on the component.
           * @returns

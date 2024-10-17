@@ -161,6 +161,7 @@ export class KulButton {
     #list: HTMLKulListElement;
     #kulManager = kulManagerInstance();
     #rippleSurface: HTMLDivElement;
+    #timeout: NodeJS.Timeout;
 
     /*-------------------------------------------------*/
     /*                   E v e n t s                   */
@@ -242,6 +243,35 @@ export class KulButton {
     @Method()
     async refresh(): Promise<void> {
         forceUpdate(this);
+    }
+    /**
+     * Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.
+     * @param {string} label - Temporary label to display.
+     * @param {string} icon - Temporary icon to display.
+     * @param {number} timeout - Time in ms to wait before restoring previous values.
+     * @returns {Promise<void>}
+     */
+    @Method()
+    async setMessage(
+        label: string = 'Copied!',
+        icon: string = 'check',
+        timeout: number = 1000
+    ): Promise<void> {
+        if (this.#timeout) {
+            return;
+        }
+
+        const oldIcon = this.kulIcon;
+        const oldLabel = this.kulLabel;
+
+        this.kulLabel = label;
+        this.kulIcon = icon;
+
+        this.#timeout = setTimeout(() => {
+            this.kulLabel = oldLabel;
+            this.kulIcon = oldIcon;
+            this.#timeout = null;
+        }, timeout);
     }
     /**
      * Sets the component's state.

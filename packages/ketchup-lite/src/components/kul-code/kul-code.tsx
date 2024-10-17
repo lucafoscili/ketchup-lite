@@ -21,8 +21,6 @@ import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { GenericObject } from '../../types/GenericTypes';
-import { KulButton } from '../kul-button/kul-button';
-import { KulButtonEventPayload } from '../kul-button/kul-button-declarations';
 import Prism from 'prismjs';
 import { STATIC_LANGUAGES } from './languages/static-languages';
 
@@ -91,7 +89,6 @@ export class KulCode {
     /*       I n t e r n a l   V a r i a b l e s       */
     /*-------------------------------------------------*/
 
-    #copyTimeoutId: NodeJS.Timeout;
     #el: HTMLPreElement | HTMLDivElement;
     #kulManager = kulManagerInstance();
 
@@ -151,26 +148,6 @@ export class KulCode {
     /*-------------------------------------------------*/
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
-
-    #copy(e: CustomEvent<KulButtonEventPayload>) {
-        if (e.detail.eventType === 'pointerdown') {
-            const button = e.detail.comp as KulButton;
-            navigator.clipboard.writeText(this.kulValue);
-
-            button.kulLabel = 'Copied!';
-            button.kulIcon = 'check';
-
-            if (this.#copyTimeoutId) {
-                clearTimeout(this.#copyTimeoutId);
-            }
-
-            this.#copyTimeoutId = setTimeout(() => {
-                button.kulLabel = 'Copy';
-                button.kulIcon = 'content_copy';
-                this.#copyTimeoutId = null;
-            }, 1000);
-        }
-    }
 
     #format(value: string) {
         if (typeof value === 'string' && /^[\{\}]\s*$/i.test(value)) {
@@ -311,9 +288,17 @@ export class KulCode {
                                 kulIcon="content_copy"
                                 kulLabel="Copy"
                                 kulStyling="flat"
-                                onKul-button-event={(
-                                    e: CustomEvent<KulButtonEventPayload>
-                                ) => this.#copy(e)}
+                                onKul-button-event={(e) => {
+                                    const { comp, eventType } = e.detail;
+                                    switch (eventType) {
+                                        case 'click':
+                                            navigator.clipboard.writeText(
+                                                this.kulValue
+                                            );
+                                            comp.setMessage();
+                                            break;
+                                    }
+                                }}
                             ></kul-button>
                         </div>
                         {shouldPreserveSpace ? (
