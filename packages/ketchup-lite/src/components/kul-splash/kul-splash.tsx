@@ -20,7 +20,7 @@ import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import { GenericObject } from '../../types/GenericTypes';
 
 @Component({
     tag: 'kul-splash',
@@ -137,7 +137,6 @@ export class KulSplash {
         setTimeout(() => {
             this.state = 'unmounting';
             setTimeout(() => {
-                this.onKulEvent(new CustomEvent('unmount'), 'unmount');
                 this.rootElement.remove();
             }, 300);
         }, ms);
@@ -197,5 +196,6 @@ export class KulSplash {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
+        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

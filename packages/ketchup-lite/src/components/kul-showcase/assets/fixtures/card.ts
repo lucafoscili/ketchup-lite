@@ -5,6 +5,22 @@ import { KulCardLayout } from '../../../kul-card/kul-card-declarations';
 export const CARD_KULDATA_FACTORY: {
     [K in KulCardLayout]: () => KulDataDataset;
 } = {
+    debug: () => {
+        return {
+            nodes: [
+                {
+                    cells: {
+                        kulCode: { shape: 'code', value: '' },
+                        kulButton: {
+                            shape: 'button',
+                            value: '',
+                        },
+                    },
+                    id: 'debug',
+                },
+            ],
+        };
+    },
     keywords: () => {
         return {
             nodes: [
@@ -129,7 +145,7 @@ export const CARD_KULDATA_FACTORY: {
                             value: '',
                         },
                     },
-                    id: '1',
+                    id: 'keywords',
                 },
             ],
         };
@@ -149,7 +165,7 @@ export const CARD_KULDATA_FACTORY: {
                             ),
                         },
                     },
-                    id: '1',
+                    id: 'material',
                 },
             ],
         };
@@ -165,7 +181,7 @@ export const CARD_KULDATA_FACTORY: {
                             value: '',
                         },
                     },
-                    id: '1',
+                    id: 'upload',
                 },
             ],
         };

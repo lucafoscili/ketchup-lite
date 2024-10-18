@@ -5,37 +5,30 @@ import type {
     KulGenericComponent,
 } from '../../types/GenericTypes';
 import {
-    KulDebugCategory,
     KulDebugLifecycles,
     KulDebugLog,
     KulDebugLogClass,
     KulDebugLogFactory,
     KulDebugLogsToPrint,
     KulDebugLogToPrintEntry,
-    KulDebugWidgetFactory,
 } from './kul-debug-declarations';
+import { KulCode } from '../../components/kul-code/kul-code';
 
 const dom: KulDom = document.documentElement as KulDom;
 
 export class KulDebug {
-    #CONTAINER: HTMLElement;
     #IS_ENABLED: boolean;
     #LOG_LIMIT: number;
     #LOGS: KulDebugLog[];
+    #MANAGED_COMPONENTS: Set<KulCode>;
 
     constructor(active?: boolean, logLimit?: number) {
         this.#IS_ENABLED = active ? true : false;
         this.#LOG_LIMIT = logLimit ? logLimit : 250;
         this.#LOGS = [];
-        this.#CONTAINER = document.createElement('div');
-        this.#CONTAINER.setAttribute('kul-debug', '');
-        document.body.appendChild(this.#CONTAINER);
-        document.addEventListener('kul-language-change', () => {
-            if (this.#IS_ENABLED) {
-                this.widget.create();
-            }
-        });
+        this.#MANAGED_COMPONENTS = new Set();
     }
+
     logs: KulDebugLogFactory = {
         dump: () => {
             this.#LOGS = [];
@@ -44,15 +37,12 @@ export class KulDebug {
             return (comp as KulGenericComponent).rootElement !== undefined;
         },
         new: async (comp, message, category = 'informational') => {
-            if (category === 'informational') {
-                return;
-            }
             const isFromComponent = this.logs.fromComponent(comp);
             const log: KulDebugLog = {
                 category,
                 class: null,
                 date: new Date(),
-                id: ` ${isFromComponent ? comp.rootElement : 'KulManager'} #${isFromComponent ? comp.rootElement.id : ''} => `,
+                id: ` ${isFromComponent ? comp.rootElement.tagName : 'KulManager'} #${isFromComponent ? comp.rootElement.id : ''} => `,
                 message,
                 type:
                     message.indexOf('Render #') > -1
@@ -86,12 +76,6 @@ export class KulDebug {
                             log.message,
                         log.class
                     );
-                    window.dispatchEvent(
-                        new CustomEvent('kul-debug-error', {
-                            bubbles: true,
-                            detail: { log },
-                        })
-                    );
                     break;
                 case 'warning':
                     console.warn(
@@ -101,6 +85,12 @@ export class KulDebug {
                         log.class
                     );
                     break;
+            }
+
+            if (this.isEnabled()) {
+                Array.from(this.#MANAGED_COMPONENTS).forEach((comp) => {
+                    comp.kulValue += `\n${log.id}${log.message}`;
+                });
             }
         },
         print: () => {
@@ -150,25 +140,15 @@ export class KulDebug {
             }
         },
     };
-    widget: KulDebugWidgetFactory = {
-        create: () => {
-            if (!this.widget.element) {
-                this.widget.create();
-            }
-        },
-        destroy: () => {
-            this.widget.element.remove();
-            this.widget.element = null;
-        },
-        element: null,
-        initialize: () => {
-            const card = document.createElement('kul-card');
-            this.widget.element = card;
-        },
-    };
+
     isEnabled(): boolean {
         return this.#IS_ENABLED;
     }
+
+    register(comp: KulCode): void {
+        this.#MANAGED_COMPONENTS.add(comp);
+    }
+
     toggle(value?: boolean) {
         if (value === false || value === true) {
             this.#IS_ENABLED = value;
@@ -178,6 +158,11 @@ export class KulDebug {
 
         return this.#IS_ENABLED;
     }
+
+    unregister(comp: KulCode): void {
+        this.#MANAGED_COMPONENTS.delete(comp);
+    }
+
     async updateDebugInfo(
         comp: KulComponent<KulComponentName>,
         lifecycle: KulDebugLifecycles

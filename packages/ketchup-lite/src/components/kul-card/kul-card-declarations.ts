@@ -59,4 +59,4 @@ export interface KulCardPropsInterface {
     kulSizeY?: string;
     kulStyle?: string;
 }
-export type KulCardLayout = 'keywords' | 'material' | 'upload';
+export type KulCardLayout = 'debug' | 'keywords' | 'material' | 'upload';

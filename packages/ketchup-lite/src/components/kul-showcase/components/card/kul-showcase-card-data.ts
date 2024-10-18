@@ -1,4 +1,3 @@
-import { getAssetPath } from '@stencil/core';
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { DOC_IDS } from '../../kul-showcase-data';
 import { CardData } from './kul-showcase-card-declarations';
@@ -18,6 +17,21 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCard'> =
 const TAG_NAME: KulComponentTag<'KulCard'> = 'kul-card';
 
 export const CARD_EXAMPLES: CardData = {
+    debug: {
+        image: {
+            ['data-description']: 'Card with custom style',
+            kulSizeX: '320px',
+            kulSizeY: '320px',
+            kulData: CARD_KULDATA_FACTORY.debug(),
+        },
+        style: {
+            ['data-description']: 'Card with custom style',
+            ['data-dynamic']: 'custom',
+            kulSizeX: '320px',
+            kulSizeY: '320px',
+            kulData: CARD_KULDATA_FACTORY.debug(),
+        },
+    },
     keywords: {
         image: {
             ['data-description']: 'Card with custom style',

@@ -5,6 +5,7 @@ import {
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 
 export const CARD_CATEGORIES_KEYS: KulCardLayout[] = [
+    'debug',
     'keywords',
     'material',
     'upload',

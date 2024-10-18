@@ -67,9 +67,3 @@ export type KulDebugLifecycles =
     | 'did-render'
     | 'will-render';
 export type KulDebugLogType = 'load' | 'misc' | 'render' | 'resize';
-export interface KulDebugWidgetFactory {
-    create: () => void;
-    destroy: () => void;
-    element: HTMLKulCardElement;
-    initialize: () => void;
-}
