@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-18T07:22:06",
+  "timestamp": "2024-10-18T19:32:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -12139,6 +12139,16 @@
       "docstring": "",
       "path": "src/types/GenericTypes.ts"
     },
+    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchEventPayload": {
+      "declaration": "export interface KulSwitchEventPayload\n    extends KulEventPayload<'KulSwitch', KulSwitchEvent> {\n    value: string;\n}",
+      "docstring": "",
+      "path": "src/components/kul-switch/kul-switch-declarations.ts"
+    },
+    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchState": {
+      "declaration": "export type KulSwitchState = 'off' | 'on';",
+      "docstring": "",
+      "path": "src/components/kul-switch/kul-switch-declarations.ts"
+    },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset": {
       "declaration": "export interface KulDataDataset {\n    columns?: KulDataColumn[];\n    nodes?: KulDataNode[];\n}",
       "docstring": "",
@@ -12318,16 +12328,6 @@
       "declaration": "export interface KulSplashEventPayload\n    extends KulEventPayload<'KulSplash', KulSplashEvent> {}",
       "docstring": "",
       "path": "src/components/kul-splash/kul-splash-declarations.ts"
-    },
-    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchEventPayload": {
-      "declaration": "export interface KulSwitchEventPayload\n    extends KulEventPayload<'KulSwitch', KulSwitchEvent> {\n    value: string;\n}",
-      "docstring": "",
-      "path": "src/components/kul-switch/kul-switch-declarations.ts"
-    },
-    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchState": {
-      "declaration": "export type KulSwitchState = 'off' | 'on';",
-      "docstring": "",
-      "path": "src/components/kul-switch/kul-switch-declarations.ts"
     },
     "src/components/kul-tabbar/kul-tabbar-declarations.ts::KulTabbarEventPayload": {
       "declaration": "export interface KulTabbarEventPayload\n    extends KulEventPayload<'KulTabbar', KulTabbarEvent> {\n    index?: number;\n    node?: KulDataNode;\n}",
