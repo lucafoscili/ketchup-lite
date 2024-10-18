@@ -333,13 +333,9 @@ export type KulMessengerPanelsValue = 'left' | 'right';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulMessengerEvent = 'ready' | 'save';
+export type KulMessengerEvent = 'ready' | 'save' | 'unmount';
 export interface KulMessengerEventPayload
-    extends KulEventPayload<
-        KulMessenger,
-        KulMessengerEvent,
-        Event | CustomEvent
-    > {
+    extends KulEventPayload<'KulMessenger', KulMessengerEvent> {
     config: KulMessengerConfig;
 }
 /*-------------------------------------------------*/

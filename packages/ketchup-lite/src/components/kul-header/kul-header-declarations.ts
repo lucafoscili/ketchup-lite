@@ -1,12 +1,11 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulHeader } from './kul-header';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulHeaderEvent = 'ready';
+export type KulHeaderEvent = 'ready' | 'unmount';
 export interface KulHeaderEventPayload
-    extends KulEventPayload<KulHeader, KulHeaderEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulHeader', KulHeaderEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

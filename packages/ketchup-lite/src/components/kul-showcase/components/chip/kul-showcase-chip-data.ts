@@ -1,10 +1,20 @@
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_STYLES } from '../../kul-showcase-data';
+import { DOC_IDS } from '../../kul-showcase-data';
 import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 import { ChipData } from './kul-showcase-chip-declarations';
-import { SHOWCASE_DOC } from '../../kul-showcase-utils';
+import {
+    KulComponentEventName,
+    KulComponentEventPayloadName,
+    KulComponentName,
+    KulComponentTag,
+} from '../../../../types/GenericTypes';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 
-const component = 'chip';
+const COMPONENT_NAME: KulComponentName = 'KulChip';
+const EVENT_NAME: KulComponentEventName<'KulChip'> = 'kul-chip-event';
+const PAYLOAD_NAME: KulComponentEventPayloadName<'KulChip'> =
+    'KulChipEventPayload';
+const TAG_NAME: KulComponentTag<'KulChip'> = 'kul-chip';
 
 const kulData: KulDataDataset = {
     nodes: [
@@ -159,181 +169,62 @@ export const CHIP_EXAMPLES: ChipData = {
 export const CHIP_DOC: KulArticleDataset = {
     nodes: [
         {
+            id: DOC_IDS.root,
+            value: COMPONENT_NAME,
             children: [
-                SHOWCASE_DOC.create.component.overview(
-                    'KulChip',
-                    ' component feats a tree-like data visualization with selectable or deletable nodes.'
+                SECTION_FACTORY.overview(
+                    COMPONENT_NAME,
+                    'feats a tree-like data visualization with selectable or removable nodes'
                 ),
-                {
-                    children: [
+                SECTION_FACTORY.usage(COMPONENT_NAME, {
+                    data: JSON.stringify(kulData),
+                    tag: TAG_NAME,
+                }),
+                SECTION_FACTORY.props(TAG_NAME),
+                SECTION_FACTORY.events(
+                    COMPONENT_NAME,
+                    PAYLOAD_NAME,
+                    [
                         {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.2.0.0.0',
-                                            value: 'To use the ',
-                                        },
-                                        {
-                                            id: '0.2.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulChip',
-                                        },
-                                        {
-                                            id: '0.2.0.0.2',
-                                            value: ' component, include it in your HTML and provide the ',
-                                        },
-                                        {
-                                            id: '0.2.0.0.3',
-                                            tagName: 'strong',
-                                            value: 'kulData',
-                                        },
-                                        {
-                                            id: '0.2.0.0.4',
-                                            value: ' property with the JSON structure representing the chip.',
-                                        },
-                                    ],
-                                    id: '0.2.0.0',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            cells: {
-                                                kulCode: {
-                                                    shape: 'code',
-                                                    kulLanguage: 'markup',
-                                                    value: '<kul-chip></kul-chip>',
-                                                },
-                                            },
-                                            id: '0.2.0.1.0',
-                                            value: '',
-                                        },
-                                        {
-                                            cells: {
-                                                kulCode: {
-                                                    shape: 'code',
-                                                    kulLanguage: 'json',
-                                                    value: '{ "nodes": [{"value": "Node 1", "id": "0"}, {"value": "Node 2", "id": "1"}]}',
-                                                },
-                                            },
-                                            id: '0.2.0.1.1',
-                                            value: '',
-                                        },
-                                    ],
-                                    id: '0.2.0.1',
-                                },
-                            ],
-                            id: '0.2.0',
-                            value: 'Basic Usage',
+                            type: 'blur',
+                            description:
+                                'emitted when the component loses focus',
+                        },
+                        {
+                            type: 'click',
+                            description:
+                                'emitted when the component is clicked',
+                        },
+                        {
+                            type: 'delete',
+                            description: 'emitted when the a node is deleted',
+                        },
+                        {
+                            type: 'focus',
+                            description:
+                                'emitted when the component is focused',
+                        },
+                        {
+                            type: 'pointerdown',
+                            description:
+                                'emitted when as soon as the component is touched/clicked (before the click event)',
+                        },
+                        {
+                            type: 'ready',
+                            description:
+                                'emitted when the component completes its first complete lifecycle',
+                        },
+                        {
+                            type: 'unmount',
+                            description:
+                                'emitted when the component is disconnected from the DOM',
                         },
                     ],
-                    id: '0.2',
-                    value: 'Usage',
-                },
-                {
-                    children: SHOWCASE_DOC.get.props(component),
-                    id: '0.3',
-                    value: 'Properties',
-                },
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    id: '0.4.0.0',
-                                    value: 'This event is emitted during various lifecycle stages of the component. It carries a payload of type ',
-                                },
-                                {
-                                    id: '0.4.0.1',
-                                    value: 'KulChipEventPayload',
-                                },
-                                {
-                                    id: '0.4.0.2',
-                                    value: ', which includes information about the component, its state and the event type.',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            children: [
-                                                {
-                                                    children: [
-                                                        {
-                                                            id: '0.4.0.3.0.0.0',
-                                                            tagName: 'strong',
-                                                            value: 'click',
-                                                        },
-                                                        {
-                                                            id: '0.4.0.3.0.0.1',
-                                                            value: ': emitted when a node is clicked.',
-                                                        },
-                                                    ],
-                                                    id: '0.4.0.3.0.0',
-                                                    tagName: 'li',
-                                                    value: '',
-                                                },
-                                                {
-                                                    children: [
-                                                        {
-                                                            id: '0.4.0.3.0.0.0',
-                                                            tagName: 'strong',
-                                                            value: 'pointerdown',
-                                                        },
-                                                        {
-                                                            id: '0.4.0.3.0.0.1',
-                                                            value: ': emitted when as soon as a node is touched/clicked (before the click event).',
-                                                        },
-                                                    ],
-                                                    id: '0.4.0.3.0.0',
-                                                    tagName: 'li',
-                                                    value: '',
-                                                },
-                                                {
-                                                    children: [
-                                                        {
-                                                            id: '0.4.0.3.0.0.0',
-                                                            tagName: 'strong',
-                                                            value: 'ready',
-                                                        },
-                                                        {
-                                                            id: '0.4.0.3.0.0.1',
-                                                            value: ': emitted when the component completes its first complete lifecycle.',
-                                                        },
-                                                    ],
-                                                    id: '0.4.0.3.0.0',
-                                                    tagName: 'li',
-                                                    value: '',
-                                                },
-                                            ],
-                                            id: '0.4.0.3.0',
-                                            value: '',
-                                        },
-                                    ],
-                                    id: '0.4.0.3',
-                                    value: '',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3,
-                            id: '0.4.0',
-                            tagName: 'strong',
-                            value: 'kul-chip-event',
-                        },
-                    ],
-                    id: '0.4',
-                    value: 'Events',
-                },
-                {
-                    children: SHOWCASE_DOC.get.methods(component),
-                    id: '0.5',
-                    value: 'Methods',
-                },
-                {
-                    children: SHOWCASE_DOC.get.styles(component),
-                    id: '0.7',
-                    value: 'Styling',
-                },
+                    EVENT_NAME
+                ),
+                SECTION_FACTORY.methods(TAG_NAME),
+                SECTION_FACTORY.styling(TAG_NAME),
             ],
-            id: '0',
-            value: 'KulChip',
         },
     ],
 };

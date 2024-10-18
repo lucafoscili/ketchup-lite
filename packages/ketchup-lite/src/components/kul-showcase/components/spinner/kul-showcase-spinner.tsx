@@ -4,7 +4,7 @@ import {
     SpinnerBranch,
     SpinnerLeaf,
 } from './kul-showcase-spinner-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 

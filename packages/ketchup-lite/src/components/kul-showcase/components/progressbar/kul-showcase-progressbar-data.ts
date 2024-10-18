@@ -1,9 +1,20 @@
+import {
+    KulComponentEventName,
+    KulComponentEventPayloadName,
+    KulComponentName,
+    KulComponentTag,
+} from '../../../../types/GenericTypes';
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_STYLES } from '../../kul-showcase-data';
-import { SHOWCASE_DOC } from '../../kul-showcase-utils';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
 import { ProgressbarData } from './kul-showcase-progressbar-declarations';
 
-const component = 'progressbar';
+const COMPONENT_NAME: KulComponentName = 'KulProgressbar';
+const EVENT_NAME: KulComponentEventName<'KulProgressbar'> =
+    'kul-progressbar-event';
+const PAYLOAD_NAME: KulComponentEventPayloadName<'KulProgressbar'> =
+    'KulProgressbarEventPayload';
+const TAG_NAME: KulComponentTag<'KulProgressbar'> = 'kul-progressbar';
 
 export const PROGRESSBAR_EXAMPLES: ProgressbarData = {
     animated: {
@@ -62,132 +73,37 @@ export const PROGRESSBAR_EXAMPLES: ProgressbarData = {
 export const PROGRESSBAR_DOC: KulArticleDataset = {
     nodes: [
         {
+            id: DOC_IDS.root,
+            value: COMPONENT_NAME,
             children: [
-                SHOWCASE_DOC.create.component.overview(
-                    'KulProgressbar',
-                    ' is designed to display a progress. It can be displayed as a horizontal or as a radial bar.'
+                SECTION_FACTORY.overview(
+                    COMPONENT_NAME,
+                    'is designed to display a state of advancement. It can be displayed as a horizontal bar or as a radial widget'
                 ),
-                {
-                    children: [
+                SECTION_FACTORY.usage(COMPONENT_NAME, {
+                    tag: TAG_NAME,
+                }),
+                SECTION_FACTORY.props(TAG_NAME),
+                SECTION_FACTORY.events(
+                    COMPONENT_NAME,
+                    PAYLOAD_NAME,
+                    [
                         {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.2.0.0.0',
-                                            value: 'To use the ',
-                                        },
-                                        {
-                                            id: '0.2.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulProgressbar',
-                                        },
-                                        {
-                                            id: '0.2.0.0.2',
-                                            value: ' component, include it in your HTML.',
-                                        },
-                                    ],
-                                    id: '0.2.0.0',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            cells: {
-                                                kulCode: {
-                                                    shape: 'code',
-                                                    kulLanguage: 'markup',
-                                                    value: '<kul-progressbar kul-label="I am a progress bar!" kul-value="50"></kul-progressbar>',
-                                                },
-                                            },
-                                            id: '0.2.0.1.0',
-                                            value: '',
-                                        },
-                                    ],
-                                    id: '0.2.0.1',
-                                },
-                            ],
-                            id: '0.2.0',
-                            value: 'Basic Usage',
+                            type: 'ready',
+                            description:
+                                'emitted when the component completes its first complete lifecycle',
+                        },
+                        {
+                            type: 'unmount',
+                            description:
+                                'emitted when the component is disconnected from the DOM',
                         },
                     ],
-                    id: '0.2',
-                    value: 'Usage',
-                },
-                {
-                    children: SHOWCASE_DOC.get.props(component),
-                    id: '0.3',
-                    value: 'Properties',
-                },
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    id: '0.4.0.0',
-                                    value: 'This event is emitted during various lifecycle stages of the component. It carries a payload of type ',
-                                },
-                                {
-                                    id: '0.4.0.1',
-                                    value: 'KulEventPayload',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            children: [
-                                                {
-                                                    children: [
-                                                        {
-                                                            children: [
-                                                                {
-                                                                    id: '0.4.0.2.0.0.0.0',
-                                                                    tagName:
-                                                                        'strong',
-                                                                    value: 'ready',
-                                                                },
-                                                                {
-                                                                    id: '0.4.0.2.0.0.0.1',
-                                                                    value: ': emitted when the component completes its first complete lifecycle.',
-                                                                },
-                                                            ],
-                                                            id: '0.4.0.2.0.0.0',
-                                                            tagName: 'li',
-                                                            value: '',
-                                                        },
-                                                    ],
-                                                    id: '0.4.0.2.0.0',
-                                                    value: '',
-                                                },
-                                            ],
-                                            id: '0.4.0.2.0',
-                                            value: '',
-                                        },
-                                    ],
-                                    id: '0.4.0.2',
-                                    value: ', which includes information about the component and the event type.',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3,
-                            id: '0.4.0',
-                            tagName: 'strong',
-                            value: 'kul-progressbar-event',
-                        },
-                    ],
-                    id: '0.4',
-                    value: 'Events',
-                },
-                {
-                    children: SHOWCASE_DOC.get.methods(component),
-                    id: '0.5',
-                    value: 'Methods',
-                },
-                {
-                    children: SHOWCASE_DOC.get.styles(component),
-                    id: '0.7',
-                    value: 'Styling',
-                },
+                    EVENT_NAME
+                ),
+                SECTION_FACTORY.methods(TAG_NAME),
+                SECTION_FACTORY.styling(TAG_NAME),
             ],
-            id: '0',
-            value: 'KulProgressbar',
         },
     ],
 };

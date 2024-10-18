@@ -3,7 +3,6 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulList } from './kul-list';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
@@ -11,12 +10,13 @@ import { KulList } from './kul-list';
 export type KulListEvent =
     | 'blur'
     | 'click'
+    | 'delete'
     | 'focus'
     | 'pointerdown'
     | 'ready'
-    | 'delete';
+    | 'unmount';
 export interface KulListEventPayload
-    extends KulEventPayload<KulList, KulListEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulList', KulListEvent> {
     node: KulDataNode;
 }
 /*-------------------------------------------------*/

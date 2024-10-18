@@ -29,8 +29,8 @@ export function customFormula(
         )() as number;
         return result;
     } catch (e) {
-        dom.ketchupLite.debug.logMessage(
-            'kul-data',
+        dom.ketchupLite.debug.logs.new(
+            this,
             'Error while evaluating the following formula!(' + formula + ')',
             'warning'
         );

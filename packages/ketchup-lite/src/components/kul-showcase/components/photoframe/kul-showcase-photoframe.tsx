@@ -3,7 +3,7 @@ import {
     PHOTOFRAME_DOC,
     PHOTOFRAME_EXAMPLES,
 } from './kul-showcase-photoframe-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { PhotoframeExample } from './kul-showcase-photoframe-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

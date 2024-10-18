@@ -30,7 +30,6 @@ export interface KulManagerDatesSettings {
 }
 export interface KulManagerDebugSettings {
     active?: boolean;
-    autoPrint?: boolean;
     logLimit?: number;
 }
 export interface KulManagerLanguageSettings {

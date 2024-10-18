@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { TABBAR_DOC, TABBAR_EXAMPLES } from './kul-showcase-tabbar-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { TabbarExample } from './kul-showcase-tabbar-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

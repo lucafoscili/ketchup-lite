@@ -22,15 +22,15 @@
 
 ## Methods
 
-### `getDebugInfo() => Promise<KulDebugComponentInfo>`
+### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Retrieves the debug information reflecting the current state of the component.
 
 #### Returns
 
-Type: `Promise<KulDebugComponentInfo>`
+Type: `Promise<KulDebugLifecycleInfo>`
 
-A promise that resolves to a KulDebugComponentInfo object containing debug information.
+A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
 
 ### `getProps(descriptions?: boolean) => Promise<GenericObject>`
 
@@ -95,8 +95,8 @@ Type: `Promise<void>`
  - [kul-showcase-chip](../kul-showcase/components/chip)
  - [kul-showcase-code](../kul-showcase/components/code)
  - [kul-showcase-debug](../kul-showcase/utilities/debug)
- - [kul-showcase-drawer](../kul-showcase/layout/drawer)
- - [kul-showcase-header](../kul-showcase/layout/header)
+ - [kul-showcase-drawer](../kul-showcase/components/drawer)
+ - [kul-showcase-header](../kul-showcase/components/header)
  - [kul-showcase-image](../kul-showcase/components/image)
  - [kul-showcase-kuldata](../kul-showcase/framework/data)
  - [kul-showcase-kuldates](../kul-showcase/framework/dates)
@@ -109,7 +109,7 @@ Type: `Promise<void>`
  - [kul-showcase-kultheme](../kul-showcase/framework/theme)
  - [kul-showcase-lazy](../kul-showcase/components/lazy)
  - [kul-showcase-list](../kul-showcase/components/list)
- - [kul-showcase-messenger](../kul-showcase/layout/messenger)
+ - [kul-showcase-messenger](../kul-showcase/components/messenger)
  - [kul-showcase-photoframe](../kul-showcase/components/photoframe)
  - [kul-showcase-progressbar](../kul-showcase/components/progressbar)
  - [kul-showcase-spinner](../kul-showcase/components/spinner)

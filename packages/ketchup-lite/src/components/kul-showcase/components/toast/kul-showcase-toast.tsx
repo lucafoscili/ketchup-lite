@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { TOAST_DOC, TOAST_EXAMPLES } from './kul-showcase-toast-data';
 import { ToastExample } from './kul-showcase-toast-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 

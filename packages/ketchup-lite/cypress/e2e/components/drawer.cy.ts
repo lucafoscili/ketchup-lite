@@ -1,4 +1,4 @@
-import { KulDebugComponentInfo } from '../../../src/managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../../src/managers/kul-debug/kul-debug-declarations';
 
 const drawer = 'drawer';
 
@@ -15,7 +15,7 @@ describe('Methods', () => {
                     const kulDrawerElement: HTMLKulDrawerElement = $el[0];
                     kulDrawerElement
                         .getDebugInfo()
-                        .then((debugInfo: KulDebugComponentInfo) => {
+                        .then((debugInfo: KulDebugLifecycleInfo) => {
                             expect(debugInfo)
                                 .to.have.property('endTime')
                                 .that.is.a('number');

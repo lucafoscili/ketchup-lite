@@ -1,8 +1,6 @@
 import {
     Component,
     Element,
-    Event,
-    EventEmitter,
     forceUpdate,
     h,
     Host,
@@ -12,12 +10,10 @@ import {
     VNode,
 } from '@stencil/core';
 import { GenericObject } from '../../types/GenericTypes';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
-    KulShowcaseEvent,
-    KulShowcaseEventPayload,
     KulShowcaseProps,
     KulShowcaseTitle,
 } from './kul-showcase-declarations';
@@ -26,7 +22,6 @@ import {
     KUL_DOC,
     KUL_SHOWCASE_COMPONENTS,
     KUL_SHOWCASE_FRAMEWORK,
-    KUL_SHOWCASE_LAYOUT,
     KUL_SHOWCASE_UTILITIES,
 } from './kul-showcase-data';
 import { KulCardCustomEvent, KulDataDataset } from '../../components';
@@ -51,7 +46,7 @@ export class KulShowcase {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -68,11 +63,6 @@ export class KulShowcase {
      * @default ""
      */
     @State() currentFramework = '';
-    /**
-     * String keeping track of the current layout component being navigated by the user.
-     * @default ""
-     */
-    @State() currentLayout = '';
     /**
      * String keeping track of the current utility being accessed by the user.
      * @default ""
@@ -96,39 +86,15 @@ export class KulShowcase {
     #kulManager = kulManagerInstance();
 
     /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
-    @Event({
-        eventName: 'kul-showcase-event',
-        composed: true,
-        cancelable: false,
-        bubbles: true,
-    })
-    kulEvent: EventEmitter<KulShowcaseEventPayload>;
-
-    onKulEvent(e: Event | CustomEvent, eventType: KulShowcaseEvent) {
-        this.kulEvent.emit({
-            comp: this,
-            eventType,
-            id: this.rootElement.id,
-            originalEvent: e,
-        });
-    }
-
-    /*-------------------------------------------------*/
     /*           P u b l i c   M e t h o d s           */
     /*-------------------------------------------------*/
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -159,8 +125,6 @@ export class KulShowcase {
                     return this.currentComponent.toLowerCase();
                 case 'Framework':
                     return this.currentFramework.toLowerCase();
-                case 'Layout':
-                    return this.currentLayout.toLowerCase();
                 case 'Utilities':
                     return this.currentUtility.toLowerCase();
             }
@@ -176,16 +140,17 @@ export class KulShowcase {
                 ? KUL_SHOWCASE_COMPONENTS
                 : type === 'Framework'
                   ? KUL_SHOWCASE_FRAMEWORK
-                  : type === 'Layout'
-                    ? KUL_SHOWCASE_LAYOUT
-                    : KUL_SHOWCASE_UTILITIES;
+                  : KUL_SHOWCASE_UTILITIES;
 
         dataset.nodes.forEach((node) => {
             const kulData: KulDataDataset = {
                 nodes: [
                     {
                         cells: {
-                            icon: { shape: 'image', value: node.icon },
+                            icon: {
+                                shape: 'image',
+                                value: node.icon,
+                            },
                             text1: {
                                 value: this.#kulManager.data.cell.stringify(
                                     node.value
@@ -218,13 +183,6 @@ export class KulShowcase {
                                 this.currentFramework
                             );
                             break;
-                        case 'Layout':
-                            this.currentLayout = node.id;
-                            console.log(
-                                `Selected layout: `,
-                                this.currentLayout
-                            );
-                            break;
                         case 'Utilities':
                             this.currentUtility = node.id;
                             console.log(
@@ -252,11 +210,9 @@ export class KulShowcase {
         const current =
             title === 'Components'
                 ? this.currentComponent
-                : title === 'Layout'
-                  ? this.currentLayout
-                  : title === 'Utilities'
-                    ? this.currentUtility
-                    : this.currentFramework;
+                : title === 'Utilities'
+                  ? this.currentUtility
+                  : this.currentFramework;
         return (
             <div class="header">
                 <h2>{current ? current : title}</h2>
@@ -268,9 +224,6 @@ export class KulShowcase {
                             switch (title) {
                                 case 'Components':
                                     this.currentComponent = '';
-                                    break;
-                                case 'Layout':
-                                    this.currentLayout = '';
                                     break;
                                 case 'Framework':
                                     this.currentFramework = '';
@@ -314,10 +267,7 @@ export class KulShowcase {
                         {this.#kulManager.theme.setKulStyle(this)}
                     </style>
                 ) : undefined}
-                <div
-                    id={KUL_WRAPPER_ID}
-                    onClick={(e) => this.onKulEvent(e, 'click')}
-                >
+                <div id={KUL_WRAPPER_ID}>
                     <div class="showcase">
                         <kul-article kulData={KUL_DOC}></kul-article>
                         <div class="link-wrapper">
@@ -356,14 +306,6 @@ export class KulShowcase {
                                 {this.currentComponent
                                     ? this.#comps('Components')
                                     : this.#cards('Components')}
-                            </div>
-                        </div>
-                        <div class="section">
-                            {this.#prepHeader('Layout')}
-                            <div class="flex-wrapper flex-wrapper--responsive">
-                                {this.currentLayout
-                                    ? this.#comps('Layout')
-                                    : this.#cards('Layout')}
                             </div>
                         </div>
                         <div class="section">

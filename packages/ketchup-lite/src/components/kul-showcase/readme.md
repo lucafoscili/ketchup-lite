@@ -12,22 +12,15 @@
 | `kulStyle` | `kul-style` | Custom style of the component. | `string` | `''`    |
 
 
-## Events
-
-| Event                | Description              | Type                                   |
-| -------------------- | ------------------------ | -------------------------------------- |
-| `kul-showcase-event` | Describes event emitted. | `CustomEvent<KulShowcaseEventPayload>` |
-
-
 ## Methods
 
-### `getDebugInfo() => Promise<KulDebugComponentInfo>`
+### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.
 
 #### Returns
 
-Type: `Promise<KulDebugComponentInfo>`
+Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
@@ -72,8 +65,6 @@ graph TD;
   kul-showcase --> kul-card
   kul-showcase --> kul-button
   kul-showcase --> kul-article
-  kul-card --> kul-button
-  kul-card --> kul-image
   kul-button --> kul-image
   kul-button --> kul-list
   kul-image --> kul-spinner

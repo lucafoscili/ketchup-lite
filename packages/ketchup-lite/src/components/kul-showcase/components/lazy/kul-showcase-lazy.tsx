@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { LAZY_DOC, LAZY_EXAMPLES } from './kul-showcase-lazy-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { LazyExample } from './kul-showcase-lazy-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

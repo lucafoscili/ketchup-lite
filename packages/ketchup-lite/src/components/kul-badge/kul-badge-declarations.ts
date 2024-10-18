@@ -1,13 +1,12 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
-import { KulBadge } from './kul-badge';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulBadgeEvent = 'click' | 'ready';
+export type KulBadgeEvent = 'click' | 'ready' | 'unmount';
 export interface KulBadgeEventPayload
-    extends KulEventPayload<KulBadge, KulBadgeEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulBadge', KulBadgeEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

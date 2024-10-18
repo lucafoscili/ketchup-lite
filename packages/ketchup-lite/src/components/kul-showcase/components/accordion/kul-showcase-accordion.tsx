@@ -3,7 +3,7 @@ import {
     ACCORDION_DOC,
     ACCORDION_EXAMPLES,
 } from './kul-showcase-accordion-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { AccordionExample } from './kul-showcase-accordion-declarations';
 

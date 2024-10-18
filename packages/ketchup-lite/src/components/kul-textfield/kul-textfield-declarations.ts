@@ -1,5 +1,4 @@
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
-import { KulTextfield } from './kul-textfield';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
@@ -10,13 +9,10 @@ export type KulTextfieldEvent =
     | 'click'
     | 'focus'
     | 'input'
-    | 'ready';
+    | 'ready'
+    | 'unmount';
 export interface KulTextfieldEventPayload
-    extends KulEventPayload<
-        KulTextfield,
-        KulTextfieldEvent,
-        Event | CustomEvent
-    > {
+    extends KulEventPayload<'KulTextfield', KulTextfieldEvent> {
     inputValue?: string;
     value?: string;
 }

@@ -29,7 +29,7 @@ export class KulData {
         },
         stringify: (value: unknown) => {
             if (value === null || value === undefined) {
-                return String(value);
+                return String(value).valueOf();
             } else if (value instanceof Date) {
                 return value.toISOString();
             } else if (typeof value === 'object') {
@@ -40,7 +40,7 @@ export class KulData {
                     return '[object Object]';
                 }
             } else {
-                return String(value);
+                return String(value).valueOf();
             }
         },
     };
@@ -61,12 +61,15 @@ export class KulData {
             const shapes: KulDataShapesMap = {
                 badge: [],
                 button: [],
+                chart: [],
                 chat: [],
+                chip: [],
                 code: [],
                 image: [],
                 number: [],
                 switch: [],
                 text: [],
+                upload: [],
             };
             const nodes = dataset.nodes;
 
@@ -90,9 +93,19 @@ export class KulData {
                                     extracted as KulDataCell<'button'>
                                 );
                                 break;
+                            case 'chart':
+                                shapes.chart.push(
+                                    extracted as KulDataCell<'chart'>
+                                );
+                                break;
                             case 'chat':
                                 shapes.chat.push(
                                     extracted as KulDataCell<'chat'>
+                                );
+                                break;
+                            case 'chip':
+                                shapes.chip.push(
+                                    extracted as KulDataCell<'chip'>
                                 );
                                 break;
                             case 'code':
@@ -113,6 +126,11 @@ export class KulData {
                             case 'number':
                                 shapes.number.push(
                                     cell as KulDataCell<'number'>
+                                );
+                                break;
+                            case 'upload':
+                                shapes.upload.push(
+                                    extracted as KulDataCell<'upload'>
                                 );
                                 break;
                             case 'text':

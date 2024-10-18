@@ -1,17 +1,12 @@
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulAccordion } from './kul-accordion';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulAccordionEvent = 'click' | 'pointerdown' | 'ready';
+export type KulAccordionEvent = 'click' | 'pointerdown' | 'ready' | 'unmount';
 export interface KulAccordionEventPayload
-    extends KulEventPayload<
-        KulAccordion,
-        KulAccordionEvent,
-        Event | CustomEvent
-    > {}
+    extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/
