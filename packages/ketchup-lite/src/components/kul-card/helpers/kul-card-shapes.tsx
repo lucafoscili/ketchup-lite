@@ -12,16 +12,7 @@ import {
     KulDataCell,
     KulDataShapes,
 } from '../../../managers/kul-data/kul-data-declarations';
-import { KulCardAdapter } from '../kul-card-declarations';
-
-type ShapeCallback<
-    C extends KulComponentName,
-    S extends KulDataShapes | 'text',
-> = S extends 'text'
-    ? never
-    : (
-          e: CustomEvent<KulEventPayload<C, KulEventType<KulComponent<C>>>>
-      ) => void;
+import { KulCardAdapter, KulCardShapeCallback } from '../kul-card-declarations';
 
 export const getShapes = <
     C extends KulComponentName,
@@ -31,8 +22,8 @@ export const getShapes = <
     shape: S,
     items: Partial<KulDataCell<S>>[],
     eventDispatcher: KulCardAdapter['actions']['dispatchEvent'],
-    defaultProps?: Partial<KulDataCell<S>>,
-    defaultCb?: S extends 'text' ? never : ShapeCallback<C, S>
+    defaultProps?: Partial<KulDataCell<S>>[],
+    defaultCb?: S extends 'text' ? never : KulCardShapeCallback<C, S>
 ): {
     element: VNode[];
     ref: Array<HTMLDivElement | KulComponentRootElement<C>>;
@@ -65,10 +56,12 @@ export const getShapes = <
             for (let index = 0; items && index < items.length; index++) {
                 const props = items[index];
                 const toSpread = {};
-                if (defaultProps) {
+                if (defaultProps?.[index]) {
                     decorateSpreader(
                         toSpread,
-                        defaultProps as Partial<KulDataCell<KulDataShapes>>
+                        defaultProps[index] as Partial<
+                            KulDataCell<KulDataShapes>
+                        >
                     );
                 }
                 decorateSpreader(

@@ -26,7 +26,7 @@ import {
     KulDataDataset,
     KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
-import { LAYOUT_HUB } from './layouts/kul-card-layout-hub';
+import { LAYOUT_HUB } from './helpers/kul-card-layout-hub';
 
 @Component({
     tag: 'kul-card',

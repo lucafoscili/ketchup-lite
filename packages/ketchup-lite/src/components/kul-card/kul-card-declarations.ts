@@ -4,11 +4,12 @@ import {
     KulEventPayload,
     KulEventType,
 } from '../../types/GenericTypes';
-import { KulCard } from './kul-card';
 import {
     KulDataDataset,
+    KulDataShapes,
     KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulCard } from './kul-card';
 
 /*-------------------------------------------------*/
 /*                  A d a p t e r                  */
@@ -36,12 +37,25 @@ export type KulCardEvent =
     | 'unmount';
 export interface KulCardEventPayload
     extends KulEventPayload<'KulCard', KulCardEvent> {}
+export type KulCardShapeCallback<
+    C extends KulComponentName,
+    S extends KulDataShapes | 'text',
+> = S extends 'text'
+    ? never
+    : (
+          e: CustomEvent<KulEventPayload<C, KulEventType<KulComponent<C>>>>
+      ) => void;
 /*-------------------------------------------------*/
 /*                 I n t e r n a l                 */
 /*-------------------------------------------------*/
 export enum KulCardCSSClasses {
     HAS_ACTIONS = 'has-actions',
     HAS_CONTENT = 'has-content',
+}
+
+export enum KulCardShapesIds {
+    CLEAR = 'clear',
+    THEME = 'theme',
 }
 /*-------------------------------------------------*/
 /*                    P r o p s                    */

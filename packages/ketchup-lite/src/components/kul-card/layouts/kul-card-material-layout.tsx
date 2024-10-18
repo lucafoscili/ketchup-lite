@@ -3,7 +3,10 @@ import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
 import { KulCardAdapter, KulCardCSSClasses } from '../kul-card-declarations';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
-import { getShapes } from '../helpers/shapes';
+import { getShapes } from '../helpers/kul-card-shapes';
+import { DEFAULTS } from '../helpers/kul-card-defaults';
+
+const KUL_MANAGER = kulManagerInstance();
 
 export function getMaterialLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
@@ -21,15 +24,9 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
         'image',
         shapes.image,
         eventDispatcher,
-        {
-            htmlProps: {
-                className: 'kul-cover',
-            },
-            kulSizeX: '100%',
-            kulSizeY: '100%',
-        }
+        DEFAULTS.material.image()
     );
-    const text = getShapes(
+    const texts = getShapes(
         'KulTextfield',
         'text',
         shapes.text,
@@ -42,17 +39,17 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
         : null;
 
     const titleIndex = 0;
-    const title = text.element?.length ? shapes.text[titleIndex].value : null;
+    const title = texts.element?.length ? shapes.text[titleIndex].value : null;
 
     const subtitleIndex = 1;
     const subtitle =
-        text.element?.length > subtitleIndex
+        texts.element?.length > subtitleIndex
             ? shapes.text[subtitleIndex].value
             : null;
 
     const descriptionIndex = 2;
     const description =
-        text.element?.length > descriptionIndex
+        texts.element?.length > descriptionIndex
             ? shapes.text[descriptionIndex].value
             : undefined;
 
@@ -67,7 +64,7 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
                 class={RIPPLE_SURFACE_CLASS}
                 data-cy={KulDataCyAttributes.RIPPLE}
                 onPointerDown={(e) => {
-                    kulManagerInstance().theme.ripple.trigger(
+                    KUL_MANAGER.theme.ripple.trigger(
                         e as PointerEvent,
                         e.currentTarget as HTMLElement
                     );

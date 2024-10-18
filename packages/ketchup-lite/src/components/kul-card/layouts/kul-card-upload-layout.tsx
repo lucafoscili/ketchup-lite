@@ -1,6 +1,7 @@
 import { h, VNode } from '@stencil/core';
 import { KulCardAdapter } from '../kul-card-declarations';
-import { getShapes } from '../helpers/shapes';
+import { getShapes } from '../helpers/kul-card-shapes';
+import { DEFAULTS } from '../helpers/kul-card-defaults';
 
 export function getUploadLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
@@ -12,13 +13,7 @@ export function getUploadLayout(adapter: KulCardAdapter): VNode {
         'button',
         shapes.button,
         eventDispatcher,
-        {
-            htmlProps: {
-                className: 'kul-full-width',
-            },
-            kulIcon: 'upload',
-            kulLabel: 'Upload',
-        }
+        DEFAULTS.upload.button()
     );
     const uploads = getShapes(
         'KulUpload',

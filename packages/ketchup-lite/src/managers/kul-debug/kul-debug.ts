@@ -11,8 +11,10 @@ import {
     KulDebugLogFactory,
     KulDebugLogsToPrint,
     KulDebugLogToPrintEntry,
+    KulDebugManagedComponents,
 } from './kul-debug-declarations';
 import { KulCode } from '../../components/kul-code/kul-code';
+import { KulSwitch } from '../../components/kul-switch/kul-switch';
 
 const dom: KulDom = document.documentElement as KulDom;
 
@@ -20,24 +22,41 @@ export class KulDebug {
     #IS_ENABLED: boolean;
     #LOG_LIMIT: number;
     #LOGS: KulDebugLog[];
-    #MANAGED_COMPONENTS: Set<KulCode>;
+    #MANAGED_COMPONENTS: { codes: Set<KulCode>; switches: Set<KulSwitch> };
 
     constructor(active?: boolean, logLimit?: number) {
         this.#IS_ENABLED = active ? true : false;
         this.#LOG_LIMIT = logLimit ? logLimit : 250;
         this.#LOGS = [];
-        this.#MANAGED_COMPONENTS = new Set();
+        this.#MANAGED_COMPONENTS = { codes: new Set(), switches: new Set() };
     }
+
+    #codeDispatcher = (log?: KulDebugLog) => {
+        Array.from(this.#MANAGED_COMPONENTS.codes).forEach((comp) => {
+            if (log) {
+                comp.kulValue = `# ${log.id}:\n${log.message}\n\n${comp.kulValue}`;
+            } else {
+                comp.kulValue = '';
+            }
+        });
+    };
+
+    #switchDispatcher = () => {
+        Array.from(this.#MANAGED_COMPONENTS.switches).forEach((comp) => {
+            comp.setValue(this.#IS_ENABLED ? 'on' : 'off');
+        });
+    };
 
     logs: KulDebugLogFactory = {
         dump: () => {
             this.#LOGS = [];
+            this.#codeDispatcher();
         },
         fromComponent(comp: KulDebugLogClass): comp is KulGenericComponent {
             return (comp as KulGenericComponent).rootElement !== undefined;
         },
         new: async (comp, message, category = 'informational') => {
-            if (this.#MANAGED_COMPONENTS.has(comp as KulCode)) {
+            if (this.#MANAGED_COMPONENTS.codes.has(comp as KulCode)) {
                 return;
             }
 
@@ -46,7 +65,9 @@ export class KulDebug {
                 category,
                 class: null,
                 date: new Date(),
-                id: ` ${isFromComponent ? comp.rootElement.tagName : 'KulManager'} #${isFromComponent ? comp.rootElement.id : ''} => `,
+                id: isFromComponent
+                    ? `${comp.rootElement.tagName} ${comp.rootElement.id ? '( #' + comp.rootElement.id + ' )' : ''}`
+                    : 'KulManager',
                 message,
                 type:
                     message.indexOf('Render #') > -1
@@ -92,9 +113,7 @@ export class KulDebug {
             }
 
             if (this.isEnabled()) {
-                Array.from(this.#MANAGED_COMPONENTS).forEach((comp) => {
-                    comp.kulValue += `\n${log.id}${log.message}`;
-                });
+                this.#codeDispatcher(log);
             }
         },
         print: () => {
@@ -149,22 +168,34 @@ export class KulDebug {
         return this.#IS_ENABLED;
     }
 
-    register(comp: KulCode): void {
-        this.#MANAGED_COMPONENTS.add(comp);
+    register(comp: KulDebugManagedComponents): void {
+        if (comp.rootElement.tagName.toLowerCase() === 'kul-code') {
+            this.#MANAGED_COMPONENTS.codes.add(comp as KulCode);
+        } else {
+            this.#MANAGED_COMPONENTS.switches.add(comp as KulSwitch);
+        }
     }
 
-    toggle(value?: boolean) {
+    toggle(value?: boolean, dispatch = true) {
         if (value === false || value === true) {
             this.#IS_ENABLED = value;
         } else {
             this.#IS_ENABLED = !this.#IS_ENABLED;
         }
 
+        if (dispatch) {
+            this.#switchDispatcher();
+        }
+
         return this.#IS_ENABLED;
     }
 
-    unregister(comp: KulCode): void {
-        this.#MANAGED_COMPONENTS.delete(comp);
+    unregister(comp: KulDebugManagedComponents): void {
+        if (comp.rootElement.tagName.toLowerCase() === 'kul-code') {
+            this.#MANAGED_COMPONENTS.codes.delete(comp as KulCode);
+        } else {
+            this.#MANAGED_COMPONENTS.switches.delete(comp as KulSwitch);
+        }
     }
 
     async updateDebugInfo(
