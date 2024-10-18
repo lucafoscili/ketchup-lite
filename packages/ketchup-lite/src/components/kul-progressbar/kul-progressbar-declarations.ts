@@ -3,7 +3,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulProgressbarEvent = 'ready';
+export type KulProgressbarEvent = 'ready' | 'unmount';
 export interface KulProgressbarEventPayload
     extends KulEventPayload<'KulProgressbar', KulProgressbarEvent> {
     isPlaceholder?: boolean;

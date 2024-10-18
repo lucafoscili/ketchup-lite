@@ -8,7 +8,8 @@ export type KulSwitchEvent =
     | 'change'
     | 'focus'
     | 'pointerdown'
-    | 'ready';
+    | 'ready'
+    | 'unmount';
 export interface KulSwitchEventPayload
     extends KulEventPayload<'KulSwitch', KulSwitchEvent> {
     value: string;

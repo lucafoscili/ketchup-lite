@@ -10,7 +10,7 @@ import { KulScrollOnHover } from '../kul-scroll-on-hover/kul-scroll-on-hover';
 import { KulTheme } from '../kul-theme/kul-theme';
 import { KulDebug } from './kul-debug';
 
-export interface KulDebugComponentInfo {
+export interface KulDebugLifecycleInfo {
     endTime: number;
     renderCount: number;
     renderEnd: number;

@@ -31,7 +31,7 @@ import {
     KUL_WRAPPER_ID,
 } from '../../variables/GenericVariables';
 import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 
 @Component({
     tag: 'kul-image',
@@ -52,7 +52,7 @@ export class KulImage {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -139,10 +139,10 @@ export class KulImage {
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**

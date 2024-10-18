@@ -59,6 +59,11 @@ export const UPLOAD_DOC: KulArticleDataset = {
                                 'emitted when the component completes its first complete lifecycle',
                         },
                         {
+                            type: 'unmount',
+                            description:
+                                'emitted when the component is disconnected from the DOM',
+                        },
+                        {
                             type: 'upload',
                             description:
                                 'emitted when a new file has been uploaded',

@@ -23,7 +23,7 @@ import {
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
 
 @Component({
@@ -44,7 +44,7 @@ export class KulTextfield {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -178,10 +178,10 @@ export class KulTextfield {
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -489,5 +489,6 @@ export class KulTextfield {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
+        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

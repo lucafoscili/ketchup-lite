@@ -24,7 +24,7 @@ import {
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulLanguageGeneric } from '../../managers/kul-language/kul-language-declarations';
 
@@ -46,7 +46,7 @@ export class KulList {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -240,10 +240,10 @@ export class KulList {
     }
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -465,5 +465,6 @@ export class KulList {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
+        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

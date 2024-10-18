@@ -7,7 +7,12 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulTreeEvent = 'click' | 'kul-event' | 'pointerdown' | 'ready';
+export type KulTreeEvent =
+    | 'click'
+    | 'kul-event'
+    | 'pointerdown'
+    | 'ready'
+    | 'unmount';
 export interface KulTreeEventPayload
     extends KulEventPayload<'KulTree', KulTreeEvent> {
     node?: KulDataNode;

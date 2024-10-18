@@ -47,13 +47,13 @@ Type: `Promise<void>`
 
 
 
-### `getDebugInfo() => Promise<KulDebugComponentInfo>`
+### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.
 
 #### Returns
 
-Type: `Promise<KulDebugComponentInfo>`
+Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 

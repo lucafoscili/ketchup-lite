@@ -65,7 +65,12 @@ export interface KulChatAdapter {
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulChatEvent = 'config' | 'polling' | 'ready' | 'update';
+export type KulChatEvent =
+    | 'config'
+    | 'polling'
+    | 'ready'
+    | 'unmount'
+    | 'update';
 export interface KulChatEventPayload
     extends KulEventPayload<'KulChat', KulChatEvent> {
     history: string;

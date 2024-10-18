@@ -10,7 +10,7 @@ import {
     State,
 } from '@stencil/core';
 import { Method } from '@stencil/core/internal';
-import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulLazyEvent,
@@ -18,7 +18,7 @@ import {
     KulLazyProps,
     KulLazyRenderMode,
 } from './kul-lazy-declarations';
-import { KulDebugComponentInfo } from '../../components';
+import { KulDebugLifecycleInfo } from '../../components';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 
@@ -40,7 +40,7 @@ export class KulLazy {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -130,10 +130,10 @@ export class KulLazy {
     }
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -333,5 +333,6 @@ export class KulLazy {
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
         this.#intObserver?.unobserve(this.rootElement);
+        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

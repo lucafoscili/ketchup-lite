@@ -9,7 +9,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulChartEvent = 'click' | 'ready';
+export type KulChartEvent = 'click' | 'ready' | 'unmount';
 export interface KulChartEventPayload
     extends KulEventPayload<'KulChart', KulChartEvent> {
     column: KulDataColumn;

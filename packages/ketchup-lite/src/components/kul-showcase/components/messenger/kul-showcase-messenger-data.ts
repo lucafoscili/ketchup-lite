@@ -139,6 +139,11 @@ export const MESSENGER_DOC: KulArticleDataset = {
                             description:
                                 'emitted when the save button is clicked (or after each response if autosave is enabled)',
                         },
+                        {
+                            type: 'unmount',
+                            description:
+                                'emitted when the component is disconnected from the DOM',
+                        },
                     ],
                     EVENT_NAME
                 ),

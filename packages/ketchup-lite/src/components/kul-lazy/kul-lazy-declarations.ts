@@ -3,7 +3,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulLazyEvent = 'kul-event' | 'load' | 'ready';
+export type KulLazyEvent = 'kul-event' | 'load' | 'ready' | 'unmount';
 export interface KulLazyEventPayload
     extends KulEventPayload<'KulLazy', KulLazyEvent> {}
 /*-------------------------------------------------*/

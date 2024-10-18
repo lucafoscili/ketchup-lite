@@ -9,7 +9,8 @@ export type KulTextfieldEvent =
     | 'click'
     | 'focus'
     | 'input'
-    | 'ready';
+    | 'ready'
+    | 'unmount';
 export interface KulTextfieldEventPayload
     extends KulEventPayload<'KulTextfield', KulTextfieldEvent> {
     inputValue?: string;

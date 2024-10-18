@@ -68,7 +68,6 @@ const buttonEventHandler = (e: CustomEvent<KulButtonEventPayload>) => {
         case 'click':
             KUL_MANAGER.theme.randomTheme();
             break;
-
         case 'kul-event':
             listEventHandler(originalEvent as CustomEvent<KulListEventPayload>);
             break;
@@ -81,6 +80,9 @@ const codeEventHandler = (e: CustomEvent<KulCodeEventPayload>) => {
     switch (eventType) {
         case 'ready':
             KUL_MANAGER.debug.register(comp);
+            break;
+        case 'unmount':
+            KUL_MANAGER.debug.unregister(comp);
             break;
     }
 };

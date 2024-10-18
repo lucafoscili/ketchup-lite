@@ -4,7 +4,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulAccordionEvent = 'click' | 'pointerdown' | 'ready';
+export type KulAccordionEvent = 'click' | 'pointerdown' | 'ready' | 'unmount';
 export interface KulAccordionEventPayload
     extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}
 /*-------------------------------------------------*/

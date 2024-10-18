@@ -37,6 +37,10 @@ export class KulDebug {
             return (comp as KulGenericComponent).rootElement !== undefined;
         },
         new: async (comp, message, category = 'informational') => {
+            if (this.#MANAGED_COMPONENTS.has(comp as KulCode)) {
+                return;
+            }
+
             const isFromComponent = this.logs.fromComponent(comp);
             const log: KulDebugLog = {
                 category,

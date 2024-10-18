@@ -10,7 +10,8 @@ export type KulButtonEvent =
     | 'focus'
     | 'kul-event'
     | 'pointerdown'
-    | 'ready';
+    | 'ready'
+    | 'unmount';
 export interface KulButtonEventPayload
     extends KulEventPayload<'KulButton', KulButtonEvent> {
     value: string;

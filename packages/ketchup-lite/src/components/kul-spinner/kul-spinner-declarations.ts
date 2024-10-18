@@ -3,7 +3,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulSpinnerEvent = 'ready';
+export type KulSpinnerEvent = 'ready' | 'unmount';
 export interface KulSpinnerEventPayload
     extends KulEventPayload<'KulSpinner', KulSpinnerEvent> {}
 /*-------------------------------------------------*/

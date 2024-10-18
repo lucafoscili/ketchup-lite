@@ -42,7 +42,7 @@ import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 
 @Component({
     tag: 'kul-chart',
@@ -62,7 +62,7 @@ export class KulChart {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -183,10 +183,10 @@ export class KulChart {
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -1340,5 +1340,6 @@ export class KulChart {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
+        this.onKulEvent(new CustomEvent('unmount'), 'unmount', {});
     }
 }

@@ -19,7 +19,7 @@ import {
     KulCardAdapter,
     KulCardLayout,
 } from './kul-card-declarations';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
@@ -46,7 +46,7 @@ export class KulCard {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -128,10 +128,10 @@ export class KulCard {
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -229,5 +229,6 @@ export class KulCard {
     disconnectedCallback() {
         this.#kulManager.language.unregister(this);
         this.#kulManager.theme.unregister(this);
+        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

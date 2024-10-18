@@ -62,6 +62,11 @@ export const LAZY_DOC: KulArticleDataset = {
                             description:
                                 'emitted when the component completes its first complete lifecycle',
                         },
+                        {
+                            type: 'unmount',
+                            description:
+                                'emitted when the component is disconnected from the DOM',
+                        },
                     ],
                     EVENT_NAME
                 ),

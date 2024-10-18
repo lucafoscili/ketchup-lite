@@ -10,10 +10,11 @@ import { KulEventPayload } from '../../types/GenericTypes';
 export type KulListEvent =
     | 'blur'
     | 'click'
+    | 'delete'
     | 'focus'
     | 'pointerdown'
     | 'ready'
-    | 'delete';
+    | 'unmount';
 export interface KulListEventPayload
     extends KulEventPayload<'KulList', KulListEvent> {
     node: KulDataNode;

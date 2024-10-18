@@ -2,7 +2,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulCodeEvent = 'ready';
+export type KulCodeEvent = 'ready' | 'unmount';
 export interface KulCodeEventPayload
     extends KulEventPayload<'KulCode', KulCodeEvent> {}
 /*-------------------------------------------------*/

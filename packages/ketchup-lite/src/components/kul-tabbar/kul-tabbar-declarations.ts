@@ -7,7 +7,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulTabbarEvent = 'click' | 'pointerdown' | 'ready';
+export type KulTabbarEvent = 'click' | 'pointerdown' | 'ready' | 'unmount';
 export interface KulTabbarEventPayload
     extends KulEventPayload<'KulTabbar', KulTabbarEvent> {
     index?: number;

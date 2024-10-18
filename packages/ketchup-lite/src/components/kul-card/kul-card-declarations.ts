@@ -32,7 +32,8 @@ export type KulCardEvent =
     | 'contextmenu'
     | 'kul-event'
     | 'pointerdown'
-    | 'ready';
+    | 'ready'
+    | 'unmount';
 export interface KulCardEventPayload
     extends KulEventPayload<'KulCard', KulCardEvent> {}
 /*-------------------------------------------------*/

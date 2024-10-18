@@ -1,4 +1,4 @@
-import { KulDebugComponentInfo } from '../../../src/managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../../src/managers/kul-debug/kul-debug-declarations';
 
 const header = 'header';
 
@@ -15,7 +15,7 @@ describe('Methods', () => {
                     const kulHeaderElement: HTMLKulHeaderElement = $el[0];
                     kulHeaderElement
                         .getDebugInfo()
-                        .then((debugInfo: KulDebugComponentInfo) => {
+                        .then((debugInfo: KulDebugLifecycleInfo) => {
                             expect(debugInfo)
                                 .to.have.property('endTime')
                                 .that.is.a('number');

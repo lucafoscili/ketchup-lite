@@ -51,7 +51,7 @@ export const TOAST_DOC: KulArticleDataset = {
                         {
                             type: 'unmount',
                             description:
-                                'emitted when the component is removed from the DOM',
+                                'emitted when the component is disconnected from the DOM',
                         },
                     ],
                     EVENT_NAME

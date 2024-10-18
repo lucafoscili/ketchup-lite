@@ -22,15 +22,15 @@
 
 ## Methods
 
-### `getDebugInfo() => Promise<KulDebugComponentInfo>`
+### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Retrieves the debug information reflecting the current state of the component.
 
 #### Returns
 
-Type: `Promise<KulDebugComponentInfo>`
+Type: `Promise<KulDebugLifecycleInfo>`
 
-A promise that resolves to a KulDebugComponentInfo object containing debug information.
+A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
 
 ### `getProps(descriptions?: boolean) => Promise<GenericObject>`
 

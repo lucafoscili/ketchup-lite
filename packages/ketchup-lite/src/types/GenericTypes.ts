@@ -86,7 +86,7 @@ import {
     KulProgressbarEvent,
     KulProgressbarProps,
 } from '../components/kul-progressbar/kul-progressbar-declarations';
-import { KulDebugComponentInfo } from '../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../managers/kul-debug/kul-debug-declarations';
 import {
     KulMessengerEvent,
     KulMessengerProps,
@@ -247,8 +247,8 @@ export interface KulComponent<T extends KulComponentName>
     rootElement: KulComponentElementMap[T];
 }
 interface KulComponentCommon {
-    debugInfo: KulDebugComponentInfo;
-    getDebugInfo: () => Promise<KulDebugComponentInfo>;
+    debugInfo: KulDebugLifecycleInfo;
+    getDebugInfo: () => Promise<KulDebugLifecycleInfo>;
     getProps: (descriptions?: boolean) => Promise<GenericObject>;
     kulStyle: string;
     refresh: () => Promise<void>;
