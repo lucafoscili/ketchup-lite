@@ -41,6 +41,17 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(image);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(image);
+        const eventType: KulImageEvent = 'unmount';
+        cy.checkEvent(image, eventType);
+        cy.get('@eventElement').then(($image) => {
+            const kulImageElement = $image[0] as HTMLKulImageElement;
+            kulImageElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

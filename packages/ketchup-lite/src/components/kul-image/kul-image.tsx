@@ -12,11 +12,7 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import type {
-    GenericMap,
-    GenericObject,
-    KulEventPayload,
-} from '../../types/GenericTypes';
+import type { GenericMap, GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulImageEvent,
@@ -160,6 +156,17 @@ export class KulImage {
     @Method()
     async refresh(): Promise<void> {
         forceUpdate(this);
+    }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
     }
 
     /*-------------------------------------------------*/

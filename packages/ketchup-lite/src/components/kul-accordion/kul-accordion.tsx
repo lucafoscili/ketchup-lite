@@ -12,7 +12,10 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import type { GenericObject } from '../../types/GenericTypes';
+import {
+    KulDataCyAttributes,
+    type GenericObject,
+} from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataDataset,
@@ -191,6 +194,17 @@ export class KulAccordion {
         }
         this.refresh();
     }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
+    }
 
     /*-------------------------------------------------*/
     /*           P r i v a t e   M e t h o d s         */
@@ -251,6 +265,11 @@ export class KulAccordion {
                         tabindex="1"
                         title={node.description}
                         class={headerClassName}
+                        data-cy={
+                            isExpandible
+                                ? undefined
+                                : KulDataCyAttributes.BUTTON
+                        }
                         onClick={(e) => this.toggleNode(node.id, e)}
                         onPointerDown={(e) => {
                             this.onKulEvent(e, 'pointerdown', node);
@@ -337,6 +356,5 @@ export class KulAccordion {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
-        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

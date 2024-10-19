@@ -137,6 +137,7 @@ export class KulSplash {
         setTimeout(() => {
             this.state = 'unmounting';
             setTimeout(() => {
+                this.onKulEvent(new CustomEvent('unmount'), 'unmount');
                 this.rootElement.remove();
             }, 300);
         }, ms);
@@ -196,6 +197,5 @@ export class KulSplash {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
-        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

@@ -50,6 +50,17 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(tabbar);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(tabbar);
+        const eventType: KulTabbarEvent = 'unmount';
+        cy.checkEvent(tabbar, eventType);
+        cy.get('@eventElement').then(($tabbar) => {
+            const kulTabbarElement = $tabbar[0] as HTMLKulTabbarElement;
+            kulTabbarElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

@@ -196,6 +196,13 @@ export class KulChip {
         return this.selectedNodes;
     }
     /**
+     * This method is used to trigger a new render of the component.
+     */
+    @Method()
+    async refresh(): Promise<void> {
+        forceUpdate(this);
+    }
+    /**
      * Selects one or more nodes in the chip component.
      * @param {KulDataNode[] | string[]} nodes - An array of KulDataNode objects or node IDs to be selected.
      * @returns {Promise<void>}
@@ -224,11 +231,15 @@ export class KulChip {
         this.selectedNodes = nodesToAdd;
     }
     /**
-     * This method is used to trigger a new render of the component.
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
      */
     @Method()
-    async refresh(): Promise<void> {
-        forceUpdate(this);
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
     }
 
     /*-------------------------------------------------*/
@@ -502,6 +513,5 @@ export class KulChip {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
-        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

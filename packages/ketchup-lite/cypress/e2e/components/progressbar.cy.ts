@@ -1,8 +1,10 @@
 import {
+    KulProgressbarEvent,
     KulProgressbarProps,
     KulProgressbarPropsInterface,
 } from '../../../src/components/kul-progressbar/kul-progressbar-declarations';
 import { PROGRESSBAR_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/progressbar/kul-showcase-progressbar-declarations';
+import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
 const progressbar = 'progressbar';
 const progressbarCapitalized =
@@ -29,6 +31,18 @@ describe('Basic', () => {
 describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(progressbar);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(progressbar);
+        const eventType: KulProgressbarEvent = 'unmount';
+        cy.checkEvent(progressbar, eventType);
+        cy.get('@eventElement').then(($progressbar) => {
+            const kulProgressbarElement =
+                $progressbar[0] as HTMLKulProgressbarElement;
+            kulProgressbarElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 

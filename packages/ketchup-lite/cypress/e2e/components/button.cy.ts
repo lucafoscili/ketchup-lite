@@ -70,6 +70,17 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(button);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(button);
+        const eventType: KulButtonEvent = 'unmount';
+        cy.checkEvent(button, eventType);
+        cy.get('@eventElement').then(($button) => {
+            const kulButtonElement = $button[0] as HTMLKulButtonElement;
+            kulButtonElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

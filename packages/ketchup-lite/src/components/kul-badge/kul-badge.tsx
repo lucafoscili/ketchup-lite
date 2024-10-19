@@ -127,6 +127,17 @@ export class KulBadge {
     async refresh(): Promise<void> {
         forceUpdate(this);
     }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
+    }
 
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
@@ -178,6 +189,5 @@ export class KulBadge {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
-        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }

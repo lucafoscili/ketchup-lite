@@ -119,6 +119,17 @@ describe('Events', () => {
         cy.checkReadyEvent(badge);
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
+
+    it(`unmount`, () => {
+        cy.navigate(badge);
+        const eventType: KulBadgeEvent = 'unmount';
+        cy.checkEvent(badge, eventType);
+        cy.get('@eventElement').then(($badge) => {
+            const kulBadgeElement = $badge[0] as HTMLKulBadgeElement;
+            kulBadgeElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

@@ -1,8 +1,10 @@
 import {
+    KulMessengerEvent,
     KulMessengerProps,
     KulMessengerPropsInterface,
 } from '../../../src/components/kul-messenger/kul-messenger-declarations';
 import { MESSENGER_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/messenger/kul-showcase-messenger-declarations';
+import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
 const messenger = 'messenger';
 const messengerCapitalized =
@@ -29,6 +31,18 @@ describe('Basic', () => {
 describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(messenger);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(messenger);
+        const eventType: KulMessengerEvent = 'unmount';
+        cy.checkEvent(messenger, eventType);
+        cy.get('@eventElement').then(($messenger) => {
+            const kulMessengerElement =
+                $messenger[0] as HTMLKulMessengerElement;
+            kulMessengerElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 

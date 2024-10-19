@@ -17,7 +17,7 @@ import {
     KulShowcaseProps,
     KulShowcaseTitle,
 } from './kul-showcase-declarations';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KUL_DOC,
     KUL_SHOWCASE_COMPONENTS,
@@ -84,35 +84,6 @@ export class KulShowcase {
     /*-------------------------------------------------*/
 
     #kulManager = kulManagerInstance();
-
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
-    /**
-     * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
-     */
-    @Method()
-    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
-        return this.debugInfo;
-    }
-    /**
-     * Used to retrieve component's props values.
-     * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-     * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
-     */
-    @Method()
-    async getProps(descriptions?: boolean): Promise<GenericObject> {
-        return getProps(this, KulShowcaseProps, descriptions);
-    }
-    /**
-     * This method is used to trigger a new render of the component.
-     */
-    @Method()
-    async refresh(): Promise<void> {
-        forceUpdate(this);
-    }
 
     /*-------------------------------------------------*/
     /*           P r i v a t e   M e t h o d s         */
@@ -243,30 +214,9 @@ export class KulShowcase {
     /*          L i f e c y c l e   H o o k s          */
     /*-------------------------------------------------*/
 
-    componentWillLoad() {
-        this.#kulManager.theme.register(this);
-    }
-
-    componentDidLoad() {
-        this.#kulManager.debug.updateDebugInfo(this, 'did-load');
-    }
-
-    componentWillRender() {
-        this.#kulManager.debug.updateDebugInfo(this, 'will-render');
-    }
-
-    componentDidRender() {
-        this.#kulManager.debug.updateDebugInfo(this, 'did-render');
-    }
-
     render() {
         return (
             <Host>
-                {this.kulStyle ? (
-                    <style id={KUL_STYLE_ID}>
-                        {this.#kulManager.theme.setKulStyle(this)}
-                    </style>
-                ) : undefined}
                 <div id={KUL_WRAPPER_ID}>
                     <div class="showcase">
                         <kul-article kulData={KUL_DOC}></kul-article>
@@ -328,9 +278,5 @@ export class KulShowcase {
                 </div>
             </Host>
         );
-    }
-
-    disconnectedCallback() {
-        this.#kulManager.theme.unregister(this);
     }
 }

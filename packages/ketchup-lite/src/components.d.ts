@@ -109,6 +109,11 @@ export namespace Components {
           * @param id - Id of the node.
          */
         "toggleNode": (id: string, e?: Event) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulArticle {
         /**
@@ -136,6 +141,11 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulBadge {
         /**
@@ -168,6 +178,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulButton {
         /**
@@ -272,6 +287,11 @@ export namespace Components {
           * @returns
          */
         "setValue": (value: KulButtonState) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulCard {
         /**
@@ -319,6 +339,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulChart {
         /**
@@ -391,6 +416,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulChat {
         /**
@@ -472,6 +502,11 @@ export namespace Components {
           * Sets the history of the component through a string.
          */
         "setHistory": (history: string) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulChip {
         /**
@@ -520,6 +555,11 @@ export namespace Components {
           * @returns
          */
         "setSelectedNodes": (nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulCode {
         /**
@@ -562,6 +602,11 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulDrawer {
         /**
@@ -601,6 +646,11 @@ export namespace Components {
           * Opens the drawer when closed and vice-versa.
          */
         "toggle": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulHeader {
         /**
@@ -623,6 +673,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulImage {
         /**
@@ -676,6 +731,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulLazy {
         /**
@@ -723,6 +783,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulList {
         /**
@@ -793,6 +858,11 @@ export namespace Components {
           * @param index - Zero-based index of the item that must be selected, when not provided the list will attempt to select the focused element.
          */
         "selectNode": (index?: number) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulMessenger {
         /**
@@ -834,6 +904,11 @@ export namespace Components {
           * Resets the states of the component.
          */
         "reset": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulPhotoframe {
         /**
@@ -871,6 +946,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulProgressbar {
         /**
@@ -918,28 +998,18 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulShowcase {
-        /**
-          * Fetches debug information of the component's current state.
-          * @returns A promise that resolves with the debug information object.
-         */
-        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
-        /**
-          * Used to retrieve component's props values.
-          * @param descriptions - When provided and true, the result will be the list of props with their description.
-          * @returns List of props as object, each key will be a prop.
-         */
-        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
         /**
           * Custom style of the component.
           * @default ""
          */
         "kulStyle": string;
-        /**
-          * This method is used to trigger a new render of the component.
-         */
-        "refresh": () => Promise<void>;
     }
     interface KulShowcaseAccordion {
     }
@@ -1067,6 +1137,11 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulSplash {
         /**
@@ -1157,6 +1232,11 @@ export namespace Components {
           * @returns
          */
         "setValue": (value: KulSwitchState) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulTabbar {
         /**
@@ -1205,6 +1285,11 @@ export namespace Components {
           * @returns The newly set value.
          */
         "setValue": (value: number | string) => Promise<KulTabbarState>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulTextfield {
         /**
@@ -1291,6 +1376,11 @@ export namespace Components {
           * @returns
          */
         "setValue": (value: string) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulToast {
         /**
@@ -1338,6 +1428,11 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulTree {
         /**
@@ -1390,6 +1485,11 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulUpload {
         /**
@@ -1431,6 +1531,11 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
 }
 export interface KulAccordionCustomEvent<T> extends CustomEvent<T> {

@@ -4,6 +4,7 @@ import {
     KulPhotoframePropsInterface,
 } from '../../../src/components/kul-photoframe/kul-photoframe-declarations';
 import { PHOTOFRAME_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/photoframe/kul-showcase-photoframe-declarations';
+import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
 const photoframe = 'photoframe';
 const photoframeCapitalized =
@@ -35,6 +36,18 @@ describe('Events', () => {
 
     it(`ready`, () => {
         cy.checkReadyEvent(photoframe);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(photoframe);
+        const eventType: KulPhotoframeEvent = 'unmount';
+        cy.checkEvent(photoframe, eventType);
+        cy.get('@eventElement').then(($photoframe) => {
+            const kulPhotoframeElement =
+                $photoframe[0] as HTMLKulPhotoframeElement;
+            kulPhotoframeElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 

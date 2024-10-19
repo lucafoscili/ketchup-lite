@@ -336,7 +336,10 @@ function visitManager() {
                             );
                         }
                     };
-                    win.addEventListener('kul-splash-event', checkEvent);
+                    win.document.addEventListener(
+                        'kul-splash-event',
+                        checkEvent
+                    );
                 });
             });
         },

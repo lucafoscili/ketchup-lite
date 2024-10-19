@@ -36,6 +36,17 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(upload);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(upload);
+        const eventType: KulUploadEvent = 'unmount';
+        cy.checkEvent(upload, eventType);
+        cy.get('@eventElement').then(($upload) => {
+            const kulUploadElement = $upload[0] as HTMLKulUploadElement;
+            kulUploadElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

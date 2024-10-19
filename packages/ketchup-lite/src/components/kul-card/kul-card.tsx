@@ -158,6 +158,17 @@ export class KulCard {
     async refresh(): Promise<void> {
         forceUpdate(this);
     }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
+    }
 
     /*-------------------------------------------------*/
     /*           P r i v a t e   M e t h o d s         */
@@ -229,6 +240,5 @@ export class KulCard {
     disconnectedCallback() {
         this.#kulManager.language.unregister(this);
         this.#kulManager.theme.unregister(this);
-        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
     }
 }
