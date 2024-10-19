@@ -27,13 +27,13 @@
 
 ## Methods
 
-### `getDebugInfo() => Promise<KulDebugComponentInfo>`
+### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.
 
 #### Returns
 
-Type: `Promise<KulDebugComponentInfo>`
+Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
@@ -70,7 +70,6 @@ Type: `Promise<void>`
 
  - [kul-badge](../kul-badge)
  - [kul-button](../kul-button)
- - [kul-card](../kul-card)
  - [kul-chat](../kul-chat)
  - [kul-messenger](../kul-messenger)
  - [kul-showcase-image](../kul-showcase/components/image)
@@ -90,7 +89,6 @@ graph TD;
   kul-image --> kul-badge
   kul-badge --> kul-image
   kul-button --> kul-image
-  kul-card --> kul-image
   kul-chat --> kul-image
   kul-messenger --> kul-image
   kul-showcase-image --> kul-image

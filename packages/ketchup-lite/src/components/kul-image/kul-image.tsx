@@ -12,11 +12,7 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import type {
-    GenericMap,
-    GenericObject,
-    KulEventPayload,
-} from '../../types/GenericTypes';
+import type { GenericMap, GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulImageEvent,
@@ -31,7 +27,7 @@ import {
     KUL_WRAPPER_ID,
 } from '../../variables/GenericVariables';
 import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 
 @Component({
     tag: 'kul-image',
@@ -52,7 +48,7 @@ export class KulImage {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -139,10 +135,10 @@ export class KulImage {
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -160,6 +156,17 @@ export class KulImage {
     @Method()
     async refresh(): Promise<void> {
         forceUpdate(this);
+    }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
     }
 
     /*-------------------------------------------------*/
@@ -238,7 +245,7 @@ export class KulImage {
 
     render() {
         if (!this.kulValue) {
-            this.#kulManager.debug.logMessage(this, 'Empty image.');
+            this.#kulManager.debug.logs.new(this, 'Empty image.');
             return;
         }
 

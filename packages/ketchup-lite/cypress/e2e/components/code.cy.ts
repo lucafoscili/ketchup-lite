@@ -1,8 +1,10 @@
 import {
+    KulCodeEvent,
     KulCodeProps,
     KulCodePropsInterface,
 } from '../../../src/components/kul-code/kul-code-declarations';
 import { CODE_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/code/kul-showcase-code-declarations';
+import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
 const code = 'code';
 const codeCapitalized = code.charAt(0).toUpperCase() + code.slice(1);
@@ -25,6 +27,17 @@ describe('Basic', () => {
 describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(code);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(code);
+        const eventType: KulCodeEvent = 'unmount';
+        cy.checkEvent(code, eventType);
+        cy.get('@eventElement').then(($code) => {
+            const kulCodeElement = $code[0] as HTMLKulCodeElement;
+            kulCodeElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 

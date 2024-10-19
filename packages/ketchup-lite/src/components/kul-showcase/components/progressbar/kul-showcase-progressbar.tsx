@@ -3,7 +3,7 @@ import {
     PROGRESSBAR_DOC,
     PROGRESSBAR_EXAMPLES,
 } from './kul-showcase-progressbar-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { ProgressbarExample } from './kul-showcase-progressbar-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

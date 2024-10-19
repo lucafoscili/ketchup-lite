@@ -1,12 +1,16 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulUpload } from './kul-upload';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulUploadEvent = 'delete' | 'pointerdown' | 'ready' | 'upload';
+export type KulUploadEvent =
+    | 'delete'
+    | 'pointerdown'
+    | 'ready'
+    | 'unmount'
+    | 'upload';
 export interface KulUploadEventPayload
-    extends KulEventPayload<KulUpload, KulUploadEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulUpload', KulUploadEvent> {
     selectedFiles: File[];
 }
 /*-------------------------------------------------*/

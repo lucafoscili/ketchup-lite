@@ -1,15 +1,19 @@
 /// <reference types="cypress" />
 
-import {
-    KulDom,
-    KulManager,
-} from '../../src/managers/kul-manager/kul-manager-declarations';
+import { KulManager } from '../../src/managers/kul-manager/kul-manager';
+import { KulDom } from '../../src/managers/kul-manager/kul-manager-declarations';
 import {
     GenericMap,
     KulComponent,
+    KulComponentName,
     KulDataCyAttributes,
+    KulGenericEventPayload,
     KulEventPayload,
     KulEventType,
+    KulGenericComponent,
+    KulGenericEventType,
+    KulGenericEvent,
+    KulGenericRootElement,
 } from '../../src/types/GenericTypes';
 import { DataCyAttributeTransformed } from './selectors';
 
@@ -30,7 +34,10 @@ declare global {
                 componentExamples: Array<string>
             ): Chainable;
             checkDebugInfo(component: string): Chainable;
-            checkEvent(component: string, eventType: KulEventType): Chainable;
+            checkEvent(
+                component: string,
+                eventType: KulGenericEventType
+            ): Chainable;
             checkProps(
                 component: string,
                 componentProps: GenericMap
@@ -41,7 +48,7 @@ declare global {
             ): Chainable;
             checkReadyEvent(
                 component: string,
-                eventType?: KulEventType
+                eventType?: KulGenericEventType
             ): Chainable;
             checkRenderCountIncrease(
                 component: string,
@@ -93,7 +100,7 @@ Cypress.Commands.add('checkDebugInfo', (component) => {
         .find(component)
         .first()
         .then(($comp) => {
-            const kulElement = $comp[0] as Partial<KulComponent>;
+            const kulElement = $comp[0] as Partial<KulGenericComponent>;
             kulElement.getDebugInfo().then((debugInfo) => {
                 expect(debugInfo)
                     .to.have.property('endTime')
@@ -114,26 +121,32 @@ Cypress.Commands.add('checkDebugInfo', (component) => {
         });
 });
 
-Cypress.Commands.add('checkEvent', (component, eventType) => {
-    cy.document().then((document) => {
-        const checkEvent = (event: CustomEvent<KulEventPayload>) => {
-            if (
-                event.type === `kul-${component}-event` &&
-                event.detail.eventType === eventType
-            ) {
-                const eventCheck = document.createElement('div');
-                eventCheck.dataset.cy = KulDataCyAttributes.CHECK;
-                document.body.appendChild(eventCheck);
-            }
-        };
-        document.addEventListener(`kul-${component}-event`, checkEvent);
-    });
-    cy.get('@kulComponentShowcase')
-        .find(`kul-${component}`)
-        .first()
-        .scrollIntoView()
-        .as('eventElement');
-});
+Cypress.Commands.add(
+    'checkEvent',
+    <N extends KulComponentName>(
+        component: N,
+        eventType: KulEventType<KulComponent<N>>
+    ) => {
+        cy.document().then((document) => {
+            const checkEvent = (event: KulGenericEvent) => {
+                if (
+                    event.type === `kul-${component}-event` &&
+                    event.detail.eventType === eventType
+                ) {
+                    const eventCheck = document.createElement('div');
+                    eventCheck.dataset.cy = KulDataCyAttributes.CHECK;
+                    document.body.appendChild(eventCheck);
+                }
+            };
+            document.addEventListener(`kul-${component}-event`, checkEvent);
+        });
+        cy.get('@kulComponentShowcase')
+            .find(`kul-${component}`)
+            .first()
+            .scrollIntoView()
+            .as('eventElement');
+    }
+);
 
 Cypress.Commands.add('checkKulStyle', () => {
     function checkStyles(attempts = 0) {
@@ -156,10 +169,12 @@ Cypress.Commands.add('checkProps', (component, componentProps) => {
         .find(component)
         .first()
         .then(($comp) => {
-            ($comp[0] as Partial<KulComponent>).getProps().then((props) => {
-                const enumKeys = Object.keys(componentProps);
-                expect(Object.keys(props)).to.deep.equal(enumKeys);
-            });
+            ($comp[0] as Partial<KulGenericComponent>)
+                .getProps()
+                .then((props) => {
+                    const enumKeys = Object.keys(componentProps);
+                    expect(Object.keys(props)).to.deep.equal(enumKeys);
+                });
         });
 });
 
@@ -168,7 +183,7 @@ Cypress.Commands.add('checkPropsInterface', (component, componentProps) => {
         .find(component)
         .first()
         .then(($comp) => {
-            const kulArticleElement = $comp[0] as Partial<KulComponent>;
+            const kulArticleElement = $comp[0] as Partial<KulGenericComponent>;
             return kulArticleElement.getProps();
         })
         .then((props) => {
@@ -179,12 +194,12 @@ Cypress.Commands.add('checkPropsInterface', (component, componentProps) => {
 
 Cypress.Commands.add(
     'checkReadyEvent',
-    (component, eventType: KulEventType = 'ready') => {
+    (component, eventType: KulGenericEventType = 'ready') => {
         visitManager().visit();
         visitManager().splashUnmount();
         cy.document().then((document) => {
             const eventName = `kul-${component}-event`;
-            const checkEvent = (event: CustomEvent<KulEventPayload>) => {
+            const checkEvent = (event: CustomEvent<KulGenericEventPayload>) => {
                 if (
                     event.type === eventName &&
                     event.detail.eventType === eventType
@@ -213,7 +228,8 @@ Cypress.Commands.add(
         cy.get(component)
             .first()
             .then(($component) => {
-                const componentElement: Partial<KulComponent> = $component[0];
+                const componentElement: Partial<KulGenericRootElement> =
+                    $component[0];
                 return componentElement.getDebugInfo();
             })
             .then((debugInfo) => {
@@ -222,14 +238,15 @@ Cypress.Commands.add(
         cy.get(component)
             .first()
             .then(($component) => {
-                const componentElement: Partial<KulComponent> = $component[0];
+                const componentElement: Partial<KulGenericRootElement> =
+                    $component[0];
                 return componentElement.refresh();
             });
         function checkForRenderCountIncrease(attempts = 0) {
             cy.get(component)
                 .first()
                 .then(($component) => {
-                    const componentElement: Partial<KulComponent> =
+                    const componentElement: Partial<KulGenericRootElement> =
                         $component[0];
                     return componentElement.getDebugInfo();
                 })
@@ -307,9 +324,7 @@ function visitManager() {
         splashUnmount: () => {
             cy.window().then((win) => {
                 return new Cypress.Promise((resolve) => {
-                    const checkEvent = (
-                        event: CustomEvent<KulEventPayload>
-                    ) => {
+                    const checkEvent = (event: KulGenericEvent) => {
                         if (
                             event.type === 'kul-splash-event' &&
                             event.detail.eventType === 'unmount'
@@ -321,7 +336,10 @@ function visitManager() {
                             );
                         }
                     };
-                    win.addEventListener('kul-splash-event', checkEvent);
+                    win.document.addEventListener(
+                        'kul-splash-event',
+                        checkEvent
+                    );
                 });
             });
         },

@@ -9,7 +9,6 @@ import {
     Method,
     Prop,
     State,
-    VNode,
 } from '@stencil/core';
 import type { GenericMap, GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -17,15 +16,17 @@ import {
     KulCardProps,
     KulCardEvent,
     KulCardEventPayload,
+    KulCardAdapter,
+    KulCardLayout,
 } from './kul-card-declarations';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulDataDataset,
     KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
-import { getLayoutA } from './layouts/kul-card-layout-a';
+import { LAYOUT_HUB } from './helpers/kul-card-layout-hub';
 
 @Component({
     tag: 'kul-card',
@@ -45,7 +46,7 @@ export class KulCard {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -71,9 +72,10 @@ export class KulCard {
     @Prop({ mutable: true }) kulData: KulDataDataset = null;
     /**
      * Sets the layout.
-     * @default "a"
+     * @default "material"
      */
-    @Prop({ mutable: true, reflect: true }) kulLayout = 'a';
+    @Prop({ mutable: true, reflect: true }) kulLayout: KulCardLayout =
+        'material';
     /**
      * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
      * @default "100%"
@@ -120,21 +122,16 @@ export class KulCard {
         });
     }
 
-    #cardEvent: EventListenerOrEventListenerObject = (e: CustomEvent) => {
-        e.stopPropagation();
-        this.onKulEvent(e, 'kul-event');
-    };
-
     /*-------------------------------------------------*/
     /*           P u b l i c   M e t h o d s           */
     /*-------------------------------------------------*/
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -161,33 +158,30 @@ export class KulCard {
     async refresh(): Promise<void> {
         forceUpdate(this);
     }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
+    }
 
     /*-------------------------------------------------*/
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
 
-    /**
-     * This method will return the virtual node of the card containing the core layout of the card.
-     * @returns {VNode} Virtual node of the card for the specified layout.
-     */
-    getLayout(): Promise<VNode> {
-        switch (this.kulLayout.toLowerCase()) {
-            case 'a':
-            default:
-                return getLayoutA(this, this.shapes);
-        }
-    }
-    /**
-     * Sets the event listeners on the sub-components, in order to properly emit the generic kul-card-event.
-     */
-    registerListeners(): void {
-        const root = this.rootElement.shadowRoot;
-        root.addEventListener('kul-badge-event', this.#cardEvent);
-        root.addEventListener('kul-button-event', this.#cardEvent);
-        root.addEventListener('kul-code-event', this.#cardEvent);
-        root.addEventListener('kul-image-event', this.#cardEvent);
-        root.addEventListener('kul-upload-event', this.#cardEvent);
-    }
+    #adapter: KulCardAdapter = {
+        actions: {
+            dispatchEvent: async (e) => {
+                this.onKulEvent(e, 'kul-event');
+            },
+        },
+        get: { card: () => this, shapes: () => this.shapes },
+    };
 
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
@@ -196,7 +190,6 @@ export class KulCard {
     componentWillLoad() {
         this.#kulManager.language.register(this);
         this.#kulManager.theme.register(this);
-        this.registerListeners();
     }
 
     componentDidLoad() {
@@ -238,7 +231,7 @@ export class KulCard {
                     onContextMenu={(e) => this.onKulEvent(e, 'contextmenu')}
                     onPointerDown={(e) => this.onKulEvent(e, 'pointerdown')}
                 >
-                    {this.getLayout()}
+                    {LAYOUT_HUB[this.kulLayout.toLowerCase()](this.#adapter)}
                 </div>
             </Host>
         );

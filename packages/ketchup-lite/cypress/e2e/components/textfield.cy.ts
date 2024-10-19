@@ -87,6 +87,18 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(textfield);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(textfield);
+        const eventType: KulTextfieldEvent = 'unmount';
+        cy.checkEvent(textfield, eventType);
+        cy.get('@eventElement').then(($textfield) => {
+            const kulTextfieldElement =
+                $textfield[0] as HTMLKulTextfieldElement;
+            kulTextfieldElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

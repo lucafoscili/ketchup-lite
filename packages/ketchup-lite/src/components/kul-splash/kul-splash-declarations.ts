@@ -1,12 +1,11 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulSplash } from './kul-splash';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulSplashEvent = 'ready' | 'unmount';
 export interface KulSplashEventPayload
-    extends KulEventPayload<KulSplash, KulSplashEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulSplash', KulSplashEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

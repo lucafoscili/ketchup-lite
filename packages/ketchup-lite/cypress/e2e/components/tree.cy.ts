@@ -61,6 +61,17 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(tree);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(tree);
+        const eventType: KulTreeEvent = 'unmount';
+        cy.checkEvent(tree, eventType);
+        cy.get('@eventElement').then(($tree) => {
+            const kulTreeElement = $tree[0] as HTMLKulTreeElement;
+            kulTreeElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

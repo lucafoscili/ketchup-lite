@@ -24,13 +24,13 @@
 
 ## Methods
 
-### `getDebugInfo() => Promise<KulDebugComponentInfo>`
+### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.
 
 #### Returns
 
-Type: `Promise<KulDebugComponentInfo>`
+Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
@@ -93,7 +93,7 @@ Type: `Promise<void>`
 
 ### Used by
 
- - [kul-showcase-messenger](../kul-showcase/layout/messenger)
+ - [kul-showcase-messenger](../kul-showcase/components/messenger)
 
 ### Depends on
 

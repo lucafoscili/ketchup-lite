@@ -29,10 +29,13 @@ export const COMPONENTS = [
     'upload',
 ];
 export const DOC_IDS = {
-    content: '0.0.0.0',
-    paragraph: '0.0.0',
-    section: '0.0',
-    root: '0',
+    content: 'content',
+    contentList: 'content-list',
+    contentListItem: 'content-list-item',
+    contentWrapper: 'content-wrapper',
+    paragraph: 'paragraph',
+    section: 'section',
+    root: 'root',
 };
 export const DOC_STYLES = {
     hiddenSeparator: {
@@ -154,6 +157,18 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             value: 'Code',
         },
         {
+            description: 'Acts as the side menu within the application layout.',
+            icon: 'web',
+            id: 'Drawer',
+            value: 'Drawer',
+        },
+        {
+            description: 'Serves as the top header bar for the application.',
+            icon: 'web_asset',
+            id: 'Header',
+            value: 'Header',
+        },
+        {
             description: 'Displays images and supports different resolutions.',
             icon: 'image',
             id: 'Image',
@@ -171,6 +186,13 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'list',
             id: 'List',
             value: 'List',
+        },
+        {
+            description:
+                'A small template that acts as an interface between the user and an LLM for roleplay.',
+            icon: 'assistant',
+            id: 'Messenger',
+            value: 'Messenger',
         },
         {
             description:
@@ -299,29 +321,6 @@ export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
         },
     ],
 };
-export const KUL_SHOWCASE_LAYOUT: KulDataDataset = {
-    nodes: [
-        {
-            description: 'Acts as the side menu within the application layout.',
-            icon: 'web',
-            id: 'Drawer',
-            value: 'Drawer',
-        },
-        {
-            description: 'Serves as the top header bar for the application.',
-            icon: 'web_asset',
-            id: 'Header',
-            value: 'Header',
-        },
-        {
-            description:
-                'A small template that acts as an interface between the user and an LLM for roleplay.',
-            icon: 'assistant',
-            id: 'Messenger',
-            value: 'Messenger',
-        },
-    ],
-};
 export const KUL_SHOWCASE_UTILITIES: KulDataDataset = {
     nodes: [
         {
@@ -336,57 +335,57 @@ export const KUL_SHOWCASE_UTILITIES: KulDataDataset = {
 export const KUL_DOC: KulArticleDataset = {
     nodes: [
         {
-            id: '0',
+            id: DOC_IDS.root,
             value: 'Ketchup Lite',
             children: [
                 {
+                    id: DOC_IDS.section,
+                    value: '',
                     children: [
                         {
+                            id: DOC_IDS.paragraph,
+                            value: '',
                             children: [
                                 {
-                                    id: '1.5',
+                                    id: DOC_IDS.contentWrapper,
                                     value: 'Ketchup Lite is a Webcomponents library written in TypeScript and Sass.',
                                 },
                                 {
-                                    id: '1.5',
+                                    id: DOC_IDS.contentWrapper,
                                     value: "It's a side project on which I'm working on in my free time.",
                                 },
                                 {
+                                    id: DOC_IDS.contentWrapper,
+                                    value: '',
                                     children: [
                                         {
-                                            id: '',
+                                            id: DOC_IDS.content,
                                             value: 'It is a fork stemming from the original ',
                                         },
                                         {
-                                            id: '',
+                                            id: DOC_IDS.content,
                                             tagName: 'strong',
                                             value: 'Ketchup project',
                                         },
                                         {
-                                            id: '',
+                                            id: DOC_IDS.content,
                                             value: ', aiming to provide a streamlined and efficient set of tools for developers.',
                                         },
                                     ],
-                                    id: '',
-                                    value: '',
                                 },
                             ],
-                            id: '',
-                            value: '',
                         },
                         {
+                            id: DOC_IDS.paragraph,
+                            value: '',
                             children: [
                                 {
                                     id: '',
                                     value: 'For more information you can visit the GitHub page of the project.',
                                 },
                             ],
-                            id: '',
-                            value: '',
                         },
                     ],
-                    id: '',
-                    value: '',
                 },
             ],
         },

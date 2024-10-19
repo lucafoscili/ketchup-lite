@@ -120,6 +120,17 @@ describe('Events', () => {
         cy.checkReadyEvent(article);
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
+
+    it(`unmount`, () => {
+        cy.navigate(article);
+        const eventType: KulArticleEvent = 'unmount';
+        cy.checkEvent(article, eventType);
+        cy.get('@eventElement').then(($article) => {
+            const kulArticleElement = $article[0] as HTMLKulArticleElement;
+            kulArticleElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

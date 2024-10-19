@@ -1,4 +1,4 @@
-import { GenericObject } from '../../../../types/GenericTypes';
+import { GenericObject } from '../../../../components';
 import { KulHeaderPropsInterface } from '../../../kul-header/kul-header-declarations';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 

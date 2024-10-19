@@ -5,7 +5,7 @@ import {
     KulBadgePropsInterface,
 } from '../../../src/components/kul-badge/kul-badge-declarations';
 import { BADGE_EXAMPLES_KEYS } from './../../../src/components/kul-showcase/components/badge/kul-showcase-badge-declarations';
-import { DynamicExampleManager } from '../../../src/components/kul-showcase/kul-showcase-utils';
+import { DynamicExampleManager } from '../../../src/components/kul-showcase/helpers/kul-showcase-dyn-sample';
 import { KulImagePropsInterface } from '../../../src/components';
 import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
@@ -117,6 +117,17 @@ describe('Events', () => {
 
     it(`ready`, () => {
         cy.checkReadyEvent(badge);
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(badge);
+        const eventType: KulBadgeEvent = 'unmount';
+        cy.checkEvent(badge, eventType);
+        cy.get('@eventElement').then(($badge) => {
+            const kulBadgeElement = $badge[0] as HTMLKulBadgeElement;
+            kulBadgeElement.unmount();
+        });
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });

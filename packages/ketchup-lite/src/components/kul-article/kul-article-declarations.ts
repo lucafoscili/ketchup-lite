@@ -3,7 +3,6 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulArticle } from './kul-article';
 
 /*-------------------------------------------------*/
 /*                     D a t a                     */
@@ -18,9 +17,9 @@ export interface KulArticleNode extends KulDataNode {
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulArticleEvent = 'kul-event' | 'ready';
+export type KulArticleEvent = 'kul-event' | 'ready' | 'unmount';
 export interface KulArticleEventPayload
-    extends KulEventPayload<KulArticle, KulArticleEvent, Event | CustomEvent> {}
+    extends KulEventPayload<'KulArticle', KulArticleEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/

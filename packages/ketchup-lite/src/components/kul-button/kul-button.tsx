@@ -24,7 +24,7 @@ import {
     KulButtonState,
     KulButtonStyling,
 } from './kul-button-declarations';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import {
     KUL_DROPDOWN_CLASS,
@@ -59,7 +59,7 @@ export class KulButton {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -161,6 +161,7 @@ export class KulButton {
     #list: HTMLKulListElement;
     #kulManager = kulManagerInstance();
     #rippleSurface: HTMLDivElement;
+    #timeout: NodeJS.Timeout;
 
     /*-------------------------------------------------*/
     /*                   E v e n t s                   */
@@ -213,10 +214,10 @@ export class KulButton {
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -244,6 +245,35 @@ export class KulButton {
         forceUpdate(this);
     }
     /**
+     * Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.
+     * @param {string} label - Temporary label to display.
+     * @param {string} icon - Temporary icon to display.
+     * @param {number} timeout - Time in ms to wait before restoring previous values.
+     * @returns {Promise<void>}
+     */
+    @Method()
+    async setMessage(
+        label: string = 'Copied!',
+        icon: string = 'check',
+        timeout: number = 1000
+    ): Promise<void> {
+        if (this.#timeout) {
+            return;
+        }
+
+        const oldIcon = this.kulIcon;
+        const oldLabel = this.kulLabel;
+
+        this.kulLabel = label;
+        this.kulIcon = icon;
+
+        this.#timeout = setTimeout(() => {
+            this.kulLabel = oldLabel;
+            this.kulIcon = oldIcon;
+            this.#timeout = null;
+        }, timeout);
+    }
+    /**
      * Sets the component's state.
      * @param {KulButtonState} value - The new state to be set on the component.
      * @returns {Promise<void>}
@@ -251,6 +281,17 @@ export class KulButton {
     @Method()
     async setValue(value: KulButtonState): Promise<void> {
         this.#updateState(value);
+    }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
     }
 
     /*-------------------------------------------------*/
@@ -591,7 +632,7 @@ export class KulButton {
         );
 
         if (!this.kulLabel && !this.kulIcon && !this.kulData) {
-            this.#kulManager.debug.logMessage(
+            this.#kulManager.debug.logs.new(
                 this,
                 'Empty button.',
                 'informational'

@@ -50,7 +50,6 @@ export class KulManager {
         this.dates = new KulDates(overrides?.dates?.locale ?? null);
         this.debug = new KulDebug(
             overrides?.debug?.active ?? null,
-            overrides?.debug?.autoPrint ?? null,
             overrides?.debug?.logLimit ?? null
         );
         this.dynamicPosition = new KulDynamicPosition();
@@ -144,16 +143,16 @@ export class KulManager {
      */
     setLibraryLocalization(locale: KulDatesLocales) {
         if (!Object.values(KulDatesLocales).includes(locale)) {
-            this.debug.logMessage(
-                'kul-manager',
+            this.debug.logs.new(
+                this,
                 'Missing locale (' + locale + ')!',
                 'error'
             );
             return;
         }
         if (!KulLanguageDefaults[locale]) {
-            this.debug.logMessage(
-                'kul-manager',
+            this.debug.logs.new(
+                this,
                 'Missing language for locale (' + locale + ')!',
                 'error'
             );

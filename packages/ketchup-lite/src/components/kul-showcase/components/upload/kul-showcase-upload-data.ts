@@ -1,9 +1,19 @@
+import {
+    KulComponentEventName,
+    KulComponentEventPayloadName,
+    KulComponentName,
+    KulComponentTag,
+} from '../../../../types/GenericTypes';
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_STYLES } from '../../kul-showcase-data';
-import { SHOWCASE_DOC } from '../../kul-showcase-utils';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
 import { UploadData } from './kul-showcase-upload-declarations';
 
-const component = 'upload';
+const COMPONENT_NAME: KulComponentName = 'KulUpload';
+const EVENT_NAME: KulComponentEventName<'KulUpload'> = 'kul-upload-event';
+const PAYLOAD_NAME: KulComponentEventPayloadName<'KulUpload'> =
+    'KulUploadEventPayload';
+const TAG_NAME: KulComponentTag<'KulUpload'> = 'kul-upload';
 
 export const UPLOAD_EXAMPLES: UploadData = {
     simple: {
@@ -18,160 +28,52 @@ export const UPLOAD_EXAMPLES: UploadData = {
 export const UPLOAD_DOC: KulArticleDataset = {
     nodes: [
         {
+            id: DOC_IDS.root,
+            value: COMPONENT_NAME,
             children: [
-                SHOWCASE_DOC.create.component.overview(
-                    'KulUpload',
-                    ' component is a customizable and reusable web component designed to handle file uploads.'
+                SECTION_FACTORY.overview(
+                    COMPONENT_NAME,
+                    'is a widget that enables uploading files'
                 ),
-                {
-                    children: [
+                SECTION_FACTORY.usage(COMPONENT_NAME, {
+                    tag: TAG_NAME,
+                }),
+                SECTION_FACTORY.props(TAG_NAME),
+                SECTION_FACTORY.events(
+                    COMPONENT_NAME,
+                    PAYLOAD_NAME,
+                    [
                         {
-                            children: [
-                                {
-                                    children: [
-                                        {
-                                            id: '0.2.0.0.0',
-                                            value: 'To use the ',
-                                        },
-                                        {
-                                            id: '0.2.0.0.1',
-                                            tagName: 'strong',
-                                            value: 'KulUpload',
-                                        },
-                                        {
-                                            id: '0.2.0.0.2',
-                                            value: ' component, include it in your HTML and optionally set the ',
-                                        },
-                                        {
-                                            id: '0.2.0.0.3',
-                                            tagName: 'strong',
-                                            value: 'kulLabel',
-                                        },
-                                        {
-                                            id: '0.2.0.0.4',
-                                            value: " property to customize the button's label.",
-                                        },
-                                    ],
-                                    id: '0.2.0.0',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            cells: {
-                                                kulCode: {
-                                                    shape: 'code',
-                                                    kulLanguage: 'markup',
-                                                    value: '<kul-upload></kul-upload>',
-                                                },
-                                            },
-                                            id: '0.2.0.1.0',
-                                            value: '',
-                                        },
-                                    ],
-                                    id: '0.2.0.1',
-                                },
-                            ],
-                            id: '0.2.0',
-                            value: 'Basic Usage',
+                            type: 'delete',
+                            description:
+                                'emitted when an uploaded file is removed',
+                        },
+                        {
+                            type: 'pointerdown',
+                            description:
+                                'emitted when as soon as the component is touched/clicked (before the click event)',
+                        },
+                        {
+                            type: 'ready',
+                            description:
+                                'emitted when the component completes its first complete lifecycle',
+                        },
+                        {
+                            type: 'unmount',
+                            description:
+                                'emitted when the component is disconnected from the DOM',
+                        },
+                        {
+                            type: 'upload',
+                            description:
+                                'emitted when a new file has been uploaded',
                         },
                     ],
-                    id: '0.2',
-                    value: 'Usage',
-                },
-                {
-                    children: SHOWCASE_DOC.get.props(component),
-                    id: '0.3',
-                    value: 'Properties',
-                },
-                {
-                    children: [
-                        {
-                            children: [
-                                {
-                                    id: '0.4.0.0',
-                                    value: 'This event is emitted during various lifecycle stages of the component. It carries a payload of type ',
-                                },
-                                {
-                                    id: '0.4.0.1',
-                                    value: 'KulUploadEventPayload',
-                                },
-                                {
-                                    children: [
-                                        {
-                                            children: [
-                                                {
-                                                    id: '0.4.0.2.0.0',
-                                                    tagName: 'strong',
-                                                    value: 'pointerdown',
-                                                },
-                                                {
-                                                    id: '0.4.0.2.0.1',
-                                                    value: ': emitted when as soon as the component is touched/clicked (before the click event).',
-                                                },
-                                            ],
-                                            id: '0.4.0.2.0',
-                                            tagName: 'li',
-                                            value: '',
-                                        },
-                                        {
-                                            children: [
-                                                {
-                                                    id: '0.4.0.2.1.0',
-                                                    tagName: 'strong',
-                                                    value: 'ready',
-                                                },
-                                                {
-                                                    id: '0.4.0.2.1.1',
-                                                    value: ': emitted when the component completes its first complete lifecycle.',
-                                                },
-                                            ],
-                                            id: '0.4.0.2.1',
-                                            tagName: 'li',
-                                            value: '',
-                                        },
-                                        {
-                                            children: [
-                                                {
-                                                    id: '0.4.0.2.2.0',
-                                                    tagName: 'strong',
-                                                    value: 'upload',
-                                                },
-                                                {
-                                                    id: '0.4.0.2.2.1',
-                                                    value: ': emitted when new files are uploaded.',
-                                                },
-                                            ],
-                                            id: '0.4.0.2.2',
-                                            tagName: 'li',
-                                            value: '',
-                                        },
-                                    ],
-                                    id: '0.4.0.2',
-                                    value: ', which includes information about the component and the event type.',
-                                },
-                            ],
-                            cssStyle: DOC_STYLES.monoPrimaryH3,
-                            id: '0.4.0',
-                            tagName: 'strong',
-                            value: 'kul-upload-event',
-                        },
-                    ],
-                    id: '0.4',
-                    value: 'Events',
-                },
-                {
-                    children: SHOWCASE_DOC.get.methods(component),
-                    id: '0.5',
-                    value: 'Methods',
-                },
-                {
-                    children: SHOWCASE_DOC.get.styles(component),
-                    id: '0.7',
-                    value: 'Styling',
-                },
+                    EVENT_NAME
+                ),
+                SECTION_FACTORY.methods(TAG_NAME),
+                SECTION_FACTORY.styling(TAG_NAME),
             ],
-            id: '0',
-            value: 'KulUpload',
         },
     ],
 };

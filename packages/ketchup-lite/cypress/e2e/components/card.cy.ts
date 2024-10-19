@@ -56,14 +56,26 @@ describe('Events', () => {
         cy.navigate(card);
         const eventType: KulCardEvent = 'pointerdown';
         cy.checkEvent(card, eventType);
-        cy.get('@eventElement')
+        cy.get(`${cardTag}#material-image`)
             .findCyElement(KulDataCyAttributes.RIPPLE)
+            .first()
             .click();
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 
     it(`ready`, () => {
         cy.checkReadyEvent(card);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(card);
+        const eventType: KulCardEvent = 'unmount';
+        cy.checkEvent(card, eventType);
+        cy.get('@eventElement').then(($card) => {
+            const kulCardElement = $card[0] as HTMLKulCardElement;
+            kulCardElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 
@@ -87,7 +99,7 @@ describe('Methods', () => {
     it(`getProps: check keys against Kul${cardCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(cardTag, {
             kulData: null,
-            kulLayoutNumber: null,
+            kulLayout: null,
             kulSizeX: null,
             kulSizeY: null,
             kulStyle: null,

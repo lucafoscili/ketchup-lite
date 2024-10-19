@@ -8,7 +8,7 @@ import 'dayjs/locale/it';
 import 'dayjs/locale/pl';
 import 'dayjs/locale/ru';
 import 'dayjs/locale/zh';
-import { KulComponent, KulComponentName } from '../../types/GenericTypes';
+import { KulGenericRootElement } from '../../types/GenericTypes';
 import {
     KulDateTimeFormatOptionsMonth,
     KulDatesFormats,
@@ -23,10 +23,7 @@ import {
 export class KulDates {
     dayjs: Function;
     locale: KulDatesLocales;
-    managedComponents: Set<KulComponent<KulComponentName>['rootElement']>;
-    /**
-     * Initializes KulDates.
-     */
+    managedComponents: Set<KulGenericRootElement>;
     constructor(locale?: KulDatesLocales) {
         this.managedComponents = new Set();
         this.setLocale(locale);

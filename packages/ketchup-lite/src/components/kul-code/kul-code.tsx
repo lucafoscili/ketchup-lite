@@ -19,10 +19,8 @@ import {
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { GenericObject } from '../../types/GenericTypes';
-import { KulButton } from '../kul-button/kul-button';
-import { KulButtonEventPayload } from '../kul-button/kul-button-declarations';
 import Prism from 'prismjs';
 import { STATIC_LANGUAGES } from './languages/static-languages';
 
@@ -45,7 +43,7 @@ export class KulCode {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -91,7 +89,6 @@ export class KulCode {
     /*       I n t e r n a l   V a r i a b l e s       */
     /*-------------------------------------------------*/
 
-    #copyTimeoutId: NodeJS.Timeout;
     #el: HTMLPreElement | HTMLDivElement;
     #kulManager = kulManagerInstance();
 
@@ -125,10 +122,10 @@ export class KulCode {
 
     /**
      * Retrieves the debug information reflecting the current state of the component.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves to a KulDebugComponentInfo object containing debug information.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -147,30 +144,21 @@ export class KulCode {
     async refresh(): Promise<void> {
         forceUpdate(this);
     }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
+    }
 
     /*-------------------------------------------------*/
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
-
-    #copy(e: CustomEvent<KulButtonEventPayload>) {
-        if (e.detail.eventType === 'pointerdown') {
-            const button = e.detail.comp as KulButton;
-            navigator.clipboard.writeText(this.kulValue);
-
-            button.kulLabel = 'Copied!';
-            button.kulIcon = 'check';
-
-            if (this.#copyTimeoutId) {
-                clearTimeout(this.#copyTimeoutId);
-            }
-
-            this.#copyTimeoutId = setTimeout(() => {
-                button.kulLabel = 'Copy';
-                button.kulIcon = 'content_copy';
-                this.#copyTimeoutId = null;
-            }, 1000);
-        }
-    }
 
     #format(value: string) {
         if (typeof value === 'string' && /^[\{\}]\s*$/i.test(value)) {
@@ -190,7 +178,7 @@ export class KulCode {
             }
             Prism.highlightElement(this.#el);
         } catch (error) {
-            this.#kulManager.debug.logMessage(
+            this.#kulManager.debug.logs.new(
                 this,
                 'Failed to highlight code:' + error,
                 'error'
@@ -311,9 +299,17 @@ export class KulCode {
                                 kulIcon="content_copy"
                                 kulLabel="Copy"
                                 kulStyling="flat"
-                                onKul-button-event={(
-                                    e: CustomEvent<KulButtonEventPayload>
-                                ) => this.#copy(e)}
+                                onKul-button-event={(e) => {
+                                    const { comp, eventType } = e.detail;
+                                    switch (eventType) {
+                                        case 'click':
+                                            navigator.clipboard.writeText(
+                                                this.kulValue
+                                            );
+                                            comp.setMessage();
+                                            break;
+                                    }
+                                }}
                             ></kul-button>
                         </div>
                         {shouldPreserveSpace ? (

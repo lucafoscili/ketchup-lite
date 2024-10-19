@@ -1,6 +1,5 @@
 import type { KulDom } from '../kul-manager/kul-manager-declarations';
 import { KulComponent, KulComponentName } from '../../types/GenericTypes';
-import { KulDebugCategory } from '../kul-debug/kul-debug-declarations';
 import {
     KulLanguageDecode,
     KulLanguageDefaults,
@@ -70,8 +69,8 @@ export class KulLanguage {
             return invalidKey(key);
         }
         function invalidKey(key: KulLanguageKey) {
-            dom.ketchupLite.debug.logMessage(
-                'kul-language',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Invalid translation for key (' + key + ')!',
                 'warning'
             );
@@ -86,8 +85,8 @@ export class KulLanguage {
         if (language && typeof language === 'string') {
             language = language.toLowerCase();
         } else {
-            dom.ketchupLite.debug.logMessage(
-                'kul-language',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 "Couldn't set language, invalid string received (" +
                     language +
                     ')!',
@@ -101,16 +100,16 @@ export class KulLanguage {
         const dVariant: string = decodedLanguage.variant;
         if (this.list[dLanguage]) {
             if (dVariant && !this.list[dLanguage].variants[dVariant]) {
-                dom.ketchupLite.debug.logMessage(
-                    'kul-language',
+                dom.ketchupLite.debug.logs.new(
+                    this,
                     'Variant not found (' + dVariant + ')!',
                     'warning'
                 );
                 return;
             }
         } else {
-            dom.ketchupLite.debug.logMessage(
-                'kul-language',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Language not found (' + dLanguage + ')!',
                 'warning'
             );

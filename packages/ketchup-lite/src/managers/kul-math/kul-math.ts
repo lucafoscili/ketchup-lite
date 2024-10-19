@@ -64,8 +64,8 @@ export class KulMath {
     setLocale(locale: KulMathLocales): void {
         if (!Object.values(KulMathLocales).includes(locale)) {
             locale = KulMathLocales.en;
-            dom.ketchupLite.debug.logMessage(
-                'kul-math',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Invalid locale (' + locale + ')! Defaulting to english.',
                 'warning'
             );

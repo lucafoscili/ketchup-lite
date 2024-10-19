@@ -18,10 +18,9 @@ import {
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { GenericObject } from '../../types/GenericTypes';
 import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
-import { KulToastCustomEvent } from '../../components';
 
 @Component({
     tag: 'kul-toast',
@@ -41,7 +40,7 @@ export class KulToast {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -68,14 +67,6 @@ export class KulToast {
      * @default () => void
      */
     @Prop() kulCloseCallback: () => void = () => {
-        const e = new CustomEvent('unmount');
-        this.onKulEvent(e, 'unmount');
-        this.kulEvent.emit({
-            comp: this,
-            eventType: 'unmount',
-            id: this.rootElement.id,
-            originalEvent: e,
-        });
         this.rootElement.remove();
     };
     /**
@@ -139,10 +130,10 @@ export class KulToast {
 
     /**
      * Retrieves the debug information reflecting the current state of the component.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves to a KulDebugComponentInfo object containing debug information.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -160,6 +151,17 @@ export class KulToast {
     @Method()
     async refresh(): Promise<void> {
         forceUpdate(this);
+    }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
     }
 
     /*-------------------------------------------------*/

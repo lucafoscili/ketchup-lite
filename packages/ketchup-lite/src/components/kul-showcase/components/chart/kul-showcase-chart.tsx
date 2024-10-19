@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
 import { CHART_DOC, CHART_EXAMPLES } from './kul-showcase-chart-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../kul-showcase-utils';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { ChartExample } from './kul-showcase-chart-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';

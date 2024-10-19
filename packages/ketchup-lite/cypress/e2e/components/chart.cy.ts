@@ -4,6 +4,7 @@ import {
     KulChartPropsInterface,
 } from '../../../src/components/kul-chart/kul-chart-declarations';
 import { CHART_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/chart/kul-showcase-chart-declarations';
+import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
 const chart = 'chart';
 const chartCapitalized = chart.charAt(0).toUpperCase() + chart.slice(1);
@@ -26,6 +27,17 @@ describe('Basic', () => {
 describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(chart);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(chart);
+        const eventType: KulChartEvent = 'unmount';
+        cy.checkEvent(chart, eventType);
+        cy.get('@eventElement').then(($chart) => {
+            const kulChartElement = $chart[0] as HTMLKulChartElement;
+            kulChartElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 

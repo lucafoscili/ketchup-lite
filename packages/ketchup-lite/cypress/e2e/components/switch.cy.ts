@@ -74,6 +74,18 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(switchComponent);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(switchComponent);
+        const eventType: KulSwitchEvent = 'unmount';
+        cy.checkEvent(switchComponent, eventType);
+        cy.get('@eventElement').then(($switchComponent) => {
+            const kulSwitchElement =
+                $switchComponent[0] as HTMLKulSwitchElement;
+            kulSwitchElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

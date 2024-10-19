@@ -12,13 +12,16 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import type { GenericObject } from '../../types/GenericTypes';
+import {
+    KulDataCyAttributes,
+    type GenericObject,
+} from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugComponentInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
@@ -45,7 +48,7 @@ export class KulAccordion {
     /**
      * Debug information.
      */
-    @State() debugInfo: KulDebugComponentInfo = {
+    @State() debugInfo: KulDebugLifecycleInfo = {
         endTime: 0,
         renderCount: 0,
         renderEnd: 0,
@@ -134,10 +137,10 @@ export class KulAccordion {
 
     /**
      * Fetches debug information of the component's current state.
-     * @returns {Promise<KulDebugComponentInfo>} A promise that resolves with the debug information object.
+     * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
     @Method()
-    async getDebugInfo(): Promise<KulDebugComponentInfo> {
+    async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
     }
     /**
@@ -190,6 +193,17 @@ export class KulAccordion {
             this.onKulEvent(e || new CustomEvent('click'), 'click');
         }
         this.refresh();
+    }
+    /**
+     * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+     * @param {number} ms - Number of milliseconds
+     */
+    @Method()
+    async unmount(ms: number = 0): Promise<void> {
+        setTimeout(() => {
+            this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+            this.rootElement.remove();
+        }, ms);
     }
 
     /*-------------------------------------------------*/
@@ -251,6 +265,11 @@ export class KulAccordion {
                         tabindex="1"
                         title={node.description}
                         class={headerClassName}
+                        data-cy={
+                            isExpandible
+                                ? undefined
+                                : KulDataCyAttributes.BUTTON
+                        }
                         onClick={(e) => this.toggleNode(node.id, e)}
                         onPointerDown={(e) => {
                             this.onKulEvent(e, 'pointerdown', node);

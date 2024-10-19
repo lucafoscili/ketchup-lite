@@ -5,14 +5,13 @@ import {
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulChart } from './kul-chart';
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulChartEvent = 'click' | 'ready';
+export type KulChartEvent = 'click' | 'ready' | 'unmount';
 export interface KulChartEventPayload
-    extends KulEventPayload<KulChart, KulChartEvent, Event | CustomEvent> {
+    extends KulEventPayload<'KulChart', KulChartEvent> {
     column: KulDataColumn;
     node: KulDataNode;
     x: number | string;

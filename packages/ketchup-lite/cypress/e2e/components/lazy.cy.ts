@@ -40,6 +40,17 @@ describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(lazy);
     });
+
+    it(`unmount`, () => {
+        cy.navigate(lazy);
+        const eventType: KulLazyEvent = 'unmount';
+        cy.checkEvent(lazy, eventType);
+        cy.get('@eventElement').then(($lazy) => {
+            const kulLazyElement = $lazy[0] as HTMLKulLazyElement;
+            kulLazyElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
 });
 
 describe('Methods', () => {

@@ -129,13 +129,13 @@ export class KulTheme {
         if (list) {
             this.list = list;
         }
-        dom.ketchupLite.debug.logMessage(
-            'theme manager',
+        dom.ketchupLite.debug.logs.new(
+            this,
             'Setting theme to: ' + this.name + '.'
         );
         if (!this.list[this.name]) {
-            dom.ketchupLite.debug.logMessage(
-                'theme manager',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Invalid theme name, falling back to default ("silver").'
             );
             this.name = 'silver';
@@ -189,14 +189,14 @@ export class KulTheme {
                 this.icons() +
                 '}';
             this.customStyle();
-            dom.ketchupLite.debug.logMessage(
-                'kul-theme',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Theme ' + dom.getAttribute('kul-theme') + ' refreshed.'
             );
             document.dispatchEvent(new CustomEvent('kul-theme-refresh'));
         } catch (error) {
-            dom.ketchupLite.debug.logMessage(
-                'kul-theme',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Theme not refreshed.',
                 'warning'
             );
@@ -332,8 +332,8 @@ export class KulTheme {
             }
             this.set(themes[index]);
         } else {
-            dom.ketchupLite.debug.logMessage(
-                'kul-theme',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 "Couldn't set a random theme: no themes available!",
                 'warning'
             );
@@ -348,8 +348,8 @@ export class KulTheme {
         //Testing whether the color is transparent, if it is a fall back value will be returned matching the background-color
         if (color === 'transparent') {
             color = this.cssVars['--kul-background-color'];
-            dom.ketchupLite.debug.logMessage(
-                'theme manager',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Received TRANSPARENT color, converted to ' +
                     color +
                     ' (theme background).'
@@ -372,8 +372,8 @@ export class KulTheme {
             const oldColor: string = color;
             color = this.codeToHex(color);
             isHex = color.substring(0, 1) === '#' ? true : false;
-            dom.ketchupLite.debug.logMessage(
-                'theme manager',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Received CODE NAME color ' +
                     oldColor +
                     ', converted to ' +
@@ -438,8 +438,8 @@ export class KulTheme {
                         rgbColorObj.b
                     );
                 }
-                dom.ketchupLite.debug.logMessage(
-                    'theme-manager',
+                dom.ketchupLite.debug.logs.new(
+                    this,
                     'Received HEX color ' +
                         oldColor +
                         ', converted to ' +
@@ -447,8 +447,8 @@ export class KulTheme {
                         '.'
                 );
             } catch (error) {
-                dom.ketchupLite.debug.logMessage(
-                    'theme-manager',
+                dom.ketchupLite.debug.logs.new(
+                    this,
                     'Invalid color: ' + color + '.'
                 );
             }
@@ -463,8 +463,8 @@ export class KulTheme {
             rgbValues = values[1] + ',' + values[2] + ',' + values[3];
             rgbColor = color;
         } catch (error) {
-            dom.ketchupLite.debug.logMessage(
-                'theme-manager',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Color not converted to rgb values: ' + color + '.'
             );
         }
@@ -477,8 +477,8 @@ export class KulTheme {
                     parseInt(values[3])
                 );
             } catch (error) {
-                dom.ketchupLite.debug.logMessage(
-                    'theme-manager',
+                dom.ketchupLite.debug.logs.new(
+                    this,
                     'Color not converted to hex value: ' + color + '.'
                 );
             }
@@ -497,8 +497,8 @@ export class KulTheme {
                 hslValues = hsl.h + ',' + hsl.s + '%,' + hsl.l + '%';
                 hslColor = 'hsl(' + hsl.h + ',' + hsl.s + '%,' + hsl.l + '%)';
             } catch (error) {
-                dom.ketchupLite.debug.logMessage(
-                    'theme-manager',
+                dom.ketchupLite.debug.logs.new(
+                    this,
                     'Color not converted to hex value: ' + color + '.'
                 );
             }
@@ -815,8 +815,8 @@ export class KulTheme {
         if (colorCodes[color.toLowerCase()]) {
             return colorCodes[color.toLowerCase()];
         } else {
-            dom.ketchupLite.debug.logMessage(
-                'theme manager',
+            dom.ketchupLite.debug.logs.new(
+                this,
                 'Could not decode color ' + color + '!'
             );
             return color;

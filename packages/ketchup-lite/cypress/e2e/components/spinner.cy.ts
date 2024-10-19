@@ -1,8 +1,10 @@
 import {
+    KulSpinnerEvent,
     KulSpinnerProps,
     KulSpinnerPropsInterface,
 } from '../../../src/components/kul-spinner/kul-spinner-declarations';
 import { SPINNER_EXAMPLES_CATEGORIES } from '../../../src/components/kul-showcase/components/spinner/kul-showcase-spinner-declarations';
+import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
 
 const spinner = 'spinner';
 const spinnerCapitalized = spinner.charAt(0).toUpperCase() + spinner.slice(1);
@@ -27,6 +29,17 @@ describe('Basic', () => {
 describe('Events', () => {
     it(`ready`, () => {
         cy.checkReadyEvent(spinner);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(spinner);
+        const eventType: KulSpinnerEvent = 'unmount';
+        cy.checkEvent(spinner, eventType);
+        cy.get('@eventElement').then(($spinner) => {
+            const kulSpinnerElement = $spinner[0] as HTMLKulSpinnerElement;
+            kulSpinnerElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 

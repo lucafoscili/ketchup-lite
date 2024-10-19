@@ -48,17 +48,6 @@ describe('Events', () => {
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 
-    it(`focus`, () => {
-        cy.navigate(chip);
-        const eventType: KulChipEvent = 'focus';
-        cy.checkEvent(chip, eventType);
-        cy.get('@eventElement')
-            .findCyElement(KulDataCyAttributes.INPUT)
-            .first()
-            .focus();
-        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
-    });
-
     it(`delete`, () => {
         cy.navigate(chip);
         const eventType: KulChipEvent = 'delete';
@@ -70,8 +59,30 @@ describe('Events', () => {
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 
+    it(`focus`, () => {
+        cy.navigate(chip);
+        const eventType: KulChipEvent = 'focus';
+        cy.checkEvent(chip, eventType);
+        cy.get('@eventElement')
+            .findCyElement(KulDataCyAttributes.INPUT)
+            .first()
+            .focus();
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
+
     it(`ready`, () => {
         cy.checkReadyEvent(chip);
+    });
+
+    it(`unmount`, () => {
+        cy.navigate(chip);
+        const eventType: KulChipEvent = 'unmount';
+        cy.checkEvent(chip, eventType);
+        cy.get('@eventElement').then(($chip) => {
+            const kulChipElement = $chip[0] as HTMLKulChipElement;
+            kulChipElement.unmount();
+        });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });
 });
 
