@@ -47,6 +47,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "(id: string, e?: Event) => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -157,6 +166,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -261,6 +279,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -367,6 +394,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "(value: KulButtonState) => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -545,6 +581,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -608,6 +653,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -724,6 +778,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "(history: string) => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -877,6 +940,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature:
           "(nodes: (KulDataNode[] | string[]) & Array<any>) => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -983,6 +1055,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -1124,6 +1205,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -1184,6 +1274,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -1243,6 +1342,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -1321,6 +1429,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -1441,6 +1558,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "(index?: number) => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -1573,6 +1699,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -1676,6 +1811,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -1738,6 +1882,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -1816,35 +1969,7 @@ export const KUL_DOC: KulShowcaseDoc = {
     ],
   },
   "kul-showcase": {
-    methods: [
-      {
-        name: "getDebugInfo",
-        docs: "Fetches debug information of the component's current state.",
-        returns: {
-          type: "Promise<KulDebugLifecycleInfo>",
-          docs: "A promise that resolves with the debug information object.",
-        },
-        signature: "() => Promise<KulDebugLifecycleInfo>",
-      },
-      {
-        name: "getProps",
-        docs: "Used to retrieve component's props values.",
-        returns: {
-          type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
-        },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
-      },
-      {
-        name: "refresh",
-        docs: "This method is used to trigger a new render of the component.",
-        returns: {
-          type: "Promise<void>",
-          docs: "",
-        },
-        signature: "() => Promise<void>",
-      },
-    ],
+    methods: [],
     props: [
       {
         name: "kulStyle",
@@ -2058,6 +2183,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -2241,6 +2375,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "(value: KulSwitchState) => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -2351,6 +2494,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "The newly set value.",
         },
         signature: "(value: number | string) => Promise<KulTabbarState>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -2474,6 +2626,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "(value: string) => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -2620,6 +2781,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         },
         signature: "() => Promise<void>",
       },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
     ],
     props: [
       {
@@ -2704,6 +2874,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
@@ -2839,6 +3018,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
       },
     ],
     props: [
