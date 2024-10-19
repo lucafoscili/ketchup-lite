@@ -6,8 +6,6 @@ import { KulDataCyAttributes } from '../../../types/GenericTypes';
 import { getShapes } from '../helpers/kul-card-shapes';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
 
-const KUL_MANAGER = kulManagerInstance();
-
 export function getMaterialLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
@@ -64,7 +62,7 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
                 class={RIPPLE_SURFACE_CLASS}
                 data-cy={KulDataCyAttributes.RIPPLE}
                 onPointerDown={(e) => {
-                    KUL_MANAGER.theme.ripple.trigger(
+                    kulManagerInstance().theme.ripple.trigger(
                         e as PointerEvent,
                         e.currentTarget as HTMLElement
                     );

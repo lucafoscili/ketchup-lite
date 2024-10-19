@@ -8,8 +8,6 @@ import { KulCodeEventPayload } from '../../kul-code/kul-code-declarations';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
 import { KulSwitchEventPayload } from '../../kul-switch/kul-switch-declarations';
 
-const KUL_MANAGER = kulManagerInstance();
-
 export function getDebugLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
@@ -77,10 +75,10 @@ const buttonEventHandler = (e: CustomEvent<KulButtonEventPayload>) => {
         case 'click':
             switch (id) {
                 case KulCardShapesIds.CLEAR:
-                    KUL_MANAGER.debug.logs.dump();
+                    kulManagerInstance().debug.logs.dump();
                     break;
                 case KulCardShapesIds.THEME:
-                    KUL_MANAGER.theme.randomTheme();
+                    kulManagerInstance().theme.randomTheme();
                     break;
             }
             break;
@@ -101,10 +99,10 @@ const codeEventHandler = (e: CustomEvent<KulCodeEventPayload>) => {
 
     switch (eventType) {
         case 'ready':
-            KUL_MANAGER.debug.register(comp);
+            kulManagerInstance().debug.register(comp);
             break;
         case 'unmount':
-            KUL_MANAGER.debug.unregister(comp);
+            kulManagerInstance().debug.unregister(comp);
             break;
     }
 };
@@ -114,7 +112,7 @@ const listEventHandler = (e: CustomEvent<KulListEventPayload>) => {
 
     switch (eventType) {
         case 'click':
-            KUL_MANAGER.theme.set(node.id);
+            kulManagerInstance().theme.set(node.id);
             break;
     }
 };
@@ -125,13 +123,13 @@ const switchEventHandler = (e: CustomEvent<KulSwitchEventPayload>) => {
 
     switch (eventType) {
         case 'change':
-            KUL_MANAGER.debug.toggle(boolValue, false);
+            kulManagerInstance().debug.toggle(boolValue, false);
             break;
         case 'ready':
-            KUL_MANAGER.debug.register(comp);
+            kulManagerInstance().debug.register(comp);
             break;
         case 'unmount':
-            KUL_MANAGER.debug.unregister(comp);
+            kulManagerInstance().debug.unregister(comp);
             break;
     }
 };
