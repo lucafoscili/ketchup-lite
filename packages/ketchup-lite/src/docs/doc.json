@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-18T19:32:54",
+  "timestamp": "2024-10-19T18:03:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -294,6 +294,45 @@
               "text": "id - Id of the node."
             }
           ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -579,6 +618,45 @@
           "parameters": [],
           "docs": "Triggers a re-render of the component to reflect any state changes.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -1031,6 +1109,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -1767,6 +1884,45 @@
               "name": "returns"
             }
           ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -2232,6 +2388,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -2754,6 +2949,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -3278,6 +3512,45 @@
           ],
           "docs": "Sets the history of the component through a string.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -3751,6 +4024,45 @@
               "name": "returns"
             }
           ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -4105,6 +4417,45 @@
           "parameters": [],
           "docs": "Triggers a re-render of the component to reflect any state changes.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -4455,6 +4806,45 @@
           "parameters": [],
           "docs": "Opens the drawer when closed and vice-versa.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -4652,6 +5042,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -5020,6 +5449,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -5385,6 +5853,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -5875,6 +6382,45 @@
               "text": "index - Zero-based index of the item that must be selected, when not provided the list will attempt to select the focused element."
             }
           ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -6241,6 +6787,45 @@
           "parameters": [],
           "docs": "Resets the states of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -6614,6 +7199,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -6937,6 +7561,45 @@
           "parameters": [],
           "docs": "Triggers a re-render of the component to reflect any state changes.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -7067,110 +7730,7 @@
           "required": false
         }
       ],
-      "methods": [
-        {
-          "name": "getDebugInfo",
-          "returns": {
-            "type": "Promise<KulDebugLifecycleInfo>",
-            "docs": "A promise that resolves with the debug information object."
-          },
-          "complexType": {
-            "signature": "() => Promise<KulDebugLifecycleInfo>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              },
-              "KulDebugLifecycleInfo": {
-                "location": "import",
-                "path": "../../managers/kul-debug/kul-debug-declarations",
-                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
-              }
-            },
-            "return": "Promise<KulDebugLifecycleInfo>"
-          },
-          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
-          "parameters": [],
-          "docs": "Fetches debug information of the component's current state.",
-          "docsTags": [
-            {
-              "name": "returns",
-              "text": "A promise that resolves with the debug information object."
-            }
-          ]
-        },
-        {
-          "name": "getProps",
-          "returns": {
-            "type": "Promise<GenericObject<unknown>>",
-            "docs": "List of props as object, each key will be a prop."
-          },
-          "complexType": {
-            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
-            "parameters": [
-              {
-                "name": "descriptions",
-                "type": "boolean",
-                "docs": "- When provided and true, the result will be the list of props with their description."
-              }
-            ],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              },
-              "GenericObject": {
-                "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::GenericObject"
-              }
-            },
-            "return": "Promise<GenericObject<unknown>>"
-          },
-          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
-          "parameters": [
-            {
-              "name": "descriptions",
-              "type": "boolean",
-              "docs": "- When provided and true, the result will be the list of props with their description."
-            }
-          ],
-          "docs": "Used to retrieve component's props values.",
-          "docsTags": [
-            {
-              "name": "param",
-              "text": "descriptions - When provided and true, the result will be the list of props with their description."
-            },
-            {
-              "name": "returns",
-              "text": "List of props as object, each key will be a prop."
-            }
-          ]
-        },
-        {
-          "name": "refresh",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "() => Promise<void>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<void>"
-          },
-          "signature": "refresh() => Promise<void>",
-          "parameters": [],
-          "docs": "This method is used to trigger a new render of the component.",
-          "docsTags": []
-        }
-      ],
+      "methods": [],
       "events": [],
       "listeners": [],
       "styles": [],
@@ -9159,6 +9719,45 @@
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -9860,6 +10459,45 @@
               "name": "returns"
             }
           ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -10245,6 +10883,45 @@
             {
               "name": "returns",
               "text": "The newly set value."
+            }
+          ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
             }
           ]
         }
@@ -10866,6 +11543,45 @@
               "name": "returns"
             }
           ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -11279,6 +11995,45 @@
           "parameters": [],
           "docs": "Triggers a re-render of the component to reflect any state changes.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -11660,6 +12415,45 @@
           "parameters": [],
           "docs": "Triggers a re-render of the component to reflect any state changes.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [
@@ -12020,6 +12814,45 @@
           "parameters": [],
           "docs": "Triggers a re-render of the component to reflect any state changes.",
           "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
         }
       ],
       "events": [

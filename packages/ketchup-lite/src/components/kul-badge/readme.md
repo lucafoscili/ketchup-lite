@@ -59,6 +59,22 @@ Type: `Promise<void>`
 
 
 
+### `unmount(ms?: number) => Promise<void>`
+
+Initiates the unmount sequence, which removes the component from the DOM after a delay.
+
+#### Parameters
+
+| Name | Type     | Description              |
+| ---- | -------- | ------------------------ |
+| `ms` | `number` | - Number of milliseconds |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## CSS Custom Properties
 
