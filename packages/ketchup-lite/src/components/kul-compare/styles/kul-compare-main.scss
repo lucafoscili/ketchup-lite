@@ -1,0 +1,26 @@
+:host {
+  display: block;
+}
+
+#kul-component {
+  height: 100%;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 1fr auto;
+  width: 100%;
+}
+
+.change-view {
+  padding: 12px;
+  width: 100%;
+}
+
+.view {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}

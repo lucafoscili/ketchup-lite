@@ -13,6 +13,7 @@ export const COMPONENTS = [
     'chat',
     'chip',
     'code',
+    'compare',
     'image',
     'lazy',
     'list',
@@ -155,6 +156,12 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'code',
             id: 'Code',
             value: 'Code',
+        },
+        {
+            description: 'Compare two different components.',
+            icon: 'magnify',
+            id: 'Compare',
+            value: 'Compare',
         },
         {
             description: 'Acts as the side menu within the application layout.',
