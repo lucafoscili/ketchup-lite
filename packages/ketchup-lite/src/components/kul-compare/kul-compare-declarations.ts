@@ -7,7 +7,7 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulCompareEvent = 'ready' | 'unmount';
+export type KulCompareEvent = 'kul-event' | 'ready' | 'unmount';
 export interface KulCompareEventPayload
     extends KulEventPayload<'KulCompare', KulCompareEvent> {}
 /*-------------------------------------------------*/
@@ -25,4 +25,4 @@ export interface KulComparePropsInterface {
     kulStyle?: string;
     kulView?: KulCompareView;
 }
-export type KulCompareView = 'before-after' | 'side-by-side';
+export type KulCompareView = 'overlay' | 'split';

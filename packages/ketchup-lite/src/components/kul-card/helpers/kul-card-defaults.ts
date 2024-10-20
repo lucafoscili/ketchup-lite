@@ -1,6 +1,7 @@
 import {
     KulDataCell,
     KulDataNode,
+    KulDataShapeDefaults,
     KulDataShapes,
 } from '../../../managers/kul-data/kul-data-declarations';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
@@ -22,9 +23,7 @@ const getThemes = () => {
 };
 
 export const DEFAULTS: {
-    [L in KulCardLayout]: Partial<{
-        [S in KulDataShapes]: () => Partial<KulDataCell<S>>[];
-    }>;
+    [L in KulCardLayout]: KulDataShapeDefaults;
 } = {
     debug: {
         button: () => [

@@ -1188,10 +1188,23 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulView",
         docs: "Sets the type of view, either styled as a before-after or a side-by-side comparison.",
-        type: '"before-after" | "side-by-side"',
+        type: '"overlay" | "split"',
       },
     ],
-    styles: [],
+    styles: [
+      {
+        name: "--kul-compare-change-view-background-color",
+        docs: "Sets the background color of the bottom bar. Defaults to var(--kul-title-background-color).",
+      },
+      {
+        name: "--kul-compare-change-view-padding",
+        docs: "Sets the padding of the bottom bar. Defaults to 1fr auto.",
+      },
+      {
+        name: "--kul-compare-slider-color",
+        docs: "Sets the color of the overlay slider. Defaults to var(--kul-title-background-color).",
+      },
+    ],
   },
   "kul-drawer": {
     methods: [

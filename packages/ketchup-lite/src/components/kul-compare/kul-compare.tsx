@@ -4,17 +4,16 @@ import {
     Event,
     EventEmitter,
     forceUpdate,
+    Fragment,
     h,
     Host,
     Method,
     Prop,
     State,
-    VNode,
 } from '@stencil/core';
 import { type GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
-    KulDataCellContainer,
     KulDataDataset,
     KulDataShapes,
     KulDataShapesMap,
@@ -28,6 +27,7 @@ import {
     KulCompareProps,
     KulCompareView,
 } from './kul-compare-declarations';
+import { DEFAULTS } from './helpers/kul-compare-defaults';
 
 @Component({
     tag: 'kul-compare',
@@ -56,11 +56,16 @@ export class KulCompare {
     };
     /**
      * The shapes of the component.
-     * @default ""
+     * @default undefined
      *
      * @see KulDataShapesMap - For a list of possible shapes.
      */
     @State() shapes: KulDataShapesMap;
+    /**
+     * The current view of the compare.
+     * @default "before-after"
+     */
+    @State() view: KulCompareView = 'overlay';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -85,7 +90,7 @@ export class KulCompare {
      * Sets the type of view, either styled as a before-after or a side-by-side comparison.
      * @default null
      */
-    @Prop({ mutable: true }) kulView: KulCompareView = 'before-after';
+    @Prop({ mutable: true }) kulView: KulCompareView = 'overlay';
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -161,30 +166,62 @@ export class KulCompare {
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
 
+    #isOverlay() {
+        return !!(this.view === 'overlay');
+    }
+
     #prepChangeView() {
         return (
             <div class="change-view">
                 <kul-button
-                    kulIcon="filter_2"
-                    kulIconOff="filter_1"
+                    kulIcon="compare"
+                    kulIconOff="book-open"
                     kulStyling="icon"
                     kulToggable={true}
+                    onClick={() => {
+                        this.view = this.#isOverlay() ? 'split' : 'overlay';
+                    }}
+                    title={
+                        this.#isOverlay()
+                            ? 'Click for split screen comparison.'
+                            : 'Click for overlay comparison'
+                    }
                 ></kul-button>
             </div>
         );
     }
 
     #prepView() {
-        const shapes = this.shapes[this.kulShape];
-        const TagName = 'kul-' + this.kulShape;
-        const className = {
-            'kul-fit': !!(this.kulShape === 'image'),
-        };
+        const rawShapes = this.shapes[this.kulShape];
+
+        const shapes = this.#kulManager.data.cell.shapes.decorate(
+            this.kulShape,
+            rawShapes,
+            async (e) => this.onKulEvent(e, 'kul-event'),
+            [...DEFAULTS[this.kulShape](), ...DEFAULTS[this.kulShape]()]
+        ).element;
+
         return (
-            <div class="view">
-                <TagName class={className} {...shapes[0]}></TagName>
-                <TagName class={className} {...shapes[1]}></TagName>
-            </div>
+            <Fragment>
+                <div class={`view view--${this.view}`}>
+                    <div class="view__source">{shapes[0]}</div>
+                    {this.#isOverlay() ? (
+                        <div
+                            class="draggable-slider"
+                            onInput={this.#updateOverlayWidth.bind(this)}
+                        >
+                            <input
+                                class="draggable-slider__input"
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="50"
+                            />
+                        </div>
+                    ) : null}
+                    <div class="view__target">{shapes[1]}</div>
+                </div>
+            </Fragment>
         );
     }
 
@@ -201,6 +238,14 @@ export class KulCompare {
                 );
             }
         }
+    }
+
+    #updateOverlayWidth(event: InputEvent) {
+        const sliderValue = (event.target as HTMLInputElement).value;
+        this.rootElement.style.setProperty(
+            '--kul_compare_overlay_width',
+            `${sliderValue}%`
+        );
     }
 
     /*-------------------------------------------------*/

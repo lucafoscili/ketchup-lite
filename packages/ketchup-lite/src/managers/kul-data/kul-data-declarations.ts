@@ -215,6 +215,9 @@ export type KulDataShapeCallback<
     : (
           e: CustomEvent<KulEventPayload<C, KulEventType<KulComponent<C>>>>
       ) => void;
+export type KulDataShapeDefaults = Partial<{
+    [S in KulDataShapes]: () => Partial<KulDataCell<S>>[];
+}>;
 export type KulDataShapeEventDispatcher = <T extends KulComponentName>(
     e: CustomEvent<KulEventPayload<T, KulEventType<KulComponent<T>>>>
 ) => Promise<void>;

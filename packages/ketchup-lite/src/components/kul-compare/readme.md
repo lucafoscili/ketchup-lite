@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                          | Type                                                                                                                              | Default          |
-| ---------- | ----------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| `kulData`  | --          | Actual data of the compare.                                                          | `KulDataDataset`                                                                                                                  | `null`           |
-| `kulShape` | `kul-shape` | Sets the type of shapes to compare.                                                  | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'`        |
-| `kulStyle` | `kul-style` | Custom style of the component.                                                       | `string`                                                                                                                          | `''`             |
-| `kulView`  | `kul-view`  | Sets the type of view, either styled as a before-after or a side-by-side comparison. | `"before-after" \| "side-by-side"`                                                                                                | `'before-after'` |
+| Property   | Attribute   | Description                                                                          | Type                                                                                                                              | Default     |
+| ---------- | ----------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `kulData`  | --          | Actual data of the compare.                                                          | `KulDataDataset`                                                                                                                  | `null`      |
+| `kulShape` | `kul-shape` | Sets the type of shapes to compare.                                                  | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'`   |
+| `kulStyle` | `kul-style` | Custom style of the component.                                                       | `string`                                                                                                                          | `''`        |
+| `kulView`  | `kul-view`  | Sets the type of view, either styled as a before-after or a side-by-side comparison. | `"overlay" \| "split"`                                                                                                            | `'overlay'` |
 
 
 ## Events
@@ -75,6 +75,15 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 Type: `Promise<void>`
 
 
+
+
+## CSS Custom Properties
+
+| Name                                         | Description                                                                                 |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `--kul-compare-change-view-background-color` | Sets the background color of the bottom bar. Defaults to var(--kul-title-background-color). |
+| `--kul-compare-change-view-padding`          | Sets the padding of the bottom bar. Defaults to 1fr auto.                                   |
+| `--kul-compare-slider-color`                 | Sets the color of the overlay slider. Defaults to var(--kul-title-background-color).        |
 
 
 ## Dependencies

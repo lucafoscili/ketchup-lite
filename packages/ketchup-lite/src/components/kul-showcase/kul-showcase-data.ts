@@ -159,7 +159,7 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
         },
         {
             description: 'Compare two different components.',
-            icon: 'magnify',
+            icon: 'compare',
             id: 'Compare',
             value: 'Compare',
         },

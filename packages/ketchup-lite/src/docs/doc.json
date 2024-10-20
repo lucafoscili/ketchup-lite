@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-20T09:39:55",
+  "timestamp": "2024-10-20T20:23:42",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -4660,10 +4660,10 @@
         },
         {
           "name": "kulView",
-          "type": "\"before-after\" | \"side-by-side\"",
+          "type": "\"overlay\" | \"split\"",
           "complexType": {
             "original": "KulCompareView",
-            "resolved": "\"before-after\" | \"side-by-side\"",
+            "resolved": "\"overlay\" | \"split\"",
             "references": {
               "KulCompareView": {
                 "location": "import",
@@ -4682,14 +4682,14 @@
               "text": "null"
             }
           ],
-          "default": "'before-after'",
+          "default": "'overlay'",
           "values": [
             {
-              "value": "before-after",
+              "value": "overlay",
               "type": "string"
             },
             {
-              "value": "side-by-side",
+              "value": "split",
               "type": "string"
             }
           ],
@@ -4863,7 +4863,23 @@
         }
       ],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--kul-compare-change-view-background-color",
+          "annotation": "prop",
+          "docs": "Sets the background color of the bottom bar. Defaults to var(--kul-title-background-color)."
+        },
+        {
+          "name": "--kul-compare-change-view-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of the bottom bar. Defaults to 1fr auto."
+        },
+        {
+          "name": "--kul-compare-slider-color",
+          "annotation": "prop",
+          "docs": "Sets the color of the overlay slider. Defaults to var(--kul-title-background-color)."
+        }
+      ],
       "slots": [],
       "parts": [],
       "dependents": [
@@ -13488,7 +13504,7 @@
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
     "src/components/kul-compare/kul-compare-declarations.ts::KulCompareView": {
-      "declaration": "export type KulCompareView = 'before-after' | 'side-by-side';",
+      "declaration": "export type KulCompareView = 'overlay' | 'split';",
       "docstring": "",
       "path": "src/components/kul-compare/kul-compare-declarations.ts"
     },
