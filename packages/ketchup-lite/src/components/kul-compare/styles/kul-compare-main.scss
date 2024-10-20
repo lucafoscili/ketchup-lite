@@ -69,6 +69,7 @@
     }
 
     & > :last-child {
+      border-right: 3px solid var(--kul_compare_slider_color);
       height: 100%;
       left: 0;
       overflow: hidden;

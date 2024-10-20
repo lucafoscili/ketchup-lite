@@ -25,6 +25,7 @@ export const config: Config = {
                 'kul-showcase-chat',
                 'kul-showcase-chip',
                 'kul-showcase-code',
+                'kul-showcase-compare',
                 'kul-showcase-drawer',
                 'kul-showcase-header',
                 'kul-showcase-image',
