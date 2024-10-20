@@ -29,7 +29,6 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     };
 
     const buttons = decorator(
-        'KulButton',
         'button',
         shapes.button,
         eventDispatcher,
@@ -37,14 +36,12 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
         buttonEventHandler
     );
     const charts = decorator(
-        'KulChart',
         'chart',
         shapes.chart,
         eventDispatcher,
         DEFAULTS.keywords.chart()
     );
     const chips = decorator(
-        'KulChip',
         'chip',
         shapes.chip,
         eventDispatcher,

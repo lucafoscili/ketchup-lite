@@ -122,12 +122,6 @@
   color: var(--kul_article_content_color);
   font-family: var(--kul_article_content_font_family);
   font-size: var(--kul_article_content_font_size);
-
-  &--kul-code {
-    max-width: max-content;
-    margin: auto;
-    padding: 1.75em 0;
-  }
 }
 
 h1 {
@@ -166,4 +160,10 @@ h3 {
   justify-content: center;
   height: 100%;
   width: 100%;
+}
+
+[data-component='KulCode'] {
+  max-width: max-content;
+  margin: auto;
+  padding: 1.75em 0;
 }

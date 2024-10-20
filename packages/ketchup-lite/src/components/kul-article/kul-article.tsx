@@ -240,42 +240,25 @@ export class KulArticle {
     }
 
     #contentTemplate(node: KulArticleNode, depth: number): VNode {
+        const decorator = kulManagerInstance().data.cell.shapes.decorate;
+
         const key = node?.cells && Object.keys(node.cells)[0];
         const cell = node?.cells?.[key];
-        const ComponentTag = cell
-            ? 'kul-' + cell.shape
-            : node.tagName
-              ? node.tagName
-              : 'span';
 
         if (cell) {
-            const eventName = `onKul-${cell.shape}-event`;
-            const eventBinder = {
-                [eventName]: (e: CustomEvent<unknown>) => {
-                    this.onKulEvent(e, 'kul-event');
-                },
-            };
-            return (
-                <ComponentTag
-                    class={`content content--${ComponentTag}`}
-                    data-cy={KulDataCyAttributes.SHAPE}
-                    data-depth={depth.toString()}
-                    {...this.#kulManager.data.cell.shapes.get(cell)}
-                    {...eventBinder}
-                    style={node.cssStyle}
-                >
-                    {node.value}
-                </ComponentTag>
+            const shape = decorator(cell.shape, [cell], async (e) =>
+                this.onKulEvent(e, 'kul-event')
             );
+            return shape.element[0];
         } else {
             return (
-                <ComponentTag
-                    class={`content content--${ComponentTag}`}
+                <span
+                    class={`content content--span`}
                     data-depth={depth.toString()}
                     style={node.cssStyle}
                 >
                     {node.value}
-                </ComponentTag>
+                </span>
             );
         }
     }

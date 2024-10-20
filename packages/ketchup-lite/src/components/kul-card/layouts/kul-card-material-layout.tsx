@@ -11,25 +11,14 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
     const eventDispatcher = adapter.actions.dispatchEvent;
     const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
-    const buttons = decorator(
-        'KulButton',
-        'button',
-        shapes.button,
-        eventDispatcher
-    );
+    const buttons = decorator('button', shapes.button, eventDispatcher);
     const images = decorator(
-        'KulImage',
         'image',
         shapes.image,
         eventDispatcher,
         DEFAULTS.material.image()
     );
-    const texts = decorator(
-        'KulTextfield',
-        'text',
-        shapes.text,
-        eventDispatcher
-    );
+    const texts = decorator('text', shapes.text, eventDispatcher);
 
     const coverIndex = 0;
     const cover: VNode = images.element?.length

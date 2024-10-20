@@ -25,6 +25,13 @@ const decorateSpreader = (
         htmlProps?: Record<string, any>;
     }
 ) => {
+    const clean = () => {
+        if (toSpread['value'] && !toSpread['kulValue']) {
+            toSpread['kulValue'] = toSpread['value'];
+        }
+        delete toSpread['shape'];
+        delete toSpread['value'];
+    };
     if (props.htmlProps) {
         for (const key in props.htmlProps) {
             const prop = props.htmlProps[key];
@@ -39,6 +46,7 @@ const decorateSpreader = (
         const prop = props[key];
         toSpread[key] = prop;
     }
+    clean();
 };
 
 export const cellDecorateShapes = <

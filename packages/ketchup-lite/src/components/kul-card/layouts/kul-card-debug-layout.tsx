@@ -14,7 +14,6 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
     const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
     const buttons = decorator(
-        'KulButton',
         'button',
         shapes.button,
         eventDispatcher,
@@ -22,7 +21,6 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
         buttonEventHandler
     );
     const codes = decorator(
-        'KulCode',
         'code',
         shapes.code,
         eventDispatcher,
@@ -30,7 +28,6 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
         codeEventHandler
     );
     const switches = decorator(
-        'KulSwitch',
         'switch',
         shapes.switch,
         eventDispatcher,

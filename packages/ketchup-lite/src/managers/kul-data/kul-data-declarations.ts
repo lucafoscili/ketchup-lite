@@ -168,6 +168,9 @@ export type KulDataShapes =
 export type KulDataShapesMap = {
     [K in KulDataShapes]?: Partial<KulDataCell<K>>[];
 };
+export type KulDataShapeComponentMap = {
+    [K in KulDataShapes]: KulComponentName;
+};
 export interface KulDataNodeOperations {
     exists: (dataset: KulDataDataset) => boolean;
     filter: (

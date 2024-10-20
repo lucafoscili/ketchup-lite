@@ -10,18 +10,12 @@ export function getUploadLayout(adapter: KulCardAdapter): VNode {
     const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
     const buttons = decorator(
-        'KulButton',
         'button',
         shapes.button,
         eventDispatcher,
         DEFAULTS.upload.button()
     );
-    const uploads = decorator(
-        'KulUpload',
-        'upload',
-        shapes.upload,
-        eventDispatcher
-    );
+    const uploads = decorator('upload', shapes.upload, eventDispatcher);
 
     const className = {
         [`${card.kulLayout}-layout`]: true,

@@ -6,6 +6,7 @@ import {
     KulDataNode,
     KulDataNodeOperations,
     KulDataShapeCallback,
+    KulDataShapeComponentMap,
     KulDataShapeEventDispatcher,
     KulDataShapes,
 } from './kul-data-declarations';
@@ -33,6 +34,20 @@ import { KulComponentName } from '../../types/GenericTypes';
  * @module KulData
  */
 export class KulData {
+    #SHAPES_MAP: KulDataShapeComponentMap = {
+        badge: 'KulBadge',
+        button: 'KulButton',
+        card: 'KulCard',
+        chart: 'KulChart',
+        chat: 'KulChat',
+        chip: 'KulChip',
+        code: 'KulCode',
+        image: 'KulImage',
+        number: 'KulTextfield',
+        switch: 'KulSwitch',
+        text: 'KulTextfield',
+        upload: 'KulUpload',
+    };
     cell = {
         exists: (node: KulDataNode) => cellExists(node),
         shapes: {
@@ -40,7 +55,6 @@ export class KulData {
                 C extends KulComponentName,
                 S extends KulDataShapes | 'text',
             >(
-                component: C,
                 shape: S,
                 items: Partial<KulDataCell<S>>[],
                 eventDispatcher: KulDataShapeEventDispatcher,
@@ -50,7 +64,7 @@ export class KulData {
                     : KulDataShapeCallback<C, S>
             ) =>
                 cellDecorateShapes(
-                    component,
+                    this.#SHAPES_MAP[shape],
                     shape,
                     items,
                     eventDispatcher,
