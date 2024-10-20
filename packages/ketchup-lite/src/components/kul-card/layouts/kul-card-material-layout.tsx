@@ -3,28 +3,28 @@ import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
 import { KulCardAdapter, KulCardCSSClasses } from '../kul-card-declarations';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
-import { getShapes } from '../helpers/kul-card-shapes';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
 
 export function getMaterialLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
     const eventDispatcher = adapter.actions.dispatchEvent;
+    const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
-    const buttons = getShapes(
+    const buttons = decorator(
         'KulButton',
         'button',
         shapes.button,
         eventDispatcher
     );
-    const images = getShapes(
+    const images = decorator(
         'KulImage',
         'image',
         shapes.image,
         eventDispatcher,
         DEFAULTS.material.image()
     );
-    const texts = getShapes(
+    const texts = decorator(
         'KulTextfield',
         'text',
         shapes.text,

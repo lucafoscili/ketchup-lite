@@ -1,13 +1,14 @@
 import { h, VNode } from '@stencil/core';
-import { getShapes } from '../helpers/kul-card-shapes';
 import { KulCardAdapter } from '../kul-card-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
+import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 
 export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
     const eventDispatcher = adapter.actions.dispatchEvent;
+    const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
     const buttonEventHandler = async (
         e: CustomEvent<KulButtonEventPayload>
@@ -27,7 +28,7 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
         }
     };
 
-    const buttons = getShapes(
+    const buttons = decorator(
         'KulButton',
         'button',
         shapes.button,
@@ -35,14 +36,14 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
         DEFAULTS.keywords.button(),
         buttonEventHandler
     );
-    const charts = getShapes(
+    const charts = decorator(
         'KulChart',
         'chart',
         shapes.chart,
         eventDispatcher,
         DEFAULTS.keywords.chart()
     );
-    const chips = getShapes(
+    const chips = decorator(
         'KulChip',
         'chip',
         shapes.chip,

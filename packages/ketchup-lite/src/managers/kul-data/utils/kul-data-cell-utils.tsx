@@ -1,11 +1,133 @@
+import { h, VNode } from '@stencil/core';
+import {
+    GenericObject,
+    KulComponent,
+    KulComponentName,
+    KulComponentRootElement,
+    KulDataCyAttributes,
+    KulEventPayload,
+    KulEventType,
+} from '../../../types/GenericTypes';
 import {
     KulDataCell,
     KulDataDataset,
     KulDataNode,
+    KulDataShapeCallback,
+    KulDataShapeEventDispatcher,
     KulDataShapes,
     KulDataShapesMap,
 } from '../kul-data-declarations';
 import { nodeExists } from './kul-data-node-utils';
+
+const decorateSpreader = (
+    toSpread: GenericObject,
+    props: Partial<KulDataCell<KulDataShapes>> & {
+        htmlProps?: Record<string, any>;
+    }
+) => {
+    if (props.htmlProps) {
+        for (const key in props.htmlProps) {
+            const prop = props.htmlProps[key];
+            if (prop === 'className') {
+                toSpread['class'] = prop;
+            } else {
+                toSpread[key] = prop;
+            }
+        }
+    }
+    for (const key in props) {
+        const prop = props[key];
+        toSpread[key] = prop;
+    }
+};
+
+export const cellDecorateShapes = <
+    C extends KulComponentName,
+    S extends KulDataShapes | 'text',
+>(
+    component: C,
+    shape: S,
+    items: Partial<KulDataCell<S>>[],
+    eventDispatcher: KulDataShapeEventDispatcher,
+    defaultProps?: Partial<KulDataCell<S>>[],
+    defaultCb?: S extends 'text' ? never : KulDataShapeCallback<C, S>
+) => {
+    const r: {
+        element: VNode[];
+        ref: Array<HTMLDivElement | KulComponentRootElement<C>>;
+    } = { element: [], ref: [] };
+
+    switch (shape) {
+        case 'number':
+        case 'text':
+            for (let index = 0; items && index < items.length; index++) {
+                const props = items[index].value;
+                r.element.push(
+                    <div
+                        id={`${shape}${index}`}
+                        ref={(el) => {
+                            if (el) {
+                                r.ref.push(el);
+                            }
+                        }}
+                    >
+                        {props}
+                    </div>
+                );
+            }
+            return r;
+
+        default:
+            for (let index = 0; items && index < items.length; index++) {
+                const props = items[index];
+                const toSpread = {};
+                if (defaultProps?.[index]) {
+                    decorateSpreader(
+                        toSpread,
+                        defaultProps[index] as Partial<
+                            KulDataCell<KulDataShapes>
+                        >
+                    );
+                }
+                decorateSpreader(
+                    toSpread,
+                    props as Partial<KulDataCell<KulDataShapes>>
+                );
+
+                const TagName = 'kul-' + shape;
+                const eventHandler = {
+                    ['onKul-' + shape + '-event']: (
+                        e: CustomEvent<
+                            KulEventPayload<C, KulEventType<KulComponent<C>>>
+                        >
+                    ) => {
+                        if (defaultCb) {
+                            defaultCb(e);
+                        }
+                        eventDispatcher(e);
+                    },
+                };
+
+                r.element.push(
+                    <TagName
+                        data-component={component}
+                        data-cy={KulDataCyAttributes.SHAPE}
+                        id={`${shape}${index}`}
+                        ref={(el: KulComponentRootElement<C>) => {
+                            if (el) {
+                                r.ref.push(el);
+                            }
+                        }}
+                        {...eventHandler}
+                        {...toSpread}
+                    ></TagName>
+                );
+            }
+            break;
+    }
+
+    return r;
+};
 
 export const cellExists = (node: KulDataNode) => {
     return !!(node && node.cells && Object.keys(node.cells).length);

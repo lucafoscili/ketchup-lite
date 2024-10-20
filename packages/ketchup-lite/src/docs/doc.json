@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-20T05:19:35",
+  "timestamp": "2024-10-20T09:39:55",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -1577,7 +1577,7 @@
           "name": "kulType",
           "type": "\"button\" | \"reset\" | \"submit\"",
           "complexType": {
-            "original": "| 'button'\r\n        | 'reset'\r\n        | 'submit'",
+            "original": "| 'button'\n        | 'reset'\n        | 'submit'",
             "resolved": "\"button\" | \"reset\" | \"submit\"",
             "references": {}
           },
@@ -4662,9 +4662,15 @@
           "name": "kulView",
           "type": "\"before-after\" | \"side-by-side\"",
           "complexType": {
-            "original": "'before-after' | 'side-by-side'",
+            "original": "KulCompareView",
             "resolved": "\"before-after\" | \"side-by-side\"",
-            "references": {}
+            "references": {
+              "KulCompareView": {
+                "location": "import",
+                "path": "./kul-compare-declarations",
+                "id": "src/components/kul-compare/kul-compare-declarations.ts::KulCompareView"
+              }
+            }
           },
           "mutable": true,
           "attr": "kul-view",
@@ -8347,7 +8353,7 @@
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
-      "readme": "# kul-showcase-chart\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-chart\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9041,7 +9047,7 @@
       "filePath": "src/components/kul-showcase/components/lazy/kul-showcase-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-lazy",
-      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-lazy\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9089,7 +9095,7 @@
       "filePath": "src/components/kul-showcase/components/list/kul-showcase-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-list",
-      "readme": "# kul-showcase-list\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-list\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9220,7 +9226,7 @@
       "filePath": "src/components/kul-showcase/components/photoframe/kul-showcase-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-photoframe",
-      "readme": "# kul-showcase-photoframe\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-photoframe\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13417,7 +13423,7 @@
       "path": "src/components/kul-chip/kul-chip-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataNode": {
-      "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: unknown;\n}",
+      "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: string | number;\n}",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
@@ -13480,6 +13486,11 @@
       "declaration": "export type KulDataShapes =\n    | 'badge'\n    | 'button'\n    | 'card'\n    | 'chart'\n    | 'chat'\n    | 'chip'\n    | 'code'\n    | 'image'\n    | 'number'\n    | 'switch'\n    | 'text'\n    | 'upload';",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
+    },
+    "src/components/kul-compare/kul-compare-declarations.ts::KulCompareView": {
+      "declaration": "export type KulCompareView = 'before-after' | 'side-by-side';",
+      "docstring": "",
+      "path": "src/components/kul-compare/kul-compare-declarations.ts"
     },
     "src/components/kul-compare/kul-compare-declarations.ts::KulCompareEventPayload": {
       "declaration": "export interface KulCompareEventPayload\n    extends KulEventPayload<'KulCompare', KulCompareEvent> {}",

@@ -4,11 +4,13 @@ import {
     KulDataColumn,
     KulDataDataset,
     KulDataNode,
-    KulDataNodeDrilldownInfo,
     KulDataNodeOperations,
+    KulDataShapeCallback,
+    KulDataShapeEventDispatcher,
     KulDataShapes,
 } from './kul-data-declarations';
 import {
+    cellDecorateShapes,
     cellExists,
     cellGetAllShapes,
     cellGetShape,
@@ -24,6 +26,7 @@ import {
     nodeSetProperties,
     nodeToStream,
 } from './utils/kul-data-node-utils';
+import { KulComponentName } from '../../types/GenericTypes';
 
 /**
  * Handles data operations.
@@ -33,6 +36,27 @@ export class KulData {
     cell = {
         exists: (node: KulDataNode) => cellExists(node),
         shapes: {
+            decorate: <
+                C extends KulComponentName,
+                S extends KulDataShapes | 'text',
+            >(
+                component: C,
+                shape: S,
+                items: Partial<KulDataCell<S>>[],
+                eventDispatcher: KulDataShapeEventDispatcher,
+                defaultProps?: Partial<KulDataCell<S>>[],
+                defaultCb?: S extends 'text'
+                    ? never
+                    : KulDataShapeCallback<C, S>
+            ) =>
+                cellDecorateShapes(
+                    component,
+                    shape,
+                    items,
+                    eventDispatcher,
+                    defaultProps,
+                    defaultCb
+                ),
             get: (cell: KulDataCell<KulDataShapes>) => cellGetShape(cell),
             getAll: (dataset: KulDataDataset) => cellGetAllShapes(dataset),
         },

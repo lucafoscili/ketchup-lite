@@ -1,6 +1,5 @@
 import { h, VNode } from '@stencil/core';
 import { KulCardAdapter, KulCardShapesIds } from '../kul-card-declarations';
-import { getShapes } from '../helpers/kul-card-shapes';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
@@ -12,8 +11,9 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
     const eventDispatcher = adapter.actions.dispatchEvent;
+    const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
-    const buttons = getShapes(
+    const buttons = decorator(
         'KulButton',
         'button',
         shapes.button,
@@ -21,7 +21,7 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
         DEFAULTS.debug.button(),
         buttonEventHandler
     );
-    const codes = getShapes(
+    const codes = decorator(
         'KulCode',
         'code',
         shapes.code,
@@ -29,7 +29,7 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
         DEFAULTS.debug.code(),
         codeEventHandler
     );
-    const switches = getShapes(
+    const switches = decorator(
         'KulSwitch',
         'switch',
         shapes.switch,

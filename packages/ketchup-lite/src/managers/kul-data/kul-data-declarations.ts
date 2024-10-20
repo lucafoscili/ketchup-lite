@@ -8,7 +8,13 @@ import {
 import { KulCodePropsInterface } from '../../components/kul-code/kul-code-declarations';
 import { KulImagePropsInterface } from '../../components/kul-image/kul-image-declarations';
 import { KulSwitchPropsInterface } from '../../components/kul-switch/kul-switch-declarations';
-import { GenericMap } from '../../types/GenericTypes';
+import {
+    GenericMap,
+    KulComponent,
+    KulComponentName,
+    KulEventPayload,
+    KulEventType,
+} from '../../types/GenericTypes';
 import { KulChartPropsInterface } from '../../components/kul-chart/kul-chart-declarations';
 import { KulChipPropsInterface } from '../../components/kul-chip/kul-chip-declarations';
 import { KulUploadPropsInterface } from '../../components/kul-upload/kul-upload-declarations';
@@ -198,3 +204,14 @@ export interface KulDataFilterRange {
     min?: number | string;
     max?: number | string;
 }
+export type KulDataShapeCallback<
+    C extends KulComponentName,
+    S extends KulDataShapes | 'text',
+> = S extends 'text'
+    ? never
+    : (
+          e: CustomEvent<KulEventPayload<C, KulEventType<KulComponent<C>>>>
+      ) => void;
+export type KulDataShapeEventDispatcher = <T extends KulComponentName>(
+    e: CustomEvent<KulEventPayload<T, KulEventType<KulComponent<T>>>>
+) => Promise<void>;
