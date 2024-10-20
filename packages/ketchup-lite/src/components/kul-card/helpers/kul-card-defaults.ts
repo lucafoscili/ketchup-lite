@@ -1,30 +1,29 @@
 import {
     KulDataCell,
     KulDataNode,
+    KulDataShapeDefaults,
     KulDataShapes,
 } from '../../../managers/kul-data/kul-data-declarations';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { KulCardLayout, KulCardShapesIds } from '../kul-card-declarations';
 
-const KUL_MANAGER = kulManagerInstance();
-
 const getThemes = () => {
     const nodes: KulDataNode[] = [];
-    KUL_MANAGER.theme.getThemes().forEach((t) => {
-        const char0 = t.charAt(0).toUpperCase();
-        nodes.push({
-            id: t,
-            value: `${char0}${t.substring(1)}`,
+    kulManagerInstance()
+        .theme.getThemes()
+        .forEach((t) => {
+            const char0 = t.charAt(0).toUpperCase();
+            nodes.push({
+                id: t,
+                value: `${char0}${t.substring(1)}`,
+            });
         });
-    });
 
     return nodes;
 };
 
 export const DEFAULTS: {
-    [L in KulCardLayout]: Partial<{
-        [S in KulDataShapes]: () => Partial<KulDataCell<S>>[];
-    }>;
+    [L in KulCardLayout]: KulDataShapeDefaults;
 } = {
     debug: {
         button: () => [
@@ -58,7 +57,7 @@ export const DEFAULTS: {
             {
                 kulLeadingLabel: true,
                 kulLabel: 'Toggle debug',
-                kulValue: KUL_MANAGER.debug.isEnabled(),
+                kulValue: kulManagerInstance().debug.isEnabled(),
             },
         ],
     },

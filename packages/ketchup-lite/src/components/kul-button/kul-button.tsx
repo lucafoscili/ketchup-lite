@@ -251,7 +251,6 @@ export class KulButton {
      * @param {number} timeout - Time in ms to wait before restoring previous values.
      * @returns {Promise<void>}
      */
-    @Method()
     async setMessage(
         label: string = 'Copied!',
         icon: string = 'check',
@@ -264,8 +263,10 @@ export class KulButton {
         const oldIcon = this.kulIcon;
         const oldLabel = this.kulLabel;
 
-        this.kulLabel = label;
-        this.kulIcon = icon;
+        requestAnimationFrame(() => {
+            this.kulLabel = label;
+            this.kulIcon = icon;
+        });
 
         this.#timeout = setTimeout(() => {
             this.kulLabel = oldLabel;

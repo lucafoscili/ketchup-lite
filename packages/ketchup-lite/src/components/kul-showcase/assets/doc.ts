@@ -377,16 +377,6 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<void>",
       },
       {
-        name: "setMessage",
-        docs: "Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.",
-        returns: {
-          type: "Promise<void>",
-          docs: "",
-        },
-        signature:
-          "(label?: string, icon?: string, timeout?: number) => Promise<void>",
-      },
-      {
         name: "setValue",
         docs: "Sets the component's state.",
         returns: {
@@ -1140,6 +1130,82 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-compare": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's properties and descriptions.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "Promise resolved with an object containing the component's properties.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulData",
+        docs: "Actual data of the compare.",
+        type: "KulDataDataset",
+      },
+      {
+        name: "kulShape",
+        docs: "Sets the type of shapes to compare.",
+        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "switch" | "text" | "upload"',
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+      {
+        name: "kulView",
+        docs: "Sets the type of view, either styled as a before-after or a side-by-side comparison.",
+        type: '"overlay" | "split"',
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-compare-change-view-background-color",
+        docs: "Sets the background color of the bottom bar. Defaults to var(--kul-title-background-color).",
+      },
+      {
+        name: "--kul-compare-change-view-padding",
+        docs: "Sets the padding of the bottom bar. Defaults to 1fr auto.",
+      },
+      {
+        name: "--kul-compare-slider-color",
+        docs: "Sets the color of the overlay slider. Defaults to var(--kul-title-background-color).",
+      },
+    ],
+  },
   "kul-drawer": {
     methods: [
       {
@@ -1453,7 +1519,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulRenderMode",
-        docs: "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
+        docs: "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
         type: '"both" | "props" | "viewport"',
       },
       {
@@ -2020,6 +2086,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-code": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-compare": {
     methods: [],
     props: [],
     styles: [],
@@ -2650,32 +2721,32 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulHelper",
-        docs: "Specifies helper text to display alongside the text field.\nHelper text can provide additional context or instructions to the user.",
+        docs: "Specifies helper text to display alongside the text field.\r\nHelper text can provide additional context or instructions to the user.",
         type: "KulTextfieldHelper",
       },
       {
         name: "kulHtmlAttributes",
-        docs: "Allows customization of the input or textarea element through additional HTML attributes.\nThis can include attributes like 'readonly', 'placeholder', etc., to further customize the behavior or appearance of the input.",
+        docs: "Allows customization of the input or textarea element through additional HTML attributes.\r\nThis can include attributes like 'readonly', 'placeholder', etc., to further customize the behavior or appearance of the input.",
         type: "GenericObject<unknown>",
       },
       {
         name: "kulIcon",
-        docs: "Defines the icon to be displayed within the text field.\nIcons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.",
+        docs: "Defines the icon to be displayed within the text field.\r\nIcons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.",
         type: "string",
       },
       {
         name: "kulLabel",
-        docs: "Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.\nLabels are especially important for screen readers and users navigating with keyboard-only controls.",
+        docs: "Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.\r\nLabels are especially important for screen readers and users navigating with keyboard-only controls.",
         type: "string",
       },
       {
         name: "kulStyle",
-        docs: "Accepts custom CSS styles to apply directly to the text field component.\nThis allows for fine-grained control over the appearance of the component beyond predefined styling options.",
+        docs: "Accepts custom CSS styles to apply directly to the text field component.\r\nThis allows for fine-grained control over the appearance of the component beyond predefined styling options.",
         type: "string",
       },
       {
         name: "kulStyling",
-        docs: "Determines the overall styling theme of the text field, affecting its shape and border.\nOptions include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.",
+        docs: "Determines the overall styling theme of the text field, affecting its shape and border.\r\nOptions include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.",
         type: '"flat" | "outlined" | "raised" | "textarea"',
       },
       {
@@ -2685,7 +2756,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulValue",
-        docs: "Initializes the text field with a default value when the component is first rendered.\nThis can be used to pre-fill forms or set a starting point for user input.",
+        docs: "Initializes the text field with a default value when the component is first rendered.\r\nThis can be used to pre-fill forms or set a starting point for user input.",
         type: "string",
       },
     ],
@@ -2903,7 +2974,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulInitialExpansionDepth",
-        docs: "Sets the initial expanded nodes based on the specified depth.\nIf the property is not provided, all nodes in the tree will be expanded.",
+        docs: "Sets the initial expanded nodes based on the specified depth.\r\nIf the property is not provided, all nodes in the tree will be expanded.",
         type: "number",
       },
       {

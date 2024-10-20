@@ -1,0 +1,130 @@
+:host {
+  /**
+    * @prop --kul-compare-change-view-padding: Sets the padding of the bottom bar.
+    * Defaults to 1fr auto.
+    */
+  --kul_compare_grid_template: var(--kul-compare-grid-template, 1fr auto);
+  /**
+  * @prop --kul-compare-change-view-background-color: Sets the background color of the bottom bar.
+  * Defaults to var(--kul-title-background-color).
+  */
+  --kul_compare_change_view_background_color: var(
+    --kul-compare-change-view-background-color,
+    var(--kul-title-background-color)
+  );
+  /**
+  * @prop --kul-compare-slider-color: Sets the color of the overlay slider.
+  * Defaults to var(--kul-title-background-color).
+  */
+  --kul_compare_slider_color: var(
+    --kul-compare-slider-color,
+    var(--kul-title-background-color)
+  );
+  /**
+  * @prop --kul-compare-change-view-padding: Sets the padding of the bottom bar.
+  * Defaults to 8px.
+  */
+  --kul_compare_change_view_padding: var(
+    --kul-compare-change-view-padding,
+    8px
+  );
+
+  display: block;
+}
+
+#kul-component {
+  height: 100%;
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  grid-template-rows: var(--kul_compare_grid_template);
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.change-view {
+  background: var(--kul_compare_change_view_background_color);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  padding: var(--kul_compare_change_view_padding);
+  width: 100%;
+}
+
+.view {
+  & {
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  &--overlay {
+    & > :first-child {
+      height: 100%;
+      position: relative;
+      width: 100%;
+    }
+
+    & > :last-child {
+      height: 100%;
+      left: 0;
+      overflow: hidden;
+      position: absolute;
+      top: 0;
+      width: var(--kul_compare_overlay_width, 50%);
+    }
+  }
+
+  &--split {
+    & {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      overflow: hidden;
+    }
+  }
+}
+
+.draggable-slider {
+  & {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+  }
+
+  &__input {
+    & {
+      appearance: none;
+      background: transparent;
+      cursor: grab;
+      height: 100%;
+      margin: 0;
+      pointer-events: all;
+      width: 100%;
+      z-index: 1;
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      background-color: var(--kul_compare_slider_color);
+      cursor: ew-resize;
+      height: 100%;
+      margin: 0;
+      width: 10px;
+    }
+
+    &::-moz-slider-thumb {
+      appearance: none;
+      background-color: var(--kul_compare_slider_color);
+      cursor: ew-resize;
+      height: 100%;
+      margin: 0;
+      width: 10px;
+    }
+  }
+}

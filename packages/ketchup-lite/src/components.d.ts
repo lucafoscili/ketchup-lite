@@ -5,7 +5,7 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { KulDataDataset, KulDataNode, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
+import { KulDataDataset, KulDataNode, KulDataShapes, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
 import { KulAccordionEventPayload } from "./components/kul-accordion/kul-accordion-declarations";
 import { KulDebugLifecycleInfo } from "./managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "./types/GenericTypes";
@@ -20,6 +20,7 @@ import { XAXisComponentOption, YAXisComponentOption } from "echarts";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
+import { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 import { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 import { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLifecycleInfo1 } from "./components";
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
@@ -36,7 +37,7 @@ import { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } fro
 import { KulToastEventPayload } from "./components/kul-toast/kul-toast-declarations";
 import { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
 import { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
-export { KulDataDataset, KulDataNode, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
+export { KulDataDataset, KulDataNode, KulDataShapes, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
 export { KulAccordionEventPayload } from "./components/kul-accordion/kul-accordion-declarations";
 export { KulDebugLifecycleInfo } from "./managers/kul-debug/kul-debug-declarations";
 export { GenericObject } from "./types/GenericTypes";
@@ -51,6 +52,7 @@ export { XAXisComponentOption, YAXisComponentOption } from "echarts";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
+export { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 export { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 export { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLifecycleInfo1 } from "./components";
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
@@ -273,14 +275,6 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
-        /**
-          * Temporarily sets a different label/icon combination, falling back to their previous value after a timeout.
-          * @param label - Temporary label to display.
-          * @param icon - Temporary icon to display.
-          * @param timeout - Time in ms to wait before restoring previous values.
-          * @returns
-         */
-        "setMessage": (label?: string, icon?: string, timeout?: number) => Promise<void>;
         /**
           * Sets the component's state.
           * @param value - The new state to be set on the component.
@@ -600,6 +594,48 @@ export namespace Components {
         "kulValue": string;
         /**
           * Triggers a re-render of the component to reflect any state changes.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
+    }
+    interface KulCompare {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
+        /**
+          * Used to retrieve component's properties and descriptions.
+          * @param descriptions - When true, includes descriptions for each property.
+          * @returns Promise resolved with an object containing the component's properties.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Actual data of the compare.
+          * @default null
+         */
+        "kulData": KulDataDataset;
+        /**
+          * Sets the type of shapes to compare.
+          * @default ""
+         */
+        "kulShape": KulDataShapes;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * Sets the type of view, either styled as a before-after or a side-by-side comparison.
+          * @default null
+         */
+        "kulView": KulCompareView;
+        /**
+          * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
         /**
@@ -1028,6 +1064,8 @@ export namespace Components {
     interface KulShowcaseChip {
     }
     interface KulShowcaseCode {
+    }
+    interface KulShowcaseCompare {
     }
     interface KulShowcaseDebug {
     }
@@ -1574,6 +1612,10 @@ export interface KulCodeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulCodeElement;
 }
+export interface KulCompareCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulCompareElement;
+}
 export interface KulDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulDrawerElement;
@@ -1792,6 +1834,23 @@ declare global {
         prototype: HTMLKulCodeElement;
         new (): HTMLKulCodeElement;
     };
+    interface HTMLKulCompareElementEventMap {
+        "kul-compare-event": KulCompareEventPayload;
+    }
+    interface HTMLKulCompareElement extends Components.KulCompare, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulCompareElementEventMap>(type: K, listener: (this: HTMLKulCompareElement, ev: KulCompareCustomEvent<HTMLKulCompareElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulCompareElementEventMap>(type: K, listener: (this: HTMLKulCompareElement, ev: KulCompareCustomEvent<HTMLKulCompareElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulCompareElement: {
+        prototype: HTMLKulCompareElement;
+        new (): HTMLKulCompareElement;
+    };
     interface HTMLKulDrawerElementEventMap {
         "kul-drawer-event": KulDrawerEventPayload;
     }
@@ -1987,6 +2046,12 @@ declare global {
     var HTMLKulShowcaseCodeElement: {
         prototype: HTMLKulShowcaseCodeElement;
         new (): HTMLKulShowcaseCodeElement;
+    };
+    interface HTMLKulShowcaseCompareElement extends Components.KulShowcaseCompare, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseCompareElement: {
+        prototype: HTMLKulShowcaseCompareElement;
+        new (): HTMLKulShowcaseCompareElement;
     };
     interface HTMLKulShowcaseDebugElement extends Components.KulShowcaseDebug, HTMLStencilElement {
     }
@@ -2290,6 +2355,7 @@ declare global {
         "kul-chat": HTMLKulChatElement;
         "kul-chip": HTMLKulChipElement;
         "kul-code": HTMLKulCodeElement;
+        "kul-compare": HTMLKulCompareElement;
         "kul-drawer": HTMLKulDrawerElement;
         "kul-header": HTMLKulHeaderElement;
         "kul-image": HTMLKulImageElement;
@@ -2308,6 +2374,7 @@ declare global {
         "kul-showcase-chat": HTMLKulShowcaseChatElement;
         "kul-showcase-chip": HTMLKulShowcaseChipElement;
         "kul-showcase-code": HTMLKulShowcaseCodeElement;
+        "kul-showcase-compare": HTMLKulShowcaseCompareElement;
         "kul-showcase-debug": HTMLKulShowcaseDebugElement;
         "kul-showcase-drawer": HTMLKulShowcaseDrawerElement;
         "kul-showcase-header": HTMLKulShowcaseHeaderElement;
@@ -2679,6 +2746,32 @@ declare namespace LocalJSX {
          */
         "onKul-code-event"?: (event: KulCodeCustomEvent<KulCodeEventPayload>) => void;
     }
+    interface KulCompare {
+        /**
+          * Actual data of the compare.
+          * @default null
+         */
+        "kulData"?: KulDataDataset;
+        /**
+          * Sets the type of shapes to compare.
+          * @default ""
+         */
+        "kulShape"?: KulDataShapes;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Sets the type of view, either styled as a before-after or a side-by-side comparison.
+          * @default null
+         */
+        "kulView"?: KulCompareView;
+        /**
+          * Describes event emitted.
+         */
+        "onKul-compare-event"?: (event: KulCompareCustomEvent<KulCompareEventPayload>) => void;
+    }
     interface KulDrawer {
         /**
           * Custom style of the component.
@@ -2927,6 +3020,8 @@ declare namespace LocalJSX {
     interface KulShowcaseChip {
     }
     interface KulShowcaseCode {
+    }
+    interface KulShowcaseCompare {
     }
     interface KulShowcaseDebug {
     }
@@ -3270,6 +3365,7 @@ declare namespace LocalJSX {
         "kul-chat": KulChat;
         "kul-chip": KulChip;
         "kul-code": KulCode;
+        "kul-compare": KulCompare;
         "kul-drawer": KulDrawer;
         "kul-header": KulHeader;
         "kul-image": KulImage;
@@ -3288,6 +3384,7 @@ declare namespace LocalJSX {
         "kul-showcase-chat": KulShowcaseChat;
         "kul-showcase-chip": KulShowcaseChip;
         "kul-showcase-code": KulShowcaseCode;
+        "kul-showcase-compare": KulShowcaseCompare;
         "kul-showcase-debug": KulShowcaseDebug;
         "kul-showcase-drawer": KulShowcaseDrawer;
         "kul-showcase-header": KulShowcaseHeader;
@@ -3337,6 +3434,7 @@ declare module "@stencil/core" {
             "kul-chat": LocalJSX.KulChat & JSXBase.HTMLAttributes<HTMLKulChatElement>;
             "kul-chip": LocalJSX.KulChip & JSXBase.HTMLAttributes<HTMLKulChipElement>;
             "kul-code": LocalJSX.KulCode & JSXBase.HTMLAttributes<HTMLKulCodeElement>;
+            "kul-compare": LocalJSX.KulCompare & JSXBase.HTMLAttributes<HTMLKulCompareElement>;
             "kul-drawer": LocalJSX.KulDrawer & JSXBase.HTMLAttributes<HTMLKulDrawerElement>;
             "kul-header": LocalJSX.KulHeader & JSXBase.HTMLAttributes<HTMLKulHeaderElement>;
             "kul-image": LocalJSX.KulImage & JSXBase.HTMLAttributes<HTMLKulImageElement>;
@@ -3355,6 +3453,7 @@ declare module "@stencil/core" {
             "kul-showcase-chat": LocalJSX.KulShowcaseChat & JSXBase.HTMLAttributes<HTMLKulShowcaseChatElement>;
             "kul-showcase-chip": LocalJSX.KulShowcaseChip & JSXBase.HTMLAttributes<HTMLKulShowcaseChipElement>;
             "kul-showcase-code": LocalJSX.KulShowcaseCode & JSXBase.HTMLAttributes<HTMLKulShowcaseCodeElement>;
+            "kul-showcase-compare": LocalJSX.KulShowcaseCompare & JSXBase.HTMLAttributes<HTMLKulShowcaseCompareElement>;
             "kul-showcase-debug": LocalJSX.KulShowcaseDebug & JSXBase.HTMLAttributes<HTMLKulShowcaseDebugElement>;
             "kul-showcase-drawer": LocalJSX.KulShowcaseDrawer & JSXBase.HTMLAttributes<HTMLKulShowcaseDrawerElement>;
             "kul-showcase-header": LocalJSX.KulShowcaseHeader & JSXBase.HTMLAttributes<HTMLKulShowcaseHeaderElement>;

@@ -4,40 +4,41 @@ import {
     Event,
     EventEmitter,
     forceUpdate,
+    Fragment,
     h,
     Host,
     Method,
     Prop,
     State,
 } from '@stencil/core';
-import type { GenericMap, GenericObject } from '../../types/GenericTypes';
+import { type GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
-    KulCardProps,
-    KulCardEvent,
-    KulCardEventPayload,
-    KulCardAdapter,
-    KulCardLayout,
-} from './kul-card-declarations';
+    KulDataDataset,
+    KulDataShapes,
+    KulDataShapesMap,
+} from '../../managers/kul-data/kul-data-declarations';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
-    KulDataDataset,
-    KulDataShapesMap,
-} from '../../managers/kul-data/kul-data-declarations';
-import { LAYOUT_HUB } from './helpers/kul-card-layout-hub';
+    KulCompareEvent,
+    KulCompareEventPayload,
+    KulCompareProps,
+    KulCompareView,
+} from './kul-compare-declarations';
+import { DEFAULTS } from './helpers/kul-compare-defaults';
 
 @Component({
-    tag: 'kul-card',
-    styleUrl: 'kul-card.scss',
+    tag: 'kul-compare',
+    styleUrl: 'kul-compare.scss',
     shadow: true,
 })
-export class KulCard {
+export class KulCompare {
     /**
-     * References the root HTML element of the component (<kul-card>).
+     * References the root HTML element of the component (<kul-compare>).
      */
-    @Element() rootElement: HTMLKulCardElement;
+    @Element() rootElement: HTMLKulCompareElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */
@@ -55,42 +56,41 @@ export class KulCard {
     };
     /**
      * The shapes of the component.
-     * @default ""
+     * @default undefined
      *
      * @see KulDataShapesMap - For a list of possible shapes.
      */
     @State() shapes: KulDataShapesMap;
+    /**
+     * The current view of the compare.
+     * @default "before-after"
+     */
+    @State() view: KulCompareView = 'overlay';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
     /*-------------------------------------------------*/
 
     /**
-     * The actual data of the card.
+     * Actual data of the compare.
      * @default null
      */
     @Prop({ mutable: true }) kulData: KulDataDataset = null;
     /**
-     * Sets the layout.
-     * @default "material"
+     * Sets the type of shapes to compare.
+     * @default ""
      */
-    @Prop({ mutable: true, reflect: true }) kulLayout: KulCardLayout =
-        'material';
-    /**
-     * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
-     * @default "100%"
-     */
-    @Prop({ mutable: true, reflect: true }) kulSizeX = '100%';
-    /**
-     * The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).
-     * @default "100%"
-     */
-    @Prop({ mutable: true, reflect: true }) kulSizeY = '100%';
+    @Prop({ mutable: true, reflect: true }) kulShape: KulDataShapes = 'image';
     /**
      * Custom style of the component.
      * @default ""
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
+    /**
+     * Sets the type of view, either styled as a before-after or a side-by-side comparison.
+     * @default null
+     */
+    @Prop({ mutable: true }) kulView: KulCompareView = 'overlay';
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -103,21 +103,21 @@ export class KulCard {
     /*-------------------------------------------------*/
 
     /**
-     * Triggered when an event is fired.
+     * Describes event emitted.
      */
     @Event({
-        eventName: 'kul-card-event',
+        eventName: 'kul-compare-event',
         composed: true,
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulCardEventPayload>;
+    kulEvent: EventEmitter<KulCompareEventPayload>;
 
-    onKulEvent(e: Event | CustomEvent, eventType: KulCardEvent): void {
+    onKulEvent(e: Event | CustomEvent, eventType: KulCompareEvent) {
         this.kulEvent.emit({
             comp: this,
-            id: this.rootElement.id,
             eventType,
+            id: this.rootElement.id,
             originalEvent: e,
         });
     }
@@ -135,21 +135,13 @@ export class KulCard {
         return this.debugInfo;
     }
     /**
-     * Used to retrieve component's props values.
-     * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-     * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+     * Used to retrieve component's properties and descriptions.
+     * @param {boolean} descriptions - When true, includes descriptions for each property.
+     * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
      */
     @Method()
     async getProps(descriptions?: boolean): Promise<GenericObject> {
-        return getProps(this, KulCardProps, descriptions);
-    }
-    /**
-     * Used to retrieve component's shapes.
-     * @returns {Promise<KulDataShapesMap>} Map of shapes.
-     */
-    @Method()
-    async getShapes(): Promise<KulDataShapesMap> {
-        return this.shapes;
+        return getProps(this, KulCompareProps, descriptions);
     }
     /**
      * This method is used to trigger a new render of the component.
@@ -174,21 +166,93 @@ export class KulCard {
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
 
-    #adapter: KulCardAdapter = {
-        actions: {
-            dispatchEvent: async (e) => {
-                this.onKulEvent(e, 'kul-event');
-            },
-        },
-        get: { card: () => this, shapes: () => this.shapes },
-    };
+    #isOverlay() {
+        return !!(this.view === 'overlay');
+    }
+
+    #prepChangeView() {
+        return (
+            <div class="change-view">
+                <kul-button
+                    kulIcon="compare"
+                    kulIconOff="book-open"
+                    kulStyling="icon"
+                    kulToggable={true}
+                    onClick={() => {
+                        this.view = this.#isOverlay() ? 'split' : 'overlay';
+                    }}
+                    title={
+                        this.#isOverlay()
+                            ? 'Click for split screen comparison.'
+                            : 'Click for overlay comparison'
+                    }
+                ></kul-button>
+            </div>
+        );
+    }
+
+    #prepView() {
+        const rawShapes = this.shapes[this.kulShape];
+
+        const shapes = this.#kulManager.data.cell.shapes.decorate(
+            this.kulShape,
+            rawShapes,
+            async (e) => this.onKulEvent(e, 'kul-event'),
+            [...DEFAULTS[this.kulShape](), ...DEFAULTS[this.kulShape]()]
+        ).element;
+
+        return (
+            <Fragment>
+                <div class={`view view--${this.view}`}>
+                    <div class="view__source">{shapes[0]}</div>
+                    {this.#isOverlay() ? (
+                        <div
+                            class="draggable-slider"
+                            onInput={this.#updateOverlayWidth.bind(this)}
+                        >
+                            <input
+                                class="draggable-slider__input"
+                                type="range"
+                                min="0"
+                                max="100"
+                                value="50"
+                            />
+                        </div>
+                    ) : null}
+                    <div class="view__target">{shapes[1]}</div>
+                </div>
+            </Fragment>
+        );
+    }
+
+    #prepCompare() {
+        const hasShapes = !!this.shapes?.[this.kulShape];
+        if (hasShapes) {
+            const shapes = this.shapes[this.kulShape];
+            if (shapes?.length > 1) {
+                return (
+                    <div class="grid">
+                        {this.#prepView()}
+                        {this.#prepChangeView()}
+                    </div>
+                );
+            }
+        }
+    }
+
+    #updateOverlayWidth(event: InputEvent) {
+        const sliderValue = (event.target as HTMLInputElement).value;
+        this.rootElement.style.setProperty(
+            '--kul_compare_overlay_width',
+            `${sliderValue}%`
+        );
+    }
 
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
     /*-------------------------------------------------*/
 
     componentWillLoad() {
-        this.#kulManager.language.register(this);
         this.#kulManager.theme.register(this);
     }
 
@@ -198,12 +262,12 @@ export class KulCard {
     }
 
     componentWillRender() {
+        this.#kulManager.debug.updateDebugInfo(this, 'will-render');
         if (this.kulData) {
             this.shapes = this.#kulManager.data.cell.shapes.getAll(
                 this.kulData
             );
         }
-        this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
 
     componentDidRender() {
@@ -211,36 +275,21 @@ export class KulCard {
     }
 
     render() {
-        if (!this.kulData && this.rootElement.children.length < 1) {
-            return;
-        }
-
-        const style: GenericMap = {
-            '--kul_card_height': this.kulSizeY ? this.kulSizeY : '100%',
-            '--kul_card_width': this.kulSizeX ? this.kulSizeX : '100%',
-        };
-
         return (
-            <Host style={style}>
+            <Host>
                 {this.kulStyle ? (
                     <style id={KUL_STYLE_ID}>
                         {this.#kulManager.theme.setKulStyle(this)}
                     </style>
                 ) : undefined}
-                <div
-                    id={KUL_WRAPPER_ID}
-                    onClick={(e) => this.onKulEvent(e, 'click')}
-                    onContextMenu={(e) => this.onKulEvent(e, 'contextmenu')}
-                    onPointerDown={(e) => this.onKulEvent(e, 'pointerdown')}
-                >
-                    {LAYOUT_HUB[this.kulLayout.toLowerCase()](this.#adapter)}
+                <div id={KUL_WRAPPER_ID}>
+                    <div class="compare">{this.#prepCompare()}</div>
                 </div>
             </Host>
         );
     }
 
     disconnectedCallback() {
-        this.#kulManager.language.unregister(this);
         this.#kulManager.theme.unregister(this);
     }
 }

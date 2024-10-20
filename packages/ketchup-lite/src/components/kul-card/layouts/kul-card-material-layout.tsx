@@ -3,35 +3,22 @@ import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
 import { KulCardAdapter, KulCardCSSClasses } from '../kul-card-declarations';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
-import { getShapes } from '../helpers/kul-card-shapes';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
-
-const KUL_MANAGER = kulManagerInstance();
 
 export function getMaterialLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
     const eventDispatcher = adapter.actions.dispatchEvent;
+    const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
-    const buttons = getShapes(
-        'KulButton',
-        'button',
-        shapes.button,
-        eventDispatcher
-    );
-    const images = getShapes(
-        'KulImage',
+    const buttons = decorator('button', shapes.button, eventDispatcher);
+    const images = decorator(
         'image',
         shapes.image,
         eventDispatcher,
         DEFAULTS.material.image()
     );
-    const texts = getShapes(
-        'KulTextfield',
-        'text',
-        shapes.text,
-        eventDispatcher
-    );
+    const texts = decorator('text', shapes.text, eventDispatcher);
 
     const coverIndex = 0;
     const cover: VNode = images.element?.length
@@ -64,7 +51,7 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
                 class={RIPPLE_SURFACE_CLASS}
                 data-cy={KulDataCyAttributes.RIPPLE}
                 onPointerDown={(e) => {
-                    KUL_MANAGER.theme.ripple.trigger(
+                    kulManagerInstance().theme.ripple.trigger(
                         e as PointerEvent,
                         e.currentTarget as HTMLElement
                     );

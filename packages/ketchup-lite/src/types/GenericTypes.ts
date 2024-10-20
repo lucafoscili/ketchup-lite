@@ -108,6 +108,7 @@ import { KulChart } from '../components/kul-chart/kul-chart';
 import { KulChat } from '../components/kul-chat/kul-chat';
 import { KulChip } from '../components/kul-chip/kul-chip';
 import { KulCode } from '../components/kul-code/kul-code';
+import { KulCompare } from '../components/kul-compare/kul-compare';
 import { KulDrawer } from '../components/kul-drawer/kul-drawer';
 import { KulHeader } from '../components/kul-header/kul-header';
 import { KulImage } from '../components/kul-image/kul-image';
@@ -124,6 +125,10 @@ import { KulTextfield } from '../components/kul-textfield/kul-textfield';
 import { KulToast } from '../components/kul-toast/kul-toast';
 import { KulTree } from '../components/kul-tree/kul-tree';
 import { KulUpload } from '../components/kul-upload/kul-upload';
+import {
+    KulCompareEvent,
+    KulCompareProps,
+} from '../components/kul-compare/kul-compare-declarations';
 
 export interface GenericMap {
     [index: string]: string;
@@ -141,6 +146,7 @@ export type KulComponentName =
     | 'KulChat'
     | 'KulChip'
     | 'KulCode'
+    | 'KulCompare'
     | 'KulDrawer'
     | 'KulHeader'
     | 'KulImage'
@@ -167,6 +173,7 @@ export type KulComponentElementMap = {
     KulChat: HTMLKulChatElement;
     KulChip: HTMLKulChipElement;
     KulCode: HTMLKulCodeElement;
+    KulCompare: HTMLKulCompareElement;
     KulDrawer: HTMLKulDrawerElement;
     KulHeader: HTMLKulHeaderElement;
     KulImage: HTMLKulImageElement;
@@ -194,6 +201,7 @@ export type KulComponentClassMap = {
     KulChat: KulChat;
     KulChip: KulChip;
     KulCode: KulCode;
+    KulCompare: KulCompare;
     KulDrawer: KulDrawer;
     KulHeader: KulHeader;
     KulImage: KulImage;
@@ -221,6 +229,7 @@ export type KulComponentTagMap = {
     KulChat: 'kul-chat';
     KulChip: 'kul-chip';
     KulCode: 'kul-code';
+    KulCompare: 'kul-compare';
     KulDrawer: 'kul-drawer';
     KulHeader: 'kul-header';
     KulImage: 'kul-image';
@@ -288,6 +297,7 @@ export type ComponentEventMap = {
     KulChat: KulChatEvent;
     KulChip: KulChipEvent;
     KulCode: KulCodeEvent;
+    KulCompare: KulCompareEvent;
     KulDrawer: KulDrawerEvent;
     KulHeader: KulHeaderEvent;
     KulImage: KulImageEvent;
@@ -315,6 +325,7 @@ export type ComponentPropsMap = {
     KulChat: KulChatProps;
     KulChip: KulChipProps;
     KulCode: KulCodeProps;
+    KulCompare: KulCompareProps;
     KulDrawer: KulDrawerProps;
     KulHeader: KulHeaderProps;
     KulImage: KulImageProps;
