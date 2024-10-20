@@ -253,14 +253,12 @@ export class KulArticle {
         } else {
             const ComponentTag = node.tagName ? node.tagName : 'span';
             return (
-                <ComponentTag class={`content content--${ComponentTag}`}>
-                    <span
-                        class={`content content--span`}
-                        data-depth={depth.toString()}
-                        style={node.cssStyle}
-                    >
-                        {node.value}
-                    </span>
+                <ComponentTag
+                    class={`content content--${ComponentTag}`}
+                    data-depth={depth.toString()}
+                    style={node.cssStyle}
+                >
+                    {node.value}
                 </ComponentTag>
             );
         }
