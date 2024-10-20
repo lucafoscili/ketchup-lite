@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-20T20:23:42",
+  "timestamp": "2024-10-20T22:01:54",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -1577,7 +1577,7 @@
           "name": "kulType",
           "type": "\"button\" | \"reset\" | \"submit\"",
           "complexType": {
-            "original": "| 'button'\n        | 'reset'\n        | 'submit'",
+            "original": "| 'button'\r\n        | 'reset'\r\n        | 'submit'",
             "resolved": "\"button\" | \"reset\" | \"submit\"",
             "references": {}
           },
