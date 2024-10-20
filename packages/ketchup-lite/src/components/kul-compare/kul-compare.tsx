@@ -27,7 +27,10 @@ import {
     KulCompareProps,
     KulCompareView,
 } from './kul-compare-declarations';
-import { DEFAULTS } from './helpers/kul-compare-defaults';
+import {
+    SOURCE_DEFAULTS,
+    TARGET_DEFAULTS,
+} from './helpers/kul-compare-defaults';
 
 @Component({
     tag: 'kul-compare',
@@ -198,7 +201,10 @@ export class KulCompare {
             this.kulShape,
             rawShapes,
             async (e) => this.onKulEvent(e, 'kul-event'),
-            [...DEFAULTS[this.kulShape](), ...DEFAULTS[this.kulShape]()]
+            [
+                ...SOURCE_DEFAULTS[this.kulShape](),
+                ...TARGET_DEFAULTS[this.kulShape](),
+            ]
         ).element;
 
         return (
