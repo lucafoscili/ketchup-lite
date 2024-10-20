@@ -251,14 +251,15 @@ export class KulArticle {
             );
             return shape.element[0];
         } else {
+            const ComponentTag = node.tagName ? node.tagName : 'span';
             return (
-                <span
-                    class={`content content--span`}
+                <ComponentTag
+                    class={`content content--${ComponentTag}`}
                     data-depth={depth.toString()}
                     style={node.cssStyle}
                 >
                     {node.value}
-                </span>
+                </ComponentTag>
             );
         }
     }
