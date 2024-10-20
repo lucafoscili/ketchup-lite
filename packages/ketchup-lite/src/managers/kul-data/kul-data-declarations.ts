@@ -144,7 +144,7 @@ export interface KulDataNode {
     cssStyle?: GenericMap;
     description?: string;
     icon?: string;
-    value?: unknown;
+    value?: string | number;
 }
 export type KulDataShapes =
     | 'badge'

@@ -260,7 +260,7 @@ export class KulArticle {
                     class={`content content--${ComponentTag}`}
                     data-cy={KulDataCyAttributes.SHAPE}
                     data-depth={depth.toString()}
-                    {...this.#kulManager.data.extract.singleShape(cell)}
+                    {...this.#kulManager.data.cell.shapes.get(cell)}
                     {...eventBinder}
                     style={node.cssStyle}
                 >

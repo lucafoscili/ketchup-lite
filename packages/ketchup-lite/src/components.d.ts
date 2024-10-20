@@ -20,7 +20,7 @@ import { XAXisComponentOption, YAXisComponentOption } from "echarts";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
-import { KulCompareEventPayload } from "./components/kul-compare/kul-compare-declarations";
+import { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 import { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 import { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLifecycleInfo1 } from "./components";
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
@@ -52,7 +52,7 @@ export { XAXisComponentOption, YAXisComponentOption } from "echarts";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
-export { KulCompareEventPayload } from "./components/kul-compare/kul-compare-declarations";
+export { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 export { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 export { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLifecycleInfo1 } from "./components";
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
@@ -633,7 +633,7 @@ export namespace Components {
           * Sets the type of view, either styled as a before-after or a side-by-side comparison.
           * @default null
          */
-        "kulView": 'before-after' | 'side-by-side';
+        "kulView": KulCompareView;
         /**
           * This method is used to trigger a new render of the component.
          */
@@ -2766,7 +2766,7 @@ declare namespace LocalJSX {
           * Sets the type of view, either styled as a before-after or a side-by-side comparison.
           * @default null
          */
-        "kulView"?: 'before-after' | 'side-by-side';
+        "kulView"?: KulCompareView;
         /**
           * Describes event emitted.
          */

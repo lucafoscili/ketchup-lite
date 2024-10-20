@@ -199,7 +199,9 @@ export class KulCard {
 
     componentWillRender() {
         if (this.kulData) {
-            this.shapes = this.#kulManager.data.extract.shapes(this.kulData);
+            this.shapes = this.#kulManager.data.cell.shapes.getAll(
+                this.kulData
+            );
         }
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }

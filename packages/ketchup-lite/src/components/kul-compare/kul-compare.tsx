@@ -26,6 +26,7 @@ import {
     KulCompareEvent,
     KulCompareEventPayload,
     KulCompareProps,
+    KulCompareView,
 } from './kul-compare-declarations';
 
 @Component({
@@ -84,8 +85,7 @@ export class KulCompare {
      * Sets the type of view, either styled as a before-after or a side-by-side comparison.
      * @default null
      */
-    @Prop({ mutable: true }) kulView: 'before-after' | 'side-by-side' =
-        'before-after';
+    @Prop({ mutable: true }) kulView: KulCompareView = 'before-after';
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
@@ -177,25 +177,30 @@ export class KulCompare {
     #prepView() {
         const shapes = this.shapes[this.kulShape];
         const TagName = 'kul-' + this.kulShape;
+        const className = {
+            'kul-fit': !!(this.kulShape === 'image'),
+        };
         return (
             <div class="view">
-                <TagName {...shapes[0]}></TagName>
-                <TagName {...shapes[1]}></TagName>
+                <TagName class={className} {...shapes[0]}></TagName>
+                <TagName class={className} {...shapes[1]}></TagName>
             </div>
         );
     }
 
     #prepCompare() {
-        if (!(this.shapes?.[this.kulShape]?.length < 2)) {
-            return;
+        const hasShapes = !!this.shapes?.[this.kulShape];
+        if (hasShapes) {
+            const shapes = this.shapes[this.kulShape];
+            if (shapes?.length > 1) {
+                return (
+                    <div class="grid">
+                        {this.#prepView()}
+                        {this.#prepChangeView()}
+                    </div>
+                );
+            }
         }
-
-        return (
-            <div class="grid">
-                {this.#prepView()}
-                {this.#prepChangeView()}
-            </div>
-        );
     }
 
     /*-------------------------------------------------*/
@@ -214,7 +219,9 @@ export class KulCompare {
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
         if (this.kulData) {
-            this.shapes = this.#kulManager.data.extract.shapes(this.kulData);
+            this.shapes = this.#kulManager.data.cell.shapes.getAll(
+                this.kulData
+            );
         }
     }
 
