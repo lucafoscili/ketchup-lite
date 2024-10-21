@@ -27,10 +27,7 @@ import {
     KulCompareProps,
     KulCompareView,
 } from './kul-compare-declarations';
-import {
-    SOURCE_DEFAULTS,
-    TARGET_DEFAULTS,
-} from './helpers/kul-compare-defaults';
+import { DEFAULTS } from './helpers/kul-compare-defaults';
 
 @Component({
     tag: 'kul-compare',
@@ -196,15 +193,13 @@ export class KulCompare {
 
     #prepView() {
         const rawShapes = this.shapes[this.kulShape];
+        const { source, target } = DEFAULTS(this.#isOverlay());
 
         const shapes = this.#kulManager.data.cell.shapes.decorate(
             this.kulShape,
             rawShapes,
             async (e) => this.onKulEvent(e, 'kul-event'),
-            [
-                ...SOURCE_DEFAULTS[this.kulShape](),
-                ...TARGET_DEFAULTS[this.kulShape](),
-            ]
+            [...source[this.kulShape](), ...target[this.kulShape]()]
         ).element;
 
         return (
@@ -215,6 +210,7 @@ export class KulCompare {
                         <div
                             class="draggable-slider"
                             onInput={this.#updateOverlayWidth.bind(this)}
+                            onTouchStart={this.#updateOverlayWidth.bind(this)}
                         >
                             <input
                                 class="draggable-slider__input"
