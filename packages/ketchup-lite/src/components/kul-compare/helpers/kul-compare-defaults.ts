@@ -1,11 +1,11 @@
 import { KulDataShapeDefaults } from '../../../managers/kul-data/kul-data-declarations';
 
 export const DEFAULTS: (isOverlay: boolean) => {
-    source: KulDataShapeDefaults;
-    target: KulDataShapeDefaults;
+    left: KulDataShapeDefaults;
+    right: KulDataShapeDefaults;
 } = (isOverlay) => {
     return {
-        source: {
+        left: {
             image: () => [
                 {
                     htmlProps: { className: 'kul-fit' },
@@ -14,7 +14,7 @@ export const DEFAULTS: (isOverlay: boolean) => {
                 },
             ],
         },
-        target: {
+        right: {
             image: () => [
                 {
                     htmlProps: { className: 'kul-fit' },
