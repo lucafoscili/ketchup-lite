@@ -10,6 +10,7 @@ import {
     Method,
     Prop,
     State,
+    Watch,
 } from '@stencil/core';
 import { type GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -143,6 +144,29 @@ export class KulCompare {
             id: this.rootElement.id,
             originalEvent: e,
         });
+    }
+
+    /*-------------------------------------------------*/
+    /*                 W a t c h e r s                 */
+    /*-------------------------------------------------*/
+
+    @Watch('kulData')
+    @Watch('kulShape')
+    async updateShapes() {
+        try {
+            this.shapes = this.#kulManager.data.cell.shapes.getAll(
+                this.kulData
+            );
+            const shapes = this.#getShapes();
+            this.leftShape = shapes[0];
+            this.rightShape = shapes[1];
+        } catch (error) {
+            this.#kulManager.debug.logs.new(
+                this,
+                'Error updating shapes: ' + error,
+                'error'
+            );
+        }
     }
 
     /*-------------------------------------------------*/
@@ -387,20 +411,7 @@ export class KulCompare {
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         this.view = this.kulView;
-        try {
-            this.shapes = this.#kulManager.data.cell.shapes.getAll(
-                this.kulData
-            );
-            const shapes = this.#getShapes();
-            this.leftShape = shapes[0];
-            this.rightShape = shapes[1];
-        } catch (error) {
-            this.#kulManager.debug.logs.new(
-                this,
-                'Error when initializing shapes: ' + error,
-                'error'
-            );
-        }
+        this.updateShapes();
     }
 
     componentDidLoad() {
