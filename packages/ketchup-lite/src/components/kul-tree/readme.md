@@ -104,6 +104,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-compare](../kul-compare)
  - [kul-showcase-tree](../kul-showcase/components/tree)
 
 ### Depends on
@@ -114,6 +115,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   kul-tree --> kul-textfield
+  kul-compare --> kul-tree
   kul-showcase-tree --> kul-tree
   style kul-tree fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -18,6 +18,7 @@ export const COMPARE_KULDATA_FACTORY: Partial<{
                         },
                     },
                     id: 'image_1',
+                    value: 'First node',
                 },
                 {
                     cells: {
@@ -29,6 +30,31 @@ export const COMPARE_KULDATA_FACTORY: Partial<{
                         },
                     },
                     id: 'image_2',
+                    value: 'Second node',
+                },
+                {
+                    cells: {
+                        kulImage: {
+                            shape: 'image',
+                            value: getAssetPath(
+                                `./assets/media/avatar_thor_2.png`
+                            ),
+                        },
+                    },
+                    id: 'image_3',
+                    value: 'Third node',
+                },
+                {
+                    cells: {
+                        kulImage: {
+                            shape: 'image',
+                            value: getAssetPath(
+                                `./assets/media/avatar_freya_2.png`
+                            ),
+                        },
+                    },
+                    id: 'image_4',
+                    value: 'Fourth node',
                 },
             ],
         };
