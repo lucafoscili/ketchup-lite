@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-20T23:20:40",
+  "timestamp": "2024-10-21T11:35:50",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -4886,11 +4886,13 @@
         "kul-showcase-compare"
       ],
       "dependencies": [
-        "kul-button"
+        "kul-button",
+        "kul-tree"
       ],
       "dependencyGraph": {
         "kul-compare": [
-          "kul-button"
+          "kul-button",
+          "kul-tree"
         ],
         "kul-button": [
           "kul-image",
@@ -4902,6 +4904,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-tree": [
+          "kul-textfield"
         ],
         "kul-showcase-compare": [
           "kul-compare"
@@ -8640,7 +8645,8 @@
           "kul-article"
         ],
         "kul-compare": [
-          "kul-button"
+          "kul-button",
+          "kul-tree"
         ],
         "kul-button": [
           "kul-image",
@@ -8652,6 +8658,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-tree": [
+          "kul-textfield"
         ]
       }
     },
@@ -12950,6 +12959,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-compare",
         "kul-showcase-tree"
       ],
       "dependencies": [
@@ -12958,6 +12968,9 @@
       "dependencyGraph": {
         "kul-tree": [
           "kul-textfield"
+        ],
+        "kul-compare": [
+          "kul-tree"
         ],
         "kul-showcase-tree": [
           "kul-tree"
