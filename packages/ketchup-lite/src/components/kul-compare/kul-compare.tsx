@@ -214,7 +214,7 @@ export class KulCompare {
     /*-------------------------------------------------*/
 
     #getShapes() {
-        return this.shapes[this.kulShape];
+        return this.shapes?.[this.kulShape] || [];
     }
 
     #hasShapes() {
