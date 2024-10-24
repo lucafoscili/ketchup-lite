@@ -251,7 +251,7 @@ export class KulMessenger {
     };
 
     #hasCharacters() {
-        const nodes = this.kulData.nodes || [];
+        const nodes = this.kulData?.nodes || [];
         return !!nodes.length;
     }
 
