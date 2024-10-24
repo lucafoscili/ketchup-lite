@@ -64,7 +64,7 @@ export class KulCompare {
      *
      * @see KulDataShapesMap - For a list of possible shapes.
      */
-    @State() shapes: KulDataShapesMap;
+    @State() shapes: KulDataShapesMap = {};
     /**
      * The current view of the compare.
      * @default "before-after"
