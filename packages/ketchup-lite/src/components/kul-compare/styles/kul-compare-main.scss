@@ -37,6 +37,11 @@
   width: 100%;
 }
 
+.compare {
+  height: 100%;
+  width: 100%;
+}
+
 .grid {
   display: grid;
   grid-template-rows: var(--kul_compare_grid_template);
