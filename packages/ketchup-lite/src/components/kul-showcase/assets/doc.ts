@@ -1198,11 +1198,19 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "--kul-compare-change-view-padding",
-        docs: "Sets the padding of the bottom bar. Defaults to 1fr auto.",
+        docs: "Sets the padding of the bottom bar. Defaults to 8px.",
+      },
+      {
+        name: "--kul-compare-grid-template",
+        docs: "Sets the grid's layout. Defaults to 1fr auto.",
       },
       {
         name: "--kul-compare-slider-color",
         docs: "Sets the color of the overlay slider. Defaults to var(--kul-title-background-color).",
+      },
+      {
+        name: "--kul-compare-slider-width",
+        docs: "Sets the width of the overlay slider. Defaults to 3px.",
       },
     ],
   },

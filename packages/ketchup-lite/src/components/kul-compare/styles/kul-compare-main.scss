@@ -1,6 +1,6 @@
 :host {
   /**
-    * @prop --kul-compare-change-view-padding: Sets the padding of the bottom bar.
+    * @prop --kul-compare-grid-template: Sets the grid's layout.
     * Defaults to 1fr auto.
     */
   --kul_compare_grid_template: var(--kul-compare-grid-template, 1fr auto);
@@ -13,20 +13,25 @@
     var(--kul-title-background-color)
   );
   /**
-  * @prop --kul-compare-slider-color: Sets the color of the overlay slider.
-  * Defaults to var(--kul-title-background-color).
-  */
-  --kul_compare_slider_color: var(
-    --kul-compare-slider-color,
-    var(--kul-title-background-color)
-  );
-  /**
   * @prop --kul-compare-change-view-padding: Sets the padding of the bottom bar.
   * Defaults to 8px.
   */
   --kul_compare_change_view_padding: var(
     --kul-compare-change-view-padding,
     8px
+  );
+  /**
+  * @prop --kul-compare-slider-width: Sets the width of the overlay slider.
+  * Defaults to 3px.
+  */
+  --kul_compare_slider_width: var(--kul-compare-slider-width, 3px);
+  /**
+  * @prop --kul-compare-slider-color: Sets the color of the overlay slider.
+  * Defaults to var(--kul-title-background-color).
+  */
+  --kul_compare_slider_color: var(
+    --kul-compare-slider-color,
+    var(--kul-title-background-color)
   );
 
   display: block;
@@ -74,13 +79,25 @@
     }
 
     & > :last-child {
-      border-right: 3px solid var(--kul_compare_slider_color);
-      clip-path: inset(0 var(--kul_compare_overlay_width, 50%) 0 0);
-      height: 100%;
-      left: 0;
-      overflow: hidden;
-      position: absolute;
-      top: 0;
+      & {
+        clip-path: inset(0 var(--kul_compare_overlay_width, 50%) 0 0);
+        height: 100%;
+        left: 0;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+      }
+
+      &:after {
+        background-color: var(--kul_compare_slider_color);
+        content: '';
+        height: 100%;
+        pointer-events: none;
+        position: absolute;
+        right: var(--kul_compare_overlay_width, 50%);
+        top: 0;
+        width: var(--kul_compare_slider_width);
+      }
     }
   }
 
