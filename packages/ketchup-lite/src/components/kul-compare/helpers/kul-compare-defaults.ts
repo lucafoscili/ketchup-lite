@@ -3,7 +3,7 @@ import { KulDataShapeDefaults } from '../../../managers/kul-data/kul-data-declar
 export const DEFAULTS: (isOverlay: boolean) => {
     left: KulDataShapeDefaults;
     right: KulDataShapeDefaults;
-} = (isOverlay) => {
+} = (_isOverlay) => {
     return {
         left: {
             image: () => [
@@ -18,7 +18,7 @@ export const DEFAULTS: (isOverlay: boolean) => {
             image: () => [
                 {
                     htmlProps: { className: 'kul-fit' },
-                    kulSizeX: isOverlay ? 'auto' : '100%',
+                    kulSizeX: '100%',
                     kulSizeY: '100%',
                 },
             ],
