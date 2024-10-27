@@ -75,12 +75,12 @@
 
     & > :last-child {
       border-right: 3px solid var(--kul_compare_slider_color);
+      clip-path: inset(0 var(--kul_compare_overlay_width, 50%) 0 0);
       height: 100%;
       left: 0;
       overflow: hidden;
       position: absolute;
       top: 0;
-      width: var(--kul_compare_overlay_width, 50%);
     }
   }
 
