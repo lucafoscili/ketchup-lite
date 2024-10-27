@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-27T21:11:52",
+  "timestamp": "2024-10-27T21:52:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -4872,12 +4872,22 @@
         {
           "name": "--kul-compare-change-view-padding",
           "annotation": "prop",
-          "docs": "Sets the padding of the bottom bar. Defaults to 1fr auto."
+          "docs": "Sets the padding of the bottom bar. Defaults to 8px."
+        },
+        {
+          "name": "--kul-compare-grid-template",
+          "annotation": "prop",
+          "docs": "Sets the grid's layout. Defaults to 1fr auto."
         },
         {
           "name": "--kul-compare-slider-color",
           "annotation": "prop",
           "docs": "Sets the color of the overlay slider. Defaults to var(--kul-title-background-color)."
+        },
+        {
+          "name": "--kul-compare-slider-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the overlay slider. Defaults to 3px."
         }
       ],
       "slots": [],

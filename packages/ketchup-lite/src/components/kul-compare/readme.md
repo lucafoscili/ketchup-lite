@@ -82,8 +82,10 @@ Type: `Promise<void>`
 | Name                                         | Description                                                                                 |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | `--kul-compare-change-view-background-color` | Sets the background color of the bottom bar. Defaults to var(--kul-title-background-color). |
-| `--kul-compare-change-view-padding`          | Sets the padding of the bottom bar. Defaults to 1fr auto.                                   |
+| `--kul-compare-change-view-padding`          | Sets the padding of the bottom bar. Defaults to 8px.                                        |
+| `--kul-compare-grid-template`                | Sets the grid's layout. Defaults to 1fr auto.                                               |
 | `--kul-compare-slider-color`                 | Sets the color of the overlay slider. Defaults to var(--kul-title-background-color).        |
+| `--kul-compare-slider-width`                 | Sets the width of the overlay slider. Defaults to 3px.                                      |
 
 
 ## Dependencies

@@ -397,7 +397,8 @@ export class KulCompare {
     }
 
     #updateOverlayWidth(event: InputEvent) {
-        const sliderValue = (event.target as HTMLInputElement).value;
+        const sliderValue =
+            100 - parseInt((event.target as HTMLInputElement).value);
         this.rootElement.style.setProperty(
             '--kul_compare_overlay_width',
             `${sliderValue}%`
