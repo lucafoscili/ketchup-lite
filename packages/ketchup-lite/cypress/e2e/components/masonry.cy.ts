@@ -60,7 +60,9 @@ describe('Methods', () => {
 
     it(`getProps: check keys against Kul${masonryCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(masonryTag, {
+            kulColumns: null,
             kulData: null,
+            kulSelectable: null,
             kulShape: null,
             kulStyle: null,
             kulView: null,
