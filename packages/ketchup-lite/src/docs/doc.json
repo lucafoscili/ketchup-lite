@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-27T21:53:18",
+  "timestamp": "2024-10-28T17:05:05",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -788,6 +788,7 @@
         "kul-showcase-kultheme",
         "kul-showcase-lazy",
         "kul-showcase-list",
+        "kul-showcase-masonry",
         "kul-showcase-messenger",
         "kul-showcase-photoframe",
         "kul-showcase-progressbar",
@@ -878,6 +879,9 @@
           "kul-article"
         ],
         "kul-showcase-list": [
+          "kul-article"
+        ],
+        "kul-showcase-masonry": [
           "kul-article"
         ],
         "kul-showcase-messenger": [
@@ -1975,6 +1979,7 @@
         "kul-chat",
         "kul-code",
         "kul-compare",
+        "kul-masonry",
         "kul-messenger",
         "kul-showcase",
         "kul-showcase-button",
@@ -2004,6 +2009,9 @@
           "kul-button"
         ],
         "kul-compare": [
+          "kul-button"
+        ],
+        "kul-masonry": [
           "kul-button"
         ],
         "kul-messenger": [
@@ -6885,6 +6893,434 @@
       }
     },
     {
+      "filePath": "src/components/kul-masonry/kul-masonry.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-masonry",
+      "readme": "# kul-masonry\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulColumns",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-columns",
+          "reflectToAttr": false,
+          "docs": "Number of columns of the masonry.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "4"
+            }
+          ],
+          "default": "4",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulData",
+          "type": "KulDataDataset",
+          "complexType": {
+            "original": "KulDataDataset",
+            "resolved": "KulDataDataset",
+            "references": {
+              "KulDataDataset": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Actual data of the masonry.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulShape",
+          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+          "complexType": {
+            "original": "KulDataShapes",
+            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+            "references": {
+              "KulDataShapes": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataShapes"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-shape",
+          "reflectToAttr": true,
+          "docs": "Sets the type of shapes to compare.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "'image'",
+          "values": [
+            {
+              "value": "badge",
+              "type": "string"
+            },
+            {
+              "value": "button",
+              "type": "string"
+            },
+            {
+              "value": "card",
+              "type": "string"
+            },
+            {
+              "value": "chart",
+              "type": "string"
+            },
+            {
+              "value": "chat",
+              "type": "string"
+            },
+            {
+              "value": "chip",
+              "type": "string"
+            },
+            {
+              "value": "code",
+              "type": "string"
+            },
+            {
+              "value": "image",
+              "type": "string"
+            },
+            {
+              "value": "number",
+              "type": "string"
+            },
+            {
+              "value": "switch",
+              "type": "string"
+            },
+            {
+              "value": "text",
+              "type": "string"
+            },
+            {
+              "value": "upload",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": true,
+          "docs": "Custom style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulView",
+          "type": "\"masonry\" | \"waterfall\"",
+          "complexType": {
+            "original": "KulMasonryView",
+            "resolved": "\"masonry\" | \"waterfall\"",
+            "references": {
+              "KulMasonryView": {
+                "location": "import",
+                "path": "./kul-masonry-declarations",
+                "id": "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonryView"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-view",
+          "reflectToAttr": false,
+          "docs": "Sets the type of view, either the actual masonry or a waterfall view.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "'masonry'",
+          "values": [
+            {
+              "value": "masonry",
+              "type": "string"
+            },
+            {
+              "value": "waterfall",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "Promise resolved with an object containing the component's properties."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When true, includes descriptions for each property."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When true, includes descriptions for each property."
+            }
+          ],
+          "docs": "Used to retrieve component's properties and descriptions.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When true, includes descriptions for each property."
+            },
+            {
+              "name": "returns",
+              "text": "Promise resolved with an object containing the component's properties."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-masonry-event",
+          "detail": "KulMasonryEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulMasonryEventPayload",
+            "resolved": "KulMasonryEventPayload",
+            "references": {
+              "KulMasonryEventPayload": {
+                "location": "import",
+                "path": "./kul-masonry-declarations",
+                "id": "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonryEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-masonry-button-bottom",
+          "annotation": "prop",
+          "docs": "Sets the bottom placement of the change view button. Defaults to 30px."
+        },
+        {
+          "name": "--kul-masonry-button-right",
+          "annotation": "prop",
+          "docs": "Sets the right placement of the change view button. Defaults to 30px."
+        },
+        {
+          "name": "--kul-masonry-column-size",
+          "annotation": "prop",
+          "docs": "Sets the dimension of the masonry columns. Defaults to minmax(0px, 1fr)."
+        },
+        {
+          "name": "--kul-masonry-grid-gap",
+          "annotation": "prop",
+          "docs": "Sets the gaps of the grid. Defaults to 8px."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-masonry"
+      ],
+      "dependencies": [
+        "kul-button"
+      ],
+      "dependencyGraph": {
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-showcase-masonry": [
+          "kul-masonry"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
@@ -9171,6 +9607,68 @@
         "kul-showcase-list": [
           "kul-list",
           "kul-article"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/components/masonry/kul-showcase-masonry.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-masonry",
+      "readme": "# kul-showcase-masonry\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-masonry",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-masonry": [
+          "kul-masonry",
+          "kul-article"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
         ]
       }
     },
@@ -13640,6 +14138,16 @@
       "declaration": "export interface KulUploadEventPayload\n    extends KulEventPayload<'KulUpload', KulUploadEvent> {\n    selectedFiles: File[];\n}",
       "docstring": "",
       "path": "src/components/kul-upload/kul-upload-declarations.ts"
+    },
+    "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonryView": {
+      "declaration": "export type KulMasonryView = 'masonry' | 'waterfall';",
+      "docstring": "",
+      "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
+    },
+    "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonryEventPayload": {
+      "declaration": "export interface KulMasonryEventPayload\n    extends KulEventPayload<'KulMasonry', KulMasonryEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
     }
   }
 }

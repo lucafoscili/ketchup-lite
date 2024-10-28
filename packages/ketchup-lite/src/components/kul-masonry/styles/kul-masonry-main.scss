@@ -1,0 +1,70 @@
+:host {
+  /**
+       * @prop --kul-masonry-button-bottom: Sets the bottom placement of the change view button.
+       * Defaults to 30px.
+       */
+  --kul_masonry_button_bottom: var(--kul-masonry-grid-gap, 30px);
+  /**
+     * @prop --kul-masonry-button-right: Sets the right placement of the change view button.
+     * Defaults to 30px.
+     */
+  --kul_masonry_button_right: var(--kul-masonry-button-right, 30px);
+  /**
+       * @prop --kul-masonry-column-size: Sets the dimension of the masonry columns.
+       * Defaults to minmax(0px, 1fr).
+       */
+  --kul_masonry_column_size: var(--kul-masonry-column-size, minmax(0px, 1fr));
+  /**
+     * @prop --kul-masonry-grid-gap: Sets the gaps of the grid.
+     * Defaults to 8px.
+     */
+  --kul_masonry_grid_gap: var(--kul-masonry-grid-gap, 8px);
+
+  display: block;
+}
+
+#kul-component {
+  height: 100%;
+  width: 100%;
+}
+
+.masonry {
+  display: flex;
+  flex-direction: column;
+  gap: var(--kul_masonry_grid_gap);
+  height: 100%;
+  width: 100%;
+}
+
+.grid {
+  & {
+    align-items: start;
+    column-gap: var(--kul_masonry_grid_gap);
+    display: grid;
+  }
+
+  &--masonry {
+    grid-template-columns: repeat(
+      var(--kul_masonry_columns),
+      var(--kul_masonry_column_size)
+    );
+  }
+
+  &--waterfall {
+    grid-template-columns: 1fr;
+  }
+
+  &__column {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: var(--kul_masonry_grid_gap);
+    width: 100%;
+  }
+
+  &__change-view {
+    bottom: var(--kul_masonry_button_bottom);
+    position: absolute;
+    right: var(--kul_masonry_button_right);
+  }
+}

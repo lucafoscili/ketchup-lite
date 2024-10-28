@@ -10,6 +10,7 @@ import {
     Method,
     Prop,
     State,
+    VNode,
     Watch,
 } from '@stencil/core';
 import { type GenericObject } from '../../types/GenericTypes';
@@ -225,7 +226,7 @@ export class KulCompare {
         return !!(this.view === 'overlay');
     }
 
-    #prepChangeView() {
+    #prepChangeView(): VNode {
         const ids = {
             left: 'toggle-left-panel',
             right: 'toggle-right-panel',
@@ -302,7 +303,7 @@ export class KulCompare {
         );
     }
 
-    #prepPanel(side: 'left' | 'right') {
+    #prepPanel(side: 'left' | 'right'): VNode {
         const dataset: KulDataDataset = { nodes: [] };
         const shapes = this.#getShapes();
         for (let index = 0; index < shapes.length; index++) {
@@ -346,7 +347,7 @@ export class KulCompare {
         );
     }
 
-    #prepView() {
+    #prepView(): VNode {
         const { left, right } = DEFAULTS(this.#isOverlay());
         const shapes = this.#kulManager.data.cell.shapes.decorate(
             this.kulShape,
@@ -382,7 +383,7 @@ export class KulCompare {
         );
     }
 
-    #prepCompare() {
+    #prepCompare(): VNode {
         if (this.#hasShapes()) {
             const shapes = this.shapes[this.kulShape];
             if (shapes?.length > 1) {
