@@ -65,6 +65,10 @@ export const MASONRY_DOC: KulArticleDataset = {
                     PAYLOAD_NAME,
                     [
                         {
+                            type: 'kul-event',
+                            description: 'emitted by shapes',
+                        },
+                        {
                             type: 'ready',
                             description:
                                 'emitted when the component completes its first complete lifecycle',

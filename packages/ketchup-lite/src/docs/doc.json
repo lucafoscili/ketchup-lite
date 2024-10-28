@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-28T18:35:16",
+  "timestamp": "2024-10-28T21:16:08",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -6955,6 +6955,33 @@
           "values": [
             {
               "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulSelectable",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-selectable",
+          "reflectToAttr": true,
+          "docs": "Allows for the selection of elements.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
             }
           ],
           "optional": false,
@@ -14145,7 +14172,7 @@
       "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
     },
     "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonryEventPayload": {
-      "declaration": "export interface KulMasonryEventPayload\n    extends KulEventPayload<'KulMasonry', KulMasonryEvent> {}",
+      "declaration": "export interface KulMasonryEventPayload\n    extends KulEventPayload<'KulMasonry', KulMasonryEvent> {\n    selectedShape: KulMasonrySelectedShape;\n}",
       "docstring": "",
       "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
     }

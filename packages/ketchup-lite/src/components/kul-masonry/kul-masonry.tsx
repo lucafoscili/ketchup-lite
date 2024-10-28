@@ -13,10 +13,15 @@ import {
     VNode,
     Watch,
 } from '@stencil/core';
-import { type GenericObject } from '../../types/GenericTypes';
+import {
+    KulGenericEventPayload,
+    type GenericObject,
+} from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
+    KulDataCell,
     KulDataDataset,
+    KulDataShapeDefaults,
     KulDataShapes,
     KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
@@ -27,6 +32,7 @@ import {
     KulMasonryEvent,
     KulMasonryEventPayload,
     KulMasonryProps,
+    KulMasonrySelectedShape,
     KulMasonryView,
 } from './kul-masonry-declarations';
 import { KulButtonEventPayload } from '../kul-button/kul-button-declarations';
@@ -57,6 +63,11 @@ export class KulMasonry {
         startTime: performance.now(),
     };
     /**
+     * The selected element.
+     * @default undefined
+     */
+    @State() selectedShape: KulMasonrySelectedShape = {};
+    /**
      * The shapes of the component.
      * @default undefined
      *
@@ -83,6 +94,11 @@ export class KulMasonry {
      * @default null
      */
     @Prop({ mutable: true }) kulData: KulDataDataset = null;
+    /**
+     * Allows for the selection of elements.
+     * @default ""
+     */
+    @Prop({ mutable: true, reflect: true }) kulSelectable = false;
     /**
      * Sets the type of shapes to compare.
      * @default ""
@@ -121,11 +137,34 @@ export class KulMasonry {
     kulEvent: EventEmitter<KulMasonryEventPayload>;
 
     onKulEvent(e: Event | CustomEvent, eventType: KulMasonryEvent) {
+        let shouldUpdateState = false;
+        const state: KulMasonrySelectedShape = {};
+
+        switch (eventType) {
+            case 'kul-event':
+                if (this.kulSelectable) {
+                    const { comp } = (e as CustomEvent<KulGenericEventPayload>)
+                        .detail;
+                    const index = parseInt(comp.rootElement.dataset.index);
+                    if (this.selectedShape.index !== index) {
+                        state.index = index;
+                        state.shape = this.shapes[this.kulShape][index];
+                    }
+                    shouldUpdateState = true;
+                }
+                break;
+        }
+
+        if (shouldUpdateState) {
+            this.selectedShape = state;
+        }
+
         this.kulEvent.emit({
             comp: this,
             eventType,
             id: this.rootElement.id,
             originalEvent: e,
+            selectedShape: this.selectedShape,
         });
     }
 
@@ -194,17 +233,34 @@ export class KulMasonry {
     /*-------------------------------------------------*/
 
     #divideShapesIntoColumns(columnCount: number): VNode[][] {
+        const props: Partial<KulDataCell<KulDataShapes>>[] = this.shapes[
+            this.kulShape
+        ].map(() => ({
+            htmlProps: {
+                dataset: { selected: '' },
+            },
+        }));
+        if (this.selectedShape.index) {
+            props[this.selectedShape.index] = {
+                htmlProps: {
+                    dataset: { selected: 'true' },
+                },
+            };
+        }
         const columns: VNode[][] = Array.from(
             { length: columnCount },
-            () => []
+            () => [],
+            []
         );
         const decoratedShapes = this.#kulManager.data.cell.shapes.decorate(
             this.kulShape,
             this.shapes[this.kulShape],
-            async (e) => this.onKulEvent(e, 'kul-event')
-        ).element;
+            async (e) => this.onKulEvent(e, 'kul-event'),
+            props
+        );
 
-        decoratedShapes.forEach((element: VNode, index: number) => {
+        decoratedShapes.element.forEach((element: VNode, index: number) => {
+            element.$attrs$['data-index'] = index.toString();
             columns[index % columnCount].push(element);
         });
 

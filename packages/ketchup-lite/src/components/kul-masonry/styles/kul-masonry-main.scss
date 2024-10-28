@@ -21,6 +21,15 @@
   --kul_masonry_grid_gap: var(--kul-masonry-grid-gap, 8px);
 
   display: block;
+  height: 100%;
+  width: 100%;
+}
+
+:host([kul-selectable]) {
+  kul-image {
+    cursor: pointer;
+    overflow: hidden;
+  }
 }
 
 #kul-component {
@@ -66,5 +75,34 @@
     bottom: var(--kul_masonry_button_bottom);
     position: absolute;
     right: var(--kul_masonry_button_right);
+    z-index: 2;
+  }
+}
+
+[data-selected='true'] {
+  & {
+    border-radius: 5px;
+    box-shadow: 0 4px 10px var(--kul-primary-color);
+    outline: 2px solid var(--kul-primary-color);
+    outline-offset: 4px;
+    position: relative;
+    transform: scale(1.05);
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease,
+      outline-offset 0.3s ease;
+    z-index: 1;
+  }
+
+  &:after {
+    border: 4px solid var(--kul-primary-color);
+    border-radius: 8px;
+    bottom: -4px;
+    content: '';
+    left: -4px;
+    pointer-events: none;
+    position: absolute;
+    right: -4px;
+    top: -4px;
   }
 }

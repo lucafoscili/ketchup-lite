@@ -7,13 +7,14 @@
 
 ## Properties
 
-| Property     | Attribute     | Description                                                           | Type                                                                                                                              | Default     |
-| ------------ | ------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `kulColumns` | `kul-columns` | Number of columns of the masonry.                                     | `number`                                                                                                                          | `4`         |
-| `kulData`    | --            | Actual data of the masonry.                                           | `KulDataDataset`                                                                                                                  | `null`      |
-| `kulShape`   | `kul-shape`   | Sets the type of shapes to compare.                                   | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'`   |
-| `kulStyle`   | `kul-style`   | Custom style of the component.                                        | `string`                                                                                                                          | `''`        |
-| `kulView`    | `kul-view`    | Sets the type of view, either the actual masonry or a waterfall view. | `"masonry" \| "waterfall"`                                                                                                        | `'masonry'` |
+| Property        | Attribute        | Description                                                           | Type                                                                                                                              | Default     |
+| --------------- | ---------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `kulColumns`    | `kul-columns`    | Number of columns of the masonry.                                     | `number`                                                                                                                          | `4`         |
+| `kulData`       | --               | Actual data of the masonry.                                           | `KulDataDataset`                                                                                                                  | `null`      |
+| `kulSelectable` | `kul-selectable` | Allows for the selection of elements.                                 | `boolean`                                                                                                                         | `true`      |
+| `kulShape`      | `kul-shape`      | Sets the type of shapes to compare.                                   | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'`   |
+| `kulStyle`      | `kul-style`      | Custom style of the component.                                        | `string`                                                                                                                          | `''`        |
+| `kulView`       | `kul-view`       | Sets the type of view, either the actual masonry or a waterfall view. | `"masonry" \| "waterfall"`                                                                                                        | `'masonry'` |
 
 
 ## Events

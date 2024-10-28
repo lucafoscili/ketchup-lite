@@ -1786,6 +1786,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         type: "KulDataDataset",
       },
       {
+        name: "kulSelectable",
+        docs: "Allows for the selection of elements.",
+        type: "boolean",
+      },
+      {
         name: "kulShape",
         docs: "Sets the type of shapes to compare.",
         type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "switch" | "text" | "upload"',

@@ -925,6 +925,11 @@ export namespace Components {
          */
         "kulData": KulDataDataset;
         /**
+          * Allows for the selection of elements.
+          * @default ""
+         */
+        "kulSelectable": boolean;
+        /**
           * Sets the type of shapes to compare.
           * @default ""
          */
@@ -2999,6 +3004,11 @@ declare namespace LocalJSX {
           * @default null
          */
         "kulData"?: KulDataDataset;
+        /**
+          * Allows for the selection of elements.
+          * @default ""
+         */
+        "kulSelectable"?: boolean;
         /**
           * Sets the type of shapes to compare.
           * @default ""
