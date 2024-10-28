@@ -14,6 +14,7 @@ import {
     Watch,
 } from '@stencil/core';
 import {
+    KulGenericEvent,
     KulGenericEventPayload,
     type GenericObject,
 } from '../../types/GenericTypes';
@@ -142,15 +143,23 @@ export class KulMasonry {
 
         switch (eventType) {
             case 'kul-event':
-                if (this.kulSelectable) {
-                    const { comp } = (e as CustomEvent<KulGenericEventPayload>)
-                        .detail;
-                    const index = parseInt(comp.rootElement.dataset.index);
-                    if (this.selectedShape.index !== index) {
-                        state.index = index;
-                        state.shape = this.shapes[this.kulShape][index];
-                    }
-                    shouldUpdateState = true;
+                const { eventType } = (e as KulGenericEvent).detail;
+                switch (eventType) {
+                    case 'click':
+                        if (this.kulSelectable) {
+                            const { comp } = (
+                                e as CustomEvent<KulGenericEventPayload>
+                            ).detail;
+                            const index = parseInt(
+                                comp.rootElement.dataset.index
+                            );
+                            if (this.selectedShape.index !== index) {
+                                state.index = index;
+                                state.shape = this.shapes[this.kulShape][index];
+                            }
+                            shouldUpdateState = true;
+                        }
+                        break;
                 }
                 break;
         }
