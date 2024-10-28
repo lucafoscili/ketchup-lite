@@ -29,16 +29,22 @@ const decorateSpreader = (
         if (toSpread['value'] && !toSpread['kulValue']) {
             toSpread['kulValue'] = toSpread['value'];
         }
+        delete toSpread['htmlProps'];
         delete toSpread['shape'];
         delete toSpread['value'];
     };
     if (props.htmlProps) {
         for (const key in props.htmlProps) {
             const prop = props.htmlProps[key];
-            if (prop === 'className') {
+            if (key === 'className') {
                 toSpread['class'] = prop;
             } else {
                 toSpread[key] = prop;
+            }
+            if (key === 'dataset') {
+                for (const k in prop) {
+                    toSpread[`data-${k}`] = prop[k];
+                }
             }
         }
     }
@@ -46,6 +52,7 @@ const decorateSpreader = (
         const prop = props[key];
         toSpread[key] = prop;
     }
+
     clean();
 };
 
