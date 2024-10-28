@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-28T17:05:05",
+  "timestamp": "2024-10-28T18:35:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -6896,7 +6896,7 @@
       "filePath": "src/components/kul-masonry/kul-masonry.tsx",
       "encapsulation": "shadow",
       "tag": "kul-masonry",
-      "readme": "# kul-masonry\n\n\n",
+      "readme": "# kul-masonry\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9614,7 +9614,7 @@
       "filePath": "src/components/kul-showcase/components/masonry/kul-showcase-masonry.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-masonry",
-      "readme": "# kul-showcase-masonry\n\n\n",
+      "readme": "# kul-showcase-masonry\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
