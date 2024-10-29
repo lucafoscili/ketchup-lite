@@ -1,5 +1,5 @@
 import { FunctionalComponent, getAssetPath, h } from '@stencil/core';
-import { KulDataNode } from '../../../components';
+import { KulDataNode } from '../../../managers/kul-data/kul-data-declarations';
 
 /*-------------------------------------------------*/
 /*                C o m p o n e n t                */

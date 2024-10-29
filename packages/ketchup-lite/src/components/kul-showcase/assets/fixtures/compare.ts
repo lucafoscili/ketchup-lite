@@ -1,5 +1,5 @@
 import { getAssetPath } from '@stencil/core';
-import { KulDataDataset } from '../../../../components';
+import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 import { KulComponentName } from '../../../../types/GenericTypes';
 
 export const COMPARE_KULDATA_FACTORY: Partial<{

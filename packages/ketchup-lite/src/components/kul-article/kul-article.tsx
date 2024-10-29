@@ -23,10 +23,11 @@ import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
+import { GenericObject } from '../../types/GenericTypes';
 import { KulLanguageGeneric } from '../../managers/kul-language/kul-language-declarations';
 
 @Component({
+    assetsDirs: ['assets/fonts'],
     tag: 'kul-article',
     styleUrl: 'kul-article.scss',
     shadow: true,

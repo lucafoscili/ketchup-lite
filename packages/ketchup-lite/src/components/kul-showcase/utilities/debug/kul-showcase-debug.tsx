@@ -3,8 +3,10 @@ import { KUL_WRAPPER_ID } from '../../../../variables/GenericVariables';
 import { DEBUG_DOC } from './kul-showcase-debug-data';
 import { KulButtonEventPayload } from '../../../kul-button/kul-button-declarations';
 import { KulListEventPayload } from '../../../kul-list/kul-list-declarations';
-import { GenericObject } from '../../../../components';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import {
+    GenericObject,
+    KulDataCyAttributes,
+} from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-debug',

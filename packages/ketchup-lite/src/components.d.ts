@@ -22,11 +22,10 @@ import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-c
 import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
 import { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 import { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
-import { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLifecycleInfo1 } from "./components";
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMasonryEventPayload, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
+import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -55,11 +54,10 @@ export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-c
 export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
 export { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 export { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
-export { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLifecycleInfo1 } from "./components";
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMasonryEventPayload, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
+export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -655,7 +653,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugLifecycleInfo1>;
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -695,7 +693,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugLifecycleInfo1>;
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -785,7 +783,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugLifecycleInfo1>;
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -915,8 +913,13 @@ export namespace Components {
          */
         "getProps": (descriptions?: boolean) => Promise<GenericObject>;
         /**
+          * Returns the selected shape.
+          * @returns Selected shape.
+         */
+        "getSelectedShape": () => Promise<KulMasonrySelectedShape>;
+        /**
           * Number of columns of the masonry.
-          * @default 4
+          * @default 3
          */
         "kulColumns": number;
         /**
@@ -948,6 +951,10 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Sets the selected shape by index.
+         */
+        "setSelectedShape": (index: number) => Promise<void>;
         /**
           * Initiates the unmount sequence, which removes the component from the DOM after a delay.
           * @param ms - Number of milliseconds
@@ -1180,7 +1187,7 @@ export namespace Components {
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
-        "getDebugInfo": () => Promise<KulDebugLifecycleInfo1>;
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
         /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
@@ -1337,7 +1344,7 @@ export namespace Components {
           * Retrieves the debug information reflecting the current state of the component.
           * @returns A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
          */
-        "getDebugInfo": () => Promise<KulDebugLifecycleInfo1>;
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
         /**
           * Retrieves the properties of the component, with optional descriptions.
           * @param descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
@@ -1549,7 +1556,7 @@ export namespace Components {
           * The actual data of the tree.
           * @default null
          */
-        "kulData": KulDataDataset1;
+        "kulData": KulDataDataset;
         /**
           * When true, displays a text field which enables filtering the dataset of the tree.
           * @default null
@@ -2996,7 +3003,7 @@ declare namespace LocalJSX {
     interface KulMasonry {
         /**
           * Number of columns of the masonry.
-          * @default 4
+          * @default 3
          */
         "kulColumns"?: number;
         /**
@@ -3421,7 +3428,7 @@ declare namespace LocalJSX {
           * The actual data of the tree.
           * @default null
          */
-        "kulData"?: KulDataDataset1;
+        "kulData"?: KulDataDataset;
         /**
           * When true, displays a text field which enables filtering the dataset of the tree.
           * @default null

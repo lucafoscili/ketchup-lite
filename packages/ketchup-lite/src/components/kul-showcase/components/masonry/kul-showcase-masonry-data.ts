@@ -17,6 +17,11 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulMasonry'> =
 const TAG_NAME: KulComponentTag<'KulMasonry'> = 'kul-masonry';
 
 export const MASONRY_EXAMPLES: MasonryData = {
+    selectable: {
+        ['data-description']: 'Selectable masonry',
+        kulData: MASONRY_KULDATA_FACTORY.KulImage(),
+        kulSelectable: true,
+    },
     simple: {
         ['data-description']: 'Simple masonry',
         kulData: MASONRY_KULDATA_FACTORY.KulImage(),

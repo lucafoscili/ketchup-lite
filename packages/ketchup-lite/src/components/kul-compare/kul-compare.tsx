@@ -67,11 +67,6 @@ export class KulCompare {
      */
     @State() shapes: KulDataShapesMap = {};
     /**
-     * The current view of the compare.
-     * @default "before-after"
-     */
-    @State() view: KulCompareView = 'overlay';
-    /**
      * State reflecting whether the left panel is open or not.
      * @default false
      */
@@ -223,7 +218,7 @@ export class KulCompare {
     }
 
     #isOverlay() {
-        return !!(this.view === 'overlay');
+        return !!(this.kulView === 'overlay');
     }
 
     #prepChangeView(): VNode {
@@ -252,7 +247,7 @@ export class KulCompare {
                                 value === 'on' ? true : false;
                             break;
                         case ids.view:
-                            this.view = value === 'on' ? 'split' : 'overlay';
+                            this.kulView = value === 'on' ? 'split' : 'overlay';
                             break;
                     }
                     break;
@@ -358,7 +353,7 @@ export class KulCompare {
 
         return (
             <Fragment>
-                <div class={`view view--${this.view}`}>
+                <div class={`view view--${this.kulView}`}>
                     <div class="view__left">{shapes[0]}</div>
                     {this.isLeftPanelOpened ? this.#prepPanel('left') : null}
                     {this.isRightPanelOpened ? this.#prepPanel('right') : null}
@@ -412,7 +407,6 @@ export class KulCompare {
 
     componentWillLoad() {
         this.#kulManager.theme.register(this);
-        this.view = this.kulView;
         this.updateShapes();
     }
 

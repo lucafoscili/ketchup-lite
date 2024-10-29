@@ -19,7 +19,7 @@ import {
     KulSpinnerProps,
 } from './kul-spinner-declarations';
 import { getProps } from '../../utils/componentUtils';
-import { KulDebugLifecycleInfo } from '../../components';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 
 @Component({

@@ -1756,6 +1756,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "(descriptions?: boolean) => Promise<GenericObject>",
       },
       {
+        name: "getSelectedShape",
+        docs: "Returns the selected shape.",
+        returns: {
+          type: "Promise<KulMasonrySelectedShape>",
+          docs: "Selected shape.",
+        },
+        signature: "() => Promise<KulMasonrySelectedShape>",
+      },
+      {
         name: "refresh",
         docs: "This method is used to trigger a new render of the component.",
         returns: {
@@ -1763,6 +1772,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "",
         },
         signature: "() => Promise<void>",
+      },
+      {
+        name: "setSelectedShape",
+        docs: "Sets the selected shape by index.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(index: number) => Promise<void>",
       },
       {
         name: "unmount",
@@ -1809,11 +1827,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [
       {
         name: "--kul-masonry-button-bottom",
-        docs: "Sets the bottom placement of the change view button. Defaults to 30px.",
+        docs: "Sets the bottom placement of the change view button. Defaults to 16px.",
       },
       {
         name: "--kul-masonry-button-right",
-        docs: "Sets the right placement of the change view button. Defaults to 30px.",
+        docs: "Sets the right placement of the change view button. Defaults to 16px.",
       },
       {
         name: "--kul-masonry-column-size",
@@ -1822,6 +1840,18 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-masonry-grid-gap",
         docs: "Sets the gaps of the grid. Defaults to 8px.",
+      },
+      {
+        name: "--kul-masonry-grid-items-alignment",
+        docs: "Sets the alignments of grids' items. Defaults to 8px.",
+      },
+      {
+        name: "--kul-masonry-padding",
+        docs: "Sets the padding of the grid. Defaults to 12px.",
+      },
+      {
+        name: "--kul-masonry-selected-border",
+        docs: "Sets the border color of selected items. Defaults to var(--kul-primary-color).",
       },
     ],
   },

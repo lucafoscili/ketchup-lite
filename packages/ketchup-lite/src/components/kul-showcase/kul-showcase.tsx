@@ -1,22 +1,7 @@
-import {
-    Component,
-    Element,
-    forceUpdate,
-    h,
-    Host,
-    Method,
-    Prop,
-    State,
-    VNode,
-} from '@stencil/core';
-import { GenericObject } from '../../types/GenericTypes';
+import { Component, Element, h, Host, Prop, State, VNode } from '@stencil/core';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { getProps } from '../../utils/componentUtils';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import {
-    KulShowcaseProps,
-    KulShowcaseTitle,
-} from './kul-showcase-declarations';
+import { KulShowcaseTitle } from './kul-showcase-declarations';
 import { KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KUL_DOC,
@@ -24,7 +9,7 @@ import {
     KUL_SHOWCASE_FRAMEWORK,
     KUL_SHOWCASE_UTILITIES,
 } from './kul-showcase-data';
-import { KulCardCustomEvent, KulDataDataset } from '../../components';
+import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import { KulCardEventPayload } from '../kul-card/kul-card-declarations';
 
 @Component({
@@ -134,9 +119,9 @@ export class KulShowcase {
                     },
                 ],
             };
-            const onEvent: (
-                event: KulCardCustomEvent<KulCardEventPayload>
-            ) => void = (e) => {
+            const onEvent: (event: CustomEvent<KulCardEventPayload>) => void = (
+                e
+            ) => {
                 if (e.detail.eventType === 'click') {
                     switch (type) {
                         case 'Components':

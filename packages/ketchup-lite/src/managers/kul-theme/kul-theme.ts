@@ -7,96 +7,97 @@ import type {
 } from '../../types/GenericTypes';
 import { getAssetPath } from '@stencil/core';
 import {
-    KulThemeColor,
+    KulThemeAttribute,
     KulThemeCSSVariables,
     KulThemeHSLValues,
-    KulThemeIcons,
     KulThemeJSON,
     KulThemeRGBValues,
-    masterCustomStyle,
 } from './kul-theme-declarations';
 import { themesJson } from './kul-theme-values';
 import { RIPPLE_SURFACE_CLASS } from '../../variables/GenericVariables';
 
-const dom: KulDom = document.documentElement as KulDom;
+const DOM = document.documentElement as KulDom;
 
-/**
- * Theme manager, handles everything about theming, kulStyles and color utilities.
- * @module KulTheme
- */
 export class KulTheme {
+    #MASTER_CUSTOM_STYLE = 'MASTER';
     cssVars: Partial<KulThemeCSSVariables>;
     isDarkTheme: boolean;
     list: KulThemeJSON;
     managedComponents: Set<KulComponent<KulComponentName>>;
     name: string;
     styleTag: HTMLStyleElement;
-    /**
-     * Initializes KulTheme.
-     */
+
     constructor(list?: KulThemeJSON, name?: string) {
         this.cssVars = {};
         this.list = list ? list : themesJson;
         this.managedComponents = new Set();
         this.name = name ? name : 'silver';
-        this.styleTag = dom
-            .querySelector('head')
-            .appendChild(document.createElement('style'));
+        this.styleTag = DOM.querySelector('head').appendChild(
+            document.createElement('style')
+        );
     }
-    /**
-     * Sets the CSS variables of the theme.
-     */
-    private imports(): string {
-        const imports: string[] = this.list[this.name].imports
-            ? this.list[this.name].imports
-            : [];
-        let css: string = '';
-        for (let index = 0; index < imports.length; index++) {
-            css += '@import ' + imports[index] + ';';
-        }
-        return css;
-    }
-    /**
-     * Sets the CSS variables of the theme.
-     */
-    private cssVariables(): string {
-        const variables: KulThemeCSSVariables =
-            this.list[this.name].cssVariables;
-        let css: string = '';
-        for (let key in variables) {
-            if (variables.hasOwnProperty(key)) {
-                const val: string = variables[key];
-                this.cssVars[key] = val;
-                css += key + ': ' + val + ';';
-                if (key.indexOf('color') > -1) {
-                    const computedColor: KulThemeColor = this.colorCheck(val);
-                    const rgbKey: string = key + '-rgb';
-                    const hKey: string = key + '-h';
-                    const sKey: string = key + '-s';
-                    const lKey: string = key + '-l';
-                    const rgbVal: string = computedColor.rgbValues;
-                    const hue: string = computedColor.hue;
-                    const saturation: string = computedColor.saturation;
-                    const lightness: string = computedColor.lightness;
-                    this.cssVars[rgbKey] = rgbVal;
-                    this.cssVars[hKey] = hue;
-                    this.cssVars[lKey] = lightness;
-                    this.cssVars[sKey] = saturation;
-                    css += rgbKey + ': ' + rgbVal + ';';
-                    css += hKey + ': ' + hue + ';';
-                    css += lKey + ': ' + lightness + ';';
-                    css += sKey + ': ' + saturation + ';';
-                }
+
+    #cssVariables = () => {
+        const theme = this.list[this.name];
+
+        const variables = theme.cssVariables;
+        let css = '';
+
+        Object.entries(variables).forEach(([key, val]) => {
+            this.cssVars[key] = val;
+            css += `${key}: ${val};`;
+
+            if (key.includes('color')) {
+                const { rgbValues, hue, saturation, lightness } =
+                    this.colorCheck(val);
+                const rgbKey = `${key}-rgb`;
+                const hKey = `${key}-h`;
+                const sKey = `${key}-s`;
+                const lKey = `${key}-l`;
+
+                this.cssVars[rgbKey] = rgbValues;
+                this.cssVars[hKey] = hue;
+                this.cssVars[lKey] = lightness;
+                this.cssVars[sKey] = saturation;
+
+                css += `${rgbKey}: ${rgbValues};`;
+                css += `${hKey}: ${hue};`;
+                css += `${lKey}: ${lightness};`;
+                css += `${sKey}: ${saturation};`;
             }
-        }
+        });
+
         return css;
-    }
-    /**
-     * Sets the icon variables of the theme.
-     */
-    private icons(): string {
-        const icons: KulThemeIcons = this.list[this.name].icons;
-        let css: string = '';
+    };
+
+    #customStyle = () => {
+        this.managedComponents.forEach(function (comp) {
+            if (comp?.rootElement?.isConnected) {
+                comp.refresh();
+            }
+        });
+    };
+
+    #font = () => {
+        let fonts = '';
+        const theme = this.list[this.name];
+
+        if (theme.font?.length) {
+            theme.font.forEach((f) => {
+                const fontPath = getAssetPath(`./assets/fonts/${f}-Regular`);
+                const fontFace = `@font-face{font-family:${f.split('-')[0].replace(/(?<!^)(?=[A-Z])/g, ' ')};src:url('${fontPath}.woff2')format('woff2'),url('${fontPath}.woff') format('woff');}`;
+                fonts += fontFace;
+            });
+        }
+
+        return fonts;
+    };
+
+    #icons = () => {
+        const theme = this.list[this.name];
+
+        const icons = theme.icons;
+        let css = '';
         for (var key in icons) {
             if (icons.hasOwnProperty(key)) {
                 const val = `url('${getAssetPath(
@@ -107,67 +108,53 @@ export class KulTheme {
             }
         }
         return css;
-    }
-    /**
-     * Refreshed managed components to apply theme kulStyles.
-     */
-    private customStyle(): void {
-        this.managedComponents.forEach(function (comp) {
-            if (comp?.rootElement?.isConnected) {
-                comp.refresh();
-            }
-        });
-    }
-    /**
-     * Sets the theme using this.name or the function's argument.
-     * @param {string} name - When present, this theme will be set.
-     */
-    set(name?: string, list?: KulThemeJSON): void {
+    };
+
+    set = (name?: string, list?: KulThemeJSON) => {
         if (name) {
             this.name = name;
         }
         if (list) {
             this.list = list;
         }
-        dom.ketchupLite.debug.logs.new(
+        DOM.ketchupLite.debug.logs.new(
             this,
             'Setting theme to: ' + this.name + '.'
         );
-        if (!this.list[this.name]) {
-            dom.ketchupLite.debug.logs.new(
+
+        const theme = this.list?.[this.name];
+        if (!theme) {
+            DOM.ketchupLite.debug.logs.new(
                 this,
                 'Invalid theme name, falling back to default ("silver").'
             );
             this.name = 'silver';
         }
 
-        this.isDarkTheme = this.list[this.name].isDark;
+        this.isDarkTheme = theme.isDark;
         this.cssVars = {};
-        this.styleTag.innerText =
-            this.imports() +
-            ' :root[kul-theme="' +
-            this.name +
-            '"]{' +
-            this.cssVariables() +
-            this.icons() +
-            '}';
-        this.customStyle();
 
-        document.documentElement.setAttribute('kul-theme', this.name);
+        this.styleTag.innerText = `
+        ${this.#font()}
+        :root[kul-theme="${this.name}"] {
+        ${this.#cssVariables()}
+        ${this.#icons()}
+        }`;
+
+        this.#customStyle();
+
+        DOM.setAttribute('kul-theme', this.name);
         if (this.isDarkTheme) {
-            document.documentElement.removeAttribute('kul-light-theme');
-            document.documentElement.setAttribute('kul-dark-theme', '');
+            DOM.removeAttribute(KulThemeAttribute.LIGHT);
+            DOM.setAttribute(KulThemeAttribute.DARK, '');
         } else {
-            document.documentElement.removeAttribute('kul-dark-theme');
-            document.documentElement.setAttribute('kul-light-theme', '');
+            DOM.removeAttribute(KulThemeAttribute.DARK);
+            DOM.setAttribute(KulThemeAttribute.LIGHT, '');
         }
         document.dispatchEvent(new CustomEvent('kul-theme-change'));
-    }
-    /**
-     * Gets the name of available themes.
-     * @returns {Array<string>} Array of themes' names.
-     */
-    getThemes(): Array<string> {
+    };
+
+    getThemes = () => {
         const themes: Array<string> = [];
         for (var key in this.list) {
             if (this.list.hasOwnProperty(key)) {
@@ -175,50 +162,37 @@ export class KulTheme {
             }
         }
         return themes;
-    }
-    /**
-     * This method will just refresh the current theme.
-     */
-    refresh(): void {
+    };
+
+    refresh = () => {
         try {
             this.styleTag.innerText =
                 ':root[kul-theme="' +
                 this.name +
                 '"]{' +
-                this.cssVariables() +
-                this.icons() +
+                this.#cssVariables() +
+                this.#icons() +
                 '}';
-            this.customStyle();
-            dom.ketchupLite.debug.logs.new(
+            this.#customStyle();
+            DOM.ketchupLite.debug.logs.new(
                 this,
-                'Theme ' + dom.getAttribute('kul-theme') + ' refreshed.'
+                'Theme ' + DOM.getAttribute('kul-theme') + ' refreshed.'
             );
             document.dispatchEvent(new CustomEvent('kul-theme-refresh'));
         } catch (error) {
-            dom.ketchupLite.debug.logs.new(
+            DOM.ketchupLite.debug.logs.new(
                 this,
                 'Theme not refreshed.',
                 'warning'
             );
         }
-    }
-    /**
-     * Ripple effect utility for DOM elements. It allows the addition of the ripple effect on elements triggered by pointer events.
-     */
+    };
+
     ripple = {
-        /**
-         * Adds a ripple effect to the specified HTML element by adding a specific class.
-         * @param {HTMLElement} el - The element to which the ripple effect will be applied.
-         */
         setup: (el: HTMLElement) => {
             el.classList.add(RIPPLE_SURFACE_CLASS);
             el.dataset.cy = 'ripple';
         },
-        /**
-         * Triggers the ripple effect on the specified element based on the location of a pointer event.
-         * @param {PointerEvent} e - The pointer event that triggers the ripple effect.
-         * @param {HTMLElement} el - The element on which the ripple effect is to be applied.
-         */
         trigger: (e: PointerEvent, el: HTMLElement) => {
             const rect = el.getBoundingClientRect();
             const parent = el.parentElement;
@@ -245,30 +219,20 @@ export class KulTheme {
             }, 500);
         },
     };
-    /**
-     * Registers a KulComponent in KulTheme, in order to be properly refreshed whenever the theme changes.
-     * @param {KulComponent<KulComponentName>} comp - The component calling this function.
-     */
-    register(comp: KulComponent<KulComponentName>): void {
+
+    register = (comp: KulComponent<KulComponentName>) => {
         this.managedComponents.add(comp);
-    }
-    /**
-     * Unregisters a KulComponent, so it won't be refreshed when the theme changes.
-     * @param {KulComponent<KulComponentName>} comp - The component calling this function.
-     */
-    unregister(comp: KulComponent<KulComponentName>): void {
+    };
+
+    unregister = (comp: KulComponent<KulComponentName>) => {
         this.managedComponents?.delete(comp);
-    }
-    /**
-     * Combines global (style every component should have), theme's and component's customStyles, returning the result.
-     * @param comp - The component calling this function.
-     * @returns {string} Combined customStyle.
-     */
-    setKulStyle(comp: KulComponent<KulComponentName>): string {
+    };
+
+    setKulStyle = (comp: KulComponent<KulComponentName>) => {
         const styles: GenericObject = this.list[this.name].customStyles;
         let completeStyle = '';
-        if (styles && styles[masterCustomStyle]) {
-            completeStyle += styles[masterCustomStyle];
+        if (styles && styles[this.#MASTER_CUSTOM_STYLE]) {
+            completeStyle += styles[this.#MASTER_CUSTOM_STYLE];
         }
         if (styles && styles[comp.rootElement.tagName]) {
             completeStyle += ' ' + styles[comp.rootElement.tagName];
@@ -277,13 +241,9 @@ export class KulTheme {
             completeStyle += ' ' + comp.kulStyle;
         }
         return completeStyle ? completeStyle : null;
-    }
-    /**
-     * Checks whether on a given color the text should be white or black.
-     * @param {string} color - Color used to check the contrast.
-     * @returns {string} "white" or "black".
-     */
-    colorContrast(color: string): string {
+    };
+
+    colorContrast = (color: string) => {
         color = this.colorCheck(color).rgbColor;
         const colorValues: string[] = color.replace(/[^\d,.]/g, '').split(',');
         const brightness: number = Math.round(
@@ -293,13 +253,9 @@ export class KulTheme {
                 1000
         );
         return brightness > 125 ? 'black' : 'white';
-    }
-    /**
-     * Generates a random HEX color.
-     * @param {number} brightness - Brightness of the color generated (0-255).
-     * @returns {string} Random HEX color.
-     */
-    randomColor(brightness: number): string {
+    };
+
+    randomColor = (brightness: number) => {
         function randomChannel(brightness: number) {
             var r = 255 - brightness;
             var n = 0 | (Math.random() * r + brightness);
@@ -312,11 +268,9 @@ export class KulTheme {
             randomChannel(brightness) +
             randomChannel(brightness)
         );
-    }
-    /**
-     * Sets a random theme between those specified in this.list (excludes "print" and "test") and different from the currently used one.
-     */
-    randomTheme(): void {
+    };
+
+    randomTheme = () => {
         let themes: string[] = [];
         for (var key in this.list) {
             if (this.list.hasOwnProperty(key)) {
@@ -332,23 +286,18 @@ export class KulTheme {
             }
             this.set(themes[index]);
         } else {
-            dom.ketchupLite.debug.logs.new(
+            DOM.ketchupLite.debug.logs.new(
                 this,
                 "Couldn't set a random theme: no themes available!",
                 'warning'
             );
         }
-    }
-    /**
-     * Returns HEX, RGB, HSL, HSL values and RGB values from a given color.
-     * @param {string} color - Input color.
-     * @returns {KulThemeColor} Object of color values: hexColor ("#ffffff"), hslColor ("hsl(255,100%,100%)"), hslValues ("255,100%,100%"), rgbColor ("rgb(255,255,255)") and rgbValues ("255,255,255").
-     */
-    colorCheck(color: string): KulThemeColor {
-        //Testing whether the color is transparent, if it is a fall back value will be returned matching the background-color
+    };
+
+    colorCheck = (color: string) => {
         if (color === 'transparent') {
             color = this.cssVars['--kul-background-color'];
-            dom.ketchupLite.debug.logs.new(
+            DOM.ketchupLite.debug.logs.new(
                 this,
                 'Received TRANSPARENT color, converted to ' +
                     color +
@@ -356,23 +305,22 @@ export class KulTheme {
             );
         }
 
-        const altRgbRe: RegExp = /R(\d{1,3})G(\d{1,3})B(\d{1,3})/;
-        const altRgb: boolean = altRgbRe.test(color);
+        const altRgbRe = /R(\d{1,3})G(\d{1,3})B(\d{1,3})/;
+        const altRgb = altRgbRe.test(color);
         if (altRgb) {
-            const parts: RegExpMatchArray = color.match(altRgbRe);
+            const parts = color.match(altRgbRe);
             color = 'rgb(' + parts[1] + ',' + parts[2] + ',' + parts[3] + ')';
         }
 
-        let isHex: boolean = color.substring(0, 1) === '#';
-        const isHsl: boolean = color.substring(0, 3).toLowerCase() === 'hsl';
-        const isRgb: boolean = color.substring(0, 3).toLowerCase() === 'rgb';
+        let isHex = color.substring(0, 1) === '#';
+        const isHsl = color.substring(0, 3).toLowerCase() === 'hsl';
+        const isRgb = color.substring(0, 3).toLowerCase() === 'rgb';
 
-        //If true, supposedly it's a code word
         if (!isHex && !isHsl && !isRgb) {
-            const oldColor: string = color;
+            const oldColor = color;
             color = this.codeToHex(color);
             isHex = color.substring(0, 1) === '#' ? true : false;
-            dom.ketchupLite.debug.logs.new(
+            DOM.ketchupLite.debug.logs.new(
                 this,
                 'Received CODE NAME color ' +
                     oldColor +
@@ -382,7 +330,6 @@ export class KulTheme {
             );
         }
 
-        //Testing whether the color is "hex" value or "hsl"
         let hexColor: string = null;
         let rgbColor: string = null;
         let hslColor: string = null;
@@ -438,7 +385,7 @@ export class KulTheme {
                         rgbColorObj.b
                     );
                 }
-                dom.ketchupLite.debug.logs.new(
+                DOM.ketchupLite.debug.logs.new(
                     this,
                     'Received HEX color ' +
                         oldColor +
@@ -447,15 +394,15 @@ export class KulTheme {
                         '.'
                 );
             } catch (error) {
-                dom.ketchupLite.debug.logs.new(
+                DOM.ketchupLite.debug.logs.new(
                     this,
                     'Invalid color: ' + color + '.'
                 );
             }
         }
 
-        let rgbValues: string = null;
-        const values: RegExpMatchArray = color.match(
+        let rgbValues = '';
+        const values = color.match(
             /rgba?\((\d{1,3}), ?(\d{1,3}), ?(\d{1,3})\)?(?:, ?(\d(?:\.\d?))\))?/
         );
 
@@ -463,7 +410,7 @@ export class KulTheme {
             rgbValues = values[1] + ',' + values[2] + ',' + values[3];
             rgbColor = color;
         } catch (error) {
-            dom.ketchupLite.debug.logs.new(
+            DOM.ketchupLite.debug.logs.new(
                 this,
                 'Color not converted to rgb values: ' + color + '.'
             );
@@ -477,7 +424,7 @@ export class KulTheme {
                     parseInt(values[3])
                 );
             } catch (error) {
-                dom.ketchupLite.debug.logs.new(
+                DOM.ketchupLite.debug.logs.new(
                     this,
                     'Color not converted to hex value: ' + color + '.'
                 );
@@ -497,7 +444,7 @@ export class KulTheme {
                 hslValues = hsl.h + ',' + hsl.s + '%,' + hsl.l + '%';
                 hslColor = 'hsl(' + hsl.h + ',' + hsl.s + '%,' + hsl.l + '%)';
             } catch (error) {
-                dom.ketchupLite.debug.logs.new(
+                DOM.ketchupLite.debug.logs.new(
                     this,
                     'Color not converted to hex value: ' + color + '.'
                 );
@@ -514,15 +461,10 @@ export class KulTheme {
             rgbColor: rgbColor,
             rgbValues: rgbValues,
         };
-    }
-    /**
-     * Converts an HEX color to its RGB values.
-     * @param {string} hex - Hex code.
-     * @returns {KulThemeRGBValues} Object containing RGB values.
-     */
-    hexToRgb(hex: string): KulThemeRGBValues {
-        var result: RegExpExecArray =
-            /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    };
+
+    hexToRgb = (hex: string) => {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return result
             ? {
                   r: parseInt(result[1], 16),
@@ -530,23 +472,16 @@ export class KulTheme {
                   b: parseInt(result[3], 16),
               }
             : null;
-    }
-    /**
-     * Converts an HSL color to its RGB values.
-     * @param {number} h - Hue (range [0, 360)).
-     * @param {number} s - Saturation (range [0, 1)).
-     * @param {number} l - Lightness (range [0, 1)).
-     * @returns {Array} RGB values.
-     */
-    hslToRgb(h: number, s: number, l: number): KulThemeRGBValues {
+    };
+
+    hslToRgb = (h: number, s: number, l: number) => {
         if (h == undefined) {
             return { r: 0, g: 0, b: 0 };
         }
 
-        let huePrime: number = h / 60;
-        const chroma: number = (1 - Math.abs(2 * l - 1)) * s;
-        const secondComponent: number =
-            chroma * (1 - Math.abs((huePrime % 2) - 1));
+        let huePrime = h / 60;
+        const chroma = (1 - Math.abs(2 * l - 1)) * s;
+        const secondComponent = chroma * (1 - Math.abs((huePrime % 2) - 1));
 
         huePrime = Math.floor(huePrime);
         let red: number, green: number, blue: number;
@@ -577,7 +512,7 @@ export class KulTheme {
             blue = secondComponent;
         }
 
-        const lightnessAdjustment: number = l - chroma / 2;
+        const lightnessAdjustment = l - chroma / 2;
         red += lightnessAdjustment;
         green += lightnessAdjustment;
         blue += lightnessAdjustment;
@@ -586,81 +521,50 @@ export class KulTheme {
             g: Math.round(green * 255),
             b: Math.round(blue * 255),
         };
-    }
-    /**
-     * Converts a color in RGB format to the corresponding HEX color.
-     * @param {number} r - Red channel value.
-     * @param {number} g - Green channel value.
-     * @param {number} b - Blue channel value.
-     * @returns {string} HEX color.
-     */
-    rgbToHex(r: number, g: number, b: number): string {
+    };
+
+    rgbToHex = (r: number, g: number, b: number) => {
         return (
             '#' + this.valueToHex(r) + this.valueToHex(g) + this.valueToHex(b)
         );
-    }
-    /**
-     * Converts a color in RGB format to the corresponding HSL color.
-     * @param {number} r - Red channel value.
-     * @param {number} g - Green channel value.
-     * @param {number} b - Blue channel value.
-     * @returns {KulThemeHSLValues} Object containing HSL values.
-     */
-    rgbToHsl(r: number, g: number, b: number): KulThemeHSLValues {
-        // Make r, g, and b fractions of 1
+    };
+
+    rgbToHsl = (r: number, g: number, b: number) => {
         r /= 255;
         g /= 255;
         b /= 255;
 
-        // Find greatest and smallest channel values
-        const cmin: number = Math.min(r, g, b),
-            cmax: number = Math.max(r, g, b),
-            delta: number = cmax - cmin;
-        let h: number = 0,
-            s: number = 0,
-            l: number = 0;
+        const cmin = Math.min(r, g, b),
+            cmax = Math.max(r, g, b),
+            delta = cmax - cmin;
+        let h = 0,
+            s = 0,
+            l = 0;
 
-        // Calculate hue
-        // No difference
         if (delta == 0) h = 0;
-        // Red is max
         else if (cmax == r) h = ((g - b) / delta) % 6;
-        // Green is max
         else if (cmax == g) h = (b - r) / delta + 2;
-        // Blue is max
         else h = (r - g) / delta + 4;
 
         h = Math.round(h * 60);
 
-        // Make negative hues positive behind 360°
         if (h < 0) h += 360;
 
-        // Calculate lightness
         l = (cmax + cmin) / 2;
 
-        // Calculate saturation
         s = delta == 0 ? 0 : delta / (1 - Math.abs(2 * l - 1));
 
-        // Multiply l and s by 100
         s = +(s * 100).toFixed(1);
         l = +(l * 100).toFixed(1);
 
         return { h: h, s: s, l: l };
-    }
-    /**
-     * Converts a single RGB value to the corresponding HEX value.
-     * @param {number} c - Color value.
-     * @returns {string} HEX value.
-     */
-    valueToHex(c: number): string {
-        const hex: string = c.toString(16);
+    };
+
+    valueToHex = (c: number) => {
+        const hex = c.toString(16);
         return hex.length == 1 ? '0' + hex : hex;
-    }
-    /**
-     * Converts a color code word to the corresponding HEX value.
-     * @param {string} color - Color code word.
-     * @returns {string} HEX value.
-     */
+    };
+
     codeToHex(color: string): string {
         const colorCodes: GenericMap = {
             aliceblue: '#f0f8ff',
@@ -815,7 +719,7 @@ export class KulTheme {
         if (colorCodes[color.toLowerCase()]) {
             return colorCodes[color.toLowerCase()];
         } else {
-            dom.ketchupLite.debug.logs.new(
+            DOM.ketchupLite.debug.logs.new(
                 this,
                 'Could not decode color ' + color + '!'
             );

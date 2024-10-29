@@ -22,7 +22,10 @@ import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { GenericObject } from '../../types/GenericTypes';
-import { KulDataDataset, KulDataNode } from '../../components';
+import {
+    KulDataDataset,
+    KulDataNode,
+} from '../../managers/kul-data/kul-data-declarations';
 import { TreeNode } from './node/kul-tree-node';
 import { KulTreeNodeProps } from './node/kul-tree-node-declarations';
 import {
