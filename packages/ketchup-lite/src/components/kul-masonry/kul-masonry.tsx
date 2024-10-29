@@ -22,7 +22,6 @@ import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataCell,
     KulDataDataset,
-    KulDataShapeDefaults,
     KulDataShapes,
     KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
@@ -75,11 +74,6 @@ export class KulMasonry {
      * @see KulDataShapesMap - For a list of possible shapes.
      */
     @State() shapes: KulDataShapesMap = {};
-    /**
-     * The current view of the masonry.
-     * @default "before-after"
-     */
-    @State() view: KulMasonryView = 'masonry';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -87,9 +81,9 @@ export class KulMasonry {
 
     /**
      * Number of columns of the masonry.
-     * @default 4
+     * @default 3
      */
-    @Prop({ mutable: true }) kulColumns = 4;
+    @Prop({ mutable: true }) kulColumns = 3;
     /**
      * Actual data of the masonry.
      * @default null
@@ -219,11 +213,39 @@ export class KulMasonry {
         return getProps(this, KulMasonryProps, descriptions);
     }
     /**
+     * Returns the selected shape.
+     * @returns {Promise<KulMasonrySelectedShape>} Selected shape.
+     */
+    @Method()
+    async getSelectedShape(): Promise<KulMasonrySelectedShape> {
+        return this.selectedShape;
+    }
+    /**
      * This method is used to trigger a new render of the component.
      */
     @Method()
     async refresh(): Promise<void> {
         forceUpdate(this);
+    }
+    /**
+     * Sets the selected shape by index.
+     */
+    @Method()
+    async setSelectedShape(index: number): Promise<void> {
+        const shape = this.shapes?.[this.kulShape]?.[index];
+        if (shape) {
+            const newState: KulMasonrySelectedShape = {
+                index,
+                shape,
+            };
+            this.selectedShape = newState;
+        } else {
+            this.#kulManager.debug.logs.new(
+                this,
+                `Couldn't fix shape with index: ${index}`,
+                'warning'
+            );
+        }
     }
     /**
      * Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -249,7 +271,7 @@ export class KulMasonry {
                 dataset: { selected: '' },
             },
         }));
-        if (this.selectedShape.index) {
+        if (this.selectedShape.index !== undefined) {
             props[this.selectedShape.index] = {
                 htmlProps: {
                     dataset: { selected: 'true' },
@@ -281,7 +303,7 @@ export class KulMasonry {
     }
 
     #isMasonry() {
-        return !!(this.view === 'masonry');
+        return !!(this.kulView === 'masonry');
     }
 
     #prepChangeView() {
@@ -294,7 +316,7 @@ export class KulMasonry {
 
             switch (eventType) {
                 case 'click':
-                    this.view = value === 'on' ? 'masonry' : 'waterfall';
+                    this.kulView = value === 'on' ? 'masonry' : 'waterfall';
                     break;
             }
         };
@@ -335,7 +357,7 @@ export class KulMasonry {
             if (shapes?.length) {
                 return (
                     <Fragment>
-                        <div class={`grid grid--${this.view}`}>
+                        <div class={`grid grid--${this.kulView}`}>
                             {this.#prepView()}
                         </div>
                         {this.#prepChangeView()}
@@ -351,7 +373,6 @@ export class KulMasonry {
 
     componentWillLoad() {
         this.#kulManager.theme.register(this);
-        this.view = this.kulView;
         this.updateShapes();
     }
 

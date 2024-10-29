@@ -9,7 +9,7 @@
 
 | Property        | Attribute        | Description                                                           | Type                                                                                                                              | Default     |
 | --------------- | ---------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `kulColumns`    | `kul-columns`    | Number of columns of the masonry.                                     | `number`                                                                                                                          | `4`         |
+| `kulColumns`    | `kul-columns`    | Number of columns of the masonry.                                     | `number`                                                                                                                          | `3`         |
 | `kulData`       | --               | Actual data of the masonry.                                           | `KulDataDataset`                                                                                                                  | `null`      |
 | `kulSelectable` | `kul-selectable` | Allows for the selection of elements.                                 | `boolean`                                                                                                                         | `false`     |
 | `kulShape`      | `kul-shape`      | Sets the type of shapes to compare.                                   | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'`   |
@@ -52,9 +52,35 @@ Type: `Promise<GenericObject<unknown>>`
 
 Promise resolved with an object containing the component's properties.
 
+### `getSelectedShape() => Promise<KulMasonrySelectedShape>`
+
+Returns the selected shape.
+
+#### Returns
+
+Type: `Promise<KulMasonrySelectedShape>`
+
+Selected shape.
+
 ### `refresh() => Promise<void>`
 
 This method is used to trigger a new render of the component.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `setSelectedShape(index: number) => Promise<void>`
+
+Sets the selected shape by index.
+
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `index` | `number` |             |
 
 #### Returns
 
@@ -81,12 +107,15 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                          | Description                                                              |
-| ----------------------------- | ------------------------------------------------------------------------ |
-| `--kul-masonry-button-bottom` | Sets the bottom placement of the change view button. Defaults to 30px.   |
-| `--kul-masonry-button-right`  | Sets the right placement of the change view button. Defaults to 30px.    |
-| `--kul-masonry-column-size`   | Sets the dimension of the masonry columns. Defaults to minmax(0px, 1fr). |
-| `--kul-masonry-grid-gap`      | Sets the gaps of the grid. Defaults to 8px.                              |
+| Name                                 | Description                                                                    |
+| ------------------------------------ | ------------------------------------------------------------------------------ |
+| `--kul-masonry-button-bottom`        | Sets the bottom placement of the change view button. Defaults to 16px.         |
+| `--kul-masonry-button-right`         | Sets the right placement of the change view button. Defaults to 16px.          |
+| `--kul-masonry-column-size`          | Sets the dimension of the masonry columns. Defaults to minmax(0px, 1fr).       |
+| `--kul-masonry-grid-gap`             | Sets the gaps of the grid. Defaults to 8px.                                    |
+| `--kul-masonry-grid-items-alignment` | Sets the alignments of grids' items. Defaults to 8px.                          |
+| `--kul-masonry-padding`              | Sets the padding of the grid. Defaults to 12px.                                |
+| `--kul-masonry-selected-border`      | Sets the border color of selected items. Defaults to var(--kul-primary-color). |
 
 
 ## Dependencies

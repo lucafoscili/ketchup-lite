@@ -26,7 +26,7 @@ import { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLif
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMasonryEventPayload, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
+import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -59,7 +59,7 @@ export { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLif
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMasonryEventPayload, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
+export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -915,8 +915,13 @@ export namespace Components {
          */
         "getProps": (descriptions?: boolean) => Promise<GenericObject>;
         /**
+          * Returns the selected shape.
+          * @returns Selected shape.
+         */
+        "getSelectedShape": () => Promise<KulMasonrySelectedShape>;
+        /**
           * Number of columns of the masonry.
-          * @default 4
+          * @default 3
          */
         "kulColumns": number;
         /**
@@ -948,6 +953,10 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Sets the selected shape by index.
+         */
+        "setSelectedShape": (index: number) => Promise<void>;
         /**
           * Initiates the unmount sequence, which removes the component from the DOM after a delay.
           * @param ms - Number of milliseconds
@@ -2996,7 +3005,7 @@ declare namespace LocalJSX {
     interface KulMasonry {
         /**
           * Number of columns of the masonry.
-          * @default 4
+          * @default 3
          */
         "kulColumns"?: number;
         /**
