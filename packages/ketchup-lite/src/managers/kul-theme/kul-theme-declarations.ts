@@ -1,36 +1,20 @@
 import { GenericObject } from '../../types/GenericTypes';
 
-/**
- * Variable used to fetch the MASTER customStyle (used in every component).
- */
-export const masterCustomStyle = 'MASTER';
-/**
- * Interface of the themes JSON.
- */
 export interface KulThemeJSON {
     [index: string]: KulThemeElement;
 }
-/**
- * Interface wrapping all the others.
- */
 export interface KulThemeElement {
     cssVariables: KulThemeCSSVariables;
     icons: KulThemeIcons;
     isDark: boolean;
+    font?: KulThemeFonts[];
     customStyles?: GenericObject;
-    imports?: string[];
 }
-// Represents a chart color key
 export type KulThemeChartColorKey = `--kul-chart-color-${number}`;
-// Define a type that represents all possible chart color keys
 export type KulThemeAllChartColorKeys = KulThemeChartColorKey[];
-// Represents the CSS variables for chart colors
 export type KulThemeChartColorCSSVariables = {
     [K in KulThemeAllChartColorKeys[number]]: string;
 };
-/**
- * All CSS variables managed by KulTheme.
- */
 export interface KulThemeCSSVariables extends KulThemeChartColorCSSVariables {
     [KulThemeColorValues.PRIMARY]: string;
     [KulThemeColorValues.SECONDARY]: string;
@@ -58,15 +42,11 @@ export interface KulThemeCSSVariables extends KulThemeChartColorCSSVariables {
     [KulThemeColorValues.DANGER]: string;
     [KulThemeColorValues.SPINNER]: string;
     '--kul-font-family-monospace': string;
-    '--kul-obj-cursor': string;
     [KulThemeColorValues.TEXT_ON_SECONDARY]: string;
     '--kul-card-zindex': number;
     '--kul-drawer-zindex': number;
     '--kul-header-zindex': number;
 }
-/**
- * All icons managed by KulTheme.
- */
 export interface KulThemeIcons {
     [KulThemeIconValues.ASCENDING]: string;
     [KulThemeIconValues.CLEAR]: string;
@@ -79,9 +59,6 @@ export interface KulThemeIcons {
     [KulThemeIconValues.SEARCH]: string;
     [KulThemeIconValues.WARNING]: string;
 }
-/**
- * Object returned by the colorCheck method, containing hex/rgb/hsl CSS colors and rgb/hsl values.
- */
 export interface KulThemeColor {
     hexColor: string;
     hslColor: string;
@@ -92,25 +69,16 @@ export interface KulThemeColor {
     rgbColor: string;
     rgbValues: string;
 }
-/**
- * Interface of a color described by RGB colors.
- */
 export interface KulThemeRGBValues {
     r: number;
     g: number;
     b: number;
 }
-/**
- * Interface of a color described by HSL colors.
- */
 export interface KulThemeHSLValues {
     h: number;
     s: number;
     l: number;
 }
-/**
- * List of all colors.
- */
 export enum KulThemeColorValues {
     PRIMARY = '--kul-primary-color',
     SECONDARY = '--kul-secondary-color',
@@ -140,9 +108,21 @@ export enum KulThemeColorValues {
     CHART_3 = '--kul-chart-color-3',
     CHART_4 = '--kul-chart-color-4',
 }
-/**
- * List of all icons.
- */
+export enum KulThemeFonts {
+    ABEL = 'Abel',
+    BLINKER = 'Blinker',
+    CRIMSON_TEXT = 'CrimsonText',
+    FIRA_CODE = 'FiraCode',
+    IBM_PLEX = 'IBMPlexSans',
+    INTER = 'Inter',
+    LATO = 'Lato',
+    MALI = 'Mali',
+    OPEN_SANS = 'Open_Sans',
+    OSWALD = 'Oswald',
+    PUBLIC_SANS = 'PublicSans',
+    RAJDHANI = 'Rajdhani',
+    UBUNTU = 'Ubuntu',
+}
 export enum KulThemeIconValues {
     ASCENDING = '--kul-ascending-icon',
     CLEAR = '--kul-clear-icon',
@@ -154,4 +134,8 @@ export enum KulThemeIconValues {
     KEY = '--kul-key-icon',
     SEARCH = '--kul-search-icon',
     WARNING = '--kul-warning-icon',
+}
+export enum KulThemeAttribute {
+    DARK = 'kul-dark-theme',
+    LIGHT = 'kul-light-theme',
 }

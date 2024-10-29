@@ -363,11 +363,7 @@ export const KUL_DOC: KulArticleDataset = {
                             children: [
                                 {
                                     id: DOC_IDS.contentWrapper,
-                                    value: 'Ketchup Lite is a Webcomponents library written in TypeScript and Sass.',
-                                },
-                                {
-                                    id: DOC_IDS.contentWrapper,
-                                    value: "It's a side project on which I'm working on in my free time.",
+                                    value: 'Ketchup Lite is a framework-agnostic web components library in TypeScript and Sass, built with Stencil.js for simplicity and speed.',
                                 },
                                 {
                                     id: DOC_IDS.contentWrapper,
@@ -375,16 +371,16 @@ export const KUL_DOC: KulArticleDataset = {
                                     children: [
                                         {
                                             id: DOC_IDS.content,
-                                            value: 'It is a fork stemming from the original ',
+                                            value: 'As a fork of the ',
                                         },
                                         {
                                             id: DOC_IDS.content,
                                             tagName: 'strong',
-                                            value: 'Ketchup project',
+                                            value: 'original Ketchup project',
                                         },
                                         {
                                             id: DOC_IDS.content,
-                                            value: ', aiming to provide a streamlined and efficient set of tools for developers.',
+                                            value: ', it offers a refined toolset optimized for lightweight, scalable web applications.',
                                         },
                                     ],
                                 },
@@ -395,8 +391,96 @@ export const KUL_DOC: KulArticleDataset = {
                             value: '',
                             children: [
                                 {
-                                    id: '',
-                                    value: 'For more information you can visit the GitHub page of the project.',
+                                    id: DOC_IDS.contentWrapper,
+                                    value: 'Notable for a clean glassmorphism design, Ketchup Lite’s components are perfect for intuitive and visually appealing UIs.',
+                                },
+                            ],
+                        },
+                        {
+                            id: DOC_IDS.contentList,
+                            value: 'Core Features',
+                            children: [
+                                {
+                                    id: DOC_IDS.contentListItem,
+                                    value: 'Lightweight and fast for improved performance on any web project.',
+                                },
+                                {
+                                    id: DOC_IDS.contentListItem,
+                                    value: 'Accessible design principles for inclusive UI components.',
+                                },
+                                {
+                                    id: DOC_IDS.contentListItem,
+                                    value: 'Compatible with frameworks like React, Vue, and Angular.',
+                                },
+                            ],
+                        },
+                        {
+                            id: DOC_IDS.paragraph,
+                            value: '',
+                            children: [
+                                {
+                                    id: DOC_IDS.contentWrapper,
+                                    value: 'Get started quickly with the GitHub repository for installation guides, usage examples, and full documentation.',
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    id: DOC_IDS.section,
+                    value: 'Why Choose Ketchup Lite?',
+                    children: [
+                        {
+                            id: DOC_IDS.paragraph,
+                            value: '',
+                            children: [
+                                {
+                                    id: DOC_IDS.contentWrapper,
+                                    value: 'Ketchup Lite provides a unique blend of performance and flexibility. Designed to be framework-agnostic, it easily adapts to various project needs, ensuring your applications remain lightweight and scalable.',
+                                },
+                            ],
+                        },
+                        {
+                            id: DOC_IDS.paragraph,
+                            value: '',
+                            children: [
+                                {
+                                    id: DOC_IDS.contentWrapper,
+                                    value: "Whether you're building with React, Vue, Angular, or vanilla JavaScript, Ketchup Lite’s components integrate smoothly with your stack of choice.",
+                                },
+                            ],
+                        },
+                    ],
+                },
+                {
+                    id: DOC_IDS.section,
+                    value: 'Getting Started',
+                    children: [
+                        {
+                            id: DOC_IDS.paragraph,
+                            value: '',
+                            children: [
+                                {
+                                    id: DOC_IDS.contentWrapper,
+                                    value: 'Install the library effortlessly via npm and dive into the documentation for component demos and usage examples.',
+                                },
+                            ],
+                        },
+                        {
+                            id: DOC_IDS.contentList,
+                            value: 'Installation',
+                            children: [
+                                {
+                                    id: DOC_IDS.contentListItem,
+                                    value: 'Run `npm install ketchup-lite` in your project directory.',
+                                },
+                                {
+                                    id: DOC_IDS.contentListItem,
+                                    value: 'Import components directly into your code with zero configuration.',
+                                },
+                                {
+                                    id: DOC_IDS.contentListItem,
+                                    value: "Explore component customization options to fit your project's style.",
                                 },
                             ],
                         },
