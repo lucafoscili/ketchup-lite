@@ -17,6 +17,7 @@ export const COMPONENTS = [
     'image',
     'lazy',
     'list',
+    'masonry',
     'messenger',
     'photoframe',
     'progressbar',
@@ -193,6 +194,13 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'list',
             id: 'List',
             value: 'List',
+        },
+        {
+            description:
+                'Designed to display images as a masonry or in waterfall view.',
+            icon: 'view-quilt',
+            id: 'Masonry',
+            value: 'Masonry',
         },
         {
             description:

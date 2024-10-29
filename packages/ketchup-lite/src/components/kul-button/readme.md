@@ -142,6 +142,7 @@ Type: `Promise<void>`
  - [kul-chat](../kul-chat)
  - [kul-code](../kul-code)
  - [kul-compare](../kul-compare)
+ - [kul-masonry](../kul-masonry)
  - [kul-messenger](../kul-messenger)
  - [kul-showcase](../kul-showcase)
  - [kul-showcase-button](../kul-showcase/components/button)
@@ -164,6 +165,7 @@ graph TD;
   kul-chat --> kul-button
   kul-code --> kul-button
   kul-compare --> kul-button
+  kul-masonry --> kul-button
   kul-messenger --> kul-button
   kul-showcase --> kul-button
   kul-showcase-button --> kul-button

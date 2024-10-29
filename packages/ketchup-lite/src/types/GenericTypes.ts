@@ -129,6 +129,11 @@ import {
     KulCompareEvent,
     KulCompareProps,
 } from '../components/kul-compare/kul-compare-declarations';
+import { KulMasonry } from '../components/kul-masonry/kul-masonry';
+import {
+    KulMasonryEvent,
+    KulMasonryProps,
+} from '../components/kul-masonry/kul-masonry-declarations';
 
 export interface GenericMap {
     [index: string]: string;
@@ -152,6 +157,7 @@ export type KulComponentName =
     | 'KulImage'
     | 'KulLazy'
     | 'KulList'
+    | 'KulMasonry'
     | 'KulMessenger'
     | 'KulPhotoframe'
     | 'KulProgressbar'
@@ -179,6 +185,7 @@ export type KulComponentElementMap = {
     KulImage: HTMLKulImageElement;
     KulLazy: HTMLKulLazyElement;
     KulList: HTMLKulListElement;
+    KulMasonry: HTMLKulMasonryElement;
     KulMessenger: HTMLKulMessengerElement;
     KulPhotoframe: HTMLKulPhotoframeElement;
     KulProgressbar: HTMLKulProgressbarElement;
@@ -207,6 +214,7 @@ export type KulComponentClassMap = {
     KulImage: KulImage;
     KulLazy: KulLazy;
     KulList: KulList;
+    KulMasonry: KulMasonry;
     KulMessenger: KulMessenger;
     KulPhotoframe: KulPhotoframe;
     KulProgressbar: KulProgressbar;
@@ -235,6 +243,7 @@ export type KulComponentTagMap = {
     KulImage: 'kul-image';
     KulLazy: 'kul-lazy';
     KulList: 'kul-list';
+    KulMasonry: 'kul-masonry';
     KulMessenger: 'kul-messenger';
     KulPhotoframe: 'kul-photoframe';
     KulProgressbar: 'kul-progressbar';
@@ -303,6 +312,7 @@ export type ComponentEventMap = {
     KulImage: KulImageEvent;
     KulLazy: KulLazyEvent;
     KulList: KulListEvent;
+    KulMasonry: KulMasonryEvent;
     KulMessenger: KulMessengerEvent;
     KulPhotoframe: KulPhotoframeEvent;
     KulProgressbar: KulProgressbarEvent;
@@ -331,6 +341,7 @@ export type ComponentPropsMap = {
     KulImage: KulImageProps;
     KulLazy: KulLazyProps;
     KulList: KulListProps;
+    KulMasonry: KulMasonryProps;
     KulMessenger: KulMessengerProps;
     KulPhotoframe: KulPhotoframeProps;
     KulProgressbar: KulProgressbarProps;

@@ -1735,6 +1735,96 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-masonry": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's properties and descriptions.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "Promise resolved with an object containing the component's properties.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulColumns",
+        docs: "Number of columns of the masonry.",
+        type: "number",
+      },
+      {
+        name: "kulData",
+        docs: "Actual data of the masonry.",
+        type: "KulDataDataset",
+      },
+      {
+        name: "kulSelectable",
+        docs: "Allows for the selection of elements.",
+        type: "boolean",
+      },
+      {
+        name: "kulShape",
+        docs: "Sets the type of shapes to compare.",
+        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "switch" | "text" | "upload"',
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+      {
+        name: "kulView",
+        docs: "Sets the type of view, either the actual masonry or a waterfall view.",
+        type: '"masonry" | "waterfall"',
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-masonry-button-bottom",
+        docs: "Sets the bottom placement of the change view button. Defaults to 30px.",
+      },
+      {
+        name: "--kul-masonry-button-right",
+        docs: "Sets the right placement of the change view button. Defaults to 30px.",
+      },
+      {
+        name: "--kul-masonry-column-size",
+        docs: "Sets the dimension of the masonry columns. Defaults to minmax(0px, 1fr).",
+      },
+      {
+        name: "--kul-masonry-grid-gap",
+        docs: "Sets the gaps of the grid. Defaults to 8px.",
+      },
+    ],
+  },
   "kul-messenger": {
     methods: [
       {
@@ -2174,6 +2264,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-list": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-masonry": {
     methods: [],
     props: [],
     styles: [],

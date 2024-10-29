@@ -26,6 +26,7 @@ import { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLif
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
+import { KulMasonryEventPayload, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -58,6 +59,7 @@ export { KulDataDataset as KulDataDataset1, KulDebugLifecycleInfo as KulDebugLif
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
+export { KulMasonryEventPayload, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -900,6 +902,58 @@ export namespace Components {
          */
         "unmount": (ms?: number) => Promise<void>;
     }
+    interface KulMasonry {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
+        /**
+          * Used to retrieve component's properties and descriptions.
+          * @param descriptions - When true, includes descriptions for each property.
+          * @returns Promise resolved with an object containing the component's properties.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Number of columns of the masonry.
+          * @default 4
+         */
+        "kulColumns": number;
+        /**
+          * Actual data of the masonry.
+          * @default null
+         */
+        "kulData": KulDataDataset;
+        /**
+          * Allows for the selection of elements.
+          * @default ""
+         */
+        "kulSelectable": boolean;
+        /**
+          * Sets the type of shapes to compare.
+          * @default ""
+         */
+        "kulShape": KulDataShapes;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * Sets the type of view, either the actual masonry or a waterfall view.
+          * @default null
+         */
+        "kulView": KulMasonryView;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
+    }
     interface KulMessenger {
         /**
           * Fetches debug information of the component's current state.
@@ -1096,6 +1150,8 @@ export namespace Components {
     interface KulShowcaseLazy {
     }
     interface KulShowcaseList {
+    }
+    interface KulShowcaseMasonry {
     }
     interface KulShowcaseMessenger {
     }
@@ -1636,6 +1692,10 @@ export interface KulListCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulListElement;
 }
+export interface KulMasonryCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulMasonryElement;
+}
 export interface KulMessengerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulMessengerElement;
@@ -1936,6 +1996,23 @@ declare global {
         prototype: HTMLKulListElement;
         new (): HTMLKulListElement;
     };
+    interface HTMLKulMasonryElementEventMap {
+        "kul-masonry-event": KulMasonryEventPayload;
+    }
+    interface HTMLKulMasonryElement extends Components.KulMasonry, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulMasonryElementEventMap>(type: K, listener: (this: HTMLKulMasonryElement, ev: KulMasonryCustomEvent<HTMLKulMasonryElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulMasonryElementEventMap>(type: K, listener: (this: HTMLKulMasonryElement, ev: KulMasonryCustomEvent<HTMLKulMasonryElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulMasonryElement: {
+        prototype: HTMLKulMasonryElement;
+        new (): HTMLKulMasonryElement;
+    };
     interface HTMLKulMessengerElementEventMap {
         "kul-messenger-event": KulMessengerEventPayload;
     }
@@ -2142,6 +2219,12 @@ declare global {
     var HTMLKulShowcaseListElement: {
         prototype: HTMLKulShowcaseListElement;
         new (): HTMLKulShowcaseListElement;
+    };
+    interface HTMLKulShowcaseMasonryElement extends Components.KulShowcaseMasonry, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseMasonryElement: {
+        prototype: HTMLKulShowcaseMasonryElement;
+        new (): HTMLKulShowcaseMasonryElement;
     };
     interface HTMLKulShowcaseMessengerElement extends Components.KulShowcaseMessenger, HTMLStencilElement {
     }
@@ -2361,6 +2444,7 @@ declare global {
         "kul-image": HTMLKulImageElement;
         "kul-lazy": HTMLKulLazyElement;
         "kul-list": HTMLKulListElement;
+        "kul-masonry": HTMLKulMasonryElement;
         "kul-messenger": HTMLKulMessengerElement;
         "kul-photoframe": HTMLKulPhotoframeElement;
         "kul-progressbar": HTMLKulProgressbarElement;
@@ -2390,6 +2474,7 @@ declare global {
         "kul-showcase-kultheme": HTMLKulShowcaseKulthemeElement;
         "kul-showcase-lazy": HTMLKulShowcaseLazyElement;
         "kul-showcase-list": HTMLKulShowcaseListElement;
+        "kul-showcase-masonry": HTMLKulShowcaseMasonryElement;
         "kul-showcase-messenger": HTMLKulShowcaseMessengerElement;
         "kul-showcase-photoframe": HTMLKulShowcasePhotoframeElement;
         "kul-showcase-progressbar": HTMLKulShowcaseProgressbarElement;
@@ -2908,6 +2993,42 @@ declare namespace LocalJSX {
          */
         "onKul-list-event"?: (event: KulListCustomEvent<KulListEventPayload>) => void;
     }
+    interface KulMasonry {
+        /**
+          * Number of columns of the masonry.
+          * @default 4
+         */
+        "kulColumns"?: number;
+        /**
+          * Actual data of the masonry.
+          * @default null
+         */
+        "kulData"?: KulDataDataset;
+        /**
+          * Allows for the selection of elements.
+          * @default ""
+         */
+        "kulSelectable"?: boolean;
+        /**
+          * Sets the type of shapes to compare.
+          * @default ""
+         */
+        "kulShape"?: KulDataShapes;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Sets the type of view, either the actual masonry or a waterfall view.
+          * @default null
+         */
+        "kulView"?: KulMasonryView;
+        /**
+          * Describes event emitted.
+         */
+        "onKul-masonry-event"?: (event: KulMasonryCustomEvent<KulMasonryEventPayload>) => void;
+    }
     interface KulMessenger {
         /**
           * Automatically saves the dataset when a chat updates.
@@ -3052,6 +3173,8 @@ declare namespace LocalJSX {
     interface KulShowcaseLazy {
     }
     interface KulShowcaseList {
+    }
+    interface KulShowcaseMasonry {
     }
     interface KulShowcaseMessenger {
     }
@@ -3371,6 +3494,7 @@ declare namespace LocalJSX {
         "kul-image": KulImage;
         "kul-lazy": KulLazy;
         "kul-list": KulList;
+        "kul-masonry": KulMasonry;
         "kul-messenger": KulMessenger;
         "kul-photoframe": KulPhotoframe;
         "kul-progressbar": KulProgressbar;
@@ -3400,6 +3524,7 @@ declare namespace LocalJSX {
         "kul-showcase-kultheme": KulShowcaseKultheme;
         "kul-showcase-lazy": KulShowcaseLazy;
         "kul-showcase-list": KulShowcaseList;
+        "kul-showcase-masonry": KulShowcaseMasonry;
         "kul-showcase-messenger": KulShowcaseMessenger;
         "kul-showcase-photoframe": KulShowcasePhotoframe;
         "kul-showcase-progressbar": KulShowcaseProgressbar;
@@ -3440,6 +3565,7 @@ declare module "@stencil/core" {
             "kul-image": LocalJSX.KulImage & JSXBase.HTMLAttributes<HTMLKulImageElement>;
             "kul-lazy": LocalJSX.KulLazy & JSXBase.HTMLAttributes<HTMLKulLazyElement>;
             "kul-list": LocalJSX.KulList & JSXBase.HTMLAttributes<HTMLKulListElement>;
+            "kul-masonry": LocalJSX.KulMasonry & JSXBase.HTMLAttributes<HTMLKulMasonryElement>;
             "kul-messenger": LocalJSX.KulMessenger & JSXBase.HTMLAttributes<HTMLKulMessengerElement>;
             "kul-photoframe": LocalJSX.KulPhotoframe & JSXBase.HTMLAttributes<HTMLKulPhotoframeElement>;
             "kul-progressbar": LocalJSX.KulProgressbar & JSXBase.HTMLAttributes<HTMLKulProgressbarElement>;
@@ -3469,6 +3595,7 @@ declare module "@stencil/core" {
             "kul-showcase-kultheme": LocalJSX.KulShowcaseKultheme & JSXBase.HTMLAttributes<HTMLKulShowcaseKulthemeElement>;
             "kul-showcase-lazy": LocalJSX.KulShowcaseLazy & JSXBase.HTMLAttributes<HTMLKulShowcaseLazyElement>;
             "kul-showcase-list": LocalJSX.KulShowcaseList & JSXBase.HTMLAttributes<HTMLKulShowcaseListElement>;
+            "kul-showcase-masonry": LocalJSX.KulShowcaseMasonry & JSXBase.HTMLAttributes<HTMLKulShowcaseMasonryElement>;
             "kul-showcase-messenger": LocalJSX.KulShowcaseMessenger & JSXBase.HTMLAttributes<HTMLKulShowcaseMessengerElement>;
             "kul-showcase-photoframe": LocalJSX.KulShowcasePhotoframe & JSXBase.HTMLAttributes<HTMLKulShowcasePhotoframeElement>;
             "kul-showcase-progressbar": LocalJSX.KulShowcaseProgressbar & JSXBase.HTMLAttributes<HTMLKulShowcaseProgressbarElement>;
