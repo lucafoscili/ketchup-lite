@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-29T06:40:10",
+  "timestamp": "2024-10-29T19:01:21",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5007,8 +5007,8 @@
               },
               "KulDebugLifecycleInfo": {
                 "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugLifecycleInfo"
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
               }
             },
             "return": "Promise<KulDebugLifecycleInfo>"
@@ -5314,8 +5314,8 @@
               },
               "KulDebugLifecycleInfo": {
                 "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugLifecycleInfo"
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
               }
             },
             "return": "Promise<KulDebugLifecycleInfo>"
@@ -5997,7 +5997,7 @@
           "mutable": false,
           "attr": "kul-render-mode",
           "reflectToAttr": false,
-          "docs": "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
+          "docs": "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
           "docsTags": [
             {
               "name": "default",
@@ -6125,8 +6125,8 @@
               },
               "KulDebugLifecycleInfo": {
                 "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugLifecycleInfo"
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
               }
             },
             "return": "Promise<KulDebugLifecycleInfo>"
@@ -6916,10 +6916,10 @@
           "docsTags": [
             {
               "name": "default",
-              "text": "4"
+              "text": "3"
             }
           ],
-          "default": "4",
+          "default": "3",
           "values": [
             {
               "type": "number"
@@ -7213,6 +7213,38 @@
           ]
         },
         {
+          "name": "getSelectedShape",
+          "returns": {
+            "type": "Promise<KulMasonrySelectedShape>",
+            "docs": "Selected shape."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulMasonrySelectedShape>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulMasonrySelectedShape": {
+                "location": "import",
+                "path": "./kul-masonry-declarations",
+                "id": "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonrySelectedShape"
+              }
+            },
+            "return": "Promise<KulMasonrySelectedShape>"
+          },
+          "signature": "getSelectedShape() => Promise<KulMasonrySelectedShape>",
+          "parameters": [],
+          "docs": "Returns the selected shape.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "Selected shape."
+            }
+          ]
+        },
+        {
           "name": "refresh",
           "returns": {
             "type": "Promise<void>",
@@ -7232,6 +7264,45 @@
           "signature": "refresh() => Promise<void>",
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "setSelectedShape",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(index: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "index",
+                "type": "number",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulMasonrySelectedShape": {
+                "location": "import",
+                "path": "./kul-masonry-declarations",
+                "id": "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonrySelectedShape"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setSelectedShape(index: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "index",
+              "type": "number",
+              "docs": ""
+            }
+          ],
+          "docs": "Sets the selected shape by index.",
           "docsTags": []
         },
         {
@@ -7301,12 +7372,12 @@
         {
           "name": "--kul-masonry-button-bottom",
           "annotation": "prop",
-          "docs": "Sets the bottom placement of the change view button. Defaults to 30px."
+          "docs": "Sets the bottom placement of the change view button. Defaults to 16px."
         },
         {
           "name": "--kul-masonry-button-right",
           "annotation": "prop",
-          "docs": "Sets the right placement of the change view button. Defaults to 30px."
+          "docs": "Sets the right placement of the change view button. Defaults to 16px."
         },
         {
           "name": "--kul-masonry-column-size",
@@ -7317,6 +7388,21 @@
           "name": "--kul-masonry-grid-gap",
           "annotation": "prop",
           "docs": "Sets the gaps of the grid. Defaults to 8px."
+        },
+        {
+          "name": "--kul-masonry-grid-items-alignment",
+          "annotation": "prop",
+          "docs": "Sets the alignments of grids' items. Defaults to 8px."
+        },
+        {
+          "name": "--kul-masonry-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of the grid. Defaults to 12px."
+        },
+        {
+          "name": "--kul-masonry-selected-border",
+          "annotation": "prop",
+          "docs": "Sets the border color of selected items. Defaults to var(--kul-primary-color)."
         }
       ],
       "slots": [],
@@ -10574,8 +10660,8 @@
               },
               "KulDebugLifecycleInfo": {
                 "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugLifecycleInfo"
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
               }
             },
             "return": "Promise<KulDebugLifecycleInfo>"
@@ -11655,8 +11741,8 @@
               },
               "KulDebugLifecycleInfo": {
                 "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDebugLifecycleInfo"
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
               }
             },
             "return": "Promise<KulDebugLifecycleInfo>"
@@ -13095,8 +13181,8 @@
             "references": {
               "KulDataDataset": {
                 "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::KulDataDataset"
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
               }
             }
           },
@@ -13156,7 +13242,7 @@
           "mutable": true,
           "attr": "kul-initial-expansion-depth",
           "reflectToAttr": false,
-          "docs": "Sets the initial expanded nodes based on the specified depth.\r\nIf the property is not provided, all nodes in the tree will be expanded.",
+          "docs": "Sets the initial expanded nodes based on the specified depth.\nIf the property is not provided, all nodes in the tree will be expanded.",
           "docsTags": [
             {
               "name": "default",
@@ -14066,11 +14152,6 @@
       "docstring": "",
       "path": "src/components/kul-drawer/kul-drawer-declarations.ts"
     },
-    "src/components.d.ts::KulDebugLifecycleInfo": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "src/components.d.ts"
-    },
     "src/components/kul-header/kul-header-declarations.ts::KulHeaderEventPayload": {
       "declaration": "export interface KulHeaderEventPayload\n    extends KulEventPayload<'KulHeader', KulHeaderEvent> {}",
       "docstring": "",
@@ -14151,11 +14232,6 @@
       "docstring": "",
       "path": "src/components/kul-toast/kul-toast-declarations.ts"
     },
-    "src/components.d.ts::KulDataDataset": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "src/components.d.ts"
-    },
     "src/components/kul-tree/kul-tree-declarations.ts::KulTreeEventPayload": {
       "declaration": "export interface KulTreeEventPayload\n    extends KulEventPayload<'KulTree', KulTreeEvent> {\n    node?: KulDataNode;\n}",
       "docstring": "",
@@ -14173,6 +14249,11 @@
     },
     "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonryEventPayload": {
       "declaration": "export interface KulMasonryEventPayload\n    extends KulEventPayload<'KulMasonry', KulMasonryEvent> {\n    selectedShape: KulMasonrySelectedShape;\n}",
+      "docstring": "",
+      "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
+    },
+    "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonrySelectedShape": {
+      "declaration": "{\n    index?: number;\n    shape?: Partial<KulDataCell<KulDataShapes>>;\n}",
       "docstring": "",
       "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
     }

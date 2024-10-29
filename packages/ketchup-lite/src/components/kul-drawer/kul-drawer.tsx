@@ -18,7 +18,7 @@ import {
     KulDrawerEventPayload,
     KulDrawerProps,
 } from './kul-drawer-declarations';
-import { KulDebugLifecycleInfo } from '../../components';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 
 @Component({

@@ -1,5 +1,5 @@
 import { getAssetPath } from '@stencil/core';
-import { KulDataDataset } from '../../../../components';
+import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 import { KulCardLayout } from '../../../kul-card/kul-card-declarations';
 
 export const CARD_KULDATA_FACTORY: {
