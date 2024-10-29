@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-29T19:01:21",
+  "timestamp": "2024-10-29T19:31:28",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5997,7 +5997,7 @@
           "mutable": false,
           "attr": "kul-render-mode",
           "reflectToAttr": false,
-          "docs": "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
+          "docs": "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
           "docsTags": [
             {
               "name": "default",
@@ -13242,7 +13242,7 @@
           "mutable": true,
           "attr": "kul-initial-expansion-depth",
           "reflectToAttr": false,
-          "docs": "Sets the initial expanded nodes based on the specified depth.\nIf the property is not provided, all nodes in the tree will be expanded.",
+          "docs": "Sets the initial expanded nodes based on the specified depth.\r\nIf the property is not provided, all nodes in the tree will be expanded.",
           "docsTags": [
             {
               "name": "default",

@@ -1527,7 +1527,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulRenderMode",
-        docs: "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
+        docs: "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
         type: '"both" | "props" | "viewport"',
       },
       {
@@ -3107,7 +3107,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulInitialExpansionDepth",
-        docs: "Sets the initial expanded nodes based on the specified depth.\nIf the property is not provided, all nodes in the tree will be expanded.",
+        docs: "Sets the initial expanded nodes based on the specified depth.\r\nIf the property is not provided, all nodes in the tree will be expanded.",
         type: "number",
       },
       {
