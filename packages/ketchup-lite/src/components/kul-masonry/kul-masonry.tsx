@@ -332,7 +332,7 @@ export class KulMasonry {
     #prepMasonry(): VNode {
         if (this.#hasShapes()) {
             const shapes = this.shapes[this.kulShape];
-            if (shapes?.length > 1) {
+            if (shapes?.length) {
                 return (
                     <Fragment>
                         <div class={`grid grid--${this.view}`}>
