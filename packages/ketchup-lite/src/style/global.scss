@@ -145,3 +145,19 @@ $kul-dd-draggable-row: 'kul-draggable-row'; // Attached to the element being dra
     opacity: 1;
   }
 }
+
+@keyframes fade-in-grid {
+  0% {
+    display: none;
+  }
+
+  1% {
+    display: grid;
+    opacity: 0;
+  }
+
+  100% {
+    display: grid;
+    opacity: 1;
+  }
+}

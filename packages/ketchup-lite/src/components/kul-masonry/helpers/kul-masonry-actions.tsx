@@ -8,10 +8,10 @@ import {
 const STYLING: KulButtonStyling = 'floating';
 
 const MASONRY_ICON = 'view_quilt';
-const HORIZONTAL_ICON = 'view_day';
+const HORIZONTAL_ICON = 'view_column';
 const MINUS_ICON = 'remove';
 const PLUS_ICON = 'plus';
-const VERTICAL_ICON = 'view_column';
+const VERTICAL_ICON = 'view_day';
 
 const buttonHandler = (
     adapter: KulMasonryAdapter,
@@ -89,10 +89,10 @@ export const ACTIONS = {
                 key={MASONRY_ICON}
                 kulIcon={
                     adapter.isMasonry()
-                        ? MASONRY_ICON
+                        ? VERTICAL_ICON
                         : adapter.isVertical()
-                          ? VERTICAL_ICON
-                          : HORIZONTAL_ICON
+                          ? HORIZONTAL_ICON
+                          : MASONRY_ICON
                 }
                 kulStyling={STYLING}
                 onKul-button-event={buttonHandler.bind(buttonHandler, adapter)}
