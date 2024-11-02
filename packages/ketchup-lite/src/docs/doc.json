@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-02T13:26:16",
+  "timestamp": "2024-11-02T15:40:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -6947,7 +6947,7 @@
       "filePath": "src/components/kul-masonry/kul-masonry.tsx",
       "encapsulation": "shadow",
       "tag": "kul-masonry",
-      "readme": "# kul-masonry\n\n\n",
+      "readme": "# kul-masonry\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
