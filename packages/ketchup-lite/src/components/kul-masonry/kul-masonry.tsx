@@ -29,13 +29,14 @@ import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declar
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
+    KulMasonryAdapter,
     KulMasonryEvent,
     KulMasonryEventPayload,
     KulMasonryProps,
     KulMasonrySelectedShape,
     KulMasonryView,
 } from './kul-masonry-declarations';
-import { KulButtonEventPayload } from '../kul-button/kul-button-declarations';
+import { ACTIONS } from './helpers/kul-masonry-actions';
 
 @Component({
     tag: 'kul-masonry',
@@ -64,12 +65,12 @@ export class KulMasonry {
     };
     /**
      * The selected element.
-     * @default undefined
+     * @default {}
      */
     @State() selectedShape: KulMasonrySelectedShape = {};
     /**
      * The shapes of the component.
-     * @default undefined
+     * @default {}
      *
      * @see KulDataShapesMap - For a list of possible shapes.
      */
@@ -80,7 +81,7 @@ export class KulMasonry {
     /*-------------------------------------------------*/
 
     /**
-     * Number of columns of the masonry.
+     * Number of columns of the masonry, doesn't affect sequential views.
      * @default 3
      */
     @Prop({ mutable: true }) kulColumns = 3;
@@ -105,7 +106,7 @@ export class KulMasonry {
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
     /**
-     * Sets the type of view, either the actual masonry or a waterfall view.
+     * Sets the type of view, either the actual masonry or a sequential view.
      * @default null
      */
     @Prop({ mutable: true }) kulView: KulMasonryView = 'masonry';
@@ -263,6 +264,38 @@ export class KulMasonry {
     /*           P r i v a t e   M e t h o d s         */
     /*-------------------------------------------------*/
 
+    #adapter: KulMasonryAdapter = {
+        actions: {
+            addColumn: async () => {
+                this.kulColumns++;
+            },
+            removeColumn: async () => {
+                if (this.kulColumns > 2) {
+                    this.kulColumns--;
+                }
+            },
+            changeView: async () => {
+                if (this.#isMasonry()) {
+                    this.kulView = 'vertical';
+                } else if (this.#isVertical()) {
+                    this.kulView = 'horizontal';
+                } else {
+                    this.kulView = 'masonry';
+                }
+            },
+        },
+        components: {
+            buttons: {
+                addColumn: null,
+                removeColumn: null,
+                changeView: null,
+            },
+        },
+        isMasonry: () => this.#isMasonry(),
+        isVertical: () => this.#isVertical(),
+        get: { masonry: () => this, shapes: () => this.shapes },
+    };
+
     #divideShapesIntoColumns(columnCount: number): VNode[][] {
         const props: Partial<KulDataCell<KulDataShapes>>[] = this.shapes[
             this.kulShape
@@ -302,39 +335,25 @@ export class KulMasonry {
         return !!this.shapes?.[this.kulShape];
     }
 
+    #isVertical() {
+        return this.kulView === 'vertical';
+    }
+
     #isMasonry() {
-        return !!(this.kulView === 'masonry');
+        return this.kulView === 'masonry';
     }
 
     #prepChangeView() {
-        const icon = this.#isMasonry() ? 'view_day' : 'view_quilt';
-        const iconOff = this.#isMasonry() ? 'view_quilt' : 'view_day';
-        const buttonEventHandler: (
-            e: CustomEvent<KulButtonEventPayload>
-        ) => void = (e) => {
-            const { eventType, value } = e.detail;
-
-            switch (eventType) {
-                case 'click':
-                    this.kulView = value === 'on' ? 'masonry' : 'waterfall';
-                    break;
-            }
-        };
         return (
-            <kul-button
-                class={'grid__change-view'}
-                kulIcon={icon}
-                kulIconOff={iconOff}
-                kulStyling={'floating'}
-                kulToggable={true}
-                kulValue={this.#isMasonry() ? true : false}
-                onKul-button-event={buttonEventHandler}
-                title={
-                    this.#isMasonry()
-                        ? 'Click to view the images arranged as a waterfall.'
-                        : 'Click to view the images arranged as a masonry.'
-                }
-            ></kul-button>
+            <div class="grid__actions">
+                {this.#isMasonry() ? (
+                    <div class="grid__actions__sub">
+                        {ACTIONS.masonry.add(this.#adapter)}
+                        {ACTIONS.masonry.remove(this.#adapter)}
+                    </div>
+                ) : null}
+                {ACTIONS.changeView(this.#adapter)}
+            </div>
         );
     }
 

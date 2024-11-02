@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-10-30T12:13:15",
+  "timestamp": "2024-11-02T13:26:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -5870,7 +5870,58 @@
         }
       ],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--kul-image-aspect-ratio",
+          "annotation": "prop",
+          "docs": "Sets the aspect ratio of the image. Defaults to 1 (square)."
+        },
+        {
+          "name": "--kul-image-background",
+          "annotation": "prop",
+          "docs": "Sets the background color of the image icon. Defaults to transparent."
+        },
+        {
+          "name": "--kul-image-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the image. Defaults to 100%."
+        },
+        {
+          "name": "--kul-image-margin",
+          "annotation": "prop",
+          "docs": "Sets the margin of the image. Defaults to auto."
+        },
+        {
+          "name": "--kul-image-mask",
+          "annotation": "prop",
+          "docs": "Sets the mask for the image icon. Defaults to none."
+        },
+        {
+          "name": "--kul-image-spinner-offset",
+          "annotation": "prop",
+          "docs": "Sets the offset of the spinner from the center. Defaults to calc(var(--kul-image-spinner-size) / 2)."
+        },
+        {
+          "name": "--kul-image-spinner-size",
+          "annotation": "prop",
+          "docs": "Sets the size of the spinner. Defaults to 32px."
+        },
+        {
+          "name": "--kul-image-transition-duration",
+          "annotation": "prop",
+          "docs": "Sets the duration of the color transition. Defaults to 0.2s."
+        },
+        {
+          "name": "--kul-image-transition-timing-function",
+          "annotation": "prop",
+          "docs": "Sets the timing function of the color transition. Defaults to ease."
+        },
+        {
+          "name": "--kul-image-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the image. Defaults to 100%."
+        }
+      ],
       "slots": [],
       "parts": [],
       "dependents": [
@@ -6896,7 +6947,7 @@
       "filePath": "src/components/kul-masonry/kul-masonry.tsx",
       "encapsulation": "shadow",
       "tag": "kul-masonry",
-      "readme": "# kul-masonry\r\n\r\n\r\n\r",
+      "readme": "# kul-masonry\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6912,7 +6963,7 @@
           "mutable": true,
           "attr": "kul-columns",
           "reflectToAttr": false,
-          "docs": "Number of columns of the masonry.",
+          "docs": "Number of columns of the masonry, doesn't affect sequential views.",
           "docsTags": [
             {
               "name": "default",
@@ -7094,10 +7145,10 @@
         },
         {
           "name": "kulView",
-          "type": "\"masonry\" | \"waterfall\"",
+          "type": "\"horizontal\" | \"masonry\" | \"vertical\"",
           "complexType": {
             "original": "KulMasonryView",
-            "resolved": "\"masonry\" | \"waterfall\"",
+            "resolved": "\"horizontal\" | \"masonry\" | \"vertical\"",
             "references": {
               "KulMasonryView": {
                 "location": "import",
@@ -7109,7 +7160,7 @@
           "mutable": true,
           "attr": "kul-view",
           "reflectToAttr": false,
-          "docs": "Sets the type of view, either the actual masonry or a waterfall view.",
+          "docs": "Sets the type of view, either the actual masonry or a sequential view.",
           "docsTags": [
             {
               "name": "default",
@@ -7119,11 +7170,15 @@
           "default": "'masonry'",
           "values": [
             {
+              "value": "horizontal",
+              "type": "string"
+            },
+            {
               "value": "masonry",
               "type": "string"
             },
             {
-              "value": "waterfall",
+              "value": "vertical",
               "type": "string"
             }
           ],
@@ -7370,6 +7425,11 @@
       "listeners": [],
       "styles": [
         {
+          "name": "--kul-masonry-actions-z-index",
+          "annotation": "prop",
+          "docs": "Sets the z-index of action elements. Defaults to 2."
+        },
+        {
           "name": "--kul-masonry-button-bottom",
           "annotation": "prop",
           "docs": "Sets the bottom placement of the change view button. Defaults to 16px."
@@ -7390,9 +7450,24 @@
           "docs": "Sets the gaps of the grid. Defaults to 8px."
         },
         {
+          "name": "--kul-masonry-grid-gap-actions",
+          "annotation": "prop",
+          "docs": "Sets the gap for action grids. Defaults to 8px."
+        },
+        {
+          "name": "--kul-masonry-grid-gap-actions-sub",
+          "annotation": "prop",
+          "docs": "Sets the gap for sub-action grids. Defaults to 4px."
+        },
+        {
           "name": "--kul-masonry-grid-items-alignment",
           "annotation": "prop",
-          "docs": "Sets the alignments of grids' items. Defaults to 8px."
+          "docs": "Sets the alignment of grid items. Defaults to start."
+        },
+        {
+          "name": "--kul-masonry-hover-brightness",
+          "annotation": "prop",
+          "docs": "Sets the brightness on hover. Defaults to 125%."
         },
         {
           "name": "--kul-masonry-padding",
@@ -7400,9 +7475,69 @@
           "docs": "Sets the padding of the grid. Defaults to 12px."
         },
         {
+          "name": "--kul-masonry-selected-after-border-radius",
+          "annotation": "prop",
+          "docs": "Sets the border radius of the ::after pseudo-element. Defaults to 8px."
+        },
+        {
+          "name": "--kul-masonry-selected-after-border-width",
+          "annotation": "prop",
+          "docs": "Sets the border width of the ::after pseudo-element. Defaults to 4px."
+        },
+        {
+          "name": "--kul-masonry-selected-after-offset",
+          "annotation": "prop",
+          "docs": "Sets the offset for the ::after pseudo-element. Defaults to -4px."
+        },
+        {
           "name": "--kul-masonry-selected-border",
           "annotation": "prop",
           "docs": "Sets the border color of selected items. Defaults to var(--kul-primary-color)."
+        },
+        {
+          "name": "--kul-masonry-selected-border-radius",
+          "annotation": "prop",
+          "docs": "Sets the border radius of selected items. Defaults to 5px."
+        },
+        {
+          "name": "--kul-masonry-selected-box-shadow-blur",
+          "annotation": "prop",
+          "docs": "Sets the blur radius of the box-shadow. Defaults to 10px."
+        },
+        {
+          "name": "--kul-masonry-selected-box-shadow-offset-y",
+          "annotation": "prop",
+          "docs": "Sets the Y-offset of the box-shadow. Defaults to 4px."
+        },
+        {
+          "name": "--kul-masonry-selected-outline-offset",
+          "annotation": "prop",
+          "docs": "Sets the outline offset of selected items. Defaults to 4px."
+        },
+        {
+          "name": "--kul-masonry-selected-outline-width",
+          "annotation": "prop",
+          "docs": "Sets the outline width of selected items. Defaults to 2px."
+        },
+        {
+          "name": "--kul-masonry-selected-transform-scale",
+          "annotation": "prop",
+          "docs": "Sets the scale transform of selected items. Defaults to 1.05."
+        },
+        {
+          "name": "--kul-masonry-selected-z-index",
+          "annotation": "prop",
+          "docs": "Sets the z-index of selected items. Defaults to 1."
+        },
+        {
+          "name": "--kul-masonry-transition-duration",
+          "annotation": "prop",
+          "docs": "Sets the duration of transitions. Defaults to 0.3s."
+        },
+        {
+          "name": "--kul-masonry-transition-timing-function",
+          "annotation": "prop",
+          "docs": "Sets the timing function of transitions. Defaults to ease."
         }
       ],
       "slots": [],
@@ -14243,7 +14378,7 @@
       "path": "src/components/kul-upload/kul-upload-declarations.ts"
     },
     "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonryView": {
-      "declaration": "export type KulMasonryView = 'masonry' | 'waterfall';",
+      "declaration": "export type KulMasonryView = 'horizontal' | 'masonry' | 'vertical';",
       "docstring": "",
       "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
     },
