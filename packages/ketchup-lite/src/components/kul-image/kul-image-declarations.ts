@@ -4,7 +4,13 @@ import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulImageEvent = 'click' | 'load' | 'ready' | 'unmount';
+export type KulImageEvent =
+    | 'click'
+    | 'contextmenu'
+    | 'error'
+    | 'load'
+    | 'ready'
+    | 'unmount';
 export interface KulImageEventPayload
     extends KulEventPayload<'KulImage', KulImageEvent> {}
 /*-------------------------------------------------*/

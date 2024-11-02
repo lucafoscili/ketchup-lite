@@ -80,6 +80,22 @@ Type: `Promise<void>`
 
 
 
+## CSS Custom Properties
+
+| Name                                     | Description                                                                                          |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `--kul-image-aspect-ratio`               | Sets the aspect ratio of the image. Defaults to 1 (square).                                          |
+| `--kul-image-background`                 | Sets the background color of the image icon. Defaults to transparent.                                |
+| `--kul-image-height`                     | Sets the height of the image. Defaults to 100%.                                                      |
+| `--kul-image-margin`                     | Sets the margin of the image. Defaults to auto.                                                      |
+| `--kul-image-mask`                       | Sets the mask for the image icon. Defaults to none.                                                  |
+| `--kul-image-spinner-offset`             | Sets the offset of the spinner from the center. Defaults to calc(var(--kul-image-spinner-size) / 2). |
+| `--kul-image-spinner-size`               | Sets the size of the spinner. Defaults to 32px.                                                      |
+| `--kul-image-transition-duration`        | Sets the duration of the color transition. Defaults to 0.2s.                                         |
+| `--kul-image-transition-timing-function` | Sets the timing function of the color transition. Defaults to ease.                                  |
+| `--kul-image-width`                      | Sets the width of the image. Defaults to 100%.                                                       |
+
+
 ## Dependencies
 
 ### Used by

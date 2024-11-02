@@ -12,7 +12,7 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import type { GenericMap, GenericObject } from '../../types/GenericTypes';
+import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulImageEvent,
@@ -55,6 +55,11 @@ export class KulImage {
         renderStart: 0,
         startTime: performance.now(),
     };
+    /**
+     * The selected element.
+     * @default false
+     */
+    @State() error = false;
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -174,38 +179,43 @@ export class KulImage {
     /*-------------------------------------------------*/
 
     createIcon(): VNode {
-        const classObj: GenericObject<boolean> = {
+        const className = {
             image__icon: true,
         };
-        const style: GenericMap = {
-            background: this.kulColor
+        const style = {
+            ['--kul_image_background']: this.kulColor
                 ? this.kulColor
                 : `var(${KulThemeColorValues.ICON})`,
+            ['--kul_image_mask']: '',
         };
-        if (this.kulValue.indexOf(CSS_VAR_PREFIX) > -1) {
+        const isThemeIcon = this.kulValue.indexOf(CSS_VAR_PREFIX) > -1;
+        if (isThemeIcon) {
             const themeIcon = this.kulValue.replace('--', '');
-            classObj['kul-icon'] = true;
-            classObj[themeIcon] = true;
-            const icon =
-                this.#kulManager.theme.list[this.#kulManager.theme.name].icons[
-                    this.kulValue
-                ];
-            const path = getAssetPath(`./assets/svg/${icon}.svg`);
-            style.mask = `url('${path}') no-repeat center`;
-            style.webkitMask = `url('${path}') no-repeat center`;
-        } else {
-            const path = getAssetPath(`./assets/svg/${this.kulValue}.svg`);
-            style.mask = `url('${path}') no-repeat center`;
-            style.webkitMask = `url('${path}') no-repeat center`;
+            className['kul-icon'] = true;
+            className[themeIcon] = true;
         }
+        const icon = this.error
+            ? 'broken_image'
+            : isThemeIcon
+              ? this.#kulManager.theme.list[this.#kulManager.theme.name].icons[
+                    this.kulValue
+                ]
+              : this.kulValue;
+        style['--kul_image_mask'] =
+            `url('${getAssetPath(`./assets/svg/${icon}.svg`)}') no-repeat center`;
 
-        return <div class={classObj} style={style}></div>;
+        return <div class={className} style={style}></div>;
     }
 
     createImage(): VNode {
         return (
             <img
+                onError={(e) => {
+                    this.error = true;
+                    this.onKulEvent(e, 'error');
+                }}
                 onLoad={(e) => {
+                    this.error = false;
                     this.onKulEvent(e, 'load');
                 }}
                 src={this.kulValue}
@@ -253,22 +263,14 @@ export class KulImage {
         let feedback: HTMLElement;
         const isUrl = this.isResourceUrl();
         let spinnerLayout: number;
-        let style: {
-            '--kul_image_height': string;
-            '--kul_image_width': string;
+        let style = {
+            '--kul_image_height': this.kulSizeY ? this.kulSizeY : 'auto',
+            '--kul_image_width': this.kulSizeX ? this.kulSizeX : '100%',
         };
 
-        if (isUrl) {
-            style = {
-                '--kul_image_height': this.kulSizeY ? this.kulSizeY : 'auto',
-                '--kul_image_width': this.kulSizeX ? this.kulSizeX : '100%',
-            };
+        if (isUrl && !this.error) {
             el = this.createImage();
         } else {
-            style = {
-                '--kul_image_height': this.kulSizeY ? this.kulSizeY : '100%',
-                '--kul_image_width': this.kulSizeX ? this.kulSizeX : '100%',
-            };
             el = this.createIcon();
         }
 
