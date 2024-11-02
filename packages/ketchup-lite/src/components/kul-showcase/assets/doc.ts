@@ -1464,7 +1464,48 @@ export const KUL_DOC: KulShowcaseDoc = {
         type: "string",
       },
     ],
-    styles: [],
+    styles: [
+      {
+        name: "--kul-image-aspect-ratio",
+        docs: "Sets the aspect ratio of the image. Defaults to 1 (square).",
+      },
+      {
+        name: "--kul-image-background",
+        docs: "Sets the background color of the image icon. Defaults to transparent.",
+      },
+      {
+        name: "--kul-image-height",
+        docs: "Sets the height of the image. Defaults to 100%.",
+      },
+      {
+        name: "--kul-image-margin",
+        docs: "Sets the margin of the image. Defaults to auto.",
+      },
+      {
+        name: "--kul-image-mask",
+        docs: "Sets the mask for the image icon. Defaults to none.",
+      },
+      {
+        name: "--kul-image-spinner-offset",
+        docs: "Sets the offset of the spinner from the center. Defaults to calc(var(--kul-image-spinner-size) / 2).",
+      },
+      {
+        name: "--kul-image-spinner-size",
+        docs: "Sets the size of the spinner. Defaults to 32px.",
+      },
+      {
+        name: "--kul-image-transition-duration",
+        docs: "Sets the duration of the color transition. Defaults to 0.2s.",
+      },
+      {
+        name: "--kul-image-transition-timing-function",
+        docs: "Sets the timing function of the color transition. Defaults to ease.",
+      },
+      {
+        name: "--kul-image-width",
+        docs: "Sets the width of the image. Defaults to 100%.",
+      },
+    ],
   },
   "kul-lazy": {
     methods: [
@@ -1795,7 +1836,7 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [
       {
         name: "kulColumns",
-        docs: "Number of columns of the masonry.",
+        docs: "Number of columns of the masonry, doesn't affect sequential views.",
         type: "number",
       },
       {
@@ -1820,11 +1861,15 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulView",
-        docs: "Sets the type of view, either the actual masonry or a waterfall view.",
-        type: '"masonry" | "waterfall"',
+        docs: "Sets the type of view, either the actual masonry or a sequential view.",
+        type: '"horizontal" | "masonry" | "vertical"',
       },
     ],
     styles: [
+      {
+        name: "--kul-masonry-actions-z-index",
+        docs: "Sets the z-index of action elements. Defaults to 2.",
+      },
       {
         name: "--kul-masonry-button-bottom",
         docs: "Sets the bottom placement of the change view button. Defaults to 16px.",
@@ -1842,16 +1887,76 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets the gaps of the grid. Defaults to 8px.",
       },
       {
+        name: "--kul-masonry-grid-gap-actions",
+        docs: "Sets the gap for action grids. Defaults to 8px.",
+      },
+      {
+        name: "--kul-masonry-grid-gap-actions-sub",
+        docs: "Sets the gap for sub-action grids. Defaults to 4px.",
+      },
+      {
         name: "--kul-masonry-grid-items-alignment",
-        docs: "Sets the alignments of grids' items. Defaults to 8px.",
+        docs: "Sets the alignment of grid items. Defaults to start.",
+      },
+      {
+        name: "--kul-masonry-hover-brightness",
+        docs: "Sets the brightness on hover. Defaults to 125%.",
       },
       {
         name: "--kul-masonry-padding",
         docs: "Sets the padding of the grid. Defaults to 12px.",
       },
       {
+        name: "--kul-masonry-selected-after-border-radius",
+        docs: "Sets the border radius of the ::after pseudo-element. Defaults to 8px.",
+      },
+      {
+        name: "--kul-masonry-selected-after-border-width",
+        docs: "Sets the border width of the ::after pseudo-element. Defaults to 4px.",
+      },
+      {
+        name: "--kul-masonry-selected-after-offset",
+        docs: "Sets the offset for the ::after pseudo-element. Defaults to -4px.",
+      },
+      {
         name: "--kul-masonry-selected-border",
         docs: "Sets the border color of selected items. Defaults to var(--kul-primary-color).",
+      },
+      {
+        name: "--kul-masonry-selected-border-radius",
+        docs: "Sets the border radius of selected items. Defaults to 5px.",
+      },
+      {
+        name: "--kul-masonry-selected-box-shadow-blur",
+        docs: "Sets the blur radius of the box-shadow. Defaults to 10px.",
+      },
+      {
+        name: "--kul-masonry-selected-box-shadow-offset-y",
+        docs: "Sets the Y-offset of the box-shadow. Defaults to 4px.",
+      },
+      {
+        name: "--kul-masonry-selected-outline-offset",
+        docs: "Sets the outline offset of selected items. Defaults to 4px.",
+      },
+      {
+        name: "--kul-masonry-selected-outline-width",
+        docs: "Sets the outline width of selected items. Defaults to 2px.",
+      },
+      {
+        name: "--kul-masonry-selected-transform-scale",
+        docs: "Sets the scale transform of selected items. Defaults to 1.05.",
+      },
+      {
+        name: "--kul-masonry-selected-z-index",
+        docs: "Sets the z-index of selected items. Defaults to 1.",
+      },
+      {
+        name: "--kul-masonry-transition-duration",
+        docs: "Sets the duration of transitions. Defaults to 0.3s.",
+      },
+      {
+        name: "--kul-masonry-transition-timing-function",
+        docs: "Sets the timing function of transitions. Defaults to ease.",
       },
     ],
   },
