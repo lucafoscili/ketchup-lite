@@ -918,7 +918,7 @@ export namespace Components {
          */
         "getSelectedShape": () => Promise<KulMasonrySelectedShape>;
         /**
-          * Number of columns of the masonry.
+          * Number of columns of the masonry, doesn't affect sequential views.
           * @default 3
          */
         "kulColumns": number;
@@ -943,7 +943,7 @@ export namespace Components {
          */
         "kulStyle": string;
         /**
-          * Sets the type of view, either the actual masonry or a waterfall view.
+          * Sets the type of view, either the actual masonry or a sequential view.
           * @default null
          */
         "kulView": KulMasonryView;
@@ -3002,7 +3002,7 @@ declare namespace LocalJSX {
     }
     interface KulMasonry {
         /**
-          * Number of columns of the masonry.
+          * Number of columns of the masonry, doesn't affect sequential views.
           * @default 3
          */
         "kulColumns"?: number;
@@ -3027,7 +3027,7 @@ declare namespace LocalJSX {
          */
         "kulStyle"?: string;
         /**
-          * Sets the type of view, either the actual masonry or a waterfall view.
+          * Sets the type of view, either the actual masonry or a sequential view.
           * @default null
          */
         "kulView"?: KulMasonryView;

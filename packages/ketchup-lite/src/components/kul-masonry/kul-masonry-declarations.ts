@@ -2,9 +2,36 @@ import {
     KulDataCell,
     KulDataDataset,
     KulDataShapes,
+    KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
+import { KulMasonry } from './kul-masonry';
 
+/*-------------------------------------------------*/
+/*                  A d a p t e r                  */
+/*-------------------------------------------------*/
+export interface KulMasonryAdapter {
+    actions: KulMasonryAdapterActions;
+    components: {
+        buttons: {
+            addColumn: HTMLKulButtonElement;
+            removeColumn: HTMLKulButtonElement;
+            changeView: HTMLKulButtonElement;
+        };
+    };
+    isMasonry: () => boolean;
+    isVertical: () => boolean;
+    get: {
+        masonry: () => KulMasonry;
+        shapes: () => KulDataShapesMap;
+    };
+}
+
+export interface KulMasonryAdapterActions {
+    addColumn: () => Promise<void>;
+    removeColumn: () => Promise<void>;
+    changeView: () => Promise<void>;
+}
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
@@ -29,7 +56,7 @@ export enum KulMasonryProps {
     kulSelectable = 'Allows for the selection of elements.',
     kulShape = 'Sets the type of shapes to compare.',
     kulStyle = 'Sets a custom CSS style for the component.',
-    kulView = 'Sets the type of view, either the actual masonry or a waterfall view.',
+    kulView = 'Sets the type of view, either the actual masonry or a sequential view.',
 }
 export interface KulMasonryPropsInterface {
     kulColumns?: number;
@@ -39,4 +66,4 @@ export interface KulMasonryPropsInterface {
     kulStyle?: string;
     kulView?: KulMasonryView;
 }
-export type KulMasonryView = 'masonry' | 'waterfall';
+export type KulMasonryView = 'horizontal' | 'masonry' | 'vertical';

@@ -7,14 +7,14 @@
 
 ## Properties
 
-| Property        | Attribute        | Description                                                           | Type                                                                                                                              | Default     |
-| --------------- | ---------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `kulColumns`    | `kul-columns`    | Number of columns of the masonry.                                     | `number`                                                                                                                          | `3`         |
-| `kulData`       | --               | Actual data of the masonry.                                           | `KulDataDataset`                                                                                                                  | `null`      |
-| `kulSelectable` | `kul-selectable` | Allows for the selection of elements.                                 | `boolean`                                                                                                                         | `false`     |
-| `kulShape`      | `kul-shape`      | Sets the type of shapes to compare.                                   | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'`   |
-| `kulStyle`      | `kul-style`      | Custom style of the component.                                        | `string`                                                                                                                          | `''`        |
-| `kulView`       | `kul-view`       | Sets the type of view, either the actual masonry or a waterfall view. | `"masonry" \| "waterfall"`                                                                                                        | `'masonry'` |
+| Property        | Attribute        | Description                                                            | Type                                                                                                                              | Default     |
+| --------------- | ---------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `kulColumns`    | `kul-columns`    | Number of columns of the masonry, doesn't affect sequential views.     | `number`                                                                                                                          | `3`         |
+| `kulData`       | --               | Actual data of the masonry.                                            | `KulDataDataset`                                                                                                                  | `null`      |
+| `kulSelectable` | `kul-selectable` | Allows for the selection of elements.                                  | `boolean`                                                                                                                         | `false`     |
+| `kulShape`      | `kul-shape`      | Sets the type of shapes to compare.                                    | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'`   |
+| `kulStyle`      | `kul-style`      | Custom style of the component.                                         | `string`                                                                                                                          | `''`        |
+| `kulView`       | `kul-view`       | Sets the type of view, either the actual masonry or a sequential view. | `"horizontal" \| "masonry" \| "vertical"`                                                                                         | `'masonry'` |
 
 
 ## Events
@@ -107,15 +107,31 @@ Type: `Promise<void>`
 
 ## CSS Custom Properties
 
-| Name                                 | Description                                                                    |
-| ------------------------------------ | ------------------------------------------------------------------------------ |
-| `--kul-masonry-button-bottom`        | Sets the bottom placement of the change view button. Defaults to 16px.         |
-| `--kul-masonry-button-right`         | Sets the right placement of the change view button. Defaults to 16px.          |
-| `--kul-masonry-column-size`          | Sets the dimension of the masonry columns. Defaults to minmax(0px, 1fr).       |
-| `--kul-masonry-grid-gap`             | Sets the gaps of the grid. Defaults to 8px.                                    |
-| `--kul-masonry-grid-items-alignment` | Sets the alignments of grids' items. Defaults to 8px.                          |
-| `--kul-masonry-padding`              | Sets the padding of the grid. Defaults to 12px.                                |
-| `--kul-masonry-selected-border`      | Sets the border color of selected items. Defaults to var(--kul-primary-color). |
+| Name                                         | Description                                                                    |
+| -------------------------------------------- | ------------------------------------------------------------------------------ |
+| `--kul-masonry-actions-z-index`              | Sets the z-index of action elements. Defaults to 2.                            |
+| `--kul-masonry-button-bottom`                | Sets the bottom placement of the change view button. Defaults to 16px.         |
+| `--kul-masonry-button-right`                 | Sets the right placement of the change view button. Defaults to 16px.          |
+| `--kul-masonry-column-size`                  | Sets the dimension of the masonry columns. Defaults to minmax(0px, 1fr).       |
+| `--kul-masonry-grid-gap`                     | Sets the gaps of the grid. Defaults to 8px.                                    |
+| `--kul-masonry-grid-gap-actions`             | Sets the gap for action grids. Defaults to 8px.                                |
+| `--kul-masonry-grid-gap-actions-sub`         | Sets the gap for sub-action grids. Defaults to 4px.                            |
+| `--kul-masonry-grid-items-alignment`         | Sets the alignment of grid items. Defaults to start.                           |
+| `--kul-masonry-hover-brightness`             | Sets the brightness on hover. Defaults to 125%.                                |
+| `--kul-masonry-padding`                      | Sets the padding of the grid. Defaults to 12px.                                |
+| `--kul-masonry-selected-after-border-radius` | Sets the border radius of the ::after pseudo-element. Defaults to 8px.         |
+| `--kul-masonry-selected-after-border-width`  | Sets the border width of the ::after pseudo-element. Defaults to 4px.          |
+| `--kul-masonry-selected-after-offset`        | Sets the offset for the ::after pseudo-element. Defaults to -4px.              |
+| `--kul-masonry-selected-border`              | Sets the border color of selected items. Defaults to var(--kul-primary-color). |
+| `--kul-masonry-selected-border-radius`       | Sets the border radius of selected items. Defaults to 5px.                     |
+| `--kul-masonry-selected-box-shadow-blur`     | Sets the blur radius of the box-shadow. Defaults to 10px.                      |
+| `--kul-masonry-selected-box-shadow-offset-y` | Sets the Y-offset of the box-shadow. Defaults to 4px.                          |
+| `--kul-masonry-selected-outline-offset`      | Sets the outline offset of selected items. Defaults to 4px.                    |
+| `--kul-masonry-selected-outline-width`       | Sets the outline width of selected items. Defaults to 2px.                     |
+| `--kul-masonry-selected-transform-scale`     | Sets the scale transform of selected items. Defaults to 1.05.                  |
+| `--kul-masonry-selected-z-index`             | Sets the z-index of selected items. Defaults to 1.                             |
+| `--kul-masonry-transition-duration`          | Sets the duration of transitions. Defaults to 0.3s.                            |
+| `--kul-masonry-transition-timing-function`   | Sets the timing function of transitions. Defaults to ease.                     |
 
 
 ## Dependencies
