@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-03T15:24:58",
+  "timestamp": "2024-11-03T16:12:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -2708,13 +2708,13 @@
           "name": "kulXAxis",
           "type": "AxisBaseOptionCommon & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | CategoryAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | LogAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | TimeAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | ValueAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; }",
           "complexType": {
-            "original": "XAXisComponentOption",
+            "original": "KulChartXAxis",
             "resolved": "AxisBaseOptionCommon & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | CategoryAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | LogAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | TimeAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; } | ValueAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"xAxis\"; }",
             "references": {
-              "XAXisComponentOption": {
+              "KulChartXAxis": {
                 "location": "import",
-                "path": "echarts",
-                "id": "node_modules::XAXisOption"
+                "path": "./kul-chart-declarations",
+                "id": "src/components/kul-chart/kul-chart-declarations.tsx::KulChartXAxis"
               }
             }
           },
@@ -2752,13 +2752,13 @@
           "name": "kulYAxis",
           "type": "AxisBaseOptionCommon & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | CategoryAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | LogAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | TimeAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | ValueAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; }",
           "complexType": {
-            "original": "YAXisComponentOption",
+            "original": "KulChartYAxis",
             "resolved": "AxisBaseOptionCommon & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | CategoryAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | LogAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | TimeAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; } | ValueAxisBaseOption & { gridIndex?: number; gridId?: string; position?: CartesianAxisPosition; offset?: number; categorySortInfo?: OrdinalSortInfo; } & { mainType?: \"yAxis\"; }",
             "references": {
-              "YAXisComponentOption": {
+              "KulChartYAxis": {
                 "location": "import",
-                "path": "echarts",
-                "id": "node_modules::YAXisOption"
+                "path": "./kul-chart-declarations",
+                "id": "src/components/kul-chart/kul-chart-declarations.tsx::KulChartYAxis"
               }
             }
           },
@@ -14174,6 +14174,16 @@
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
       "declaration": "export type KulChartType =\n    | 'area'\n    | 'bar'\n    | 'bubble'\n    | 'calendar'\n    | 'candlestick'\n    | 'funnel'\n    | 'gaussian'\n    | 'hbar'\n    | 'line'\n    | 'pie'\n    | 'radar'\n    | 'sankey'\n    | 'scatter';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartXAxis": {
+      "declaration": "declare type XAXisOption = CartesianAxisOption & {\n    mainType?: 'xAxis';\n};",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartYAxis": {
+      "declaration": "declare type YAXisOption = CartesianAxisOption & {\n    mainType?: 'yAxis';\n};",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },

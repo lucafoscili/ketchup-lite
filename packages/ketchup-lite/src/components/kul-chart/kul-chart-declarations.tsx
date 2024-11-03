@@ -111,8 +111,8 @@ export interface KulChartPropsInterface {
     kulSizeY?: string;
     kulStyle?: string;
     kulTypes?: KulChartType[];
-    kulXAxis?: XAXisComponentOption;
-    kulYAxis?: YAXisComponentOption;
+    kulXAxis?: KulChartXAxis;
+    kulYAxis?: KulChartYAxis;
 }
 export type KulChartType =
     | 'area'
@@ -134,3 +134,5 @@ export type KulChartLegendPlacement =
     | 'hidden'
     | 'right'
     | 'top';
+export type KulChartXAxis = XAXisComponentOption;
+export type KulChartYAxis = YAXisComponentOption;

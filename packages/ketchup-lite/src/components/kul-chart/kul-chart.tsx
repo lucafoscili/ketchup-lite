@@ -18,14 +18,10 @@ import {
     KulChartLegendPlacement,
     KulChartAdapter,
     KulChartEventData,
+    KulChartXAxis,
+    KulChartYAxis,
 } from './kul-chart-declarations';
-import {
-    ECharts,
-    XAXisComponentOption,
-    YAXisComponentOption,
-    dispose,
-    init,
-} from 'echarts';
+import { ECharts, dispose, init } from 'echarts';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import { getProps } from '../../utils/componentUtils';
 import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
@@ -116,12 +112,12 @@ export class KulChart {
      * Customization options for the x Axis.
      * @default null
      */
-    @Prop() kulXAxis: XAXisComponentOption = null;
+    @Prop() kulXAxis: KulChartXAxis = null;
     /**
      * Customization options for the y Axis.
      * @default null
      */
-    @Prop() kulYAxis: YAXisComponentOption = null;
+    @Prop() kulYAxis: KulChartYAxis = null;
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
