@@ -31,7 +31,7 @@ jobs:
               uses: actions/cache@v3
               with:
                   path: node_modules
-                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-v2
                   restore-keys: |
                       ${{ runner.os }}-modules-
 
@@ -39,7 +39,7 @@ jobs:
               uses: actions/cache@v3
               with:
                   path: ~/.cache/Cypress
-                  key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}
+                  key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}-v2
                   restore-keys: |
                       ${{ runner.os }}-cypress-
 
@@ -63,5 +63,7 @@ jobs:
                     exit 1
                   fi
 
-            - name: Run Cypress Tests
-              uses: cypress-io/github-action@v5
+            - name: Cypress Run
+              run: |
+                  cd packages/ketchup-lite
+                  npx cypress run
