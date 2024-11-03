@@ -28,6 +28,7 @@ import {
     LineSeriesOption,
     PieSeriesOption,
     RadarSeriesOption,
+    SankeySeriesOption,
     SeriesOption,
     XAXisComponentOption,
     YAXisComponentOption,
@@ -415,6 +416,8 @@ export class KulChart {
                 return this.#setPieOptions();
             case 'radar':
                 return this.#setRadarOptions();
+            case 'sankey':
+                return this.#setSankeyOptions();
             default:
                 return this.#setDefaultOptions();
         }
@@ -485,7 +488,7 @@ export class KulChart {
         return options;
     }
 
-    #setRadarOptions(): EChartsOption {
+    #setRadarOptions() {
         const adapter = this.#adapter;
         const design = adapter.design;
         this.#createSeriesData();
@@ -569,7 +572,7 @@ export class KulChart {
         return options;
     }
 
-    #setCandlestickOptions(): EChartsOption {
+    #setCandlestickOptions() {
         const adapter = this.#adapter;
         const design = adapter.design;
         this.#createSeriesData();
@@ -658,7 +661,7 @@ export class KulChart {
         return options;
     }
 
-    #setFunnelOptions(): EChartsOption {
+    #setFunnelOptions() {
         const adapter = this.#adapter;
         const design = adapter.design;
         this.#createSeriesData();
@@ -699,6 +702,56 @@ export class KulChart {
                         borderWidth: 1,
                     },
                 } as FunnelSeriesOption,
+            ],
+            tooltip: design.tooltip(adapter),
+        };
+
+        return options;
+    }
+
+    #setSankeyOptions() {
+        const adapter = this.#adapter;
+        const design = adapter.design;
+        this.#createSeriesData();
+
+        const sourceKey = this.kulAxis;
+        const targetKey = this.kulSeries[0];
+        const valueKey = this.kulSeries[1];
+
+        const links = this.kulData.nodes.map((node) => {
+            return {
+                source: String(node.cells[sourceKey]?.value || 'Source'),
+                target: String(node.cells[targetKey]?.value || 'Target'),
+                value: parseFloat(
+                    this.#stringify(node.cells[valueKey]?.value) || '0'
+                ),
+            };
+        });
+
+        const colors = design.colors(adapter, links.length);
+
+        const options: EChartsOption = {
+            color: colors,
+            legend: design.legend(adapter),
+            series: [
+                {
+                    type: 'sankey',
+                    data: [
+                        ...new Set(
+                            links.flatMap((link) => [link.source, link.target])
+                        ),
+                    ].map((name) => ({ name })),
+                    links: links,
+                    label: {
+                        show: true,
+                        color: design.theme.textColor,
+                        fontFamily: design.theme.font,
+                    },
+                    lineStyle: {
+                        color: 'gradient',
+                        curveness: 0.5,
+                    },
+                } as SankeySeriesOption,
             ],
             tooltip: design.tooltip(adapter),
         };

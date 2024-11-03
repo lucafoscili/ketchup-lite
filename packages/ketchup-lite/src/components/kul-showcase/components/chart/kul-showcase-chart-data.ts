@@ -95,6 +95,14 @@ export const CHART_EXAMPLES: ChartData = {
         kulSizeY: '300px',
         kulTypes: ['radar'],
     },
+    sankey: {
+        ['data-description']: 'Sankey',
+        kulAxis: 'Source',
+        kulData: CHART_KULDATA_FACTORY.sankey(),
+        kulSeries: ['Target', 'Value'],
+        kulSizeY: '300px',
+        kulTypes: ['sankey'],
+    },
     scatter: {
         ['data-description']: 'Scatter',
         kulAxis: 'X',

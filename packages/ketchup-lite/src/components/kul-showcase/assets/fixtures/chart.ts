@@ -492,6 +492,47 @@ export const CHART_KULDATA_FACTORY: Partial<{
             },
         ],
     }),
+    sankey: () => ({
+        columns: [
+            { id: 'Source', title: 'Source' },
+            { id: 'Target', title: 'Target' },
+            { id: 'Value', title: 'Value' },
+        ],
+        nodes: [
+            {
+                id: '0',
+                cells: {
+                    Source: { value: 'Marketing' },
+                    Target: { value: 'Sales' },
+                    Value: { value: '300' },
+                },
+            },
+            {
+                id: '1',
+                cells: {
+                    Source: { value: 'Sales' },
+                    Target: { value: 'Support' },
+                    Value: { value: '150' },
+                },
+            },
+            {
+                id: '2',
+                cells: {
+                    Source: { value: 'Marketing' },
+                    Target: { value: 'Development' },
+                    Value: { value: '200' },
+                },
+            },
+            {
+                id: '3',
+                cells: {
+                    Source: { value: 'Development' },
+                    Target: { value: 'Operations' },
+                    Value: { value: '100' },
+                },
+            },
+        ],
+    }),
     scatter: () => ({
         columns: [
             { id: 'X', title: 'X Axis' },

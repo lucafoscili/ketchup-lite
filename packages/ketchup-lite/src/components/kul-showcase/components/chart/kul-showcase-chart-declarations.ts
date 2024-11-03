@@ -11,6 +11,7 @@ export const CHART_EXAMPLES_KEYS = [
     'line',
     'pie',
     'radar',
+    'sankey',
     'scatter',
     'style',
 ] as const;
