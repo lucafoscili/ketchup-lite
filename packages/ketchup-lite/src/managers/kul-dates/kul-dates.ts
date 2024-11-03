@@ -9,17 +9,7 @@ import 'dayjs/locale/pl';
 import 'dayjs/locale/ru';
 import 'dayjs/locale/zh';
 import { KulGenericRootElement } from '../../types/GenericTypes';
-import {
-    KulDateTimeFormatOptionsMonth,
-    KulDatesFormats,
-    KulDatesLocales,
-    KulDatesNormalize,
-} from './kul-dates-declarations';
-
-/**
- * Handles operations and formatting of dates.
- * @module KulDates
- */
+import { KulDatesLocales, KulDatesNormalize } from './kul-dates-declarations';
 export class KulDates {
     dayjs: Function;
     locale: KulDatesLocales;
@@ -32,11 +22,6 @@ export class KulDates {
         dayjs.extend(localizedFormat);
         dayjs.extend(minMax);
     }
-    /**
-     * Sets the locale from the browser or from a given argument.
-     * @returns {string} Locale string.
-     * @see https://github.com/iamkun/dayjs/issues/732
-     */
     setLocale(locale?: KulDatesLocales): string {
         if (locale) {
             // Sets locale from string
@@ -77,27 +62,15 @@ export class KulDates {
         });
         document.dispatchEvent(new CustomEvent('kul-dates-localechange'));
     }
-    /**
-     * @returns {string} The current locale.
-     */
     getLocale(): string {
         return this.locale;
     }
-    /**
-     * Gets the available locales.
-     * @returns {Array<KulDatesLocales>} Array of locales' names.
-     */
     getLocales(): Array<KulDatesLocales> {
         const items: Array<KulDatesLocales> = Object.keys(KulDatesLocales)
             .map((key) => KulDatesLocales[key as keyof typeof KulDatesLocales])
             .filter((value) => typeof value === 'string');
         return items;
     }
-
-    /**
-     * Gets date format by browser locale
-     * @returns {string} date format pattern, by browser locale
-     */
     getDateFormat(): string {
         const formatObj = new Intl.DateTimeFormat(
             this.getLocale()
@@ -119,12 +92,6 @@ export class KulDates {
             .join('');
         return dateFormat;
     }
-
-    /**
-     * Gets time format by browser locale
-     * @param {boolean} manageSeconds flag to set seconds managing
-     * @returns {string} time format pattern, by browser locale
-     */
     getTimeFormat(manageSeconds: boolean): string {
         const options: Intl.DateTimeFormatOptions = {
             hour: '2-digit',
@@ -154,24 +121,12 @@ export class KulDates {
             .join('');
         return timeFormat;
     }
-    /**
-     * Formats the given date.
-     * @param {dayjs.ConfigType} input - Date to be formatted.
-     * @param {string} format - Output format.
-     * @see https://day.js.org/docs/en/display/format
-     */
     format(input: dayjs.ConfigType, format?: string): string {
         if (!format) {
             format = 'L'; // MM/DD/YYYY, DD/MM/YYYY depending on locale
         }
         return dayjs(input).format(format);
     }
-    /**
-     * Gets the time formatted
-     * @param {Date} time time as Date object
-     * @param {boolean} manageSeconds flag to set seconds managing
-     * @return {string} time as string, formatted
-     **/
     formatTime(time: Date, manageSeconds: boolean): string {
         const options: Intl.DateTimeFormatOptions = {
             hour: '2-digit',
@@ -183,13 +138,6 @@ export class KulDates {
         }
         return time.toLocaleTimeString(this.getLocale() + '-u-hc-h23', options);
     }
-    /**
-     * Validates the given date.
-     * @param {dayjs.ConfigType} date - Date to be validated.
-     * @param {string} format - Format of the input date.
-     * @param {boolean} strict - Strict parsing requires that the format and input match exactly, including delimiters.
-     * @returns {boolean} Returns whether the argument is a valid date or not.
-     */
     isValid(
         date: dayjs.ConfigType,
         format?: string,
@@ -201,24 +149,6 @@ export class KulDates {
             return dayjs(date, undefined, strict).isValid();
         }
     }
-
-    /**
-     * Validates the given date as string.
-     * @param {string} value time string, formatted by actual browser locale
-     * @param {boolean} manageSeconds if manage seconds
-     * @returns {boolean} true if time string in input is a valid time
-     */
-    isValidFormattedStringTime(value: string, manageSeconds: boolean): boolean {
-        let format = this.getTimeFormat(manageSeconds);
-        return this.isValid(value, format, true);
-    }
-
-    /**
-     * Converts the input in a Date object.
-     * @param {dayjs.ConfigType} input - Input date.
-     * @param {string} format - Format of the input date.
-     * @returns {Date} Date object.
-     */
     toDate(input: dayjs.ConfigType, format?: string): Date {
         if (format && format != null) {
             return dayjs(input, format).toDate();
@@ -226,12 +156,6 @@ export class KulDates {
             return dayjs(input).toDate();
         }
     }
-    /**
-     * Converts the input in a Dayjs object.
-     * @param {dayjs.ConfigType} input - Input date.
-     * @param {string} format - Format of the input date.
-     * @returns {dayjs.Dayjs} Dayjs object.
-     */
     toDayjs(input: dayjs.ConfigType, format?: string): dayjs.Dayjs {
         if (format) {
             return dayjs(input, format);
@@ -239,13 +163,6 @@ export class KulDates {
             return dayjs(input);
         }
     }
-
-    /**
-     * Returns a computed ISO date/time from a partial string.
-     * @param {string} input - Input string containing a partial date/time (i.e.: 011221).
-     * @param {KulDatesNormalize} type - Type of the input string.
-     * @returns {dayjs.Dayjs} Dayjs object of the normalized date.
-     */
     normalize(input: string, type?: KulDatesNormalize): dayjs.Dayjs {
         const l = dayjs.Ls[this.locale].formats.L;
         // array e for-each con contains
@@ -380,11 +297,6 @@ export class KulDates {
             return today;
         }
     }
-    /**
-     * Returns the minimum date from an array of dates.
-     * @param {dayjs.ConfigType[]} dates - Array of dates.
-     * @returns {dayjs.Dayjs} Minimum date.
-     */
     min(dates: dayjs.ConfigType[]): dayjs.Dayjs {
         const dayjsDates: dayjs.Dayjs[] = [];
         for (let index = 0; index < dates.length; index++) {
@@ -393,11 +305,6 @@ export class KulDates {
         }
         return dayjs.min(dayjsDates);
     }
-    /**
-     * Returns the maximum date from an array of dates.
-     * @param {dayjs.ConfigType[]} dates - Array of dates.
-     * @returns {dayjs.Dayjs} Maximum date.
-     */
     max(dates: dayjs.ConfigType[]): dayjs.Dayjs {
         const dayjsDates: dayjs.Dayjs[] = [];
         for (let index = 0; index < dates.length; index++) {
@@ -406,14 +313,6 @@ export class KulDates {
         }
         return dayjs.max(dayjsDates);
     }
-    /**
-     * Adds the given amount of time to the input date.
-     * @param {dayjs.ConfigType} input - Input date.
-     * @param {number} value - The value of the addition (i.e.: 7).
-     * @param {dayjs.OpUnitType} unit - The unit of the addition (i.e.: "year").
-     * @returns {dayjs.Dayjs} Computed date.
-     * @see https://day.js.org/docs/en/manipulate/add
-     */
     add(
         input: dayjs.ConfigType,
         value: number,
@@ -421,14 +320,6 @@ export class KulDates {
     ): dayjs.Dayjs {
         return dayjs(input).add(value, unit);
     }
-    /**
-     * Subtracts the given amount of time from the input date.
-     * @param {dayjs.ConfigType} input - Input date.
-     * @param {number} value - The value of the subtraction (i.e.: 7).
-     * @param {dayjs.OpUnitType} unit - The unit of the subtraction (i.e.: "year").
-     * @returns {dayjs.Dayjs} Computed date.
-     * @see https://day.js.org/docs/en/manipulate/subtract
-     */
     subtract(
         input: dayjs.ConfigType,
         value: number,
@@ -436,312 +327,11 @@ export class KulDates {
     ): dayjs.Dayjs {
         return dayjs(input).subtract(value, unit);
     }
-
-    /**
-     * Gets the month formatted
-     * @param {number} month month id
-     * @param {KulDateTimeFormatOptionsMonth} format format
-     * @returns {string} the month formatted, by browser locale
-     */
-    getMonthAsString(
-        month: number,
-        format: KulDateTimeFormatOptionsMonth
-    ): string {
-        if (month == null) {
-            return '';
-        }
-        const dateTmp = new Date();
-        dateTmp.setDate(1);
-        dateTmp.setMonth(month - 1);
-        const options: Intl.DateTimeFormatOptions = {
-            month: format,
-        };
-        const dateTimeFormat = new Intl.DateTimeFormat(
-            this.getLocale(),
-            options
-        );
-        return dateTimeFormat.format(dateTmp);
-    }
-
-    /**
-     * Gets the year months formatted
-     * @param {KulDateTimeFormatOptionsMonth} format format
-     * @returns {string[]} the months formatted, by browser locale
-     */
-    getMonthsAsString(format?: KulDateTimeFormatOptionsMonth): string[] {
-        if (format == null || format.trim() == '') {
-            format = KulDateTimeFormatOptionsMonth.LONG;
-        }
-        var months: string[] = [];
-        for (var i = 0; i < 12; i++) {
-            months[i] = this.getMonthAsString(i + 1, format);
-        }
-
-        return months;
-    }
-
-    /**
-     * Gets the day formatted
-     * @param {Date} date date
-     * @returns {string} the day formatted, by browser locale
-     */
-    getDayAsString(date: Date): string {
-        if (date == null) {
-            return '';
-        }
-        const options: Intl.DateTimeFormatOptions = {
-            weekday: 'narrow',
-            /** weekday: 'narrow' 'short' 'long' */
-        };
-        const dateTimeFormat = new Intl.DateTimeFormat(
-            this.getLocale(),
-            options
-        );
-        return dateTimeFormat.format(date);
-    }
-
-    /**
-     * First day of current week
-     * @param {number} firstDayIndex first day of week index
-     * @returns {Date} the first day of current week
-     */
-    firstDayThisWeek(firstDayIndex?: number): Date {
-        var d = new Date();
-        const day = d.getDay();
-        // dayIndex0
-        d.setDate(d.getDate() - day);
-        // dayIndexX
-        d.setDate(d.getDate() + firstDayIndex);
-        return d;
-    }
-
-    /**
-     * Dates of current week
-     * @param {number} firstDayIndex first day of week index
-     * @returns { startDate: Date; endDate: Date } the dates of current week
-     */
-    thisWeek(firstDayIndex?: number): { startDate: Date; endDate: Date } {
-        const firstDay = this.firstDayThisWeek(firstDayIndex);
-        return {
-            startDate: firstDay,
-            endDate: offsetDate(firstDay, 6),
-        };
-
-        function offsetDate(base: Date, count: number): Date {
-            const date = new Date(base);
-            date.setDate(base.getDate() + count);
-            return date;
-        }
-    }
-
-    /**
-     * Gets the days of current week as string
-     * @param {number} firstDayIndex first day of week index
-     * @returns {string[]} the days of current week as string
-     */
-    getDaysOfWeekAsString(firstDayIndex?: number): string[] {
-        var thisWeekDays: { startDate: Date; endDate: Date } =
-            this.thisWeek(firstDayIndex);
-        var monday: Date = thisWeekDays.startDate;
-        var days: string[] = [];
-        for (var i = 0; i < 7; i++) {
-            var date: Date = new Date(monday.toISOString());
-            date.setDate(date.getDate() + i);
-            days[i] = this.getDayAsString(date);
-        }
-        return days;
-    }
-
-    /**
-     * Gets the timestamp formatted
-     * @param {string} value date/time as string, formatted ISO
-     * @returns {string} date/time as string, formatted by actual browser locale
-     **/
-    timestampStringToFormattedString(value: string): string {
-        const options: Intl.DateTimeFormatOptions = {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false,
-        };
-        let date = this.toDate(
-            this.normalize(value, KulDatesNormalize.TIMESTAMP)
-        );
-        return date.toLocaleString(this.getLocale() + '-u-hc-h23', options);
-    }
-
-    /**
-     * Gets ISO date/time from formatted string, as string
-     * @param {string} value date/time as string, formatted by actual browser locale
-     * @returns {string} date/time as string, formatted ISO
-     **/
-    formattedStringToTimestampString(value: string): string {
-        return this.formattedStringToCustomDateTime(
-            value,
-            KulDatesFormats.ISO_DATE_TIME,
-            true
-        );
-    }
-
-    /**
-     * Gets formatted dateTime as customed ISO (see KulDatesFormats)
-     * @param {string} value time as string, formatted by actual browser locale
-     * @param {string} outputFormat time format to return (see KulDatesFormats)
-     * @param {boolean} manageSeconds flag to set seconds managing
-     * @returns {string} time as string, formatted
-     **/
-    formattedStringToCustomDateTime(
-        value: string,
-        outputFormat: string,
-        manageSeconds: boolean
-    ): string {
-        let inputFormat: string = this.getTimeFormat(manageSeconds);
-        if (this.isValid(value, inputFormat)) {
-            return this.format(
-                this.normalize(value, KulDatesNormalize.TIME),
-                outputFormat
-            );
-        } else {
-            return '';
-        }
-    }
-
-    /**
-     * Gets the time formatted
-     * @param {string} value time as string, formatted ISO
-     * @param {boolean} manageSeconds flag to set seconds managing
-     * @param {string} customedFormat time format from smeupObject
-     * @returns {string} time as string, formatted by actual browser locale
-     **/
-    timeStringToFormattedString(
-        value: string,
-        manageSeconds: boolean,
-        customedFormat?: string
-    ): string {
-        const options: Intl.DateTimeFormatOptions = {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-        };
-        if (manageSeconds == true) {
-            options.second = '2-digit';
-        }
-        let date = this.toDate(this.normalize(value, KulDatesNormalize.TIME));
-
-        return formatByCustomedOutputTimeFormat(
-            value,
-            date,
-            options,
-            customedFormat,
-            this
-        );
-
-        function formatByCustomedOutputTimeFormat(
-            valueStr: string,
-            date: Date,
-            options: Intl.DateTimeFormatOptions,
-            customedFormat: string,
-            kulDates: KulDates
-        ): string {
-            if (customedFormat == null) {
-                return date.toLocaleTimeString(
-                    kulDates.getLocale() + '-u-hc-h23',
-                    options
-                );
-            }
-
-            switch (customedFormat) {
-                case 'I13': {
-                    //hh:mm
-                    break;
-                }
-                case 'I12': {
-                    //hh:mm:ss
-                    break;
-                }
-                case 'I11': {
-                    //???
-                    //hh:dddd
-                    //return moment(date).format('HH:DDDD');
-                    return valueStr;
-                }
-                case 'I14': {
-                    //???
-                    //sssss
-                    //return moment(date).format('SSSSS');
-                    return valueStr;
-                }
-                case 'I1H': {
-                    //???
-                    //Ora,Cen/Min HH,xx
-                    return valueStr;
-                }
-                case 'I1M': {
-                    //???
-                    //Min,Cen/Sec  MMMM,xx
-                    return valueStr;
-                }
-                case 'I21': {
-                    //???
-                    //Giorni,(4 decim)
-                    return valueStr;
-                }
-                case 'I22': {
-                    //???
-                    //Ore,(4 decim)
-                    return valueStr;
-                }
-                case 'I23': {
-                    //???
-                    //Minuti,(4 decim)
-                    return valueStr;
-                }
-                case 'I24': {
-                    //???
-                    //Secondi
-                    return valueStr;
-                }
-                case 'I2H': {
-                    //???
-                    //Ora,Cen/Min HHHH,xx
-                    return valueStr;
-                }
-                case 'I2D': {
-                    //???
-                    //Ore Minuti Secondi HHMMS
-                    return valueStr;
-                }
-                case 'I2M': {
-                    //???
-                    //Min,Cen/Sec MMMM,xx
-                    return valueStr;
-                }
-            }
-
-            return date.toLocaleTimeString(
-                kulDates.getLocale() + '-u-hc-h23',
-                options
-            );
-        }
-    }
-
-    /**
-     * Registers a KulComponent in KulDates, in order to be properly handled whenever the locale changes.
-     * @param {any} component - The Ketchup component to be registered.
-     */
     register(component: any): void {
         this.managedComponents.add(
             component.rootElement ? component.rootElement : component
         );
     }
-    /**
-     * Unregisters a KulComponent, so it won't be refreshed when the locale changes.
-     *
-     * @param {any} component - The component calling this function.
-     */
     unregister(component: any): void {
         if (this.managedComponents) {
             this.managedComponents.delete(
@@ -749,47 +339,4 @@ export class KulDates {
             );
         }
     }
-    /**
-     * Formats a JS Date Object to ISO String
-     *
-     * @param {Date} date - The date to be formatted to ISO.
-     */
-    formatToIsoDate = (date: Date) => {
-        return dayjs(date).toISOString() ?? undefined;
-    };
-
-    /**
-     * Parses a Date string to JS Date Object
-     *
-     * @param {string} ymd - The string to be converted to Date.
-     */
-    parseToDayStart = (ymd: string) => {
-        return dayjs(ymd).toDate();
-    };
-
-    parseToDayEnd = (endDate: string) => {
-        return dayjs(endDate)
-            .set('hour', 23)
-            .set('minute', 59)
-            .set('second', 59)
-            .toDate();
-    };
-
-    /**
-     * Returns Start and end date of given dates
-     *
-     * @param {string} startDate - The start date string.
-     * @param {string} endDate - The end date string.
-     * @param {string} _name
-     */
-    validDates = (startDate: string, endDate: string, _name: string) => {
-        let start = this.parseToDayStart(startDate);
-        const end = this.parseToDayEnd(endDate);
-        if (start?.getTime() > end?.getTime()) {
-            start = this.parseToDayStart(endDate);
-        }
-        return { start, end };
-    };
-
-    formatToLocaleSimple = (date: Date) => dayjs(date).format('DD/MM/YYYY');
 }

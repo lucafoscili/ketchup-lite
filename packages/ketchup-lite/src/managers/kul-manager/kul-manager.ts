@@ -6,8 +6,6 @@ import { KulDynamicPosition } from '../kul-dynamic-position/kul-dynamic-position
 import { KulDynamicPositionElement } from '../kul-dynamic-position/kul-dynamic-position-declarations';
 import { KulLanguage } from '../kul-language/kul-language';
 import { KulLanguageDefaults } from '../kul-language/kul-language-declarations';
-import { KulMath } from '../kul-math/kul-math';
-import { KulMathLocales } from '../kul-math/kul-math-declarations';
 import { KulScrollOnHover } from '../kul-scroll-on-hover/kul-scroll-on-hover';
 import { KulTheme } from '../kul-theme/kul-theme';
 import { setAssetPath } from '@stencil/core';
@@ -21,10 +19,6 @@ import { KulLLM } from '../kul-llm/kul-llm';
 
 const dom: KulDom = document.documentElement as KulDom;
 
-/**
- * This class controls every other Ketchup utility suite.
- * @module KulManager
- */
 export class KulManager {
     data: KulData;
     dates: KulDates;
@@ -32,7 +26,6 @@ export class KulManager {
     dynamicPosition: KulDynamicPosition;
     language: KulLanguage;
     llm: KulLLM;
-    math: KulMath;
     overrides?: KulManagerInitialization;
     resize: ResizeObserver;
     scrollOnHover: KulScrollOnHover;
@@ -58,7 +51,6 @@ export class KulManager {
             overrides?.language?.name ?? null
         );
         this.llm = new KulLLM();
-        this.math = new KulMath();
         this.scrollOnHover = new KulScrollOnHover(
             overrides?.scrollOnHover?.delay ?? null,
             overrides?.scrollOnHover?.step ?? null
@@ -73,7 +65,6 @@ export class KulManager {
 
         this.#setupListeners();
     }
-
     #setupListeners() {
         document.addEventListener('click', (e) => {
             const paths = e.composedPath() as HTMLElement[];
@@ -116,11 +107,6 @@ export class KulManager {
             });
         });
     }
-    /**
-     * Adds a new click callback.
-     * @param {KulManagerClickCb} cb - The callback to add.
-     * @param {boolean} async - When true, the callback will be added asynchrounously to prevent instant firing if it was added through a click event.
-     */
     addClickCallback(cb: KulManagerClickCb, async?: boolean) {
         if (async) {
             setTimeout(() => {
@@ -130,17 +116,9 @@ export class KulManager {
             this.utilities.clickCallbacks.add(cb);
         }
     }
-    /**
-     * Removes the given click callback.
-     * @param {KulManagerClickCb} cb - The callback to remove.
-     */
     removeClickCallback(cb: KulManagerClickCb) {
         this.utilities.clickCallbacks.delete(cb);
     }
-    /**
-     * Sets both locale and language library-wide.
-     * @param {KulDatesLocales} locale - The supported locale.
-     */
     setLibraryLocalization(locale: KulDatesLocales) {
         if (!Object.values(KulDatesLocales).includes(locale)) {
             this.debug.logs.new(
@@ -160,13 +138,8 @@ export class KulManager {
         }
         this.dates.setLocale(locale);
         this.language.set(KulLanguageDefaults[locale]);
-        this.math.setLocale(KulMathLocales[locale]);
     }
 }
-/**
- * Called by the Ketchup components to retrieve the instance of KulManager (or creating a new one when missing).
- * @returns {KulManager} KulManager instance.
- */
 export function kulManagerInstance(): KulManager {
     if (!dom.ketchupLite) {
         const overrides: KulManagerInitialization = dom.ketchupLiteInit ?? null;
@@ -177,9 +150,6 @@ export function kulManagerInstance(): KulManager {
             const locale = dom.ketchupLite.dates.locale;
             if (!overrides.language || !overrides.language.name) {
                 dom.ketchupLite.language.set(KulLanguageDefaults[locale]);
-            }
-            if (!overrides.math || !overrides.math.locale) {
-                dom.ketchupLite.math.setLocale(KulMathLocales[locale]);
             }
         }
         document.dispatchEvent(new CustomEvent('kul-manager-ready'));

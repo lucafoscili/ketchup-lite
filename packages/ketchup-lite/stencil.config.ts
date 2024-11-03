@@ -12,8 +12,8 @@ export const config: Config = {
                 'kul-showcase-kuldebug',
                 'kul-showcase-kuldynamicposition',
                 'kul-showcase-kullanguage',
+                'kul-showcase-kulllm',
                 'kul-showcase-kulmanager',
-                'kul-showcase-kulmath',
                 'kul-showcase-kulscrollonhover',
                 'kul-showcase-kultheme',
                 'kul-showcase-accordion',
@@ -59,9 +59,7 @@ export const config: Config = {
             serviceWorker: null,
         },
         reactOutputTarget({
-            componentCorePackage: 'ketchup-lite',
-            proxiesFile: '../ketchup-lite-react/src/index.ts',
-            includeDefineCustomElements: true,
+            outDir: 'ketchup-lite-react',
         }),
         {
             type: 'dist',
@@ -69,6 +67,7 @@ export const config: Config = {
         },
         {
             type: 'dist-custom-elements',
+            externalRuntime: false,
         },
     ],
     plugins: [

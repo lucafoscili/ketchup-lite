@@ -16,7 +16,7 @@ import { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-b
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 import { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
 import { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
-import { XAXisComponentOption, YAXisComponentOption } from "echarts";
+import { XAXisOption as XAXisComponentOption, YAXisOption as YAXisComponentOption } from "echarts";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
@@ -48,7 +48,7 @@ export { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-b
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 export { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
 export { KulChartEventPayload, KulChartLegendPlacement, KulChartType } from "./components/kul-chart/kul-chart-declarations";
-export { XAXisComponentOption, YAXisComponentOption } from "echarts";
+export { XAXisOption as XAXisComponentOption, YAXisOption as YAXisComponentOption } from "echarts";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
@@ -1146,9 +1146,9 @@ export namespace Components {
     }
     interface KulShowcaseKullanguage {
     }
-    interface KulShowcaseKulmanager {
+    interface KulShowcaseKulllm {
     }
-    interface KulShowcaseKulmath {
+    interface KulShowcaseKulmanager {
     }
     interface KulShowcaseKulscrollonhover {
     }
@@ -2191,17 +2191,17 @@ declare global {
         prototype: HTMLKulShowcaseKullanguageElement;
         new (): HTMLKulShowcaseKullanguageElement;
     };
+    interface HTMLKulShowcaseKulllmElement extends Components.KulShowcaseKulllm, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseKulllmElement: {
+        prototype: HTMLKulShowcaseKulllmElement;
+        new (): HTMLKulShowcaseKulllmElement;
+    };
     interface HTMLKulShowcaseKulmanagerElement extends Components.KulShowcaseKulmanager, HTMLStencilElement {
     }
     var HTMLKulShowcaseKulmanagerElement: {
         prototype: HTMLKulShowcaseKulmanagerElement;
         new (): HTMLKulShowcaseKulmanagerElement;
-    };
-    interface HTMLKulShowcaseKulmathElement extends Components.KulShowcaseKulmath, HTMLStencilElement {
-    }
-    var HTMLKulShowcaseKulmathElement: {
-        prototype: HTMLKulShowcaseKulmathElement;
-        new (): HTMLKulShowcaseKulmathElement;
     };
     interface HTMLKulShowcaseKulscrollonhoverElement extends Components.KulShowcaseKulscrollonhover, HTMLStencilElement {
     }
@@ -2475,8 +2475,8 @@ declare global {
         "kul-showcase-kuldebug": HTMLKulShowcaseKuldebugElement;
         "kul-showcase-kuldynamicposition": HTMLKulShowcaseKuldynamicpositionElement;
         "kul-showcase-kullanguage": HTMLKulShowcaseKullanguageElement;
+        "kul-showcase-kulllm": HTMLKulShowcaseKulllmElement;
         "kul-showcase-kulmanager": HTMLKulShowcaseKulmanagerElement;
-        "kul-showcase-kulmath": HTMLKulShowcaseKulmathElement;
         "kul-showcase-kulscrollonhover": HTMLKulShowcaseKulscrollonhoverElement;
         "kul-showcase-kultheme": HTMLKulShowcaseKulthemeElement;
         "kul-showcase-lazy": HTMLKulShowcaseLazyElement;
@@ -3169,9 +3169,9 @@ declare namespace LocalJSX {
     }
     interface KulShowcaseKullanguage {
     }
-    interface KulShowcaseKulmanager {
+    interface KulShowcaseKulllm {
     }
-    interface KulShowcaseKulmath {
+    interface KulShowcaseKulmanager {
     }
     interface KulShowcaseKulscrollonhover {
     }
@@ -3525,8 +3525,8 @@ declare namespace LocalJSX {
         "kul-showcase-kuldebug": KulShowcaseKuldebug;
         "kul-showcase-kuldynamicposition": KulShowcaseKuldynamicposition;
         "kul-showcase-kullanguage": KulShowcaseKullanguage;
+        "kul-showcase-kulllm": KulShowcaseKulllm;
         "kul-showcase-kulmanager": KulShowcaseKulmanager;
-        "kul-showcase-kulmath": KulShowcaseKulmath;
         "kul-showcase-kulscrollonhover": KulShowcaseKulscrollonhover;
         "kul-showcase-kultheme": KulShowcaseKultheme;
         "kul-showcase-lazy": KulShowcaseLazy;
@@ -3596,8 +3596,8 @@ declare module "@stencil/core" {
             "kul-showcase-kuldebug": LocalJSX.KulShowcaseKuldebug & JSXBase.HTMLAttributes<HTMLKulShowcaseKuldebugElement>;
             "kul-showcase-kuldynamicposition": LocalJSX.KulShowcaseKuldynamicposition & JSXBase.HTMLAttributes<HTMLKulShowcaseKuldynamicpositionElement>;
             "kul-showcase-kullanguage": LocalJSX.KulShowcaseKullanguage & JSXBase.HTMLAttributes<HTMLKulShowcaseKullanguageElement>;
+            "kul-showcase-kulllm": LocalJSX.KulShowcaseKulllm & JSXBase.HTMLAttributes<HTMLKulShowcaseKulllmElement>;
             "kul-showcase-kulmanager": LocalJSX.KulShowcaseKulmanager & JSXBase.HTMLAttributes<HTMLKulShowcaseKulmanagerElement>;
-            "kul-showcase-kulmath": LocalJSX.KulShowcaseKulmath & JSXBase.HTMLAttributes<HTMLKulShowcaseKulmathElement>;
             "kul-showcase-kulscrollonhover": LocalJSX.KulShowcaseKulscrollonhover & JSXBase.HTMLAttributes<HTMLKulShowcaseKulscrollonhoverElement>;
             "kul-showcase-kultheme": LocalJSX.KulShowcaseKultheme & JSXBase.HTMLAttributes<HTMLKulShowcaseKulthemeElement>;
             "kul-showcase-lazy": LocalJSX.KulShowcaseLazy & JSXBase.HTMLAttributes<HTMLKulShowcaseLazyElement>;

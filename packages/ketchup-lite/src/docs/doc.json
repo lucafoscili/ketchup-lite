@@ -1,9 +1,9 @@
 {
-  "timestamp": "2024-11-03T13:11:32",
+  "timestamp": "2024-11-03T15:24:58",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.18.1",
-    "typescriptVersion": "5.4.5"
+    "version": "4.22.2",
+    "typescriptVersion": "5.5.4"
   },
   "components": [
     {
@@ -269,7 +269,7 @@
               "Event": {
                 "location": "import",
                 "path": "@stencil/core",
-                "id": ""
+                "id": "node_modules::Event"
               }
             },
             "return": "Promise<void>"
@@ -782,8 +782,8 @@
         "kul-showcase-kuldebug",
         "kul-showcase-kuldynamicposition",
         "kul-showcase-kullanguage",
+        "kul-showcase-kulllm",
         "kul-showcase-kulmanager",
-        "kul-showcase-kulmath",
         "kul-showcase-kulscrollonhover",
         "kul-showcase-kultheme",
         "kul-showcase-lazy",
@@ -863,10 +863,10 @@
         "kul-showcase-kullanguage": [
           "kul-article"
         ],
-        "kul-showcase-kulmanager": [
+        "kul-showcase-kulllm": [
           "kul-article"
         ],
-        "kul-showcase-kulmath": [
+        "kul-showcase-kulmanager": [
           "kul-article"
         ],
         "kul-showcase-kulscrollonhover": [
@@ -2425,6 +2425,7 @@
       "filePath": "src/components/kul-chart/kul-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chart",
+      "readme": "# kul-chart\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -2713,7 +2714,7 @@
               "XAXisComponentOption": {
                 "location": "import",
                 "path": "echarts",
-                "id": ""
+                "id": "node_modules::XAXisOption"
               }
             }
           },
@@ -2757,7 +2758,7 @@
               "YAXisComponentOption": {
                 "location": "import",
                 "path": "echarts",
-                "id": ""
+                "id": "node_modules::YAXisOption"
               }
             }
           },
@@ -9662,6 +9663,31 @@
       }
     },
     {
+      "filePath": "src/components/kul-showcase/framework/llm/kul-showcase-kulllm.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-kulllm",
+      "readme": "# kul-showcase-kulllm\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [],
+      "dependencies": [
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-kulllm": [
+          "kul-article"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-showcase/framework/manager/kul-showcase-kulmanager.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kulmanager",
@@ -9682,31 +9708,6 @@
       ],
       "dependencyGraph": {
         "kul-showcase-kulmanager": [
-          "kul-article"
-        ]
-      }
-    },
-    {
-      "filePath": "src/components/kul-showcase/framework/math/kul-showcase-kulmath.tsx",
-      "encapsulation": "shadow",
-      "tag": "kul-showcase-kulmath",
-      "readme": "# kul-showcase-kuldata\r\n\r\n\r\n\r",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [],
-      "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
-      "dependencyGraph": {
-        "kul-showcase-kulmath": [
           "kul-article"
         ]
       }

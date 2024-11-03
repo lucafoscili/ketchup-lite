@@ -7,7 +7,6 @@ import { KulDynamicPosition } from '../kul-dynamic-position/kul-dynamic-position
 import { KulLanguage } from '../kul-language/kul-language';
 import { KulLLM } from '../kul-llm/kul-llm';
 import { KulManager } from '../kul-manager/kul-manager';
-import { KulMath } from '../kul-math/kul-math';
 import { KulScrollOnHover } from '../kul-scroll-on-hover/kul-scroll-on-hover';
 import { KulTheme } from '../kul-theme/kul-theme';
 import { KulDebug } from './kul-debug';
@@ -52,7 +51,6 @@ export type KulDebugLogClass =
     | KulLanguage
     | KulLLM
     | KulManager
-    | KulMath
     | KulScrollOnHover
     | KulTheme;
 export type KulDebugLogsToPrint = {

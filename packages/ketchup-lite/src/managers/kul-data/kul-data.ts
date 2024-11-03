@@ -29,10 +29,6 @@ import {
 } from './utils/kul-data-node-utils';
 import { KulComponentName } from '../../types/GenericTypes';
 
-/**
- * Handles data operations.
- * @module KulData
- */
 export class KulData {
     #SHAPES_MAP: KulDataShapeComponentMap = {
         badge: 'KulBadge',

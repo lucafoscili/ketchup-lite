@@ -310,16 +310,17 @@ export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
             value: 'KulLanguage',
         },
         {
+            description:
+                'Utility to connect with Open-AI compatible endpoints.',
+            icon: 'language',
+            id: 'KulLlm',
+            value: 'KulLlm',
+        },
+        {
             description: 'Handles various management tasks within the library.',
             icon: 'settings',
             id: 'KulManager',
             value: 'KulManager',
-        },
-        {
-            description: 'Math operations and number formatting.',
-            icon: 'calculator',
-            id: 'KulMath',
-            value: 'KulMath',
         },
         {
             description:
