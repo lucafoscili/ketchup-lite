@@ -8,6 +8,7 @@ export const CHART_EXAMPLES_KEYS = [
     'gaussian',
     'line',
     'pie',
+    'radar',
     'scatter',
     'style',
 ] as const;

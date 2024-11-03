@@ -348,6 +348,19 @@ export class KulChart {
                     } as BarSeriesOption;
                     break;
 
+                case 'radar':
+                    seriesOption = {
+                        name: seriesName,
+                        type: 'radar',
+                        data: [
+                            {
+                                value: data.filter((value) => !isNaN(value)),
+                                name: seriesName,
+                            },
+                        ],
+                    } as RadarSeriesOption;
+                    break;
+
                 default:
                     seriesOption = {
                         name: seriesName,
@@ -388,17 +401,19 @@ export class KulChart {
         this.#chartEl.on('click', this.#adapter.actions.onClick);
     }
 
-    #createChartOptions(): EChartsOption {
+    #createChartOptions() {
         const firstType = this.kulTypes?.[0] || 'line';
         switch (firstType) {
             case 'pie':
                 return this.#setPieOptions();
+            case 'radar':
+                return this.#setRadarOptions();
             default:
                 return this.#setDefaultOptions();
         }
     }
 
-    #setDefaultOptions(): EChartsOption {
+    #setDefaultOptions() {
         const adapter = this.#adapter;
         const design = adapter.design;
         this.#createAxisData();
@@ -431,7 +446,7 @@ export class KulChart {
         return options;
     }
 
-    #setPieOptions(): EChartsOption {
+    #setPieOptions() {
         const adapter = this.#adapter;
         const design = adapter.design;
         this.#createSeriesData();
@@ -458,6 +473,87 @@ export class KulChart {
                     data,
                 } as PieSeriesOption,
             ],
+        };
+
+        return options;
+    }
+
+    #setRadarOptions(): EChartsOption {
+        const adapter = this.#adapter;
+        const design = adapter.design;
+        this.#createSeriesData();
+
+        const indicators = this.kulSeries.map((seriesName) => {
+            const values = this.#y[seriesName] || [];
+            const max = Math.max(...values);
+            return {
+                name: seriesName,
+                max: isNaN(max) ? 100 : max,
+            };
+        });
+
+        const data = this.kulData.nodes.map((node) => {
+            return {
+                value: this.kulSeries.map((seriesName) =>
+                    parseFloat(
+                        String(node.cells[seriesName]?.value).valueOf() || '0'
+                    )
+                ),
+                name:
+                    String(node.cells[this.kulAxis]?.value).valueOf() ||
+                    'Entity',
+            };
+        });
+
+        const colors = design.colors(adapter, data.length);
+
+        const options: EChartsOption = {
+            color: colors,
+            legend: {
+                ...design.legend(adapter),
+                data: data.map((item) => item.name),
+            },
+            radar: {
+                indicator: indicators,
+                shape: 'circle',
+                splitNumber: 5,
+                axisName: {
+                    color: adapter.design.theme.textColor,
+                    fontFamily: adapter.design.theme.font,
+                },
+                splitArea: {
+                    show: true,
+                    areaStyle: {
+                        color: [colors[0] + '1A', colors[1] + '0D'],
+                    },
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: colors[2] || 'rgba(128, 128, 128, 0.5)',
+                        type: 'dashed',
+                    },
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: colors[2] || 'rgba(128, 128, 128, 0.5)',
+                    },
+                },
+            },
+            series: [
+                {
+                    areaStyle: {
+                        opacity: 0.2, // Adds a semi-transparent fill to the radar areas
+                    },
+                    lineStyle: {
+                        width: 2,
+                    },
+                    symbol: 'circle',
+                    symbolSize: 6,
+                    type: 'radar',
+                    data: data,
+                } as RadarSeriesOption,
+            ],
+            tooltip: design.tooltip(adapter),
         };
 
         return options;

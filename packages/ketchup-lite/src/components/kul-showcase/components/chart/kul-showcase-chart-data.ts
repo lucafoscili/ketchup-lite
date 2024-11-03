@@ -65,6 +65,20 @@ export const CHART_EXAMPLES: ChartData = {
         kulSizeY: '300px',
         kulTypes: ['pie'],
     },
+    radar: {
+        ['data-description']: 'Radar',
+        kulAxis: 'Axis',
+        kulData: CHART_KULDATA_FACTORY.radar(),
+        kulSeries: [
+            'Speed',
+            'Agility',
+            'Strength',
+            'Endurance',
+            'Intelligence',
+        ],
+        kulSizeY: '300px',
+        kulTypes: ['radar'],
+    },
     scatter: {
         ['data-description']: 'Scatter',
         kulAxis: 'X',

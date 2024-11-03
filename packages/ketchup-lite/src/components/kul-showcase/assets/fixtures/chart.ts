@@ -360,37 +360,34 @@ export const CHART_KULDATA_FACTORY: Partial<{
     }),
     radar: () => ({
         columns: [
-            { id: 'Metric', title: 'Metric' },
-            { id: 'Value', title: 'Value' },
+            { id: 'Axis', title: 'Category' },
+            { id: 'Speed', title: 'Speed' },
+            { id: 'Agility', title: 'Agility' },
+            { id: 'Strength', title: 'Strength' },
+            { id: 'Endurance', title: 'Endurance' },
+            { id: 'Intelligence', title: 'Intelligence' },
         ],
         nodes: [
             {
                 id: '0',
-                cells: { Metric: { value: 'Speed' }, Value: { value: '80' } },
+                cells: {
+                    Axis: { value: 'Competitor A' },
+                    Speed: { value: '80' },
+                    Agility: { value: '70' },
+                    Strength: { value: '90' },
+                    Endurance: { value: '60' },
+                    Intelligence: { value: '85' },
+                },
             },
             {
                 id: '1',
-                cells: { Metric: { value: 'Agility' }, Value: { value: '70' } },
-            },
-            {
-                id: '2',
                 cells: {
-                    Metric: { value: 'Strength' },
-                    Value: { value: '90' },
-                },
-            },
-            {
-                id: '3',
-                cells: {
-                    Metric: { value: 'Endurance' },
-                    Value: { value: '60' },
-                },
-            },
-            {
-                id: '4',
-                cells: {
-                    Metric: { value: 'Intelligence' },
-                    Value: { value: '85' },
+                    Axis: { value: 'Competitor B' },
+                    Speed: { value: '75' },
+                    Agility: { value: '80' },
+                    Strength: { value: '85' },
+                    Endurance: { value: '70' },
+                    Intelligence: { value: '80' },
                 },
             },
         ],

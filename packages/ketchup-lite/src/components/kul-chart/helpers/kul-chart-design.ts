@@ -22,17 +22,21 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         return axis;
     },
     colors: (adapter, count) => {
+        const hex = (color: string) => {
+            return adapter.get.manager().theme.colorCheck(color).hexColor;
+        };
+
         const chart = adapter.get.chart();
         const manager = adapter.get.manager();
         const colorArray: string[] = [];
 
         if (chart.kulColors && chart.kulColors.length > 0) {
-            colorArray.push(...chart.kulColors);
+            colorArray.push(...chart.kulColors.map((c) => hex(c)));
         } else {
             let index = 1;
             let colorVar = `--kul-chart-color-${index}`;
             while (manager.theme.cssVars[colorVar]) {
-                colorArray.push(manager.theme.cssVars[colorVar]);
+                colorArray.push(hex(manager.theme.cssVars[colorVar]));
                 index++;
                 colorVar = `--kul-chart-color-${index}`;
             }
