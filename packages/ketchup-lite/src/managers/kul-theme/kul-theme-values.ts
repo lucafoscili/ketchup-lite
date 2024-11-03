@@ -56,7 +56,7 @@ export const themesJson: KulThemeJSON = {
     },
     cinder: {
         cssVariables: {
-            '--kul-primary-color': '##afafaf',
+            '--kul-primary-color': '#afafaf',
             '--kul-secondary-color': '#333333',
             '--kul-background-color': '#101010',
             '--kul-header-background-color': '#1b1b1b',
