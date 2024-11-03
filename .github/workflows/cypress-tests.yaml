@@ -28,7 +28,7 @@ jobs:
               run: yarn install --immutable
 
             - name: Cache Node Modules
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with:
                   path: node_modules
                   key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
@@ -36,7 +36,7 @@ jobs:
                       ${{ runner.os }}-modules-
 
             - name: Cache Cypress Binary
-              uses: actions/cache@v2
+              uses: actions/cache@v3
               with:
                   path: ~/.cache/Cypress
                   key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}
@@ -47,9 +47,21 @@ jobs:
               run: |
                   cd packages/ketchup-lite
                   yarn dev &
-                  sleep 10 # Wait for the server to start
+                  n=0
+                  until [ $n -ge 10 ]
+                  do
+                    if curl --silent --fail http://localhost:3333; then
+                      echo "Server is ready!"
+                      break
+                    fi
+                    n=$((n+1))
+                    echo "Waiting for server to be ready..."
+                    sleep 5
+                  done
+                  if [ $n -ge 10 ]; then
+                    echo "Server did not become ready in time" >&2
+                    exit 1
+                  fi
 
-            - name: Cypress Run
-              run: |
-                  cd packages/ketchup-lite
-                  npx cypress run
+            - name: Run Cypress Tests
+              uses: cypress-io/github-action@v5
