@@ -1,20 +1,8 @@
-/**
- * HTML attribute attached to dynamically positioned elements.
- */
 export const kulDynamicPositionAttribute = 'kul-dynamic-position';
-/**
- * HTML attribute attached to dynamically positioned elements' anchor point.
- */
 export const kulDynamicPositionAnchorAttribute = 'kul-dynamic-position-anchor';
-/**
- * Master type extending all subtypes of available anchor points.
- */
 export type KulDynamicPositionAnchor =
     | HTMLElement
     | KulDynamicPositionCoordinates;
-/**
- * Fixed position element.
- */
 export interface KulDynamicPositionElement extends HTMLElement {
     kulDynamicPosition?: {
         anchor: KulDynamicPositionAnchor;
@@ -25,16 +13,10 @@ export interface KulDynamicPositionElement extends HTMLElement {
         rAF: number;
     };
 }
-/**
- * Coordinates for fixed positioning.
- */
 export interface KulDynamicPositionCoordinates {
     x: number;
     y: number;
 }
-/**
- * Available placements.
- */
 export enum KulDynamicPositionPlacement {
     AUTO = '',
     BOTTOM = 'b',

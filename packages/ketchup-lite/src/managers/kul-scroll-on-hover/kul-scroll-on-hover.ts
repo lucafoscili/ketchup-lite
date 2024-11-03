@@ -7,10 +7,6 @@ import {
 
 const dom: KulDom = document.documentElement as KulDom;
 
-/**
- * Lets the user scroll an element's overflow by hovering with the mouse on its left/right edge.
- * @module KulScrollOnHover
- */
 export class KulScrollOnHover {
     container: HTMLElement;
     delay: number;
@@ -24,11 +20,6 @@ export class KulScrollOnHover {
     #mouseleaveEvent: (event: MouseEvent) => Promise<void>;
     #rAF: number;
     #timeout: ReturnType<typeof setTimeout>;
-    /**
-     * Initializes KulScrollOnHover.
-     * @param {number} delay - Sets the time in milliseconds before the scrolling starts when mouse-hovering.
-     * @param {number} step - The amount in pixels for each scroll recursion.
-     */
     constructor(delay?: number, step?: number) {
         this.delay = delay ? delay : 500;
         this.managedElements = new Set();
@@ -41,9 +32,6 @@ export class KulScrollOnHover {
             this.updateChildren(event.target as KulScrollOnHoverElement);
         this.#timeout = null;
     }
-    /**
-     * Initializes the left and right arrow icons.
-     */
     #initArrows() {
         this.#arrowsContainer = document.createElement('div');
         this.#leftArrows = [];
@@ -78,14 +66,6 @@ export class KulScrollOnHover {
         this.container.appendChild(this.#arrowsContainer);
         document.body.appendChild(this.container);
     }
-    /**
-     * Watches the given element in order to trigger the scroll on hover when conditions are met.
-     * Children nodes with the "hover-scrolling-child" will be watched and scrolled when el scrolls.
-     * @param {KulScrollOnHoverElement} el - Element to watch.
-     * @param {boolean} vertical - Enables vertical scroll.
-     * @param {KulScrollOnHoverPercentages} percentages - Sets how big is the area in which the scroll is enabled.
-     * @param {number} step - The amount in pixels for each scroll recursion.
-     */
     register(
         el: KulScrollOnHoverElement,
         vertical?: boolean,
@@ -115,10 +95,6 @@ export class KulScrollOnHover {
         el.addEventListener('mouseleave', this.#mouseleaveEvent);
         this.managedElements.add(el);
     }
-    /**
-     * Removes the given element from ScrollOnHover watchlist.
-     * @param {KulScrollOnHoverElement} el - Element to unregister.
-     */
     unregister(el: KulScrollOnHoverElement): void {
         el.removeEventListener('scroll', this.#scrollEvent);
         el.removeEventListener('mousemove', this.#mousemoveEvent);
@@ -127,18 +103,9 @@ export class KulScrollOnHover {
             this.managedElements.delete(el);
         }
     }
-    /**
-     * Returns whether an element was previously registered or not.
-     * @param {KulScrollOnHoverElement} el - Element to test.
-     * @returns {boolean} True if the element was registered.
-     */
     isRegistered(el: KulScrollOnHoverElement): boolean {
         return !this.managedElements ? false : this.managedElements.has(el);
     }
-    /**
-     * When called, this function prepares the class for the scrolling process.
-     * @param {MouseEvent} event - The starter event, which should be a MouseMove event.
-     */
     async start(event: MouseEvent): Promise<void> {
         const el: KulScrollOnHoverElement =
             event.currentTarget as KulScrollOnHoverElement;
@@ -172,9 +139,9 @@ export class KulScrollOnHover {
                     elOffset < percLeft && el.scrollLeft !== 0
                         ? ScrollOnHoverDirection.LEFT
                         : elOffset > percRight &&
-                          el.scrollLeft !== maxScrollLeft
-                        ? ScrollOnHoverDirection.RIGHT
-                        : null;
+                            el.scrollLeft !== maxScrollLeft
+                          ? ScrollOnHoverDirection.RIGHT
+                          : null;
                 if (direction) {
                     for (let i = 0; i < 3; i++) {
                         if (direction === ScrollOnHoverDirection.LEFT) {
@@ -212,8 +179,8 @@ export class KulScrollOnHover {
                     elOffset < percTop && el.scrollTop !== 0
                         ? ScrollOnHoverDirection.TOP
                         : elOffset > percBottom && el.scrollTop !== maxScrollTop
-                        ? ScrollOnHoverDirection.BOTTOM
-                        : null;
+                          ? ScrollOnHoverDirection.BOTTOM
+                          : null;
                 if (direction) {
                     this.#timeout = setTimeout(() => {
                         el.scrollOnHover.active = true;
@@ -231,10 +198,6 @@ export class KulScrollOnHover {
             }
         }
     }
-    /**
-     * When called, this function stops the scrolling process.
-     * @param {KulScrollOnHoverElement} el - The scrolled element.
-     */
     async stop(el: KulScrollOnHoverElement): Promise<void> {
         el.scrollOnHover.active = false;
         cancelAnimationFrame(this.#rAF);
@@ -249,14 +212,6 @@ export class KulScrollOnHover {
             this.#rightArrows[i].classList.remove('kul-animated');
         }
     }
-    /**
-     * The actual recursive scroll function.
-     * @param {KulScrollOnHoverElement} el - The scrolled element.
-     * @param {number} maxScrollLeft - Left coordinates to which the recursiveness must be stopped.
-     * @param {number} percForward - Range of the right (or bottom) area.
-     * @param {number} percBack - Range of the left (or top) scrollable area.
-     * @param {ScrollOnHoverDirection} direction - Direction of the scroll.
-     */
     run(
         el: KulScrollOnHoverElement,
         maxScrollLeft: number,
@@ -376,10 +331,6 @@ export class KulScrollOnHover {
             );
         });
     }
-    /**
-     * Scrolls children of the element having the "hover-scrolling-child" class
-     * @param {KulScrollOnHoverElement} el - The scrolled element.
-     */
     updateChildren(el: KulScrollOnHoverElement): void {
         for (let i = 0; i < el.scrollOnHover.children.length; i++) {
             el.scrollOnHover.children[i].scrollLeft = el.scrollLeft;

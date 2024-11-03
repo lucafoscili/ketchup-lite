@@ -2373,12 +2373,12 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [],
     styles: [],
   },
-  "kul-showcase-kulmanager": {
+  "kul-showcase-kulllm": {
     methods: [],
     props: [],
     styles: [],
   },
-  "kul-showcase-kulmath": {
+  "kul-showcase-kulmanager": {
     methods: [],
     props: [],
     styles: [],

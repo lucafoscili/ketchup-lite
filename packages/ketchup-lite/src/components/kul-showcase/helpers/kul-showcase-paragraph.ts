@@ -44,7 +44,7 @@ export const PARAGRAPH_FACTORY = {
     ): KulArticleNode => {
         const signature = (): KulArticleNode => {
             let value = '(';
-            args.forEach((a, index) => {
+            args?.forEach((a, index) => {
                 value += `${a.name}:${a.type}${index < args.length - 1 ? ',' : ''}`;
             });
             value += ')';
@@ -56,7 +56,7 @@ export const PARAGRAPH_FACTORY = {
         };
         const params = () => {
             const content: KulArticleNode[] = [];
-            args.forEach((a) => {
+            args?.forEach((a) => {
                 content.push(DOC_NODES.lineBreak);
                 content.push({
                     id: DOC_IDS.content,
@@ -83,7 +83,7 @@ export const PARAGRAPH_FACTORY = {
                     value: description,
                 },
                 DOC_NODES.lineBreak,
-                ...(hasArgs && params()),
+                ...((hasArgs && params()) || []),
             ],
             id: DOC_IDS.paragraph,
             cssStyle: DOC_STYLES.monoPrimaryH3Large,

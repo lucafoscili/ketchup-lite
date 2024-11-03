@@ -13,7 +13,7 @@
         "noUnusedParameters": true,
         "resolveJsonModule": true,
         "target": "ES2022",
-        "types": ["cypress", "node", "numeral", "prismjs"]
+        "types": ["cypress", "node", "prismjs"]
     },
     "exclude": ["node_modules"],
     "include": ["src"]

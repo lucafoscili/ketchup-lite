@@ -1,10 +1,6 @@
 import { kulManagerInstance } from '../kul-manager/kul-manager';
 import { KulLLMRequest } from './kul-llm-declarations';
 
-/**
- * Handles LLM operations.
- * @module KulLLM
- */
 export class KulLLM {
     async fetch(request: KulLLMRequest, url: string) {
         try {

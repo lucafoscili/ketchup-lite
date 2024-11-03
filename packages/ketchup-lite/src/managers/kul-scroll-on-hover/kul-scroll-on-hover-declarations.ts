@@ -1,6 +1,3 @@
-/**
- * Element scrollable on mouse over.
- */
 export interface KulScrollOnHoverElement extends HTMLElement {
     scrollOnHover: {
         active: boolean;
@@ -17,9 +14,6 @@ export interface KulScrollOnHoverPercentages {
     back: number;
     forward: number;
 }
-/**
- * The direction to which ScollableElement can be scrolled.
- */
 export enum ScrollOnHoverDirection {
     BOTTOM = 'bottom',
     LEFT = 'left',

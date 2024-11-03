@@ -1,7 +1,6 @@
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { ChartData } from './kul-showcase-chart-declarations';
 import { DOC_IDS } from '../../kul-showcase-data';
-import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
@@ -9,6 +8,8 @@ import {
     KulComponentTag,
 } from '../../../../types/GenericTypes';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { CHART_KULDATA_FACTORY } from '../../assets/fixtures/chart';
+import { KulDataDataset } from '../../../../components';
 
 const COMPONENT_NAME: KulComponentName = 'KulChart';
 const EVENT_NAME: KulComponentEventName<'KulChart'> = 'kul-chart-event';
@@ -16,185 +17,105 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulChart'> =
     'KulChartEventPayload';
 const TAG_NAME: KulComponentTag<'KulChart'> = 'kul-chart';
 
-const kulData: KulDataDataset = {
-    columns: [
-        {
-            id: 'Axis',
-            title: 'Department',
-        },
-        {
-            id: 'Series_1',
-            title: 'Current Budget',
-        },
-        {
-            id: 'Series_2',
-            title: 'Projected Budget',
-        },
-        {
-            id: 'Series_3',
-            title: 'Allocated Budget',
-        },
-        {
-            id: 'Series_4',
-            title: 'Expenditures',
-        },
-        {
-            id: 'Series_5',
-            title: 'Savings',
-        },
-    ],
-    nodes: [
-        {
-            cells: {
-                Axis: {
-                    value: 'Digital Marketing',
-                },
-                Series_1: {
-                    value: '15000',
-                },
-                Series_2: {
-                    value: '16000',
-                },
-                Series_3: {
-                    value: '15500',
-                },
-                Series_4: {
-                    value: '14500',
-                },
-                Series_5: {
-                    value: '500',
-                },
-            },
-            id: '0',
-        },
-        {
-            cells: {
-                Axis: {
-                    value: 'E-commerce Sales',
-                },
-                Series_1: {
-                    value: '8000',
-                },
-                Series_2: {
-                    value: '9000',
-                },
-                Series_3: {
-                    value: '8500',
-                },
-                Series_4: {
-                    value: '7500',
-                },
-                Series_5: {
-                    value: '1000',
-                },
-            },
-            id: '1',
-        },
-        {
-            cells: {
-                Axis: {
-                    value: 'Administrative Services',
-                },
-                Series_1: {
-                    value: '6000',
-                },
-                Series_2: {
-                    value: '6500',
-                },
-                Series_3: {
-                    value: '6250',
-                },
-                Series_4: {
-                    value: '6000',
-                },
-                Series_5: {
-                    value: '250',
-                },
-            },
-            id: '2',
-        },
-        {
-            cells: {
-                Axis: {
-                    value: 'Product Development',
-                },
-                Series_1: {
-                    value: '20000',
-                },
-                Series_2: {
-                    value: '22000',
-                },
-                Series_3: {
-                    value: '21000',
-                },
-                Series_4: {
-                    value: '20500',
-                },
-                Series_5: {
-                    value: '9500',
-                },
-            },
-            id: '3',
-        },
-        {
-            cells: {
-                Axis: {
-                    value: 'Customer Support',
-                },
-                Series_1: {
-                    value: '10000',
-                },
-                Series_2: {
-                    value: '11000',
-                },
-                Series_3: {
-                    value: '10500',
-                },
-                Series_4: {
-                    value: '10000',
-                },
-                Series_5: {
-                    value: '500',
-                },
-            },
-            id: '4',
-        },
-    ],
-};
-
 export const CHART_EXAMPLES: ChartData = {
     area: {
         ['data-description']: 'Area',
         kulAxis: 'Axis',
-        kulData,
+        kulData: CHART_KULDATA_FACTORY.line(),
+        kulSeries: ['Series_1', 'Series_2', 'Series_3', 'Series_4', 'Series_5'],
         kulSizeY: '300px',
         kulTypes: ['area'],
     },
     bar: {
         ['data-description']: 'Bar',
         kulAxis: 'Axis',
-        kulData,
+        kulData: CHART_KULDATA_FACTORY.bar(),
         kulSeries: ['Series_1'],
         kulSizeY: '300px',
         kulTypes: ['bar'],
     },
+    calendar: {
+        ['data-description']: 'Calendar',
+        kulAxis: 'Date',
+        kulData: CHART_KULDATA_FACTORY.calendar(),
+        kulSeries: ['Value'],
+        kulSizeY: '300px',
+        kulTypes: ['calendar'],
+    },
+    candlestick: {
+        ['data-description']: 'Candlestick',
+        kulAxis: 'Date',
+        kulData: CHART_KULDATA_FACTORY.candlestick(),
+        kulSeries: ['Open', 'Close', 'Low', 'High'],
+        kulSizeY: '300px',
+        kulTypes: ['candlestick'],
+    },
+    funnel: {
+        ['data-description']: 'Funnel',
+        kulAxis: 'Stage',
+        kulData: CHART_KULDATA_FACTORY.funnel(),
+        kulSeries: ['Value', 'Revenue'],
+        kulSizeY: '300px',
+        kulTypes: ['funnel'],
+    },
+    hbar: {
+        ['data-description']: 'Bar (horizontal)',
+        kulAxis: 'Axis',
+        kulData: CHART_KULDATA_FACTORY.bar(),
+        kulSeries: ['Series_1'],
+        kulSizeY: '300px',
+        kulTypes: ['hbar'],
+    },
+    gaussian: {
+        ['data-description']: 'Gaussian',
+        kulAxis: 'X',
+        kulData: CHART_KULDATA_FACTORY.gaussian(),
+        kulSeries: ['Frequency'],
+        kulSizeY: '300px',
+        kulTypes: ['gaussian'],
+    },
     line: {
         ['data-description']: 'Line',
         kulAxis: 'Axis',
-        kulData,
+        kulData: CHART_KULDATA_FACTORY.line(),
+        kulSeries: ['Series_1', 'Series_2', 'Series_3', 'Series_4', 'Series_5'],
         kulSizeY: '300px',
     },
     pie: {
         ['data-description']: 'Pie',
         kulAxis: 'Axis',
-        kulData,
+        kulData: CHART_KULDATA_FACTORY.pie(),
+        kulSeries: ['Series_1', 'Series_2', 'Series_3', 'Series_4', 'Series_5'],
         kulSizeY: '300px',
         kulTypes: ['pie'],
     },
+    radar: {
+        ['data-description']: 'Radar',
+        kulAxis: 'Axis',
+        kulData: CHART_KULDATA_FACTORY.radar(),
+        kulSeries: [
+            'Speed',
+            'Agility',
+            'Strength',
+            'Endurance',
+            'Intelligence',
+        ],
+        kulSizeY: '300px',
+        kulTypes: ['radar'],
+    },
+    sankey: {
+        ['data-description']: 'Sankey',
+        kulAxis: 'Source',
+        kulData: CHART_KULDATA_FACTORY.sankey(),
+        kulSeries: ['Target', 'Value'],
+        kulSizeY: '300px',
+        kulTypes: ['sankey'],
+    },
     scatter: {
         ['data-description']: 'Scatter',
-        kulAxis: 'Axis',
-        kulData,
+        kulAxis: 'X',
+        kulData: CHART_KULDATA_FACTORY.scatter(),
+        kulSeries: ['Y'],
         kulSizeY: '300px',
         kulTypes: ['scatter'],
     },
@@ -202,7 +123,7 @@ export const CHART_EXAMPLES: ChartData = {
         ['data-description']: 'Bar',
         ['data-dynamic']: 'custom',
         kulAxis: 'Axis',
-        kulData,
+        kulData: CHART_KULDATA_FACTORY.line(),
         kulSeries: ['Series_1'],
         kulSizeY: '300px',
         kulTypes: ['bar'],
@@ -220,7 +141,16 @@ export const CHART_DOC: KulArticleDataset = {
                     'is designed to plot data on charts'
                 ),
                 SECTION_FACTORY.usage(COMPONENT_NAME, {
-                    data: JSON.stringify(kulData),
+                    data: JSON.stringify({
+                        columns: [
+                            { id: 'my_column_1', title: 'My column' },
+                            { id: 'my_column_2', title: 'My column (2)' },
+                        ],
+                        nodes: [
+                            { id: 'my_node_1', value: 1 },
+                            { id: 'my_node_2', value: 2 },
+                        ],
+                    } as KulDataDataset),
                     tag: TAG_NAME,
                 }),
                 SECTION_FACTORY.props(TAG_NAME),

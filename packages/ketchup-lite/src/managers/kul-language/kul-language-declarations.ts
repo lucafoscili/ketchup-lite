@@ -1,7 +1,3 @@
-/**
- * Master type extending all subtypes of keys.
- * Remember to edit "languages.json"
- */
 export type KulLanguageKey =
     | KulLanguageCheckbox
     | KulLanguageColumn
@@ -17,48 +13,32 @@ export type KulLanguageKey =
     | KulLanguageSearch
     | KulLanguageTotals
     | 'keys';
-// Type that can be either a string or another LanguageKeys object
 export type KulLanguageValue = string | { [key: string]: KulLanguageValue };
-// Mapped type that enforces the structure
 export type KulLanguageKeys = Partial<{
     [K in KulLanguageKey]: KulLanguageValue;
 }>;
-// Individual language element
 export interface LanguageElement {
     keys: KulLanguageKeys;
     variants?: {
         [key: string]: KulLanguageKeys;
     };
 }
-// Define the structure of the entire language data
 export interface LanguagesJson {
     [language: string]: LanguageElement;
 }
-/**
- * Interface of the languages JSON.
- */
 export interface KulLanguageJSON {
     [index: string]: KulLanguageElement;
 }
-/**
- * Interface of a single language.
- */
 export interface KulLanguageElement {
     keys: KulLanguageKeys;
     variants?: {
         [key: string]: KulLanguageKeys;
     };
 }
-/**
- * Decode language interface.
- */
 export interface KulLanguageDecode {
     language: string;
     variant: string;
 }
-/**
- * Default languages available.
- */
 export enum KulLanguageDefaults {
     cn = 'chinese',
     en = 'english',
@@ -68,18 +48,12 @@ export enum KulLanguageDefaults {
     pl = 'polish',
     ru = 'russian',
 }
-/**
- * Checkbox statuses decodes.
- */
 export enum KulLanguageCheckbox {
     ALL = 'checkboxAll',
     CHECKED = 'checkboxChecked',
     INDETERMINATE = 'checkboxIndeterminate',
     UNCHECKED = 'checkboxUnchecked',
 }
-/**
- * Column related decodes.
- */
 export enum KulLanguageColumn {
     ADD = 'columnAdd',
     ADD_DESCRIPTION = 'columnAddDescription',
@@ -91,9 +65,6 @@ export enum KulLanguageColumn {
     NON_NUMERICAL_IN_TABLE = 'columnNonNumericalInTable',
     SWAP = 'columnSwap',
 }
-/**
- * Dashboard related decodes.
- */
 export enum KulLanguageDashboard {
     DIMENSION = 'dashboardDimension',
     LOADED = 'dashboardLoaded',
@@ -101,9 +72,6 @@ export enum KulLanguageDashboard {
     SAVE = 'dashboardSave',
     VERTICAL = 'dashboardVertical',
 }
-/**
- * Debug widget decodes.
- */
 export enum KulLanguageDebug {
     AUTOPRINT = 'debugAutoprint',
     CLEAR = 'debugClear',
@@ -119,27 +87,18 @@ export enum KulLanguageDebug {
     PRINT = 'debugPrint',
     THEME_CHANGER = 'debugThemeChanger',
 }
-/**
- * Density decodes (data table customization settings).
- */
 export enum KulLanguageDensity {
     DENSE = 'densityDense',
     LABEL = 'densityLabel',
     MEDIUM = 'densityMedium',
     WIDE = 'densityWide',
 }
-/**
- * Font size decodes (data table customization settings).
- */
 export enum KulLanguageFontsize {
     BIG = 'fontsizeBig',
     LABEL = 'fontsizeLabel',
     MEDIUM = 'fontsizeMedium',
     SMALL = 'fontsizeSmall',
 }
-/**
- * Generic user interface action/messages.
- */
 export enum KulLanguageGeneric {
     ABORT = 'genericAbort',
     ADD_NEW = 'genericAddNew',
@@ -190,9 +149,6 @@ export enum KulLanguageGeneric {
     WEEK = 'genericWeek',
     YES = 'genericYes',
 }
-/**
- * Grid decodes (data table customization settings).
- */
 export enum KulLanguageGrid {
     COLUMN = 'gridColumn',
     COMPLETE = 'gridComplete',
@@ -200,24 +156,15 @@ export enum KulLanguageGrid {
     NONE = 'gridNone',
     ROW = 'gridRow',
 }
-/**
- * Grouping decodes (data table groups).
- */
 export enum KulLanguageGrouping {
     DISABLE = 'groupingDisable',
     ENABLE = 'groupingEnable',
     GROUPS = 'groupingGroups',
 }
-/**
- * Page related decodes.
- */
 export enum KulLanguagePage {
     PAGE = 'pagePage',
     TOTAL = 'pageTotal',
 }
-/**
- * Row related decodes.
- */
 export enum KulLanguageRow {
     DETAIL = 'rowDetail',
     EDITABLE_KEY = 'rowEditableKey',
@@ -229,17 +176,11 @@ export enum KulLanguageRow {
     SELECTED = 'rowSelected',
     TOTAL = 'rowTotal',
 }
-/**
- * Search decodes.
- */
 export enum KulLanguageSearch {
     FROM = 'searchFrom',
     SEARCH = 'searchSearch',
     TO = 'searchTo',
 }
-/**
- * Footer totals decodes (tree and data table).
- */
 export enum KulLanguageTotals {
     AVERAGE = 'totalsAverage',
     CALCULATE = 'totalsCalculate',

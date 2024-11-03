@@ -160,14 +160,6 @@ export const MANAGER_DATA: KulArticleDataset = {
                             },
                         ]),
                         DOC_NODES.hiddenSeparator,
-                        PARAGRAPH_FACTORY.asBulletListEntry('math', [
-                            {
-                                title: 'locale (string)',
-                                description:
-                                    ': sets the locale for mathematical and financial operations within the library.',
-                            },
-                        ]),
-                        DOC_NODES.hiddenSeparator,
                         PARAGRAPH_FACTORY.asBulletListEntry('scrollOnHover', [
                             {
                                 title: 'delay (number)',

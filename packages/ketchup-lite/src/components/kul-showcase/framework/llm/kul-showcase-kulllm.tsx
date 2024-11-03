@@ -1,17 +1,17 @@
 import { Component, Element, Fragment, h } from '@stencil/core';
 import { KUL_WRAPPER_ID } from '../../../../variables/GenericVariables';
-import { MATH_DATA } from './kul-showcase-kulmath-data';
+import { LLM_DATA } from './kul-showcase-kulllm-data';
 
 @Component({
-    tag: 'kul-showcase-kulmath',
-    styleUrl: 'kul-showcase-kulmath.scss',
+    tag: 'kul-showcase-kulllm',
+    styleUrl: 'kul-showcase-kulllm.scss',
     shadow: true,
 })
-export class KulShowcaseKulmath {
+export class KulShowcaseKulllm {
     /**
-     * References the root HTML element of the component (<kul-showcase-kulmath>).
+     * References the root HTML element of the component (<kul-showcase-kulllm>).
      */
-    @Element() rootElement: HTMLKulShowcaseKulmathElement;
+    @Element() rootElement: HTMLKulShowcaseKulllmElement;
 
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
@@ -21,7 +21,7 @@ export class KulShowcaseKulmath {
         return (
             <Fragment>
                 <div id={KUL_WRAPPER_ID}>
-                    <kul-article kulData={MATH_DATA}></kul-article>
+                    <kul-article kulData={LLM_DATA}></kul-article>
                 </div>
             </Fragment>
         );

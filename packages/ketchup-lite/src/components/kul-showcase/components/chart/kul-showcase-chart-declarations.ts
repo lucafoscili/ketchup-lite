@@ -4,8 +4,15 @@ import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 export const CHART_EXAMPLES_KEYS = [
     'area',
     'bar',
+    'calendar',
+    'candlestick',
+    'funnel',
+    'hbar',
+    'gaussian',
     'line',
     'pie',
+    'radar',
+    'sankey',
     'scatter',
     'style',
 ] as const;
