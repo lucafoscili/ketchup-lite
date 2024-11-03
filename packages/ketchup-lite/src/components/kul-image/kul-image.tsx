@@ -11,6 +11,7 @@ import {
     Prop,
     State,
     VNode,
+    Watch,
 } from '@stencil/core';
 import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -132,6 +133,15 @@ export class KulImage {
             originalEvent: e,
             eventType,
         });
+    }
+
+    /*-------------------------------------------------*/
+    /*                 W a t c h e r s                 */
+    /*-------------------------------------------------*/
+
+    @Watch('kulValue')
+    async updateShapes() {
+        this.error = false;
     }
 
     /*-------------------------------------------------*/
