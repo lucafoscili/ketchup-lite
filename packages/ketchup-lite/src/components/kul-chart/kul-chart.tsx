@@ -25,6 +25,7 @@ import {
     ECharts,
     EChartsOption,
     FunnelSeriesOption,
+    HeatmapSeriesOption,
     LineSeriesOption,
     PieSeriesOption,
     RadarSeriesOption,
@@ -408,6 +409,8 @@ export class KulChart {
     #createChartOptions() {
         const firstType = this.kulTypes?.[0] || 'line';
         switch (firstType) {
+            case 'calendar':
+                return this.#setCalendarOptions();
             case 'candlestick':
                 return this.#setCandlestickOptions();
             case 'funnel':
@@ -504,6 +507,10 @@ export class KulChart {
 
         const data = this.kulData.nodes.map((node) => {
             return {
+                name:
+                    this.#stringify(
+                        node.cells[this.kulAxis]?.value
+                    ).valueOf() || 'Entity',
                 value: this.kulSeries.map((seriesName) =>
                     parseFloat(
                         this.#stringify(
@@ -511,10 +518,6 @@ export class KulChart {
                         ).valueOf() || '0'
                     )
                 ),
-                name:
-                    this.#stringify(
-                        node.cells[this.kulAxis]?.value
-                    ).valueOf() || 'Entity',
             };
         });
 
@@ -529,7 +532,6 @@ export class KulChart {
             radar: {
                 indicator: indicators,
                 shape: 'circle',
-                splitNumber: 5,
                 axisName: {
                     color: adapter.design.theme.textColor,
                     fontFamily: adapter.design.theme.font,
@@ -555,7 +557,7 @@ export class KulChart {
             series: [
                 {
                     areaStyle: {
-                        opacity: 0.2, // Adds a semi-transparent fill to the radar areas
+                        opacity: 0.2,
                     },
                     lineStyle: {
                         width: 2,
@@ -594,13 +596,8 @@ export class KulChart {
         });
 
         const colors = [design.theme.successColor, design.theme.dangerColor];
-        console.log(design.legend(adapter));
         const options: EChartsOption = {
             color: colors,
-            legend: {
-                ...design.legend(adapter),
-                data: ['Open', 'Close', 'Low', 'High'],
-            },
             xAxis: {
                 type: 'category',
                 data: this.kulData.nodes.map((node) =>
@@ -685,7 +682,10 @@ export class KulChart {
 
         const options: EChartsOption = {
             color: colors,
-            legend: design.legend(adapter),
+            legend: {
+                ...design.legend(adapter),
+                data: data.map((item) => item.name),
+            },
             series: [
                 {
                     type: 'funnel',
@@ -720,8 +720,12 @@ export class KulChart {
 
         const links = this.kulData.nodes.map((node) => {
             return {
-                source: String(node.cells[sourceKey]?.value || 'Source'),
-                target: String(node.cells[targetKey]?.value || 'Target'),
+                source: this.#stringify(
+                    node.cells[sourceKey]?.value || 'Source'
+                ),
+                target: this.#stringify(
+                    node.cells[targetKey]?.value || 'Target'
+                ),
                 value: parseFloat(
                     this.#stringify(node.cells[valueKey]?.value) || '0'
                 ),
@@ -732,7 +736,6 @@ export class KulChart {
 
         const options: EChartsOption = {
             color: colors,
-            legend: design.legend(adapter),
             series: [
                 {
                     type: 'sankey',
@@ -758,6 +761,88 @@ export class KulChart {
 
         return options;
     }
+
+    #setCalendarOptions(): EChartsOption {
+        const adapter = this.#adapter;
+        const design = adapter.design;
+        this.#createSeriesData();
+
+        const dateKey = this.kulAxis;
+        const valueKey = this.kulSeries[0];
+
+        const data = this.kulData.nodes.map((node) => {
+            return [
+                String(
+                    node.cells[dateKey]?.value ||
+                        new Date().toISOString().split('T')[0]
+                ),
+                parseFloat(this.#stringify(node.cells[valueKey]?.value) || '0'),
+            ];
+        });
+
+        const colors = design.colors(adapter, 1);
+        const year = new Date(
+            Math.min(...data.map(([date]) => new Date(date).getTime()))
+        ).getFullYear();
+
+        const options: EChartsOption = {
+            color: colors,
+            calendar: {
+                range: year,
+                cellSize: ['auto', 24],
+                itemStyle: {
+                    borderWidth: 1,
+                    borderColor: design.theme.border,
+                    color: design.theme.backgroundColor,
+                },
+                dayLabel: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+                monthLabel: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+                yearLabel: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+            },
+            series: [
+                {
+                    type: 'heatmap',
+                    coordinateSystem: 'calendar',
+                    data: data,
+                    label: {
+                        show: false,
+                    },
+                    itemStyle: {
+                        color: colors[0],
+                    },
+                } as HeatmapSeriesOption,
+            ],
+            tooltip: design.tooltip(adapter),
+            visualMap: {
+                align: 'auto',
+                bottom: 'bottom',
+                inRange: {
+                    color: [design.theme.backgroundColor, colors[0]],
+                },
+                left: 'center',
+                max: Math.max(...data.map(([_, value]) => Number(value))),
+                min: Math.min(...data.map(([_, value]) => Number(value))),
+                orient: 'horizontal',
+                text: ['High', 'Low'],
+                textStyle: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+            },
+        };
+
+        return options;
+    }
+
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
     /*-------------------------------------------------*/

@@ -34,6 +34,14 @@ export const CHART_EXAMPLES: ChartData = {
         kulSizeY: '300px',
         kulTypes: ['bar'],
     },
+    calendar: {
+        ['data-description']: 'Calendar',
+        kulAxis: 'Date',
+        kulData: CHART_KULDATA_FACTORY.calendar(),
+        kulSeries: ['Value'],
+        kulSizeY: '300px',
+        kulTypes: ['calendar'],
+    },
     candlestick: {
         ['data-description']: 'Candlestick',
         kulAxis: 'Date',

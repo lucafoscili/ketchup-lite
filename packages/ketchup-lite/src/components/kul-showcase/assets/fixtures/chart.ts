@@ -218,38 +218,70 @@ export const CHART_KULDATA_FACTORY: Partial<{
             },
         ],
     }),
+
     calendar: () => ({
         columns: [
             { id: 'Date', title: 'Date' },
-            { id: 'EventCount', title: 'Event Count' },
+            { id: 'Value', title: 'Value' },
         ],
         nodes: [
             {
                 id: '0',
                 cells: {
-                    Date: { value: '2024-01-01' },
-                    EventCount: { value: '3' },
+                    Date: {
+                        value: new Date(
+                            new Date().setDate(new Date().getDate() - 4)
+                        )
+                            .toISOString()
+                            .split('T')[0],
+                    },
+                    Value: { value: '10' },
                 },
             },
             {
                 id: '1',
                 cells: {
-                    Date: { value: '2024-01-02' },
-                    EventCount: { value: '5' },
+                    Date: {
+                        value: new Date(
+                            new Date().setDate(new Date().getDate() - 3)
+                        )
+                            .toISOString()
+                            .split('T')[0],
+                    },
+                    Value: { value: '15' },
                 },
             },
             {
                 id: '2',
                 cells: {
-                    Date: { value: '2024-01-03' },
-                    EventCount: { value: '1' },
+                    Date: {
+                        value: new Date(
+                            new Date().setDate(new Date().getDate() - 2)
+                        )
+                            .toISOString()
+                            .split('T')[0],
+                    },
+                    Value: { value: '20' },
                 },
             },
             {
                 id: '3',
                 cells: {
-                    Date: { value: '2024-01-04' },
-                    EventCount: { value: '7' },
+                    Date: {
+                        value: new Date(
+                            new Date().setDate(new Date().getDate() - 1)
+                        )
+                            .toISOString()
+                            .split('T')[0],
+                    },
+                    Value: { value: '25' },
+                },
+            },
+            {
+                id: '4',
+                cells: {
+                    Date: { value: new Date().toISOString().split('T')[0] },
+                    Value: { value: '30' },
                 },
             },
         ],
