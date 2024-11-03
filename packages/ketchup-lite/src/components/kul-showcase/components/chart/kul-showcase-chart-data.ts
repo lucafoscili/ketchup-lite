@@ -34,6 +34,14 @@ export const CHART_EXAMPLES: ChartData = {
         kulSizeY: '300px',
         kulTypes: ['bar'],
     },
+    candlestick: {
+        ['data-description']: 'Candlestick',
+        kulAxis: 'Date',
+        kulData: CHART_KULDATA_FACTORY.candlestick(),
+        kulSeries: ['Open', 'Close', 'Low', 'High'],
+        kulSizeY: '300px',
+        kulTypes: ['candlestick'],
+    },
     hbar: {
         ['data-description']: 'Bar (horizontal)',
         kulAxis: 'Axis',

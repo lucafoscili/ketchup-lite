@@ -254,6 +254,57 @@ export const CHART_KULDATA_FACTORY: Partial<{
             },
         ],
     }),
+    candlestick: () => ({
+        columns: [
+            { id: 'Date', title: 'Date' },
+            { id: 'Open', title: 'Open' },
+            { id: 'Close', title: 'Close' },
+            { id: 'Low', title: 'Low' },
+            { id: 'High', title: 'High' },
+        ],
+        nodes: [
+            {
+                id: '0',
+                cells: {
+                    Date: { value: '2024-11-01' },
+                    Open: { value: '100' },
+                    Close: { value: '110' },
+                    Low: { value: '95' },
+                    High: { value: '115' },
+                },
+            },
+            {
+                id: '1',
+                cells: {
+                    Date: { value: '2024-11-02' },
+                    Open: { value: '110' },
+                    Close: { value: '105' },
+                    Low: { value: '100' },
+                    High: { value: '120' },
+                },
+            },
+            {
+                id: '2',
+                cells: {
+                    Date: { value: '2024-11-03' },
+                    Open: { value: '105' },
+                    Close: { value: '115' },
+                    Low: { value: '102' },
+                    High: { value: '118' },
+                },
+            },
+            {
+                id: '3',
+                cells: {
+                    Date: { value: '2024-11-04' },
+                    Open: { value: '115' },
+                    Close: { value: '120' },
+                    Low: { value: '110' },
+                    High: { value: '125' },
+                },
+            },
+        ],
+    }),
     gaussian: () => ({
         columns: [
             { id: 'X', title: 'X Axis (Value)' },

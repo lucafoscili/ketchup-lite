@@ -42,7 +42,9 @@ export interface KulChartAdapterDesign {
     theme: {
         backgroundColor: string;
         border: string;
+        dangerColor: string;
         font: string;
+        successColor: string;
         textColor: string;
     };
     tooltip: (adapter: KulChartAdapter) => TooltipComponentOption;
@@ -102,7 +104,7 @@ export type KulChartType =
     | 'bar'
     | 'bubble'
     | 'calendar'
-    | 'candle'
+    | 'candlestick'
     | 'funnel'
     | 'gaussian'
     | 'hbar'

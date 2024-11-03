@@ -88,7 +88,9 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
     theme: {
         backgroundColor: '',
         border: '',
+        dangerColor: '',
         font: '',
+        successColor: '',
         textColor: '',
     },
     tooltip: (adapter) => {

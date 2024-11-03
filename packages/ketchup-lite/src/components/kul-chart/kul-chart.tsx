@@ -21,6 +21,7 @@ import {
 } from './kul-chart-declarations';
 import {
     BarSeriesOption,
+    CandlestickSeriesOption,
     ECharts,
     EChartsOption,
     LineSeriesOption,
@@ -136,6 +137,7 @@ export class KulChart {
     #chartEl: ECharts;
     #kulManager = kulManagerInstance();
     #findColumn = this.#kulManager.data.column.find;
+    #stringify = this.#kulManager.data.cell.stringify;
     #x: string[] = [];
     #y: Record<string, number[]>;
 
@@ -250,7 +252,9 @@ export class KulChart {
         const themeVars = this.#kulManager.theme.cssVars;
         theme.backgroundColor = themeVars[KulThemeColorValues.BACKGROUND];
         theme.border = themeVars[KulThemeColorValues.BORDER];
+        theme.dangerColor = themeVars[KulThemeColorValues.DANGER];
         theme.font = themeVars['--kul-font-family'];
+        theme.successColor = themeVars[KulThemeColorValues.SUCCESS];
         theme.textColor = themeVars[KulThemeColorValues.TEXT];
     }
 
@@ -266,7 +270,7 @@ export class KulChart {
                         ? node.cells[axisId]
                         : Object.values(node.cells || {})[0];
                 if (cell?.value != null) {
-                    x.push(String(cell.value));
+                    x.push(this.#stringify(cell.value));
                 } else {
                     x.push(''); // Handle missing values appropriately
                 }
@@ -322,6 +326,14 @@ export class KulChart {
             let seriesOption: SeriesOption;
 
             switch (seriesType) {
+                case 'bar':
+                    seriesOption = {
+                        name: seriesName,
+                        type: 'bar',
+                        data,
+                        itemStyle: { color: colors[index] },
+                    } as BarSeriesOption;
+                    break;
                 case 'line':
                     seriesOption = {
                         name: seriesName,
@@ -338,29 +350,6 @@ export class KulChart {
                         (seriesOption as LineSeriesOption).smooth = true;
                     }
                     break;
-
-                case 'bar':
-                    seriesOption = {
-                        name: seriesName,
-                        type: 'bar',
-                        data,
-                        itemStyle: { color: colors[index] },
-                    } as BarSeriesOption;
-                    break;
-
-                case 'radar':
-                    seriesOption = {
-                        name: seriesName,
-                        type: 'radar',
-                        data: [
-                            {
-                                value: data.filter((value) => !isNaN(value)),
-                                name: seriesName,
-                            },
-                        ],
-                    } as RadarSeriesOption;
-                    break;
-
                 default:
                     seriesOption = {
                         name: seriesName,
@@ -387,8 +376,6 @@ export class KulChart {
             case 'calendar':
             case 'hbar':
                 return 'bar';
-            case 'candle':
-                return 'candlestick';
             default:
                 return kulType;
         }
@@ -404,6 +391,8 @@ export class KulChart {
     #createChartOptions() {
         const firstType = this.kulTypes?.[0] || 'line';
         switch (firstType) {
+            case 'candlestick':
+                return this.#setCandlestickOptions();
             case 'pie':
                 return this.#setPieOptions();
             case 'radar':
@@ -496,12 +485,15 @@ export class KulChart {
             return {
                 value: this.kulSeries.map((seriesName) =>
                     parseFloat(
-                        String(node.cells[seriesName]?.value).valueOf() || '0'
+                        this.#stringify(
+                            node.cells[seriesName]?.value
+                        ).valueOf() || '0'
                     )
                 ),
                 name:
-                    String(node.cells[this.kulAxis]?.value).valueOf() ||
-                    'Entity',
+                    this.#stringify(
+                        node.cells[this.kulAxis]?.value
+                    ).valueOf() || 'Entity',
             };
         });
 
@@ -559,6 +551,91 @@ export class KulChart {
         return options;
     }
 
+    #setCandlestickOptions(): EChartsOption {
+        const adapter = this.#adapter;
+        const design = adapter.design;
+        this.#createSeriesData();
+
+        const data = this.kulData.nodes.map((node) => {
+            const open = parseFloat(
+                this.#stringify(node.cells['Open']?.value) || '0'
+            );
+            const close = parseFloat(
+                this.#stringify(node.cells['Close']?.value) || '0'
+            );
+            const low = parseFloat(
+                this.#stringify(node.cells['Low']?.value) || '0'
+            );
+            const high = parseFloat(
+                this.#stringify(node.cells['High']?.value) || '0'
+            );
+            return [open, close, low, high];
+        });
+
+        const colors = [design.theme.successColor, design.theme.dangerColor];
+
+        const options: EChartsOption = {
+            color: colors,
+            legend: design.legend(adapter),
+            xAxis: {
+                type: 'category',
+                data: this.kulData.nodes.map((node) =>
+                    this.#stringify(node.cells[this.kulAxis]?.value || '')
+                ),
+                axisLabel: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: design.theme.border,
+                    },
+                },
+            },
+            yAxis: {
+                type: 'value',
+                axisLabel: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+                axisLine: {
+                    lineStyle: {
+                        color: design.theme.border,
+                    },
+                },
+                splitLine: {
+                    lineStyle: {
+                        color: design.theme.border,
+                    },
+                },
+            },
+            series: [
+                {
+                    type: 'candlestick',
+                    data: data,
+                    itemStyle: {
+                        color: colors[0],
+                        color0: colors[1],
+                        borderColor: colors[0],
+                        borderColor0: colors[1],
+                    },
+                } as CandlestickSeriesOption,
+            ],
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                },
+                backgroundColor: design.theme.backgroundColor,
+                textStyle: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+            },
+        };
+
+        return options;
+    }
     /*-------------------------------------------------*/
     /*          L i f e c y c l e   H o o k s          */
     /*-------------------------------------------------*/
