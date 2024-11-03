@@ -192,6 +192,12 @@
   height: 100%;
   padding: var(--kul_masonry_padding);
   width: 100%;
+
+  &:not(:hover) {
+    .grid__actions {
+      display: none;
+    }
+  }
 }
 
 .grid {
@@ -242,6 +248,7 @@
   }
 
   &__actions {
+    animation: fade-in-grid 125ms ease-in;
     bottom: var(--kul_masonry_button_bottom);
     display: grid;
     grid-auto-flow: row;
