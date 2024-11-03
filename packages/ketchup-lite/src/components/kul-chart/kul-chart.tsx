@@ -20,21 +20,10 @@ import {
     KulChartEventData,
 } from './kul-chart-declarations';
 import {
-    BarSeriesOption,
-    CandlestickSeriesOption,
     ECharts,
-    EChartsOption,
-    FunnelSeriesOption,
-    HeatmapSeriesOption,
-    LineSeriesOption,
-    PieSeriesOption,
-    RadarSeriesOption,
-    SankeySeriesOption,
-    SeriesOption,
     XAXisComponentOption,
     YAXisComponentOption,
     dispose,
-    graphic,
     init,
 } from 'echarts';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -46,6 +35,7 @@ import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declar
 import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import { onClick } from './helpers/kul-chart-actions';
 import { CHART_DESIGN } from './helpers/kul-chart-design';
+import { CHART_OPTIONS } from './helpers/kul-chart-options';
 
 @Component({
     tag: 'kul-chart',
@@ -137,11 +127,13 @@ export class KulChart {
     /*       I n t e r n a l   V a r i a b l e s       */
     /*-------------------------------------------------*/
 
-    #chartContainer: HTMLDivElement;
-    #chartEl: ECharts;
     #kulManager = kulManagerInstance();
     #findColumn = this.#kulManager.data.column.find;
     #stringify = this.#kulManager.data.cell.stringify;
+
+    #chartContainer: HTMLDivElement;
+    #chartEl: ECharts;
+
     #x: string[] = [];
     #y: Record<string, number[]>;
 
@@ -217,9 +209,22 @@ export class KulChart {
 
     #adapter: KulChartAdapter = {
         actions: {
+            mapType: (type) => {
+                switch (type) {
+                    case 'area':
+                    case 'bubble':
+                    case 'gaussian':
+                        return 'line';
+                    case 'calendar':
+                    case 'hbar':
+                        return 'bar';
+                    default:
+                        return type;
+                }
+            },
             onClick: (e) => onClick(this.#adapter, e),
+            stringify: (str) => this.#stringify(str),
         },
-        design: CHART_DESIGN,
         emit: {
             event: (eventType, data, e = new CustomEvent(eventType)) => {
                 this.onKulEvent(e, eventType, data);
@@ -227,7 +232,9 @@ export class KulChart {
         },
         get: {
             chart: () => this,
+            design: CHART_DESIGN,
             manager: () => this.#kulManager,
+            options: CHART_OPTIONS,
             seriesColumn: (series) =>
                 this.#findColumn(this.kulData, { title: series }),
             x: () => this.#x,
@@ -252,7 +259,7 @@ export class KulChart {
     }
 
     #updateThemeColors() {
-        const theme = this.#adapter.design.theme;
+        const theme = this.#adapter.get.design.theme;
         const themeVars = this.#kulManager.theme.cssVars;
         theme.backgroundColor = themeVars[KulThemeColorValues.BACKGROUND];
         theme.border = themeVars[KulThemeColorValues.BORDER];
@@ -314,91 +321,6 @@ export class KulChart {
         this.#y = y;
     }
 
-    #buildSeriesOptions(yData: Record<string, number[]>): SeriesOption[] {
-        const seriesOptions: SeriesOption[] = [];
-        const types = this.kulTypes || [];
-        const colors = this.#adapter.design.colors(
-            this.#adapter,
-            Object.keys(yData).length
-        );
-
-        let index = 0;
-        for (const [seriesName, data] of Object.entries(yData)) {
-            const color = colors[index];
-            const kulType = types[index] || types[0];
-            const seriesType = this.#mapKulChartTypeToSeriesType(kulType);
-
-            let seriesOption: SeriesOption;
-
-            switch (seriesType) {
-                case 'bar':
-                    seriesOption = {
-                        color,
-                        name: seriesName,
-                        type: 'bar',
-                        data,
-                        itemStyle: { color },
-                    } as BarSeriesOption;
-                    break;
-                case 'line':
-                    seriesOption = {
-                        color,
-                        name: seriesName,
-                        type: 'line',
-                        data,
-                        itemStyle: { color },
-                    } as LineSeriesOption;
-
-                    if (kulType === 'area') {
-                        (seriesOption as LineSeriesOption).areaStyle = {
-                            color: new graphic.LinearGradient(0, 0, 0, 0.25, [
-                                {
-                                    offset: 0,
-                                    color: `rgba(${
-                                        this.#kulManager.theme.colorCheck(color)
-                                            .rgbValues
-                                    }, 0.375)`,
-                                },
-                            ]),
-                        };
-                    }
-
-                    if (kulType === 'gaussian') {
-                        (seriesOption as LineSeriesOption).smooth = true;
-                    }
-                    break;
-                default:
-                    seriesOption = {
-                        color,
-                        name: seriesName,
-                        type: seriesType as 'scatter',
-                        data,
-                        itemStyle: { color: colors[index] },
-                    };
-                    break;
-            }
-
-            seriesOptions.push(seriesOption);
-            index++;
-        }
-
-        return seriesOptions;
-    }
-
-    #mapKulChartTypeToSeriesType(kulType: KulChartType): SeriesOption['type'] {
-        switch (kulType) {
-            case 'area':
-            case 'bubble':
-            case 'gaussian':
-                return 'line';
-            case 'calendar':
-            case 'hbar':
-                return 'bar';
-            default:
-                return kulType;
-        }
-    }
-
     async #createChart() {
         const options = this.#createChartOptions();
         this.#chartEl.setOption(options, true);
@@ -407,440 +329,28 @@ export class KulChart {
     }
 
     #createChartOptions() {
+        const options = this.#adapter.get.options;
         const firstType = this.kulTypes?.[0] || 'line';
+
+        this.#createSeriesData();
+
         switch (firstType) {
             case 'calendar':
-                return this.#setCalendarOptions();
+                return options.calendar(this.#adapter);
             case 'candlestick':
-                return this.#setCandlestickOptions();
+                return options.candlestick(this.#adapter);
             case 'funnel':
-                return this.#setFunnelOptions();
+                return options.funnel(this.#adapter);
             case 'pie':
-                return this.#setPieOptions();
+                return options.pie(this.#adapter);
             case 'radar':
-                return this.#setRadarOptions();
+                return options.radar(this.#adapter);
             case 'sankey':
-                return this.#setSankeyOptions();
+                return options.sankey(this.#adapter);
             default:
-                return this.#setDefaultOptions();
+                this.#createAxisData();
+                return options.default(this.#adapter);
         }
-    }
-
-    #setDefaultOptions() {
-        const adapter = this.#adapter;
-        const design = adapter.design;
-        this.#createAxisData();
-        this.#createSeriesData();
-        const seriesOptions = this.#buildSeriesOptions(this.#y);
-        const isHorizontal = this.kulTypes?.[0] === 'hbar';
-        const options: EChartsOption = {
-            color: design.colors(adapter, Object.keys(this.#y).length),
-            legend: design.legend(adapter),
-            tooltip: {
-                ...design.tooltip(adapter),
-                trigger: 'axis',
-            },
-            series: seriesOptions,
-            xAxis: {
-                ...design.axis(adapter),
-                mainType: 'xAxis',
-                type: isHorizontal ? 'value' : 'category',
-                data: isHorizontal ? undefined : this.#x,
-                ...this.kulXAxis,
-            } as XAXisComponentOption,
-            yAxis: {
-                ...design.axis(adapter),
-                mainType: 'yAxis',
-                type: isHorizontal ? 'category' : 'value',
-                data: isHorizontal ? this.#x : undefined,
-                ...this.kulYAxis,
-            } as YAXisComponentOption,
-        };
-        return options;
-    }
-
-    #setPieOptions() {
-        const adapter = this.#adapter;
-        const design = adapter.design;
-        this.#createSeriesData();
-        const data = Object.entries(this.#y).map(([name, values]) => ({
-            name,
-            value: values.reduce((a, b) => a + b, 0),
-        }));
-        const options: EChartsOption = {
-            color: design.colors(adapter, data.length),
-            label: design.label(adapter),
-            legend: design.legend(adapter),
-            tooltip: {
-                ...design.tooltip(adapter),
-                trigger: 'item',
-                formatter: '{a} <br/>{b}: {c} ({d}%)',
-            },
-            series: [
-                {
-                    name:
-                        this.#findColumn(this.kulData, {
-                            id: this.kulAxis,
-                        })?.[0].title || 'Data',
-                    type: 'pie',
-                    data,
-                } as PieSeriesOption,
-            ],
-        };
-
-        return options;
-    }
-
-    #setRadarOptions() {
-        const adapter = this.#adapter;
-        const design = adapter.design;
-        this.#createSeriesData();
-
-        const indicators = this.kulSeries.map((seriesName) => {
-            const values = this.#y[seriesName] || [];
-            const max = Math.max(...values);
-            return {
-                name: seriesName,
-                max: isNaN(max) ? 100 : max,
-            };
-        });
-
-        const data = this.kulData.nodes.map((node) => {
-            return {
-                name:
-                    this.#stringify(
-                        node.cells[this.kulAxis]?.value
-                    ).valueOf() || 'Entity',
-                value: this.kulSeries.map((seriesName) =>
-                    parseFloat(
-                        this.#stringify(
-                            node.cells[seriesName]?.value
-                        ).valueOf() || '0'
-                    )
-                ),
-            };
-        });
-
-        const colors = design.colors(adapter, data.length);
-
-        const options: EChartsOption = {
-            color: colors,
-            legend: {
-                ...design.legend(adapter),
-                data: data.map((item) => item.name),
-            },
-            radar: {
-                indicator: indicators,
-                shape: 'circle',
-                axisName: {
-                    color: adapter.design.theme.textColor,
-                    fontFamily: adapter.design.theme.font,
-                },
-                splitArea: {
-                    show: true,
-                    areaStyle: {
-                        color: [colors[0] + '1A', colors[1] + '0D'],
-                    },
-                },
-                splitLine: {
-                    lineStyle: {
-                        color: colors[2] || 'rgba(128, 128, 128, 0.5)',
-                        type: 'dashed',
-                    },
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: colors[2] || 'rgba(128, 128, 128, 0.5)',
-                    },
-                },
-            },
-            series: [
-                {
-                    areaStyle: {
-                        opacity: 0.2,
-                    },
-                    lineStyle: {
-                        width: 2,
-                    },
-                    symbol: 'circle',
-                    symbolSize: 6,
-                    type: 'radar',
-                    data: data,
-                } as RadarSeriesOption,
-            ],
-            tooltip: design.tooltip(adapter),
-        };
-
-        return options;
-    }
-
-    #setCandlestickOptions() {
-        const adapter = this.#adapter;
-        const design = adapter.design;
-        this.#createSeriesData();
-
-        const data = this.kulData.nodes.map((node) => {
-            const open = parseFloat(
-                this.#stringify(node.cells['Open']?.value) || '0'
-            );
-            const close = parseFloat(
-                this.#stringify(node.cells['Close']?.value) || '0'
-            );
-            const low = parseFloat(
-                this.#stringify(node.cells['Low']?.value) || '0'
-            );
-            const high = parseFloat(
-                this.#stringify(node.cells['High']?.value) || '0'
-            );
-            return [open, close, low, high];
-        });
-
-        const colors = [design.theme.successColor, design.theme.dangerColor];
-        const options: EChartsOption = {
-            color: colors,
-            xAxis: {
-                type: 'category',
-                data: this.kulData.nodes.map((node) =>
-                    this.#stringify(node.cells[this.kulAxis]?.value || '')
-                ),
-                axisLabel: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: design.theme.border,
-                    },
-                },
-            },
-            yAxis: {
-                type: 'value',
-                axisLabel: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-                axisLine: {
-                    lineStyle: {
-                        color: design.theme.border,
-                    },
-                },
-                splitLine: {
-                    lineStyle: {
-                        color: design.theme.border,
-                    },
-                },
-            },
-            series: [
-                {
-                    type: 'candlestick',
-                    data: data,
-                    itemStyle: {
-                        color: colors[0],
-                        color0: colors[1],
-                        borderColor: colors[0],
-                        borderColor0: colors[1],
-                    },
-                } as CandlestickSeriesOption,
-            ],
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                },
-                backgroundColor: design.theme.backgroundColor,
-                textStyle: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-            },
-        };
-
-        return options;
-    }
-
-    #setFunnelOptions() {
-        const adapter = this.#adapter;
-        const design = adapter.design;
-        this.#createSeriesData();
-
-        const data = this.kulSeries.map((seriesName) => {
-            const totalValue = this.kulData.nodes.reduce((sum, node) => {
-                return (
-                    sum +
-                    parseFloat(
-                        this.#stringify(node.cells[seriesName]?.value) || '0'
-                    )
-                );
-            }, 0);
-            return {
-                name: String(seriesName),
-                value: totalValue,
-            };
-        });
-
-        const colors = design.colors(adapter, data.length);
-
-        const options: EChartsOption = {
-            color: colors,
-            legend: {
-                ...design.legend(adapter),
-                data: data.map((item) => item.name),
-            },
-            series: [
-                {
-                    type: 'funnel',
-                    data: data,
-                    sort: 'descending',
-                    label: {
-                        show: true,
-                        position: 'inside',
-                        color: design.theme.textColor,
-                        fontFamily: design.theme.font,
-                    },
-                    itemStyle: {
-                        borderColor: design.theme.border,
-                        borderWidth: 1,
-                    },
-                } as FunnelSeriesOption,
-            ],
-            tooltip: design.tooltip(adapter),
-        };
-
-        return options;
-    }
-
-    #setSankeyOptions() {
-        const adapter = this.#adapter;
-        const design = adapter.design;
-        this.#createSeriesData();
-
-        const sourceKey = this.kulAxis;
-        const targetKey = this.kulSeries[0];
-        const valueKey = this.kulSeries[1];
-
-        const links = this.kulData.nodes.map((node) => {
-            return {
-                source: this.#stringify(
-                    node.cells[sourceKey]?.value || 'Source'
-                ),
-                target: this.#stringify(
-                    node.cells[targetKey]?.value || 'Target'
-                ),
-                value: parseFloat(
-                    this.#stringify(node.cells[valueKey]?.value) || '0'
-                ),
-            };
-        });
-
-        const colors = design.colors(adapter, links.length);
-
-        const options: EChartsOption = {
-            color: colors,
-            series: [
-                {
-                    type: 'sankey',
-                    data: [
-                        ...new Set(
-                            links.flatMap((link) => [link.source, link.target])
-                        ),
-                    ].map((name) => ({ name })),
-                    links: links,
-                    label: {
-                        show: true,
-                        color: design.theme.textColor,
-                        fontFamily: design.theme.font,
-                    },
-                    lineStyle: {
-                        color: 'gradient',
-                        curveness: 0.5,
-                    },
-                } as SankeySeriesOption,
-            ],
-            tooltip: design.tooltip(adapter),
-        };
-
-        return options;
-    }
-
-    #setCalendarOptions(): EChartsOption {
-        const adapter = this.#adapter;
-        const design = adapter.design;
-        this.#createSeriesData();
-
-        const dateKey = this.kulAxis;
-        const valueKey = this.kulSeries[0];
-
-        const data = this.kulData.nodes.map((node) => {
-            return [
-                String(
-                    node.cells[dateKey]?.value ||
-                        new Date().toISOString().split('T')[0]
-                ),
-                parseFloat(this.#stringify(node.cells[valueKey]?.value) || '0'),
-            ];
-        });
-
-        const colors = design.colors(adapter, 1);
-        const year = new Date(
-            Math.min(...data.map(([date]) => new Date(date).getTime()))
-        ).getFullYear();
-
-        const options: EChartsOption = {
-            color: colors,
-            calendar: {
-                range: year,
-                cellSize: ['auto', 24],
-                itemStyle: {
-                    borderWidth: 1,
-                    borderColor: design.theme.border,
-                    color: design.theme.backgroundColor,
-                },
-                dayLabel: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-                monthLabel: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-                yearLabel: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-            },
-            series: [
-                {
-                    type: 'heatmap',
-                    coordinateSystem: 'calendar',
-                    data: data,
-                    label: {
-                        show: false,
-                    },
-                    itemStyle: {
-                        color: colors[0],
-                    },
-                } as HeatmapSeriesOption,
-            ],
-            tooltip: design.tooltip(adapter),
-            visualMap: {
-                align: 'auto',
-                bottom: 'bottom',
-                inRange: {
-                    color: [design.theme.backgroundColor, colors[0]],
-                },
-                left: 'center',
-                max: Math.max(...data.map(([_, value]) => Number(value))),
-                min: Math.min(...data.map(([_, value]) => Number(value))),
-                orient: 'horizontal',
-                text: ['High', 'Low'],
-                textStyle: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-            },
-        };
-
-        return options;
     }
 
     /*-------------------------------------------------*/

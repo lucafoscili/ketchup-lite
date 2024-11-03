@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-02T15:42:04",
+  "timestamp": "2024-11-03T13:11:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.18.1",
@@ -2425,7 +2425,6 @@
       "filePath": "src/components/kul-chart/kul-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chart",
-      "readme": "# kul-chart\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14167,6 +14166,21 @@
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
+      "declaration": "export type KulChartLegendPlacement =\n    | 'bottom'\n    | 'left'\n    | 'hidden'\n    | 'right'\n    | 'top';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
+      "declaration": "export type KulChartType =\n    | 'area'\n    | 'bar'\n    | 'bubble'\n    | 'calendar'\n    | 'candlestick'\n    | 'funnel'\n    | 'gaussian'\n    | 'hbar'\n    | 'line'\n    | 'pie'\n    | 'radar'\n    | 'sankey'\n    | 'scatter';",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
+      "declaration": "export interface KulChartEventPayload\n    extends KulEventPayload<'KulChart', KulChartEvent> {\n    data?: KulChartEventData;\n}",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
     "src/components/kul-button/kul-button-declarations.ts::KulButtonStyling": {
       "declaration": "export type KulButtonStyling =\n    | 'flat'\n    | 'floating'\n    | 'icon'\n    | 'outlined'\n    | 'raised';",
       "docstring": "",
@@ -14251,21 +14265,6 @@
       "declaration": "export interface KulBadgeEventPayload\n    extends KulEventPayload<'KulBadge', KulBadgeEvent> {}",
       "docstring": "",
       "path": "src/components/kul-badge/kul-badge-declarations.ts"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candle'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
-    },
-    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload\r\n    extends KulEventPayload<'KulChart', KulChartEvent> {\r\n    column: KulDataColumn;\r\n    node: KulDataNode;\r\n    x: number | string;\r\n    y: number | string;\r\n}",
-      "docstring": "",
-      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataShapes": {
       "declaration": "export type KulDataShapes =\n    | 'badge'\n    | 'button'\n    | 'card'\n    | 'chart'\n    | 'chat'\n    | 'chip'\n    | 'code'\n    | 'image'\n    | 'number'\n    | 'switch'\n    | 'text'\n    | 'upload';",

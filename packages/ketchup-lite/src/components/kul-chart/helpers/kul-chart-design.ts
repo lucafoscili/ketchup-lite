@@ -9,7 +9,7 @@ import { KulChartAdapterDesign } from '../kul-chart-declarations';
 
 export const CHART_DESIGN: KulChartAdapterDesign = {
     axis: (adapter) => {
-        const theme = adapter.design.theme;
+        const theme = adapter.get.design.theme;
         const axis: XAXisComponentOption | YAXisComponentOption = {
             axisLabel: {
                 color: theme.textColor,
@@ -49,7 +49,7 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         return colorArray.slice(0, count);
     },
     label: (adapter) => {
-        const theme = adapter.design.theme;
+        const theme = adapter.get.design.theme;
         const label: EChartsOption = {
             show: true,
             formatter: '{b|{b}}',
@@ -73,7 +73,7 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
             return null;
         }
 
-        const theme = adapter.design.theme;
+        const theme = adapter.get.design.theme;
         const data = Object.keys(adapter.get.y());
         const legend: LegendComponentOption = {
             data,
@@ -94,7 +94,7 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         textColor: '',
     },
     tooltip: (adapter) => {
-        const theme = adapter.design.theme;
+        const theme = adapter.get.design.theme;
         const tooltip: TooltipComponentOption = {
             backgroundColor: theme.backgroundColor,
             textStyle: {

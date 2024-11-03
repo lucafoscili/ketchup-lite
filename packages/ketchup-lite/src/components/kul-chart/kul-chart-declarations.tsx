@@ -2,14 +2,17 @@ import {
     ECElementEvent,
     EChartsOption,
     LegendComponentOption,
+    SeriesOption,
     TooltipComponentOption,
     XAXisComponentOption,
     YAXisComponentOption,
 } from 'echarts';
 import {
+    KulDataCell,
     KulDataColumn,
     KulDataDataset,
     KulDataNode,
+    KulDataShapes,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulChart } from './kul-chart';
@@ -20,9 +23,10 @@ import { KulManager } from '../../managers/kul-manager/kul-manager';
 /*-------------------------------------------------*/
 export interface KulChartAdapter {
     actions: {
+        mapType: (type: KulChartType) => SeriesOption['type'];
         onClick: (e: ECElementEvent) => boolean | void;
+        stringify: (str: KulDataCell<KulDataShapes>['value']) => string;
     };
-    design: KulChartAdapterDesign;
     emit: {
         event: (
             eventType: KulChartEvent,
@@ -51,10 +55,21 @@ export interface KulChartAdapterDesign {
 }
 export interface KulChartAdapterGetters {
     chart: () => KulChart;
+    design: KulChartAdapterDesign;
     manager: () => KulManager;
+    options: KulChartAdapterOptions;
     seriesColumn: (seriesName: string) => KulDataColumn[];
     x: () => string[];
     y: () => Record<string, number[]>;
+}
+export interface KulChartAdapterOptions {
+    calendar: (adapter: KulChartAdapter) => EChartsOption;
+    candlestick: (adapter: KulChartAdapter) => EChartsOption;
+    default: (adapter: KulChartAdapter) => EChartsOption;
+    funnel: (adapter: KulChartAdapter) => EChartsOption;
+    pie: (adapter: KulChartAdapter) => EChartsOption;
+    radar: (adapter: KulChartAdapter) => EChartsOption;
+    sankey: (adapter: KulChartAdapter) => EChartsOption;
 }
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
