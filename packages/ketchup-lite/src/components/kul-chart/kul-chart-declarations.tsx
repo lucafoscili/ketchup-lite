@@ -1,17 +1,68 @@
-import { XAXisComponentOption, YAXisComponentOption } from 'echarts';
+import {
+    ECElementEvent,
+    EChartsOption,
+    LegendComponentOption,
+    TooltipComponentOption,
+    XAXisComponentOption,
+    YAXisComponentOption,
+} from 'echarts';
 import {
     KulDataColumn,
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
+import { KulChart } from './kul-chart';
+import { KulManager } from '../../managers/kul-manager/kul-manager';
 
+/*-------------------------------------------------*/
+/*                  A d a p t e r                  */
+/*-------------------------------------------------*/
+export interface KulChartAdapter {
+    actions: {
+        onClick: (e: ECElementEvent) => boolean | void;
+    };
+    design: KulChartAdapterDesign;
+    emit: {
+        event: (
+            eventType: KulChartEvent,
+            data?: KulChartEventData,
+            e?: Event
+        ) => void;
+    };
+    get: KulChartAdapterGetters;
+}
+export interface KulChartAdapterDesign {
+    axis: (
+        adapter: KulChartAdapter
+    ) => XAXisComponentOption | YAXisComponentOption;
+    colors: (adapter: KulChartAdapter, count: number) => string[];
+    label: (adapter: KulChartAdapter) => EChartsOption;
+    legend: (adapter: KulChartAdapter) => LegendComponentOption;
+    theme: {
+        backgroundColor: string;
+        border: string;
+        font: string;
+        textColor: string;
+    };
+    tooltip: (adapter: KulChartAdapter) => TooltipComponentOption;
+}
+export interface KulChartAdapterGetters {
+    chart: () => KulChart;
+    manager: () => KulManager;
+    seriesColumn: (seriesName: string) => KulDataColumn[];
+    x: () => string[];
+    y: () => Record<string, number[]>;
+}
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
 export type KulChartEvent = 'click' | 'ready' | 'unmount';
 export interface KulChartEventPayload
     extends KulEventPayload<'KulChart', KulChartEvent> {
+    data?: KulChartEventData;
+}
+export interface KulChartEventData {
     column: KulDataColumn;
     node: KulDataNode;
     x: number | string;
