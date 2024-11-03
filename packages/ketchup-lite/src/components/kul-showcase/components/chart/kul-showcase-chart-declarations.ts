@@ -5,6 +5,7 @@ export const CHART_EXAMPLES_KEYS = [
     'area',
     'bar',
     'candlestick',
+    'funnel',
     'hbar',
     'gaussian',
     'line',

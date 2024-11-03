@@ -42,6 +42,14 @@ export const CHART_EXAMPLES: ChartData = {
         kulSizeY: '300px',
         kulTypes: ['candlestick'],
     },
+    funnel: {
+        ['data-description']: 'Funnel',
+        kulAxis: 'Stage',
+        kulData: CHART_KULDATA_FACTORY.funnel(),
+        kulSeries: ['Value', 'Revenue'],
+        kulSizeY: '300px',
+        kulTypes: ['funnel'],
+    },
     hbar: {
         ['data-description']: 'Bar (horizontal)',
         kulAxis: 'Axis',

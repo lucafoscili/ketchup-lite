@@ -305,6 +305,55 @@ export const CHART_KULDATA_FACTORY: Partial<{
             },
         ],
     }),
+    funnel: () => ({
+        columns: [
+            { id: 'Stage', title: 'Stage' },
+            { id: 'Value', title: 'Value' },
+            { id: 'Revenue', title: 'Revenue' },
+        ],
+        nodes: [
+            {
+                id: '0',
+                cells: {
+                    Stage: { value: 'Prospects' },
+                    Value: { value: '500' },
+                    Revenue: { value: '2000' },
+                },
+            },
+            {
+                id: '1',
+                cells: {
+                    Stage: { value: 'Qualified Leads' },
+                    Value: { value: '300' },
+                    Revenue: { value: '1500' },
+                },
+            },
+            {
+                id: '2',
+                cells: {
+                    Stage: { value: 'Proposals' },
+                    Value: { value: '200' },
+                    Revenue: { value: '1200' },
+                },
+            },
+            {
+                id: '3',
+                cells: {
+                    Stage: { value: 'Negotiations' },
+                    Value: { value: '100' },
+                    Revenue: { value: '800' },
+                },
+            },
+            {
+                id: '4',
+                cells: {
+                    Stage: { value: 'Closed Deals' },
+                    Value: { value: '50' },
+                    Revenue: { value: '500' },
+                },
+            },
+        ],
+    }),
     gaussian: () => ({
         columns: [
             { id: 'X', title: 'X Axis (Value)' },

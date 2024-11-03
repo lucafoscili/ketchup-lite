@@ -24,6 +24,7 @@ import {
     CandlestickSeriesOption,
     ECharts,
     EChartsOption,
+    FunnelSeriesOption,
     LineSeriesOption,
     PieSeriesOption,
     RadarSeriesOption,
@@ -31,6 +32,7 @@ import {
     XAXisComponentOption,
     YAXisComponentOption,
     dispose,
+    graphic,
     init,
 } from 'echarts';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -320,7 +322,8 @@ export class KulChart {
 
         let index = 0;
         for (const [seriesName, data] of Object.entries(yData)) {
-            const kulType = types[index] || 'line';
+            const color = colors[index];
+            const kulType = types[index] || types[0];
             const seriesType = this.#mapKulChartTypeToSeriesType(kulType);
 
             let seriesOption: SeriesOption;
@@ -328,22 +331,34 @@ export class KulChart {
             switch (seriesType) {
                 case 'bar':
                     seriesOption = {
+                        color,
                         name: seriesName,
                         type: 'bar',
                         data,
-                        itemStyle: { color: colors[index] },
+                        itemStyle: { color },
                     } as BarSeriesOption;
                     break;
                 case 'line':
                     seriesOption = {
+                        color,
                         name: seriesName,
                         type: 'line',
                         data,
-                        itemStyle: { color: colors[index] },
+                        itemStyle: { color },
                     } as LineSeriesOption;
 
                     if (kulType === 'area') {
-                        (seriesOption as LineSeriesOption).areaStyle = {};
+                        (seriesOption as LineSeriesOption).areaStyle = {
+                            color: new graphic.LinearGradient(0, 0, 0, 0.25, [
+                                {
+                                    offset: 0,
+                                    color: `rgba(${
+                                        this.#kulManager.theme.colorCheck(color)
+                                            .rgbValues
+                                    }, 0.375)`,
+                                },
+                            ]),
+                        };
                     }
 
                     if (kulType === 'gaussian') {
@@ -352,6 +367,7 @@ export class KulChart {
                     break;
                 default:
                     seriesOption = {
+                        color,
                         name: seriesName,
                         type: seriesType as 'scatter',
                         data,
@@ -393,6 +409,8 @@ export class KulChart {
         switch (firstType) {
             case 'candlestick':
                 return this.#setCandlestickOptions();
+            case 'funnel':
+                return this.#setFunnelOptions();
             case 'pie':
                 return this.#setPieOptions();
             case 'radar':
@@ -573,10 +591,13 @@ export class KulChart {
         });
 
         const colors = [design.theme.successColor, design.theme.dangerColor];
-
+        console.log(design.legend(adapter));
         const options: EChartsOption = {
             color: colors,
-            legend: design.legend(adapter),
+            legend: {
+                ...design.legend(adapter),
+                data: ['Open', 'Close', 'Low', 'High'],
+            },
             xAxis: {
                 type: 'category',
                 data: this.kulData.nodes.map((node) =>
@@ -632,6 +653,54 @@ export class KulChart {
                     fontFamily: design.theme.font,
                 },
             },
+        };
+
+        return options;
+    }
+
+    #setFunnelOptions(): EChartsOption {
+        const adapter = this.#adapter;
+        const design = adapter.design;
+        this.#createSeriesData();
+
+        const data = this.kulSeries.map((seriesName) => {
+            const totalValue = this.kulData.nodes.reduce((sum, node) => {
+                return (
+                    sum +
+                    parseFloat(
+                        this.#stringify(node.cells[seriesName]?.value) || '0'
+                    )
+                );
+            }, 0);
+            return {
+                name: String(seriesName),
+                value: totalValue,
+            };
+        });
+
+        const colors = design.colors(adapter, data.length);
+
+        const options: EChartsOption = {
+            color: colors,
+            legend: design.legend(adapter),
+            series: [
+                {
+                    type: 'funnel',
+                    data: data,
+                    sort: 'descending',
+                    label: {
+                        show: true,
+                        position: 'inside',
+                        color: design.theme.textColor,
+                        fontFamily: design.theme.font,
+                    },
+                    itemStyle: {
+                        borderColor: design.theme.border,
+                        borderWidth: 1,
+                    },
+                } as FunnelSeriesOption,
+            ],
+            tooltip: design.tooltip(adapter),
         };
 
         return options;
