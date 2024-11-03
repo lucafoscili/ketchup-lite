@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-03T16:12:06",
+  "timestamp": "2024-11-03T20:52:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -9666,7 +9666,7 @@
       "filePath": "src/components/kul-showcase/framework/llm/kul-showcase-kulllm.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kulllm",
-      "readme": "# kul-showcase-kulllm\n\n\n",
+      "readme": "# kul-showcase-kulllm\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14168,12 +14168,12 @@
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\n    | 'bottom'\n    | 'left'\n    | 'hidden'\n    | 'right'\n    | 'top';",
+      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\n    | 'area'\n    | 'bar'\n    | 'bubble'\n    | 'calendar'\n    | 'candlestick'\n    | 'funnel'\n    | 'gaussian'\n    | 'hbar'\n    | 'line'\n    | 'pie'\n    | 'radar'\n    | 'sankey'\n    | 'scatter';",
+      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candlestick'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
@@ -14188,7 +14188,7 @@
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload\n    extends KulEventPayload<'KulChart', KulChartEvent> {\n    data?: KulChartEventData;\n}",
+      "declaration": "export interface KulChartEventPayload\r\n    extends KulEventPayload<'KulChart', KulChartEvent> {\r\n    data?: KulChartEventData;\r\n}",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },

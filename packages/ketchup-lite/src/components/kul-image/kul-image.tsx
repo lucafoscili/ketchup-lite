@@ -11,6 +11,7 @@ import {
     Prop,
     State,
     VNode,
+    Watch,
 } from '@stencil/core';
 import type { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -135,6 +136,15 @@ export class KulImage {
     }
 
     /*-------------------------------------------------*/
+    /*                 W a t c h e r s                 */
+    /*-------------------------------------------------*/
+
+    @Watch('kulValue')
+    async resetState() {
+        this.error = false;
+    }
+
+    /*-------------------------------------------------*/
     /*           P u b l i c   M e t h o d s           */
     /*-------------------------------------------------*/
 
@@ -215,7 +225,7 @@ export class KulImage {
                     this.onKulEvent(e, 'error');
                 }}
                 onLoad={(e) => {
-                    this.error = false;
+                    this.resetState();
                     this.onKulEvent(e, 'load');
                 }}
                 src={this.kulValue}
