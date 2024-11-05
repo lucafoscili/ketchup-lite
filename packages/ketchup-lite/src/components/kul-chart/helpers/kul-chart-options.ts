@@ -17,6 +17,98 @@ import {
 import { KulChartAdapterOptions } from '../kul-chart-declarations';
 
 export const CHART_OPTIONS: KulChartAdapterOptions = {
+    bubble: (adapter) => {
+        const chart = adapter.get.chart();
+        const design = adapter.get.design;
+        const stringify = adapter.actions.stringify;
+
+        const xAxisKey = chart.kulAxis;
+        const xAxisColumn = adapter.get
+            .manager()
+            .data.column.find(chart.kulData, { id: xAxisKey })?.[0];
+        const yAxisKey = chart.kulSeries[0];
+        const bubbleSizeKey = chart.kulSeries[1];
+
+        const xCategories: Set<string> = new Set();
+        const yCategories: Set<string> = new Set();
+
+        const data = chart.kulData.nodes.map((node) => {
+            const xValue = stringify(node.cells[xAxisKey]?.value) || '0';
+            const yValue = stringify(node.cells[yAxisKey]?.value) || '0';
+            const bubbleSize = parseFloat(
+                stringify(node.cells[bubbleSizeKey]?.value) || '0'
+            );
+
+            xCategories.add(xValue);
+            yCategories.add(yValue);
+
+            return [xValue, yValue, bubbleSize];
+        });
+
+        const colors = design.colors(adapter, 1);
+        const formatter = (params: any) => {
+            return `${xAxisColumn.title}: ${params.value[0]}<br>${yAxisKey}: ${params.value[1]}<br>Size: ${params.value[2]}`;
+        };
+
+        const options: EChartsOption = {
+            color: colors,
+            xAxis: {
+                type: 'category',
+                name: xAxisColumn ? xAxisColumn.title : 'X Axis',
+                data: Array.from(xCategories),
+                axisLabel: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+            },
+            yAxis: {
+                type: 'category',
+                name: yAxisKey ? yAxisKey : 'Y Axis',
+                data: Array.from(yCategories),
+                axisLabel: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+            },
+            series: [
+                {
+                    type: 'scatter',
+                    data: data,
+                    symbolSize: (val) => val[2],
+                    itemStyle: {
+                        borderColor: design.theme.border,
+                        borderWidth: 1,
+                        color: colors[0],
+                    },
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)',
+                        },
+                    },
+                } as ScatterSeriesOption,
+            ],
+            tooltip: design.tooltip(adapter, formatter),
+            visualMap: {
+                min: Math.min(...data.map(([_, __, count]) => Number(count))),
+                max: Math.max(...data.map(([_, __, count]) => Number(count))),
+                calculable: true,
+                orient: 'vertical',
+                left: 'left',
+                bottom: '15%',
+                inRange: {
+                    color: ['#f6efa6', colors[0]],
+                },
+                text: ['High', 'Low'],
+                textStyle: {
+                    color: design.theme.textColor,
+                    fontFamily: design.theme.font,
+                },
+            },
+        };
+
+        return options;
+    },
     calendar: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -321,7 +413,6 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         const design = adapter.get.design;
         const stringify = adapter.actions.stringify;
 
-        // Retrieve axis and series information from chart props
         const xAxisKey = chart.kulAxis;
         const xAxisColumn = adapter.get
             .manager()
@@ -335,7 +426,6 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             return column ? column.title : 'Y Axis';
         });
 
-        // Dynamically extract unique values for both axes from data to define category axes
         const xCategories: Set<string> = new Set();
         const yCategories: Set<string> = new Set();
 
@@ -354,7 +444,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         });
 
         const colors = design.colors(adapter, 1);
-        const formatter = (params) => {
+        const formatter = (params: any) => {
             return `${axisLabel}: ${params.value[0]}<br>${seriesLabels[0]}: ${params.value[1]}<br>Frequency: ${params.value[2]}`;
         };
 
@@ -468,10 +558,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         const indicator = chart.kulSeries.map((seriesName) => {
             const values = adapter.get.y()[seriesName] || [];
-            const max = Math.max(...values);
             return {
                 name: seriesName,
-                max: isNaN(max) ? 100 : max,
+                alignTicks: false,
             };
         });
 

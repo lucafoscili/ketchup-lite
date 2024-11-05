@@ -171,49 +171,89 @@ export const CHART_KULDATA_FACTORY: Partial<{
     }),
     bubble: () => ({
         columns: [
-            { id: 'X', title: 'X Axis' },
-            { id: 'Y', title: 'Y Axis' },
-            { id: 'Size', title: 'Bubble Size' },
+            { id: 'X_Value', title: 'X Axis Value' },
+            { id: 'Y_Value', title: 'Y Axis Value' },
+            { id: 'Bubble_Size', title: 'Bubble Size' },
         ],
         nodes: [
             {
                 id: '0',
                 cells: {
-                    X: { value: '5' },
-                    Y: { value: '10' },
-                    Size: { value: '20' },
+                    X_Value: { value: '10' },
+                    Y_Value: { value: '15' },
+                    Bubble_Size: { value: '8' },
                 },
             },
             {
                 id: '1',
                 cells: {
-                    X: { value: '15' },
-                    Y: { value: '25' },
-                    Size: { value: '30' },
+                    X_Value: { value: '20' },
+                    Y_Value: { value: '25' },
+                    Bubble_Size: { value: '15' },
                 },
             },
             {
                 id: '2',
                 cells: {
-                    X: { value: '20' },
-                    Y: { value: '35' },
-                    Size: { value: '40' },
+                    X_Value: { value: '30' },
+                    Y_Value: { value: '35' },
+                    Bubble_Size: { value: '12' },
                 },
             },
             {
                 id: '3',
                 cells: {
-                    X: { value: '25' },
-                    Y: { value: '50' },
-                    Size: { value: '25' },
+                    X_Value: { value: '40' },
+                    Y_Value: { value: '45' },
+                    Bubble_Size: { value: '20' },
                 },
             },
             {
                 id: '4',
                 cells: {
-                    X: { value: '30' },
-                    Y: { value: '40' },
-                    Size: { value: '50' },
+                    X_Value: { value: '50' },
+                    Y_Value: { value: '55' },
+                    Bubble_Size: { value: '25' },
+                },
+            },
+            {
+                id: '5',
+                cells: {
+                    X_Value: { value: '60' },
+                    Y_Value: { value: '65' },
+                    Bubble_Size: { value: '18' },
+                },
+            },
+            {
+                id: '6',
+                cells: {
+                    X_Value: { value: '70' },
+                    Y_Value: { value: '75' },
+                    Bubble_Size: { value: '30' },
+                },
+            },
+            {
+                id: '7',
+                cells: {
+                    X_Value: { value: '80' },
+                    Y_Value: { value: '85' },
+                    Bubble_Size: { value: '22' },
+                },
+            },
+            {
+                id: '8',
+                cells: {
+                    X_Value: { value: '90' },
+                    Y_Value: { value: '95' },
+                    Bubble_Size: { value: '10' },
+                },
+            },
+            {
+                id: '9',
+                cells: {
+                    X_Value: { value: '100' },
+                    Y_Value: { value: '105' },
+                    Bubble_Size: { value: '5' },
                 },
             },
         ],

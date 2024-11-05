@@ -67,6 +67,7 @@ export interface KulChartAdapterGetters {
     y: () => Record<string, number[]>;
 }
 export interface KulChartAdapterOptions {
+    bubble: (adapter: KulChartAdapter) => EChartsOption;
     calendar: (adapter: KulChartAdapter) => EChartsOption;
     candlestick: (adapter: KulChartAdapter) => EChartsOption;
     default: (adapter: KulChartAdapter) => EChartsOption;
