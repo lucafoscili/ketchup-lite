@@ -28,6 +28,7 @@ export const COMPONENTS = [
     'textfield',
     'toast',
     'tree',
+    'typewriter',
     'upload',
 ];
 export const DOC_IDS = {
@@ -267,6 +268,13 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'file-tree',
             id: 'Tree',
             value: 'Tree',
+        },
+        {
+            description:
+                "Simulates a typewriter's behavior by displaying text gradually.",
+            icon: 'sign-text',
+            id: 'Typewriter',
+            value: 'Typewriter',
         },
         {
             description: 'Provides functionality to upload files easily.',

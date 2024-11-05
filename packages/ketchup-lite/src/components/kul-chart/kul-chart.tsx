@@ -331,12 +331,16 @@ export class KulChart {
         this.#createSeriesData();
 
         switch (firstType) {
+            case 'bubble':
+                return options.bubble(this.#adapter);
             case 'calendar':
                 return options.calendar(this.#adapter);
             case 'candlestick':
                 return options.candlestick(this.#adapter);
             case 'funnel':
                 return options.funnel(this.#adapter);
+            case 'heatmap':
+                return options.heatmap(this.#adapter);
             case 'pie':
                 return options.pie(this.#adapter);
             case 'radar':

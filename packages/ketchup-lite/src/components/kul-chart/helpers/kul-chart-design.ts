@@ -93,10 +93,11 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         successColor: '',
         textColor: '',
     },
-    tooltip: (adapter) => {
+    tooltip: (adapter, formatter?) => {
         const theme = adapter.get.design.theme;
         const tooltip: TooltipComponentOption = {
             backgroundColor: theme.backgroundColor,
+            formatter,
             textStyle: {
                 color: theme.textColor,
                 fontFamily: theme.font,

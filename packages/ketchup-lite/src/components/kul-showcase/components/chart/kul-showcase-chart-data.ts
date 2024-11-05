@@ -34,6 +34,14 @@ export const CHART_EXAMPLES: ChartData = {
         kulSizeY: '300px',
         kulTypes: ['bar'],
     },
+    bubble: {
+        ['data-description']: 'Bubble',
+        kulAxis: 'X_Value',
+        kulData: CHART_KULDATA_FACTORY.bubble(),
+        kulSeries: ['Y_Value', 'Bubble_Size'],
+        kulSizeY: '400px',
+        kulTypes: ['bubble'],
+    },
     calendar: {
         ['data-description']: 'Calendar',
         kulAxis: 'Date',
@@ -65,6 +73,14 @@ export const CHART_EXAMPLES: ChartData = {
         kulSeries: ['Series_1'],
         kulSizeY: '300px',
         kulTypes: ['hbar'],
+    },
+    heatmap: {
+        ['data-description']: 'Heatmap',
+        kulAxis: 'Source_Channel',
+        kulData: CHART_KULDATA_FACTORY.heatmap(),
+        kulSeries: ['Target_Channel', 'Mapping_Count'],
+        kulSizeY: '400px',
+        kulTypes: ['heatmap'],
     },
     gaussian: {
         ['data-description']: 'Gaussian',
