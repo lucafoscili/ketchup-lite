@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-03T20:52:07",
+  "timestamp": "2024-11-05T20:18:07",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -799,6 +799,7 @@
         "kul-showcase-textfield",
         "kul-showcase-toast",
         "kul-showcase-tree",
+        "kul-showcase-typewriter",
         "kul-showcase-upload"
       ],
       "dependencies": [],
@@ -912,6 +913,9 @@
           "kul-article"
         ],
         "kul-showcase-tree": [
+          "kul-article"
+        ],
+        "kul-showcase-typewriter": [
           "kul-article"
         ],
         "kul-showcase-upload": [
@@ -10490,6 +10494,54 @@
       }
     },
     {
+      "filePath": "src/components/kul-showcase/components/typewriter/kul-showcase-typewriter.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-typewriter",
+      "readme": "# kul-showcase-lazy\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-typewriter",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-typewriter": [
+          "kul-typewriter",
+          "kul-article"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-showcase/components/upload/kul-showcase-upload.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-upload",
@@ -13734,6 +13786,419 @@
       }
     },
     {
+      "filePath": "src/components/kul-typewriter/kul-typewriter.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-typewriter",
+      "readme": "# kul-typewriter\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulCursor",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-cursor",
+          "reflectToAttr": false,
+          "docs": "Enables or disables the blinking cursor.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulDeleteSpeed",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-delete-speed",
+          "reflectToAttr": false,
+          "docs": "Sets the deleting speed in milliseconds.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "50"
+            }
+          ],
+          "default": "50",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLoop",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-loop",
+          "reflectToAttr": false,
+          "docs": "Enables or disables looping of the text.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulPause",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-pause",
+          "reflectToAttr": false,
+          "docs": "Sets the duration of the pause after typing a complete text.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "1000"
+            }
+          ],
+          "default": "500",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulSpeed",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-speed",
+          "reflectToAttr": false,
+          "docs": "Sets the typing speed in milliseconds.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "100"
+            }
+          ],
+          "default": "50",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": false,
+          "docs": "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulValue",
+          "type": "string | string[]",
+          "complexType": {
+            "original": "KulTypewriterValue",
+            "resolved": "string | string[]",
+            "references": {
+              "KulTypewriterValue": {
+                "location": "import",
+                "path": "./kul-typewriter-declarations",
+                "id": "src/components/kul-typewriter/kul-typewriter-declarations.ts::KulTypewriterValue"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-value",
+          "reflectToAttr": false,
+          "docs": "Sets the text or array of texts to display with the typewriter effect.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "string[]"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "List of props as object, each key will be a prop."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When provided and true, the result will be the list of props with their description."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When provided and true, the result will be the list of props with their description."
+            }
+          ],
+          "docs": "Used to retrieve component's props values.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When provided and true, the result will be the list of props with their description."
+            },
+            {
+              "name": "returns",
+              "text": "List of props as object, each key will be a prop."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-typewriter-event",
+          "detail": "KulTypewriterEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulTypewriterEventPayload",
+            "resolved": "KulTypewriterEventPayload",
+            "references": {
+              "KulTypewriterEventPayload": {
+                "location": "import",
+                "path": "./kul-typewriter-declarations",
+                "id": "src/components/kul-typewriter/kul-typewriter-declarations.ts::KulTypewriterEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes the component's events.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-typewriter-cursor-color",
+          "annotation": "prop",
+          "docs": "Color of the blinking cursor. Defaults to the same color as text."
+        },
+        {
+          "name": "--kul-typewriter-cursor-width",
+          "annotation": "prop",
+          "docs": "Width of the blinking cursor. Defaults to 2px."
+        },
+        {
+          "name": "--kul-typewriter-font-family",
+          "annotation": "prop",
+          "docs": "Font family for the text. Defaults to inherit."
+        },
+        {
+          "name": "--kul-typewriter-font-size",
+          "annotation": "prop",
+          "docs": "Font size for the text. Defaults to inherit."
+        },
+        {
+          "name": "--kul-typewriter-text-color",
+          "annotation": "prop",
+          "docs": "Color of the text being typed. Defaults to currentColor."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-typewriter"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "kul-showcase-typewriter": [
+          "kul-typewriter"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-upload/kul-upload.tsx",
       "encapsulation": "shadow",
       "tag": "kul-upload",
@@ -14168,12 +14633,12 @@
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
+      "declaration": "export type KulChartLegendPlacement =\n    | 'bottom'\n    | 'left'\n    | 'hidden'\n    | 'right'\n    | 'top';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candlestick'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'scatter';",
+      "declaration": "export type KulChartType =\n    | 'area'\n    | 'bar'\n    | 'bubble'\n    | 'calendar'\n    | 'candlestick'\n    | 'funnel'\n    | 'gaussian'\n    | 'hbar'\n    | 'heatmap'\n    | 'line'\n    | 'pie'\n    | 'radar'\n    | 'sankey'\n    | 'scatter';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
@@ -14188,7 +14653,7 @@
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload\r\n    extends KulEventPayload<'KulChart', KulChartEvent> {\r\n    data?: KulChartEventData;\r\n}",
+      "declaration": "export interface KulChartEventPayload\n    extends KulEventPayload<'KulChart', KulChartEvent> {\n    data?: KulChartEventData;\n}",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
@@ -14401,6 +14866,16 @@
       "declaration": "{\n    index?: number;\n    shape?: Partial<KulDataCell<KulDataShapes>>;\n}",
       "docstring": "",
       "path": "src/components/kul-masonry/kul-masonry-declarations.ts"
+    },
+    "src/components/kul-typewriter/kul-typewriter-declarations.ts::KulTypewriterValue": {
+      "declaration": "export type KulTypewriterValue = string | string[];",
+      "docstring": "",
+      "path": "src/components/kul-typewriter/kul-typewriter-declarations.ts"
+    },
+    "src/components/kul-typewriter/kul-typewriter-declarations.ts::KulTypewriterEventPayload": {
+      "declaration": "export interface KulTypewriterEventPayload\n    extends KulEventPayload<'KulTypewriter', KulTypewriterEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-typewriter/kul-typewriter-declarations.ts"
     }
   }
 }

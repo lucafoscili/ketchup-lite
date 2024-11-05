@@ -137,6 +137,7 @@ Type: `Promise<void>`
  - [kul-showcase-textfield](../kul-showcase/components/textfield)
  - [kul-showcase-toast](../kul-showcase/components/toast)
  - [kul-showcase-tree](../kul-showcase/components/tree)
+ - [kul-showcase-typewriter](../kul-showcase/components/typewriter)
  - [kul-showcase-upload](../kul-showcase/components/upload)
 
 ### Graph
@@ -179,6 +180,7 @@ graph TD;
   kul-showcase-textfield --> kul-article
   kul-showcase-toast --> kul-article
   kul-showcase-tree --> kul-article
+  kul-showcase-typewriter --> kul-article
   kul-showcase-upload --> kul-article
   style kul-article fill:#f9f,stroke:#333,stroke-width:4px
 ```

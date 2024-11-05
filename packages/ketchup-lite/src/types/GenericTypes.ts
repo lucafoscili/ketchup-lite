@@ -134,6 +134,11 @@ import {
     KulMasonryEvent,
     KulMasonryProps,
 } from '../components/kul-masonry/kul-masonry-declarations';
+import {
+    KulTypewriterEvent,
+    KulTypewriterProps,
+} from '../components/kul-typewriter/kul-typewriter-declarations';
+import { KulTypewriter } from '../components/kul-typewriter/kul-typewriter';
 
 export interface GenericMap {
     [index: string]: string;
@@ -168,6 +173,7 @@ export type KulComponentName =
     | 'KulTextfield'
     | 'KulToast'
     | 'KulTree'
+    | 'KulTypewriter'
     | 'KulUpload';
 export type KulComponentElementMap = {
     KulAccordion: HTMLKulAccordionElement;
@@ -196,6 +202,7 @@ export type KulComponentElementMap = {
     KulTextfield: HTMLKulTextfieldElement;
     KulToast: HTMLKulToastElement;
     KulTree: HTMLKulTreeElement;
+    KulTypewriter: HTMLKulTypewriterElement;
     KulUpload: HTMLKulUploadElement;
 };
 export type KulComponentClassMap = {
@@ -225,6 +232,7 @@ export type KulComponentClassMap = {
     KulTextfield: KulTextfield;
     KulToast: KulToast;
     KulTree: KulTree;
+    KulTypewriter: KulTypewriter;
     KulUpload: KulUpload;
 };
 export type KulComponentTagMap = {
@@ -254,6 +262,7 @@ export type KulComponentTagMap = {
     KulTextfield: 'kul-textfield';
     KulToast: 'kul-toast';
     KulTree: 'kul-tree';
+    KulTypewriter: 'kul-typewriter';
     KulUpload: 'kul-upload';
 };
 export type KulComponentType<T extends KulComponentName> =
@@ -323,6 +332,7 @@ export type ComponentEventMap = {
     KulTextfield: KulTextfieldEvent;
     KulToast: KulToastEvent;
     KulTree: KulTreeEvent;
+    KulTypewriter: KulTypewriterEvent;
     KulUpload: KulUploadEvent;
 };
 export type ComponentPropsMap = {
@@ -352,6 +362,7 @@ export type ComponentPropsMap = {
     KulTextfield: KulTextfieldProps;
     KulToast: KulToastProps;
     KulTree: KulTreeProps;
+    KulTypewriter: KulTypewriterProps;
     KulUpload: KulUploadProps;
 };
 type ExtractComponentName<C> = C extends KulComponent<infer N> ? N : never;
