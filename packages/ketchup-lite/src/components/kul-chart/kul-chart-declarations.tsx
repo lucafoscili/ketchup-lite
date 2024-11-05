@@ -3,6 +3,7 @@ import {
     EChartsOption,
     LegendComponentOption,
     SeriesOption,
+    TooltipComponentFormatterCallback,
     TooltipComponentOption,
     XAXisComponentOption,
     YAXisComponentOption,
@@ -51,7 +52,10 @@ export interface KulChartAdapterDesign {
         successColor: string;
         textColor: string;
     };
-    tooltip: (adapter: KulChartAdapter) => TooltipComponentOption;
+    tooltip: (
+        adapter: KulChartAdapter,
+        formatter?: TooltipComponentFormatterCallback<unknown>
+    ) => TooltipComponentOption;
 }
 export interface KulChartAdapterGetters {
     chart: () => KulChart;
@@ -67,6 +71,7 @@ export interface KulChartAdapterOptions {
     candlestick: (adapter: KulChartAdapter) => EChartsOption;
     default: (adapter: KulChartAdapter) => EChartsOption;
     funnel: (adapter: KulChartAdapter) => EChartsOption;
+    heatmap: (adapter: KulChartAdapter) => EChartsOption;
     pie: (adapter: KulChartAdapter) => EChartsOption;
     radar: (adapter: KulChartAdapter) => EChartsOption;
     sankey: (adapter: KulChartAdapter) => EChartsOption;
@@ -123,6 +128,7 @@ export type KulChartType =
     | 'funnel'
     | 'gaussian'
     | 'hbar'
+    | 'heatmap'
     | 'line'
     | 'pie'
     | 'radar'

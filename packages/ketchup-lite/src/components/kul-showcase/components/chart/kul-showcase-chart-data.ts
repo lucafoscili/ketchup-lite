@@ -66,6 +66,14 @@ export const CHART_EXAMPLES: ChartData = {
         kulSizeY: '300px',
         kulTypes: ['hbar'],
     },
+    heatmap: {
+        ['data-description']: 'Heatmap',
+        kulAxis: 'Source_Channel',
+        kulData: CHART_KULDATA_FACTORY.heatmap(),
+        kulSeries: ['Target_Channel', 'Mapping_Count'],
+        kulSizeY: '400px',
+        kulTypes: ['heatmap'],
+    },
     gaussian: {
         ['data-description']: 'Gaussian',
         kulAxis: 'X',

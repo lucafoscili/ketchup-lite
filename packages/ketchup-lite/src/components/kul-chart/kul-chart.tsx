@@ -337,6 +337,8 @@ export class KulChart {
                 return options.candlestick(this.#adapter);
             case 'funnel':
                 return options.funnel(this.#adapter);
+            case 'heatmap':
+                return options.heatmap(this.#adapter);
             case 'pie':
                 return options.pie(this.#adapter);
             case 'radar':

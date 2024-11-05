@@ -218,7 +218,6 @@ export const CHART_KULDATA_FACTORY: Partial<{
             },
         ],
     }),
-
     calendar: () => ({
         columns: [
             { id: 'Date', title: 'Date' },
@@ -419,6 +418,95 @@ export const CHART_KULDATA_FACTORY: Partial<{
             {
                 id: '6',
                 cells: { X: { value: '3' }, Frequency: { value: '5' } },
+            },
+        ],
+    }),
+    heatmap: () => ({
+        columns: [
+            { id: 'Source_Channel', title: 'Source Channel Intensity' },
+            { id: 'Target_Channel', title: 'Target Channel Intensity' },
+            { id: 'Mapping_Count', title: 'Mapping Count' },
+        ],
+        nodes: [
+            {
+                id: '0',
+                cells: {
+                    Source_Channel: { value: '20' },
+                    Target_Channel: { value: '25' },
+                    Mapping_Count: { value: '12' },
+                },
+            },
+            {
+                id: '1',
+                cells: {
+                    Source_Channel: { value: '45' },
+                    Target_Channel: { value: '55' },
+                    Mapping_Count: { value: '8' },
+                },
+            },
+            {
+                id: '2',
+                cells: {
+                    Source_Channel: { value: '60' },
+                    Target_Channel: { value: '65' },
+                    Mapping_Count: { value: '20' },
+                },
+            },
+            {
+                id: '3',
+                cells: {
+                    Source_Channel: { value: '100' },
+                    Target_Channel: { value: '110' },
+                    Mapping_Count: { value: '25' },
+                },
+            },
+            {
+                id: '4',
+                cells: {
+                    Source_Channel: { value: '125' },
+                    Target_Channel: { value: '130' },
+                    Mapping_Count: { value: '18' },
+                },
+            },
+            {
+                id: '5',
+                cells: {
+                    Source_Channel: { value: '150' },
+                    Target_Channel: { value: '140' },
+                    Mapping_Count: { value: '30' },
+                },
+            },
+            {
+                id: '6',
+                cells: {
+                    Source_Channel: { value: '175' },
+                    Target_Channel: { value: '170' },
+                    Mapping_Count: { value: '22' },
+                },
+            },
+            {
+                id: '7',
+                cells: {
+                    Source_Channel: { value: '200' },
+                    Target_Channel: { value: '210' },
+                    Mapping_Count: { value: '15' },
+                },
+            },
+            {
+                id: '8',
+                cells: {
+                    Source_Channel: { value: '225' },
+                    Target_Channel: { value: '230' },
+                    Mapping_Count: { value: '10' },
+                },
+            },
+            {
+                id: '9',
+                cells: {
+                    Source_Channel: { value: '240' },
+                    Target_Channel: { value: '250' },
+                    Mapping_Count: { value: '5' },
+                },
             },
         ],
     }),
