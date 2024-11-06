@@ -172,49 +172,89 @@ export const CHART_KULDATA_FACTORY: Partial<{
     }),
     bubble: () => ({
         columns: [
-            { id: 'X', title: 'X Axis' },
-            { id: 'Y', title: 'Y Axis' },
-            { id: 'Size', title: 'Bubble Size' },
+            { id: 'X_Value', title: 'X Axis Value' },
+            { id: 'Y_Value', title: 'Y Axis Value' },
+            { id: 'Bubble_Size', title: 'Bubble Size' },
         ],
         nodes: [
             {
                 id: '0',
                 cells: {
-                    X: { value: '5' },
-                    Y: { value: '10' },
-                    Size: { value: '20' },
+                    X_Value: { value: '10' },
+                    Y_Value: { value: '15' },
+                    Bubble_Size: { value: '8' },
                 },
             },
             {
                 id: '1',
                 cells: {
-                    X: { value: '15' },
-                    Y: { value: '25' },
-                    Size: { value: '30' },
+                    X_Value: { value: '20' },
+                    Y_Value: { value: '25' },
+                    Bubble_Size: { value: '15' },
                 },
             },
             {
                 id: '2',
                 cells: {
-                    X: { value: '20' },
-                    Y: { value: '35' },
-                    Size: { value: '40' },
+                    X_Value: { value: '30' },
+                    Y_Value: { value: '35' },
+                    Bubble_Size: { value: '12' },
                 },
             },
             {
                 id: '3',
                 cells: {
-                    X: { value: '25' },
-                    Y: { value: '50' },
-                    Size: { value: '25' },
+                    X_Value: { value: '40' },
+                    Y_Value: { value: '45' },
+                    Bubble_Size: { value: '20' },
                 },
             },
             {
                 id: '4',
                 cells: {
-                    X: { value: '30' },
-                    Y: { value: '40' },
-                    Size: { value: '50' },
+                    X_Value: { value: '50' },
+                    Y_Value: { value: '55' },
+                    Bubble_Size: { value: '25' },
+                },
+            },
+            {
+                id: '5',
+                cells: {
+                    X_Value: { value: '60' },
+                    Y_Value: { value: '65' },
+                    Bubble_Size: { value: '18' },
+                },
+            },
+            {
+                id: '6',
+                cells: {
+                    X_Value: { value: '70' },
+                    Y_Value: { value: '75' },
+                    Bubble_Size: { value: '30' },
+                },
+            },
+            {
+                id: '7',
+                cells: {
+                    X_Value: { value: '80' },
+                    Y_Value: { value: '85' },
+                    Bubble_Size: { value: '22' },
+                },
+            },
+            {
+                id: '8',
+                cells: {
+                    X_Value: { value: '90' },
+                    Y_Value: { value: '95' },
+                    Bubble_Size: { value: '10' },
+                },
+            },
+            {
+                id: '9',
+                cells: {
+                    X_Value: { value: '100' },
+                    Y_Value: { value: '105' },
+                    Bubble_Size: { value: '5' },
                 },
             },
         ],
@@ -379,6 +419,95 @@ export const CHART_KULDATA_FACTORY: Partial<{
             {
                 id: '6',
                 cells: { X: { value: '3' }, Frequency: { value: '5' } },
+            },
+        ],
+    }),
+    heatmap: () => ({
+        columns: [
+            { id: 'Source_Channel', title: 'Source Channel Intensity' },
+            { id: 'Target_Channel', title: 'Target Channel Intensity' },
+            { id: 'Mapping_Count', title: 'Mapping Count' },
+        ],
+        nodes: [
+            {
+                id: '0',
+                cells: {
+                    Source_Channel: { value: '20' },
+                    Target_Channel: { value: '25' },
+                    Mapping_Count: { value: '12' },
+                },
+            },
+            {
+                id: '1',
+                cells: {
+                    Source_Channel: { value: '45' },
+                    Target_Channel: { value: '55' },
+                    Mapping_Count: { value: '8' },
+                },
+            },
+            {
+                id: '2',
+                cells: {
+                    Source_Channel: { value: '60' },
+                    Target_Channel: { value: '65' },
+                    Mapping_Count: { value: '20' },
+                },
+            },
+            {
+                id: '3',
+                cells: {
+                    Source_Channel: { value: '100' },
+                    Target_Channel: { value: '110' },
+                    Mapping_Count: { value: '25' },
+                },
+            },
+            {
+                id: '4',
+                cells: {
+                    Source_Channel: { value: '125' },
+                    Target_Channel: { value: '130' },
+                    Mapping_Count: { value: '18' },
+                },
+            },
+            {
+                id: '5',
+                cells: {
+                    Source_Channel: { value: '150' },
+                    Target_Channel: { value: '140' },
+                    Mapping_Count: { value: '30' },
+                },
+            },
+            {
+                id: '6',
+                cells: {
+                    Source_Channel: { value: '175' },
+                    Target_Channel: { value: '170' },
+                    Mapping_Count: { value: '22' },
+                },
+            },
+            {
+                id: '7',
+                cells: {
+                    Source_Channel: { value: '200' },
+                    Target_Channel: { value: '210' },
+                    Mapping_Count: { value: '15' },
+                },
+            },
+            {
+                id: '8',
+                cells: {
+                    Source_Channel: { value: '225' },
+                    Target_Channel: { value: '230' },
+                    Mapping_Count: { value: '10' },
+                },
+            },
+            {
+                id: '9',
+                cells: {
+                    Source_Channel: { value: '240' },
+                    Target_Channel: { value: '250' },
+                    Mapping_Count: { value: '5' },
+                },
             },
         ],
     }),
@@ -555,7 +684,7 @@ export const MIXED_HEATMAP = () => {
                     Heat_Value: {
                         value: Math.floor(Math.random() * 100).toString(),
                     },
-                    Line_Value: { value: (i + j).toString() },
+                    Line_Value: { value: (i + j).toString() }, // Simple function for line values
                 },
             });
         }

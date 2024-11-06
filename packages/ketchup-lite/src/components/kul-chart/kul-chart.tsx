@@ -210,13 +210,14 @@ export class KulChart {
             mapType: (type) => {
                 switch (type) {
                     case 'area':
-                    case 'bubble':
                     case 'gaussian':
                         return 'line';
                     case 'calendar':
                     case 'hbar':
                     case 'sbar':
                         return 'bar';
+                    case 'bubble':
+                        return 'scatter';
                     default:
                         return type;
                 }
@@ -330,6 +331,7 @@ export class KulChart {
                         ]);
                     }
                 } else {
+                    // For line series
                     const lineDataMap = new Map<string, number>();
                     for (const node of dataset.nodes) {
                         const xValue = this.#stringify(
@@ -340,6 +342,7 @@ export class KulChart {
                         );
                         lineDataMap.set(xValue, value);
                     }
+                    // Ensure data aligns with x-axis categories
                     for (const xValue of xCategories) {
                         seriesValues.push(lineDataMap.get(xValue) ?? 0);
                     }
@@ -348,7 +351,7 @@ export class KulChart {
                 const seriesName =
                     this.#findColumn(dataset, { id: seriesId })?.[0]?.title ||
                     seriesId;
-                const axisIndex = 0;
+                const axisIndex = 0; // Assign to the primary axis or adjust as needed
 
                 this.#seriesData.push({
                     name: seriesName,
@@ -374,12 +377,16 @@ export class KulChart {
         const firstType = this.kulTypes?.[0] || 'line';
 
         switch (firstType) {
+            case 'bubble':
+                return options.bubble(this.#adapter);
             case 'calendar':
                 return options.calendar(this.#adapter);
             case 'candlestick':
                 return options.candlestick(this.#adapter);
             case 'funnel':
                 return options.funnel(this.#adapter);
+            case 'heatmap':
+                return options.heatmap(this.#adapter);
             case 'pie':
                 return options.pie(this.#adapter);
             case 'radar':
