@@ -658,7 +658,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulAxis",
         docs: "Sets the axis of the chart.",
-        type: "string",
+        type: "string | string[]",
       },
       {
         name: "kulColors",

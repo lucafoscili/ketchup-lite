@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-03T16:12:06",
+  "timestamp": "2024-11-06T18:55:11",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -2425,18 +2425,23 @@
       "filePath": "src/components/kul-chart/kul-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chart",
-      "readme": "# kul-chart\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
         {
           "name": "kulAxis",
-          "type": "string",
+          "type": "string | string[]",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
+            "original": "KulChartAxis",
+            "resolved": "string | string[]",
+            "references": {
+              "KulChartAxis": {
+                "location": "import",
+                "path": "./kul-chart-declarations",
+                "id": "src/components/kul-chart/kul-chart-declarations.tsx::KulChartAxis"
+              }
+            }
           },
           "mutable": true,
           "attr": "kul-axis",
@@ -2452,6 +2457,9 @@
           "values": [
             {
               "type": "string"
+            },
+            {
+              "type": "string[]"
             }
           ],
           "optional": false,
@@ -9666,7 +9674,7 @@
       "filePath": "src/components/kul-showcase/framework/llm/kul-showcase-kulllm.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kulllm",
-      "readme": "# kul-showcase-kulllm\n\n\n",
+      "readme": "# kul-showcase-kulllm\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14167,13 +14175,18 @@
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartAxis": {
+      "declaration": "export type KulChartAxis = string | string[];",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
       "declaration": "export type KulChartLegendPlacement =\n    | 'bottom'\n    | 'left'\n    | 'hidden'\n    | 'right'\n    | 'top';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\n    | 'area'\n    | 'bar'\n    | 'bubble'\n    | 'calendar'\n    | 'candlestick'\n    | 'funnel'\n    | 'gaussian'\n    | 'hbar'\n    | 'line'\n    | 'pie'\n    | 'radar'\n    | 'sankey'\n    | 'scatter';",
+      "declaration": "export type KulChartType =\n    | 'area'\n    | 'bar'\n    | 'bubble'\n    | 'calendar'\n    | 'candlestick'\n    | 'funnel'\n    | 'gaussian'\n    | 'hbar'\n    | 'heatmap'\n    | 'line'\n    | 'pie'\n    | 'radar'\n    | 'sankey'\n    | 'sbar'\n    | 'scatter';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
