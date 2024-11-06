@@ -140,7 +140,7 @@ export class KulImage {
     /*-------------------------------------------------*/
 
     @Watch('kulValue')
-    async updateShapes() {
+    async resetState() {
         this.error = false;
     }
 
@@ -225,7 +225,7 @@ export class KulImage {
                     this.onKulEvent(e, 'error');
                 }}
                 onLoad={(e) => {
-                    this.error = false;
+                    this.resetState();
                     this.onKulEvent(e, 'load');
                 }}
                 src={this.kulValue}

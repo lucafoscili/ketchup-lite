@@ -35,6 +35,7 @@ import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/k
 import { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
 import { KulToastEventPayload } from "./components/kul-toast/kul-toast-declarations";
 import { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
+import { KulTypewriterEventPayload, KulTypewriterValue } from "./components/kul-typewriter/kul-typewriter-declarations";
 import { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
 export { KulDataDataset, KulDataNode, KulDataShapes, KulDataShapesMap } from "./managers/kul-data/kul-data-declarations";
 export { KulAccordionEventPayload } from "./components/kul-accordion/kul-accordion-declarations";
@@ -66,6 +67,7 @@ export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/k
 export { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
 export { KulToastEventPayload } from "./components/kul-toast/kul-toast-declarations";
 export { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
+export { KulTypewriterEventPayload, KulTypewriterValue } from "./components/kul-typewriter/kul-typewriter-declarations";
 export { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
 export namespace Components {
     interface KulAccordion {
@@ -1178,6 +1180,8 @@ export namespace Components {
     }
     interface KulShowcaseTree {
     }
+    interface KulShowcaseTypewriter {
+    }
     interface KulShowcaseUpload {
     }
     interface KulSpinner {
@@ -1590,6 +1594,63 @@ export namespace Components {
          */
         "unmount": (ms?: number) => Promise<void>;
     }
+    interface KulTypewriter {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
+        /**
+          * Used to retrieve component's props values.
+          * @param descriptions - When provided and true, the result will be the list of props with their description.
+          * @returns List of props as object, each key will be a prop.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Enables or disables the blinking cursor.
+          * @default true
+         */
+        "kulCursor": boolean;
+        /**
+          * Sets the deleting speed in milliseconds.
+          * @default 50
+         */
+        "kulDeleteSpeed": number;
+        /**
+          * Enables or disables looping of the text.
+          * @default false
+         */
+        "kulLoop": boolean;
+        /**
+          * Sets the duration of the pause after typing a complete text.
+          * @default 1000
+         */
+        "kulPause": number;
+        /**
+          * Sets the typing speed in milliseconds.
+          * @default 100
+         */
+        "kulSpeed": number;
+        /**
+          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * Sets the text or array of texts to display with the typewriter effect.
+          * @default ""
+         */
+        "kulValue": KulTypewriterValue;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
+    }
     interface KulUpload {
         /**
           * Retrieves the debug information reflecting the current state of the component.
@@ -1740,6 +1801,10 @@ export interface KulToastCustomEvent<T> extends CustomEvent<T> {
 export interface KulTreeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulTreeElement;
+}
+export interface KulTypewriterCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulTypewriterElement;
 }
 export interface KulUploadCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -2291,6 +2356,12 @@ declare global {
         prototype: HTMLKulShowcaseTreeElement;
         new (): HTMLKulShowcaseTreeElement;
     };
+    interface HTMLKulShowcaseTypewriterElement extends Components.KulShowcaseTypewriter, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseTypewriterElement: {
+        prototype: HTMLKulShowcaseTypewriterElement;
+        new (): HTMLKulShowcaseTypewriterElement;
+    };
     interface HTMLKulShowcaseUploadElement extends Components.KulShowcaseUpload, HTMLStencilElement {
     }
     var HTMLKulShowcaseUploadElement: {
@@ -2416,6 +2487,23 @@ declare global {
         prototype: HTMLKulTreeElement;
         new (): HTMLKulTreeElement;
     };
+    interface HTMLKulTypewriterElementEventMap {
+        "kul-typewriter-event": KulTypewriterEventPayload;
+    }
+    interface HTMLKulTypewriterElement extends Components.KulTypewriter, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulTypewriterElementEventMap>(type: K, listener: (this: HTMLKulTypewriterElement, ev: KulTypewriterCustomEvent<HTMLKulTypewriterElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulTypewriterElementEventMap>(type: K, listener: (this: HTMLKulTypewriterElement, ev: KulTypewriterCustomEvent<HTMLKulTypewriterElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulTypewriterElement: {
+        prototype: HTMLKulTypewriterElement;
+        new (): HTMLKulTypewriterElement;
+    };
     interface HTMLKulUploadElementEventMap {
         "kul-upload-event": KulUploadEventPayload;
     }
@@ -2490,6 +2578,7 @@ declare global {
         "kul-showcase-textfield": HTMLKulShowcaseTextfieldElement;
         "kul-showcase-toast": HTMLKulShowcaseToastElement;
         "kul-showcase-tree": HTMLKulShowcaseTreeElement;
+        "kul-showcase-typewriter": HTMLKulShowcaseTypewriterElement;
         "kul-showcase-upload": HTMLKulShowcaseUploadElement;
         "kul-spinner": HTMLKulSpinnerElement;
         "kul-splash": HTMLKulSplashElement;
@@ -2498,6 +2587,7 @@ declare global {
         "kul-textfield": HTMLKulTextfieldElement;
         "kul-toast": HTMLKulToastElement;
         "kul-tree": HTMLKulTreeElement;
+        "kul-typewriter": HTMLKulTypewriterElement;
         "kul-upload": HTMLKulUploadElement;
     }
 }
@@ -3201,6 +3291,8 @@ declare namespace LocalJSX {
     }
     interface KulShowcaseTree {
     }
+    interface KulShowcaseTypewriter {
+    }
     interface KulShowcaseUpload {
     }
     interface KulSpinner {
@@ -3457,6 +3549,47 @@ declare namespace LocalJSX {
          */
         "onKul-tree-event"?: (event: KulTreeCustomEvent<KulTreeEventPayload>) => void;
     }
+    interface KulTypewriter {
+        /**
+          * Enables or disables the blinking cursor.
+          * @default true
+         */
+        "kulCursor"?: boolean;
+        /**
+          * Sets the deleting speed in milliseconds.
+          * @default 50
+         */
+        "kulDeleteSpeed"?: number;
+        /**
+          * Enables or disables looping of the text.
+          * @default false
+         */
+        "kulLoop"?: boolean;
+        /**
+          * Sets the duration of the pause after typing a complete text.
+          * @default 1000
+         */
+        "kulPause"?: number;
+        /**
+          * Sets the typing speed in milliseconds.
+          * @default 100
+         */
+        "kulSpeed"?: number;
+        /**
+          * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Sets the text or array of texts to display with the typewriter effect.
+          * @default ""
+         */
+        "kulValue"?: KulTypewriterValue;
+        /**
+          * Describes the component's events.
+         */
+        "onKul-typewriter-event"?: (event: KulTypewriterCustomEvent<KulTypewriterEventPayload>) => void;
+    }
     interface KulUpload {
         /**
           * Sets the button's label.
@@ -3540,6 +3673,7 @@ declare namespace LocalJSX {
         "kul-showcase-textfield": KulShowcaseTextfield;
         "kul-showcase-toast": KulShowcaseToast;
         "kul-showcase-tree": KulShowcaseTree;
+        "kul-showcase-typewriter": KulShowcaseTypewriter;
         "kul-showcase-upload": KulShowcaseUpload;
         "kul-spinner": KulSpinner;
         "kul-splash": KulSplash;
@@ -3548,6 +3682,7 @@ declare namespace LocalJSX {
         "kul-textfield": KulTextfield;
         "kul-toast": KulToast;
         "kul-tree": KulTree;
+        "kul-typewriter": KulTypewriter;
         "kul-upload": KulUpload;
     }
 }
@@ -3611,6 +3746,7 @@ declare module "@stencil/core" {
             "kul-showcase-textfield": LocalJSX.KulShowcaseTextfield & JSXBase.HTMLAttributes<HTMLKulShowcaseTextfieldElement>;
             "kul-showcase-toast": LocalJSX.KulShowcaseToast & JSXBase.HTMLAttributes<HTMLKulShowcaseToastElement>;
             "kul-showcase-tree": LocalJSX.KulShowcaseTree & JSXBase.HTMLAttributes<HTMLKulShowcaseTreeElement>;
+            "kul-showcase-typewriter": LocalJSX.KulShowcaseTypewriter & JSXBase.HTMLAttributes<HTMLKulShowcaseTypewriterElement>;
             "kul-showcase-upload": LocalJSX.KulShowcaseUpload & JSXBase.HTMLAttributes<HTMLKulShowcaseUploadElement>;
             "kul-spinner": LocalJSX.KulSpinner & JSXBase.HTMLAttributes<HTMLKulSpinnerElement>;
             "kul-splash": LocalJSX.KulSplash & JSXBase.HTMLAttributes<HTMLKulSplashElement>;
@@ -3619,6 +3755,7 @@ declare module "@stencil/core" {
             "kul-textfield": LocalJSX.KulTextfield & JSXBase.HTMLAttributes<HTMLKulTextfieldElement>;
             "kul-toast": LocalJSX.KulToast & JSXBase.HTMLAttributes<HTMLKulToastElement>;
             "kul-tree": LocalJSX.KulTree & JSXBase.HTMLAttributes<HTMLKulTreeElement>;
+            "kul-typewriter": LocalJSX.KulTypewriter & JSXBase.HTMLAttributes<HTMLKulTypewriterElement>;
             "kul-upload": LocalJSX.KulUpload & JSXBase.HTMLAttributes<HTMLKulUploadElement>;
         }
     }

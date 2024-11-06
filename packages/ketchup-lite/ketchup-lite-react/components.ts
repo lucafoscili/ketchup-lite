@@ -9,7 +9,7 @@
 
 import type { EventName, StencilReactComponent } from '@stencil/react-output-target/runtime';
 import { createComponent } from '@stencil/react-output-target/runtime';
-import { type KulAccordionCustomEvent, type KulAccordionEventPayload, type KulArticleCustomEvent, type KulArticleEventPayload, type KulBadgeCustomEvent, type KulBadgeEventPayload, type KulButtonCustomEvent, type KulButtonEventPayload, type KulCardCustomEvent, type KulCardEventPayload, type KulChartCustomEvent, type KulChartEventPayload, type KulChatCustomEvent, type KulChatEventPayload, type KulChipCustomEvent, type KulChipEventPayload, type KulCodeCustomEvent, type KulCodeEventPayload, type KulCompareCustomEvent, type KulCompareEventPayload, type KulDrawerCustomEvent, type KulDrawerEventPayload, type KulHeaderCustomEvent, type KulHeaderEventPayload, type KulImageCustomEvent, type KulImageEventPayload, type KulLazyCustomEvent, type KulLazyEventPayload, type KulListCustomEvent, type KulListEventPayload, type KulMasonryCustomEvent, type KulMasonryEventPayload, type KulMessengerCustomEvent, type KulMessengerEventPayload, type KulPhotoframeCustomEvent, type KulPhotoframeEventPayload, type KulProgressbarCustomEvent, type KulProgressbarEventPayload, type KulSpinnerCustomEvent, type KulSpinnerEventPayload, type KulSplashCustomEvent, type KulSplashEventPayload, type KulSwitchCustomEvent, type KulSwitchEventPayload, type KulTabbarCustomEvent, type KulTabbarEventPayload, type KulTextfieldCustomEvent, type KulTextfieldEventPayload, type KulToastCustomEvent, type KulToastEventPayload, type KulTreeCustomEvent, type KulTreeEventPayload, type KulUploadCustomEvent, type KulUploadEventPayload } from "ketchup-lite";
+import { type KulAccordionCustomEvent, type KulAccordionEventPayload, type KulArticleCustomEvent, type KulArticleEventPayload, type KulBadgeCustomEvent, type KulBadgeEventPayload, type KulButtonCustomEvent, type KulButtonEventPayload, type KulCardCustomEvent, type KulCardEventPayload, type KulChartCustomEvent, type KulChartEventPayload, type KulChatCustomEvent, type KulChatEventPayload, type KulChipCustomEvent, type KulChipEventPayload, type KulCodeCustomEvent, type KulCodeEventPayload, type KulCompareCustomEvent, type KulCompareEventPayload, type KulDrawerCustomEvent, type KulDrawerEventPayload, type KulHeaderCustomEvent, type KulHeaderEventPayload, type KulImageCustomEvent, type KulImageEventPayload, type KulLazyCustomEvent, type KulLazyEventPayload, type KulListCustomEvent, type KulListEventPayload, type KulMasonryCustomEvent, type KulMasonryEventPayload, type KulMessengerCustomEvent, type KulMessengerEventPayload, type KulPhotoframeCustomEvent, type KulPhotoframeEventPayload, type KulProgressbarCustomEvent, type KulProgressbarEventPayload, type KulSpinnerCustomEvent, type KulSpinnerEventPayload, type KulSplashCustomEvent, type KulSplashEventPayload, type KulSwitchCustomEvent, type KulSwitchEventPayload, type KulTabbarCustomEvent, type KulTabbarEventPayload, type KulTextfieldCustomEvent, type KulTextfieldEventPayload, type KulToastCustomEvent, type KulToastEventPayload, type KulTreeCustomEvent, type KulTreeEventPayload, type KulTypewriterCustomEvent, type KulTypewriterEventPayload, type KulUploadCustomEvent, type KulUploadEventPayload } from "ketchup-lite";
 import { KulAccordion as KulAccordionElement, defineCustomElement as defineKulAccordion } from "ketchup-lite/dist/components/kul-accordion.js";
 import { KulArticle as KulArticleElement, defineCustomElement as defineKulArticle } from "ketchup-lite/dist/components/kul-article.js";
 import { KulBadge as KulBadgeElement, defineCustomElement as defineKulBadge } from "ketchup-lite/dist/components/kul-badge.js";
@@ -65,6 +65,7 @@ import { KulShowcaseTabbar as KulShowcaseTabbarElement, defineCustomElement as d
 import { KulShowcaseTextfield as KulShowcaseTextfieldElement, defineCustomElement as defineKulShowcaseTextfield } from "ketchup-lite/dist/components/kul-showcase-textfield.js";
 import { KulShowcaseToast as KulShowcaseToastElement, defineCustomElement as defineKulShowcaseToast } from "ketchup-lite/dist/components/kul-showcase-toast.js";
 import { KulShowcaseTree as KulShowcaseTreeElement, defineCustomElement as defineKulShowcaseTree } from "ketchup-lite/dist/components/kul-showcase-tree.js";
+import { KulShowcaseTypewriter as KulShowcaseTypewriterElement, defineCustomElement as defineKulShowcaseTypewriter } from "ketchup-lite/dist/components/kul-showcase-typewriter.js";
 import { KulShowcaseUpload as KulShowcaseUploadElement, defineCustomElement as defineKulShowcaseUpload } from "ketchup-lite/dist/components/kul-showcase-upload.js";
 import { KulShowcase as KulShowcaseElement, defineCustomElement as defineKulShowcase } from "ketchup-lite/dist/components/kul-showcase.js";
 import { KulSpinner as KulSpinnerElement, defineCustomElement as defineKulSpinner } from "ketchup-lite/dist/components/kul-spinner.js";
@@ -74,6 +75,7 @@ import { KulTabbar as KulTabbarElement, defineCustomElement as defineKulTabbar }
 import { KulTextfield as KulTextfieldElement, defineCustomElement as defineKulTextfield } from "ketchup-lite/dist/components/kul-textfield.js";
 import { KulToast as KulToastElement, defineCustomElement as defineKulToast } from "ketchup-lite/dist/components/kul-toast.js";
 import { KulTree as KulTreeElement, defineCustomElement as defineKulTree } from "ketchup-lite/dist/components/kul-tree.js";
+import { KulTypewriter as KulTypewriterElement, defineCustomElement as defineKulTypewriter } from "ketchup-lite/dist/components/kul-typewriter.js";
 import { KulUpload as KulUploadElement, defineCustomElement as defineKulUpload } from "ketchup-lite/dist/components/kul-upload.js";
 import React from 'react';
 
@@ -693,6 +695,17 @@ export const KulShowcaseTree: StencilReactComponent<KulShowcaseTreeElement, KulS
     defineCustomElement: defineKulShowcaseTree
 });
 
+type KulShowcaseTypewriterEvents = NonNullable<unknown>;
+
+export const KulShowcaseTypewriter: StencilReactComponent<KulShowcaseTypewriterElement, KulShowcaseTypewriterEvents> = /*@__PURE__*/ createComponent<KulShowcaseTypewriterElement, KulShowcaseTypewriterEvents>({
+    tagName: 'kul-showcase-typewriter',
+    elementClass: KulShowcaseTypewriterElement,
+    // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+    react: React,
+    events: {} as KulShowcaseTypewriterEvents,
+    defineCustomElement: defineKulShowcaseTypewriter
+});
+
 type KulShowcaseUploadEvents = NonNullable<unknown>;
 
 export const KulShowcaseUpload: StencilReactComponent<KulShowcaseUploadElement, KulShowcaseUploadEvents> = /*@__PURE__*/ createComponent<KulShowcaseUploadElement, KulShowcaseUploadEvents>({
@@ -779,6 +792,17 @@ export const KulTree: StencilReactComponent<KulTreeElement, KulTreeEvents> = /*@
     react: React,
     events: { onKulTreeEvent: 'kul-tree-event' } as KulTreeEvents,
     defineCustomElement: defineKulTree
+});
+
+type KulTypewriterEvents = { onKulTypewriterEvent: EventName<KulTypewriterCustomEvent<KulTypewriterEventPayload>> };
+
+export const KulTypewriter: StencilReactComponent<KulTypewriterElement, KulTypewriterEvents> = /*@__PURE__*/ createComponent<KulTypewriterElement, KulTypewriterEvents>({
+    tagName: 'kul-typewriter',
+    elementClass: KulTypewriterElement,
+    // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+    react: React,
+    events: { onKulTypewriterEvent: 'kul-typewriter-event' } as KulTypewriterEvents,
+    defineCustomElement: defineKulTypewriter
 });
 
 type KulUploadEvents = { onKulUploadEvent: EventName<KulUploadCustomEvent<KulUploadEventPayload>> };

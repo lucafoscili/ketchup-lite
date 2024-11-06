@@ -2458,6 +2458,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [],
     styles: [],
   },
+  "kul-showcase-typewriter": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
   "kul-showcase-upload": {
     methods: [],
     props: [],
@@ -3287,6 +3292,105 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-tree-text-color",
         docs: "Sets the text color of the tree. Defaults to var(--kul-text-color).",
+      },
+    ],
+  },
+  "kul-typewriter": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's props values.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "List of props as object, each key will be a prop.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulCursor",
+        docs: "Enables or disables the blinking cursor.",
+        type: "boolean",
+      },
+      {
+        name: "kulDeleteSpeed",
+        docs: "Sets the deleting speed in milliseconds.",
+        type: "number",
+      },
+      {
+        name: "kulLoop",
+        docs: "Enables or disables looping of the text.",
+        type: "boolean",
+      },
+      {
+        name: "kulPause",
+        docs: "Sets the duration of the pause after typing a complete text.",
+        type: "number",
+      },
+      {
+        name: "kulSpeed",
+        docs: "Sets the typing speed in milliseconds.",
+        type: "number",
+      },
+      {
+        name: "kulStyle",
+        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+        type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "Sets the text or array of texts to display with the typewriter effect.",
+        type: "string | string[]",
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-typewriter-cursor-color",
+        docs: "Color of the blinking cursor. Defaults to the same color as text.",
+      },
+      {
+        name: "--kul-typewriter-cursor-width",
+        docs: "Width of the blinking cursor. Defaults to 2px.",
+      },
+      {
+        name: "--kul-typewriter-font-family",
+        docs: "Font family for the text. Defaults to inherit.",
+      },
+      {
+        name: "--kul-typewriter-font-size",
+        docs: "Font size for the text. Defaults to inherit.",
+      },
+      {
+        name: "--kul-typewriter-text-color",
+        docs: "Color of the text being typed. Defaults to currentColor.",
       },
     ],
   },

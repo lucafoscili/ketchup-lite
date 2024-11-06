@@ -259,17 +259,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                     },
                 } as CandlestickSeriesOption,
             ],
-            tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross',
-                },
-                backgroundColor: design.theme.backgroundColor,
-                textStyle: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-            },
+            tooltip: design.tooltip(adapter),
         };
 
         return options;
@@ -633,9 +623,8 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             label: design.label(adapter),
             legend: design.legend(adapter),
             tooltip: {
-                ...design.tooltip(adapter),
+                ...design.tooltip(adapter, formatter),
                 trigger: 'item',
-                formatter: '{a} <br/>{b}: {c} ({d}%)',
             },
             series: [
                 {
@@ -648,13 +637,12 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
-
     radar: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
         const stringify = adapter.actions.stringify;
 
-        const indicators = chart.kulSeries.map((seriesName) => {
+        const indicator = chart.kulSeries.map((seriesName) => {
             const max =
                 adapter.get
                     .seriesData()
@@ -687,7 +675,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                 data: data.map((item) => item.name),
             },
             radar: {
-                indicator: indicators,
+                indicator,
                 shape: 'circle',
                 axisName: {
                     color: design.theme.textColor,
@@ -710,6 +698,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                         color: colors[2] || 'rgba(128, 128, 128, 0.5)',
                     },
                 },
+                axisTick: { alignWithLabel: false, show: false },
             },
             series: [
                 {
@@ -730,7 +719,6 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
-
     sankey: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;

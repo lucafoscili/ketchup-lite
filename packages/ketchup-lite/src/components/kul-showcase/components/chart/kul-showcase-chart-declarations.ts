@@ -13,6 +13,8 @@ export const CHART_EXAMPLES_KEYS = [
     'heatmap',
     'heatmapWithLine',
     'gaussian',
+    'hbar',
+    'heatmap',
     'line',
     'mixedLineBar',
     'mixedTypesMultiAxis',

@@ -7,6 +7,7 @@ export const config: Config = {
         {
             components: [
                 'kul-showcase',
+                'kul-showcase-debug',
                 'kul-showcase-kuldata',
                 'kul-showcase-kuldates',
                 'kul-showcase-kuldebug',
@@ -42,6 +43,7 @@ export const config: Config = {
                 'kul-showcase-textfield',
                 'kul-showcase-toast',
                 'kul-showcase-tree',
+                'kul-showcase-typewriter',
                 'kul-showcase-upload',
             ],
         },
