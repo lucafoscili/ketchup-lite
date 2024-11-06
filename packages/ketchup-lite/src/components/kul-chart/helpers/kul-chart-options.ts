@@ -280,7 +280,6 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             const yAxisPosition = yAxisPositions[i % yAxisPositions.length];
 
             xAxes.push({
-                ...design.axis(adapter, 'x'),
                 type: 'category',
                 data: axisData.data,
                 position: xAxisPosition,
@@ -289,13 +288,14 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                     ...design.axis(adapter, 'x').axisLabel,
                     interval: 0,
                 },
+                ...design.axis(adapter, 'x'),
             } as XAXisComponentOption);
 
             yAxes.push({
-                ...design.axis(adapter, 'y'),
                 type: 'value',
                 position: yAxisPosition,
                 offset: i * 30,
+                ...design.axis(adapter, 'y'),
             } as YAXisComponentOption);
         }
 
@@ -684,7 +684,10 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                 splitArea: {
                     show: true,
                     areaStyle: {
-                        color: [colors[0] + '1A', colors[1] + '0D'],
+                        color: [
+                            design.applyOpacity(colors[0], '1A'),
+                            design.applyOpacity(colors[1], '0D'),
+                        ],
                     },
                 },
                 splitLine: {

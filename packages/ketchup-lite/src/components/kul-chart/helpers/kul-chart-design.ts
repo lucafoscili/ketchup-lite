@@ -8,30 +8,47 @@ import {
 import { KulChartAdapterDesign } from '../kul-chart-declarations';
 
 export const CHART_DESIGN: KulChartAdapterDesign = {
-    axis: (adapter, axisType: 'x' | 'y') => {
+    applyOpacity: (color, opacity) => `${color}${opacity}`,
+    axis: (adapter, axisType) => {
         const theme = adapter.get.design.theme;
 
         if (axisType === 'x') {
             return {
                 axisLabel: {
+                    hideOverlap: true,
                     color: theme.textColor,
                     fontFamily: theme.font,
                 },
                 axisLine: { lineStyle: { color: theme.textColor } },
                 axisTick: { lineStyle: { color: theme.border } },
                 splitLine: { lineStyle: { color: theme.border } },
-                boundaryGap: true,
+                boundaryGap: '10%',
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    bottom: '10%',
+                    top: '10%',
+                    containLabel: true,
+                },
             } as XAXisComponentOption;
         } else {
             return {
                 axisLabel: {
+                    hideOverlap: true,
                     color: theme.textColor,
                     fontFamily: theme.font,
                 },
                 axisLine: { lineStyle: { color: theme.textColor } },
                 axisTick: { lineStyle: { color: theme.border } },
                 splitLine: { lineStyle: { color: theme.border } },
-                boundaryGap: false,
+                boundaryGap: '10%',
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    bottom: '10%',
+                    top: '10%',
+                    containLabel: true,
+                },
             } as YAXisComponentOption;
         }
     },

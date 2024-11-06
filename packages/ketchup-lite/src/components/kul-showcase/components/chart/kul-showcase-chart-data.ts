@@ -126,7 +126,7 @@ export const CHART_EXAMPLES: ChartData = {
     },
     mixedTypesMultiAxis: {
         ['data-description']: 'Mixed Types with Multiple Axes',
-        kulAxis: ['Axis', 'Axis', 'Axis'],
+        kulAxis: ['Axis', 'Axis'],
         kulData: CHART_KULDATA_FACTORY.line(),
         kulSeries: ['Series_1', 'Series_2', 'Series_3', 'Series_4', 'Series_5'],
         kulSizeY: '400px',
@@ -134,7 +134,7 @@ export const CHART_EXAMPLES: ChartData = {
     },
     multiAxis: {
         ['data-description']: 'Multi-Axis Chart with Different Units',
-        kulAxis: ['Axis', 'Axis', 'Axis'],
+        kulAxis: ['Axis', 'Axis'],
         kulData: CHART_KULDATA_FACTORY.line(),
         kulSeries: ['Series_1', 'Series_2', 'Series_3'],
         kulSizeY: '400px',

@@ -38,6 +38,7 @@ export interface KulChartAdapter {
     get: KulChartAdapterGetters;
 }
 export interface KulChartAdapterDesign {
+    applyOpacity: (color: string, opacity: string) => string;
     axis: (
         adapter: KulChartAdapter,
         axisType: 'x' | 'y'
