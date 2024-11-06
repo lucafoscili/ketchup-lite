@@ -8,18 +8,32 @@ import {
 import { KulChartAdapterDesign } from '../kul-chart-declarations';
 
 export const CHART_DESIGN: KulChartAdapterDesign = {
-    axis: (adapter) => {
+    axis: (adapter, axisType: 'x' | 'y') => {
         const theme = adapter.get.design.theme;
-        const axis: XAXisComponentOption | YAXisComponentOption = {
-            axisLabel: {
-                color: theme.textColor,
-                fontFamily: theme.font,
-            },
-            axisLine: { lineStyle: { color: theme.textColor } },
-            axisTick: { lineStyle: { color: theme.border } },
-            splitLine: { lineStyle: { color: theme.border } },
-        };
-        return axis;
+
+        if (axisType === 'x') {
+            return {
+                axisLabel: {
+                    color: theme.textColor,
+                    fontFamily: theme.font,
+                },
+                axisLine: { lineStyle: { color: theme.textColor } },
+                axisTick: { lineStyle: { color: theme.border } },
+                splitLine: { lineStyle: { color: theme.border } },
+                boundaryGap: true,
+            } as XAXisComponentOption;
+        } else {
+            return {
+                axisLabel: {
+                    color: theme.textColor,
+                    fontFamily: theme.font,
+                },
+                axisLine: { lineStyle: { color: theme.textColor } },
+                axisTick: { lineStyle: { color: theme.border } },
+                splitLine: { lineStyle: { color: theme.border } },
+                boundaryGap: false,
+            } as YAXisComponentOption;
+        }
     },
     colors: (adapter, count) => {
         const hex = (color: string) => {
@@ -74,7 +88,7 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         }
 
         const theme = adapter.get.design.theme;
-        const data = Object.keys(adapter.get.y());
+        const data = adapter.get.seriesData().map((s) => s.name);
         const legend: LegendComponentOption = {
             data,
             [chart.kulLegend]: 0,
@@ -93,10 +107,11 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         successColor: '',
         textColor: '',
     },
-    tooltip: (adapter) => {
+    tooltip: (adapter, formatter?) => {
         const theme = adapter.get.design.theme;
         const tooltip: TooltipComponentOption = {
             backgroundColor: theme.backgroundColor,
+            formatter,
             textStyle: {
                 color: theme.textColor,
                 fontFamily: theme.font,

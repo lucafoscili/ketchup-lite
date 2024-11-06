@@ -3,6 +3,7 @@ import {
     EChartsOption,
     LegendComponentOption,
     SeriesOption,
+    TooltipComponentFormatterCallback,
     TooltipComponentOption,
     XAXisComponentOption,
     YAXisComponentOption,
@@ -38,7 +39,8 @@ export interface KulChartAdapter {
 }
 export interface KulChartAdapterDesign {
     axis: (
-        adapter: KulChartAdapter
+        adapter: KulChartAdapter,
+        axisType: 'x' | 'y'
     ) => XAXisComponentOption | YAXisComponentOption;
     colors: (adapter: KulChartAdapter, count: number) => string[];
     label: (adapter: KulChartAdapter) => EChartsOption;
@@ -51,22 +53,28 @@ export interface KulChartAdapterDesign {
         successColor: string;
         textColor: string;
     };
-    tooltip: (adapter: KulChartAdapter) => TooltipComponentOption;
+    tooltip: (
+        adapter: KulChartAdapter,
+        formatter?: TooltipComponentFormatterCallback<unknown>
+    ) => TooltipComponentOption;
 }
 export interface KulChartAdapterGetters {
     chart: () => KulChart;
+    columnById: (id: string) => KulDataColumn;
     design: KulChartAdapterDesign;
     manager: () => KulManager;
     options: KulChartAdapterOptions;
     seriesColumn: (seriesName: string) => KulDataColumn[];
-    x: () => string[];
-    y: () => Record<string, number[]>;
+    xAxesData: () => { id: string; data: string[] }[];
+    seriesData: () => KulChartSeriesData[];
 }
 export interface KulChartAdapterOptions {
+    bubble: (adapter: KulChartAdapter) => EChartsOption;
     calendar: (adapter: KulChartAdapter) => EChartsOption;
     candlestick: (adapter: KulChartAdapter) => EChartsOption;
     default: (adapter: KulChartAdapter) => EChartsOption;
     funnel: (adapter: KulChartAdapter) => EChartsOption;
+    heatmap: (adapter: KulChartAdapter) => EChartsOption;
     pie: (adapter: KulChartAdapter) => EChartsOption;
     radar: (adapter: KulChartAdapter) => EChartsOption;
     sankey: (adapter: KulChartAdapter) => EChartsOption;
@@ -102,7 +110,7 @@ export enum KulChartProps {
     kulYAxis = 'Customization options for the y Axis.',
 }
 export interface KulChartPropsInterface {
-    kulAxis?: string;
+    kulAxis?: KulChartAxis;
     kulColors?: string[];
     kulData?: KulDataDataset;
     kulLegend?: KulChartLegendPlacement;
@@ -123,10 +131,12 @@ export type KulChartType =
     | 'funnel'
     | 'gaussian'
     | 'hbar'
+    | 'heatmap'
     | 'line'
     | 'pie'
     | 'radar'
     | 'sankey'
+    | 'sbar'
     | 'scatter';
 export type KulChartLegendPlacement =
     | 'bottom'
@@ -136,3 +146,51 @@ export type KulChartLegendPlacement =
     | 'top';
 export type KulChartXAxis = XAXisComponentOption;
 export type KulChartYAxis = YAXisComponentOption;
+export type KulChartAxis = string | string[];
+export interface KulChartSeriesData {
+    name: string;
+    data: number[];
+    axisIndex: number;
+    type: KulChartType;
+}
+export type KulChartTooltipDataArray = number[];
+export type KulChartTooltipDataDictionary = {
+    name?: string;
+    source?: string;
+    target?: string;
+    value?: number;
+};
+export type KulChartTooltipData =
+    | KulChartTooltipDataDictionary
+    | KulChartTooltipDataArray;
+export interface KulChartTooltipArguments<D extends KulChartTooltipData> {
+    data: D;
+    dataType: string;
+    name: string;
+    percent: number;
+    seriesName: string;
+    source: D extends {
+        name?: string;
+        source?: string;
+        target?: string;
+        value?: number;
+    }
+        ? string
+        : undefined;
+    target: D extends {
+        name?: string;
+        source?: string;
+        target?: string;
+        value?: number;
+    }
+        ? string
+        : undefined;
+    value: D extends {
+        name?: string;
+        source?: string;
+        target?: string;
+        value?: number;
+    }
+        ? number
+        : undefined;
+}

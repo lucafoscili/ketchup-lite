@@ -15,7 +15,7 @@ import { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-i
 import { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 import { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
-import { KulChartEventPayload, KulChartLegendPlacement, KulChartType, KulChartXAxis, KulChartYAxis } from "./components/kul-chart/kul-chart-declarations";
+import { KulChartAxis, KulChartEventPayload, KulChartLegendPlacement, KulChartType, KulChartXAxis, KulChartYAxis } from "./components/kul-chart/kul-chart-declarations";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
@@ -46,7 +46,7 @@ export { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-i
 export { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 export { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
-export { KulChartEventPayload, KulChartLegendPlacement, KulChartType, KulChartXAxis, KulChartYAxis } from "./components/kul-chart/kul-chart-declarations";
+export { KulChartAxis, KulChartEventPayload, KulChartLegendPlacement, KulChartType, KulChartXAxis, KulChartYAxis } from "./components/kul-chart/kul-chart-declarations";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
 export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations";
@@ -353,7 +353,7 @@ export namespace Components {
           * Sets the axis of the chart.
           * @default ""
          */
-        "kulAxis": string;
+        "kulAxis": KulChartAxis;
         /**
           * Overrides theme's colors.
           * @default []
@@ -2670,7 +2670,7 @@ declare namespace LocalJSX {
           * Sets the axis of the chart.
           * @default ""
          */
-        "kulAxis"?: string;
+        "kulAxis"?: KulChartAxis;
         /**
           * Overrides theme's colors.
           * @default []
