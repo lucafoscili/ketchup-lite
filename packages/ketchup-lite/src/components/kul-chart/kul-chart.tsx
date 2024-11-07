@@ -20,6 +20,8 @@ import {
     KulChartEventData,
     KulChartXAxis,
     KulChartYAxis,
+    KulChartAxis,
+    KulChartSeriesData,
 } from './kul-chart-declarations';
 import { ECharts, dispose, init } from 'echarts';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -67,7 +69,7 @@ export class KulChart {
      * Sets the axis of the chart.
      * @default ""
      */
-    @Prop({ mutable: true }) kulAxis = '';
+    @Prop({ mutable: true }) kulAxis: KulChartAxis = '';
     /**
      * Overrides theme's colors.
      * @default []
@@ -130,8 +132,8 @@ export class KulChart {
     #chartContainer: HTMLDivElement;
     #chartEl: ECharts;
 
-    #x: string[] = [];
-    #y: Record<string, number[]>;
+    #axesData: { id: string; data: string[] }[] = [];
+    #seriesData: KulChartSeriesData[] = [];
 
     /*-------------------------------------------------*/
     /*                   E v e n t s                   */
@@ -208,12 +210,14 @@ export class KulChart {
             mapType: (type) => {
                 switch (type) {
                     case 'area':
-                    case 'bubble':
                     case 'gaussian':
                         return 'line';
                     case 'calendar':
                     case 'hbar':
+                    case 'sbar':
                         return 'bar';
+                    case 'bubble':
+                        return 'scatter';
                     default:
                         return type;
                 }
@@ -228,13 +232,15 @@ export class KulChart {
         },
         get: {
             chart: () => this,
+            columnById: (id: string) =>
+                this.#findColumn(this.kulData, { id })[0],
             design: CHART_DESIGN,
             manager: () => this.#kulManager,
             options: CHART_OPTIONS,
             seriesColumn: (series) =>
                 this.#findColumn(this.kulData, { title: series }),
-            x: () => this.#x,
-            y: () => this.#y,
+            seriesData: () => this.#seriesData,
+            xAxesData: () => this.#axesData,
         },
     };
 
@@ -266,58 +272,100 @@ export class KulChart {
     }
 
     #createAxisData() {
-        const x: string[] = [];
-        const axisId = this.kulAxis;
+        this.#axesData = [];
+        const axisIds = this.kulAxis || [];
         const dataset = this.kulData;
 
         if (dataset?.nodes?.length) {
-            for (const node of dataset.nodes) {
-                const cell =
-                    axisId && node.cells
-                        ? node.cells[axisId]
-                        : Object.values(node.cells || {})[0];
-                if (cell?.value != null) {
-                    x.push(this.#stringify(cell.value));
-                } else {
-                    x.push(''); // Handle missing values appropriately
+            for (const axisId of axisIds) {
+                const xData: string[] = [];
+                for (const node of dataset.nodes) {
+                    const cell = node.cells?.[axisId];
+                    xData.push(
+                        cell?.value != null ? this.#stringify(cell.value) : ''
+                    );
                 }
+                this.#axesData.push({ id: axisId, data: xData });
             }
         }
+    }
 
-        this.#x = x;
+    #stringToIndexMap(array: string[]): Map<string, number> {
+        const map = new Map<string, number>();
+        array.forEach((value, index) => map.set(value, index));
+        return map;
     }
 
     #createSeriesData() {
-        const y: Record<string, number[]> = {};
-        const seriesIds =
-            this.kulSeries && this.kulSeries.length > 0
-                ? this.kulSeries
-                : this.kulData?.columns
-                      ?.map((col) => col.id)
-                      .filter((id) => id !== this.kulAxis) || [];
+        this.#seriesData = [];
+        const seriesIds = this.kulSeries || [];
         const dataset = this.kulData;
 
         if (dataset?.nodes?.length) {
-            for (const seriesId of seriesIds) {
-                const seriesValues: number[] = [];
-                for (const node of dataset.nodes) {
-                    const cellValue = node.cells?.[seriesId]?.value;
-                    const numericValue =
-                        cellValue != null ? Number(cellValue) : NaN;
-                    seriesValues.push(numericValue);
+            const xCategories = this.#axesData[0]?.data || [];
+            const yCategories = this.#axesData[1]?.data || [];
+            const xMap = this.#stringToIndexMap(xCategories);
+            const yMap = this.#stringToIndexMap(yCategories);
+
+            for (let index = 0; index < seriesIds.length; index++) {
+                const seriesId = seriesIds[index];
+                const seriesType =
+                    this.kulTypes?.[index] || this.kulTypes?.[0] || 'line';
+                const seriesValues: any[] = [];
+
+                if (seriesType === 'heatmap') {
+                    for (const node of dataset.nodes) {
+                        const xValue = this.#stringify(
+                            node.cells[this.kulAxis[0]]?.value
+                        );
+                        const yValue = this.#stringify(
+                            node.cells[this.kulAxis[1]]?.value
+                        );
+                        const value = parseFloat(
+                            this.#stringify(node.cells[seriesId]?.value) || '0'
+                        );
+                        seriesValues.push([
+                            xMap.get(xValue),
+                            yMap.get(yValue),
+                            value,
+                        ]);
+                    }
+                } else {
+                    // For line series
+                    const lineDataMap = new Map<string, number>();
+                    for (const node of dataset.nodes) {
+                        const xValue = this.#stringify(
+                            node.cells[this.kulAxis[0]]?.value
+                        );
+                        const value = parseFloat(
+                            this.#stringify(node.cells[seriesId]?.value) || '0'
+                        );
+                        lineDataMap.set(xValue, value);
+                    }
+                    // Ensure data aligns with x-axis categories
+                    for (const xValue of xCategories) {
+                        seriesValues.push(lineDataMap.get(xValue) ?? 0);
+                    }
                 }
+
                 const seriesName =
-                    this.#findColumn(dataset, {
-                        id: seriesId,
-                    })?.[0]?.title || seriesId;
-                y[seriesName] = seriesValues;
+                    this.#findColumn(dataset, { id: seriesId })?.[0]?.title ||
+                    seriesId;
+                const axisIndex = 0; // Assign to the primary axis or adjust as needed
+
+                this.#seriesData.push({
+                    name: seriesName,
+                    data: seriesValues,
+                    axisIndex,
+                    type: seriesType,
+                });
             }
         }
-
-        this.#y = y;
     }
 
     async #createChart() {
+        this.#createAxisData();
+        this.#createSeriesData();
         const options = this.#createChartOptions();
         this.#chartEl.setOption(options, true);
 
@@ -327,8 +375,6 @@ export class KulChart {
     #createChartOptions() {
         const options = this.#adapter.get.options;
         const firstType = this.kulTypes?.[0] || 'line';
-
-        this.#createSeriesData();
 
         switch (firstType) {
             case 'bubble':
@@ -359,6 +405,9 @@ export class KulChart {
 
     componentWillLoad() {
         this.#kulManager.theme.register(this);
+        if (typeof this.kulAxis === 'string') {
+            this.kulAxis = [this.kulAxis];
+        }
     }
 
     componentDidLoad() {

@@ -14,57 +14,68 @@ import {
     XAXisComponentOption,
     YAXisComponentOption,
 } from 'echarts';
-import { KulChartAdapterOptions } from '../kul-chart-declarations';
+import {
+    KulChartAdapterOptions,
+    KulChartTooltipArguments,
+    KulChartTooltipDataArray,
+    KulChartTooltipDataDictionary,
+} from '../kul-chart-declarations';
 
 export const CHART_OPTIONS: KulChartAdapterOptions = {
     bubble: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
         const stringify = adapter.actions.stringify;
+        const getColumn = adapter.get.columnById;
 
-        const xAxisKey = chart.kulAxis;
-        const xAxisColumn = adapter.get
-            .manager()
-            .data.column.find(chart.kulData, { id: xAxisKey })?.[0];
-        const yAxisKey = chart.kulSeries[0];
-        const bubbleSizeKey = chart.kulSeries[1];
+        const xAxisKey = chart.kulAxis[0];
+        const yAxisKey = chart.kulAxis[1];
+        const sizeKey = chart.kulSeries[0];
 
-        const xCategories: Set<string> = new Set();
-        const yCategories: Set<string> = new Set();
+        const xData = chart.kulData.nodes.map((node) =>
+            parseFloat(stringify(node.cells[xAxisKey]?.value) || '0')
+        );
+        const yData = chart.kulData.nodes.map((node) =>
+            parseFloat(stringify(node.cells[yAxisKey]?.value) || '0')
+        );
+        const sizeData = chart.kulData.nodes.map((node) =>
+            parseFloat(stringify(node.cells[sizeKey]?.value) || '0')
+        );
 
-        const data = chart.kulData.nodes.map((node) => {
-            const xValue = stringify(node.cells[xAxisKey]?.value) || '0';
-            const yValue = stringify(node.cells[yAxisKey]?.value) || '0';
-            const bubbleSize = parseFloat(
-                stringify(node.cells[bubbleSizeKey]?.value) || '0'
-            );
+        const data = xData.map((x, index) => [
+            x,
+            yData[index],
+            sizeData[index],
+        ]);
 
-            xCategories.add(xValue);
-            yCategories.add(yValue);
+        const formatter = (
+            params: KulChartTooltipArguments<KulChartTooltipDataArray>
+        ) => {
+            const { data } = params;
+            const [x, y, size] = data;
+            const xAxisLabel = getColumn(xAxisKey)?.title || xAxisKey;
+            const yAxisLabel = getColumn(yAxisKey)?.title || yAxisKey;
+            const sizeLabel = getColumn(sizeKey)?.title || sizeKey;
 
-            return [xValue, yValue, bubbleSize];
-        });
-
-        const colors = design.colors(adapter, 1);
-        const formatter = (params: any) => {
-            return `${xAxisColumn.title}: ${params.value[0]}<br>${yAxisKey}: ${params.value[1]}<br>Size: ${params.value[2]}`;
+            return `
+                ${xAxisLabel}: ${x}<br/>
+                ${yAxisLabel}: ${y}<br/>
+                ${sizeLabel}: ${size}
+            `;
         };
 
         const options: EChartsOption = {
-            color: colors,
             xAxis: {
-                type: 'category',
-                name: xAxisColumn ? xAxisColumn.title : 'X Axis',
-                data: Array.from(xCategories),
+                name: getColumn(xAxisKey)?.title || xAxisKey,
+                nameLocation: 'middle',
+                nameGap: 25,
                 axisLabel: {
                     color: design.theme.textColor,
                     fontFamily: design.theme.font,
                 },
             },
             yAxis: {
-                type: 'category',
-                name: yAxisKey ? yAxisKey : 'Y Axis',
-                data: Array.from(yCategories),
+                name: getColumn(yAxisKey)?.title || yAxisKey,
                 axisLabel: {
                     color: design.theme.textColor,
                     fontFamily: design.theme.font,
@@ -76,35 +87,11 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                     data: data,
                     symbolSize: (val) => val[2],
                     itemStyle: {
-                        borderColor: design.theme.border,
-                        borderWidth: 1,
-                        color: colors[0],
+                        color: design.colors(adapter, 1)[0],
                     },
-                    emphasis: {
-                        itemStyle: {
-                            shadowBlur: 10,
-                            shadowColor: 'rgba(0, 0, 0, 0.5)',
-                        },
-                    },
-                } as ScatterSeriesOption,
+                },
             ],
             tooltip: design.tooltip(adapter, formatter),
-            visualMap: {
-                min: Math.min(...data.map(([_, __, count]) => Number(count))),
-                max: Math.max(...data.map(([_, __, count]) => Number(count))),
-                calculable: true,
-                orient: 'vertical',
-                left: 'left',
-                bottom: '15%',
-                inRange: {
-                    color: ['#f6efa6', colors[0]],
-                },
-                text: ['High', 'Low'],
-                textStyle: {
-                    color: design.theme.textColor,
-                    fontFamily: design.theme.font,
-                },
-            },
         };
 
         return options;
@@ -113,7 +100,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
 
-        const dateKey = chart.kulAxis;
+        const dateKey = chart.kulAxis[0];
         const valueKey = chart.kulSeries[0];
 
         const data = chart.kulData.nodes.map((node) => {
@@ -134,6 +121,17 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             Math.min(...data.map(([date]) => new Date(date).getTime()))
         ).getFullYear();
 
+        const formatter = (
+            params: KulChartTooltipArguments<KulChartTooltipDataDictionary>
+        ) => {
+            const { value } = params;
+            const date = value[0];
+            const dataValue = value[1];
+            return `
+                <strong>Date:</strong> ${date}<br/>
+                <strong>Value:</strong> ${dataValue}
+            `;
+        };
         const options: EChartsOption = {
             color: colors,
             calendar: {
@@ -170,7 +168,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                     },
                 } as HeatmapSeriesOption,
             ],
-            tooltip: design.tooltip(adapter),
+            tooltip: design.tooltip(adapter, formatter),
             visualMap: {
                 align: 'auto',
                 bottom: 'bottom',
@@ -196,6 +194,8 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         const design = adapter.get.design;
         const stringify = adapter.actions.stringify;
 
+        const xAxisKey = chart.kulAxis[0];
+
         const data = chart.kulData.nodes.map((node) => {
             const open = parseFloat(
                 stringify(node.cells['Open']?.value) || '0'
@@ -210,14 +210,16 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             return [open, close, low, high];
         });
 
+        const xAxisData = chart.kulData.nodes.map((node) =>
+            stringify(node.cells[xAxisKey]?.value || '')
+        );
+
         const colors = [design.theme.successColor, design.theme.dangerColor];
         const options: EChartsOption = {
             color: colors,
             xAxis: {
                 type: 'category',
-                data: chart.kulData.nodes.map((node) =>
-                    stringify(node.cells[chart.kulAxis]?.value || '')
-                ),
+                data: xAxisData,
                 axisLabel: {
                     color: design.theme.textColor,
                     fontFamily: design.theme.font,
@@ -263,42 +265,59 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         return options;
     },
     default: (adapter) => {
-        const chart = adapter.get.chart();
         const design = adapter.get.design;
+        const colors = design.colors(adapter, adapter.get.seriesData().length);
 
-        const seriesOptions: SeriesOption[] = [];
-        const types = chart.kulTypes || [];
-        const colors = design.colors(
-            adapter,
-            Object.keys(adapter.get.y()).length
-        );
+        const xAxes: XAXisComponentOption[] = [];
+        const yAxes: YAXisComponentOption[] = [];
 
-        let index = 0;
-        for (const [seriesName, data] of Object.entries(adapter.get.y())) {
-            const color = colors[index];
-            const kulType = types[index] || types[0];
-            const seriesType = adapter.actions.mapType(kulType);
+        const xAxisPositions: Array<'bottom' | 'top'> = ['bottom', 'top'];
+        const yAxisPositions: Array<'left' | 'right'> = ['left', 'right'];
 
-            const seriesOption:
-                | BarSeriesOption
-                | LineSeriesOption
-                | ScatterSeriesOption = {};
+        for (let i = 0; i < adapter.get.xAxesData().length; i++) {
+            const axisData = adapter.get.xAxesData()[i];
+            const xAxisPosition = xAxisPositions[i % xAxisPositions.length];
+            const yAxisPosition = yAxisPositions[i % yAxisPositions.length];
 
-            switch (seriesType) {
-                case 'bar':
-                    seriesOption.color = color;
-                    seriesOption.name = seriesName;
-                    seriesOption.type = 'bar';
-                    seriesOption.data = data;
-                    seriesOption.itemStyle = { color };
-                    break;
-                case 'line':
-                    seriesOption.color = color;
-                    seriesOption.name = seriesName;
-                    seriesOption.type = 'line';
-                    seriesOption.data = data;
-                    seriesOption.itemStyle = { color };
-                    if (kulType === 'area') {
+            xAxes.push({
+                type: 'category',
+                data: axisData.data,
+                position: xAxisPosition,
+                offset: i * 30,
+                axisLabel: {
+                    ...design.axis(adapter, 'x').axisLabel,
+                    interval: 0,
+                },
+                ...design.axis(adapter, 'x'),
+            } as XAXisComponentOption);
+
+            yAxes.push({
+                type: 'value',
+                position: yAxisPosition,
+                offset: i * 30,
+                ...design.axis(adapter, 'y'),
+            } as YAXisComponentOption);
+        }
+
+        const seriesOptions: SeriesOption[] = adapter.get
+            .seriesData()
+            .map((seriesData, index) => {
+                const color = colors[index];
+                const seriesType = adapter.actions.mapType(seriesData.type);
+
+                let seriesOption: SeriesOption;
+
+                if (seriesType === 'line') {
+                    seriesOption = {
+                        name: seriesData.name,
+                        type: 'line',
+                        data: seriesData.data,
+                        xAxisIndex: seriesData.axisIndex,
+                        yAxisIndex: seriesData.axisIndex,
+                        itemStyle: { color },
+                    } as LineSeriesOption;
+
+                    if (seriesData.type === 'area') {
                         (seriesOption as LineSeriesOption).areaStyle = {
                             color: new graphic.LinearGradient(0, 0, 0, 0.25, [
                                 {
@@ -313,46 +332,105 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                         };
                     }
 
-                    if (kulType === 'gaussian') {
+                    if (seriesData.type === 'gaussian') {
                         (seriesOption as LineSeriesOption).smooth = true;
                     }
-                    break;
-                default:
-                    seriesOption.color = color;
-                    seriesOption.name = seriesName;
-                    seriesOption.type = seriesType as 'scatter';
-                    seriesOption.data = data;
-                    seriesOption.itemStyle = { color: colors[index] };
-                    break;
-            }
+                } else if (seriesType === 'bar') {
+                    const isStacked = seriesData.type === 'sbar';
 
-            seriesOptions.push(seriesOption);
-            index++;
-        }
+                    seriesOption = {
+                        name: seriesData.name,
+                        type: 'bar',
+                        data: seriesData.data,
+                        xAxisIndex: seriesData.axisIndex,
+                        yAxisIndex: seriesData.axisIndex,
+                        itemStyle: { color },
+                        stack: isStacked ? 'total' : undefined,
+                    } as BarSeriesOption;
 
-        const isHorizontal = chart.kulTypes?.[0] === 'hbar';
+                    if (seriesData.type === 'hbar') {
+                        xAxes[seriesData.axisIndex].type = 'value';
+                        yAxes[seriesData.axisIndex].type = 'category';
+                    }
+                } else if (seriesType === 'scatter') {
+                    seriesOption = {
+                        name: seriesData.name,
+                        type: 'scatter',
+                        data: seriesData.data,
+                        xAxisIndex: seriesData.axisIndex,
+                        yAxisIndex: seriesData.axisIndex,
+                        itemStyle: { color },
+                    } as ScatterSeriesOption;
+                } else if (seriesType === 'heatmap') {
+                    seriesOption = {
+                        name: seriesData.name,
+                        type: 'heatmap',
+                        data: seriesData.data,
+                        xAxisIndex: 0,
+                        yAxisIndex: 0,
+                        itemStyle: {
+                            borderColor: design.theme.border,
+                            borderWidth: 1,
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)',
+                            },
+                        },
+                    } as unknown as HeatmapSeriesOption;
+                } else {
+                    seriesOption = {
+                        name: seriesData.name,
+                        type: seriesType as SeriesOption['type'],
+                        data: seriesData.data,
+                        xAxisIndex: seriesData.axisIndex,
+                        yAxisIndex: seriesData.axisIndex,
+                        itemStyle: { color },
+                    } as SeriesOption;
+                }
+
+                return seriesOption;
+            });
+
+        const hasVisualMap = seriesOptions.some((s) => s.type === 'heatmap');
+
         const options: EChartsOption = {
-            color: design.colors(adapter, Object.keys(adapter.get.y()).length),
+            color: colors,
             legend: design.legend(adapter),
             tooltip: {
                 ...design.tooltip(adapter),
                 trigger: 'axis',
             },
+            xAxis: xAxes,
+            yAxis: yAxes,
             series: seriesOptions,
-            xAxis: {
-                ...design.axis(adapter),
-                mainType: 'xAxis',
-                type: isHorizontal ? 'value' : 'category',
-                data: isHorizontal ? undefined : adapter.get.x(),
-                ...chart.kulXAxis,
-            } as XAXisComponentOption,
-            yAxis: {
-                ...design.axis(adapter),
-                mainType: 'yAxis',
-                type: isHorizontal ? 'category' : 'value',
-                data: isHorizontal ? adapter.get.x() : undefined,
-                ...chart.kulYAxis,
-            } as YAXisComponentOption,
+            visualMap: hasVisualMap
+                ? {
+                      min: Math.min(
+                          ...seriesOptions
+                              .filter((s) => s.type === 'heatmap')
+                              .flatMap((s) => s.data.map((d) => d[2]))
+                      ),
+                      max: Math.max(
+                          ...seriesOptions
+                              .filter((s) => s.type === 'heatmap')
+                              .flatMap((s) => s.data.map((d) => d[2]))
+                      ),
+                      calculable: true,
+                      orient: 'vertical',
+                      left: 'left',
+                      bottom: '15%',
+                      inRange: {
+                          color: ['#f6efa6', colors[0]],
+                      },
+                      text: ['High', 'Low'],
+                      textStyle: {
+                          color: design.theme.textColor,
+                          fontFamily: design.theme.font,
+                      },
+                  }
+                : undefined,
         };
 
         return options;
@@ -380,6 +458,17 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         const colors = design.colors(adapter, data.length);
 
+        const formatter = (
+            params: KulChartTooltipArguments<KulChartTooltipDataDictionary>
+        ) => {
+            const { name, value, percent } = params;
+            return `
+                <strong>${name}</strong><br/>
+                Value: ${value}<br/>
+                Percent: ${percent}%
+            `;
+        };
+
         const options: EChartsOption = {
             color: colors,
             legend: {
@@ -403,7 +492,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                     },
                 } as FunnelSeriesOption,
             ],
-            tooltip: design.tooltip(adapter),
+            tooltip: design.tooltip(adapter, formatter),
         };
 
         return options;
@@ -413,47 +502,49 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         const design = adapter.get.design;
         const stringify = adapter.actions.stringify;
 
-        const xAxisKey = chart.kulAxis;
-        const xAxisColumn = adapter.get
-            .manager()
-            .data.column.find(chart.kulData, { id: xAxisKey })?.[0];
-        const axisLabel = xAxisColumn ? xAxisColumn.title : 'X Axis';
-
-        const seriesLabels = chart.kulSeries.map((seriesId) => {
-            const column = adapter.get
-                .manager()
-                .data.column.find(chart.kulData, { id: seriesId })?.[0];
-            return column ? column.title : 'Y Axis';
-        });
+        const xAxisKey = chart.kulAxis[0];
+        const yAxisKey = chart.kulSeries[0];
+        const valueKey = chart.kulSeries[1];
 
         const xCategories: Set<string> = new Set();
         const yCategories: Set<string> = new Set();
 
         const data = chart.kulData.nodes.map((node) => {
-            const sourceValue = stringify(node.cells[xAxisKey]?.value) || '0';
-            const targetValue =
-                stringify(node.cells[chart.kulSeries[0]]?.value) || '0';
-            const mappingCount = parseFloat(
-                stringify(node.cells[chart.kulSeries[1]]?.value) || '0'
+            const xValue = stringify(node.cells[xAxisKey]?.value) || '';
+            const yValue = stringify(node.cells[yAxisKey]?.value) || '';
+            const value = parseFloat(
+                stringify(node.cells[valueKey]?.value) || '0'
             );
 
-            xCategories.add(sourceValue);
-            yCategories.add(targetValue);
+            xCategories.add(xValue);
+            yCategories.add(yValue);
 
-            return [sourceValue, targetValue, mappingCount];
+            return [xValue, yValue, value];
         });
 
+        const xCategoriesArray = Array.from(xCategories);
+        const yCategoriesArray = Array.from(yCategories);
+
+        const xMap = new Map(
+            xCategoriesArray.map((value, index) => [value, index])
+        );
+        const yMap = new Map(
+            yCategoriesArray.map((value, index) => [value, index])
+        );
+
+        const heatmapData = data.map(([xValue, yValue, value]) => [
+            xMap.get(stringify(xValue)),
+            yMap.get(stringify(yValue)),
+            value,
+        ]);
+
         const colors = design.colors(adapter, 1);
-        const formatter = (params: any) => {
-            return `${axisLabel}: ${params.value[0]}<br>${seriesLabels[0]}: ${params.value[1]}<br>Frequency: ${params.value[2]}`;
-        };
 
         const options: EChartsOption = {
             color: colors,
             xAxis: {
                 type: 'category',
-                name: axisLabel,
-                data: Array.from(xCategories),
+                data: xCategoriesArray,
                 axisLabel: {
                     color: design.theme.textColor,
                     fontFamily: design.theme.font,
@@ -461,8 +552,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             },
             yAxis: {
                 type: 'category',
-                name: seriesLabels[0],
-                data: Array.from(yCategories),
+                data: yCategoriesArray,
                 axisLabel: {
                     color: design.theme.textColor,
                     fontFamily: design.theme.font,
@@ -471,7 +561,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             series: [
                 {
                     type: 'heatmap',
-                    data: data,
+                    data: heatmapData,
                     label: {
                         show: false,
                     },
@@ -487,10 +577,10 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                     },
                 },
             ],
-            tooltip: design.tooltip(adapter, formatter),
+            tooltip: design.tooltip(adapter),
             visualMap: {
-                min: Math.min(...data.map(([_, __, count]) => Number(count))),
-                max: Math.max(...data.map(([_, __, count]) => Number(count))),
+                min: Math.min(...heatmapData.map((item) => Number(item[2]))),
+                max: Math.max(...heatmapData.map((item) => Number(item[2]))),
                 calculable: true,
                 orient: 'vertical',
                 left: 'left',
@@ -512,23 +602,22 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
 
-        const data = Object.entries(adapter.get.y()).map(([name, values]) => ({
-            name,
-            value: values.reduce((a, b) => a + b, 0),
+        const data = adapter.get.seriesData().map((series) => ({
+            name: series.name,
+            value: series.data.reduce((a, b) => a + b, 0),
         }));
-        const formatter = (args: {
-            data: { name: string; value: number };
-            percent: number;
-            seriesName: string;
-        }) => {
+
+        const formatter = (
+            params: KulChartTooltipArguments<KulChartTooltipDataDictionary>
+        ) => {
             const {
                 data: { name, value },
                 percent,
                 seriesName,
-            } = args;
-            debugger;
+            } = params;
             return `<strong>${seriesName}</strong><br/>${name}: ${value.toLocaleString()} (${percent.toFixed(2)}%)`;
         };
+
         const options: EChartsOption = {
             color: design.colors(adapter, data.length),
             label: design.label(adapter),
@@ -539,10 +628,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             },
             series: [
                 {
-                    name:
-                        adapter.get.manager().data.column.find(chart.kulData, {
-                            id: chart.kulAxis,
-                        })?.[0].title || 'Data',
+                    name: chart.kulAxis[0] || 'Data',
                     type: 'pie',
                     data,
                 } as PieSeriesOption,
@@ -557,19 +643,26 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         const stringify = adapter.actions.stringify;
 
         const indicator = chart.kulSeries.map((seriesName) => {
-            const values = adapter.get.y()[seriesName] || [];
+            const max =
+                adapter.get
+                    .seriesData()
+                    .find((s) => s.name === seriesName)
+                    ?.data.reduce((a, b) => Math.max(a, b), 0) || 100;
             return {
                 name: seriesName,
-                alignTicks: false,
+                max,
             };
         });
 
         const data = chart.kulData.nodes.map((node) => {
+            const name =
+                stringify(node.cells[chart.kulAxis[0]]?.value) || 'Entity';
+            const value = chart.kulSeries.map((seriesName) =>
+                parseFloat(stringify(node.cells[seriesName]?.value) || '0')
+            );
             return {
-                name: stringify(node.cells[chart.kulAxis]?.value) || 'Entity',
-                value: chart.kulSeries.map((seriesName) =>
-                    parseFloat(stringify(node.cells[seriesName]?.value) || '0')
-                ),
+                name,
+                value,
             };
         });
 
@@ -591,7 +684,10 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                 splitArea: {
                     show: true,
                     areaStyle: {
-                        color: [colors[0] + '1A', colors[1] + '0D'],
+                        color: [
+                            design.applyOpacity(colors[0], '1A'),
+                            design.applyOpacity(colors[1], '0D'),
+                        ],
                     },
                 },
                 splitLine: {
@@ -631,7 +727,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         const design = adapter.get.design;
         const stringify = adapter.actions.stringify;
 
-        const sourceKey = chart.kulAxis;
+        const sourceKey = chart.kulAxis[0];
         const targetKey = chart.kulSeries[0];
         const valueKey = chart.kulSeries[1];
 
@@ -646,6 +742,21 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         });
 
         const colors = design.colors(adapter, links.length);
+
+        const formatter = (
+            params: KulChartTooltipArguments<KulChartTooltipDataDictionary>
+        ) => {
+            if (params.dataType === 'edge') {
+                const { source, target, value } = params.data;
+                return `
+                    <strong>Flow:</strong><br/>
+                    ${source} → ${target}<br/>
+                    Value: ${value}
+                `;
+            } else {
+                return `<strong>${params.name}</strong>`;
+            }
+        };
 
         const options: EChartsOption = {
             color: colors,
@@ -669,7 +780,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
                     },
                 } as SankeySeriesOption,
             ],
-            tooltip: design.tooltip(adapter),
+            tooltip: design.tooltip(adapter, formatter),
         };
 
         return options;

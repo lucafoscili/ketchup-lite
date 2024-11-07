@@ -8,18 +8,49 @@ import {
 import { KulChartAdapterDesign } from '../kul-chart-declarations';
 
 export const CHART_DESIGN: KulChartAdapterDesign = {
-    axis: (adapter) => {
+    applyOpacity: (color, opacity) => `${color}${opacity}`,
+    axis: (adapter, axisType) => {
         const theme = adapter.get.design.theme;
-        const axis: XAXisComponentOption | YAXisComponentOption = {
-            axisLabel: {
-                color: theme.textColor,
-                fontFamily: theme.font,
-            },
-            axisLine: { lineStyle: { color: theme.textColor } },
-            axisTick: { lineStyle: { color: theme.border } },
-            splitLine: { lineStyle: { color: theme.border } },
-        };
-        return axis;
+
+        if (axisType === 'x') {
+            return {
+                axisLabel: {
+                    hideOverlap: true,
+                    color: theme.textColor,
+                    fontFamily: theme.font,
+                },
+                axisLine: { lineStyle: { color: theme.textColor } },
+                axisTick: { lineStyle: { color: theme.border } },
+                splitLine: { lineStyle: { color: theme.border } },
+                boundaryGap: '10%',
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    bottom: '10%',
+                    top: '10%',
+                    containLabel: true,
+                },
+            } as XAXisComponentOption;
+        } else {
+            return {
+                axisLabel: {
+                    hideOverlap: true,
+                    color: theme.textColor,
+                    fontFamily: theme.font,
+                },
+                axisLine: { lineStyle: { color: theme.textColor } },
+                axisTick: { lineStyle: { color: theme.border } },
+                splitLine: { lineStyle: { color: theme.border } },
+                boundaryGap: '10%',
+                grid: {
+                    left: '10%',
+                    right: '10%',
+                    bottom: '10%',
+                    top: '10%',
+                    containLabel: true,
+                },
+            } as YAXisComponentOption;
+        }
     },
     colors: (adapter, count) => {
         const hex = (color: string) => {
@@ -74,7 +105,7 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         }
 
         const theme = adapter.get.design.theme;
-        const data = Object.keys(adapter.get.y());
+        const data = adapter.get.seriesData().map((s) => s.name);
         const legend: LegendComponentOption = {
             data,
             [chart.kulLegend]: 0,

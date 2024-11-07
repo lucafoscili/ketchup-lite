@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-05T20:22:31",
+  "timestamp": "2024-11-07T12:36:52",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -2429,18 +2429,24 @@
       "filePath": "src/components/kul-chart/kul-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chart",
-      "readme": "# kul-chart\n\n\n",
+      "readme": "# kul-chart\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
       "props": [
         {
           "name": "kulAxis",
-          "type": "string",
+          "type": "string | string[]",
           "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
+            "original": "KulChartAxis",
+            "resolved": "string | string[]",
+            "references": {
+              "KulChartAxis": {
+                "location": "import",
+                "path": "./kul-chart-declarations",
+                "id": "src/components/kul-chart/kul-chart-declarations.tsx::KulChartAxis"
+              }
+            }
           },
           "mutable": true,
           "attr": "kul-axis",
@@ -2456,6 +2462,9 @@
           "values": [
             {
               "type": "string"
+            },
+            {
+              "type": "string[]"
             }
           ],
           "optional": false,
@@ -10497,7 +10506,7 @@
       "filePath": "src/components/kul-showcase/components/typewriter/kul-showcase-typewriter.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-typewriter",
-      "readme": "# kul-showcase-lazy\n\n\n",
+      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13789,7 +13798,7 @@
       "filePath": "src/components/kul-typewriter/kul-typewriter.tsx",
       "encapsulation": "shadow",
       "tag": "kul-typewriter",
-      "readme": "# kul-typewriter\n\n\n",
+      "readme": "# kul-typewriter\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14632,13 +14641,18 @@
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
+    "src/components/kul-chart/kul-chart-declarations.tsx::KulChartAxis": {
+      "declaration": "export type KulChartAxis = string | string[];",
+      "docstring": "",
+      "path": "src/components/kul-chart/kul-chart-declarations.tsx"
+    },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\n    | 'bottom'\n    | 'left'\n    | 'hidden'\n    | 'right'\n    | 'top';",
+      "declaration": "export type KulChartLegendPlacement =\r\n    | 'bottom'\r\n    | 'left'\r\n    | 'hidden'\r\n    | 'right'\r\n    | 'top';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\n    | 'area'\n    | 'bar'\n    | 'bubble'\n    | 'calendar'\n    | 'candlestick'\n    | 'funnel'\n    | 'gaussian'\n    | 'hbar'\n    | 'heatmap'\n    | 'line'\n    | 'pie'\n    | 'radar'\n    | 'sankey'\n    | 'scatter';",
+      "declaration": "export type KulChartType =\r\n    | 'area'\r\n    | 'bar'\r\n    | 'bubble'\r\n    | 'calendar'\r\n    | 'candlestick'\r\n    | 'funnel'\r\n    | 'gaussian'\r\n    | 'hbar'\r\n    | 'heatmap'\r\n    | 'line'\r\n    | 'pie'\r\n    | 'radar'\r\n    | 'sankey'\r\n    | 'sbar'\r\n    | 'scatter';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
@@ -14653,7 +14667,7 @@
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload\n    extends KulEventPayload<'KulChart', KulChartEvent> {\n    data?: KulChartEventData;\n}",
+      "declaration": "export interface KulChartEventPayload\r\n    extends KulEventPayload<'KulChart', KulChartEvent> {\r\n    data?: KulChartEventData;\r\n}",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },

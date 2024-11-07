@@ -1,4 +1,5 @@
-import { KulChartType, KulDataDataset } from '../../../../components';
+import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
+import { KulChartType } from '../../../kul-chart/kul-chart-declarations';
 
 const BASE_DATASET: KulDataDataset = {
     columns: [
@@ -258,73 +259,33 @@ export const CHART_KULDATA_FACTORY: Partial<{
             },
         ],
     }),
-    calendar: () => ({
-        columns: [
-            { id: 'Date', title: 'Date' },
-            { id: 'Value', title: 'Value' },
-        ],
-        nodes: [
-            {
-                id: '0',
+    calendar: () => {
+        const today = new Date();
+        const dataPoints = 365;
+        const nodes = [];
+
+        for (let i = 0; i < dataPoints; i++) {
+            const date = new Date(today);
+            date.setDate(today.getDate() - i);
+            nodes.push({
+                id: i.toString(),
                 cells: {
-                    Date: {
-                        value: new Date(
-                            new Date().setDate(new Date().getDate() - 4)
-                        )
-                            .toISOString()
-                            .split('T')[0],
+                    Date: { value: date.toISOString().split('T')[0] },
+                    Value: {
+                        value: Math.floor(Math.random() * 100).toString(),
                     },
-                    Value: { value: '10' },
                 },
-            },
-            {
-                id: '1',
-                cells: {
-                    Date: {
-                        value: new Date(
-                            new Date().setDate(new Date().getDate() - 3)
-                        )
-                            .toISOString()
-                            .split('T')[0],
-                    },
-                    Value: { value: '15' },
-                },
-            },
-            {
-                id: '2',
-                cells: {
-                    Date: {
-                        value: new Date(
-                            new Date().setDate(new Date().getDate() - 2)
-                        )
-                            .toISOString()
-                            .split('T')[0],
-                    },
-                    Value: { value: '20' },
-                },
-            },
-            {
-                id: '3',
-                cells: {
-                    Date: {
-                        value: new Date(
-                            new Date().setDate(new Date().getDate() - 1)
-                        )
-                            .toISOString()
-                            .split('T')[0],
-                    },
-                    Value: { value: '25' },
-                },
-            },
-            {
-                id: '4',
-                cells: {
-                    Date: { value: new Date().toISOString().split('T')[0] },
-                    Value: { value: '30' },
-                },
-            },
-        ],
-    }),
+            });
+        }
+
+        return {
+            columns: [
+                { id: 'Date', title: 'Date' },
+                { id: 'Value', title: 'Value' },
+            ],
+            nodes,
+        };
+    },
     candlestick: () => ({
         columns: [
             { id: 'Date', title: 'Date' },
@@ -706,4 +667,36 @@ export const CHART_KULDATA_FACTORY: Partial<{
             { id: '4', cells: { X: { value: '30' }, Y: { value: '60' } } },
         ],
     }),
+};
+
+export const MIXED_HEATMAP = () => {
+    const xCategories = ['A', 'B', 'C', 'D', 'E'];
+    const yCategories = ['W', 'X', 'Y', 'Z'];
+    const nodes = [];
+
+    for (let i = 0; i < xCategories.length; i++) {
+        for (let j = 0; j < yCategories.length; j++) {
+            nodes.push({
+                id: `${i}-${j}`,
+                cells: {
+                    X: { value: xCategories[i] },
+                    Y: { value: yCategories[j] },
+                    Heat_Value: {
+                        value: Math.floor(Math.random() * 100).toString(),
+                    },
+                    Line_Value: { value: (i + j).toString() }, // Simple function for line values
+                },
+            });
+        }
+    }
+
+    return {
+        columns: [
+            { id: 'X', title: 'X Axis' },
+            { id: 'Y', title: 'Y Axis' },
+            { id: 'Heat_Value', title: 'Heatmap Value' },
+            { id: 'Line_Value', title: 'Line Value' },
+        ],
+        nodes,
+    };
 };

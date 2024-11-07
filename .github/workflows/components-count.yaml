@@ -1,0 +1,27 @@
+name: Update Component Count
+
+on:
+    schedule:
+        - cron: '0 * * * *' # Runs every hour
+    push:
+        branches:
+            - main
+
+jobs:
+    count-components:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Count Components
+              run: |
+                  COUNT=$(ls -l packages/ketchup-lite/src/components | grep '^d' | wc -l)
+                  echo "{ \"components\": $COUNT }" > count.json
+
+            - name: Commit changes
+              uses: stefanzweifel/git-auto-commit-action@v4
+              with:
+                  commit_message: 'Updated component count'
+                  file_pattern: count.json
