@@ -105,6 +105,10 @@ export class KulCarousel {
 
     #interval: NodeJS.Timeout;
     #kulManager = kulManagerInstance();
+    #lastSwipeTime = 0;
+    #swipeThrottleDelay = 300;
+    #touchStartX = 0;
+    #touchEndX = 0;
 
     /*-------------------------------------------------*/
     /*                   E v e n t s                   */
@@ -177,25 +181,21 @@ export class KulCarousel {
      */
     @Method()
     async goToSlide(index: number) {
-        if (index >= 0 && index < this.#getTotalSlides()) {
-            this.currentIndex = index;
-        }
+        this.#adapter.actions.toSlide(this.#adapter, index);
     }
     /**
      * Advances to the next slide, looping back to the start if at the end.
      */
     @Method()
     async nextSlide() {
-        this.currentIndex = (this.currentIndex + 1) % this.#getTotalSlides();
+        this.#adapter.actions.next(this.#adapter);
     }
     /**
      * Moves to the previous slide, looping to the last slide if at the beginning.
      */
     @Method()
     async prevSlide() {
-        this.currentIndex =
-            (this.currentIndex - 1 + this.#getTotalSlides()) %
-            this.#getTotalSlides();
+        this.#adapter.actions.previous(this.#adapter);
     }
     /**
      * This method is used to trigger a new render of the component.
@@ -415,7 +415,39 @@ export class KulCarousel {
                     </style>
                 ) : undefined}
                 <div id={KUL_WRAPPER_ID}>
-                    <div class="carousel">{this.#prepCarousel()}</div>
+                    <div
+                        class="carousel"
+                        onTouchStart={(e) =>
+                            (this.#touchStartX = e.touches[0].clientX)
+                        }
+                        onTouchMove={() => {
+                            const swipeDistance =
+                                this.#touchEndX - this.#touchStartX;
+                            const swipeThreshold = 50;
+
+                            const currentTime = performance.now();
+
+                            if (
+                                Math.abs(swipeDistance) > swipeThreshold &&
+                                currentTime - this.#lastSwipeTime >
+                                    this.#swipeThrottleDelay
+                            ) {
+                                this.#lastSwipeTime = currentTime;
+                                if (swipeDistance > 0) {
+                                    this.#adapter.actions.previous(
+                                        this.#adapter
+                                    );
+                                } else {
+                                    this.#adapter.actions.next(this.#adapter);
+                                }
+                            }
+                        }}
+                        onTouchEnd={(e) =>
+                            (this.#touchEndX = e.touches[0].clientX)
+                        }
+                    >
+                        {this.#prepCarousel()}
+                    </div>
                 </div>
             </Host>
         );
