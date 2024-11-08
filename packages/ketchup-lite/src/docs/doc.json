@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-08T12:36:55",
+  "timestamp": "2024-11-08T20:50:02",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -2437,6 +2437,7 @@
       "filePath": "src/components/kul-carousel/kul-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-carousel",
+      "readme": "# kul-carousel\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9567,6 +9568,7 @@
       "filePath": "src/components/kul-showcase/components/carousel/kul-showcase-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-carousel",
+      "readme": "# kul-showcase-carousel\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

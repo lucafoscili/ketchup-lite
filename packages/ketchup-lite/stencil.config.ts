@@ -62,7 +62,7 @@ export const config: Config = {
             serviceWorker: null,
         },
         reactOutputTarget({
-            outDir: 'ketchup-lite-react',
+            outDir: '../ketchup-lite-react/src',
         }),
         {
             type: 'dist',
