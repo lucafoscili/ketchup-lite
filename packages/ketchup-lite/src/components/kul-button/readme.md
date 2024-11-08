@@ -139,6 +139,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-carousel](../kul-carousel)
  - [kul-chat](../kul-chat)
  - [kul-code](../kul-code)
  - [kul-compare](../kul-compare)
@@ -162,6 +163,7 @@ graph TD;
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-carousel --> kul-button
   kul-chat --> kul-button
   kul-code --> kul-button
   kul-compare --> kul-button

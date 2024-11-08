@@ -615,6 +615,101 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-carousel": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's props values.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "List of props as object, each key will be a prop.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "goToSlide",
+        docs: "Changes the slide to the specified index if it's within bounds.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(index: number) => Promise<void>",
+      },
+      {
+        name: "nextSlide",
+        docs: "Advances to the next slide, looping back to the start if at the end.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "prevSlide",
+        docs: "Moves to the previous slide, looping to the last slide if at the beginning.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulAutoPlay",
+        docs: "Enable or disable autoplay for the carousel.",
+        type: "boolean",
+      },
+      {
+        name: "kulData",
+        docs: "Actual data of the carousel.",
+        type: "KulDataDataset",
+      },
+      {
+        name: "kulInterval",
+        docs: "Interval in milliseconds for autoplay.",
+        type: "number",
+      },
+      {
+        name: "kulShape",
+        docs: "Sets the type of shapes to compare.",
+        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "switch" | "text" | "upload"',
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+    ],
+    styles: [],
+  },
   "kul-chart": {
     methods: [
       {
@@ -2299,6 +2394,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-card": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-carousel": {
     methods: [],
     props: [],
     styles: [],

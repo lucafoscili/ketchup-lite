@@ -139,6 +139,11 @@ import {
     KulTypewriterProps,
 } from '../components/kul-typewriter/kul-typewriter-declarations';
 import { KulTypewriter } from '../components/kul-typewriter/kul-typewriter';
+import {
+    KulCarouselEvent,
+    KulCarouselProps,
+} from '../components/kul-carousel/kul-carousel-declarations';
+import { KulCarousel } from '../components/kul-carousel/kul-carousel';
 
 export interface GenericMap {
     [index: string]: string;
@@ -152,6 +157,7 @@ export type KulComponentName =
     | 'KulBadge'
     | 'KulButton'
     | 'KulCard'
+    | 'KulCarousel'
     | 'KulChart'
     | 'KulChat'
     | 'KulChip'
@@ -181,6 +187,7 @@ export type KulComponentElementMap = {
     KulBadge: HTMLKulBadgeElement;
     KulButton: HTMLKulButtonElement;
     KulCard: HTMLKulCardElement;
+    KulCarousel: HTMLKulCarouselElement;
     KulChart: HTMLKulChartElement;
     KulChat: HTMLKulChatElement;
     KulChip: HTMLKulChipElement;
@@ -211,6 +218,7 @@ export type KulComponentClassMap = {
     KulBadge: KulBadge;
     KulButton: KulButton;
     KulCard: KulCard;
+    KulCarousel: KulCarousel;
     KulChart: KulChart;
     KulChat: KulChat;
     KulChip: KulChip;
@@ -241,6 +249,7 @@ export type KulComponentTagMap = {
     KulBadge: 'kul-badge';
     KulButton: 'kul-button';
     KulCard: 'kul-card';
+    KulCarousel: 'kul-carousel';
     KulChart: 'kul-chart';
     KulChat: 'kul-chat';
     KulChip: 'kul-chip';
@@ -311,6 +320,7 @@ export type ComponentEventMap = {
     KulBadge: KulBadgeEvent;
     KulButton: KulButtonEvent;
     KulCard: KulCardEvent;
+    KulCarousel: KulCarouselEvent;
     KulChart: KulChartEvent;
     KulChat: KulChatEvent;
     KulChip: KulChipEvent;
@@ -341,6 +351,7 @@ export type ComponentPropsMap = {
     KulBadge: KulBadgeProps;
     KulButton: KulButtonProps;
     KulCard: KulCardProps;
+    KulCarousel: KulCarouselProps;
     KulChart: KulChartProps;
     KulChat: KulChatProps;
     KulChip: KulChipProps;

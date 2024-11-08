@@ -1,0 +1,18 @@
+:host {
+  --template-columns: 1fr;
+
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  :host {
+    --template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.comp-wrapper {
+  max-height: 80vh;
+  overflow: auto;
+}

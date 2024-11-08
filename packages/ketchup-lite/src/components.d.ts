@@ -15,6 +15,7 @@ import { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-i
 import { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 import { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
+import { KulCarouselEventPayload } from "./components/kul-carousel/kul-carousel-declarations";
 import { KulChartAxis, KulChartEventPayload, KulChartLegendPlacement, KulChartType, KulChartXAxis, KulChartYAxis } from "./components/kul-chart/kul-chart-declarations";
 import { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 import { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
@@ -47,6 +48,7 @@ export { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-i
 export { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
 export { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
+export { KulCarouselEventPayload } from "./components/kul-carousel/kul-carousel-declarations";
 export { KulChartAxis, KulChartEventPayload, KulChartLegendPlacement, KulChartType, KulChartXAxis, KulChartYAxis } from "./components/kul-chart/kul-chart-declarations";
 export { KulChatEventPayload, KulChatHistory, KulChatLayout } from "./components/kul-chat/kul-chat-declarations";
 export { KulChipEventPayload, KulChipStyling } from "./components/kul-chip/kul-chip-declarations";
@@ -329,6 +331,66 @@ export namespace Components {
           * @default ""
          */
         "kulStyle": string;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
+    }
+    interface KulCarousel {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
+        /**
+          * Used to retrieve component's props values.
+          * @param descriptions - When provided and true, the result will be the list of props with their description.
+          * @returns List of props as object, each key will be a prop.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Changes the slide to the specified index if it's within bounds.
+          * @param index - The number of the slide to go to.
+         */
+        "goToSlide": (index: number) => Promise<void>;
+        /**
+          * Enable or disable autoplay for the carousel.
+          * @default false
+         */
+        "kulAutoPlay": boolean;
+        /**
+          * Actual data of the carousel.
+          * @default null
+         */
+        "kulData": KulDataDataset;
+        /**
+          * Interval in milliseconds for autoplay.
+          * @default 3000
+         */
+        "kulInterval": number;
+        /**
+          * Sets the type of shapes to compare.
+          * @default ""
+         */
+        "kulShape": KulDataShapes;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * Advances to the next slide, looping back to the start if at the end.
+         */
+        "nextSlide": () => Promise<void>;
+        /**
+          * Moves to the previous slide, looping to the last slide if at the beginning.
+         */
+        "prevSlide": () => Promise<void>;
         /**
           * This method is used to trigger a new render of the component.
          */
@@ -1118,6 +1180,8 @@ export namespace Components {
     }
     interface KulShowcaseCard {
     }
+    interface KulShowcaseCarousel {
+    }
     interface KulShowcaseChart {
     }
     interface KulShowcaseChat {
@@ -1718,6 +1782,10 @@ export interface KulCardCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulCardElement;
 }
+export interface KulCarouselCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulCarouselElement;
+}
 export interface KulChartCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulChartElement;
@@ -1895,6 +1963,23 @@ declare global {
     var HTMLKulCardElement: {
         prototype: HTMLKulCardElement;
         new (): HTMLKulCardElement;
+    };
+    interface HTMLKulCarouselElementEventMap {
+        "kul-carousel-event": KulCarouselEventPayload;
+    }
+    interface HTMLKulCarouselElement extends Components.KulCarousel, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulCarouselElementEventMap>(type: K, listener: (this: HTMLKulCarouselElement, ev: KulCarouselCustomEvent<HTMLKulCarouselElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulCarouselElementEventMap>(type: K, listener: (this: HTMLKulCarouselElement, ev: KulCarouselCustomEvent<HTMLKulCarouselElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulCarouselElement: {
+        prototype: HTMLKulCarouselElement;
+        new (): HTMLKulCarouselElement;
     };
     interface HTMLKulChartElementEventMap {
         "kul-chart-event": KulChartEventPayload;
@@ -2169,6 +2254,12 @@ declare global {
     var HTMLKulShowcaseCardElement: {
         prototype: HTMLKulShowcaseCardElement;
         new (): HTMLKulShowcaseCardElement;
+    };
+    interface HTMLKulShowcaseCarouselElement extends Components.KulShowcaseCarousel, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseCarouselElement: {
+        prototype: HTMLKulShowcaseCarouselElement;
+        new (): HTMLKulShowcaseCarouselElement;
     };
     interface HTMLKulShowcaseChartElement extends Components.KulShowcaseChart, HTMLStencilElement {
     }
@@ -2527,6 +2618,7 @@ declare global {
         "kul-badge": HTMLKulBadgeElement;
         "kul-button": HTMLKulButtonElement;
         "kul-card": HTMLKulCardElement;
+        "kul-carousel": HTMLKulCarouselElement;
         "kul-chart": HTMLKulChartElement;
         "kul-chat": HTMLKulChatElement;
         "kul-chip": HTMLKulChipElement;
@@ -2547,6 +2639,7 @@ declare global {
         "kul-showcase-badge": HTMLKulShowcaseBadgeElement;
         "kul-showcase-button": HTMLKulShowcaseButtonElement;
         "kul-showcase-card": HTMLKulShowcaseCardElement;
+        "kul-showcase-carousel": HTMLKulShowcaseCarouselElement;
         "kul-showcase-chart": HTMLKulShowcaseChartElement;
         "kul-showcase-chat": HTMLKulShowcaseChatElement;
         "kul-showcase-chip": HTMLKulShowcaseChipElement;
@@ -2754,6 +2847,37 @@ declare namespace LocalJSX {
           * Triggered when an event is fired.
          */
         "onKul-card-event"?: (event: KulCardCustomEvent<KulCardEventPayload>) => void;
+    }
+    interface KulCarousel {
+        /**
+          * Enable or disable autoplay for the carousel.
+          * @default false
+         */
+        "kulAutoPlay"?: boolean;
+        /**
+          * Actual data of the carousel.
+          * @default null
+         */
+        "kulData"?: KulDataDataset;
+        /**
+          * Interval in milliseconds for autoplay.
+          * @default 3000
+         */
+        "kulInterval"?: number;
+        /**
+          * Sets the type of shapes to compare.
+          * @default ""
+         */
+        "kulShape"?: KulDataShapes;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Describes event emitted.
+         */
+        "onKul-carousel-event"?: (event: KulCarouselCustomEvent<KulCarouselEventPayload>) => void;
     }
     interface KulChart {
         /**
@@ -3229,6 +3353,8 @@ declare namespace LocalJSX {
     }
     interface KulShowcaseCard {
     }
+    interface KulShowcaseCarousel {
+    }
     interface KulShowcaseChart {
     }
     interface KulShowcaseChat {
@@ -3622,6 +3748,7 @@ declare namespace LocalJSX {
         "kul-badge": KulBadge;
         "kul-button": KulButton;
         "kul-card": KulCard;
+        "kul-carousel": KulCarousel;
         "kul-chart": KulChart;
         "kul-chat": KulChat;
         "kul-chip": KulChip;
@@ -3642,6 +3769,7 @@ declare namespace LocalJSX {
         "kul-showcase-badge": KulShowcaseBadge;
         "kul-showcase-button": KulShowcaseButton;
         "kul-showcase-card": KulShowcaseCard;
+        "kul-showcase-carousel": KulShowcaseCarousel;
         "kul-showcase-chart": KulShowcaseChart;
         "kul-showcase-chat": KulShowcaseChat;
         "kul-showcase-chip": KulShowcaseChip;
@@ -3695,6 +3823,7 @@ declare module "@stencil/core" {
             "kul-badge": LocalJSX.KulBadge & JSXBase.HTMLAttributes<HTMLKulBadgeElement>;
             "kul-button": LocalJSX.KulButton & JSXBase.HTMLAttributes<HTMLKulButtonElement>;
             "kul-card": LocalJSX.KulCard & JSXBase.HTMLAttributes<HTMLKulCardElement>;
+            "kul-carousel": LocalJSX.KulCarousel & JSXBase.HTMLAttributes<HTMLKulCarouselElement>;
             "kul-chart": LocalJSX.KulChart & JSXBase.HTMLAttributes<HTMLKulChartElement>;
             "kul-chat": LocalJSX.KulChat & JSXBase.HTMLAttributes<HTMLKulChatElement>;
             "kul-chip": LocalJSX.KulChip & JSXBase.HTMLAttributes<HTMLKulChipElement>;
@@ -3715,6 +3844,7 @@ declare module "@stencil/core" {
             "kul-showcase-badge": LocalJSX.KulShowcaseBadge & JSXBase.HTMLAttributes<HTMLKulShowcaseBadgeElement>;
             "kul-showcase-button": LocalJSX.KulShowcaseButton & JSXBase.HTMLAttributes<HTMLKulShowcaseButtonElement>;
             "kul-showcase-card": LocalJSX.KulShowcaseCard & JSXBase.HTMLAttributes<HTMLKulShowcaseCardElement>;
+            "kul-showcase-carousel": LocalJSX.KulShowcaseCarousel & JSXBase.HTMLAttributes<HTMLKulShowcaseCarouselElement>;
             "kul-showcase-chart": LocalJSX.KulShowcaseChart & JSXBase.HTMLAttributes<HTMLKulShowcaseChartElement>;
             "kul-showcase-chat": LocalJSX.KulShowcaseChat & JSXBase.HTMLAttributes<HTMLKulShowcaseChatElement>;
             "kul-showcase-chip": LocalJSX.KulShowcaseChip & JSXBase.HTMLAttributes<HTMLKulShowcaseChipElement>;

@@ -9,6 +9,7 @@ export const COMPONENTS = [
     'badge',
     'button',
     'card',
+    'carousel',
     'chart',
     'chat',
     'chip',
@@ -133,6 +134,13 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'art_track',
             id: 'Card',
             value: 'Card',
+        },
+        {
+            description:
+                'Provides a navigable slideshow of images or content cards.',
+            icon: 'slideshow',
+            id: 'Carousel',
+            value: 'Carousel',
         },
         {
             description:

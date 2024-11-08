@@ -9,12 +9,13 @@
 
 import type { EventName, StencilReactComponent } from '@stencil/react-output-target/runtime';
 import { createComponent } from '@stencil/react-output-target/runtime';
-import { type KulAccordionCustomEvent, type KulAccordionEventPayload, type KulArticleCustomEvent, type KulArticleEventPayload, type KulBadgeCustomEvent, type KulBadgeEventPayload, type KulButtonCustomEvent, type KulButtonEventPayload, type KulCardCustomEvent, type KulCardEventPayload, type KulChartCustomEvent, type KulChartEventPayload, type KulChatCustomEvent, type KulChatEventPayload, type KulChipCustomEvent, type KulChipEventPayload, type KulCodeCustomEvent, type KulCodeEventPayload, type KulCompareCustomEvent, type KulCompareEventPayload, type KulDrawerCustomEvent, type KulDrawerEventPayload, type KulHeaderCustomEvent, type KulHeaderEventPayload, type KulImageCustomEvent, type KulImageEventPayload, type KulLazyCustomEvent, type KulLazyEventPayload, type KulListCustomEvent, type KulListEventPayload, type KulMasonryCustomEvent, type KulMasonryEventPayload, type KulMessengerCustomEvent, type KulMessengerEventPayload, type KulPhotoframeCustomEvent, type KulPhotoframeEventPayload, type KulProgressbarCustomEvent, type KulProgressbarEventPayload, type KulSpinnerCustomEvent, type KulSpinnerEventPayload, type KulSplashCustomEvent, type KulSplashEventPayload, type KulSwitchCustomEvent, type KulSwitchEventPayload, type KulTabbarCustomEvent, type KulTabbarEventPayload, type KulTextfieldCustomEvent, type KulTextfieldEventPayload, type KulToastCustomEvent, type KulToastEventPayload, type KulTreeCustomEvent, type KulTreeEventPayload, type KulTypewriterCustomEvent, type KulTypewriterEventPayload, type KulUploadCustomEvent, type KulUploadEventPayload } from "ketchup-lite";
+import { type KulAccordionCustomEvent, type KulAccordionEventPayload, type KulArticleCustomEvent, type KulArticleEventPayload, type KulBadgeCustomEvent, type KulBadgeEventPayload, type KulButtonCustomEvent, type KulButtonEventPayload, type KulCardCustomEvent, type KulCardEventPayload, type KulCarouselCustomEvent, type KulCarouselEventPayload, type KulChartCustomEvent, type KulChartEventPayload, type KulChatCustomEvent, type KulChatEventPayload, type KulChipCustomEvent, type KulChipEventPayload, type KulCodeCustomEvent, type KulCodeEventPayload, type KulCompareCustomEvent, type KulCompareEventPayload, type KulDrawerCustomEvent, type KulDrawerEventPayload, type KulHeaderCustomEvent, type KulHeaderEventPayload, type KulImageCustomEvent, type KulImageEventPayload, type KulLazyCustomEvent, type KulLazyEventPayload, type KulListCustomEvent, type KulListEventPayload, type KulMasonryCustomEvent, type KulMasonryEventPayload, type KulMessengerCustomEvent, type KulMessengerEventPayload, type KulPhotoframeCustomEvent, type KulPhotoframeEventPayload, type KulProgressbarCustomEvent, type KulProgressbarEventPayload, type KulSpinnerCustomEvent, type KulSpinnerEventPayload, type KulSplashCustomEvent, type KulSplashEventPayload, type KulSwitchCustomEvent, type KulSwitchEventPayload, type KulTabbarCustomEvent, type KulTabbarEventPayload, type KulTextfieldCustomEvent, type KulTextfieldEventPayload, type KulToastCustomEvent, type KulToastEventPayload, type KulTreeCustomEvent, type KulTreeEventPayload, type KulTypewriterCustomEvent, type KulTypewriterEventPayload, type KulUploadCustomEvent, type KulUploadEventPayload } from "ketchup-lite";
 import { KulAccordion as KulAccordionElement, defineCustomElement as defineKulAccordion } from "ketchup-lite/dist/components/kul-accordion.js";
 import { KulArticle as KulArticleElement, defineCustomElement as defineKulArticle } from "ketchup-lite/dist/components/kul-article.js";
 import { KulBadge as KulBadgeElement, defineCustomElement as defineKulBadge } from "ketchup-lite/dist/components/kul-badge.js";
 import { KulButton as KulButtonElement, defineCustomElement as defineKulButton } from "ketchup-lite/dist/components/kul-button.js";
 import { KulCard as KulCardElement, defineCustomElement as defineKulCard } from "ketchup-lite/dist/components/kul-card.js";
+import { KulCarousel as KulCarouselElement, defineCustomElement as defineKulCarousel } from "ketchup-lite/dist/components/kul-carousel.js";
 import { KulChart as KulChartElement, defineCustomElement as defineKulChart } from "ketchup-lite/dist/components/kul-chart.js";
 import { KulChat as KulChatElement, defineCustomElement as defineKulChat } from "ketchup-lite/dist/components/kul-chat.js";
 import { KulChip as KulChipElement, defineCustomElement as defineKulChip } from "ketchup-lite/dist/components/kul-chip.js";
@@ -34,6 +35,7 @@ import { KulShowcaseArticle as KulShowcaseArticleElement, defineCustomElement as
 import { KulShowcaseBadge as KulShowcaseBadgeElement, defineCustomElement as defineKulShowcaseBadge } from "ketchup-lite/dist/components/kul-showcase-badge.js";
 import { KulShowcaseButton as KulShowcaseButtonElement, defineCustomElement as defineKulShowcaseButton } from "ketchup-lite/dist/components/kul-showcase-button.js";
 import { KulShowcaseCard as KulShowcaseCardElement, defineCustomElement as defineKulShowcaseCard } from "ketchup-lite/dist/components/kul-showcase-card.js";
+import { KulShowcaseCarousel as KulShowcaseCarouselElement, defineCustomElement as defineKulShowcaseCarousel } from "ketchup-lite/dist/components/kul-showcase-carousel.js";
 import { KulShowcaseChart as KulShowcaseChartElement, defineCustomElement as defineKulShowcaseChart } from "ketchup-lite/dist/components/kul-showcase-chart.js";
 import { KulShowcaseChat as KulShowcaseChatElement, defineCustomElement as defineKulShowcaseChat } from "ketchup-lite/dist/components/kul-showcase-chat.js";
 import { KulShowcaseChip as KulShowcaseChipElement, defineCustomElement as defineKulShowcaseChip } from "ketchup-lite/dist/components/kul-showcase-chip.js";
@@ -132,6 +134,17 @@ export const KulCard: StencilReactComponent<KulCardElement, KulCardEvents> = /*@
     react: React,
     events: { onKulCardEvent: 'kul-card-event' } as KulCardEvents,
     defineCustomElement: defineKulCard
+});
+
+type KulCarouselEvents = { onKulCarouselEvent: EventName<KulCarouselCustomEvent<KulCarouselEventPayload>> };
+
+export const KulCarousel: StencilReactComponent<KulCarouselElement, KulCarouselEvents> = /*@__PURE__*/ createComponent<KulCarouselElement, KulCarouselEvents>({
+    tagName: 'kul-carousel',
+    elementClass: KulCarouselElement,
+    // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+    react: React,
+    events: { onKulCarouselEvent: 'kul-carousel-event' } as KulCarouselEvents,
+    defineCustomElement: defineKulCarousel
 });
 
 type KulChartEvents = { onKulChartEvent: EventName<KulChartCustomEvent<KulChartEventPayload>> };
@@ -352,6 +365,17 @@ export const KulShowcaseCard: StencilReactComponent<KulShowcaseCardElement, KulS
     react: React,
     events: {} as KulShowcaseCardEvents,
     defineCustomElement: defineKulShowcaseCard
+});
+
+type KulShowcaseCarouselEvents = NonNullable<unknown>;
+
+export const KulShowcaseCarousel: StencilReactComponent<KulShowcaseCarouselElement, KulShowcaseCarouselEvents> = /*@__PURE__*/ createComponent<KulShowcaseCarouselElement, KulShowcaseCarouselEvents>({
+    tagName: 'kul-showcase-carousel',
+    elementClass: KulShowcaseCarouselElement,
+    // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+    react: React,
+    events: {} as KulShowcaseCarouselEvents,
+    defineCustomElement: defineKulShowcaseCarousel
 });
 
 type KulShowcaseChartEvents = NonNullable<unknown>;
