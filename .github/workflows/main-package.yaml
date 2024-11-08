@@ -16,13 +16,16 @@ jobs:
                   COUNT=$(ls -l packages/ketchup-lite/src/components | grep '^d' | wc -l)
                   echo "{ \"components\": $COUNT }" > count.json
 
-            - name: Configure Git for Component Count Update
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-                  git add count.json
-                  git commit -m "Updated component count"
-                  git push origin main
+            # Remove the Git configuration and push steps
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v5
+              with:
+                  commit-message: 'Updated component count'
+                  branch: 'update-component-count-${{ github.run_id }}'
+                  title: 'Update component count'
+                  body: 'Automatically updates the component count.'
+                  labels: 'automated PR'
 
             - name: Clear npm cache
               run: npm cache clean --force
@@ -40,6 +43,7 @@ jobs:
               run: npm run build
 
             - name: Publish Ketchup Lite
+              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
               run: |
                   cd packages/ketchup-lite
                   npm publish
@@ -47,6 +51,7 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Publish Ketchup Lite React
+              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
               run: |
                   cd packages/ketchup-lite-react
                   npm publish
