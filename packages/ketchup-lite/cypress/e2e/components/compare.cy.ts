@@ -25,6 +25,18 @@ describe('Basic', () => {
 });
 
 describe('Events', () => {
+    it(`kul-event`, () => {
+        cy.navigate(compare);
+        const eventType: KulCompareEvent = 'kul-event';
+        cy.checkEvent(compare, eventType);
+        cy.get('@eventElement')
+            .findCyElement(KulDataCyAttributes.SHAPE)
+            .first()
+            .scrollIntoView()
+            .trigger('click', { force: true, x: 100, y: 100 });
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
+
     it(`ready`, () => {
         cy.checkReadyEvent(compare);
     });
@@ -33,9 +45,9 @@ describe('Events', () => {
         cy.navigate(compare);
         const eventType: KulCompareEvent = 'unmount';
         cy.checkEvent(compare, eventType);
-        cy.get('@eventElement').then(($article) => {
-            const kulArticleElement = $article[0] as HTMLKulArticleElement;
-            kulArticleElement.unmount();
+        cy.get('@eventElement').then(($compare) => {
+            const kulCompareElement = $compare[0] as HTMLKulCompareElement;
+            kulCompareElement.unmount();
         });
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });

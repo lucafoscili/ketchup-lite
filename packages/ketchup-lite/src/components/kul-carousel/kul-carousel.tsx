@@ -13,11 +13,7 @@ import {
     VNode,
     Watch,
 } from '@stencil/core';
-import {
-    KulGenericEvent,
-    KulGenericEventPayload,
-    type GenericObject,
-} from '../../types/GenericTypes';
+import { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataCell,
@@ -29,10 +25,13 @@ import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declar
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
+    KulCarouselAdapter,
     KulCarouselEvent,
     KulCarouselEventPayload,
     KulCarouselProps,
 } from './kul-carousel-declarations';
+import { ACTIONS } from './helpers/kul-carousel-actions';
+import { COMPONENTS } from './helpers/kul-carousel-components';
 
 @Component({
     tag: 'kul-carousel',
@@ -221,41 +220,163 @@ export class KulCarousel {
     /*                   M e t h o d s                 */
     /*-------------------------------------------------*/
 
+    #adapter: KulCarouselAdapter = {
+        actions: ACTIONS,
+        components: COMPONENTS,
+        get: {
+            carousel: () => this,
+            interval: () => this.#interval,
+            manager: () => this.#kulManager,
+            state: { currentIndex: () => this.currentIndex },
+            totalSlides: () => this.#getTotalSlides(),
+        },
+        set: {
+            interval: (value) => (this.#interval = value),
+            state: { currentIndex: (value) => (this.currentIndex = value) },
+        },
+    };
+
     #getTotalSlides() {
         return this.shapes?.[this.kulShape]?.length || 0;
     }
 
-    #startAutoPlay() {
-        if (this.kulAutoPlay && this.kulInterval > 0) {
-            this.#interval = setInterval(() => {
-                this.nextSlide();
-            }, this.kulInterval);
+    #hasShapes() {
+        return !!this.shapes?.[this.kulShape];
+    }
+
+    #prepCarousel(): VNode {
+        if (this.#hasShapes()) {
+            const shapes = this.shapes[this.kulShape];
+            if (shapes?.length) {
+                return (
+                    <Fragment>
+                        <div
+                            class="carousel__track"
+                            role="region"
+                            aria-live="polite"
+                        >
+                            {this.#prepSlide()}
+                        </div>
+                        <div class="carousel__controls">
+                            {this.#adapter.components.back(this.#adapter)}
+                            {this.#adapter.components.forward(this.#adapter)}
+                        </div>
+                        <div class="carousel__indicators-wrapper">
+                            <div class="carousel__indicators">
+                                {this.#prepIndicators()}
+                            </div>
+                        </div>
+                    </Fragment>
+                );
+            }
         }
     }
 
-    #stopAutoPlay() {
-        if (this.#interval) {
-            clearInterval(this.#interval);
-            this.#interval = null;
+    #prepIndicators(): VNode[] {
+        const totalSlides = this.#getTotalSlides();
+        const maxIndicators = 9;
+        const halfMax = Math.floor(maxIndicators / 2);
+
+        let start = Math.max(0, this.currentIndex - halfMax);
+        let end = Math.min(totalSlides, start + maxIndicators);
+
+        if (end === totalSlides) {
+            start = Math.max(0, end - maxIndicators);
         }
+
+        const indicators = [];
+
+        if (start > 0) {
+            const className = {
+                carousel__chevron: true,
+                'carousel__chevron--left': true,
+            };
+            indicators.push(
+                <span
+                    class={className}
+                    onClick={() =>
+                        this.#adapter.actions.toSlide(this.#adapter, 0)
+                    }
+                    title={`Jump to the first slide (#${0})`}
+                >
+                    «
+                </span>
+            );
+        }
+
+        this.shapes[this.kulShape]
+            ?.slice(start, end)
+            .forEach(
+                (_: Partial<KulDataCell<KulDataShapes>>, index: number) => {
+                    const actualIndex = start + index;
+                    const isCurrent = actualIndex === this.currentIndex;
+                    const isFirst = actualIndex === start;
+                    const isLast = actualIndex === end - 1;
+
+                    const className = {
+                        carousel__indicator: true,
+                        'carousel__indicator--active': isCurrent,
+                        'carousel__indicator--small':
+                            (isFirst || isLast) && !isCurrent,
+                    };
+                    indicators.push(
+                        <span
+                            class={className}
+                            onClick={() =>
+                                this.#adapter.actions.toSlide(
+                                    this.#adapter,
+                                    actualIndex
+                                )
+                            }
+                            title={`#${index}`}
+                        />
+                    );
+                }
+            );
+
+        if (end < totalSlides) {
+            const className = {
+                carousel__chevron: true,
+                'carousel__chevron--right': true,
+            };
+            indicators.push(
+                <span
+                    class={className}
+                    onClick={() =>
+                        this.#adapter.actions.toSlide(
+                            this.#adapter,
+                            totalSlides - 1
+                        )
+                    }
+                    title={`Jump to the last slide (#${totalSlides - 1})`}
+                >
+                    »
+                </span>
+            );
+        }
+
+        return indicators;
     }
 
-    #prepIndicators() {
-        return this.shapes[this.kulShape]?.map((_, index) => (
-            <span
-                class={`carousel__indicator ${
-                    this.currentIndex === index ? 'active' : ''
-                }`}
-                onClick={() => this.goToSlide(index)}
-            />
-        ));
-    }
+    #prepSlide(): VNode {
+        const props: Partial<KulDataCell<KulDataShapes>>[] = this.shapes[
+            this.kulShape
+        ].map(() => ({
+            htmlProps: {
+                className: 'kul-fit',
+            },
+        }));
 
-    #prepSlides() {
-        const currentSlide = this.shapes[this.kulShape]?.[this.currentIndex];
+        const decoratedShapes = this.#kulManager.data.cell.shapes.decorate(
+            this.kulShape,
+            this.shapes[this.kulShape],
+            async (e) => this.onKulEvent(e, 'kul-event'),
+            props
+        ).element;
+
         return (
             <div class="carousel__slide" data-index={this.currentIndex}>
-                <Fragment>{currentSlide}</Fragment>
+                <Fragment>{decoratedShapes[this.currentIndex]}</Fragment>
             </div>
         );
     }
@@ -268,7 +389,7 @@ export class KulCarousel {
         this.#kulManager.theme.register(this);
         this.updateShapes();
         if (this.kulAutoPlay) {
-            this.#startAutoPlay();
+            this.#adapter.actions.autoplay.start(this.#adapter);
         }
     }
 
@@ -294,32 +415,7 @@ export class KulCarousel {
                     </style>
                 ) : undefined}
                 <div id={KUL_WRAPPER_ID}>
-                    <div class="carousel">
-                        <div
-                            class="carousel__track"
-                            role="region"
-                            aria-live="polite"
-                        >
-                            {this.#prepSlides()}
-                        </div>
-                        <div class="carousel__controls">
-                            <kul-button
-                                kulIcon="chevron_left"
-                                kulStyling="icon"
-                                onClick={() => this.prevSlide()}
-                                title="Previous slide."
-                            ></kul-button>
-                            <kul-button
-                                kulIcon="chevron_right"
-                                kulStyling="icon"
-                                onClick={() => this.nextSlide()}
-                                title="Next slide."
-                            ></kul-button>
-                        </div>
-                        <div class="carousel__indicators">
-                            {this.#prepIndicators()}
-                        </div>
-                    </div>
+                    <div class="carousel">{this.#prepCarousel()}</div>
                 </div>
             </Host>
         );
@@ -327,6 +423,6 @@ export class KulCarousel {
 
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
-        this.#stopAutoPlay();
+        this.#adapter.actions.autoplay.stop(this.#adapter);
     }
 }

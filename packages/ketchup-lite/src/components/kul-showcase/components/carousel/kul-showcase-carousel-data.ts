@@ -17,6 +17,11 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCarousel'> =
 const TAG_NAME: KulComponentTag<'KulCarousel'> = 'kul-carousel';
 
 export const CAROUSEL_EXAMPLES: CarouselData = {
+    autoplay: {
+        ['data-description']: 'Carousel with autoplay',
+        kulAutoPlay: true,
+        kulData: MASONRY_KULDATA_FACTORY.KulImage(),
+    },
     simple: {
         ['data-description']: 'Simple carousel',
         kulData: MASONRY_KULDATA_FACTORY.KulImage(),

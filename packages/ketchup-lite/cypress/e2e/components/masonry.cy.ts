@@ -25,6 +25,18 @@ describe('Basic', () => {
 });
 
 describe('Events', () => {
+    it(`kul-event`, () => {
+        cy.navigate(masonry);
+        const eventType: KulMasonryEvent = 'kul-event';
+        cy.checkEvent(masonry, eventType);
+        cy.get('@eventElement')
+            .findCyElement(KulDataCyAttributes.SHAPE)
+            .first()
+            .scrollIntoView()
+            .click();
+        cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    });
+
     it(`ready`, () => {
         cy.checkReadyEvent(masonry);
     });
@@ -33,9 +45,9 @@ describe('Events', () => {
         cy.navigate(masonry);
         const eventType: KulMasonryEvent = 'unmount';
         cy.checkEvent(masonry, eventType);
-        cy.get('@eventElement').then(($article) => {
-            const kulArticleElement = $article[0] as HTMLKulArticleElement;
-            kulArticleElement.unmount();
+        cy.get('@eventElement').then(($masonry) => {
+            const kulMasonryElement = $masonry[0] as HTMLKulMasonryElement;
+            kulMasonryElement.unmount();
         });
         cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
     });

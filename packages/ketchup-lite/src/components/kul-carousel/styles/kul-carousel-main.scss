@@ -1,6 +1,7 @@
 :host {
   display: block;
   font-family: var(--kul-font-family, sans-serif);
+  height: 100%;
   margin: auto;
   max-width: 600px;
   overflow: hidden;
@@ -8,65 +9,88 @@
   width: 100%;
 }
 
-.carousel {
+#kul-component {
   height: 100%;
-  position: relative;
   width: 100%;
+}
+
+.carousel {
+  & {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
 
   &__controls {
     & {
+      align-items: center;
       display: flex;
+      height: 100%;
       justify-content: space-between;
+      opacity: 0;
       position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
+      top: 0;
+      transition: opacity 0.2s ease;
       width: 100%;
-    }
-
-    kul-button {
-      & {
-        background-color: rgba(var(--kul-background-color-rgb), 0.5);
-        border-radius: 50%;
-        color: var(--kul-text-color-rgb);
-        cursor: pointer;
-        font-size: 1.2rem;
-        padding: 0.5rem;
-        transition: background-color 0.2s ease;
-      }
 
       &:hover {
-        background: rgba(var(--kul-background-color-rgb), 0.7);
+        opacity: 1;
       }
     }
   }
 
   &__indicator {
     & {
-      background-color: var(--kul-text-color-rgb);
+      background-color: var(--kul-background-color);
       border-radius: 50%;
       cursor: pointer;
-      height: 10px;
-      margin: 0 5px;
-      transition: background-color 0.3s;
-      width: 10px;
+      height: 8px;
+      width: 8px;
+      margin: 0 4px;
+      transition:
+        background-color 0.3s,
+        transform 0.3s;
     }
 
     &--active {
-      background: var(--kul-background-color-rgb);
+      background-color: var(--kul-primary-color);
+      height: 12px;
+      width: 12px;
+    }
+
+    &--small {
+      height: 6px;
+      width: 6px;
     }
   }
 
   &__indicators {
-    bottom: 10px;
+    align-items: center;
     display: flex;
     justify-content: center;
-    position: absolute;
     width: 100%;
+  }
+
+  &__indicators-wrapper {
+    & {
+      bottom: 0;
+      display: flex;
+      padding: 8px 0;
+      position: absolute;
+      transition: transform 0.3s;
+    }
+
+    &:hover {
+      transform: scale(1.5);
+    }
   }
 
   &__track {
     display: flex;
-    transition: transform 0.4s ease-in-out;
+    height: 100%;
+    transition: transform 0.5s cubic-bezier(0.5, 0, 0.1, 1); // Smooth, easing effect
     will-change: transform;
     width: 100%;
   }
@@ -77,6 +101,32 @@
     flex-shrink: 0;
     height: 100%;
     justify-content: center;
-    min-width: 100%;
+    width: 100%;
+  }
+
+  &__chevron {
+    & {
+      color: var(--kul-background-color);
+      cursor: pointer;
+      font-size: 12px;
+      margin: 0 6px;
+      transition: transform 0.3s ease;
+    }
+
+    &--left {
+      margin-right: 8px;
+    }
+
+    &--right {
+      margin-left: 8px;
+    }
+
+    &:hover {
+      transform: translateX(-3px);
+    }
+
+    &--right:hover {
+      transform: translateX(3px);
+    }
   }
 }

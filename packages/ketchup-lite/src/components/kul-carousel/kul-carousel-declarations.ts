@@ -1,9 +1,9 @@
+import { VNode } from '@stencil/core';
 import {
-    KulDataCell,
     KulDataDataset,
     KulDataShapes,
-    KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulManager } from '../../managers/kul-manager/kul-manager';
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulCarousel } from './kul-carousel';
 
@@ -12,25 +12,35 @@ import { KulCarousel } from './kul-carousel';
 /*-------------------------------------------------*/
 export interface KulCarouselAdapter {
     actions: KulCarouselAdapterActions;
-    components: {
-        buttons: {
-            addColumn: HTMLKulButtonElement;
-            removeColumn: HTMLKulButtonElement;
-            changeView: HTMLKulButtonElement;
-        };
-    };
-    isCarousel: () => boolean;
-    isVertical: () => boolean;
-    get: {
-        carousel: () => KulCarousel;
-        shapes: () => KulDataShapesMap;
-    };
+    components: KulCarouselAdapterComponents;
+    get: KulCarouselAdapterGetters;
+    set: KulCarouselAdapterSetters;
 }
-
 export interface KulCarouselAdapterActions {
-    addColumn: () => Promise<void>;
-    removeColumn: () => Promise<void>;
-    changeView: () => Promise<void>;
+    autoplay: {
+        start: (adapter: KulCarouselAdapter) => void;
+        stop: (adapter: KulCarouselAdapter) => void;
+    };
+    next: (adapter: KulCarouselAdapter) => void;
+    previous: (adapter: KulCarouselAdapter) => void;
+    toSlide: (adapter: KulCarouselAdapter, value: number) => void;
+}
+export interface KulCarouselAdapterComponents {
+    back: (adapter: KulCarouselAdapter) => VNode;
+    forward: (adapter: KulCarouselAdapter) => VNode;
+}
+export interface KulCarouselAdapterGetters {
+    carousel: () => KulCarousel;
+    interval: () => NodeJS.Timeout;
+    manager: () => KulManager;
+    state: {
+        currentIndex: () => number;
+    };
+    totalSlides: () => number;
+}
+export interface KulCarouselAdapterSetters {
+    interval: (value: NodeJS.Timeout) => void;
+    state: { currentIndex: (value: number) => void };
 }
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
@@ -39,29 +49,19 @@ export type KulCarouselEvent = 'kul-event' | 'ready' | 'unmount';
 export interface KulCarouselEventPayload
     extends KulEventPayload<'KulCarousel', KulCarouselEvent> {}
 /*-------------------------------------------------*/
-/*                   S t a t e s                   */
-/*-------------------------------------------------*/
-export type KulCarouselSelectedShape = {
-    index?: number;
-    shape?: Partial<KulDataCell<KulDataShapes>>;
-};
-/*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/
 export enum KulCarouselProps {
-    kulColumns = 'Number of columns of the carousel.',
+    kulAutoPlay = 'Enable or disable autoplay for the carousel.',
     kulData = 'Actual data to carousel.',
-    kulSelectable = 'Allows for the selection of elements.',
+    kulInterval = 'Interval in milliseconds for autoplay.',
     kulShape = 'Sets the type of shapes to compare.',
     kulStyle = 'Sets a custom CSS style for the component.',
-    kulView = 'Sets the type of view, either the actual carousel or a sequential view.',
 }
 export interface KulCarouselPropsInterface {
-    kulColumns?: number;
+    kulAutoPlay?: boolean;
     kulData?: KulDataDataset;
-    kulSelectable?: boolean;
+    kulInterval?: number;
     kulShape?: KulDataShapes;
     kulStyle?: string;
-    kulView?: KulCarouselView;
 }
-export type KulCarouselView = 'horizontal' | 'carousel' | 'vertical';
