@@ -22,6 +22,7 @@ export const config: Config = {
                 'kul-showcase-badge',
                 'kul-showcase-button',
                 'kul-showcase-card',
+                'kul-showcase-carousel',
                 'kul-showcase-chart',
                 'kul-showcase-chat',
                 'kul-showcase-chip',
@@ -61,7 +62,7 @@ export const config: Config = {
             serviceWorker: null,
         },
         reactOutputTarget({
-            outDir: 'ketchup-lite-react',
+            outDir: '../ketchup-lite-react/src',
         }),
         {
             type: 'dist',

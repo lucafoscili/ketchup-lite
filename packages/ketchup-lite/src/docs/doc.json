@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-07T12:36:52",
+  "timestamp": "2024-11-08T20:50:02",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -768,6 +768,7 @@
         "kul-showcase-badge",
         "kul-showcase-button",
         "kul-showcase-card",
+        "kul-showcase-carousel",
         "kul-showcase-chart",
         "kul-showcase-chat",
         "kul-showcase-chip",
@@ -820,6 +821,9 @@
           "kul-article"
         ],
         "kul-showcase-card": [
+          "kul-article"
+        ],
+        "kul-showcase-carousel": [
           "kul-article"
         ],
         "kul-showcase-chart": [
@@ -1980,6 +1984,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-carousel",
         "kul-chat",
         "kul-code",
         "kul-compare",
@@ -2005,6 +2010,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-carousel": [
+          "kul-button"
         ],
         "kul-chat": [
           "kul-button"
@@ -2422,6 +2430,485 @@
         ],
         "kul-showcase-card": [
           "kul-card"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-carousel/kul-carousel.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-carousel",
+      "readme": "# kul-carousel\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulAutoPlay",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-auto-play",
+          "reflectToAttr": false,
+          "docs": "Enable or disable autoplay for the carousel.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulData",
+          "type": "KulDataDataset",
+          "complexType": {
+            "original": "KulDataDataset",
+            "resolved": "KulDataDataset",
+            "references": {
+              "KulDataDataset": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Actual data of the carousel.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulInterval",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-interval",
+          "reflectToAttr": false,
+          "docs": "Interval in milliseconds for autoplay.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "3000"
+            }
+          ],
+          "default": "3000",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulShape",
+          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+          "complexType": {
+            "original": "KulDataShapes",
+            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+            "references": {
+              "KulDataShapes": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataShapes"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-shape",
+          "reflectToAttr": true,
+          "docs": "Sets the type of shapes to compare.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "'image'",
+          "values": [
+            {
+              "value": "badge",
+              "type": "string"
+            },
+            {
+              "value": "button",
+              "type": "string"
+            },
+            {
+              "value": "card",
+              "type": "string"
+            },
+            {
+              "value": "chart",
+              "type": "string"
+            },
+            {
+              "value": "chat",
+              "type": "string"
+            },
+            {
+              "value": "chip",
+              "type": "string"
+            },
+            {
+              "value": "code",
+              "type": "string"
+            },
+            {
+              "value": "image",
+              "type": "string"
+            },
+            {
+              "value": "number",
+              "type": "string"
+            },
+            {
+              "value": "switch",
+              "type": "string"
+            },
+            {
+              "value": "text",
+              "type": "string"
+            },
+            {
+              "value": "upload",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": true,
+          "docs": "Custom style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "List of props as object, each key will be a prop."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When provided and true, the result will be the list of props with their description."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When provided and true, the result will be the list of props with their description."
+            }
+          ],
+          "docs": "Used to retrieve component's props values.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When provided and true, the result will be the list of props with their description."
+            },
+            {
+              "name": "returns",
+              "text": "List of props as object, each key will be a prop."
+            }
+          ]
+        },
+        {
+          "name": "goToSlide",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(index: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "index",
+                "type": "number",
+                "docs": "- The number of the slide to go to."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "goToSlide(index: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "index",
+              "type": "number",
+              "docs": "- The number of the slide to go to."
+            }
+          ],
+          "docs": "Changes the slide to the specified index if it's within bounds.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "index - The number of the slide to go to."
+            }
+          ]
+        },
+        {
+          "name": "nextSlide",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "nextSlide() => Promise<void>",
+          "parameters": [],
+          "docs": "Advances to the next slide, looping back to the start if at the end.",
+          "docsTags": []
+        },
+        {
+          "name": "prevSlide",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "prevSlide() => Promise<void>",
+          "parameters": [],
+          "docs": "Moves to the previous slide, looping to the last slide if at the beginning.",
+          "docsTags": []
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-carousel-event",
+          "detail": "KulCarouselEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulCarouselEventPayload",
+            "resolved": "KulCarouselEventPayload",
+            "references": {
+              "KulCarouselEventPayload": {
+                "location": "import",
+                "path": "./kul-carousel-declarations",
+                "id": "src/components/kul-carousel/kul-carousel-declarations.ts::KulCarouselEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-carousel"
+      ],
+      "dependencies": [
+        "kul-button"
+      ],
+      "dependencyGraph": {
+        "kul-carousel": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-showcase-carousel": [
+          "kul-carousel"
         ]
       }
     },
@@ -9078,6 +9565,68 @@
       }
     },
     {
+      "filePath": "src/components/kul-showcase/components/carousel/kul-showcase-carousel.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-carousel",
+      "readme": "# kul-showcase-carousel\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-carousel",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-carousel": [
+          "kul-carousel",
+          "kul-article"
+        ],
+        "kul-carousel": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
@@ -14890,6 +15439,11 @@
       "declaration": "export interface KulTypewriterEventPayload\n    extends KulEventPayload<'KulTypewriter', KulTypewriterEvent> {}",
       "docstring": "",
       "path": "src/components/kul-typewriter/kul-typewriter-declarations.ts"
+    },
+    "src/components/kul-carousel/kul-carousel-declarations.ts::KulCarouselEventPayload": {
+      "declaration": "export interface KulCarouselEventPayload\n    extends KulEventPayload<'KulCarousel', KulCarouselEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-carousel/kul-carousel-declarations.ts"
     }
   }
 }
