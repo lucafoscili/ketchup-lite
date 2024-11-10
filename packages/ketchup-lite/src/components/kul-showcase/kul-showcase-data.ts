@@ -22,6 +22,7 @@ export const COMPONENTS = [
     'messenger',
     'photoframe',
     'progressbar',
+    'slider',
     'splash',
     'spinner',
     'switch',
@@ -230,6 +231,12 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'data_usage',
             id: 'Progressbar',
             value: 'Progress bar',
+        },
+        {
+            description: 'Simple component for selecting a range of values.',
+            icon: 'straighten',
+            id: 'Slider',
+            value: 'Slider',
         },
         {
             description:

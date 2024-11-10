@@ -29,6 +29,7 @@ import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from 
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
+import { KulSliderEventPayload } from "./components/kul-slider/kul-slider-declarations";
 import { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 import { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -62,6 +63,7 @@ export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from 
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
+export { KulSliderEventPayload } from "./components/kul-slider/kul-slider-declarations";
 export { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 export { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -1230,6 +1232,8 @@ export namespace Components {
     }
     interface KulShowcaseProgressbar {
     }
+    interface KulShowcaseSlider {
+    }
     interface KulShowcaseSpinner {
     }
     interface KulShowcaseSplash {
@@ -1247,6 +1251,84 @@ export namespace Components {
     interface KulShowcaseTypewriter {
     }
     interface KulShowcaseUpload {
+    }
+    interface KulSlider {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
+        /**
+          * Used to retrieve component's properties and descriptions.
+          * @param descriptions - When true, includes descriptions for each property.
+          * @returns Promise resolved with an object containing the component's properties.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Used to retrieve the component's current state.
+          * @returns Promise resolved with the current state of the component.
+         */
+        "getValue": () => Promise<number>;
+        /**
+          * When true, the component is disabled, preventing user interaction.
+          * @default false
+         */
+        "kulDisabled": boolean;
+        /**
+          * Defines text to display as a label for the slider.
+          * @default ""
+         */
+        "kulLabel": string;
+        /**
+          * When true, displays the label before the slider component. Defaults to `false`.
+          * @default false
+         */
+        "kulLeadingLabel": boolean;
+        /**
+          * The maximum value allowed by the slider.
+          * @default 100
+         */
+        "kulMax": number;
+        /**
+          * The minimum value allowed by the slider.
+          * @default 0
+         */
+        "kulMin": number;
+        /**
+          * Adds a ripple effect when interacting with the slider.
+          * @default true
+         */
+        "kulRipple": boolean;
+        /**
+          * Sets the increment or decrement steps when moving the slider.
+          * @default 1
+         */
+        "kulStep": number;
+        /**
+          * Custom CSS style to apply to the slider component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * The initial numeric value for the slider within the defined range.
+          * @default 50
+         */
+        "kulValue": number;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Sets the component's state.
+          * @param value - The new state to be set on the component.
+          * @returns
+         */
+        "setValue": (value: number) => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
     }
     interface KulSpinner {
         /**
@@ -1842,6 +1924,10 @@ export interface KulProgressbarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulProgressbarElement;
 }
+export interface KulSliderCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulSliderElement;
+}
 export interface KulSpinnerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulSpinnerElement;
@@ -2405,6 +2491,12 @@ declare global {
         prototype: HTMLKulShowcaseProgressbarElement;
         new (): HTMLKulShowcaseProgressbarElement;
     };
+    interface HTMLKulShowcaseSliderElement extends Components.KulShowcaseSlider, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseSliderElement: {
+        prototype: HTMLKulShowcaseSliderElement;
+        new (): HTMLKulShowcaseSliderElement;
+    };
     interface HTMLKulShowcaseSpinnerElement extends Components.KulShowcaseSpinner, HTMLStencilElement {
     }
     var HTMLKulShowcaseSpinnerElement: {
@@ -2458,6 +2550,23 @@ declare global {
     var HTMLKulShowcaseUploadElement: {
         prototype: HTMLKulShowcaseUploadElement;
         new (): HTMLKulShowcaseUploadElement;
+    };
+    interface HTMLKulSliderElementEventMap {
+        "kul-slider-event": KulSliderEventPayload;
+    }
+    interface HTMLKulSliderElement extends Components.KulSlider, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulSliderElementEventMap>(type: K, listener: (this: HTMLKulSliderElement, ev: KulSliderCustomEvent<HTMLKulSliderElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulSliderElementEventMap>(type: K, listener: (this: HTMLKulSliderElement, ev: KulSliderCustomEvent<HTMLKulSliderElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulSliderElement: {
+        prototype: HTMLKulSliderElement;
+        new (): HTMLKulSliderElement;
     };
     interface HTMLKulSpinnerElementEventMap {
         "kul-spinner-event": KulSpinnerEventPayload;
@@ -2664,6 +2773,7 @@ declare global {
         "kul-showcase-messenger": HTMLKulShowcaseMessengerElement;
         "kul-showcase-photoframe": HTMLKulShowcasePhotoframeElement;
         "kul-showcase-progressbar": HTMLKulShowcaseProgressbarElement;
+        "kul-showcase-slider": HTMLKulShowcaseSliderElement;
         "kul-showcase-spinner": HTMLKulShowcaseSpinnerElement;
         "kul-showcase-splash": HTMLKulShowcaseSplashElement;
         "kul-showcase-switch": HTMLKulShowcaseSwitchElement;
@@ -2673,6 +2783,7 @@ declare global {
         "kul-showcase-tree": HTMLKulShowcaseTreeElement;
         "kul-showcase-typewriter": HTMLKulShowcaseTypewriterElement;
         "kul-showcase-upload": HTMLKulShowcaseUploadElement;
+        "kul-slider": HTMLKulSliderElement;
         "kul-spinner": HTMLKulSpinnerElement;
         "kul-splash": HTMLKulSplashElement;
         "kul-switch": HTMLKulSwitchElement;
@@ -3403,6 +3514,8 @@ declare namespace LocalJSX {
     }
     interface KulShowcaseProgressbar {
     }
+    interface KulShowcaseSlider {
+    }
     interface KulShowcaseSpinner {
     }
     interface KulShowcaseSplash {
@@ -3420,6 +3533,57 @@ declare namespace LocalJSX {
     interface KulShowcaseTypewriter {
     }
     interface KulShowcaseUpload {
+    }
+    interface KulSlider {
+        /**
+          * When true, the component is disabled, preventing user interaction.
+          * @default false
+         */
+        "kulDisabled"?: boolean;
+        /**
+          * Defines text to display as a label for the slider.
+          * @default ""
+         */
+        "kulLabel"?: string;
+        /**
+          * When true, displays the label before the slider component. Defaults to `false`.
+          * @default false
+         */
+        "kulLeadingLabel"?: boolean;
+        /**
+          * The maximum value allowed by the slider.
+          * @default 100
+         */
+        "kulMax"?: number;
+        /**
+          * The minimum value allowed by the slider.
+          * @default 0
+         */
+        "kulMin"?: number;
+        /**
+          * Adds a ripple effect when interacting with the slider.
+          * @default true
+         */
+        "kulRipple"?: boolean;
+        /**
+          * Sets the increment or decrement steps when moving the slider.
+          * @default 1
+         */
+        "kulStep"?: number;
+        /**
+          * Custom CSS style to apply to the slider component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * The initial numeric value for the slider within the defined range.
+          * @default 50
+         */
+        "kulValue"?: number;
+        /**
+          * Describes event emitted for various slider interactions like click, focus, blur.
+         */
+        "onKul-slider-event"?: (event: KulSliderCustomEvent<KulSliderEventPayload>) => void;
     }
     interface KulSpinner {
         /**
@@ -3794,6 +3958,7 @@ declare namespace LocalJSX {
         "kul-showcase-messenger": KulShowcaseMessenger;
         "kul-showcase-photoframe": KulShowcasePhotoframe;
         "kul-showcase-progressbar": KulShowcaseProgressbar;
+        "kul-showcase-slider": KulShowcaseSlider;
         "kul-showcase-spinner": KulShowcaseSpinner;
         "kul-showcase-splash": KulShowcaseSplash;
         "kul-showcase-switch": KulShowcaseSwitch;
@@ -3803,6 +3968,7 @@ declare namespace LocalJSX {
         "kul-showcase-tree": KulShowcaseTree;
         "kul-showcase-typewriter": KulShowcaseTypewriter;
         "kul-showcase-upload": KulShowcaseUpload;
+        "kul-slider": KulSlider;
         "kul-spinner": KulSpinner;
         "kul-splash": KulSplash;
         "kul-switch": KulSwitch;
@@ -3869,6 +4035,7 @@ declare module "@stencil/core" {
             "kul-showcase-messenger": LocalJSX.KulShowcaseMessenger & JSXBase.HTMLAttributes<HTMLKulShowcaseMessengerElement>;
             "kul-showcase-photoframe": LocalJSX.KulShowcasePhotoframe & JSXBase.HTMLAttributes<HTMLKulShowcasePhotoframeElement>;
             "kul-showcase-progressbar": LocalJSX.KulShowcaseProgressbar & JSXBase.HTMLAttributes<HTMLKulShowcaseProgressbarElement>;
+            "kul-showcase-slider": LocalJSX.KulShowcaseSlider & JSXBase.HTMLAttributes<HTMLKulShowcaseSliderElement>;
             "kul-showcase-spinner": LocalJSX.KulShowcaseSpinner & JSXBase.HTMLAttributes<HTMLKulShowcaseSpinnerElement>;
             "kul-showcase-splash": LocalJSX.KulShowcaseSplash & JSXBase.HTMLAttributes<HTMLKulShowcaseSplashElement>;
             "kul-showcase-switch": LocalJSX.KulShowcaseSwitch & JSXBase.HTMLAttributes<HTMLKulShowcaseSwitchElement>;
@@ -3878,6 +4045,7 @@ declare module "@stencil/core" {
             "kul-showcase-tree": LocalJSX.KulShowcaseTree & JSXBase.HTMLAttributes<HTMLKulShowcaseTreeElement>;
             "kul-showcase-typewriter": LocalJSX.KulShowcaseTypewriter & JSXBase.HTMLAttributes<HTMLKulShowcaseTypewriterElement>;
             "kul-showcase-upload": LocalJSX.KulShowcaseUpload & JSXBase.HTMLAttributes<HTMLKulShowcaseUploadElement>;
+            "kul-slider": LocalJSX.KulSlider & JSXBase.HTMLAttributes<HTMLKulSliderElement>;
             "kul-spinner": LocalJSX.KulSpinner & JSXBase.HTMLAttributes<HTMLKulSpinnerElement>;
             "kul-splash": LocalJSX.KulSplash & JSXBase.HTMLAttributes<HTMLKulSplashElement>;
             "kul-switch": LocalJSX.KulSwitch & JSXBase.HTMLAttributes<HTMLKulSwitchElement>;

@@ -144,6 +144,11 @@ import {
     KulCarouselProps,
 } from '../components/kul-carousel/kul-carousel-declarations';
 import { KulCarousel } from '../components/kul-carousel/kul-carousel';
+import {
+    KulSliderEvent,
+    KulSliderProps,
+} from '../components/kul-slider/kul-slider-declarations';
+import { KulSlider } from '../components/kul-slider/kul-slider';
 
 export interface GenericMap {
     [index: string]: string;
@@ -172,6 +177,7 @@ export type KulComponentName =
     | 'KulMessenger'
     | 'KulPhotoframe'
     | 'KulProgressbar'
+    | 'KulSlider'
     | 'KulSpinner'
     | 'KulSplash'
     | 'KulSwitch'
@@ -202,6 +208,7 @@ export type KulComponentElementMap = {
     KulMessenger: HTMLKulMessengerElement;
     KulPhotoframe: HTMLKulPhotoframeElement;
     KulProgressbar: HTMLKulProgressbarElement;
+    KulSlider: HTMLKulSliderElement;
     KulSpinner: HTMLKulSpinnerElement;
     KulSplash: HTMLKulSplashElement;
     KulSwitch: HTMLKulSwitchElement;
@@ -233,6 +240,7 @@ export type KulComponentClassMap = {
     KulMessenger: KulMessenger;
     KulPhotoframe: KulPhotoframe;
     KulProgressbar: KulProgressbar;
+    KulSlider: KulSlider;
     KulSpinner: KulSpinner;
     KulSplash: KulSplash;
     KulSwitch: KulSwitch;
@@ -264,6 +272,7 @@ export type KulComponentTagMap = {
     KulMessenger: 'kul-messenger';
     KulPhotoframe: 'kul-photoframe';
     KulProgressbar: 'kul-progressbar';
+    KulSlider: 'kul-slider';
     KulSpinner: 'kul-spinner';
     KulSplash: 'kul-splash';
     KulSwitch: 'kul-switch';
@@ -335,6 +344,7 @@ export type ComponentEventMap = {
     KulMessenger: KulMessengerEvent;
     KulPhotoframe: KulPhotoframeEvent;
     KulProgressbar: KulProgressbarEvent;
+    KulSlider: KulSliderEvent;
     KulSpinner: KulSpinnerEvent;
     KulSplash: KulSplashEvent;
     KulSwitch: KulSwitchEvent;
@@ -366,6 +376,7 @@ export type ComponentPropsMap = {
     KulMessenger: KulMessengerProps;
     KulPhotoframe: KulPhotoframeProps;
     KulProgressbar: KulProgressbarProps;
+    KulSlider: KulSliderProps;
     KulSpinner: KulSpinnerProps;
     KulSplash: KulSplashProps;
     KulSwitch: KulSwitchProps;

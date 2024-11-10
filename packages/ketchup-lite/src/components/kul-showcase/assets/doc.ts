@@ -2523,6 +2523,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [],
     styles: [],
   },
+  "kul-showcase-slider": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
   "kul-showcase-spinner": {
     methods: [],
     props: [],
@@ -2567,6 +2572,241 @@ export const KUL_DOC: KulShowcaseDoc = {
     methods: [],
     props: [],
     styles: [],
+  },
+  "kul-slider": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's properties and descriptions.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "Promise resolved with an object containing the component's properties.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "getValue",
+        docs: "Used to retrieve the component's current state.",
+        returns: {
+          type: "Promise<number>",
+          docs: "Promise resolved with the current state of the component.",
+        },
+        signature: "() => Promise<number>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "setValue",
+        docs: "Sets the component's state.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value: number) => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulDisabled",
+        docs: "When true, the component is disabled, preventing user interaction.",
+        type: "boolean",
+      },
+      {
+        name: "kulLabel",
+        docs: "Defines text to display as a label for the slider.",
+        type: "string",
+      },
+      {
+        name: "kulLeadingLabel",
+        docs: "When true, displays the label before the slider component. Defaults to `false`.",
+        type: "boolean",
+      },
+      {
+        name: "kulMax",
+        docs: "The maximum value allowed by the slider.",
+        type: "number",
+      },
+      {
+        name: "kulMin",
+        docs: "The minimum value allowed by the slider.",
+        type: "number",
+      },
+      {
+        name: "kulRipple",
+        docs: "Adds a ripple effect when interacting with the slider.",
+        type: "boolean",
+      },
+      {
+        name: "kulStep",
+        docs: "Sets the increment or decrement steps when moving the slider.",
+        type: "number",
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom CSS style to apply to the slider component.",
+        type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "The initial numeric value for the slider within the defined range.",
+        type: "number",
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-slider-backdrop-filter",
+        docs: "Sets backdrop filter effect for the track and thumb underlay. Defaults to blur(10px).",
+      },
+      {
+        name: "--kul-slider-box-shadow",
+        docs: "Sets box shadow for the slider components. Defaults to 0px 4px 8px rgba(0, 0, 0, 0.2).",
+      },
+      {
+        name: "--kul-slider-disabled-opacity",
+        docs: "Sets opacity of the slider when disabled. Defaults to 0.5.",
+      },
+      {
+        name: "--kul-slider-font-family",
+        docs: "Sets font family of the slider's label. Defaults to var(--kul-font-family).",
+      },
+      {
+        name: "--kul-slider-font-size",
+        docs: "Sets font size of the slider's label. Defaults to var(--kul-font-size).",
+      },
+      {
+        name: "--kul-slider-font-weight",
+        docs: "Sets font weight of the slider's label. Defaults to 400.",
+      },
+      {
+        name: "--kul-slider-label-color",
+        docs: "Sets text color of the slider's label. Defaults to var(--kul-text-color).",
+      },
+      {
+        name: "--kul-slider-label-font-size",
+        docs: "Sets font size of the slider's label. Defaults to 0.875em.",
+      },
+      {
+        name: "--kul-slider-label-letter-spacing",
+        docs: "Sets letter spacing of the slider's label. Defaults to 0.0178571429em.",
+      },
+      {
+        name: "--kul-slider-label-line-height",
+        docs: "Sets line height of the slider's label. Defaults to 2em.",
+      },
+      {
+        name: "--kul-slider-label-padding-left",
+        docs: "Sets left padding of the slider's label. Defaults to 4px.",
+      },
+      {
+        name: "--kul-slider-label-padding-right",
+        docs: "Sets right padding of the slider's label. Defaults to 4px.",
+      },
+      {
+        name: "--kul-slider-margin",
+        docs: "Sets margin around the slider component. Defaults to 0 0.75em.",
+      },
+      {
+        name: "--kul-slider-min-width",
+        docs: "Sets minimum width of the slider component. Defaults to 120px.",
+      },
+      {
+        name: "--kul-slider-primary-color",
+        docs: "Sets primary color of the component. Used for active parts of the slider such as the track and thumb. Defaults to var(--kul-primary-color).",
+      },
+      {
+        name: "--kul-slider-primary-color-rgb",
+        docs: "Sets primary color RGB values for the component. Used to create transparent variations of the primary color. Defaults to var(--kul-primary-color-rgb).",
+      },
+      {
+        name: "--kul-slider-thumb-active-after-scale",
+        docs: "Sets scale transform on active state for the thumb's after element. Defaults to 1.5.",
+      },
+      {
+        name: "--kul-slider-thumb-backdrop-filter",
+        docs: "Sets backdrop filter for the thumb underlay. Defaults to blur(10px).",
+      },
+      {
+        name: "--kul-slider-thumb-backdrop-filter-active",
+        docs: "Sets backdrop filter for the active thumb. Defaults to blur(12px).",
+      },
+      {
+        name: "--kul-slider-thumb-border-radius",
+        docs: "Sets border radius of the slider thumb. Defaults to 50%.",
+      },
+      {
+        name: "--kul-slider-thumb-box-shadow",
+        docs: "Sets box shadow for the slider thumb. Defaults to 0px 4px 8px rgba(0, 0, 0, 0.2).",
+      },
+      {
+        name: "--kul-slider-thumb-color",
+        docs: "Sets color of the slider thumb. Defaults to var(--kul-border-color).",
+      },
+      {
+        name: "--kul-slider-thumb-height",
+        docs: "Sets height of the slider thumb. Defaults to 24px.",
+      },
+      {
+        name: "--kul-slider-thumb-hover-scale",
+        docs: "Sets scale transform on hover for the thumb. Defaults to 1.1.",
+      },
+      {
+        name: "--kul-slider-thumb-underlay-top",
+        docs: "Sets top position of the thumb underlay. Defaults to -9px.",
+      },
+      {
+        name: "--kul-slider-thumb-width",
+        docs: "Sets width of the slider thumb. Defaults to 24px.",
+      },
+      {
+        name: "--kul-slider-track-border-radius",
+        docs: "Sets border radius of the slider track. Defaults to 12px.",
+      },
+      {
+        name: "--kul-slider-track-height",
+        docs: "Sets height of the slider track. Defaults to 6px.",
+      },
+      {
+        name: "--kul-slider-transition-duration",
+        docs: "Sets duration of transitions. Defaults to 0.3s.",
+      },
+      {
+        name: "--kul-slider-value-bottom-position",
+        docs: "Sets the bottom position of the value display. Defaults to -3em.",
+      },
+      {
+        name: "--kul-slider-value-font-size",
+        docs: "Sets font size of the slider's value display. Defaults to 0.875em.",
+      },
+      {
+        name: "--kul-slider-value-font-weight",
+        docs: "Sets font weight of the slider's value display. Defaults to 500.",
+      },
+    ],
   },
   "kul-spinner": {
     methods: [

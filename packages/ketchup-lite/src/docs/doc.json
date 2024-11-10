@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-08T20:50:02",
+  "timestamp": "2024-11-10T16:05:31",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -793,6 +793,7 @@
         "kul-showcase-messenger",
         "kul-showcase-photoframe",
         "kul-showcase-progressbar",
+        "kul-showcase-slider",
         "kul-showcase-spinner",
         "kul-showcase-splash",
         "kul-showcase-switch",
@@ -896,6 +897,9 @@
           "kul-article"
         ],
         "kul-showcase-progressbar": [
+          "kul-article"
+        ],
+        "kul-showcase-slider": [
           "kul-article"
         ],
         "kul-showcase-spinner": [
@@ -10662,6 +10666,54 @@
       }
     },
     {
+      "filePath": "src/components/kul-showcase/components/slider/kul-showcase-slider.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-slider",
+      "readme": "# kul-showcase-slider\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-slider",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-slider": [
+          "kul-slider",
+          "kul-article"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-showcase/components/spinner/kul-showcase-spinner.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-spinner",
@@ -11159,6 +11211,668 @@
         "kul-button": [
           "kul-image",
           "kul-list"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-slider/kul-slider.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-slider",
+      "readme": "# kul-button\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulDisabled",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-disabled",
+          "reflectToAttr": true,
+          "docs": "When true, the component is disabled, preventing user interaction.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLabel",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-label",
+          "reflectToAttr": true,
+          "docs": "Defines text to display as a label for the slider.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLeadingLabel",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-leading-label",
+          "reflectToAttr": true,
+          "docs": "When true, displays the label before the slider component. Defaults to `false`.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulMax",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-max",
+          "reflectToAttr": false,
+          "docs": "The maximum value allowed by the slider.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "100"
+            }
+          ],
+          "default": "100",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulMin",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-min",
+          "reflectToAttr": false,
+          "docs": "The minimum value allowed by the slider.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "0"
+            }
+          ],
+          "default": "0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulRipple",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-ripple",
+          "reflectToAttr": true,
+          "docs": "Adds a ripple effect when interacting with the slider.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStep",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-step",
+          "reflectToAttr": false,
+          "docs": "Sets the increment or decrement steps when moving the slider.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "1"
+            }
+          ],
+          "default": "1",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": true,
+          "docs": "Custom CSS style to apply to the slider component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulValue",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-value",
+          "reflectToAttr": true,
+          "docs": "The initial numeric value for the slider within the defined range.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "50"
+            }
+          ],
+          "default": "50",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "Promise resolved with an object containing the component's properties."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When true, includes descriptions for each property."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When true, includes descriptions for each property."
+            }
+          ],
+          "docs": "Used to retrieve component's properties and descriptions.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When true, includes descriptions for each property."
+            },
+            {
+              "name": "returns",
+              "text": "Promise resolved with an object containing the component's properties."
+            }
+          ]
+        },
+        {
+          "name": "getValue",
+          "returns": {
+            "type": "Promise<number>",
+            "docs": "Promise resolved with the current state of the component."
+          },
+          "complexType": {
+            "signature": "() => Promise<number>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<number>"
+          },
+          "signature": "getValue() => Promise<number>",
+          "parameters": [],
+          "docs": "Used to retrieve the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "Promise resolved with the current state of the component."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "setValue",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "number",
+                "docs": "- The new state to be set on the component."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setValue(value: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "docs": "- The new state to be set on the component."
+            }
+          ],
+          "docs": "Sets the component's state.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "value - The new state to be set on the component."
+            },
+            {
+              "name": "returns"
+            }
+          ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-slider-event",
+          "detail": "KulSliderEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulSliderEventPayload",
+            "resolved": "KulSliderEventPayload",
+            "references": {
+              "KulSliderEventPayload": {
+                "location": "import",
+                "path": "./kul-slider-declarations",
+                "id": "src/components/kul-slider/kul-slider-declarations.ts::KulSliderEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted for various slider interactions like click, focus, blur.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-slider-backdrop-filter",
+          "annotation": "prop",
+          "docs": "Sets backdrop filter effect for the track and thumb underlay. Defaults to blur(10px)."
+        },
+        {
+          "name": "--kul-slider-box-shadow",
+          "annotation": "prop",
+          "docs": "Sets box shadow for the slider components. Defaults to 0px 4px 8px rgba(0, 0, 0, 0.2)."
+        },
+        {
+          "name": "--kul-slider-disabled-opacity",
+          "annotation": "prop",
+          "docs": "Sets opacity of the slider when disabled. Defaults to 0.5."
+        },
+        {
+          "name": "--kul-slider-font-family",
+          "annotation": "prop",
+          "docs": "Sets font family of the slider's label. Defaults to var(--kul-font-family)."
+        },
+        {
+          "name": "--kul-slider-font-size",
+          "annotation": "prop",
+          "docs": "Sets font size of the slider's label. Defaults to var(--kul-font-size)."
+        },
+        {
+          "name": "--kul-slider-font-weight",
+          "annotation": "prop",
+          "docs": "Sets font weight of the slider's label. Defaults to 400."
+        },
+        {
+          "name": "--kul-slider-label-color",
+          "annotation": "prop",
+          "docs": "Sets text color of the slider's label. Defaults to var(--kul-text-color)."
+        },
+        {
+          "name": "--kul-slider-label-font-size",
+          "annotation": "prop",
+          "docs": "Sets font size of the slider's label. Defaults to 0.875em."
+        },
+        {
+          "name": "--kul-slider-label-letter-spacing",
+          "annotation": "prop",
+          "docs": "Sets letter spacing of the slider's label. Defaults to 0.0178571429em."
+        },
+        {
+          "name": "--kul-slider-label-line-height",
+          "annotation": "prop",
+          "docs": "Sets line height of the slider's label. Defaults to 2em."
+        },
+        {
+          "name": "--kul-slider-label-padding-left",
+          "annotation": "prop",
+          "docs": "Sets left padding of the slider's label. Defaults to 4px."
+        },
+        {
+          "name": "--kul-slider-label-padding-right",
+          "annotation": "prop",
+          "docs": "Sets right padding of the slider's label. Defaults to 4px."
+        },
+        {
+          "name": "--kul-slider-margin",
+          "annotation": "prop",
+          "docs": "Sets margin around the slider component. Defaults to 0 0.75em."
+        },
+        {
+          "name": "--kul-slider-min-width",
+          "annotation": "prop",
+          "docs": "Sets minimum width of the slider component. Defaults to 120px."
+        },
+        {
+          "name": "--kul-slider-primary-color",
+          "annotation": "prop",
+          "docs": "Sets primary color of the component. Used for active parts of the slider such as the track and thumb. Defaults to var(--kul-primary-color)."
+        },
+        {
+          "name": "--kul-slider-primary-color-rgb",
+          "annotation": "prop",
+          "docs": "Sets primary color RGB values for the component. Used to create transparent variations of the primary color. Defaults to var(--kul-primary-color-rgb)."
+        },
+        {
+          "name": "--kul-slider-thumb-active-after-scale",
+          "annotation": "prop",
+          "docs": "Sets scale transform on active state for the thumb's after element. Defaults to 1.5."
+        },
+        {
+          "name": "--kul-slider-thumb-backdrop-filter",
+          "annotation": "prop",
+          "docs": "Sets backdrop filter for the thumb underlay. Defaults to blur(10px)."
+        },
+        {
+          "name": "--kul-slider-thumb-backdrop-filter-active",
+          "annotation": "prop",
+          "docs": "Sets backdrop filter for the active thumb. Defaults to blur(12px)."
+        },
+        {
+          "name": "--kul-slider-thumb-border-radius",
+          "annotation": "prop",
+          "docs": "Sets border radius of the slider thumb. Defaults to 50%."
+        },
+        {
+          "name": "--kul-slider-thumb-box-shadow",
+          "annotation": "prop",
+          "docs": "Sets box shadow for the slider thumb. Defaults to 0px 4px 8px rgba(0, 0, 0, 0.2)."
+        },
+        {
+          "name": "--kul-slider-thumb-color",
+          "annotation": "prop",
+          "docs": "Sets color of the slider thumb. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-slider-thumb-height",
+          "annotation": "prop",
+          "docs": "Sets height of the slider thumb. Defaults to 24px."
+        },
+        {
+          "name": "--kul-slider-thumb-hover-scale",
+          "annotation": "prop",
+          "docs": "Sets scale transform on hover for the thumb. Defaults to 1.1."
+        },
+        {
+          "name": "--kul-slider-thumb-underlay-top",
+          "annotation": "prop",
+          "docs": "Sets top position of the thumb underlay. Defaults to -9px."
+        },
+        {
+          "name": "--kul-slider-thumb-width",
+          "annotation": "prop",
+          "docs": "Sets width of the slider thumb. Defaults to 24px."
+        },
+        {
+          "name": "--kul-slider-track-border-radius",
+          "annotation": "prop",
+          "docs": "Sets border radius of the slider track. Defaults to 12px."
+        },
+        {
+          "name": "--kul-slider-track-height",
+          "annotation": "prop",
+          "docs": "Sets height of the slider track. Defaults to 6px."
+        },
+        {
+          "name": "--kul-slider-transition-duration",
+          "annotation": "prop",
+          "docs": "Sets duration of transitions. Defaults to 0.3s."
+        },
+        {
+          "name": "--kul-slider-value-bottom-position",
+          "annotation": "prop",
+          "docs": "Sets the bottom position of the value display. Defaults to -3em."
+        },
+        {
+          "name": "--kul-slider-value-font-size",
+          "annotation": "prop",
+          "docs": "Sets font size of the slider's value display. Defaults to 0.875em."
+        },
+        {
+          "name": "--kul-slider-value-font-weight",
+          "annotation": "prop",
+          "docs": "Sets font weight of the slider's value display. Defaults to 500."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-slider"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "kul-showcase-slider": [
+          "kul-slider"
         ]
       }
     },
@@ -15444,6 +16158,11 @@
       "declaration": "export interface KulCarouselEventPayload\n    extends KulEventPayload<'KulCarousel', KulCarouselEvent> {}",
       "docstring": "",
       "path": "src/components/kul-carousel/kul-carousel-declarations.ts"
+    },
+    "src/components/kul-slider/kul-slider-declarations.ts::KulSliderEventPayload": {
+      "declaration": "export interface KulSliderEventPayload\n    extends KulEventPayload<'KulSlider', KulSliderEvent> {\n    value: number;\n}",
+      "docstring": "",
+      "path": "src/components/kul-slider/kul-slider-declarations.ts"
     }
   }
 }
