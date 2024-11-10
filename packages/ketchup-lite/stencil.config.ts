@@ -37,6 +37,7 @@ export const config: Config = {
                 'kul-showcase-messenger',
                 'kul-showcase-photoframe',
                 'kul-showcase-progressbar',
+                'kul-showcase-slider',
                 'kul-showcase-spinner',
                 'kul-showcase-splash',
                 'kul-showcase-switch',
