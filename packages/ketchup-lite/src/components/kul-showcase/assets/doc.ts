@@ -1602,6 +1602,69 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-imageviewer": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's properties and descriptions.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "Promise resolved with an object containing the component's properties.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulData",
+        docs: "Actual data of the image viewer.",
+        type: "KulDataDataset",
+      },
+      {
+        name: "kulLoadCallback",
+        docs: "Callback invoked when the load button is clicked.",
+        type: "(dir: string) => Promise<void>",
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "Configuration parameters of the detail view.",
+        type: "KulDataDataset",
+      },
+    ],
+    styles: [],
+  },
   "kul-lazy": {
     methods: [
       {
@@ -2444,6 +2507,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-image": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-imageviewer": {
     methods: [],
     props: [],
     styles: [],

@@ -155,6 +155,7 @@ Type: `Promise<void>`
 ### Used by
 
  - [kul-chat](../kul-chat)
+ - [kul-imageviewer](../kul-imageviewer)
  - [kul-messenger](../kul-messenger)
  - [kul-showcase-debug](../kul-showcase/utilities/debug)
  - [kul-showcase-textfield](../kul-showcase/components/textfield)
@@ -164,6 +165,7 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   kul-chat --> kul-textfield
+  kul-imageviewer --> kul-textfield
   kul-messenger --> kul-textfield
   kul-showcase-debug --> kul-textfield
   kul-showcase-textfield --> kul-textfield

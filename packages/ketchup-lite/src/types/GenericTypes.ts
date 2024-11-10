@@ -149,6 +149,11 @@ import {
     KulSliderProps,
 } from '../components/kul-slider/kul-slider-declarations';
 import { KulSlider } from '../components/kul-slider/kul-slider';
+import {
+    KulImageviewerEvent,
+    KulImageviewerProps,
+} from '../components/kul-imageviewer/kul-imageviewer-declarations';
+import { KulImageviewer } from '../components/kul-imageviewer/kul-imageviewer';
 
 export interface GenericMap {
     [index: string]: string;
@@ -171,6 +176,7 @@ export type KulComponentName =
     | 'KulDrawer'
     | 'KulHeader'
     | 'KulImage'
+    | 'KulImageviewer'
     | 'KulLazy'
     | 'KulList'
     | 'KulMasonry'
@@ -202,6 +208,7 @@ export type KulComponentElementMap = {
     KulDrawer: HTMLKulDrawerElement;
     KulHeader: HTMLKulHeaderElement;
     KulImage: HTMLKulImageElement;
+    KulImageviewer: HTMLKulImageviewerElement;
     KulLazy: HTMLKulLazyElement;
     KulList: HTMLKulListElement;
     KulMasonry: HTMLKulMasonryElement;
@@ -234,6 +241,7 @@ export type KulComponentClassMap = {
     KulDrawer: KulDrawer;
     KulHeader: KulHeader;
     KulImage: KulImage;
+    KulImageviewer: KulImageviewer;
     KulLazy: KulLazy;
     KulList: KulList;
     KulMasonry: KulMasonry;
@@ -266,6 +274,7 @@ export type KulComponentTagMap = {
     KulDrawer: 'kul-drawer';
     KulHeader: 'kul-header';
     KulImage: 'kul-image';
+    KulImageviewer: 'kul-imageviewer';
     KulLazy: 'kul-lazy';
     KulList: 'kul-list';
     KulMasonry: 'kul-masonry';
@@ -338,6 +347,7 @@ export type ComponentEventMap = {
     KulDrawer: KulDrawerEvent;
     KulHeader: KulHeaderEvent;
     KulImage: KulImageEvent;
+    KulImageviewer: KulImageviewerEvent;
     KulLazy: KulLazyEvent;
     KulList: KulListEvent;
     KulMasonry: KulMasonryEvent;
@@ -370,6 +380,7 @@ export type ComponentPropsMap = {
     KulDrawer: KulDrawerProps;
     KulHeader: KulHeaderProps;
     KulImage: KulImageProps;
+    KulImageviewer: KulImageviewerProps;
     KulLazy: KulLazyProps;
     KulList: KulListProps;
     KulMasonry: KulMasonryProps;

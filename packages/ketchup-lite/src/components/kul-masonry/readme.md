@@ -138,6 +138,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-imageviewer](../kul-imageviewer)
  - [kul-showcase-masonry](../kul-showcase/components/masonry)
 
 ### Depends on
@@ -153,6 +154,7 @@ graph TD;
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-imageviewer --> kul-masonry
   kul-showcase-masonry --> kul-masonry
   style kul-masonry fill:#f9f,stroke:#333,stroke-width:4px
 ```

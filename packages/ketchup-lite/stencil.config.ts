@@ -31,6 +31,7 @@ export const config: Config = {
                 'kul-showcase-drawer',
                 'kul-showcase-header',
                 'kul-showcase-image',
+                'kul-showcase-imageviewer',
                 'kul-showcase-lazy',
                 'kul-showcase-list',
                 'kul-showcase-masonry',

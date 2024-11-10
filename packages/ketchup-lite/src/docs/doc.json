@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-10T16:13:02",
+  "timestamp": "2024-11-10T18:51:55",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -778,6 +778,7 @@
         "kul-showcase-drawer",
         "kul-showcase-header",
         "kul-showcase-image",
+        "kul-showcase-imageviewer",
         "kul-showcase-kuldata",
         "kul-showcase-kuldates",
         "kul-showcase-kuldebug",
@@ -852,6 +853,9 @@
           "kul-article"
         ],
         "kul-showcase-image": [
+          "kul-article"
+        ],
+        "kul-showcase-imageviewer": [
           "kul-article"
         ],
         "kul-showcase-kuldata": [
@@ -1992,6 +1996,7 @@
         "kul-chat",
         "kul-code",
         "kul-compare",
+        "kul-imageviewer",
         "kul-masonry",
         "kul-messenger",
         "kul-showcase",
@@ -2025,6 +2030,9 @@
           "kul-button"
         ],
         "kul-compare": [
+          "kul-button"
+        ],
+        "kul-imageviewer": [
           "kul-button"
         ],
         "kul-masonry": [
@@ -6432,6 +6440,7 @@
         "kul-badge",
         "kul-button",
         "kul-chat",
+        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-image",
         "kul-tabbar",
@@ -6456,6 +6465,9 @@
         "kul-chat": [
           "kul-image"
         ],
+        "kul-imageviewer": [
+          "kul-image"
+        ],
         "kul-messenger": [
           "kul-image"
         ],
@@ -6470,6 +6482,349 @@
         ],
         "kul-upload": [
           "kul-image"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-imageviewer",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulData",
+          "type": "KulDataDataset",
+          "complexType": {
+            "original": "KulDataDataset",
+            "resolved": "KulDataDataset",
+            "references": {
+              "KulDataDataset": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Actual data of the image viewer.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
+          "default": "{}",
+          "values": [
+            {
+              "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLoadCallback",
+          "type": "(dir: string) => Promise<void>",
+          "complexType": {
+            "original": "KulImageviewerLoadCallback",
+            "resolved": "(dir: string) => Promise<void>",
+            "references": {
+              "KulImageviewerLoadCallback": {
+                "location": "import",
+                "path": "./kul-imageviewer-declarations",
+                "id": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerLoadCallback"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Callback invoked when the load button is clicked.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "(dir: string) => Promise<void>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": false,
+          "docs": "Custom style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulValue",
+          "type": "KulDataDataset",
+          "complexType": {
+            "original": "KulDataDataset",
+            "resolved": "KulDataDataset",
+            "references": {
+              "KulDataDataset": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Configuration parameters of the detail view.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
+          "default": "{}",
+          "values": [
+            {
+              "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "Promise resolved with an object containing the component's properties."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When true, includes descriptions for each property."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When true, includes descriptions for each property."
+            }
+          ],
+          "docs": "Used to retrieve component's properties and descriptions.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When true, includes descriptions for each property."
+            },
+            {
+              "name": "returns",
+              "text": "Promise resolved with an object containing the component's properties."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-imageviewer-event",
+          "detail": "KulImageviewerEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulImageviewerEventPayload",
+            "resolved": "KulImageviewerEventPayload",
+            "references": {
+              "KulImageviewerEventPayload": {
+                "location": "import",
+                "path": "./kul-imageviewer-declarations",
+                "id": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-imageviewer"
+      ],
+      "dependencies": [
+        "kul-button",
+        "kul-spinner",
+        "kul-image",
+        "kul-masonry",
+        "kul-textfield",
+        "kul-tree"
+      ],
+      "dependencyGraph": {
+        "kul-imageviewer": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-masonry",
+          "kul-textfield",
+          "kul-tree"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ],
+        "kul-showcase-imageviewer": [
+          "kul-imageviewer"
         ]
       }
     },
@@ -8047,6 +8402,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-imageviewer",
         "kul-showcase-masonry"
       ],
       "dependencies": [
@@ -8066,6 +8422,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-imageviewer": [
+          "kul-masonry"
         ],
         "kul-showcase-masonry": [
           "kul-masonry"
@@ -10100,6 +10459,79 @@
         ],
         "kul-badge": [
           "kul-image"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/components/imageviewer/kul-showcase-imageviewer.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-imageviewer",
+      "readme": "# kul-showcase-accordion\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-imageviewer",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-imageviewer": [
+          "kul-imageviewer",
+          "kul-article"
+        ],
+        "kul-imageviewer": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-masonry",
+          "kul-textfield",
+          "kul-tree"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-tree": [
+          "kul-textfield"
         ]
       }
     },
@@ -12280,6 +12712,7 @@
       "dependents": [
         "kul-chat",
         "kul-image",
+        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-button",
         "kul-showcase-spinner",
@@ -12291,6 +12724,9 @@
           "kul-spinner"
         ],
         "kul-image": [
+          "kul-spinner"
+        ],
+        "kul-imageviewer": [
           "kul-spinner"
         ],
         "kul-messenger": [
@@ -14173,6 +14609,7 @@
       "parts": [],
       "dependents": [
         "kul-chat",
+        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-debug",
         "kul-showcase-textfield",
@@ -14181,6 +14618,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "kul-chat": [
+          "kul-textfield"
+        ],
+        "kul-imageviewer": [
           "kul-textfield"
         ],
         "kul-messenger": [
@@ -15040,6 +15480,7 @@
       "parts": [],
       "dependents": [
         "kul-compare",
+        "kul-imageviewer",
         "kul-showcase-tree"
       ],
       "dependencies": [
@@ -15050,6 +15491,9 @@
           "kul-textfield"
         ],
         "kul-compare": [
+          "kul-tree"
+        ],
+        "kul-imageviewer": [
           "kul-tree"
         ],
         "kul-showcase-tree": [
@@ -16163,6 +16607,16 @@
       "declaration": "export interface KulSliderEventPayload\n    extends KulEventPayload<'KulSlider', KulSliderEvent> {\n    value: number;\n}",
       "docstring": "",
       "path": "src/components/kul-slider/kul-slider-declarations.ts"
+    },
+    "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerLoadCallback": {
+      "declaration": "(dir: string) => Promise<void>",
+      "docstring": "",
+      "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
+    },
+    "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerEventPayload": {
+      "declaration": "export interface KulImageviewerEventPayload\n    extends KulEventPayload<'KulImageviewer', KulImageviewerEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     }
   }
 }
