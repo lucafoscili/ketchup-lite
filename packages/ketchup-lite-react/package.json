@@ -1,6 +1,6 @@
 {
     "name": "ketchup-lite-react",
-    "version": "1.6.5",
+    "version": "1.6.6",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
     "keywords": [
@@ -21,7 +21,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@stencil/react-output-target": "^0.7.4",
-        "ketchup-lite": "1.6.5"
+        "ketchup-lite": "1.6.6"
     },
     "devDependencies": {
         "@types/node": "^20.2.5",

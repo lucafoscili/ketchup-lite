@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property          | Attribute   | Description                                       | Type                             | Default |
-| ----------------- | ----------- | ------------------------------------------------- | -------------------------------- | ------- |
-| `kulData`         | --          | Actual data of the image viewer.                  | `KulDataDataset`                 | `{}`    |
-| `kulLoadCallback` | --          | Callback invoked when the load button is clicked. | `(dir: string) => Promise<void>` | `null`  |
-| `kulStyle`        | `kul-style` | Custom style of the component.                    | `string`                         | `''`    |
-| `kulValue`        | --          | Configuration parameters of the detail view.      | `KulDataDataset`                 | `{}`    |
+| Property          | Attribute   | Description                                       | Type                                                          | Default |
+| ----------------- | ----------- | ------------------------------------------------- | ------------------------------------------------------------- | ------- |
+| `kulData`         | --          | Actual data of the image viewer.                  | `KulDataDataset`                                              | `{}`    |
+| `kulLoadCallback` | --          | Callback invoked when the load button is clicked. | `(imageviewer: KulImageviewer, dir: string) => Promise<void>` | `null`  |
+| `kulStyle`        | `kul-style` | Custom style of the component.                    | `string`                                                      | `''`    |
+| `kulValue`        | --          | Configuration parameters of the detail view.      | `KulDataDataset`                                              | `{}`    |
 
 
 ## Events

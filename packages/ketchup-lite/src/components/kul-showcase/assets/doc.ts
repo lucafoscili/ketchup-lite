@@ -1650,7 +1650,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulLoadCallback",
         docs: "Callback invoked when the load button is clicked.",
-        type: "(dir: string) => Promise<void>",
+        type: "(imageviewer: KulImageviewer, dir: string) => Promise<void>",
       },
       {
         name: "kulStyle",

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-10T18:51:55",
+  "timestamp": "2024-11-10T19:58:14",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -6489,6 +6489,7 @@
       "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-imageviewer",
+      "readme": "# kul-imageviewer\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6527,10 +6528,10 @@
         },
         {
           "name": "kulLoadCallback",
-          "type": "(dir: string) => Promise<void>",
+          "type": "(imageviewer: KulImageviewer, dir: string) => Promise<void>",
           "complexType": {
             "original": "KulImageviewerLoadCallback",
-            "resolved": "(dir: string) => Promise<void>",
+            "resolved": "(imageviewer: KulImageviewer, dir: string) => Promise<void>",
             "references": {
               "KulImageviewerLoadCallback": {
                 "location": "import",
@@ -6551,7 +6552,7 @@
           "default": "null",
           "values": [
             {
-              "type": "(dir: string) => Promise<void>"
+              "type": "(imageviewer: KulImageviewer, dir: string) => Promise<void>"
             }
           ],
           "optional": false,
@@ -16609,7 +16610,7 @@
       "path": "src/components/kul-slider/kul-slider-declarations.ts"
     },
     "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerLoadCallback": {
-      "declaration": "(dir: string) => Promise<void>",
+      "declaration": "(\n    imageviewer: KulImageviewer,\n    dir: string\n) => Promise<void>",
       "docstring": "",
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     },
