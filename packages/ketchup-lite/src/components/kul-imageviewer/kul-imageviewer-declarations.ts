@@ -1,7 +1,8 @@
 import { VNode } from '@stencil/core';
 import {
+    KulDataCell,
     KulDataDataset,
-    KulDataNode,
+    KulDataShapes,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulManager } from '../../managers/kul-manager/kul-manager';
 import { KulEventPayload } from '../../types/GenericTypes';
@@ -16,22 +17,41 @@ export interface KulImageviewerAdapter {
     set: KulImageviewerAdapterSetters;
 }
 export interface KulImageviewerAdapterActions {
+    clearHistory: (
+        adapter: KulImageviewerAdapter,
+        index?: number
+    ) => Promise<void>;
+    save: (adapter: KulImageviewerAdapter) => Promise<void>;
     load: (adapter: KulImageviewerAdapter) => Promise<void>;
+    redo: (adapter: KulImageviewerAdapter) => Promise<void>;
+    undo: (adapter: KulImageviewerAdapter) => Promise<void>;
+    updateValue: (
+        shape: Partial<KulDataCell<KulDataShapes>>,
+        value: string
+    ) => void;
 }
 export interface KulImageviewerAdapterComponents {
     jsx: {
-        button: (adapter: KulImageviewerAdapter) => VNode;
+        clearHistory: (adapter: KulImageviewerAdapter) => VNode;
+        load: (adapter: KulImageviewerAdapter) => VNode;
         image: (adapter: KulImageviewerAdapter) => VNode;
         masonry: (adapter: KulImageviewerAdapter) => VNode;
+        redo: (adapter: KulImageviewerAdapter) => VNode;
+        save: (adapter: KulImageviewerAdapter) => VNode;
         textfield: (adapter: KulImageviewerAdapter) => VNode;
         tree: (adapter: KulImageviewerAdapter) => VNode;
+        undo: (adapter: KulImageviewerAdapter) => VNode;
     };
     refs: {
-        button: HTMLKulButtonElement;
+        clearHistory: HTMLKulButtonElement;
         image: HTMLKulImageElement;
+        load: HTMLKulButtonElement;
         masonry: HTMLKulMasonryElement;
+        redo: HTMLKulButtonElement;
+        save: HTMLKulButtonElement;
         textfield: HTMLKulTextfieldElement;
         tree: HTMLKulTreeElement;
+        undo: HTMLKulButtonElement;
     };
 }
 export interface KulImageviewerAdapterGetters {
@@ -39,11 +59,25 @@ export interface KulImageviewerAdapterGetters {
     manager: () => KulManager;
     state: {
         currentShape: () => { shape: KulMasonrySelectedShape; value: string };
+        history: {
+            current: () => KulMasonrySelectedShape[];
+            currentSnapshot: () => {
+                shape: KulMasonrySelectedShape;
+                value: string;
+            };
+            full: () => KulImageviewerHistory;
+            index: () => number;
+        };
     };
 }
 export interface KulImageviewerAdapterSetters {
     state: {
         currentShape: (node: KulMasonrySelectedShape) => void;
+        history: {
+            clear: (index?: number) => void;
+            index: (index: number) => void;
+            new: (shape: KulMasonrySelectedShape, isSnapshot?: boolean) => void;
+        };
     };
 }
 //#endregion
@@ -51,6 +85,11 @@ export interface KulImageviewerAdapterSetters {
 export type KulImageviewerEvent = 'kul-event' | 'ready' | 'unmount';
 export interface KulImageviewerEventPayload
     extends KulEventPayload<'KulImageviewer', KulImageviewerEvent> {}
+//#endregion
+//#region State
+export type KulImageviewerHistory = {
+    [index: number]: Array<KulMasonrySelectedShape>;
+};
 //#endregion
 //#region Props
 export enum KulImageviewerProps {

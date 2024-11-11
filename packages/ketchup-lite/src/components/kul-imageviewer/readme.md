@@ -24,6 +24,23 @@
 
 ## Methods
 
+### `addSnapshot(value: string) => Promise<void>`
+
+Appends a new snapshot to the current shape's history by duplicating it with an updated value.
+It has no effect when the current shape is not set.
+
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `value` | `string` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.

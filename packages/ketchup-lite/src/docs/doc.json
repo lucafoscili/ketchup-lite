@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-10T19:58:14",
+  "timestamp": "2024-11-11T18:59:09",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -6620,6 +6620,45 @@
       ],
       "methods": [
         {
+          "name": "addSnapshot",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value: string) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "string",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulMasonrySelectedShape": {
+                "location": "import",
+                "path": "../kul-masonry/kul-masonry-declarations",
+                "id": "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonrySelectedShape"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "addSnapshot(value: string) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "docs": ""
+            }
+          ],
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+          "docsTags": []
+        },
+        {
           "name": "getDebugInfo",
           "returns": {
             "type": "Promise<KulDebugLifecycleInfo>",
@@ -8158,6 +8197,28 @@
               "text": "Selected shape."
             }
           ]
+        },
+        {
+          "name": "redecorateShapes",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "redecorateShapes() => Promise<void>",
+          "parameters": [],
+          "docs": "Redecorates the shapes, updating potential new values.",
+          "docsTags": []
         },
         {
           "name": "refresh",

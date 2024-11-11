@@ -24,9 +24,9 @@ import { KulCompareEventPayload, KulCompareView } from "./components/kul-compare
 import { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 import { KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
+import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -59,9 +59,9 @@ export { KulCompareEventPayload, KulCompareView } from "./components/kul-compare
 export { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
 export { KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
+export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -841,6 +841,10 @@ export namespace Components {
     }
     interface KulImageviewer {
         /**
+          * Appends a new snapshot to the current shape's history by duplicating it with an updated value. It has no effect when the current shape is not set.
+         */
+        "addSnapshot": (value: string) => Promise<void>;
+        /**
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */
@@ -1055,6 +1059,10 @@ export namespace Components {
           * @default null
          */
         "kulView": KulMasonryView;
+        /**
+          * Redecorates the shapes, updating potential new values.
+         */
+        "redecorateShapes": () => Promise<void>;
         /**
           * This method is used to trigger a new render of the component.
          */

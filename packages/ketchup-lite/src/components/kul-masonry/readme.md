@@ -62,6 +62,16 @@ Type: `Promise<KulMasonrySelectedShape>`
 
 Selected shape.
 
+### `redecorateShapes() => Promise<void>`
+
+Redecorates the shapes, updating potential new values.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `refresh() => Promise<void>`
 
 This method is used to trigger a new render of the component.

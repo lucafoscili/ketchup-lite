@@ -24,6 +24,7 @@ import {
     KulImageviewerAdapter,
     KulImageviewerEvent,
     KulImageviewerEventPayload,
+    KulImageviewerHistory,
     KulImageviewerLoadCallback,
     KulImageviewerProps,
 } from './kul-imageviewer-declarations';
@@ -60,6 +61,14 @@ export class KulImageviewer {
      * Currently selected image.
      */
     @State() currentShape: KulMasonrySelectedShape = {};
+    /**
+     * The history index of the image displayed in the preview.
+     */
+    @State() historyIndex = null;
+    /**
+     * Currently selected image.
+     */
+    @State() history: KulImageviewerHistory = {};
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -122,6 +131,21 @@ export class KulImageviewer {
     /*-------------------------------------------------*/
 
     /**
+     * Appends a new snapshot to the current shape's history by duplicating it with an updated value.
+     * It has no effect when the current shape is not set.
+     */
+    @Method()
+    async addSnapshot(value: string): Promise<void> {
+        if (!this.currentShape || !Object.keys(this.currentShape)?.length) {
+            return;
+        }
+        const newShape: KulMasonrySelectedShape = JSON.parse(
+            JSON.stringify(this.currentShape)
+        );
+        this.#adapter.actions.updateValue(newShape.shape, value);
+        this.#adapter.set.state.history.new(newShape, true);
+    }
+    /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
@@ -168,35 +192,91 @@ export class KulImageviewer {
             imageviewer: () => this,
             manager: () => this.#kulManager,
             state: {
-                currentShape: () => {
-                    if (this.currentShape.index !== undefined) {
-                        const value =
-                            this.currentShape.shape.value ||
-                            (
-                                this.currentShape.shape as Partial<
-                                    KulDataCell<'image'>
-                                >
-                            ).kulValue;
-                        return {
-                            shape: this.currentShape,
-                            value: this.#stringify(value),
-                        };
-                    } else {
-                        return null;
-                    }
+                currentShape: () =>
+                    this.#getSelectedShapeValue(this.currentShape),
+                history: {
+                    current: () => this.history[this.currentShape.index],
+                    currentSnapshot: () => {
+                        if (this.historyIndex === null) {
+                            return;
+                        }
+
+                        const snapshot =
+                            this.history[this.currentShape.index][
+                                this.historyIndex
+                            ];
+
+                        return this.#getSelectedShapeValue(snapshot);
+                    },
+                    full: () => this.history,
+                    index: () => this.historyIndex,
                 },
             },
         },
         set: {
-            state: { currentShape: (node) => (this.currentShape = node) },
+            state: {
+                currentShape: (node) => (this.currentShape = node),
+                history: {
+                    clear: (index = null) => {
+                        if (index !== null) {
+                            this.history[index] = [this.history[index][0]];
+                            if (this.historyIndex === 0) {
+                                this.refresh();
+                            } else {
+                                this.historyIndex = 0;
+                            }
+                        } else {
+                            this.history = {};
+                            this.historyIndex = null;
+                        }
+                    },
+                    index: (index) => (this.historyIndex = index),
+                    new: (selectedShape, isSnapshot = false) => {
+                        const historyByIndex =
+                            this.history?.[selectedShape.index] || [];
+
+                        if (this.historyIndex < historyByIndex.length - 1) {
+                            historyByIndex.splice(this.historyIndex + 1);
+                        }
+
+                        if (historyByIndex?.length && !isSnapshot) {
+                            historyByIndex[0] = selectedShape;
+                            return;
+                        }
+
+                        historyByIndex.push(selectedShape);
+                        this.history[selectedShape.index] = historyByIndex;
+                        this.historyIndex = historyByIndex.length - 1;
+                    },
+                },
+            },
         },
     };
 
+    #getSelectedShapeValue(selectedShape: KulMasonrySelectedShape) {
+        if (selectedShape.index !== undefined) {
+            const value =
+                selectedShape.shape.value ||
+                (selectedShape.shape as Partial<KulDataCell<'image'>>).kulValue;
+            return {
+                shape: selectedShape,
+                value: this.#stringify(value),
+            };
+        }
+    }
+
     #prepDetails(): VNode {
+        const jsx = this.#adapter.components.jsx;
         return (
             <div class="details-grid">
-                {this.#adapter.components.jsx.image(this.#adapter)}
-                {this.#adapter.components.jsx.tree(this.#adapter)}
+                {jsx.image(this.#adapter)}
+                <div class="details-grid__actions">
+                    {jsx.clearHistory(this.#adapter)}
+                    {jsx.undo(this.#adapter)}
+                    {jsx.redo(this.#adapter)}
+                    {jsx.save(this.#adapter)}
+                </div>
+                {jsx.tree(this.#adapter)}
                 <div class="details-grid__settings">
                     <slot name="settings"></slot>
                 </div>
@@ -223,7 +303,7 @@ export class KulImageviewer {
         return (
             <div class="navigation-grid">
                 {this.#adapter.components.jsx.textfield(this.#adapter)}
-                {this.#adapter.components.jsx.button(this.#adapter)}
+                {this.#adapter.components.jsx.load(this.#adapter)}
                 {this.#adapter.components.jsx.masonry(this.#adapter)}
             </div>
         );

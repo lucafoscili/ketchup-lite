@@ -240,7 +240,7 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
         },
         {
             description: 'Simple component for selecting a range of values.',
-            icon: 'straighten',
+            icon: 'linear_scale',
             id: 'Slider',
             value: 'Slider',
         },

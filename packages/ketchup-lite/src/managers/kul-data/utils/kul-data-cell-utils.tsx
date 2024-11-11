@@ -147,7 +147,13 @@ export const cellDecorateShapes = <
 export const cellExists = (node: KulDataNode) => {
     return !!(node && node.cells && Object.keys(node.cells).length);
 };
-export const cellGetShape = <T extends KulDataShapes>(cell: KulDataCell<T>) => {
+export const cellGetShape = <T extends KulDataShapes>(
+    cell: KulDataCell<T>,
+    deepCopy: boolean
+) => {
+    if (!deepCopy) {
+        return cell;
+    }
     const prefix = 'kul';
     const shapeProps: Partial<KulDataCell<T>> = {};
     for (const prop in cell) {
@@ -172,7 +178,7 @@ export const cellGetShape = <T extends KulDataShapes>(cell: KulDataCell<T>) => {
     }
     return shapeProps;
 };
-export const cellGetAllShapes = (dataset: KulDataDataset) => {
+export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
     if (!nodeExists(dataset)) {
         return;
     }
@@ -201,7 +207,7 @@ export const cellGetAllShapes = (dataset: KulDataDataset) => {
         for (const key in cells) {
             if (Object.prototype.hasOwnProperty.call(cells, key)) {
                 const cell = cells[key];
-                const extracted = cellGetShape(cell);
+                const extracted = cellGetShape(cell, deepCopy);
                 switch (cell.shape) {
                     case 'badge':
                         shapes.badge.push(extracted as KulDataCell<'badge'>);

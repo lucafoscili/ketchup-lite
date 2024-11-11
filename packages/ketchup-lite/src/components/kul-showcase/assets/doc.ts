@@ -1605,6 +1605,15 @@ export const KUL_DOC: KulShowcaseDoc = {
   "kul-imageviewer": {
     methods: [
       {
+        name: "addSnapshot",
+        docs: "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value: string) => Promise<void>",
+      },
+      {
         name: "getDebugInfo",
         docs: "Fetches debug information of the component's current state.",
         returns: {
@@ -1962,6 +1971,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "Selected shape.",
         },
         signature: "() => Promise<KulMasonrySelectedShape>",
+      },
+      {
+        name: "redecorateShapes",
+        docs: "Redecorates the shapes, updating potential new values.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
       },
       {
         name: "refresh",
