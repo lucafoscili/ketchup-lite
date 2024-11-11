@@ -62,6 +62,16 @@ Type: `Promise<KulMasonrySelectedShape>`
 
 Selected shape.
 
+### `redecorateShapes() => Promise<void>`
+
+Redecorates the shapes, updating potential new values.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `refresh() => Promise<void>`
 
 This method is used to trigger a new render of the component.
@@ -138,6 +148,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-imageviewer](../kul-imageviewer)
  - [kul-showcase-masonry](../kul-showcase/components/masonry)
 
 ### Depends on
@@ -153,6 +164,7 @@ graph TD;
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-imageviewer --> kul-masonry
   kul-showcase-masonry --> kul-masonry
   style kul-masonry fill:#f9f,stroke:#333,stroke-width:4px
 ```

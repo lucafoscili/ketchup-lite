@@ -193,6 +193,12 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             value: 'Image',
         },
         {
+            description: 'A layout designed to display images.',
+            icon: 'folder-image',
+            id: 'Imageviewer',
+            value: 'Image viewer',
+        },
+        {
             description:
                 'Displays a placeholder until content is ready or enters viewport.',
             icon: 'flip_to_back',
@@ -234,7 +240,7 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
         },
         {
             description: 'Simple component for selecting a range of values.',
-            icon: 'straighten',
+            icon: 'linear_scale',
             id: 'Slider',
             value: 'Slider',
         },

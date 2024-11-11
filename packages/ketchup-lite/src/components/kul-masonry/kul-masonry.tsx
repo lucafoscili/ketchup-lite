@@ -222,6 +222,13 @@ export class KulMasonry {
         return this.selectedShape;
     }
     /**
+     * Redecorates the shapes, updating potential new values.
+     */
+    @Method()
+    async redecorateShapes(): Promise<void> {
+        this.updateShapes();
+    }
+    /**
      * This method is used to trigger a new render of the component.
      */
     @Method()
@@ -241,12 +248,13 @@ export class KulMasonry {
             };
             this.selectedShape = newState;
         } else {
+            this.selectedShape = {};
             this.#kulManager.debug.logs.new(
                 this,
-                `Couldn't fix shape with index: ${index}`,
-                'warning'
+                `Couldn't set shape with index: ${index}`
             );
         }
+        this.updateShapes();
     }
     /**
      * Initiates the unmount sequence, which removes the component from the DOM after a delay.

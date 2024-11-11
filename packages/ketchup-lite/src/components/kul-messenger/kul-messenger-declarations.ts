@@ -9,9 +9,7 @@ import {
 } from '../kul-chat/kul-chat-declarations';
 import { KulMessenger } from './kul-messenger';
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
+//#region Adapter
 export interface KulMessengerAdapter {
     actions: KulMessengerAdapterActions;
     components: KulMessengerAdapterComponents;
@@ -146,9 +144,8 @@ export interface KulMessengerAdapterSetMessenger {
         panel: (panel: KulMessengerPanelsValue, value?: boolean) => boolean;
     };
 }
-/*-------------------------------------------------*/
-/*           C h a r a c t e r   N o d e           */
-/*-------------------------------------------------*/
+//#endregion
+//#region Character node
 export interface KulMessengerDataset extends KulDataDataset {
     nodes?: KulMessengerCharacterNode[];
 }
@@ -166,9 +163,8 @@ export interface KulMessengerCharacterNode extends KulDataNode {
     id: KulMessengerCharacterId;
     value: string;
 }
-/*-------------------------------------------------*/
-/*               R o o t   N o d e s               */
-/*-------------------------------------------------*/
+//#endregion
+//#region Root nodes
 export interface KulMessengerBaseRootNode<T extends KulMessengerTypes>
     extends KulDataNode {
     id: T;
@@ -235,9 +231,8 @@ export interface KulMessengerTimeframeRootNode
     > {
     id: KulMessengerImageRootIds<'timeframes'>;
 }
-/*-------------------------------------------------*/
-/*           C h i l d r e n   N o d e s           */
-/*-------------------------------------------------*/
+//#endregion
+//#region Children nodes
 export interface KulMessengerBaseChildNode<T extends KulMessengerUnionChildIds>
     extends KulDataNode {
     cells: { kulImage: { shape: 'image'; value: string } };
@@ -285,9 +280,8 @@ export interface KulMessengerTimeframeNode
     extends KulMessengerBaseChildNode<KulMessengerTimeframeId> {
     id: KulMessengerChildIds<KulMessengerTimeframeId>;
 }
-/*-------------------------------------------------*/
-/*                   S t a t e s                   */
-/*-------------------------------------------------*/
+//#endregion
+//#region States
 export interface KulMessengerChat {
     [index: KulMessengerCharacterId]: KulChatPropsInterface;
 }
@@ -330,17 +324,15 @@ export interface KulMessengerUI {
     panels: KulMessengerPanels;
 }
 export type KulMessengerPanelsValue = 'left' | 'right';
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+//#region Events
 export type KulMessengerEvent = 'ready' | 'save' | 'unmount';
 export interface KulMessengerEventPayload
     extends KulEventPayload<'KulMessenger', KulMessengerEvent> {
     config: KulMessengerConfig;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+//#region Props
 export enum KulMessengerProps {
     kulAutosave = 'Automatically saves the dataset when a chat updates.',
     kulData = 'The actual data of the component.',
@@ -353,3 +345,4 @@ export interface KulMessengerPropsInterface {
     kulStyle?: string;
     kulValue?: KulMessengerConfig;
 }
+//#endregion

@@ -23,9 +23,10 @@ import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations
 import { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 import { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
+import { KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
+import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -57,9 +58,10 @@ export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations
 export { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 export { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
+export { KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
+export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
-export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
@@ -837,6 +839,52 @@ export namespace Components {
          */
         "unmount": (ms?: number) => Promise<void>;
     }
+    interface KulImageviewer {
+        /**
+          * Appends a new snapshot to the current shape's history by duplicating it with an updated value. It has no effect when the current shape is not set.
+         */
+        "addSnapshot": (value: string) => Promise<void>;
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
+        /**
+          * Used to retrieve component's properties and descriptions.
+          * @param descriptions - When true, includes descriptions for each property.
+          * @returns Promise resolved with an object containing the component's properties.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Actual data of the image viewer.
+          * @default {}
+         */
+        "kulData": KulDataDataset;
+        /**
+          * Callback invoked when the load button is clicked.
+          * @default null
+         */
+        "kulLoadCallback": KulImageviewerLoadCallback;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * Configuration parameters of the detail view.
+          * @default {}
+         */
+        "kulValue": KulDataDataset;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
+    }
     interface KulLazy {
         /**
           * Returns the HTMLElement of the component to lazy load.
@@ -1011,6 +1059,10 @@ export namespace Components {
           * @default null
          */
         "kulView": KulMasonryView;
+        /**
+          * Redecorates the shapes, updating potential new values.
+         */
+        "redecorateShapes": () => Promise<void>;
         /**
           * This method is used to trigger a new render of the component.
          */
@@ -1201,6 +1253,8 @@ export namespace Components {
     interface KulShowcaseHeader {
     }
     interface KulShowcaseImage {
+    }
+    interface KulShowcaseImageviewer {
     }
     interface KulShowcaseKuldata {
     }
@@ -1900,6 +1954,10 @@ export interface KulImageCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulImageElement;
 }
+export interface KulImageviewerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulImageviewerElement;
+}
 export interface KulLazyCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulLazyElement;
@@ -2203,6 +2261,23 @@ declare global {
         prototype: HTMLKulImageElement;
         new (): HTMLKulImageElement;
     };
+    interface HTMLKulImageviewerElementEventMap {
+        "kul-imageviewer-event": KulImageviewerEventPayload;
+    }
+    interface HTMLKulImageviewerElement extends Components.KulImageviewer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulImageviewerElementEventMap>(type: K, listener: (this: HTMLKulImageviewerElement, ev: KulImageviewerCustomEvent<HTMLKulImageviewerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulImageviewerElementEventMap>(type: K, listener: (this: HTMLKulImageviewerElement, ev: KulImageviewerCustomEvent<HTMLKulImageviewerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulImageviewerElement: {
+        prototype: HTMLKulImageviewerElement;
+        new (): HTMLKulImageviewerElement;
+    };
     interface HTMLKulLazyElementEventMap {
         "kul-lazy-event": KulLazyEventPayload;
     }
@@ -2400,6 +2475,12 @@ declare global {
     var HTMLKulShowcaseImageElement: {
         prototype: HTMLKulShowcaseImageElement;
         new (): HTMLKulShowcaseImageElement;
+    };
+    interface HTMLKulShowcaseImageviewerElement extends Components.KulShowcaseImageviewer, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseImageviewerElement: {
+        prototype: HTMLKulShowcaseImageviewerElement;
+        new (): HTMLKulShowcaseImageviewerElement;
     };
     interface HTMLKulShowcaseKuldataElement extends Components.KulShowcaseKuldata, HTMLStencilElement {
     }
@@ -2736,6 +2817,7 @@ declare global {
         "kul-drawer": HTMLKulDrawerElement;
         "kul-header": HTMLKulHeaderElement;
         "kul-image": HTMLKulImageElement;
+        "kul-imageviewer": HTMLKulImageviewerElement;
         "kul-lazy": HTMLKulLazyElement;
         "kul-list": HTMLKulListElement;
         "kul-masonry": HTMLKulMasonryElement;
@@ -2758,6 +2840,7 @@ declare global {
         "kul-showcase-drawer": HTMLKulShowcaseDrawerElement;
         "kul-showcase-header": HTMLKulShowcaseHeaderElement;
         "kul-showcase-image": HTMLKulShowcaseImageElement;
+        "kul-showcase-imageviewer": HTMLKulShowcaseImageviewerElement;
         "kul-showcase-kuldata": HTMLKulShowcaseKuldataElement;
         "kul-showcase-kuldates": HTMLKulShowcaseKuldatesElement;
         "kul-showcase-kuldebug": HTMLKulShowcaseKuldebugElement;
@@ -3251,6 +3334,32 @@ declare namespace LocalJSX {
          */
         "onKul-image-event"?: (event: KulImageCustomEvent<KulImageEventPayload>) => void;
     }
+    interface KulImageviewer {
+        /**
+          * Actual data of the image viewer.
+          * @default {}
+         */
+        "kulData"?: KulDataDataset;
+        /**
+          * Callback invoked when the load button is clicked.
+          * @default null
+         */
+        "kulLoadCallback"?: KulImageviewerLoadCallback;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Configuration parameters of the detail view.
+          * @default {}
+         */
+        "kulValue"?: KulDataDataset;
+        /**
+          * Describes event emitted.
+         */
+        "onKul-imageviewer-event"?: (event: KulImageviewerCustomEvent<KulImageviewerEventPayload>) => void;
+    }
     interface KulLazy {
         /**
           * Sets the tag name of the component to be lazy loaded.
@@ -3483,6 +3592,8 @@ declare namespace LocalJSX {
     interface KulShowcaseHeader {
     }
     interface KulShowcaseImage {
+    }
+    interface KulShowcaseImageviewer {
     }
     interface KulShowcaseKuldata {
     }
@@ -3921,6 +4032,7 @@ declare namespace LocalJSX {
         "kul-drawer": KulDrawer;
         "kul-header": KulHeader;
         "kul-image": KulImage;
+        "kul-imageviewer": KulImageviewer;
         "kul-lazy": KulLazy;
         "kul-list": KulList;
         "kul-masonry": KulMasonry;
@@ -3943,6 +4055,7 @@ declare namespace LocalJSX {
         "kul-showcase-drawer": KulShowcaseDrawer;
         "kul-showcase-header": KulShowcaseHeader;
         "kul-showcase-image": KulShowcaseImage;
+        "kul-showcase-imageviewer": KulShowcaseImageviewer;
         "kul-showcase-kuldata": KulShowcaseKuldata;
         "kul-showcase-kuldates": KulShowcaseKuldates;
         "kul-showcase-kuldebug": KulShowcaseKuldebug;
@@ -3998,6 +4111,7 @@ declare module "@stencil/core" {
             "kul-drawer": LocalJSX.KulDrawer & JSXBase.HTMLAttributes<HTMLKulDrawerElement>;
             "kul-header": LocalJSX.KulHeader & JSXBase.HTMLAttributes<HTMLKulHeaderElement>;
             "kul-image": LocalJSX.KulImage & JSXBase.HTMLAttributes<HTMLKulImageElement>;
+            "kul-imageviewer": LocalJSX.KulImageviewer & JSXBase.HTMLAttributes<HTMLKulImageviewerElement>;
             "kul-lazy": LocalJSX.KulLazy & JSXBase.HTMLAttributes<HTMLKulLazyElement>;
             "kul-list": LocalJSX.KulList & JSXBase.HTMLAttributes<HTMLKulListElement>;
             "kul-masonry": LocalJSX.KulMasonry & JSXBase.HTMLAttributes<HTMLKulMasonryElement>;
@@ -4020,6 +4134,7 @@ declare module "@stencil/core" {
             "kul-showcase-drawer": LocalJSX.KulShowcaseDrawer & JSXBase.HTMLAttributes<HTMLKulShowcaseDrawerElement>;
             "kul-showcase-header": LocalJSX.KulShowcaseHeader & JSXBase.HTMLAttributes<HTMLKulShowcaseHeaderElement>;
             "kul-showcase-image": LocalJSX.KulShowcaseImage & JSXBase.HTMLAttributes<HTMLKulShowcaseImageElement>;
+            "kul-showcase-imageviewer": LocalJSX.KulShowcaseImageviewer & JSXBase.HTMLAttributes<HTMLKulShowcaseImageviewerElement>;
             "kul-showcase-kuldata": LocalJSX.KulShowcaseKuldata & JSXBase.HTMLAttributes<HTMLKulShowcaseKuldataElement>;
             "kul-showcase-kuldates": LocalJSX.KulShowcaseKuldates & JSXBase.HTMLAttributes<HTMLKulShowcaseKuldatesElement>;
             "kul-showcase-kuldebug": LocalJSX.KulShowcaseKuldebug & JSXBase.HTMLAttributes<HTMLKulShowcaseKuldebugElement>;

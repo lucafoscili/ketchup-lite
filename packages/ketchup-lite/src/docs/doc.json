@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-10T16:13:02",
+  "timestamp": "2024-11-11T19:20:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -778,6 +778,7 @@
         "kul-showcase-drawer",
         "kul-showcase-header",
         "kul-showcase-image",
+        "kul-showcase-imageviewer",
         "kul-showcase-kuldata",
         "kul-showcase-kuldates",
         "kul-showcase-kuldebug",
@@ -852,6 +853,9 @@
           "kul-article"
         ],
         "kul-showcase-image": [
+          "kul-article"
+        ],
+        "kul-showcase-imageviewer": [
           "kul-article"
         ],
         "kul-showcase-kuldata": [
@@ -1992,6 +1996,7 @@
         "kul-chat",
         "kul-code",
         "kul-compare",
+        "kul-imageviewer",
         "kul-masonry",
         "kul-messenger",
         "kul-showcase",
@@ -2025,6 +2030,9 @@
           "kul-button"
         ],
         "kul-compare": [
+          "kul-button"
+        ],
+        "kul-imageviewer": [
           "kul-button"
         ],
         "kul-masonry": [
@@ -6432,6 +6440,7 @@
         "kul-badge",
         "kul-button",
         "kul-chat",
+        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-image",
         "kul-tabbar",
@@ -6456,6 +6465,9 @@
         "kul-chat": [
           "kul-image"
         ],
+        "kul-imageviewer": [
+          "kul-image"
+        ],
         "kul-messenger": [
           "kul-image"
         ],
@@ -6470,6 +6482,670 @@
         ],
         "kul-upload": [
           "kul-image"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-imageviewer",
+      "readme": "# kul-imageviewer\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulData",
+          "type": "KulDataDataset",
+          "complexType": {
+            "original": "KulDataDataset",
+            "resolved": "KulDataDataset",
+            "references": {
+              "KulDataDataset": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Actual data of the image viewer.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
+          "default": "{}",
+          "values": [
+            {
+              "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLoadCallback",
+          "type": "(imageviewer: KulImageviewer, dir: string) => Promise<void>",
+          "complexType": {
+            "original": "KulImageviewerLoadCallback",
+            "resolved": "(imageviewer: KulImageviewer, dir: string) => Promise<void>",
+            "references": {
+              "KulImageviewerLoadCallback": {
+                "location": "import",
+                "path": "./kul-imageviewer-declarations",
+                "id": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerLoadCallback"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Callback invoked when the load button is clicked.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "(imageviewer: KulImageviewer, dir: string) => Promise<void>"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": false,
+          "docs": "Custom style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulValue",
+          "type": "KulDataDataset",
+          "complexType": {
+            "original": "KulDataDataset",
+            "resolved": "KulDataDataset",
+            "references": {
+              "KulDataDataset": {
+                "location": "import",
+                "path": "../../managers/kul-data/kul-data-declarations",
+                "id": "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "Configuration parameters of the detail view.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "{}"
+            }
+          ],
+          "default": "{}",
+          "values": [
+            {
+              "type": "KulDataDataset"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "addSnapshot",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value: string) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "string",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulMasonrySelectedShape": {
+                "location": "import",
+                "path": "../kul-masonry/kul-masonry-declarations",
+                "id": "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonrySelectedShape"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "addSnapshot(value: string) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "string",
+              "docs": ""
+            }
+          ],
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+          "docsTags": []
+        },
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "Promise resolved with an object containing the component's properties."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When true, includes descriptions for each property."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When true, includes descriptions for each property."
+            }
+          ],
+          "docs": "Used to retrieve component's properties and descriptions.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When true, includes descriptions for each property."
+            },
+            {
+              "name": "returns",
+              "text": "Promise resolved with an object containing the component's properties."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-imageviewer-event",
+          "detail": "KulImageviewerEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulImageviewerEventPayload",
+            "resolved": "KulImageviewerEventPayload",
+            "references": {
+              "KulImageviewerEventPayload": {
+                "location": "import",
+                "path": "./kul-imageviewer-declarations",
+                "id": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-imageviewer-component-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the #kul-component element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-component-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the #kul-component element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-border-bottom-color",
+          "annotation": "prop",
+          "docs": "Sets the bottom border color of .details-grid__actions. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-border-bottom-style",
+          "annotation": "prop",
+          "docs": "Sets the bottom border style of .details-grid__actions. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-border-bottom-width",
+          "annotation": "prop",
+          "docs": "Sets the bottom border width of .details-grid__actions. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid__actions. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .details-grid__actions. Defaults to flex."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__actions. Defaults to actions."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-border-left-color",
+          "annotation": "prop",
+          "docs": "Sets the left border color of .details-grid. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-border-left-style",
+          "annotation": "prop",
+          "docs": "Sets the left border style of .details-grid. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-border-left-width",
+          "annotation": "prop",
+          "docs": "Sets the left border width of .details-grid. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .details-grid. Defaults to none."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .details-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-border-bottom-color",
+          "annotation": "prop",
+          "docs": "Sets the bottom border color of .details-grid__image. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-border-bottom-style",
+          "annotation": "prop",
+          "docs": "Sets the bottom border style of .details-grid__image. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-border-bottom-width",
+          "annotation": "prop",
+          "docs": "Sets the bottom border width of .details-grid__image. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid__image. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__image. Defaults to image."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-align-items",
+          "annotation": "prop",
+          "docs": "Sets the align-items of .details-grid__settings. Defaults to center."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .details-grid__settings. Defaults to grid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__settings. Defaults to settings."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .details-grid__settings. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-justify-content",
+          "annotation": "prop",
+          "docs": "Sets the justify-content of .details-grid__settings. Defaults to center."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .details-grid__settings. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-template-areas",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-areas of .details-grid. Defaults to 'image image' 'actions actions' 'tree settings'."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-template-columns",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-columns of .details-grid. Defaults to 40% 1fr."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-template-rows",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-rows of .details-grid. Defaults to 60% auto 1fr."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-border-right-color",
+          "annotation": "prop",
+          "docs": "Sets the right border color of .details-grid__tree. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-border-right-style",
+          "annotation": "prop",
+          "docs": "Sets the right border style of .details-grid__tree. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-border-right-width",
+          "annotation": "prop",
+          "docs": "Sets the right border width of .details-grid__tree. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid__tree. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__tree. Defaults to tree."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .details-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of the host element. Defaults to block."
+        },
+        {
+          "name": "--kul-imageviewer-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the host element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-border-color",
+          "annotation": "prop",
+          "docs": "Sets the border color of .main-grid. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-border-style",
+          "annotation": "prop",
+          "docs": "Sets the border style of .main-grid. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-border-width",
+          "annotation": "prop",
+          "docs": "Sets the border width of .main-grid. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .main-grid. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .main-grid. Defaults to grid."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-has-selection-template-columns",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-columns when .main-grid has selection. Defaults to 30% 70%."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .main-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-template-columns",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-columns of .main-grid. Defaults to 100% 0."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .main-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-button-padding-bottom",
+          "annotation": "prop",
+          "docs": "Sets the bottom padding of .navigation-grid__button. Defaults to 12px."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .navigation-grid. Defaults to grid."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .navigation-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-masonry-overflow",
+          "annotation": "prop",
+          "docs": "Sets the overflow of .navigation-grid__masonry. Defaults to auto."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-masonry-position",
+          "annotation": "prop",
+          "docs": "Sets the position of .navigation-grid__masonry. Defaults to relative."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-template-rows",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-rows of .navigation-grid. Defaults to auto auto 1fr."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-textfield-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of .navigation-grid__textfield. Defaults to 0."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .navigation-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-viewer-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the .imageviewer element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-viewer-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the .imageviewer element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the host element. Defaults to 100%."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-imageviewer"
+      ],
+      "dependencies": [
+        "kul-button",
+        "kul-spinner",
+        "kul-image",
+        "kul-masonry",
+        "kul-textfield",
+        "kul-tree"
+      ],
+      "dependencyGraph": {
+        "kul-imageviewer": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-masonry",
+          "kul-textfield",
+          "kul-tree"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ],
+        "kul-showcase-imageviewer": [
+          "kul-imageviewer"
         ]
       }
     },
@@ -7804,6 +8480,28 @@
           ]
         },
         {
+          "name": "redecorateShapes",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "redecorateShapes() => Promise<void>",
+          "parameters": [],
+          "docs": "Redecorates the shapes, updating potential new values.",
+          "docsTags": []
+        },
+        {
           "name": "refresh",
           "returns": {
             "type": "Promise<void>",
@@ -8047,6 +8745,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-imageviewer",
         "kul-showcase-masonry"
       ],
       "dependencies": [
@@ -8066,6 +8765,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-imageviewer": [
+          "kul-masonry"
         ],
         "kul-showcase-masonry": [
           "kul-masonry"
@@ -10100,6 +10802,79 @@
         ],
         "kul-badge": [
           "kul-image"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/components/imageviewer/kul-showcase-imageviewer.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-imageviewer",
+      "readme": "# kul-showcase-accordion\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-imageviewer",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-imageviewer": [
+          "kul-imageviewer",
+          "kul-article"
+        ],
+        "kul-imageviewer": [
+          "kul-button",
+          "kul-spinner",
+          "kul-image",
+          "kul-masonry",
+          "kul-textfield",
+          "kul-tree"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-tree": [
+          "kul-textfield"
         ]
       }
     },
@@ -12280,6 +13055,7 @@
       "dependents": [
         "kul-chat",
         "kul-image",
+        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-button",
         "kul-showcase-spinner",
@@ -12291,6 +13067,9 @@
           "kul-spinner"
         ],
         "kul-image": [
+          "kul-spinner"
+        ],
+        "kul-imageviewer": [
           "kul-spinner"
         ],
         "kul-messenger": [
@@ -14173,6 +14952,7 @@
       "parts": [],
       "dependents": [
         "kul-chat",
+        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-debug",
         "kul-showcase-textfield",
@@ -14181,6 +14961,9 @@
       "dependencies": [],
       "dependencyGraph": {
         "kul-chat": [
+          "kul-textfield"
+        ],
+        "kul-imageviewer": [
           "kul-textfield"
         ],
         "kul-messenger": [
@@ -15040,6 +15823,7 @@
       "parts": [],
       "dependents": [
         "kul-compare",
+        "kul-imageviewer",
         "kul-showcase-tree"
       ],
       "dependencies": [
@@ -15050,6 +15834,9 @@
           "kul-textfield"
         ],
         "kul-compare": [
+          "kul-tree"
+        ],
+        "kul-imageviewer": [
           "kul-tree"
         ],
         "kul-showcase-tree": [
@@ -16163,6 +16950,16 @@
       "declaration": "export interface KulSliderEventPayload\n    extends KulEventPayload<'KulSlider', KulSliderEvent> {\n    value: number;\n}",
       "docstring": "",
       "path": "src/components/kul-slider/kul-slider-declarations.ts"
+    },
+    "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerLoadCallback": {
+      "declaration": "(\n    imageviewer: KulImageviewer,\n    dir: string\n) => Promise<void>",
+      "docstring": "",
+      "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
+    },
+    "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerEventPayload": {
+      "declaration": "export interface KulImageviewerEventPayload\n    extends KulEventPayload<'KulImageviewer', KulImageviewerEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     }
   }
 }

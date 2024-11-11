@@ -1602,6 +1602,303 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-imageviewer": {
+    methods: [
+      {
+        name: "addSnapshot",
+        docs: "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value: string) => Promise<void>",
+      },
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's properties and descriptions.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "Promise resolved with an object containing the component's properties.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulData",
+        docs: "Actual data of the image viewer.",
+        type: "KulDataDataset",
+      },
+      {
+        name: "kulLoadCallback",
+        docs: "Callback invoked when the load button is clicked.",
+        type: "(imageviewer: KulImageviewer, dir: string) => Promise<void>",
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "Configuration parameters of the detail view.",
+        type: "KulDataDataset",
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-imageviewer-component-height",
+        docs: "Sets the height of the #kul-component element. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-component-width",
+        docs: "Sets the width of the #kul-component element. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-actions-border-bottom-color",
+        docs: "Sets the bottom border color of .details-grid__actions. Defaults to var(--kul-border-color).",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-actions-border-bottom-style",
+        docs: "Sets the bottom border style of .details-grid__actions. Defaults to solid.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-actions-border-bottom-width",
+        docs: "Sets the bottom border width of .details-grid__actions. Defaults to 2px.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-actions-box-sizing",
+        docs: "Sets the box-sizing of .details-grid__actions. Defaults to border-box.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-actions-display",
+        docs: "Sets the display property of .details-grid__actions. Defaults to flex.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-actions-grid-area",
+        docs: "Sets the grid-area of .details-grid__actions. Defaults to actions.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-border-left-color",
+        docs: "Sets the left border color of .details-grid. Defaults to var(--kul-border-color).",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-border-left-style",
+        docs: "Sets the left border style of .details-grid. Defaults to solid.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-border-left-width",
+        docs: "Sets the left border width of .details-grid. Defaults to 2px.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-box-sizing",
+        docs: "Sets the box-sizing of .details-grid. Defaults to border-box.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-display",
+        docs: "Sets the display property of .details-grid. Defaults to none.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-height",
+        docs: "Sets the height of .details-grid. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-image-border-bottom-color",
+        docs: "Sets the bottom border color of .details-grid__image. Defaults to var(--kul-border-color).",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-image-border-bottom-style",
+        docs: "Sets the bottom border style of .details-grid__image. Defaults to solid.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-image-border-bottom-width",
+        docs: "Sets the bottom border width of .details-grid__image. Defaults to 2px.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-image-box-sizing",
+        docs: "Sets the box-sizing of .details-grid__image. Defaults to border-box.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-image-grid-area",
+        docs: "Sets the grid-area of .details-grid__image. Defaults to image.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-settings-align-items",
+        docs: "Sets the align-items of .details-grid__settings. Defaults to center.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-settings-display",
+        docs: "Sets the display property of .details-grid__settings. Defaults to grid.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-settings-grid-area",
+        docs: "Sets the grid-area of .details-grid__settings. Defaults to settings.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-settings-height",
+        docs: "Sets the height of .details-grid__settings. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-settings-justify-content",
+        docs: "Sets the justify-content of .details-grid__settings. Defaults to center.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-settings-width",
+        docs: "Sets the width of .details-grid__settings. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-template-areas",
+        docs: "Sets the grid-template-areas of .details-grid. Defaults to 'image image' 'actions actions' 'tree settings'.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-template-columns",
+        docs: "Sets the grid-template-columns of .details-grid. Defaults to 40% 1fr.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-template-rows",
+        docs: "Sets the grid-template-rows of .details-grid. Defaults to 60% auto 1fr.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-tree-border-right-color",
+        docs: "Sets the right border color of .details-grid__tree. Defaults to var(--kul-border-color).",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-tree-border-right-style",
+        docs: "Sets the right border style of .details-grid__tree. Defaults to solid.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-tree-border-right-width",
+        docs: "Sets the right border width of .details-grid__tree. Defaults to 2px.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-tree-box-sizing",
+        docs: "Sets the box-sizing of .details-grid__tree. Defaults to border-box.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-tree-grid-area",
+        docs: "Sets the grid-area of .details-grid__tree. Defaults to tree.",
+      },
+      {
+        name: "--kul-imageviewer-details-grid-width",
+        docs: "Sets the width of .details-grid. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-display",
+        docs: "Sets the display property of the host element. Defaults to block.",
+      },
+      {
+        name: "--kul-imageviewer-height",
+        docs: "Sets the height of the host element. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-border-color",
+        docs: "Sets the border color of .main-grid. Defaults to var(--kul-border-color).",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-border-style",
+        docs: "Sets the border style of .main-grid. Defaults to solid.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-border-width",
+        docs: "Sets the border width of .main-grid. Defaults to 2px.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-box-sizing",
+        docs: "Sets the box-sizing of .main-grid. Defaults to border-box.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-display",
+        docs: "Sets the display property of .main-grid. Defaults to grid.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-has-selection-template-columns",
+        docs: "Sets the grid-template-columns when .main-grid has selection. Defaults to 30% 70%.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-height",
+        docs: "Sets the height of .main-grid. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-template-columns",
+        docs: "Sets the grid-template-columns of .main-grid. Defaults to 100% 0.",
+      },
+      {
+        name: "--kul-imageviewer-main-grid-width",
+        docs: "Sets the width of .main-grid. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-button-padding-bottom",
+        docs: "Sets the bottom padding of .navigation-grid__button. Defaults to 12px.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-display",
+        docs: "Sets the display property of .navigation-grid. Defaults to grid.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-height",
+        docs: "Sets the height of .navigation-grid. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-masonry-overflow",
+        docs: "Sets the overflow of .navigation-grid__masonry. Defaults to auto.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-masonry-position",
+        docs: "Sets the position of .navigation-grid__masonry. Defaults to relative.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-template-rows",
+        docs: "Sets the grid-template-rows of .navigation-grid. Defaults to auto auto 1fr.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-textfield-padding",
+        docs: "Sets the padding of .navigation-grid__textfield. Defaults to 0.",
+      },
+      {
+        name: "--kul-imageviewer-navigation-grid-width",
+        docs: "Sets the width of .navigation-grid. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-viewer-height",
+        docs: "Sets the height of the .imageviewer element. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-viewer-width",
+        docs: "Sets the width of the .imageviewer element. Defaults to 100%.",
+      },
+      {
+        name: "--kul-imageviewer-width",
+        docs: "Sets the width of the host element. Defaults to 100%.",
+      },
+    ],
+  },
   "kul-lazy": {
     methods: [
       {
@@ -1899,6 +2196,15 @@ export const KUL_DOC: KulShowcaseDoc = {
           docs: "Selected shape.",
         },
         signature: "() => Promise<KulMasonrySelectedShape>",
+      },
+      {
+        name: "redecorateShapes",
+        docs: "Redecorates the shapes, updating potential new values.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
       },
       {
         name: "refresh",
@@ -2444,6 +2750,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-image": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-imageviewer": {
     methods: [],
     props: [],
     styles: [],

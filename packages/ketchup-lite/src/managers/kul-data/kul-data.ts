@@ -67,8 +67,10 @@ export class KulData {
                     defaultProps,
                     defaultCb
                 ),
-            get: (cell: KulDataCell<KulDataShapes>) => cellGetShape(cell),
-            getAll: (dataset: KulDataDataset) => cellGetAllShapes(dataset),
+            get: (cell: KulDataCell<KulDataShapes>, deepCopy = true) =>
+                cellGetShape(cell, deepCopy),
+            getAll: (dataset: KulDataDataset, deepCopy = true) =>
+                cellGetAllShapes(dataset, deepCopy),
         },
         stringify: (value: KulDataCell<KulDataShapes>['value']) =>
             cellStringify(value),
