@@ -35,6 +35,7 @@ describe('Events', () => {
         cy.checkEvent(imageviewer, eventType);
         cy.get('@eventElement')
             .findCyElement(KulDataCyAttributes.BUTTON)
+            .first()
             .click();
         cy.get('@eventElement')
             .findCyElement(KulDataCyAttributes.SHAPE)

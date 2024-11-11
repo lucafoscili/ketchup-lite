@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-11T18:59:09",
+  "timestamp": "2024-11-11T19:20:25",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -6823,7 +6823,288 @@
         }
       ],
       "listeners": [],
-      "styles": [],
+      "styles": [
+        {
+          "name": "--kul-imageviewer-component-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the #kul-component element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-component-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the #kul-component element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-border-bottom-color",
+          "annotation": "prop",
+          "docs": "Sets the bottom border color of .details-grid__actions. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-border-bottom-style",
+          "annotation": "prop",
+          "docs": "Sets the bottom border style of .details-grid__actions. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-border-bottom-width",
+          "annotation": "prop",
+          "docs": "Sets the bottom border width of .details-grid__actions. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid__actions. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .details-grid__actions. Defaults to flex."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-actions-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__actions. Defaults to actions."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-border-left-color",
+          "annotation": "prop",
+          "docs": "Sets the left border color of .details-grid. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-border-left-style",
+          "annotation": "prop",
+          "docs": "Sets the left border style of .details-grid. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-border-left-width",
+          "annotation": "prop",
+          "docs": "Sets the left border width of .details-grid. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .details-grid. Defaults to none."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .details-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-border-bottom-color",
+          "annotation": "prop",
+          "docs": "Sets the bottom border color of .details-grid__image. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-border-bottom-style",
+          "annotation": "prop",
+          "docs": "Sets the bottom border style of .details-grid__image. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-border-bottom-width",
+          "annotation": "prop",
+          "docs": "Sets the bottom border width of .details-grid__image. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid__image. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-image-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__image. Defaults to image."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-align-items",
+          "annotation": "prop",
+          "docs": "Sets the align-items of .details-grid__settings. Defaults to center."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .details-grid__settings. Defaults to grid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__settings. Defaults to settings."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .details-grid__settings. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-justify-content",
+          "annotation": "prop",
+          "docs": "Sets the justify-content of .details-grid__settings. Defaults to center."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-settings-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .details-grid__settings. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-template-areas",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-areas of .details-grid. Defaults to 'image image' 'actions actions' 'tree settings'."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-template-columns",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-columns of .details-grid. Defaults to 40% 1fr."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-template-rows",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-rows of .details-grid. Defaults to 60% auto 1fr."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-border-right-color",
+          "annotation": "prop",
+          "docs": "Sets the right border color of .details-grid__tree. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-border-right-style",
+          "annotation": "prop",
+          "docs": "Sets the right border style of .details-grid__tree. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-border-right-width",
+          "annotation": "prop",
+          "docs": "Sets the right border width of .details-grid__tree. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .details-grid__tree. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-tree-grid-area",
+          "annotation": "prop",
+          "docs": "Sets the grid-area of .details-grid__tree. Defaults to tree."
+        },
+        {
+          "name": "--kul-imageviewer-details-grid-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .details-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of the host element. Defaults to block."
+        },
+        {
+          "name": "--kul-imageviewer-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the host element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-border-color",
+          "annotation": "prop",
+          "docs": "Sets the border color of .main-grid. Defaults to var(--kul-border-color)."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-border-style",
+          "annotation": "prop",
+          "docs": "Sets the border style of .main-grid. Defaults to solid."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-border-width",
+          "annotation": "prop",
+          "docs": "Sets the border width of .main-grid. Defaults to 2px."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-box-sizing",
+          "annotation": "prop",
+          "docs": "Sets the box-sizing of .main-grid. Defaults to border-box."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .main-grid. Defaults to grid."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-has-selection-template-columns",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-columns when .main-grid has selection. Defaults to 30% 70%."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .main-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-template-columns",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-columns of .main-grid. Defaults to 100% 0."
+        },
+        {
+          "name": "--kul-imageviewer-main-grid-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .main-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-button-padding-bottom",
+          "annotation": "prop",
+          "docs": "Sets the bottom padding of .navigation-grid__button. Defaults to 12px."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-display",
+          "annotation": "prop",
+          "docs": "Sets the display property of .navigation-grid. Defaults to grid."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-height",
+          "annotation": "prop",
+          "docs": "Sets the height of .navigation-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-masonry-overflow",
+          "annotation": "prop",
+          "docs": "Sets the overflow of .navigation-grid__masonry. Defaults to auto."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-masonry-position",
+          "annotation": "prop",
+          "docs": "Sets the position of .navigation-grid__masonry. Defaults to relative."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-template-rows",
+          "annotation": "prop",
+          "docs": "Sets the grid-template-rows of .navigation-grid. Defaults to auto auto 1fr."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-textfield-padding",
+          "annotation": "prop",
+          "docs": "Sets the padding of .navigation-grid__textfield. Defaults to 0."
+        },
+        {
+          "name": "--kul-imageviewer-navigation-grid-width",
+          "annotation": "prop",
+          "docs": "Sets the width of .navigation-grid. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-viewer-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the .imageviewer element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-viewer-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the .imageviewer element. Defaults to 100%."
+        },
+        {
+          "name": "--kul-imageviewer-width",
+          "annotation": "prop",
+          "docs": "Sets the width of the host element. Defaults to 100%."
+        }
+      ],
       "slots": [],
       "parts": [],
       "dependents": [

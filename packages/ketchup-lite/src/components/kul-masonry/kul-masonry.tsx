@@ -251,8 +251,7 @@ export class KulMasonry {
             this.selectedShape = {};
             this.#kulManager.debug.logs.new(
                 this,
-                `Couldn't set shape with index: ${index}`,
-                'warning'
+                `Couldn't set shape with index: ${index}`
             );
         }
         this.updateShapes();
