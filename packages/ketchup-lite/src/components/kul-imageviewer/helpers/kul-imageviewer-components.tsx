@@ -246,7 +246,7 @@ const prepRedo = (adapter: KulImageviewerAdapter) => {
             onKul-button-event={eventHandler}
             ref={(el) => {
                 if (el) {
-                    adapter.components.refs.clearHistory = el;
+                    adapter.components.refs.redo = el;
                 }
             }}
         ></kul-button>
@@ -389,7 +389,7 @@ const prepUndo = (adapter: KulImageviewerAdapter) => {
             onKul-button-event={eventHandler}
             ref={(el) => {
                 if (el) {
-                    adapter.components.refs.clearHistory = el;
+                    adapter.components.refs.undo = el;
                 }
             }}
         ></kul-button>

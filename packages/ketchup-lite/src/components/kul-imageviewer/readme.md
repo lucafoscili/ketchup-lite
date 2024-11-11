@@ -41,6 +41,16 @@ Type: `Promise<void>`
 
 
 
+### `getComponents() => Promise<KulImageviewerAdapterRefs>`
+
+This method is used to retrieve the references to the subcomponents.
+
+#### Returns
+
+Type: `Promise<KulImageviewerAdapterRefs>`
+
+
+
 ### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.

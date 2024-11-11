@@ -22,6 +22,7 @@ import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulImageviewerAdapter,
+    KulImageviewerAdapterRefs,
     KulImageviewerEvent,
     KulImageviewerEventPayload,
     KulImageviewerHistory,
@@ -161,6 +162,13 @@ export class KulImageviewer {
     @Method()
     async getProps(descriptions?: boolean): Promise<GenericObject> {
         return getProps(this, KulImageviewerProps, descriptions);
+    }
+    /**
+     * This method is used to retrieve the references to the subcomponents.
+     */
+    @Method()
+    async getComponents(): Promise<KulImageviewerAdapterRefs> {
+        return this.#adapter.components.refs;
     }
     /**
      * This method is used to trigger a new render of the component.

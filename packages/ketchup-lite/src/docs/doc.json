@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-11T19:20:25",
+  "timestamp": "2024-11-11T21:12:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -6656,6 +6656,33 @@
             }
           ],
           "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+          "docsTags": []
+        },
+        {
+          "name": "getComponents",
+          "returns": {
+            "type": "Promise<KulImageviewerAdapterRefs>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<KulImageviewerAdapterRefs>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulImageviewerAdapterRefs": {
+                "location": "import",
+                "path": "./kul-imageviewer-declarations",
+                "id": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerAdapterRefs"
+              }
+            },
+            "return": "Promise<KulImageviewerAdapterRefs>"
+          },
+          "signature": "getComponents() => Promise<KulImageviewerAdapterRefs>",
+          "parameters": [],
+          "docs": "This method is used to retrieve the references to the subcomponents.",
           "docsTags": []
         },
         {
@@ -16958,6 +16985,11 @@
     },
     "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerEventPayload": {
       "declaration": "export interface KulImageviewerEventPayload\n    extends KulEventPayload<'KulImageviewer', KulImageviewerEvent> {}",
+      "docstring": "",
+      "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
+    },
+    "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerAdapterRefs": {
+      "declaration": "export interface KulImageviewerAdapterRefs {\n    clearHistory: HTMLKulButtonElement;\n    image: HTMLKulImageElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
       "docstring": "",
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     }

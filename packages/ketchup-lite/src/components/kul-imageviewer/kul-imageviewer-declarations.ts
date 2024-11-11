@@ -31,28 +31,30 @@ export interface KulImageviewerAdapterActions {
     ) => void;
 }
 export interface KulImageviewerAdapterComponents {
-    jsx: {
-        clearHistory: (adapter: KulImageviewerAdapter) => VNode;
-        load: (adapter: KulImageviewerAdapter) => VNode;
-        image: (adapter: KulImageviewerAdapter) => VNode;
-        masonry: (adapter: KulImageviewerAdapter) => VNode;
-        redo: (adapter: KulImageviewerAdapter) => VNode;
-        save: (adapter: KulImageviewerAdapter) => VNode;
-        textfield: (adapter: KulImageviewerAdapter) => VNode;
-        tree: (adapter: KulImageviewerAdapter) => VNode;
-        undo: (adapter: KulImageviewerAdapter) => VNode;
-    };
-    refs: {
-        clearHistory: HTMLKulButtonElement;
-        image: HTMLKulImageElement;
-        load: HTMLKulButtonElement;
-        masonry: HTMLKulMasonryElement;
-        redo: HTMLKulButtonElement;
-        save: HTMLKulButtonElement;
-        textfield: HTMLKulTextfieldElement;
-        tree: HTMLKulTreeElement;
-        undo: HTMLKulButtonElement;
-    };
+    jsx: KulImageviewerAdapterJsx;
+    refs: KulImageviewerAdapterRefs;
+}
+export interface KulImageviewerAdapterJsx {
+    clearHistory: (adapter: KulImageviewerAdapter) => VNode;
+    image: (adapter: KulImageviewerAdapter) => VNode;
+    load: (adapter: KulImageviewerAdapter) => VNode;
+    masonry: (adapter: KulImageviewerAdapter) => VNode;
+    redo: (adapter: KulImageviewerAdapter) => VNode;
+    save: (adapter: KulImageviewerAdapter) => VNode;
+    textfield: (adapter: KulImageviewerAdapter) => VNode;
+    tree: (adapter: KulImageviewerAdapter) => VNode;
+    undo: (adapter: KulImageviewerAdapter) => VNode;
+}
+export interface KulImageviewerAdapterRefs {
+    clearHistory: HTMLKulButtonElement;
+    image: HTMLKulImageElement;
+    load: HTMLKulButtonElement;
+    masonry: HTMLKulMasonryElement;
+    redo: HTMLKulButtonElement;
+    save: HTMLKulButtonElement;
+    textfield: HTMLKulTextfieldElement;
+    tree: HTMLKulTreeElement;
+    undo: HTMLKulButtonElement;
 }
 export interface KulImageviewerAdapterGetters {
     imageviewer: () => KulImageviewer;

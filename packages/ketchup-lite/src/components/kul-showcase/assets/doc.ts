@@ -1614,6 +1614,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "(value: string) => Promise<void>",
       },
       {
+        name: "getComponents",
+        docs: "This method is used to retrieve the references to the subcomponents.",
+        returns: {
+          type: "Promise<KulImageviewerAdapterRefs>",
+          docs: "",
+        },
+        signature: "() => Promise<KulImageviewerAdapterRefs>",
+      },
+      {
         name: "getDebugInfo",
         docs: "Fetches debug information of the component's current state.",
         returns: {
