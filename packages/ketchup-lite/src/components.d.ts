@@ -23,7 +23,7 @@ import { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations
 import { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 import { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 import { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
-import { KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
+import { KulImageviewerAdapterRefs, KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
 import { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 import { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 import { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
@@ -58,7 +58,7 @@ export { KulCodeEventPayload } from "./components/kul-code/kul-code-declarations
 export { KulCompareEventPayload, KulCompareView } from "./components/kul-compare/kul-compare-declarations";
 export { KulDrawerEventPayload } from "./components/kul-drawer/kul-drawer-declarations";
 export { KulHeaderEventPayload } from "./components/kul-header/kul-header-declarations";
-export { KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
+export { KulImageviewerAdapterRefs, KulImageviewerEventPayload, KulImageviewerLoadCallback } from "./components/kul-imageviewer/kul-imageviewer-declarations";
 export { KulMasonryEventPayload, KulMasonrySelectedShape, KulMasonryView } from "./components/kul-masonry/kul-masonry-declarations";
 export { KulLazyEventPayload, KulLazyRenderMode } from "./components/kul-lazy/kul-lazy-declarations";
 export { KulListEventPayload } from "./components/kul-list/kul-list-declarations";
@@ -844,6 +844,10 @@ export namespace Components {
           * Appends a new snapshot to the current shape's history by duplicating it with an updated value. It has no effect when the current shape is not set.
          */
         "addSnapshot": (value: string) => Promise<void>;
+        /**
+          * This method is used to retrieve the references to the subcomponents.
+         */
+        "getComponents": () => Promise<KulImageviewerAdapterRefs>;
         /**
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.

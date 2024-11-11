@@ -466,6 +466,7 @@
     display: var(--kul_imageviewer_main_grid_display);
     grid-template-columns: var(--kul_imageviewer_main_grid_template_columns);
     height: var(--kul_imageviewer_main_grid_height);
+    overflow: auto;
     width: var(--kul_imageviewer_main_grid_width);
   }
 
@@ -487,6 +488,7 @@
     display: var(--kul_imageviewer_navigation_grid_display);
     grid-template-rows: var(--kul_imageviewer_navigation_grid_template_rows);
     height: var(--kul_imageviewer_navigation_grid_height);
+    overflow: auto;
     width: var(--kul_imageviewer_navigation_grid_width);
   }
 
@@ -545,6 +547,7 @@
       var(--kul_imageviewer_details_grid_tree_border_right_color);
     box-sizing: var(--kul_imageviewer_details_grid_tree_box_sizing);
     grid-area: var(--kul_imageviewer_details_grid_tree_grid_area);
+    overflow: auto;
   }
 
   &__settings {
