@@ -46,7 +46,7 @@ jobs:
             - name: Start Stencil Development Server
               run: |
                   cd packages/ketchup-lite
-                  yarn dev &
+                  yarn stencil dev &
                   n=0
                   until [ $n -ge 10 ]
                   do
