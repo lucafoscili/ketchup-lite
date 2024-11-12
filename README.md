@@ -1,19 +1,19 @@
 <!-- markdownlint-disable MD033 -->
 # Ketchup Lite
 
-<div style="display:flex; justify-content: center; width: 100%;">
+<div align="center">
 
    ![Components](https://img.shields.io/badge/dynamic/json?logo=stencil&logoColor=black&labelColor=white&color=black&label=Components&query=components&url=https://raw.githubusercontent.com/lucafoscili/ketchup-lite/main/count.json) ![npm Package](https://img.shields.io/npm/v/ketchup-lite.svg?logo=npm&logoColor=black&labelColor=white&color=black)
 
 </div>
 
-<div style="display:flex; justify-content: center; width: 100%;">
+<div align="center">
 
    ![Ketchup Lite Logo](https://github.com/lucafoscili/ketchup-lite/blob/375581f13119ec393256ac4162212936ecf29d3d/docs/images/Logo.png 'Ketchup Lite logo')
 
 </div>
 
-<div style="display:flex; justify-content: center; width: 100%;">
+<div align="center">
 
 ![GitHub top language](https://img.shields.io/github/languages/top/lucafoscili/ketchup-lite?logo=typescript&logoColor=black&labelColor=white&color=black) ![GitHub last commit](https://img.shields.io/github/last-commit/lucafoscili/ketchup-lite?logo=github&logoColor=black&labelColor=white&color=black) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lucafoscili/ketchup-lite/cypress-tests.yaml?logo=cypress&logoColor=black&labelColor=white&color=black)
 
@@ -51,7 +51,7 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
 - **Cross-Browser Compatible**: Works across all major browsers without additional polyfills.
 - **Framework Agnostic**: Use with React, Vue, Angular, or just plain JavaScript.
   
-<div style="text-align: right;">
+<div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
@@ -90,7 +90,7 @@ After installing, you can import and use Ketchup Lite components in your project
 
 Make sure to replace `./path/to/ketchup-lite/dist/index.js` with the correct path to the `index.js` file in your `node_modules/ketchup-lite` directory.
 
-<div style="text-align: right;">
+<div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
@@ -120,7 +120,7 @@ myButton.addEventListener('kul-button-event', (e) => {
 });
 ```
 
-<div style="text-align: right;">
+<div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
@@ -130,7 +130,7 @@ myButton.addEventListener('kul-button-event', (e) => {
 
 For detailed information about each component, including available properties, events, and methods, please refer to the [showcase](https://www.lucafoscili.com/ketchup-lite).
 
-<div style="text-align: right;">
+<div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
@@ -140,7 +140,7 @@ For detailed information about each component, including available properties, e
 
 I'm working on this project primarily for fun and for my portfolio website during my free time, but P.R. from other users that find this library useful are welcome!
 
-<div style="text-align: right;">
+<div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
@@ -150,7 +150,7 @@ I'm working on this project primarily for fun and for my portfolio website durin
 
 Ketchup Lite is open-source software licensed under the MIT license. See the LICENSE file for more details.
 
-<div style="text-align: right;">
+<div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
@@ -165,7 +165,7 @@ Special thanks to the following libraries and frameworks that make this project 
 - [Echarts](https://echarts.apache.org/) for providing data visualization components.
 - [Ketchup](https://github.com/smeup/ketchup) for the original project from which Ketchup Lite is derived.
 
-<div style="text-align: right;">
+<div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
