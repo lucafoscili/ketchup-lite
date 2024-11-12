@@ -51,6 +51,16 @@ Type: `Promise<KulImageviewerAdapterRefs>`
 
 
 
+### `getCurrentSnapshot() => Promise<{ shape: KulMasonrySelectedShape; value: string; }>`
+
+Fetches the current snapshot.
+
+#### Returns
+
+Type: `Promise<{ shape: KulMasonrySelectedShape; value: string; }>`
+
+A promise that resolves with the current snapshot's object.
+
 ### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.
@@ -127,12 +137,6 @@ Type: `Promise<void>`
 | `--kul-imageviewer-details-grid-image-border-bottom-width`   | Sets the bottom border width of .details-grid__image. Defaults to 2px.                                      |
 | `--kul-imageviewer-details-grid-image-box-sizing`            | Sets the box-sizing of .details-grid__image. Defaults to border-box.                                        |
 | `--kul-imageviewer-details-grid-image-grid-area`             | Sets the grid-area of .details-grid__image. Defaults to image.                                              |
-| `--kul-imageviewer-details-grid-settings-align-items`        | Sets the align-items of .details-grid__settings. Defaults to center.                                        |
-| `--kul-imageviewer-details-grid-settings-display`            | Sets the display property of .details-grid__settings. Defaults to grid.                                     |
-| `--kul-imageviewer-details-grid-settings-grid-area`          | Sets the grid-area of .details-grid__settings. Defaults to settings.                                        |
-| `--kul-imageviewer-details-grid-settings-height`             | Sets the height of .details-grid__settings. Defaults to 100%.                                               |
-| `--kul-imageviewer-details-grid-settings-justify-content`    | Sets the justify-content of .details-grid__settings. Defaults to center.                                    |
-| `--kul-imageviewer-details-grid-settings-width`              | Sets the width of .details-grid__settings. Defaults to 100%.                                                |
 | `--kul-imageviewer-details-grid-template-areas`              | Sets the grid-template-areas of .details-grid. Defaults to 'image image' 'actions actions' 'tree settings'. |
 | `--kul-imageviewer-details-grid-template-columns`            | Sets the grid-template-columns of .details-grid. Defaults to 40% 1fr.                                       |
 | `--kul-imageviewer-details-grid-template-rows`               | Sets the grid-template-rows of .details-grid. Defaults to 60% auto 1fr.                                     |

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-11T21:13:26",
+  "timestamp": "2024-11-12T18:56:31",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -269,7 +269,7 @@
               "Event": {
                 "location": "import",
                 "path": "@stencil/core",
-                "id": "node_modules::Event"
+                "id": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event"
               }
             },
             "return": "Promise<void>"
@@ -6489,7 +6489,7 @@
       "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-imageviewer",
-      "readme": "# kul-imageviewer\n\n\n",
+      "readme": "# kul-imageviewer\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6684,6 +6684,38 @@
           "parameters": [],
           "docs": "This method is used to retrieve the references to the subcomponents.",
           "docsTags": []
+        },
+        {
+          "name": "getCurrentSnapshot",
+          "returns": {
+            "type": "Promise<{ shape: KulMasonrySelectedShape; value: string; }>",
+            "docs": "A promise that resolves with the current snapshot's object."
+          },
+          "complexType": {
+            "signature": "() => Promise<{ shape: KulMasonrySelectedShape; value: string; }>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulMasonrySelectedShape": {
+                "location": "import",
+                "path": "../kul-masonry/kul-masonry-declarations",
+                "id": "src/components/kul-masonry/kul-masonry-declarations.ts::KulMasonrySelectedShape"
+              }
+            },
+            "return": "Promise<{ shape: KulMasonrySelectedShape; value: string; }>"
+          },
+          "signature": "getCurrentSnapshot() => Promise<{ shape: KulMasonrySelectedShape; value: string; }>",
+          "parameters": [],
+          "docs": "Fetches the current snapshot.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the current snapshot's object."
+            }
+          ]
         },
         {
           "name": "getDebugInfo",
@@ -6945,36 +6977,6 @@
           "name": "--kul-imageviewer-details-grid-image-grid-area",
           "annotation": "prop",
           "docs": "Sets the grid-area of .details-grid__image. Defaults to image."
-        },
-        {
-          "name": "--kul-imageviewer-details-grid-settings-align-items",
-          "annotation": "prop",
-          "docs": "Sets the align-items of .details-grid__settings. Defaults to center."
-        },
-        {
-          "name": "--kul-imageviewer-details-grid-settings-display",
-          "annotation": "prop",
-          "docs": "Sets the display property of .details-grid__settings. Defaults to grid."
-        },
-        {
-          "name": "--kul-imageviewer-details-grid-settings-grid-area",
-          "annotation": "prop",
-          "docs": "Sets the grid-area of .details-grid__settings. Defaults to settings."
-        },
-        {
-          "name": "--kul-imageviewer-details-grid-settings-height",
-          "annotation": "prop",
-          "docs": "Sets the height of .details-grid__settings. Defaults to 100%."
-        },
-        {
-          "name": "--kul-imageviewer-details-grid-settings-justify-content",
-          "annotation": "prop",
-          "docs": "Sets the justify-content of .details-grid__settings. Defaults to center."
-        },
-        {
-          "name": "--kul-imageviewer-details-grid-settings-width",
-          "annotation": "prop",
-          "docs": "Sets the width of .details-grid__settings. Defaults to 100%."
         },
         {
           "name": "--kul-imageviewer-details-grid-template-areas",
@@ -16812,6 +16814,11 @@
       "declaration": "export interface KulAccordionEventPayload\n    extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}",
       "docstring": "",
       "path": "src/components/kul-accordion/kul-accordion-declarations.ts"
+    },
+    "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts"
     },
     "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
       "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",

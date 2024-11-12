@@ -849,6 +849,11 @@ export namespace Components {
          */
         "getComponents": () => Promise<KulImageviewerAdapterRefs>;
         /**
+          * Fetches the current snapshot.
+          * @returns A promise that resolves with the current snapshot's object.
+         */
+        "getCurrentSnapshot": () => Promise<{ shape: KulMasonrySelectedShape; value: string; }>;
+        /**
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */

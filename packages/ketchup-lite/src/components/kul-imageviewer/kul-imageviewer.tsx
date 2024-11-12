@@ -147,6 +147,24 @@ export class KulImageviewer {
         this.#adapter.set.state.history.new(newShape, true);
     }
     /**
+     * This method is used to retrieve the references to the subcomponents.
+     */
+    @Method()
+    async getComponents(): Promise<KulImageviewerAdapterRefs> {
+        return this.#adapter.components.refs;
+    }
+    /**
+     * Fetches the current snapshot.
+     * @returns {Promise<{shape: KulMasonrySelectedShape; value: string;}>} A promise that resolves with the current snapshot's object.
+     */
+    @Method()
+    async getCurrentSnapshot(): Promise<{
+        shape: KulMasonrySelectedShape;
+        value: string;
+    }> {
+        return this.#adapter.get.state.history.currentSnapshot();
+    }
+    /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
@@ -162,13 +180,6 @@ export class KulImageviewer {
     @Method()
     async getProps(descriptions?: boolean): Promise<GenericObject> {
         return getProps(this, KulImageviewerProps, descriptions);
-    }
-    /**
-     * This method is used to retrieve the references to the subcomponents.
-     */
-    @Method()
-    async getComponents(): Promise<KulImageviewerAdapterRefs> {
-        return this.#adapter.components.refs;
     }
     /**
      * This method is used to trigger a new render of the component.

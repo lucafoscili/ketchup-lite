@@ -15,8 +15,8 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Clear npm cache
-              run: npm cache clean --force
+            - name: Clear Yarn cache
+              run: yarn cache clean
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
@@ -45,8 +45,7 @@ jobs:
 
             - name: Start Stencil Development Server
               run: |
-                  cd packages/ketchup-lite
-                  yarn dev &
+                  yarn workspace ketchup-lite run dev &
                   n=0
                   until [ $n -ge 10 ]
                   do
@@ -65,5 +64,4 @@ jobs:
 
             - name: Cypress Run
               run: |
-                  cd packages/ketchup-lite
-                  npx cypress run
+                  yarn workspace ketchup-lite run test
