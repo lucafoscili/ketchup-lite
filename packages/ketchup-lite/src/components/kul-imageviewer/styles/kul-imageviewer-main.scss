@@ -392,56 +392,6 @@
     tree
   );
 
-  /* Variables for .details-grid__settings */
-  /**
-     * @prop --kul-imageviewer-details-grid-settings-align-items: Sets the align-items of .details-grid__settings.
-     * Defaults to center.
-     */
-  --kul_imageviewer_details_grid_settings_align_items: var(
-    --kul-imageviewer-details-grid-settings-align-items,
-    center
-  );
-  /**
-     * @prop --kul-imageviewer-details-grid-settings-display: Sets the display property of .details-grid__settings.
-     * Defaults to grid.
-     */
-  --kul_imageviewer_details_grid_settings_display: var(
-    --kul-imageviewer-details-grid-settings-display,
-    grid
-  );
-  /**
-     * @prop --kul-imageviewer-details-grid-settings-grid-area: Sets the grid-area of .details-grid__settings.
-     * Defaults to settings.
-     */
-  --kul_imageviewer_details_grid_settings_grid_area: var(
-    --kul-imageviewer-details-grid-settings-grid-area,
-    settings
-  );
-  /**
-     * @prop --kul-imageviewer-details-grid-settings-height: Sets the height of .details-grid__settings.
-     * Defaults to 100%.
-     */
-  --kul_imageviewer_details_grid_settings_height: var(
-    --kul-imageviewer-details-grid-settings-height,
-    100%
-  );
-  /**
-     * @prop --kul-imageviewer-details-grid-settings-justify-content: Sets the justify-content of .details-grid__settings.
-     * Defaults to center.
-     */
-  --kul_imageviewer_details_grid_settings_justify_content: var(
-    --kul-imageviewer-details-grid-settings-justify-content,
-    center
-  );
-  /**
-     * @prop --kul-imageviewer-details-grid-settings-width: Sets the width of .details-grid__settings.
-     * Defaults to 100%.
-     */
-  --kul_imageviewer_details_grid_settings_width: var(
-    --kul-imageviewer-details-grid-settings-width,
-    100%
-  );
-
   display: var(--kul_imageviewer_display);
   height: var(--kul_imageviewer_height);
   width: var(--kul_imageviewer_width);
@@ -519,6 +469,7 @@
     grid-template-columns: var(--kul_imageviewer_details_grid_template_columns);
     grid-template-rows: var(--kul_imageviewer_details_grid_template_rows);
     height: var(--kul_imageviewer_details_grid_height);
+    overflow: auto;
     width: var(--kul_imageviewer_details_grid_width);
   }
 
@@ -548,16 +499,5 @@
     box-sizing: var(--kul_imageviewer_details_grid_tree_box_sizing);
     grid-area: var(--kul_imageviewer_details_grid_tree_grid_area);
     overflow: auto;
-  }
-
-  &__settings {
-    align-items: var(--kul_imageviewer_details_grid_settings_align_items);
-    display: var(--kul_imageviewer_details_grid_settings_display);
-    grid-area: var(--kul_imageviewer_details_grid_settings_grid_area);
-    height: var(--kul_imageviewer_details_grid_settings_height);
-    justify-content: var(
-      --kul_imageviewer_details_grid_settings_justify_content
-    );
-    width: var(--kul_imageviewer_details_grid_settings_width);
   }
 }
