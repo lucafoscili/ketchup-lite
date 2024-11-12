@@ -64,4 +64,4 @@ jobs:
 
             - name: Cypress Run
               run: |
-                  yarn workspace ketchup-lite run cypress run
+                  yarn workspace ketchup-lite run test
