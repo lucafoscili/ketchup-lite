@@ -43,15 +43,17 @@ jobs:
                   yarn workspace ketchup-lite-react run build
 
             - name: Publish Ketchup Lite
-              if: github.ref == 'refs/heads/main'
+              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
+              run: |
+                  cd packages/ketchup-lite
+                  npm publish --dist
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: |
-                  yarn workspace ketchup-lite publish --access public
 
             - name: Publish Ketchup Lite React
-              if: github.ref == 'refs/heads/main'
+              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
+              run: |
+                  cd packages/ketchup-lite-react
+                  npm publish --dist
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-              run: |
-                  yarn workspace ketchup-lite-react publish --access public
