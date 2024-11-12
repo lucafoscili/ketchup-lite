@@ -16,8 +16,6 @@ jobs:
                   COUNT=$(ls -l packages/ketchup-lite/src/components | grep '^d' | wc -l)
                   echo "{ \"components\": $COUNT }" > count.json
 
-            # Remove the Git configuration and push steps
-
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v5
               with:
@@ -27,8 +25,8 @@ jobs:
                   body: 'Automatically updates the component count.'
                   labels: 'automated PR'
 
-            - name: Clear npm cache
-              run: npm cache clean --force
+            - name: Clear Yarn cache
+              run: yarn cache clean
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
@@ -40,20 +38,20 @@ jobs:
               run: yarn install --immutable
 
             - name: Build Ketchup Lite
-              run: npm run build
+              run: yarn build
 
             - name: Publish Ketchup Lite
-              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
+              if: github.ref == 'refs/heads/main'
               run: |
                   cd packages/ketchup-lite
-                  npm publish
+                  yarn publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Publish Ketchup Lite React
-              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
+              if: github.ref == 'refs/heads/main'
               run: |
                   cd packages/ketchup-lite-react
-                  npm publish
+                  yarn publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

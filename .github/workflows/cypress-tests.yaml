@@ -15,8 +15,8 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Clear npm cache
-              run: npm cache clean --force
+            - name: Clear Yarn cache
+              run: yarn cache clean
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
@@ -66,4 +66,4 @@ jobs:
             - name: Cypress Run
               run: |
                   cd packages/ketchup-lite
-                  npx cypress run
+                  yarn cypress run
