@@ -23,7 +23,7 @@ Ketchup Lite is a lightweight and versatile Web Components library designed to e
 
 Built with modern standards and best practices in mind, Ketchup Lite offers a collection of reusable components that can seamlessly integrate into any web project, regardless of the framework or vanilla JavaScript setup.
 
-<div style="display:flex; justify-content: center">
+<div align="center">
 
 [![Next.js-deployed showcase](https://img.shields.io/badge/showcase-black?style=for-the-badge&logo=next.js&logoColor=black&label=Next.js&labelColor=white&color=black&link=https%3A%2F%2Fwww.lucafoscili.com%2Fketchup-lite&link=https%3A%2F%2Fwww.lucafoscili.com%2Fketchup-lite)](https://www.lucafoscili.com/ketchup-lite)
 
