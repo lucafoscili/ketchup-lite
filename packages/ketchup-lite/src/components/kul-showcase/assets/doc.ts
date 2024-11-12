@@ -1623,6 +1623,16 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<KulImageviewerAdapterRefs>",
       },
       {
+        name: "getCurrentSnapshot",
+        docs: "Fetches the current snapshot.",
+        returns: {
+          type: "Promise<{ shape: KulMasonrySelectedShape; value: string; }>",
+          docs: "A promise that resolves with the current snapshot's object.",
+        },
+        signature:
+          "() => Promise<{ shape: KulMasonrySelectedShape; value: string; }>",
+      },
+      {
         name: "getDebugInfo",
         docs: "Fetches debug information of the component's current state.",
         returns: {
@@ -1757,30 +1767,6 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-imageviewer-details-grid-image-grid-area",
         docs: "Sets the grid-area of .details-grid__image. Defaults to image.",
-      },
-      {
-        name: "--kul-imageviewer-details-grid-settings-align-items",
-        docs: "Sets the align-items of .details-grid__settings. Defaults to center.",
-      },
-      {
-        name: "--kul-imageviewer-details-grid-settings-display",
-        docs: "Sets the display property of .details-grid__settings. Defaults to grid.",
-      },
-      {
-        name: "--kul-imageviewer-details-grid-settings-grid-area",
-        docs: "Sets the grid-area of .details-grid__settings. Defaults to settings.",
-      },
-      {
-        name: "--kul-imageviewer-details-grid-settings-height",
-        docs: "Sets the height of .details-grid__settings. Defaults to 100%.",
-      },
-      {
-        name: "--kul-imageviewer-details-grid-settings-justify-content",
-        docs: "Sets the justify-content of .details-grid__settings. Defaults to center.",
-      },
-      {
-        name: "--kul-imageviewer-details-grid-settings-width",
-        docs: "Sets the width of .details-grid__settings. Defaults to 100%.",
       },
       {
         name: "--kul-imageviewer-details-grid-template-areas",

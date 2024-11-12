@@ -1,10 +1,10 @@
 # Ketchup Lite
 
-[![npm Package](https://img.shields.io/npm/v/ketchup-lite.svg)](https://www.npmjs.com/package/ketchup-lite)
-[![Cypress tests](https://github.com/lucafoscili/ketchup-lite/actions/workflows/cypress-tests.yaml/badge.svg?branch=candidate)](https://github.com/lucafoscili/ketchup-lite/actions/workflows/cypress-tests.yaml)
+[![npm Package](https://img.shields.io/npm/v/ketchup-lite.svg)](https://www.npmjs.com/package/ketchup-lite) [![Cypress tests](https://github.com/lucafoscili/ketchup-lite/actions/workflows/cypress-tests.yaml/badge.svg?branch=candidate)](https://github.com/lucafoscili/ketchup-lite/actions/workflows/cypress-tests.yaml)
 
-[![Built with StencilJS](https://img.shields.io/badge/Built_with_StencilJS-black?style=for-the-badge&logo=stenciljs&logoColor=white)](https://stenciljs.com/)
-[![Showcase](https://img.shields.io/badge/-Showcase-black?style=for-the-badge&logo=website&logoColor=white&link=https://www.lucafoscili.com/ketchup-lite)](https://www.lucafoscili.com/ketchup-lite)
+![Ketchup Lite](https://github.com/lucafoscili/ketchup-lite/blob/375581f13119ec393256ac4162212936ecf29d3d/docs/images/Logo.png 'Ketchup Lite logo')
+
+[![Built with StencilJS](https://img.shields.io/badge/Built_with_StencilJS-black?style=for-the-badge&logo=stenciljs&logoColor=white)](https://stenciljs.com/) [![Showcase](https://img.shields.io/badge/-Showcase-black?style=for-the-badge&logo=website&logoColor=white&link=https://www.lucafoscili.com/ketchup-lite)](https://www.lucafoscili.com/ketchup-lite)
 
 Ketchup Lite is a lightweight and versatile Web Components library designed to enhance your web development experience. It is a fork stemming from the original [Ketchup project](https://github.com/smeup/ketchup), aiming to provide a streamlined and efficient set of tools for developers.
 
@@ -35,16 +35,17 @@ After installing, you can import and use Ketchup Lite components in your project
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Ketchup Lite Example</title>
-    <script type="module" src="./path/to/ketchup-lite/dist/index.js"></script>
-</head>
-<body>
-
-<kul-button kul-label="Click me!"/>
-
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Ketchup Lite Example</title>
+        <script
+            type="module"
+            src="./path/to/ketchup-lite/dist/index.js"
+        ></script>
+    </head>
+    <body>
+        <kul-button kul-label="Click me!" />
+    </body>
 </html>
 ```
 
@@ -61,16 +62,15 @@ Ketchup Lite, while sharing a common heritage with the original Ketchup project,
 - **Glassmorphism Look**: Ketchup Lite incorporates a glassmorphism aesthetic throughout its components. This gives a modern, transparent, and sleek appearance to the UI elements, enhancing the visual appeal of personal projects.
 
 - **Absence of the KupObj Concept**: Unlike the original Ketchup, Ketchup Lite does not include the KupObj concept.
-  
-- **Absence of FComponents**: Given the library's limited scope, converting its basic components to functional components is unnecessary. If you plan to add thousands of nested web components, it is recommended to stick to the original project.  
+- **Absence of FComponents**: Given the library's limited scope, converting its basic components to functional components is unnecessary. If you plan to add thousands of nested web components, it is recommended to stick to the original project.
 
 - **Event Management**: Each component emits a single generic event that encapsulates various actions. Here is an example of how to listen for a button's click event:
 
 ```javascript
-const myButton = document.querySelector("kul-button");
-myButton.addEventListener("kul-button-event", (e) => {
-    if (e.detail.eventType === "click") {
-        console.log("Click!");
+const myButton = document.querySelector('kul-button');
+myButton.addEventListener('kul-button-event', (e) => {
+    if (e.detail.eventType === 'click') {
+        console.log('Click!');
     }
 });
 ```
