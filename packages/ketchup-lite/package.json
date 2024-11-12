@@ -23,8 +23,8 @@
         "dist/"
     ],
     "scripts": {
-        "build": "rimraf target && stencil build --docs",
-        "dev": "rimraf target && stencil build --dev --watch --serve",
+        "build": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && stencil build --docs",
+        "dev": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && stencil build --dev --watch --serve",
         "test": "cypress run",
         "test:open": "cypress open"
     },

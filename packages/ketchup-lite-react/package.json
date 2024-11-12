@@ -14,8 +14,7 @@
         "dist/"
     ],
     "scripts": {
-        "build": "npm run clean && tsc",
-        "clean": "rimraf dist"
+        "build": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && tsc"
     },
     "description": "Ketchup Lite React Components library",
     "license": "Apache-2.0",
