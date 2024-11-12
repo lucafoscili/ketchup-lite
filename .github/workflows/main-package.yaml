@@ -37,21 +37,21 @@ jobs:
             - name: Install dependencies
               run: yarn install --immutable
 
-            - name: Build Ketchup Lite
-              run: yarn build
+            - name: Build Packages
+              run: |
+                  yarn workspace ketchup-lite run build
+                  yarn workspace ketchup-lite-react run build
 
             - name: Publish Ketchup Lite
               if: github.ref == 'refs/heads/main'
-              run: |
-                  cd packages/ketchup-lite
-                  yarn publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  yarn workspace ketchup-lite publish --access public
 
             - name: Publish Ketchup Lite React
               if: github.ref == 'refs/heads/main'
-              run: |
-                  cd packages/ketchup-lite-react
-                  yarn publish --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+              run: |
+                  yarn workspace ketchup-lite-react publish --access public

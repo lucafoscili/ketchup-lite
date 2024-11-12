@@ -45,8 +45,7 @@ jobs:
 
             - name: Start Stencil Development Server
               run: |
-                  cd packages/ketchup-lite
-                  yarn stencil dev &
+                  yarn workspace ketchup-lite run stencil dev &
                   n=0
                   until [ $n -ge 10 ]
                   do
@@ -65,5 +64,4 @@ jobs:
 
             - name: Cypress Run
               run: |
-                  cd packages/ketchup-lite
-                  yarn cypress run
+                  yarn workspace ketchup-lite run cypress run
