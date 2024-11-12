@@ -23,10 +23,10 @@
         "dist/"
     ],
     "scripts": {
-        "build": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && stencil build --docs",
-        "dev": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && stencil build --dev --watch --serve",
-        "test": "cypress run",
-        "test:open": "cypress open"
+      "build": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --docs",
+      "dev": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --dev --watch --serve",
+      "test": "npx cypress run",
+      "test:open": "npx cypress open"
     },
     "repository": {
         "type": "git",
