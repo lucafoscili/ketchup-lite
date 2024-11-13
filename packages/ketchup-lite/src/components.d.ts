@@ -1446,6 +1446,11 @@ export namespace Components {
          */
         "kulStyle": string;
         /**
+          * Duration for the progress bar to fill up (in milliseconds).
+          * @default undefined
+         */
+        "kulTimeout": number;
+        /**
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
@@ -3746,6 +3751,11 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
+        /**
+          * Duration for the progress bar to fill up (in milliseconds).
+          * @default undefined
+         */
+        "kulTimeout"?: number;
         "onKul-spinner-event"?: (event: KulSpinnerCustomEvent<KulSpinnerEventPayload>) => void;
     }
     interface KulSplash {

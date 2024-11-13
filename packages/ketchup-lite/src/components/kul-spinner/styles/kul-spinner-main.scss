@@ -15,7 +15,9 @@
   background: transparent;
   opacity: 0;
   overflow: hidden;
-  transition: opacity 0.8s ease-in, background-color 1s ease-in;
+  transition:
+    opacity 0.8s ease-in,
+    background-color 1s ease-in;
   transform: translatez(0);
 
   &.spinner-version > #loading-wrapper-master-spinner {
@@ -30,7 +32,9 @@
       right: 0;
       bottom: 0;
       left: 0;
-      transition: top 0.25s ease-in-out, opacity 0.25s ease-in-out;
+      transition:
+        top 0.25s ease-in-out,
+        opacity 0.25s ease-in-out;
     }
   }
 
@@ -74,7 +78,9 @@
     & div,
     &.spinner-version #loading-wrapper-master-spinner {
       position: fixed;
-      transition: opacity 1.25s ease-in, background-color 1s ease-in,
+      transition:
+        opacity 1.25s ease-in,
+        background-color 1s ease-in,
         top 0.5s ease-in;
     }
   }
@@ -161,39 +167,61 @@
   height: 1em;
   border-radius: 50%;
   transform: translatez(0);
-  animation: sk-spinner-v3 1.7s infinite ease,
+  animation:
+    sk-spinner-v3 1.7s infinite ease,
     sk-spinner-v3-1 1.7s infinite ease;
 }
 
 @keyframes sk-spinner-v3 {
   0% {
-    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
-      0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    box-shadow:
+      0 -0.83em 0 -0.4em,
+      0 -0.83em 0 -0.42em,
+      0 -0.83em 0 -0.44em,
+      0 -0.83em 0 -0.46em,
+      0 -0.83em 0 -0.477em;
   }
   5%,
   95% {
-    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
-      0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    box-shadow:
+      0 -0.83em 0 -0.4em,
+      0 -0.83em 0 -0.42em,
+      0 -0.83em 0 -0.44em,
+      0 -0.83em 0 -0.46em,
+      0 -0.83em 0 -0.477em;
   }
   10%,
   59% {
-    box-shadow: 0 -0.83em 0 -0.4em, -0.087em -0.825em 0 -0.42em,
-      -0.173em -0.812em 0 -0.44em, -0.256em -0.789em 0 -0.46em,
+    box-shadow:
+      0 -0.83em 0 -0.4em,
+      -0.087em -0.825em 0 -0.42em,
+      -0.173em -0.812em 0 -0.44em,
+      -0.256em -0.789em 0 -0.46em,
       -0.297em -0.775em 0 -0.477em;
   }
   20% {
-    box-shadow: 0 -0.83em 0 -0.4em, -0.338em -0.758em 0 -0.42em,
-      -0.555em -0.617em 0 -0.44em, -0.671em -0.488em 0 -0.46em,
+    box-shadow:
+      0 -0.83em 0 -0.4em,
+      -0.338em -0.758em 0 -0.42em,
+      -0.555em -0.617em 0 -0.44em,
+      -0.671em -0.488em 0 -0.46em,
       -0.749em -0.34em 0 -0.477em;
   }
   38% {
-    box-shadow: 0 -0.83em 0 -0.4em, -0.377em -0.74em 0 -0.42em,
-      -0.645em -0.522em 0 -0.44em, -0.775em -0.297em 0 -0.46em,
+    box-shadow:
+      0 -0.83em 0 -0.4em,
+      -0.377em -0.74em 0 -0.42em,
+      -0.645em -0.522em 0 -0.44em,
+      -0.775em -0.297em 0 -0.46em,
       -0.82em -0.09em 0 -0.477em;
   }
   100% {
-    box-shadow: 0 -0.83em 0 -0.4em, 0 -0.83em 0 -0.42em, 0 -0.83em 0 -0.44em,
-      0 -0.83em 0 -0.46em, 0 -0.83em 0 -0.477em;
+    box-shadow:
+      0 -0.83em 0 -0.4em,
+      0 -0.83em 0 -0.42em,
+      0 -0.83em 0 -0.44em,
+      0 -0.83em 0 -0.46em,
+      0 -0.83em 0 -0.477em;
   }
 }
 
@@ -220,36 +248,92 @@
 @keyframes sk-spinner-v4 {
   0%,
   100% {
-    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em,
-      0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+    box-shadow:
+      0 -3em 0 0.2em,
+      2em -2em 0 0em,
+      3em 0 0 -1em,
+      2em 2em 0 -1em,
+      0 3em 0 -1em,
+      -2em 2em 0 -1em,
+      -3em 0 0 -1em,
+      -2em -2em 0 0;
   }
   12.5% {
-    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em,
-      0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    box-shadow:
+      0 -3em 0 0,
+      2em -2em 0 0.2em,
+      3em 0 0 0,
+      2em 2em 0 -1em,
+      0 3em 0 -1em,
+      -2em 2em 0 -1em,
+      -3em 0 0 -1em,
+      -2em -2em 0 -1em;
   }
   25% {
-    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0,
-      0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+    box-shadow:
+      0 -3em 0 -0.5em,
+      2em -2em 0 0,
+      3em 0 0 0.2em,
+      2em 2em 0 0,
+      0 3em 0 -1em,
+      -2em 2em 0 -1em,
+      -3em 0 0 -1em,
+      -2em -2em 0 -1em;
   }
   37.5% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em,
-      0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    box-shadow:
+      0 -3em 0 -1em,
+      2em -2em 0 -1em,
+      3em 0em 0 0,
+      2em 2em 0 0.2em,
+      0 3em 0 0em,
+      -2em 2em 0 -1em,
+      -3em 0em 0 -1em,
+      -2em -2em 0 -1em;
   }
   50% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em,
-      0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+    box-shadow:
+      0 -3em 0 -1em,
+      2em -2em 0 -1em,
+      3em 0 0 -1em,
+      2em 2em 0 0em,
+      0 3em 0 0.2em,
+      -2em 2em 0 0,
+      -3em 0em 0 -1em,
+      -2em -2em 0 -1em;
   }
   62.5% {
-    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em,
-      0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+    box-shadow:
+      0 -3em 0 -1em,
+      2em -2em 0 -1em,
+      3em 0 0 -1em,
+      2em 2em 0 -1em,
+      0 3em 0 0,
+      -2em 2em 0 0.2em,
+      -3em 0 0 0,
+      -2em -2em 0 -1em;
   }
   75% {
-    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em,
-      0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+    box-shadow:
+      0em -3em 0 -1em,
+      2em -2em 0 -1em,
+      3em 0em 0 -1em,
+      2em 2em 0 -1em,
+      0 3em 0 -1em,
+      -2em 2em 0 0,
+      -3em 0em 0 0.2em,
+      -2em -2em 0 0;
   }
   87.5% {
-    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em,
-      0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+    box-shadow:
+      0em -3em 0 0,
+      2em -2em 0 -1em,
+      3em 0 0 -1em,
+      2em 2em 0 -1em,
+      0 3em 0 -1em,
+      -2em 2em 0 0,
+      -3em 0em 0 0,
+      -2em -2em 0 0.2em;
   }
 }
 
@@ -854,5 +938,32 @@
   }
   to {
     left: -1%;
+  }
+}
+
+.spinner-bar-v3 {
+  height: calc(1.5em - 2px);
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  background-color: var(--kul-border-color, #f0f0f0);
+
+  .progress-bar {
+    height: 100%;
+    background-color: var(--kul-spinner-color);
+    animation: sk-spinner-bar-v3 1s infinite ease-in-out;
+    transition: width 0.1s linear;
+  }
+}
+
+@keyframes sk-spinner-bar-v3 {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
   }
 }

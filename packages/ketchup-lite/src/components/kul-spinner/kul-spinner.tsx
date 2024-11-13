@@ -1,3 +1,4 @@
+import { KulEventPayload } from '../../types/GenericTypes';
 import {
     Component,
     Element,
@@ -10,6 +11,7 @@ import {
     Prop,
     State,
     VNode,
+    Watch,
 } from '@stencil/core';
 import { GenericObject } from '../../types/GenericTypes';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
@@ -21,6 +23,10 @@ import {
 import { getProps } from '../../utils/componentUtils';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import {
+    BAR_SPINNER_CONFIGS,
+    SPINNER_CONFIGS,
+} from './layouts/kul-spinner-layouts';
 
 @Component({
     tag: 'kul-spinner',
@@ -28,15 +34,13 @@ import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
     shadow: true,
 })
 export class KulSpinner {
+    //#region Root
     /**
      * References the root HTML element of the component (<kul-spinner>).
      */
     @Element() rootElement: HTMLKulSpinnerElement;
-
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#endregion
+    //#region States
     /**
      * Debug information.
      */
@@ -47,11 +51,12 @@ export class KulSpinner {
         renderStart: 0,
         startTime: performance.now(),
     };
-
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    /**
+     * Progress percentage for the progress bar.
+     */
+    @State() kulProgress = 0;
+    //#endregion
+    //#region Props
     /**
      * Specifies if the spinner is animating.
      * @default false
@@ -92,17 +97,34 @@ export class KulSpinner {
      * @default ""
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
-
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    /**
+     * Duration for the progress bar to fill up (in milliseconds).
+     * @default undefined
+     */
+    @Prop({ mutable: true, reflect: true }) kulTimeout: number;
+    //#endregion
+    //#region Internal variables
     #kulManager = kulManagerInstance();
-
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
+    #progressAnimationFrame: number;
+    //#endregion
+    //#region Watchers
+    @Watch('kulTimeout')
+    kulTimeoutChanged(newValue: number, oldValue: number) {
+        if (newValue !== oldValue && this.kulBarVariant) {
+            this.#startProgressBar();
+        }
+    }
+    @Watch('kulBarVariant')
+    kulBarVariantChanged(newValue: boolean) {
+        if (newValue && this.kulTimeout) {
+            this.#startProgressBar();
+        } else {
+            this.kulProgress = 0;
+            cancelAnimationFrame(this.#progressAnimationFrame);
+        }
+    }
+    //#endregion
+    //#region Event
     @Event({
         eventName: 'kul-spinner-event',
         composed: true,
@@ -119,11 +141,8 @@ export class KulSpinner {
             eventType,
         });
     }
-
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#endregion
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -159,24 +178,22 @@ export class KulSpinner {
             this.rootElement.remove();
         }, ms);
     }
-
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#endregion
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
-    }
 
+        if (this.kulBarVariant && this.kulTimeout) {
+            this.#startProgressBar();
+        }
+    }
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidUpdate() {
         const root = this.rootElement.shadowRoot;
         if (root) {
@@ -185,13 +202,12 @@ export class KulSpinner {
             );
         }
     }
-
     componentDidRender() {
         const root = this.rootElement.shadowRoot;
 
         if (root) {
             if (this.kulFader) {
-                setTimeout(function () {
+                setTimeout(() => {
                     root.querySelector('#loading-wrapper-master').classList.add(
                         'loading-wrapper-big-wait'
                     );
@@ -210,67 +226,23 @@ export class KulSpinner {
 
         if (this.kulBarVariant) {
             wrapperClass = 'loading-wrapper-master-bar';
-            spinnerClass = 'spinner-bar-v' + this.kulLayout;
+            const barConfig = BAR_SPINNER_CONFIGS[this.kulLayout];
+            if (barConfig) {
+                spinnerClass = barConfig.className;
+                spinnerEl = barConfig.elements(this.kulProgress);
+            } else {
+                spinnerClass = 'spinner-bar-v' + this.kulLayout;
+            }
         } else {
             masterClass += ' spinner-version';
             wrapperClass = 'loading-wrapper-master-spinner';
-            spinnerClass = 'spinner-v' + this.kulLayout;
-            if (this.kulLayout === 7) {
-                spinnerEl = [
-                    <div class="sk-spinner-v7-dot"></div>,
-                    <div class="sk-spinner-v7-dot"></div>,
-                    <div class="sk-spinner-v7-dot"></div>,
-                    <div class="sk-spinner-v7-dot"></div>,
-                    <div class="sk-spinner-v7-dot"></div>,
-                    <div class="sk-spinner-v7-dot"></div>,
-                ];
-            }
-            if (this.kulLayout === 9) {
-                spinnerEl = [
-                    <div class="sk-spinner-v9-bounce1"></div>,
-                    <div class="sk-spinner-v9-bounce2"></div>,
-                ];
-            }
-            if (this.kulLayout === 10) {
-                spinnerEl = [
-                    <div class="sk-spinner-v10-cube1"></div>,
-                    <div class="sk-spinner-v10-cube2"></div>,
-                ];
-            }
-            if (this.kulLayout === 12) {
-                spinnerEl = [
-                    <div class="sk-spinner-v12-dot1"></div>,
-                    <div class="sk-spinner-v12-dot2"></div>,
-                ];
-            }
-            if (this.kulLayout === 13) {
-                spinnerEl = [
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube1"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube2"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube3"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube4"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube5"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube6"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube7"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube8"></div>,
-                    <div class="sk-spinner-v13-cube sk-spinner-v13-cube9"></div>,
-                ];
-            }
-            if (this.kulLayout === 14) {
-                spinnerEl = [
-                    <div class="sk-spinner-v14-circle1 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle2 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle3 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle4 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle5 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle6 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle7 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle8 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle9 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle10 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle11 sk-spinner-v14-circle"></div>,
-                    <div class="sk-spinner-v14-circle12 sk-spinner-v14-circle"></div>,
-                ];
+
+            const config = SPINNER_CONFIGS[this.kulLayout];
+            if (config) {
+                spinnerClass = config.className;
+                spinnerEl = config.elements();
+            } else {
+                spinnerClass = 'spinner-v' + this.kulLayout;
             }
         }
 
@@ -319,8 +291,28 @@ export class KulSpinner {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
+        cancelAnimationFrame(this.#progressAnimationFrame);
     }
+    //#region Private methods
+    #startProgressBar() {
+        this.kulProgress = 0;
+        const startTime = Date.now();
+        const duration = this.kulTimeout;
+
+        const updateProgress = () => {
+            const elapsed = Date.now() - startTime;
+            this.kulProgress = Math.min((elapsed / duration) * 100, 100);
+            if (this.kulProgress < 100) {
+                this.#progressAnimationFrame =
+                    requestAnimationFrame(updateProgress);
+            } else {
+                cancelAnimationFrame(this.#progressAnimationFrame);
+            }
+        };
+
+        this.#progressAnimationFrame = requestAnimationFrame(updateProgress);
+    }
+    //#endregion
 }

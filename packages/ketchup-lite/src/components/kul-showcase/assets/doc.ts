@@ -3194,6 +3194,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets a custom style for the component.",
         type: "string",
       },
+      {
+        name: "kulTimeout",
+        docs: "Duration for the progress bar to fill up (in milliseconds).",
+        type: "number",
+      },
     ],
     styles: [
       {

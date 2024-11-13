@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-12T18:56:31",
+  "timestamp": "2024-11-13T19:31:23",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -12900,6 +12900,32 @@
           "values": [
             {
               "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulTimeout",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-timeout",
+          "reflectToAttr": true,
+          "docs": "Duration for the progress bar to fill up (in milliseconds).",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "undefined"
+            }
+          ],
+          "values": [
+            {
+              "type": "number"
             }
           ],
           "optional": false,
