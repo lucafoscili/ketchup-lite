@@ -2,7 +2,7 @@ import { VNode } from '@stencil/core';
 import {
     KulDataCell,
     KulDataDataset,
-    KulDataShapes,
+    KulDataGenericCell,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulManager } from '../../managers/kul-manager/kul-manager';
 import { KulEventPayload } from '../../types/GenericTypes';
@@ -21,14 +21,16 @@ export interface KulImageviewerAdapterActions {
         adapter: KulImageviewerAdapter,
         index?: number
     ) => Promise<void>;
-    save: (adapter: KulImageviewerAdapter) => Promise<void>;
+    clearSelection: (adapter: KulImageviewerAdapter) => Promise<void>;
+    delete: (adapter: KulImageviewerAdapter) => Promise<void>;
+    findImage: (
+        adapter: KulImageviewerAdapter
+    ) => Partial<KulDataCell<'image'>>;
     load: (adapter: KulImageviewerAdapter) => Promise<void>;
     redo: (adapter: KulImageviewerAdapter) => Promise<void>;
+    save: (adapter: KulImageviewerAdapter) => Promise<void>;
     undo: (adapter: KulImageviewerAdapter) => Promise<void>;
-    updateValue: (
-        shape: Partial<KulDataCell<KulDataShapes>>,
-        value: string
-    ) => void;
+    updateValue: (shape: KulDataGenericCell, value: string) => void;
 }
 export interface KulImageviewerAdapterComponents {
     jsx: KulImageviewerAdapterJsx;
@@ -36,6 +38,7 @@ export interface KulImageviewerAdapterComponents {
 }
 export interface KulImageviewerAdapterJsx {
     clearHistory: (adapter: KulImageviewerAdapter) => VNode;
+    delete: (adapter: KulImageviewerAdapter) => VNode;
     image: (adapter: KulImageviewerAdapter) => VNode;
     load: (adapter: KulImageviewerAdapter) => VNode;
     masonry: (adapter: KulImageviewerAdapter) => VNode;
@@ -47,6 +50,7 @@ export interface KulImageviewerAdapterJsx {
 }
 export interface KulImageviewerAdapterRefs {
     clearHistory: HTMLKulButtonElement;
+    delete: HTMLKulButtonElement;
     image: HTMLKulImageElement;
     load: HTMLKulButtonElement;
     masonry: HTMLKulMasonryElement;

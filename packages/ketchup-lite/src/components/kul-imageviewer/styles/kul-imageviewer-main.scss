@@ -392,6 +392,8 @@
     tree
   );
 
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   display: var(--kul_imageviewer_display);
   height: var(--kul_imageviewer_height);
   width: var(--kul_imageviewer_width);
