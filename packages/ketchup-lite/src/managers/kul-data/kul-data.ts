@@ -3,6 +3,7 @@ import {
     KulDataCell,
     KulDataColumn,
     KulDataDataset,
+    KulDataGenericCell,
     KulDataNode,
     KulDataNodeOperations,
     KulDataShapeCallback,
@@ -18,6 +19,7 @@ import {
     cellStringify,
 } from './utils/kul-data-cell-utils';
 import {
+    findNodeByCell,
     nodeExists,
     nodeFilter,
     nodeFixIds,
@@ -82,24 +84,17 @@ export class KulData {
         ) => columnFind(dataset, filters),
     };
     node: KulDataNodeOperations = {
-        exists: (dataset: KulDataDataset) => nodeExists(dataset),
-        filter: (
-            dataset: KulDataDataset,
-            filters: Partial<KulDataNode>,
-            partialMatch: boolean = false
-        ) => nodeFilter(dataset, filters, partialMatch),
-        fixIds: (nodes: KulDataNode[]) => nodeFixIds(nodes),
-        getDrilldownInfo: (nodes: KulDataNode[]) => nodeGetDrilldownInfo(nodes),
-        getParent: (nodes: KulDataNode[], child: KulDataNode) =>
-            nodeGetParent(nodes, child),
-        pop: (nodes: KulDataNode[], node2remove: KulDataNode) =>
-            nodePop(nodes, node2remove),
-        setProperties: (
-            nodes: KulDataNode[],
-            properties: Partial<KulDataNode>,
-            recursively?: boolean,
-            exclude?: KulDataNode[]
-        ) => nodeSetProperties(nodes, properties, recursively, exclude),
-        toStream: (nodes: KulDataNode[]) => nodeToStream(nodes),
+        exists: (dataset) => nodeExists(dataset),
+        filter: (dataset, filters, partialMatch = false) =>
+            nodeFilter(dataset, filters, partialMatch),
+        findNodeByCell: (dataset, cell) => findNodeByCell(dataset, cell),
+        fixIds: (nodes) => nodeFixIds(nodes),
+        getDrilldownInfo: (nodes) => nodeGetDrilldownInfo(nodes),
+        getParent: (nodes, child) => nodeGetParent(nodes, child),
+        pop: (nodes, node2remove) => nodePop(nodes, node2remove),
+        removeNodeByCell: (dataset, cell) => findNodeByCell(dataset, cell),
+        setProperties: (nodes, properties, recursively?, exclude?) =>
+            nodeSetProperties(nodes, properties, recursively, exclude),
+        toStream: (nodes) => nodeToStream(nodes),
     };
 }

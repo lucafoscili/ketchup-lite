@@ -182,10 +182,18 @@ export interface KulDataNodeOperations {
         remainingNodes: Set<KulDataNode>;
         ancestorNodes: Set<KulDataNode>;
     };
+    findNodeByCell: (
+        dataset: KulDataDataset,
+        cell: KulDataGenericCell
+    ) => KulDataNode;
     fixIds: (nodes: KulDataNode[]) => KulDataNode[];
     getDrilldownInfo: (nodes: KulDataNode[]) => KulDataNodeDrilldownInfo;
     getParent: (nodes: KulDataNode[], child: KulDataNode) => KulDataNode;
     pop: (nodes: KulDataNode[], node2remove: KulDataNode) => KulDataNode;
+    removeNodeByCell: (
+        dataset: KulDataDataset,
+        cell: KulDataGenericCell
+    ) => KulDataNode;
     setProperties: (
         nodes: KulDataNode[],
         properties: Partial<KulDataNode>,
