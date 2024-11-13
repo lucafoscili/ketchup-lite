@@ -15,7 +15,7 @@
     "dependencies": {
         "dayjs": "^1.11.13",
         "echarts": "5.5.1",
-        "ketchup-lite": "1.6.9",
+        "ketchup-lite": "1.6.10",
         "prismjs": "^1.29.0"
     },
     "devDependencies": {

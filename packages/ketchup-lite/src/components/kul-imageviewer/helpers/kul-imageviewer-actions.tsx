@@ -90,12 +90,12 @@ export const ACTIONS: KulImageviewerAdapterActions = {
         const currentSnapshot = adapter.get.state.history.currentSnapshot();
         const value = currentSnapshot.value;
 
-        adapter.actions.updateValue(shape, value);
-        await adapter.actions.clearHistory(adapter, index);
-
         const cell = adapter.actions.findImage(adapter);
         cell.value = value;
         cell.kulValue = value;
+
+        adapter.actions.updateValue(shape, value);
+        await adapter.actions.clearHistory(adapter, index);
 
         imageviewer.kulData = { ...imageviewer.kulData };
     },
