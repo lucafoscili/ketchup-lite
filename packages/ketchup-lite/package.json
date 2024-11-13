@@ -1,6 +1,6 @@
 {
     "name": "ketchup-lite",
-    "version": "1.6.8",
+    "version": "1.6.9",
     "keywords": [
         "ketchup lite",
         "web component",
@@ -23,10 +23,10 @@
         "dist/"
     ],
     "scripts": {
-      "build": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --docs",
-      "dev": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --dev --watch --serve",
-      "test": "npx cypress run",
-      "test:open": "npx cypress open"
+        "build": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --docs",
+        "dev": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --dev --watch --serve",
+        "test": "npx cypress run",
+        "test:open": "npx cypress open"
     },
     "repository": {
         "type": "git",

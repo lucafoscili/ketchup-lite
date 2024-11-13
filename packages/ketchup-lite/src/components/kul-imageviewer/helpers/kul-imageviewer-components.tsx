@@ -16,22 +16,24 @@ import {
 export const COMPONENTS: KulImageviewerAdapterComponents = {
     jsx: {
         clearHistory: (adapter) => prepClearHistory(adapter),
-        save: (adapter) => prepSave(adapter),
+        delete: (adapter) => prepDelete(adapter),
         image: (adapter) => prepImage(adapter),
         load: (adapter) => prepLoad(adapter),
         masonry: (adapter) => prepMasonry(adapter),
         redo: (adapter) => prepRedo(adapter),
+        save: (adapter) => prepSave(adapter),
         textfield: (adapter) => prepTextfield(adapter),
         tree: (adapter) => prepTree(adapter),
         undo: (adapter) => prepUndo(adapter),
     },
     refs: {
         clearHistory: null,
-        save: null,
+        delete: null,
         image: null,
         load: null,
         masonry: null,
         redo: null,
+        save: null,
         textfield: null,
         tree: null,
         undo: null,
@@ -68,12 +70,57 @@ const prepClearHistory = (adapter: KulImageviewerAdapter) => {
             class={className}
             data-cy={KulDataCyAttributes.BUTTON}
             kulDisabled={isDisabled}
-            kulIcon="delete-empty"
+            kulIcon="layers_clear"
             kulLabel="Clear history"
+            kulStyling="flat"
             onKul-button-event={eventHandler}
             ref={(el) => {
                 if (el) {
                     adapter.components.refs.clearHistory = el;
+                }
+            }}
+        >
+            <kul-spinner
+                kulActive={true}
+                kulDimensions="2px"
+                kulLayout={1}
+                slot="spinner"
+            ></kul-spinner>
+        </kul-button>
+    );
+};
+// #endregion
+// #region Delete
+const prepDelete = (adapter: KulImageviewerAdapter) => {
+    const imageviewer = adapter.get.imageviewer();
+    const className = {
+        'details-grid__delete': true,
+        'kul-danger': true,
+        'kul-full-width': true,
+    };
+    const eventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
+        const { comp, eventType } = e.detail;
+        imageviewer.onKulEvent(e, 'kul-event');
+
+        switch (eventType) {
+            case 'click':
+                requestAnimationFrame(() => (comp.kulShowSpinner = true));
+                await adapter.actions.delete(adapter);
+                requestAnimationFrame(() => (comp.kulShowSpinner = false));
+                break;
+        }
+    };
+
+    return (
+        <kul-button
+            class={className}
+            data-cy={KulDataCyAttributes.BUTTON}
+            kulIcon="delete-empty"
+            kulLabel="Delete image"
+            onKul-button-event={eventHandler}
+            ref={(el) => {
+                if (el) {
+                    adapter.components.refs.delete = el;
                 }
             }}
         >
@@ -179,8 +226,7 @@ const prepMasonry = (adapter: KulImageviewerAdapter) => {
                         if (
                             currentShape?.shape?.index === selectedShape.index
                         ) {
-                            adapter.set.state.currentShape({});
-                            adapter.set.state.history.index(null);
+                            adapter.actions.clearSelection(adapter);
                         } else {
                             adapter.set.state.currentShape(selectedShape);
 
@@ -243,6 +289,7 @@ const prepRedo = (adapter: KulImageviewerAdapter) => {
             kulDisabled={isDisabled}
             kulIcon="redo"
             kulLabel="Redo"
+            kulStyling="flat"
             onKul-button-event={eventHandler}
             ref={(el) => {
                 if (el) {
@@ -386,6 +433,7 @@ const prepUndo = (adapter: KulImageviewerAdapter) => {
             kulDisabled={isDisabled}
             kulIcon="undo"
             kulLabel="Undo"
+            kulStyling="flat"
             onKul-button-event={eventHandler}
             ref={(el) => {
                 if (el) {

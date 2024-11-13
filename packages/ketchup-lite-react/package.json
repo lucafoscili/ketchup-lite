@@ -1,6 +1,6 @@
 {
     "name": "ketchup-lite-react",
-    "version": "1.6.8",
+    "version": "1.6.9",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
     "keywords": [

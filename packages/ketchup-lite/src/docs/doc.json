@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-12T18:56:31",
+  "timestamp": "2024-11-13T21:06:04",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -12904,6 +12904,32 @@
           ],
           "optional": false,
           "required": false
+        },
+        {
+          "name": "kulTimeout",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-timeout",
+          "reflectToAttr": true,
+          "docs": "Duration for the progress bar to fill up (in milliseconds).",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "undefined"
+            }
+          ],
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
         }
       ],
       "methods": [
@@ -16996,7 +17022,7 @@
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     },
     "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerAdapterRefs": {
-      "declaration": "export interface KulImageviewerAdapterRefs {\n    clearHistory: HTMLKulButtonElement;\n    image: HTMLKulImageElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
+      "declaration": "export interface KulImageviewerAdapterRefs {\n    clearHistory: HTMLKulButtonElement;\n    delete: HTMLKulButtonElement;\n    image: HTMLKulImageElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
       "docstring": "",
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     }

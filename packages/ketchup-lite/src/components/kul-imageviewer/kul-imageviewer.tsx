@@ -290,6 +290,7 @@ export class KulImageviewer {
             <div class="details-grid">
                 {jsx.image(this.#adapter)}
                 <div class="details-grid__actions">
+                    {jsx.delete(this.#adapter)}
                     {jsx.clearHistory(this.#adapter)}
                     {jsx.undo(this.#adapter)}
                     {jsx.redo(this.#adapter)}

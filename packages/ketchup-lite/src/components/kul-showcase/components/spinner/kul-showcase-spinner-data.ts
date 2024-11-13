@@ -47,6 +47,7 @@ function createSpinnerData(
                         kulActive: true,
                         kulBarVariant: true,
                         kulLayout: i,
+                        kulTimeout: 30000,
                     };
                     break;
                 case 'style':
@@ -97,7 +98,7 @@ function createSpinnerData(
     return spinnerData;
 }
 
-export const SPINNER_EXAMPLES = createSpinnerData(2, 14);
+export const SPINNER_EXAMPLES = createSpinnerData(3, 14);
 
 export const SPINNER_DOC: KulArticleDataset = {
     nodes: [

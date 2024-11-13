@@ -1,6 +1,33 @@
-import { KulDataDataset, KulDataNode } from '../kul-data-declarations';
+import {
+    KulDataDataset,
+    KulDataGenericCell,
+    KulDataNode,
+} from '../kul-data-declarations';
 import { cellStringify } from './kul-data-cell-utils';
 
+export const findNodeByCell = (
+    dataset: KulDataDataset,
+    targetCell: KulDataGenericCell
+) => {
+    function recursive(nodes: KulDataNode[]): KulDataNode | null {
+        for (const node of nodes) {
+            if (node.cells) {
+                for (const cellKey in node.cells) {
+                    if (node.cells[cellKey] === targetCell) {
+                        return node;
+                    }
+                }
+            }
+            if (node.children) {
+                const foundNode = recursive(node.children);
+                if (foundNode) return foundNode;
+            }
+        }
+        return null;
+    }
+
+    return recursive(dataset.nodes);
+};
 export const nodeExists = (dataset: KulDataDataset) => {
     return !!(dataset && dataset.nodes?.length);
 };
@@ -232,21 +259,51 @@ export const nodeSetProperties = (
     return updated;
 };
 export const nodeToStream = (nodes: KulDataNode[]) => {
+    function recursive(node: KulDataNode) {
+        streamlined.push(node);
+        for (
+            let index = 0;
+            node.children && index < node.children.length;
+            index++
+        ) {
+            recursive(node.children[index]);
+        }
+    }
+
     const streamlined: KulDataNode[] = [];
     for (let index = 0; index < nodes.length; index++) {
         const node = nodes[index];
         recursive(node);
-
-        function recursive(node: KulDataNode) {
-            streamlined.push(node);
-            for (
-                let index = 0;
-                node.children && index < node.children.length;
-                index++
-            ) {
-                recursive(node.children[index]);
-            }
-        }
     }
     return streamlined;
+};
+export const removeNodeByCell = (
+    dataset: KulDataDataset,
+    targetCell: KulDataGenericCell
+) => {
+    function recursive(
+        nodes: KulDataNode[],
+        nodeToRemove: KulDataNode
+    ): boolean {
+        const index = nodes.indexOf(nodeToRemove);
+        if (index !== -1) {
+            nodes.splice(index, 1);
+            return true;
+        }
+
+        for (const node of nodes) {
+            if (node.children && recursive(node.children, nodeToRemove)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    const targetNode = findNodeByCell(dataset, targetCell);
+    if (!targetNode) {
+        return null;
+    }
+
+    return recursive(dataset.nodes, targetNode) ? targetNode : null;
 };

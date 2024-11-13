@@ -70,6 +70,7 @@ describe('Methods', () => {
             kulFullScreen: null,
             kulLayout: null,
             kulStyle: null,
+            kulTimeout: null,
         } as Required<KulSpinnerPropsInterface>);
     });
 });

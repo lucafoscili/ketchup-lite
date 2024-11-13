@@ -1,14 +1,11 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulSpinnerEvent = 'ready' | 'unmount';
 export interface KulSpinnerEventPayload
     extends KulEventPayload<'KulSpinner', KulSpinnerEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+//#region Props
 export enum KulSpinnerProps {
     kulActive = 'Specifies if the spinner is animating.',
     kulBarVariant = 'Controls if the component displays as a bar or a spinner.',
@@ -18,6 +15,7 @@ export enum KulSpinnerProps {
     kulFullScreen = 'Fills the entire viewport when enabled.',
     kulLayout = 'Selects the spinner layout.',
     kulStyle = 'Sets a custom style for the component.',
+    kulTimeout = 'Duration for the progress bar to fill up (in milliseconds).',
 }
 export interface KulSpinnerPropsInterface {
     kulActive: boolean;
@@ -28,4 +26,6 @@ export interface KulSpinnerPropsInterface {
     kulFullScreen: boolean;
     kulLayout: number;
     kulStyle: string;
+    kulTimeout?: number;
 }
+//#endregion
