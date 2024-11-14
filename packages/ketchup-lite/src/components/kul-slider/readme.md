@@ -55,13 +55,13 @@ Type: `Promise<GenericObject<unknown>>`
 
 Promise resolved with an object containing the component's properties.
 
-### `getValue() => Promise<number>`
+### `getValue() => Promise<KulSliderValue>`
 
 Used to retrieve the component's current state.
 
 #### Returns
 
-Type: `Promise<number>`
+Type: `Promise<KulSliderValue>`
 
 Promise resolved with the current state of the component.
 

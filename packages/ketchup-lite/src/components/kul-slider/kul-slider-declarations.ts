@@ -11,7 +11,7 @@ export type KulSliderEvent =
     | 'unmount';
 export interface KulSliderEventPayload
     extends KulEventPayload<'KulSlider', KulSliderEvent> {
-    value: number;
+    value: KulSliderValue;
 }
 //#endregion
 //#region State

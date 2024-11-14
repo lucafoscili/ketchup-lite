@@ -2930,10 +2930,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getValue",
         docs: "Used to retrieve the component's current state.",
         returns: {
-          type: "Promise<number>",
+          type: "Promise<KulSliderValue>",
           docs: "Promise resolved with the current state of the component.",
         },
-        signature: "() => Promise<number>",
+        signature: "() => Promise<KulSliderValue>",
       },
       {
         name: "refresh",

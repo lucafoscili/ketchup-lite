@@ -30,7 +30,7 @@ import { KulListEventPayload } from "./components/kul-list/kul-list-declarations
 import { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 import { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
-import { KulSliderEventPayload } from "./components/kul-slider/kul-slider-declarations";
+import { KulSliderEventPayload, KulSliderValue } from "./components/kul-slider/kul-slider-declarations";
 import { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 import { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -65,7 +65,7 @@ export { KulListEventPayload } from "./components/kul-list/kul-list-declarations
 export { KulMessengerConfig, KulMessengerDataset, KulMessengerEventPayload } from "./components/kul-messenger/kul-messenger-declarations";
 export { KulPhotoframeEventPayload } from "./components/kul-photoframe/kul-photoframe-declarations";
 export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-progressbar-declarations";
-export { KulSliderEventPayload } from "./components/kul-slider/kul-slider-declarations";
+export { KulSliderEventPayload, KulSliderValue } from "./components/kul-slider/kul-slider-declarations";
 export { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 export { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
 export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
@@ -1343,7 +1343,7 @@ export namespace Components {
           * Used to retrieve the component's current state.
           * @returns Promise resolved with the current state of the component.
          */
-        "getValue": () => Promise<number>;
+        "getValue": () => Promise<KulSliderValue>;
         /**
           * When true, the component is disabled, preventing user interaction.
           * @default false
