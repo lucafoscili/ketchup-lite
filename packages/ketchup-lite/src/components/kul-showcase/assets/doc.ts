@@ -1614,6 +1614,24 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "(value: string) => Promise<void>",
       },
       {
+        name: "clearHistory",
+        docs: "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(index?: number) => Promise<void>",
+      },
+      {
+        name: "clearSelection",
+        docs: "Clears the currently selected shape.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
         name: "getComponents",
         docs: "This method is used to retrieve the references to the subcomponents.",
         returns: {
@@ -1653,6 +1671,15 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "refresh",
         docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "reset",
+        docs: "Clears the full history and clears the current selection.",
         returns: {
           type: "Promise<void>",
           docs: "",

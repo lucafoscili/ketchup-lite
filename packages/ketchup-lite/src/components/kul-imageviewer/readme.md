@@ -41,6 +41,33 @@ Type: `Promise<void>`
 
 
 
+### `clearHistory(index?: number) => Promise<void>`
+
+Clears the history related to the shape identified by the index.
+When index is not provided, it clear the full history.
+
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `index` | `number` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `clearSelection() => Promise<void>`
+
+Clears the currently selected shape.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `getComponents() => Promise<KulImageviewerAdapterRefs>`
 
 This method is used to retrieve the references to the subcomponents.
@@ -90,6 +117,16 @@ Promise resolved with an object containing the component's properties.
 ### `refresh() => Promise<void>`
 
 This method is used to trigger a new render of the component.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `reset() => Promise<void>`
+
+Clears the full history and clears the current selection.
 
 #### Returns
 
