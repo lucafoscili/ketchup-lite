@@ -1620,7 +1620,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<void>",
           docs: "",
         },
-        signature: "(index?: any) => Promise<void>",
+        signature: "(index?: number) => Promise<void>",
       },
       {
         name: "clearSelection",

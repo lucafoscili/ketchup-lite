@@ -41,16 +41,16 @@ Type: `Promise<void>`
 
 
 
-### `clearHistory(index?: any) => Promise<void>`
+### `clearHistory(index?: number) => Promise<void>`
 
 Clears the history related to the shape identified by the index.
 When index is not provided, it clear the full history.
 
 #### Parameters
 
-| Name    | Type  | Description |
-| ------- | ----- | ----------- |
-| `index` | `any` |             |
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `index` | `number` |             |
 
 #### Returns
 

@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-14T17:44:31",
+  "timestamp": "2024-11-14T17:46:56",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -6665,11 +6665,11 @@
             "docs": ""
           },
           "complexType": {
-            "signature": "(index?: any) => Promise<void>",
+            "signature": "(index?: number) => Promise<void>",
             "parameters": [
               {
                 "name": "index",
-                "type": "any",
+                "type": "number",
                 "docs": ""
               }
             ],
@@ -6681,11 +6681,11 @@
             },
             "return": "Promise<void>"
           },
-          "signature": "clearHistory(index?: any) => Promise<void>",
+          "signature": "clearHistory(index?: number) => Promise<void>",
           "parameters": [
             {
               "name": "index",
-              "type": "any",
+              "type": "number",
               "docs": ""
             }
           ],

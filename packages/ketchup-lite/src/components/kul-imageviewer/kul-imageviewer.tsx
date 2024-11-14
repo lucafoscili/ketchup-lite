@@ -151,7 +151,7 @@ export class KulImageviewer {
      * When index is not provided, it clear the full history.
      */
     @Method()
-    async clearHistory(index = null): Promise<void> {
+    async clearHistory(index: number = null): Promise<void> {
         await this.#adapter.actions.clearHistory(this.#adapter, index);
     }
     /**

@@ -847,7 +847,7 @@ export namespace Components {
         /**
           * Clears the history related to the shape identified by the index. When index is not provided, it clear the full history.
          */
-        "clearHistory": (index?: any) => Promise<void>;
+        "clearHistory": (index?: number) => Promise<void>;
         /**
           * Clears the currently selected shape.
          */
