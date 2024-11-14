@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-14T20:42:24",
+  "timestamp": "2024-11-14T21:18:16",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -12433,21 +12433,26 @@
         {
           "name": "getValue",
           "returns": {
-            "type": "Promise<number>",
+            "type": "Promise<KulSliderValue>",
             "docs": "Promise resolved with the current state of the component."
           },
           "complexType": {
-            "signature": "() => Promise<number>",
+            "signature": "() => Promise<KulSliderValue>",
             "parameters": [],
             "references": {
               "Promise": {
                 "location": "global",
                 "id": "global::Promise"
+              },
+              "KulSliderValue": {
+                "location": "import",
+                "path": "./kul-slider-declarations",
+                "id": "src/components/kul-slider/kul-slider-declarations.ts::KulSliderValue"
               }
             },
-            "return": "Promise<number>"
+            "return": "Promise<KulSliderValue>"
           },
-          "signature": "getValue() => Promise<number>",
+          "signature": "getValue() => Promise<KulSliderValue>",
           "parameters": [],
           "docs": "Used to retrieve the component's current state.",
           "docsTags": [
@@ -17085,7 +17090,12 @@
       "path": "src/components/kul-carousel/kul-carousel-declarations.ts"
     },
     "src/components/kul-slider/kul-slider-declarations.ts::KulSliderEventPayload": {
-      "declaration": "export interface KulSliderEventPayload\n    extends KulEventPayload<'KulSlider', KulSliderEvent> {\n    value: number;\n}",
+      "declaration": "export interface KulSliderEventPayload\n    extends KulEventPayload<'KulSlider', KulSliderEvent> {\n    value: KulSliderValue;\n}",
+      "docstring": "",
+      "path": "src/components/kul-slider/kul-slider-declarations.ts"
+    },
+    "src/components/kul-slider/kul-slider-declarations.ts::KulSliderValue": {
+      "declaration": "export interface KulSliderValue {\n    display: number;\n    real: number;\n}",
       "docstring": "",
       "path": "src/components/kul-slider/kul-slider-declarations.ts"
     },

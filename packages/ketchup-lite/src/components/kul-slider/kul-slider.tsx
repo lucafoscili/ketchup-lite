@@ -136,7 +136,7 @@ export class KulSlider {
             eventType,
             id: this.rootElement.id,
             originalEvent: e,
-            value: this.value.real,
+            value: this.value,
         });
     }
     //#endregion
@@ -163,8 +163,8 @@ export class KulSlider {
      * @returns {Promise<KulSliderState>} Promise resolved with the current state of the component.
      */
     @Method()
-    async getValue(): Promise<number> {
-        return this.value.real;
+    async getValue(): Promise<KulSliderValue> {
+        return this.value;
     }
     /**
      * This method is used to trigger a new render of the component.
