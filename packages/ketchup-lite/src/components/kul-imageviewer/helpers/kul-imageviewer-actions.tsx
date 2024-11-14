@@ -83,7 +83,6 @@ export const ACTIONS: KulImageviewerAdapterActions = {
             return;
         }
         const imageviewer = adapter.get.imageviewer();
-        const manager = adapter.get.manager();
         const index = currentSelectedShape.shape.index;
         const shape = currentSelectedShape.shape.shape;
 

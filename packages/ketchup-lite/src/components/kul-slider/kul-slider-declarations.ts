@@ -1,10 +1,9 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulSliderEvent =
     | 'blur'
+    | 'change'
     | 'focus'
     | 'input'
     | 'pointerdown'
@@ -14,9 +13,14 @@ export interface KulSliderEventPayload
     extends KulEventPayload<'KulSlider', KulSliderEvent> {
     value: number;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+//#region State
+export interface KulSliderValue {
+    display: number;
+    real: number;
+}
+//#endregion
+//#region Props
 export enum KulSliderProps {
     kulDisabled = 'When true, the component is disabled, preventing user interaction.',
     kulLabel = 'Defines text to display as a label for the slider.',
@@ -28,7 +32,6 @@ export enum KulSliderProps {
     kulStyle = 'Sets a custom CSS style for the component.',
     kulValue = 'The initial numeric value of the slider within the defined range.',
 }
-
 export interface KulSliderPropsInterface {
     kulDisabled?: boolean;
     kulLabel?: string;
@@ -40,3 +43,4 @@ export interface KulSliderPropsInterface {
     kulStyle?: string;
     kulValue?: number;
 }
+//#endregion
