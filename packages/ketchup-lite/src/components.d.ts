@@ -845,6 +845,14 @@ export namespace Components {
          */
         "addSnapshot": (value: string) => Promise<void>;
         /**
+          * Clears the history related to the shape identified by the index. When index is not provided, it clear the full history.
+         */
+        "clearHistory": (index?: any) => Promise<void>;
+        /**
+          * Clears the currently selected shape.
+         */
+        "clearSelection": () => Promise<void>;
+        /**
           * This method is used to retrieve the references to the subcomponents.
          */
         "getComponents": () => Promise<KulImageviewerAdapterRefs>;
@@ -888,6 +896,10 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Clears the full history and clears the current selection.
+         */
+        "reset": () => Promise<void>;
         /**
           * Initiates the unmount sequence, which removes the component from the DOM after a delay.
           * @param ms - Number of milliseconds

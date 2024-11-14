@@ -147,6 +147,21 @@ export class KulImageviewer {
         this.#adapter.set.state.history.new(newShape, true);
     }
     /**
+     * Clears the history related to the shape identified by the index.
+     * When index is not provided, it clear the full history.
+     */
+    @Method()
+    async clearHistory(index = null): Promise<void> {
+        await this.#adapter.actions.clearHistory(this.#adapter, index);
+    }
+    /**
+     * Clears the currently selected shape.
+     */
+    @Method()
+    async clearSelection(): Promise<void> {
+        await this.#adapter.actions.clearSelection(this.#adapter);
+    }
+    /**
      * This method is used to retrieve the references to the subcomponents.
      */
     @Method()
@@ -187,6 +202,14 @@ export class KulImageviewer {
     @Method()
     async refresh(): Promise<void> {
         forceUpdate(this);
+    }
+    /**
+     * Clears the full history and clears the current selection.
+     */
+    @Method()
+    async reset(): Promise<void> {
+        await this.#adapter.actions.clearHistory(this.#adapter);
+        await this.#adapter.actions.clearSelection(this.#adapter);
     }
     /**
      * Initiates the unmount sequence, which removes the component from the DOM after a delay.

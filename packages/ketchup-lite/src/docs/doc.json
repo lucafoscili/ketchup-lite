@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-13T21:06:04",
+  "timestamp": "2024-11-14T17:42:26",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -6659,6 +6659,62 @@
           "docsTags": []
         },
         {
+          "name": "clearHistory",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(index?: any) => Promise<void>",
+            "parameters": [
+              {
+                "name": "index",
+                "type": "any",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "clearHistory(index?: any) => Promise<void>",
+          "parameters": [
+            {
+              "name": "index",
+              "type": "any",
+              "docs": ""
+            }
+          ],
+          "docs": "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
+          "docsTags": []
+        },
+        {
+          "name": "clearSelection",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "clearSelection() => Promise<void>",
+          "parameters": [],
+          "docs": "Clears the currently selected shape.",
+          "docsTags": []
+        },
+        {
           "name": "getComponents",
           "returns": {
             "type": "Promise<KulImageviewerAdapterRefs>",
@@ -6817,6 +6873,28 @@
           "signature": "refresh() => Promise<void>",
           "parameters": [],
           "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "reset",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "reset() => Promise<void>",
+          "parameters": [],
+          "docs": "Clears the full history and clears the current selection.",
           "docsTags": []
         },
         {
