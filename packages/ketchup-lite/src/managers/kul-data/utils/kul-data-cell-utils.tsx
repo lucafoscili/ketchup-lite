@@ -28,6 +28,8 @@ const decorateSpreader = (
     const clean = () => {
         if (toSpread['value'] && !toSpread['kulValue']) {
             toSpread['kulValue'] = toSpread['value'];
+        } else if (toSpread['kulValue'] && !toSpread['value']) {
+            toSpread['value'] = toSpread['kulValue'];
         }
         delete toSpread['htmlProps'];
         delete toSpread['shape'];
