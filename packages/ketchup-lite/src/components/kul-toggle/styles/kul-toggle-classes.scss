@@ -9,26 +9,26 @@
 /*-------------------------------------------------*/
 
 :host(.#{$kul-class-danger}) {
-  --kul-switch-primary-color: var(--kul-danger-color);
-  --kul-switch-primary-color-rgb: var(--kul-danger-color-rgb);
+  --kul-toggle-primary-color: var(--kul-danger-color);
+  --kul-toggle-primary-color-rgb: var(--kul-danger-color-rgb);
 }
 
 :host(.#{$kul-class-info}) {
-  --kul-switch-primary-color: var(--kul-info-color);
-  --kul-switch-primary-color-rgb: var(--kul-info-color-rgb);
+  --kul-toggle-primary-color: var(--kul-info-color);
+  --kul-toggle-primary-color-rgb: var(--kul-info-color-rgb);
 }
 
 :host(.#{$kul-class-secondary}) {
-  --kul-switch-primary-color: var(--kul-secondary-color);
-  --kul-switch-primary-color-rgb: var(--kul-secondary-color-rgb);
+  --kul-toggle-primary-color: var(--kul-secondary-color);
+  --kul-toggle-primary-color-rgb: var(--kul-secondary-color-rgb);
 }
 
 :host(.#{$kul-class-success}) {
-  --kul-switch-primary-color: var(--kul-success-color);
-  --kul-switch-primary-color-rgb: var(--kul-success-color-rgb);
+  --kul-toggle-primary-color: var(--kul-success-color);
+  --kul-toggle-primary-color-rgb: var(--kul-success-color-rgb);
 }
 
 :host(.#{$kul-class-warning}) {
-  --kul-switch-primary-color: var(--kul-warning-color);
-  --kul-switch-primary-color-rgb: var(--kul-warning-color-rgb);
+  --kul-toggle-primary-color: var(--kul-warning-color);
+  --kul-toggle-primary-color-rgb: var(--kul-warning-color-rgb);
 }

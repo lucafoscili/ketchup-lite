@@ -195,7 +195,7 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
         code: [],
         image: [],
         number: [],
-        switch: [],
+        toggle: [],
         text: [],
         upload: [],
     };
@@ -235,8 +235,8 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
                     case 'image':
                         shapes.image.push(extracted as KulDataCell<'image'>);
                         break;
-                    case 'switch':
-                        shapes.switch.push(extracted as KulDataCell<'switch'>);
+                    case 'toggle':
+                        shapes.toggle.push(extracted as KulDataCell<'toggle'>);
                         break;
                     case 'number':
                         shapes.number.push(cell as KulDataCell<'number'>);

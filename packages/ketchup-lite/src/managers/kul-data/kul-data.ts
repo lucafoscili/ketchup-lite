@@ -42,7 +42,7 @@ export class KulData {
         code: 'KulCode',
         image: 'KulImage',
         number: 'KulTextfield',
-        switch: 'KulSwitch',
+        toggle: 'KulToggle',
         text: 'KulTextfield',
         upload: 'KulUpload',
     };

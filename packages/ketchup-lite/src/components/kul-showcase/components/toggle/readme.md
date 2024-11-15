@@ -20,15 +20,15 @@
 
 ### Depends on
 
-- [kul-switch](../../../kul-switch)
+- [kul-toggle](../../../kul-toggle)
 - [kul-article](../../../kul-article)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-switch --> kul-switch
-  kul-showcase-switch --> kul-article
-  style kul-showcase-switch fill:#f9f,stroke:#333,stroke-width:4px
+  kul-showcase-toggle --> kul-toggle
+  kul-showcase-toggle --> kul-article
+  style kul-showcase-toggle fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

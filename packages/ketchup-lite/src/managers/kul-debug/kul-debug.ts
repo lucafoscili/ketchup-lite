@@ -14,7 +14,7 @@ import {
     KulDebugManagedComponents,
 } from './kul-debug-declarations';
 import { KulCode } from '../../components/kul-code/kul-code';
-import { KulSwitch } from '../../components/kul-switch/kul-switch';
+import { KulToggle } from '../../components/kul-toggle/kul-toggle';
 
 const dom: KulDom = document.documentElement as KulDom;
 
@@ -22,13 +22,13 @@ export class KulDebug {
     #IS_ENABLED: boolean;
     #LOG_LIMIT: number;
     #LOGS: KulDebugLog[];
-    #MANAGED_COMPONENTS: { codes: Set<KulCode>; switches: Set<KulSwitch> };
+    #MANAGED_COMPONENTS: { codes: Set<KulCode>; togglees: Set<KulToggle> };
 
     constructor(active?: boolean, logLimit?: number) {
         this.#IS_ENABLED = active ? true : false;
         this.#LOG_LIMIT = logLimit ? logLimit : 250;
         this.#LOGS = [];
-        this.#MANAGED_COMPONENTS = { codes: new Set(), switches: new Set() };
+        this.#MANAGED_COMPONENTS = { codes: new Set(), togglees: new Set() };
     }
 
     #codeDispatcher = (log?: KulDebugLog) => {
@@ -41,8 +41,8 @@ export class KulDebug {
         });
     };
 
-    #switchDispatcher = () => {
-        Array.from(this.#MANAGED_COMPONENTS.switches).forEach((comp) => {
+    #toggleDispatcher = () => {
+        Array.from(this.#MANAGED_COMPONENTS.togglees).forEach((comp) => {
             comp.setValue(this.#IS_ENABLED ? 'on' : 'off');
         });
     };
@@ -80,7 +80,7 @@ export class KulDebug {
             };
 
             if (this.#LOGS.length > this.#LOG_LIMIT) {
-                if (this.isEnabled()) {
+                if (this.#IS_ENABLED) {
                     console.warn(
                         dom.ketchupLite.dates.format(log.date, 'LLL:ms') +
                             ' kul-debug => ' +
@@ -172,7 +172,7 @@ export class KulDebug {
         if (comp.rootElement.tagName.toLowerCase() === 'kul-code') {
             this.#MANAGED_COMPONENTS.codes.add(comp as KulCode);
         } else {
-            this.#MANAGED_COMPONENTS.switches.add(comp as KulSwitch);
+            this.#MANAGED_COMPONENTS.togglees.add(comp as KulToggle);
         }
     }
 
@@ -184,7 +184,7 @@ export class KulDebug {
         }
 
         if (dispatch) {
-            this.#switchDispatcher();
+            this.#toggleDispatcher();
         }
 
         return this.#IS_ENABLED;
@@ -194,7 +194,7 @@ export class KulDebug {
         if (comp.rootElement.tagName.toLowerCase() === 'kul-code') {
             this.#MANAGED_COMPONENTS.codes.delete(comp as KulCode);
         } else {
-            this.#MANAGED_COMPONENTS.switches.delete(comp as KulSwitch);
+            this.#MANAGED_COMPONENTS.togglees.delete(comp as KulToggle);
         }
     }
 

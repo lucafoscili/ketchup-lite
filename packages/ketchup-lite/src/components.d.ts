@@ -33,10 +33,10 @@ import { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-pro
 import { KulSliderEventPayload, KulSliderValue } from "./components/kul-slider/kul-slider-declarations";
 import { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 import { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
-import { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 import { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
 import { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
 import { KulToastEventPayload } from "./components/kul-toast/kul-toast-declarations";
+import { KulToggleEventPayload, KulToggleState } from "./components/kul-toggle/kul-toggle-declarations";
 import { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
 import { KulTypewriterEventPayload, KulTypewriterValue } from "./components/kul-typewriter/kul-typewriter-declarations";
 import { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
@@ -68,10 +68,10 @@ export { KulProgressbarEventPayload } from "./components/kul-progressbar/kul-pro
 export { KulSliderEventPayload, KulSliderValue } from "./components/kul-slider/kul-slider-declarations";
 export { KulSpinnerEventPayload } from "./components/kul-spinner/kul-spinner-declarations";
 export { KulSplashEventPayload } from "./components/kul-splash/kul-splash-declarations";
-export { KulSwitchEventPayload, KulSwitchState } from "./components/kul-switch/kul-switch-declarations";
 export { KulTabbarEventPayload, KulTabbarState } from "./components/kul-tabbar/kul-tabbar-declarations";
 export { KulTextfieldEventPayload, KulTextfieldHelper, KulTextfieldStyling } from "./components/kul-textfield/kul-textfield-declarations";
 export { KulToastEventPayload } from "./components/kul-toast/kul-toast-declarations";
+export { KulToggleEventPayload, KulToggleState } from "./components/kul-toggle/kul-toggle-declarations";
 export { KulTreeEventPayload } from "./components/kul-tree/kul-tree-declarations";
 export { KulTypewriterEventPayload, KulTypewriterValue } from "./components/kul-typewriter/kul-typewriter-declarations";
 export { KulUploadEventPayload } from "./components/kul-upload/kul-upload-declarations";
@@ -1313,13 +1313,13 @@ export namespace Components {
     }
     interface KulShowcaseSplash {
     }
-    interface KulShowcaseSwitch {
-    }
     interface KulShowcaseTabbar {
     }
     interface KulShowcaseTextfield {
     }
     interface KulShowcaseToast {
+    }
+    interface KulShowcaseToggle {
     }
     interface KulShowcaseTree {
     }
@@ -1498,69 +1498,6 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
-        /**
-          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
-          * @param ms - Number of milliseconds
-         */
-        "unmount": (ms?: number) => Promise<void>;
-    }
-    interface KulSwitch {
-        /**
-          * Fetches debug information of the component's current state.
-          * @returns A promise that resolves with the debug information object.
-         */
-        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
-        /**
-          * Used to retrieve component's properties and descriptions.
-          * @param descriptions - When true, includes descriptions for each property.
-          * @returns Promise resolved with an object containing the component's properties.
-         */
-        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
-        /**
-          * Used to retrieve the component's current state.
-          * @returns Promise resolved with the current state of the component.
-         */
-        "getValue": () => Promise<KulSwitchState>;
-        /**
-          * Defaults at false. When set to true, the component is disabled.
-          * @default false
-         */
-        "kulDisabled": boolean;
-        /**
-          * Defines text to display along with the switch.
-          * @default ""
-         */
-        "kulLabel": string;
-        /**
-          * Defaults at false. When set to true, the label will be displayed before the component.
-          * @default false
-         */
-        "kulLeadingLabel": boolean;
-        /**
-          * When set to true, the pointerdown event will trigger a ripple effect.
-          * @default true
-         */
-        "kulRipple": boolean;
-        /**
-          * Custom style of the component.
-          * @default ""
-         */
-        "kulStyle": string;
-        /**
-          * Sets the initial boolean state of the switch.
-          * @default false
-         */
-        "kulValue": boolean;
-        /**
-          * This method is used to trigger a new render of the component.
-         */
-        "refresh": () => Promise<void>;
-        /**
-          * Sets the component's state.
-          * @param value - The new state to be set on the component.
-          * @returns
-         */
-        "setValue": (value: KulSwitchState) => Promise<void>;
         /**
           * Initiates the unmount sequence, which removes the component from the DOM after a delay.
           * @param ms - Number of milliseconds
@@ -1757,6 +1694,69 @@ export namespace Components {
           * Triggers a re-render of the component to reflect any state changes.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Initiates the unmount sequence, which removes the component from the DOM after a delay.
+          * @param ms - Number of milliseconds
+         */
+        "unmount": (ms?: number) => Promise<void>;
+    }
+    interface KulToggle {
+        /**
+          * Fetches debug information of the component's current state.
+          * @returns A promise that resolves with the debug information object.
+         */
+        "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
+        /**
+          * Used to retrieve component's properties and descriptions.
+          * @param descriptions - When true, includes descriptions for each property.
+          * @returns Promise resolved with an object containing the component's properties.
+         */
+        "getProps": (descriptions?: boolean) => Promise<GenericObject>;
+        /**
+          * Used to retrieve the component's current state.
+          * @returns Promise resolved with the current state of the component.
+         */
+        "getValue": () => Promise<KulToggleState>;
+        /**
+          * Defaults at false. When set to true, the component is disabled.
+          * @default false
+         */
+        "kulDisabled": boolean;
+        /**
+          * Defines text to display along with the toggle.
+          * @default ""
+         */
+        "kulLabel": string;
+        /**
+          * Defaults at false. When set to true, the label will be displayed before the component.
+          * @default false
+         */
+        "kulLeadingLabel": boolean;
+        /**
+          * When set to true, the pointerdown event will trigger a ripple effect.
+          * @default true
+         */
+        "kulRipple": boolean;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle": string;
+        /**
+          * Sets the initial boolean state of the toggle.
+          * @default false
+         */
+        "kulValue": boolean;
+        /**
+          * This method is used to trigger a new render of the component.
+         */
+        "refresh": () => Promise<void>;
+        /**
+          * Sets the component's state.
+          * @param value - The new state to be set on the component.
+          * @returns
+         */
+        "setValue": (value: KulToggleState | boolean) => Promise<void>;
         /**
           * Initiates the unmount sequence, which removes the component from the DOM after a delay.
           * @param ms - Number of milliseconds
@@ -2020,10 +2020,6 @@ export interface KulSplashCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulSplashElement;
 }
-export interface KulSwitchCustomEvent<T> extends CustomEvent<T> {
-    detail: T;
-    target: HTMLKulSwitchElement;
-}
 export interface KulTabbarCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulTabbarElement;
@@ -2035,6 +2031,10 @@ export interface KulTextfieldCustomEvent<T> extends CustomEvent<T> {
 export interface KulToastCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLKulToastElement;
+}
+export interface KulToggleCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLKulToggleElement;
 }
 export interface KulTreeCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -2616,12 +2616,6 @@ declare global {
         prototype: HTMLKulShowcaseSplashElement;
         new (): HTMLKulShowcaseSplashElement;
     };
-    interface HTMLKulShowcaseSwitchElement extends Components.KulShowcaseSwitch, HTMLStencilElement {
-    }
-    var HTMLKulShowcaseSwitchElement: {
-        prototype: HTMLKulShowcaseSwitchElement;
-        new (): HTMLKulShowcaseSwitchElement;
-    };
     interface HTMLKulShowcaseTabbarElement extends Components.KulShowcaseTabbar, HTMLStencilElement {
     }
     var HTMLKulShowcaseTabbarElement: {
@@ -2639,6 +2633,12 @@ declare global {
     var HTMLKulShowcaseToastElement: {
         prototype: HTMLKulShowcaseToastElement;
         new (): HTMLKulShowcaseToastElement;
+    };
+    interface HTMLKulShowcaseToggleElement extends Components.KulShowcaseToggle, HTMLStencilElement {
+    }
+    var HTMLKulShowcaseToggleElement: {
+        prototype: HTMLKulShowcaseToggleElement;
+        new (): HTMLKulShowcaseToggleElement;
     };
     interface HTMLKulShowcaseTreeElement extends Components.KulShowcaseTree, HTMLStencilElement {
     }
@@ -2709,23 +2709,6 @@ declare global {
         prototype: HTMLKulSplashElement;
         new (): HTMLKulSplashElement;
     };
-    interface HTMLKulSwitchElementEventMap {
-        "kul-switch-event": KulSwitchEventPayload;
-    }
-    interface HTMLKulSwitchElement extends Components.KulSwitch, HTMLStencilElement {
-        addEventListener<K extends keyof HTMLKulSwitchElementEventMap>(type: K, listener: (this: HTMLKulSwitchElement, ev: KulSwitchCustomEvent<HTMLKulSwitchElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
-        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLKulSwitchElementEventMap>(type: K, listener: (this: HTMLKulSwitchElement, ev: KulSwitchCustomEvent<HTMLKulSwitchElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
-        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
-    }
-    var HTMLKulSwitchElement: {
-        prototype: HTMLKulSwitchElement;
-        new (): HTMLKulSwitchElement;
-    };
     interface HTMLKulTabbarElementEventMap {
         "kul-tabbar-event": KulTabbarEventPayload;
     }
@@ -2776,6 +2759,23 @@ declare global {
     var HTMLKulToastElement: {
         prototype: HTMLKulToastElement;
         new (): HTMLKulToastElement;
+    };
+    interface HTMLKulToggleElementEventMap {
+        "kul-toggle-event": KulToggleEventPayload;
+    }
+    interface HTMLKulToggleElement extends Components.KulToggle, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLKulToggleElementEventMap>(type: K, listener: (this: HTMLKulToggleElement, ev: KulToggleCustomEvent<HTMLKulToggleElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLKulToggleElementEventMap>(type: K, listener: (this: HTMLKulToggleElement, ev: KulToggleCustomEvent<HTMLKulToggleElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLKulToggleElement: {
+        prototype: HTMLKulToggleElement;
+        new (): HTMLKulToggleElement;
     };
     interface HTMLKulTreeElementEventMap {
         "kul-tree-event": KulTreeEventPayload;
@@ -2885,20 +2885,20 @@ declare global {
         "kul-showcase-slider": HTMLKulShowcaseSliderElement;
         "kul-showcase-spinner": HTMLKulShowcaseSpinnerElement;
         "kul-showcase-splash": HTMLKulShowcaseSplashElement;
-        "kul-showcase-switch": HTMLKulShowcaseSwitchElement;
         "kul-showcase-tabbar": HTMLKulShowcaseTabbarElement;
         "kul-showcase-textfield": HTMLKulShowcaseTextfieldElement;
         "kul-showcase-toast": HTMLKulShowcaseToastElement;
+        "kul-showcase-toggle": HTMLKulShowcaseToggleElement;
         "kul-showcase-tree": HTMLKulShowcaseTreeElement;
         "kul-showcase-typewriter": HTMLKulShowcaseTypewriterElement;
         "kul-showcase-upload": HTMLKulShowcaseUploadElement;
         "kul-slider": HTMLKulSliderElement;
         "kul-spinner": HTMLKulSpinnerElement;
         "kul-splash": HTMLKulSplashElement;
-        "kul-switch": HTMLKulSwitchElement;
         "kul-tabbar": HTMLKulTabbarElement;
         "kul-textfield": HTMLKulTextfieldElement;
         "kul-toast": HTMLKulToastElement;
+        "kul-toggle": HTMLKulToggleElement;
         "kul-tree": HTMLKulTreeElement;
         "kul-typewriter": HTMLKulTypewriterElement;
         "kul-upload": HTMLKulUploadElement;
@@ -3657,13 +3657,13 @@ declare namespace LocalJSX {
     }
     interface KulShowcaseSplash {
     }
-    interface KulShowcaseSwitch {
-    }
     interface KulShowcaseTabbar {
     }
     interface KulShowcaseTextfield {
     }
     interface KulShowcaseToast {
+    }
+    interface KulShowcaseToggle {
     }
     interface KulShowcaseTree {
     }
@@ -3786,42 +3786,6 @@ declare namespace LocalJSX {
          */
         "onKul-splash-event"?: (event: KulSplashCustomEvent<KulSplashEventPayload>) => void;
     }
-    interface KulSwitch {
-        /**
-          * Defaults at false. When set to true, the component is disabled.
-          * @default false
-         */
-        "kulDisabled"?: boolean;
-        /**
-          * Defines text to display along with the switch.
-          * @default ""
-         */
-        "kulLabel"?: string;
-        /**
-          * Defaults at false. When set to true, the label will be displayed before the component.
-          * @default false
-         */
-        "kulLeadingLabel"?: boolean;
-        /**
-          * When set to true, the pointerdown event will trigger a ripple effect.
-          * @default true
-         */
-        "kulRipple"?: boolean;
-        /**
-          * Custom style of the component.
-          * @default ""
-         */
-        "kulStyle"?: string;
-        /**
-          * Sets the initial boolean state of the switch.
-          * @default false
-         */
-        "kulValue"?: boolean;
-        /**
-          * Describes event emitted for various switch interactions like click, focus, blur.
-         */
-        "onKul-switch-event"?: (event: KulSwitchCustomEvent<KulSwitchEventPayload>) => void;
-    }
     interface KulTabbar {
         /**
           * Actual data of the component.
@@ -3939,6 +3903,42 @@ declare namespace LocalJSX {
           * Describes event emitted.
          */
         "onKul-toast-event"?: (event: KulToastCustomEvent<KulToastEventPayload>) => void;
+    }
+    interface KulToggle {
+        /**
+          * Defaults at false. When set to true, the component is disabled.
+          * @default false
+         */
+        "kulDisabled"?: boolean;
+        /**
+          * Defines text to display along with the toggle.
+          * @default ""
+         */
+        "kulLabel"?: string;
+        /**
+          * Defaults at false. When set to true, the label will be displayed before the component.
+          * @default false
+         */
+        "kulLeadingLabel"?: boolean;
+        /**
+          * When set to true, the pointerdown event will trigger a ripple effect.
+          * @default true
+         */
+        "kulRipple"?: boolean;
+        /**
+          * Custom style of the component.
+          * @default ""
+         */
+        "kulStyle"?: string;
+        /**
+          * Sets the initial boolean state of the toggle.
+          * @default false
+         */
+        "kulValue"?: boolean;
+        /**
+          * Describes event emitted for various toggle interactions like click, focus, blur.
+         */
+        "onKul-toggle-event"?: (event: KulToggleCustomEvent<KulToggleEventPayload>) => void;
     }
     interface KulTree {
         /**
@@ -4105,20 +4105,20 @@ declare namespace LocalJSX {
         "kul-showcase-slider": KulShowcaseSlider;
         "kul-showcase-spinner": KulShowcaseSpinner;
         "kul-showcase-splash": KulShowcaseSplash;
-        "kul-showcase-switch": KulShowcaseSwitch;
         "kul-showcase-tabbar": KulShowcaseTabbar;
         "kul-showcase-textfield": KulShowcaseTextfield;
         "kul-showcase-toast": KulShowcaseToast;
+        "kul-showcase-toggle": KulShowcaseToggle;
         "kul-showcase-tree": KulShowcaseTree;
         "kul-showcase-typewriter": KulShowcaseTypewriter;
         "kul-showcase-upload": KulShowcaseUpload;
         "kul-slider": KulSlider;
         "kul-spinner": KulSpinner;
         "kul-splash": KulSplash;
-        "kul-switch": KulSwitch;
         "kul-tabbar": KulTabbar;
         "kul-textfield": KulTextfield;
         "kul-toast": KulToast;
+        "kul-toggle": KulToggle;
         "kul-tree": KulTree;
         "kul-typewriter": KulTypewriter;
         "kul-upload": KulUpload;
@@ -4184,20 +4184,20 @@ declare module "@stencil/core" {
             "kul-showcase-slider": LocalJSX.KulShowcaseSlider & JSXBase.HTMLAttributes<HTMLKulShowcaseSliderElement>;
             "kul-showcase-spinner": LocalJSX.KulShowcaseSpinner & JSXBase.HTMLAttributes<HTMLKulShowcaseSpinnerElement>;
             "kul-showcase-splash": LocalJSX.KulShowcaseSplash & JSXBase.HTMLAttributes<HTMLKulShowcaseSplashElement>;
-            "kul-showcase-switch": LocalJSX.KulShowcaseSwitch & JSXBase.HTMLAttributes<HTMLKulShowcaseSwitchElement>;
             "kul-showcase-tabbar": LocalJSX.KulShowcaseTabbar & JSXBase.HTMLAttributes<HTMLKulShowcaseTabbarElement>;
             "kul-showcase-textfield": LocalJSX.KulShowcaseTextfield & JSXBase.HTMLAttributes<HTMLKulShowcaseTextfieldElement>;
             "kul-showcase-toast": LocalJSX.KulShowcaseToast & JSXBase.HTMLAttributes<HTMLKulShowcaseToastElement>;
+            "kul-showcase-toggle": LocalJSX.KulShowcaseToggle & JSXBase.HTMLAttributes<HTMLKulShowcaseToggleElement>;
             "kul-showcase-tree": LocalJSX.KulShowcaseTree & JSXBase.HTMLAttributes<HTMLKulShowcaseTreeElement>;
             "kul-showcase-typewriter": LocalJSX.KulShowcaseTypewriter & JSXBase.HTMLAttributes<HTMLKulShowcaseTypewriterElement>;
             "kul-showcase-upload": LocalJSX.KulShowcaseUpload & JSXBase.HTMLAttributes<HTMLKulShowcaseUploadElement>;
             "kul-slider": LocalJSX.KulSlider & JSXBase.HTMLAttributes<HTMLKulSliderElement>;
             "kul-spinner": LocalJSX.KulSpinner & JSXBase.HTMLAttributes<HTMLKulSpinnerElement>;
             "kul-splash": LocalJSX.KulSplash & JSXBase.HTMLAttributes<HTMLKulSplashElement>;
-            "kul-switch": LocalJSX.KulSwitch & JSXBase.HTMLAttributes<HTMLKulSwitchElement>;
             "kul-tabbar": LocalJSX.KulTabbar & JSXBase.HTMLAttributes<HTMLKulTabbarElement>;
             "kul-textfield": LocalJSX.KulTextfield & JSXBase.HTMLAttributes<HTMLKulTextfieldElement>;
             "kul-toast": LocalJSX.KulToast & JSXBase.HTMLAttributes<HTMLKulToastElement>;
+            "kul-toggle": LocalJSX.KulToggle & JSXBase.HTMLAttributes<HTMLKulToggleElement>;
             "kul-tree": LocalJSX.KulTree & JSXBase.HTMLAttributes<HTMLKulTreeElement>;
             "kul-typewriter": LocalJSX.KulTypewriter & JSXBase.HTMLAttributes<HTMLKulTypewriterElement>;
             "kul-upload": LocalJSX.KulUpload & JSXBase.HTMLAttributes<HTMLKulUploadElement>;

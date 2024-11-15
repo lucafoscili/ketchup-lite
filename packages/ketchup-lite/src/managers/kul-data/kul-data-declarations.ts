@@ -7,7 +7,7 @@ import {
 } from '../../components/kul-chat/kul-chat-declarations';
 import { KulCodePropsInterface } from '../../components/kul-code/kul-code-declarations';
 import { KulImagePropsInterface } from '../../components/kul-image/kul-image-declarations';
-import { KulSwitchPropsInterface } from '../../components/kul-switch/kul-switch-declarations';
+import { KulTogglePropsInterface } from '../../components/kul-toggle/kul-toggle-declarations';
 import {
     GenericMap,
     KulComponent,
@@ -78,11 +78,11 @@ export type KulDataCell<T extends KulDataShapes> = T extends 'badge'
                           shape: 'number';
                           value: number;
                       }
-                    : T extends 'switch'
-                      ? Partial<KulSwitchPropsInterface> & {
-                            shape: 'switch';
+                    : T extends 'toggle'
+                      ? Partial<KulTogglePropsInterface> & {
+                            shape: 'toggle';
                             value: boolean;
-                            htmlProps?: Partial<HTMLKulSwitchElement>;
+                            htmlProps?: Partial<HTMLKulToggleElement>;
                         }
                       : T extends 'upload'
                         ? Partial<KulUploadPropsInterface> & {
@@ -106,7 +106,7 @@ export type KulCellNameToShape = {
     kulCode: 'code';
     kulImage: 'image';
     kulNumber: 'number';
-    kulSwitch: 'switch';
+    kulToggle: 'toggle';
     kulText: 'text';
     kulUpload: 'upload';
 };
@@ -121,7 +121,7 @@ export interface KulDataCellContainer {
     kulChip?: KulDataCellFromName<'kulChip'>;
     kulCode?: KulDataCellFromName<'kulCode'>;
     kulImage?: KulDataCellFromName<'kulImage'>;
-    kulSwitch?: KulDataCellFromName<'kulSwitch'>;
+    kulToggle?: KulDataCellFromName<'kulToggle'>;
     kulNumber?: KulDataCellFromName<'kulNumber'>;
     kulText?: KulDataCellFromName<'kulText'>;
     kulUpload?: KulDataCellFromName<'kulUpload'>;
@@ -162,7 +162,7 @@ export type KulDataShapes =
     | 'code'
     | 'image'
     | 'number'
-    | 'switch'
+    | 'toggle'
     | 'text'
     | 'upload';
 export type KulDataShapesMap = {

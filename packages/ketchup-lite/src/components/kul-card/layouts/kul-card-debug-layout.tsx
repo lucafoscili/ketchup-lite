@@ -5,7 +5,7 @@ import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations'
 import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
 import { KulCodeEventPayload } from '../../kul-code/kul-code-declarations';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
-import { KulSwitchEventPayload } from '../../kul-switch/kul-switch-declarations';
+import { KulToggleEventPayload } from '../../kul-toggle/kul-toggle-declarations';
 
 export function getDebugLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
@@ -27,12 +27,12 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
         DEFAULTS.debug.code(),
         codeEventHandler
     );
-    const switches = decorator(
-        'switch',
-        shapes.switch,
+    const togglees = decorator(
+        'toggle',
+        shapes.toggle,
         eventDispatcher,
-        DEFAULTS.debug.switch(),
-        switchEventHandler
+        DEFAULTS.debug.toggle(),
+        toggleEventHandler
     );
 
     const className = {
@@ -41,8 +41,8 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
 
     return (
         <div class={className}>
-            {switches?.element?.length && (
-                <div class="section-1 switch">{switches.element[0]}</div>
+            {togglees?.element?.length && (
+                <div class="section-1 toggle">{togglees.element[0]}</div>
             )}
             {codes?.element?.length && (
                 <div class="section-2 code">{codes.element[0]}</div>
@@ -114,7 +114,7 @@ const listEventHandler = (e: CustomEvent<KulListEventPayload>) => {
     }
 };
 
-const switchEventHandler = (e: CustomEvent<KulSwitchEventPayload>) => {
+const toggleEventHandler = (e: CustomEvent<KulToggleEventPayload>) => {
     const { comp, eventType, value } = e.detail;
     const boolValue = value === 'on' ? true : false;
 

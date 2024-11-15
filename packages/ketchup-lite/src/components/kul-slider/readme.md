@@ -118,14 +118,18 @@ Type: `Promise<void>`
 | `--kul-slider-font-family`                  | Sets font family of the slider's label. Defaults to var(--kul-font-family).                                                                            |
 | `--kul-slider-font-size`                    | Sets font size of the slider's label. Defaults to var(--kul-font-size).                                                                                |
 | `--kul-slider-font-weight`                  | Sets font weight of the slider's label. Defaults to 400.                                                                                               |
+| `--kul-slider-input-height`                 | Sets the height of the hidden input element. Defaults to 48px.                                                                                         |
 | `--kul-slider-label-color`                  | Sets text color of the slider's label. Defaults to var(--kul-text-color).                                                                              |
 | `--kul-slider-label-font-size`              | Sets font size of the slider's label. Defaults to 0.875em.                                                                                             |
 | `--kul-slider-label-letter-spacing`         | Sets letter spacing of the slider's label. Defaults to 0.0178571429em.                                                                                 |
 | `--kul-slider-label-line-height`            | Sets line height of the slider's label. Defaults to 2em.                                                                                               |
-| `--kul-slider-label-padding-left`           | Sets left padding of the slider's label. Defaults to 4px.                                                                                              |
-| `--kul-slider-label-padding-right`          | Sets right padding of the slider's label. Defaults to 4px.                                                                                             |
+| `--kul-slider-label-min-width`              | Sets the min. width of the label. Defaults to 0px.                                                                                                     |
+| `--kul-slider-label-overflow`               | Sets the behavior of the label's overflow. Defaults to unset.                                                                                          |
+| `--kul-slider-label-padding-left`           | Sets left padding of the slider's label. Defaults to 8px.                                                                                              |
+| `--kul-slider-label-padding-right`          | Sets right padding of the slider's label. Defaults to 8px.                                                                                             |
+| `--kul-slider-label-white-space`            | Sets the behavior of the label's white spaces. Defaults to pre-wrap.                                                                                   |
 | `--kul-slider-margin`                       | Sets margin around the slider component. Defaults to 0 0.75em.                                                                                         |
-| `--kul-slider-min-width`                    | Sets minimum width of the slider component. Defaults to 120px.                                                                                         |
+| `--kul-slider-min-width`                    | Sets minimum width of the slider component. Defaults to 128px.                                                                                         |
 | `--kul-slider-primary-color`                | Sets primary color of the component. Used for active parts of the slider such as the track and thumb. Defaults to var(--kul-primary-color).            |
 | `--kul-slider-primary-color-rgb`            | Sets primary color RGB values for the component. Used to create transparent variations of the primary color. Defaults to var(--kul-primary-color-rgb). |
 | `--kul-slider-thumb-active-after-scale`     | Sets scale transform on active state for the thumb's after element. Defaults to 1.5.                                                                   |

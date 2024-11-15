@@ -32,3 +32,12 @@
   --kul-slider-primary-color: var(--kul-warning-color);
   --kul-slider-primary-color-rgb: var(--kul-warning-color-rgb);
 }
+
+:host(.#{$kul-class-full-width}) {
+  width: 100%;
+
+  #kul-component,
+  .formfield {
+    width: 100%;
+  }
+}

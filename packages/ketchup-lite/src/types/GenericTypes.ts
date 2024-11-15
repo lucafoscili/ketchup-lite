@@ -92,9 +92,9 @@ import {
     KulMessengerProps,
 } from '../components/kul-messenger/kul-messenger-declarations';
 import {
-    KulSwitchEvent,
-    KulSwitchProps,
-} from '../components/kul-switch/kul-switch-declarations';
+    KulToggleEvent,
+    KulToggleProps,
+} from '../components/kul-toggle/kul-toggle-declarations';
 import {
     KulChipEvent,
     KulChipProps,
@@ -119,7 +119,7 @@ import { KulPhotoframe } from '../components/kul-photoframe/kul-photoframe';
 import { KulProgressbar } from '../components/kul-progressbar/kul-progressbar';
 import { KulSpinner } from '../components/kul-spinner/kul-spinner';
 import { KulSplash } from '../components/kul-splash/kul-splash';
-import { KulSwitch } from '../components/kul-switch/kul-switch';
+import { KulToggle } from '../components/kul-toggle/kul-toggle';
 import { KulTabbar } from '../components/kul-tabbar/kul-tabbar';
 import { KulTextfield } from '../components/kul-textfield/kul-textfield';
 import { KulToast } from '../components/kul-toast/kul-toast';
@@ -186,7 +186,7 @@ export type KulComponentName =
     | 'KulSlider'
     | 'KulSpinner'
     | 'KulSplash'
-    | 'KulSwitch'
+    | 'KulToggle'
     | 'KulTabbar'
     | 'KulTextfield'
     | 'KulToast'
@@ -218,7 +218,7 @@ export type KulComponentElementMap = {
     KulSlider: HTMLKulSliderElement;
     KulSpinner: HTMLKulSpinnerElement;
     KulSplash: HTMLKulSplashElement;
-    KulSwitch: HTMLKulSwitchElement;
+    KulToggle: HTMLKulToggleElement;
     KulTabbar: HTMLKulTabbarElement;
     KulTextfield: HTMLKulTextfieldElement;
     KulToast: HTMLKulToastElement;
@@ -251,7 +251,7 @@ export type KulComponentClassMap = {
     KulSlider: KulSlider;
     KulSpinner: KulSpinner;
     KulSplash: KulSplash;
-    KulSwitch: KulSwitch;
+    KulToggle: KulToggle;
     KulTabbar: KulTabbar;
     KulTextfield: KulTextfield;
     KulToast: KulToast;
@@ -284,7 +284,7 @@ export type KulComponentTagMap = {
     KulSlider: 'kul-slider';
     KulSpinner: 'kul-spinner';
     KulSplash: 'kul-splash';
-    KulSwitch: 'kul-switch';
+    KulToggle: 'kul-toggle';
     KulTabbar: 'kul-tabbar';
     KulTextfield: 'kul-textfield';
     KulToast: 'kul-toast';
@@ -357,7 +357,7 @@ export type ComponentEventMap = {
     KulSlider: KulSliderEvent;
     KulSpinner: KulSpinnerEvent;
     KulSplash: KulSplashEvent;
-    KulSwitch: KulSwitchEvent;
+    KulToggle: KulToggleEvent;
     KulTabbar: KulTabbarEvent;
     KulTextfield: KulTextfieldEvent;
     KulToast: KulToastEvent;
@@ -390,7 +390,7 @@ export type ComponentPropsMap = {
     KulSlider: KulSliderProps;
     KulSpinner: KulSpinnerProps;
     KulSplash: KulSplashProps;
-    KulSwitch: KulSwitchProps;
+    KulToggle: KulToggleProps;
     KulTabbar: KulTabbarProps;
     KulTextfield: KulTextfieldProps;
     KulToast: KulToastProps;
