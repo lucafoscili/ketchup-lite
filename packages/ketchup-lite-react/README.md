@@ -40,7 +40,6 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
   - [Main differences from Ketchup](#main-differences-from-ketchup)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
-  - [License](#license)
   - [Credits](#credits)
 
 ## Features
@@ -139,16 +138,6 @@ For detailed information about each component, including available properties, e
 ## Contributing
 
 I'm working on this project primarily for fun and for my portfolio website during my free time, but P.R. from other users that find this library useful are welcome!
-
-<div align="right">
-
-[(Back to Top)](#ketchup-lite)
-
-</div>
-
-## License
-
-Ketchup Lite is open-source software licensed under the MIT license. See the LICENSE file for more details.
 
 <div align="right">
 

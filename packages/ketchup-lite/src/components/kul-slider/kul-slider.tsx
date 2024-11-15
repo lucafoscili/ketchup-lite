@@ -180,8 +180,7 @@ export class KulSlider {
      */
     @Method()
     async setValue(value: number): Promise<void> {
-        this.value.display = value;
-        this.value.real = value;
+        this.value = { display: value, real: value };
     }
     /**
      * Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -238,7 +237,7 @@ export class KulSlider {
                         <div
                             class={className}
                             style={{
-                                '--slider-value': `${((this.value.display - this.kulMin) / (this.kulMax - this.kulMin)) * 100}%`,
+                                '--kul_slider_value': `${((this.value.display - this.kulMin) / (this.kulMax - this.kulMin)) * 100}%`,
                             }}
                         >
                             <input
