@@ -1,72 +1,72 @@
 :host {
   /**
-  * @prop --kul-switch-font-family: Sets font family of the switch's label.
+  * @prop --kul-toggle-font-family: Sets font family of the toggle's label.
   * Defaults to var(--kul-font-family).
   */
-  --kul_switch_font_family: var(
-    --kul-switch-font-family,
+  --kul_toggle_font_family: var(
+    --kul-toggle-font-family,
     var(--kul-font-family)
   );
   /**
-  * @prop --kul-switch-font-size: Sets font size of the switch's label.
+  * @prop --kul-toggle-font-size: Sets font size of the toggle's label.
   * Defaults to var(--kul-font-size).
   */
-  --kul_switch_font_size: var(--kul-switch-font-size, var(--kul-font-size));
+  --kul_toggle_font_size: var(--kul-toggle-font-size, var(--kul-font-size));
   /**
-  * @prop --kul-switch-font-weight: Sets font weight of the switch's label.
+  * @prop --kul-toggle-font-weight: Sets font weight of the toggle's label.
   * Defaults to 400.
   */
-  --kul_switch_font_weight: var(--kul-switch-font-weight, 400);
+  --kul_toggle_font_weight: var(--kul-toggle-font-weight, 400);
   /**
-  * @prop --kul-switch-label-color: Sets text color of the switch's label.
+  * @prop --kul-toggle-label-color: Sets text color of the toggle's label.
   * Defaults to var(--kul-text-color).
   */
-  --kul_switch_label_color: var(
-    --kul-switch-label-color,
+  --kul_toggle_label_color: var(
+    --kul-toggle-label-color,
     var(--kul-text-color)
   );
   /**
-  * @prop --kul-switch-primary-color: Sets primary color of the component.
+  * @prop --kul-toggle-primary-color: Sets primary color of the component.
   * Defaults to var(--kul-primary-color).
   */
-  --kul_switch_primary_color: var(
-    --kul-switch-primary-color,
+  --kul_toggle_primary_color: var(
+    --kul-toggle-primary-color,
     var(--kul-primary-color)
   );
   /**
-  * @prop --kul-switch-primary-color-rgb: Sets primary color RGB values of the component.
+  * @prop --kul-toggle-primary-color-rgb: Sets primary color RGB values of the component.
   * Defaults to var(--kul-primary-color-rgb).
   */
-  --kul_switch_primary_color_rgb: var(
-    --kul-switch-primary-color-rgb,
+  --kul_toggle_primary_color_rgb: var(
+    --kul-toggle-primary-color-rgb,
     var(--kul-primary-color-rgb)
   );
   /**
-  * @prop --kul-switch-thumb-color: Sets thumb color.
+  * @prop --kul-toggle-thumb-color: Sets thumb color.
   * Defaults to var(--kul-border-color).
   */
-  --kul_switch_thumb_color: var(
-    --kul-switch-thumb-color,
+  --kul_toggle_thumb_color: var(
+    --kul-toggle-thumb-color,
     var(--kul-border-color)
   );
 
   display: block;
-  font-family: var(--kul_switch_font_family);
-  font-size: var(--kul_switch_font_size);
+  font-family: var(--kul_toggle_font_family);
+  font-size: var(--kul_toggle_font_size);
 }
 
 .form-field {
   font-size: 0.875em;
   line-height: 2em;
-  font-weight: var(--kul_switch_font_weight);
+  font-weight: var(--kul_toggle_font_weight);
   letter-spacing: 0.0178571429em;
-  color: var(--kul_switch_label_color);
+  color: var(--kul_toggle_label_color);
   display: inline-flex;
   align-items: center;
   vertical-align: middle;
 
   &--align-end {
-    .switch__label {
+    .toggle__label {
       margin-left: auto;
       margin-right: 0px;
       padding-left: 0px;
@@ -76,7 +76,7 @@
   }
 
   &__label {
-    color: var(--kul_switch_label_color);
+    color: var(--kul_toggle_label_color);
     cursor: pointer;
     font-family: var(--kul-font-family);
     margin-left: 0px;
@@ -88,7 +88,7 @@
   }
 }
 
-.switch {
+.toggle {
   display: inline-block;
   position: relative;
   outline: none;
@@ -102,19 +102,19 @@
   }
 
   &--checked {
-    .switch__track {
-      background-color: var(--kul_switch_primary_color);
+    .toggle__track {
+      background-color: var(--kul_toggle_primary_color);
       opacity: 0.54;
     }
-    .switch__thumb-underlay {
+    .toggle__thumb-underlay {
       transform: translateX(16px);
     }
 
-    .switch__thumb {
-      background-color: var(--kul_switch_primary_color);
-      border-color: var(--kul_switch_primary_color);
+    .toggle__thumb {
+      background-color: var(--kul_toggle_primary_color);
+      border-color: var(--kul_toggle_primary_color);
 
-      .switch__native-control {
+      .toggle__native-control {
         transform: translateX(-16px);
       }
     }
@@ -151,7 +151,7 @@
     height: 48px;
 
     &:hover {
-      background-color: rgba(var(--kul_switch_primary_color_rgb), 0.125);
+      background-color: rgba(var(--kul_toggle_primary_color_rgb), 0.125);
     }
   }
 
@@ -185,13 +185,13 @@
     height: 48px;
   }
 
-  &:not(.switch--checked) {
-    .switch__track {
-      background-color: var(--kul_switch_label_color);
+  &:not(.toggle--checked) {
+    .toggle__track {
+      background-color: var(--kul_toggle_label_color);
     }
-    .switch__thumb {
-      background-color: var(--kul_switch_thumb_color);
-      border-color: var(--kul_switch_thumb_color);
+    .toggle__thumb {
+      background-color: var(--kul_toggle_thumb_color);
+      border-color: var(--kul_toggle_thumb_color);
     }
   }
 }

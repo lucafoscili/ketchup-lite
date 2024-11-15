@@ -1,4 +1,4 @@
-import { SwitchData } from './kul-showcase-switch-declarations';
+import { ToggleData } from './kul-showcase-toggle-declarations';
 import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { DOC_IDS } from '../../kul-showcase-data';
 import {
@@ -9,27 +9,27 @@ import {
 } from '../../../../types/GenericTypes';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 
-const COMPONENT_NAME: KulComponentName = 'KulSwitch';
-const EVENT_NAME: KulComponentEventName<'KulSwitch'> = 'kul-switch-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulSwitch'> =
-    'KulSwitchEventPayload';
-const TAG_NAME: KulComponentTag<'KulSwitch'> = 'kul-switch';
+const COMPONENT_NAME: KulComponentName = 'KulToggle';
+const EVENT_NAME: KulComponentEventName<'KulToggle'> = 'kul-toggle-event';
+const PAYLOAD_NAME: KulComponentEventPayloadName<'KulToggle'> =
+    'KulToggleEventPayload';
+const TAG_NAME: KulComponentTag<'KulToggle'> = 'kul-toggle';
 
-export const SWITCH_EXAMPLES: SwitchData = {
+export const TOGGLE_EXAMPLES: ToggleData = {
     colors: {
-        ['data-description']: 'Switch states colors',
+        ['data-description']: 'Toggle states colors',
         ['data-dynamic']: 'state-colors',
         kulLabel: 'States colors',
         kulDisabled: false,
         kulValue: true,
     },
     disabled: {
-        ['data-description']: 'Disabled switch',
+        ['data-description']: 'Disabled toggle',
         kulDisabled: true,
         kulLabel: 'Disabled',
     },
     simple: {
-        ['data-description']: 'Switch with leading label',
+        ['data-description']: 'Toggle with leading label',
         kulLabel: 'Leading label',
         kulLeadingLabel: true,
     },
@@ -40,7 +40,7 @@ export const SWITCH_EXAMPLES: SwitchData = {
     },
 };
 
-export const SWITCH_DOC: KulArticleDataset = {
+export const TOGGLE_DOC: KulArticleDataset = {
     nodes: [
         {
             id: DOC_IDS.root,

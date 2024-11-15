@@ -19,8 +19,8 @@ export const CARD_KULDATA_FACTORY: {
                             shape: 'button',
                             value: '',
                         },
-                        kulSwitch: {
-                            shape: 'switch',
+                        kulToggle: {
+                            shape: 'toggle',
                             value: false,
                         },
                     },

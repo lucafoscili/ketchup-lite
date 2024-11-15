@@ -53,7 +53,7 @@ export const DEFAULTS: {
             },
         ],
         code: () => [{ kulLanguage: 'markdown' }],
-        switch: () => [
+        toggle: () => [
             {
                 kulLeadingLabel: true,
                 kulLabel: 'Toggle debug',

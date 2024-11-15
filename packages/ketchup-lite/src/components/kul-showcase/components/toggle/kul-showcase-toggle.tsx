@@ -1,26 +1,26 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { SWITCH_DOC, SWITCH_EXAMPLES } from './kul-showcase-switch-data';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
-import { SwitchExample } from './kul-showcase-switch-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { TOGGLE_DOC, TOGGLE_EXAMPLES } from './kul-showcase-toggle-data';
+import { ToggleExample } from './kul-showcase-toggle-declarations';
 
 @Component({
-    tag: 'kul-showcase-switch',
-    styleUrl: 'kul-showcase-switch.scss',
+    tag: 'kul-showcase-toggle',
+    styleUrl: 'kul-showcase-toggle.scss',
     shadow: true,
 })
-export class KulShowcaseSwitch {
+export class KulShowcaseToggle {
     /**
-     * References the root HTML element of the component (<kul-showcase-switch>).
+     * References the root HTML element of the component (<kul-showcase-toggle>).
      */
-    @Element() rootElement: HTMLKulShowcaseSwitchElement;
+    @Element() rootElement: HTMLKulShowcaseToggleElement;
 
     /*-------------------------------------------------*/
     /*       I n t e r n a l   V a r i a b l e s       */
     /*-------------------------------------------------*/
 
-    #dynamicExamples: HTMLKulSwitchElement[] = [];
+    #dynamicExamples: HTMLKulToggleElement[] = [];
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
     #interval: NodeJS.Timeout;
 
@@ -30,16 +30,16 @@ export class KulShowcaseSwitch {
 
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in SWITCH_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(SWITCH_EXAMPLES, key)) {
-                const props: SwitchExample = SWITCH_EXAMPLES[key];
+        for (const key in TOGGLE_EXAMPLES) {
+            if (Object.prototype.hasOwnProperty.call(TOGGLE_EXAMPLES, key)) {
+                const props: ToggleExample = TOGGLE_EXAMPLES[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
                             {props['data-description']}
                         </div>
                         <div class="comp-wrapper" part="comp-wrapper">
-                            <kul-switch
+                            <kul-toggle
                                 key={key}
                                 id={key}
                                 ref={(el) => {
@@ -48,7 +48,7 @@ export class KulShowcaseSwitch {
                                     }
                                 }}
                                 {...props}
-                            ></kul-switch>
+                            ></kul-toggle>
                         </div>
                     </div>
                 );
@@ -88,7 +88,7 @@ export class KulShowcaseSwitch {
     render() {
         return (
             <Fragment>
-                <kul-article kulData={SWITCH_DOC}></kul-article>
+                <kul-article kulData={TOGGLE_DOC}></kul-article>
                 <div class="examples-title" part="examples-title">
                     Examples
                 </div>

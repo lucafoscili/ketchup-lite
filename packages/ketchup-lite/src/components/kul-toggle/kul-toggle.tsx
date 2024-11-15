@@ -19,22 +19,22 @@ import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declar
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
-    KulSwitchEvent,
-    KulSwitchEventPayload,
-    KulSwitchProps,
-    KulSwitchState,
-} from './kul-switch-declarations';
+    KulToggleEvent,
+    KulToggleEventPayload,
+    KulToggleProps,
+    KulToggleState,
+} from './kul-toggle-declarations';
 
 @Component({
-    tag: 'kul-switch',
-    styleUrl: 'kul-switch.scss',
+    tag: 'kul-toggle',
+    styleUrl: 'kul-toggle.scss',
     shadow: true,
 })
-export class KulSwitch {
+export class KulToggle {
     /**
-     * References the root HTML element of the component (<kul-switch>).
+     * References the root HTML element of the component (<kul-toggle>).
      */
-    @Element() rootElement: HTMLKulSwitchElement;
+    @Element() rootElement: HTMLKulToggleElement;
 
     /*-------------------------------------------------*/
     /*                   S t a t e s                   */
@@ -54,9 +54,9 @@ export class KulSwitch {
      * The value of the component ("on" or "off").
      * @default ""
      *
-     * @see KulSwitchState - For a list of possible states.
+     * @see KulToggleState - For a list of possible states.
      */
-    @State() value: KulSwitchState = 'off';
+    @State() value: KulToggleState = 'off';
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -68,7 +68,7 @@ export class KulSwitch {
      */
     @Prop({ mutable: true, reflect: true }) kulDisabled = false;
     /**
-     * Defines text to display along with the switch.
+     * Defines text to display along with the toggle.
      * @default ""
      */
     @Prop({ mutable: true, reflect: true }) kulLabel = '';
@@ -88,7 +88,7 @@ export class KulSwitch {
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
     /**
-     * Sets the initial boolean state of the switch.
+     * Sets the initial boolean state of the toggle.
      * @default false
      */
     @Prop({ mutable: false }) kulValue = false;
@@ -105,17 +105,17 @@ export class KulSwitch {
     /*-------------------------------------------------*/
 
     /**
-     * Describes event emitted for various switch interactions like click, focus, blur.
+     * Describes event emitted for various toggle interactions like click, focus, blur.
      */
     @Event({
-        eventName: 'kul-switch-event',
+        eventName: 'kul-toggle-event',
         composed: true,
         cancelable: false,
         bubbles: true,
     })
-    kulEvent: EventEmitter<KulSwitchEventPayload>;
+    kulEvent: EventEmitter<KulToggleEventPayload>;
 
-    onKulEvent(e: Event | CustomEvent, eventType: KulSwitchEvent) {
+    onKulEvent(e: Event | CustomEvent, eventType: KulToggleEvent) {
         switch (eventType) {
             case 'pointerdown':
                 if (this.kulRipple) {
@@ -133,6 +133,7 @@ export class KulSwitch {
             id: this.rootElement.id,
             originalEvent: e,
             value: this.value,
+            valueAsBoolean: this.value === 'on' ? true : false,
         });
     }
 
@@ -155,14 +156,14 @@ export class KulSwitch {
      */
     @Method()
     async getProps(descriptions?: boolean): Promise<GenericObject> {
-        return getProps(this, KulSwitchProps, descriptions);
+        return getProps(this, KulToggleProps, descriptions);
     }
     /**
      * Used to retrieve the component's current state.
-     * @returns {Promise<KulSwitchState>} Promise resolved with the current state of the component.
+     * @returns {Promise<KulToggleState>} Promise resolved with the current state of the component.
      */
     @Method()
-    async getValue(): Promise<KulSwitchState> {
+    async getValue(): Promise<KulToggleState> {
         return this.value;
     }
     /**
@@ -174,11 +175,11 @@ export class KulSwitch {
     }
     /**
      * Sets the component's state.
-     * @param {KulSwitchState} value - The new state to be set on the component.
+     * @param {KulToggleState} value - The new state to be set on the component.
      * @returns {Promise<void>}
      */
     @Method()
-    async setValue(value: KulSwitchState): Promise<void> {
+    async setValue(value: KulToggleState | boolean): Promise<void> {
         this.#updateState(value);
     }
     /**
@@ -202,9 +203,12 @@ export class KulSwitch {
     }
 
     #updateState(
-        value: KulSwitchState,
+        value: KulToggleState | boolean,
         e: CustomEvent<unknown> | Event = new CustomEvent('change')
     ) {
+        if (typeof value === 'boolean') {
+            value = value ? 'on' : 'off';
+        }
         if (!this.kulDisabled && (value === 'off' || value === 'on')) {
             this.value = value;
             this.onKulEvent(e, 'change');
@@ -241,9 +245,9 @@ export class KulSwitch {
 
     render() {
         const className: Record<string, boolean> = {
-            switch: true,
-            'switch--checked': this.#isOn(),
-            'switch--disabled': this.kulDisabled,
+            toggle: true,
+            'toggle--checked': this.#isOn(),
+            'toggle--disabled': this.kulDisabled,
         };
         const formClassName: Record<string, boolean> = {
             'form-field': true,
@@ -259,9 +263,9 @@ export class KulSwitch {
                 <div id={KUL_WRAPPER_ID}>
                     <div class={formClassName}>
                         <div class={className}>
-                            <div class="switch__track"></div>
-                            <div class="switch__thumb-underlay">
-                                <div class="switch__thumb">
+                            <div class="toggle__track"></div>
+                            <div class="toggle__thumb-underlay">
+                                <div class="toggle__thumb">
                                     <div
                                         ref={(el) => {
                                             if (this.kulRipple) {
@@ -270,7 +274,7 @@ export class KulSwitch {
                                         }}
                                     ></div>
                                     <input
-                                        class="switch__native-control"
+                                        class="toggle__native-control"
                                         checked={this.#isOn()}
                                         data-cy={KulDataCyAttributes.INPUT}
                                         disabled={this.kulDisabled}
@@ -289,7 +293,7 @@ export class KulSwitch {
                                         onPointerDown={(e) => {
                                             this.onKulEvent(e, 'pointerdown');
                                         }}
-                                        role="switch"
+                                        role="toggle"
                                         type="checkbox"
                                         value={this.value ? 'on' : 'off'}
                                     ></input>
@@ -297,7 +301,7 @@ export class KulSwitch {
                             </div>
                         </div>
                         <label
-                            class="switch__label"
+                            class="toggle__label"
                             onClick={(e) => {
                                 this.onKulEvent(e, 'change');
                             }}

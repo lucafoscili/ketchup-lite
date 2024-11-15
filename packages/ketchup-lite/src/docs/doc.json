@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-14T21:19:46",
+  "timestamp": "2024-11-15T19:18:47",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -797,10 +797,10 @@
         "kul-showcase-slider",
         "kul-showcase-spinner",
         "kul-showcase-splash",
-        "kul-showcase-switch",
         "kul-showcase-tabbar",
         "kul-showcase-textfield",
         "kul-showcase-toast",
+        "kul-showcase-toggle",
         "kul-showcase-tree",
         "kul-showcase-typewriter",
         "kul-showcase-upload"
@@ -912,9 +912,6 @@
         "kul-showcase-splash": [
           "kul-article"
         ],
-        "kul-showcase-switch": [
-          "kul-article"
-        ],
         "kul-showcase-tabbar": [
           "kul-article"
         ],
@@ -922,6 +919,9 @@
           "kul-article"
         ],
         "kul-showcase-toast": [
+          "kul-article"
+        ],
+        "kul-showcase-toggle": [
           "kul-article"
         ],
         "kul-showcase-tree": [
@@ -2542,10 +2542,10 @@
         },
         {
           "name": "kulShape",
-          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"text\" | \"toggle\" | \"upload\"",
           "complexType": {
             "original": "KulDataShapes",
-            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"text\" | \"toggle\" | \"upload\"",
             "references": {
               "KulDataShapes": {
                 "location": "import",
@@ -2603,11 +2603,11 @@
               "type": "string"
             },
             {
-              "value": "switch",
+              "value": "text",
               "type": "string"
             },
             {
-              "value": "text",
+              "value": "toggle",
               "type": "string"
             },
             {
@@ -5075,10 +5075,10 @@
         },
         {
           "name": "kulShape",
-          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"text\" | \"toggle\" | \"upload\"",
           "complexType": {
             "original": "KulDataShapes",
-            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"text\" | \"toggle\" | \"upload\"",
             "references": {
               "KulDataShapes": {
                 "location": "import",
@@ -5136,11 +5136,11 @@
               "type": "string"
             },
             {
-              "value": "switch",
+              "value": "text",
               "type": "string"
             },
             {
-              "value": "text",
+              "value": "toggle",
               "type": "string"
             },
             {
@@ -8327,10 +8327,10 @@
         },
         {
           "name": "kulShape",
-          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+          "type": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"text\" | \"toggle\" | \"upload\"",
           "complexType": {
             "original": "KulDataShapes",
-            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"switch\" | \"text\" | \"upload\"",
+            "resolved": "\"badge\" | \"button\" | \"card\" | \"chart\" | \"chat\" | \"chip\" | \"code\" | \"image\" | \"number\" | \"text\" | \"toggle\" | \"upload\"",
             "references": {
               "KulDataShapes": {
                 "location": "import",
@@ -8388,11 +8388,11 @@
               "type": "string"
             },
             {
-              "value": "switch",
+              "value": "text",
               "type": "string"
             },
             {
-              "value": "text",
+              "value": "toggle",
               "type": "string"
             },
             {
@@ -11715,54 +11715,6 @@
       }
     },
     {
-      "filePath": "src/components/kul-showcase/components/switch/kul-showcase-switch.tsx",
-      "encapsulation": "shadow",
-      "tag": "kul-showcase-switch",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [],
-      "methods": [],
-      "events": [],
-      "listeners": [],
-      "styles": [],
-      "slots": [],
-      "parts": [
-        {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
-          "name": "examples-title",
-          "docs": ""
-        },
-        {
-          "name": "grid",
-          "docs": ""
-        }
-      ],
-      "dependents": [],
-      "dependencies": [
-        "kul-switch",
-        "kul-article"
-      ],
-      "dependencyGraph": {
-        "kul-showcase-switch": [
-          "kul-switch",
-          "kul-article"
-        ]
-      }
-    },
-    {
       "filePath": "src/components/kul-showcase/components/tabbar/kul-showcase-tabbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-tabbar",
@@ -11931,6 +11883,54 @@
         ],
         "kul-badge": [
           "kul-image"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-showcase/components/toggle/kul-showcase-toggle.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-toggle",
+      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-toggle",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-toggle": [
+          "kul-toggle",
+          "kul-article"
         ]
       }
     },
@@ -12621,6 +12621,11 @@
           "docs": "Sets font weight of the slider's label. Defaults to 400."
         },
         {
+          "name": "--kul-slider-input-height",
+          "annotation": "prop",
+          "docs": "Sets the height of the hidden input element. Defaults to 48px."
+        },
+        {
           "name": "--kul-slider-label-color",
           "annotation": "prop",
           "docs": "Sets text color of the slider's label. Defaults to var(--kul-text-color)."
@@ -12641,14 +12646,29 @@
           "docs": "Sets line height of the slider's label. Defaults to 2em."
         },
         {
+          "name": "--kul-slider-label-min-width",
+          "annotation": "prop",
+          "docs": "Sets the min. width of the label. Defaults to 0px."
+        },
+        {
+          "name": "--kul-slider-label-overflow",
+          "annotation": "prop",
+          "docs": "Sets the behavior of the label's overflow. Defaults to unset."
+        },
+        {
           "name": "--kul-slider-label-padding-left",
           "annotation": "prop",
-          "docs": "Sets left padding of the slider's label. Defaults to 4px."
+          "docs": "Sets left padding of the slider's label. Defaults to 8px."
         },
         {
           "name": "--kul-slider-label-padding-right",
           "annotation": "prop",
-          "docs": "Sets right padding of the slider's label. Defaults to 4px."
+          "docs": "Sets right padding of the slider's label. Defaults to 8px."
+        },
+        {
+          "name": "--kul-slider-label-white-space",
+          "annotation": "prop",
+          "docs": "Sets the behavior of the label's white spaces. Defaults to pre-wrap."
         },
         {
           "name": "--kul-slider-margin",
@@ -12658,7 +12678,7 @@
         {
           "name": "--kul-slider-min-width",
           "annotation": "prop",
-          "docs": "Sets minimum width of the slider component. Defaults to 120px."
+          "docs": "Sets minimum width of the slider component. Defaults to 128px."
         },
         {
           "name": "--kul-slider-primary-color",
@@ -13505,472 +13525,6 @@
       "dependencyGraph": {
         "kul-showcase-splash": [
           "kul-splash"
-        ]
-      }
-    },
-    {
-      "filePath": "src/components/kul-switch/kul-switch.tsx",
-      "encapsulation": "shadow",
-      "tag": "kul-switch",
-      "readme": "# kul-button\r\n\r\n\r\n\r",
-      "docs": "",
-      "docsTags": [],
-      "usage": {},
-      "props": [
-        {
-          "name": "kulDisabled",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": true,
-          "attr": "kul-disabled",
-          "reflectToAttr": true,
-          "docs": "Defaults at false. When set to true, the component is disabled.",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "false"
-            }
-          ],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "kulLabel",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": true,
-          "attr": "kul-label",
-          "reflectToAttr": true,
-          "docs": "Defines text to display along with the switch.",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "\"\""
-            }
-          ],
-          "default": "''",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "kulLeadingLabel",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": true,
-          "attr": "kul-leading-label",
-          "reflectToAttr": true,
-          "docs": "Defaults at false. When set to true, the label will be displayed before the component.",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "false"
-            }
-          ],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "kulRipple",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": true,
-          "attr": "kul-ripple",
-          "reflectToAttr": true,
-          "docs": "When set to true, the pointerdown event will trigger a ripple effect.",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "true"
-            }
-          ],
-          "default": "true",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "kulStyle",
-          "type": "string",
-          "complexType": {
-            "original": "string",
-            "resolved": "string",
-            "references": {}
-          },
-          "mutable": true,
-          "attr": "kul-style",
-          "reflectToAttr": true,
-          "docs": "Custom style of the component.",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "\"\""
-            }
-          ],
-          "default": "''",
-          "values": [
-            {
-              "type": "string"
-            }
-          ],
-          "optional": false,
-          "required": false
-        },
-        {
-          "name": "kulValue",
-          "type": "boolean",
-          "complexType": {
-            "original": "boolean",
-            "resolved": "boolean",
-            "references": {}
-          },
-          "mutable": false,
-          "attr": "kul-value",
-          "reflectToAttr": false,
-          "docs": "Sets the initial boolean state of the switch.",
-          "docsTags": [
-            {
-              "name": "default",
-              "text": "false"
-            }
-          ],
-          "default": "false",
-          "values": [
-            {
-              "type": "boolean"
-            }
-          ],
-          "optional": false,
-          "required": false
-        }
-      ],
-      "methods": [
-        {
-          "name": "getDebugInfo",
-          "returns": {
-            "type": "Promise<KulDebugLifecycleInfo>",
-            "docs": "A promise that resolves with the debug information object."
-          },
-          "complexType": {
-            "signature": "() => Promise<KulDebugLifecycleInfo>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              },
-              "KulDebugLifecycleInfo": {
-                "location": "import",
-                "path": "../../managers/kul-debug/kul-debug-declarations",
-                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
-              }
-            },
-            "return": "Promise<KulDebugLifecycleInfo>"
-          },
-          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
-          "parameters": [],
-          "docs": "Fetches debug information of the component's current state.",
-          "docsTags": [
-            {
-              "name": "returns",
-              "text": "A promise that resolves with the debug information object."
-            }
-          ]
-        },
-        {
-          "name": "getProps",
-          "returns": {
-            "type": "Promise<GenericObject<unknown>>",
-            "docs": "Promise resolved with an object containing the component's properties."
-          },
-          "complexType": {
-            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
-            "parameters": [
-              {
-                "name": "descriptions",
-                "type": "boolean",
-                "docs": "- When true, includes descriptions for each property."
-              }
-            ],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              },
-              "GenericObject": {
-                "location": "import",
-                "path": "../../types/GenericTypes",
-                "id": "src/types/GenericTypes.ts::GenericObject"
-              }
-            },
-            "return": "Promise<GenericObject<unknown>>"
-          },
-          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
-          "parameters": [
-            {
-              "name": "descriptions",
-              "type": "boolean",
-              "docs": "- When true, includes descriptions for each property."
-            }
-          ],
-          "docs": "Used to retrieve component's properties and descriptions.",
-          "docsTags": [
-            {
-              "name": "param",
-              "text": "descriptions - When true, includes descriptions for each property."
-            },
-            {
-              "name": "returns",
-              "text": "Promise resolved with an object containing the component's properties."
-            }
-          ]
-        },
-        {
-          "name": "getValue",
-          "returns": {
-            "type": "Promise<KulSwitchState>",
-            "docs": "Promise resolved with the current state of the component."
-          },
-          "complexType": {
-            "signature": "() => Promise<KulSwitchState>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              },
-              "KulSwitchState": {
-                "location": "import",
-                "path": "./kul-switch-declarations",
-                "id": "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchState"
-              }
-            },
-            "return": "Promise<KulSwitchState>"
-          },
-          "signature": "getValue() => Promise<KulSwitchState>",
-          "parameters": [],
-          "docs": "Used to retrieve the component's current state.",
-          "docsTags": [
-            {
-              "name": "returns",
-              "text": "Promise resolved with the current state of the component."
-            }
-          ]
-        },
-        {
-          "name": "refresh",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "() => Promise<void>",
-            "parameters": [],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<void>"
-          },
-          "signature": "refresh() => Promise<void>",
-          "parameters": [],
-          "docs": "This method is used to trigger a new render of the component.",
-          "docsTags": []
-        },
-        {
-          "name": "setValue",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "(value: KulSwitchState) => Promise<void>",
-            "parameters": [
-              {
-                "name": "value",
-                "type": "\"off\" | \"on\"",
-                "docs": "- The new state to be set on the component."
-              }
-            ],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              },
-              "KulSwitchState": {
-                "location": "import",
-                "path": "./kul-switch-declarations",
-                "id": "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchState"
-              }
-            },
-            "return": "Promise<void>"
-          },
-          "signature": "setValue(value: KulSwitchState) => Promise<void>",
-          "parameters": [
-            {
-              "name": "value",
-              "type": "\"off\" | \"on\"",
-              "docs": "- The new state to be set on the component."
-            }
-          ],
-          "docs": "Sets the component's state.",
-          "docsTags": [
-            {
-              "name": "param",
-              "text": "value - The new state to be set on the component."
-            },
-            {
-              "name": "returns"
-            }
-          ]
-        },
-        {
-          "name": "unmount",
-          "returns": {
-            "type": "Promise<void>",
-            "docs": ""
-          },
-          "complexType": {
-            "signature": "(ms?: number) => Promise<void>",
-            "parameters": [
-              {
-                "name": "ms",
-                "type": "number",
-                "docs": "- Number of milliseconds"
-              }
-            ],
-            "references": {
-              "Promise": {
-                "location": "global",
-                "id": "global::Promise"
-              }
-            },
-            "return": "Promise<void>"
-          },
-          "signature": "unmount(ms?: number) => Promise<void>",
-          "parameters": [
-            {
-              "name": "ms",
-              "type": "number",
-              "docs": "- Number of milliseconds"
-            }
-          ],
-          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
-          "docsTags": [
-            {
-              "name": "param",
-              "text": "ms - Number of milliseconds"
-            }
-          ]
-        }
-      ],
-      "events": [
-        {
-          "event": "kul-switch-event",
-          "detail": "KulSwitchEventPayload",
-          "bubbles": true,
-          "complexType": {
-            "original": "KulSwitchEventPayload",
-            "resolved": "KulSwitchEventPayload",
-            "references": {
-              "KulSwitchEventPayload": {
-                "location": "import",
-                "path": "./kul-switch-declarations",
-                "id": "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchEventPayload"
-              }
-            }
-          },
-          "cancelable": false,
-          "composed": true,
-          "docs": "Describes event emitted for various switch interactions like click, focus, blur.",
-          "docsTags": []
-        }
-      ],
-      "listeners": [],
-      "styles": [
-        {
-          "name": "--kul-switch-font-family",
-          "annotation": "prop",
-          "docs": "Sets font family of the switch's label. Defaults to var(--kul-font-family)."
-        },
-        {
-          "name": "--kul-switch-font-size",
-          "annotation": "prop",
-          "docs": "Sets font size of the switch's label. Defaults to var(--kul-font-size)."
-        },
-        {
-          "name": "--kul-switch-font-weight",
-          "annotation": "prop",
-          "docs": "Sets font weight of the switch's label. Defaults to 400."
-        },
-        {
-          "name": "--kul-switch-label-color",
-          "annotation": "prop",
-          "docs": "Sets text color of the switch's label. Defaults to var(--kul-text-color)."
-        },
-        {
-          "name": "--kul-switch-primary-color",
-          "annotation": "prop",
-          "docs": "Sets primary color of the component. Defaults to var(--kul-primary-color)."
-        },
-        {
-          "name": "--kul-switch-primary-color-rgb",
-          "annotation": "prop",
-          "docs": "Sets primary color RGB values of the component. Defaults to var(--kul-primary-color-rgb)."
-        },
-        {
-          "name": "--kul-switch-thumb-color",
-          "annotation": "prop",
-          "docs": "Sets thumb color. Defaults to var(--kul-border-color)."
-        }
-      ],
-      "slots": [],
-      "parts": [],
-      "dependents": [
-        "kul-showcase-switch"
-      ],
-      "dependencies": [],
-      "dependencyGraph": {
-        "kul-showcase-switch": [
-          "kul-switch"
         ]
       }
     },
@@ -15517,6 +15071,472 @@
       }
     },
     {
+      "filePath": "src/components/kul-toggle/kul-toggle.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-toggle",
+      "readme": "# kul-button\r\n\r\n\r\n\r",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulDisabled",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-disabled",
+          "reflectToAttr": true,
+          "docs": "Defaults at false. When set to true, the component is disabled.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLabel",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-label",
+          "reflectToAttr": true,
+          "docs": "Defines text to display along with the toggle.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulLeadingLabel",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-leading-label",
+          "reflectToAttr": true,
+          "docs": "Defaults at false. When set to true, the label will be displayed before the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulRipple",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-ripple",
+          "reflectToAttr": true,
+          "docs": "When set to true, the pointerdown event will trigger a ripple effect.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": true,
+          "docs": "Custom style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulValue",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": false,
+          "attr": "kul-value",
+          "reflectToAttr": false,
+          "docs": "Sets the initial boolean state of the toggle.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "false"
+            }
+          ],
+          "default": "false",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "Promise resolved with an object containing the component's properties."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When true, includes descriptions for each property."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../types/GenericTypes",
+                "id": "src/types/GenericTypes.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When true, includes descriptions for each property."
+            }
+          ],
+          "docs": "Used to retrieve component's properties and descriptions.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When true, includes descriptions for each property."
+            },
+            {
+              "name": "returns",
+              "text": "Promise resolved with an object containing the component's properties."
+            }
+          ]
+        },
+        {
+          "name": "getValue",
+          "returns": {
+            "type": "Promise<KulToggleState>",
+            "docs": "Promise resolved with the current state of the component."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulToggleState>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulToggleState": {
+                "location": "import",
+                "path": "./kul-toggle-declarations",
+                "id": "src/components/kul-toggle/kul-toggle-declarations.ts::KulToggleState"
+              }
+            },
+            "return": "Promise<KulToggleState>"
+          },
+          "signature": "getValue() => Promise<KulToggleState>",
+          "parameters": [],
+          "docs": "Used to retrieve the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "Promise resolved with the current state of the component."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "setValue",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value: KulToggleState | boolean) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "boolean | KulToggleState",
+                "docs": "- The new state to be set on the component."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulToggleState": {
+                "location": "import",
+                "path": "./kul-toggle-declarations",
+                "id": "src/components/kul-toggle/kul-toggle-declarations.ts::KulToggleState"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setValue(value: KulToggleState | boolean) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "boolean | KulToggleState",
+              "docs": "- The new state to be set on the component."
+            }
+          ],
+          "docs": "Sets the component's state.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "value - The new state to be set on the component."
+            },
+            {
+              "name": "returns"
+            }
+          ]
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-toggle-event",
+          "detail": "KulToggleEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulToggleEventPayload",
+            "resolved": "KulToggleEventPayload",
+            "references": {
+              "KulToggleEventPayload": {
+                "location": "import",
+                "path": "./kul-toggle-declarations",
+                "id": "src/components/kul-toggle/kul-toggle-declarations.ts::KulToggleEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "Describes event emitted for various toggle interactions like click, focus, blur.",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [
+        {
+          "name": "--kul-toggle-font-family",
+          "annotation": "prop",
+          "docs": "Sets font family of the toggle's label. Defaults to var(--kul-font-family)."
+        },
+        {
+          "name": "--kul-toggle-font-size",
+          "annotation": "prop",
+          "docs": "Sets font size of the toggle's label. Defaults to var(--kul-font-size)."
+        },
+        {
+          "name": "--kul-toggle-font-weight",
+          "annotation": "prop",
+          "docs": "Sets font weight of the toggle's label. Defaults to 400."
+        },
+        {
+          "name": "--kul-toggle-label-color",
+          "annotation": "prop",
+          "docs": "Sets text color of the toggle's label. Defaults to var(--kul-text-color)."
+        },
+        {
+          "name": "--kul-toggle-primary-color",
+          "annotation": "prop",
+          "docs": "Sets primary color of the component. Defaults to var(--kul-primary-color)."
+        },
+        {
+          "name": "--kul-toggle-primary-color-rgb",
+          "annotation": "prop",
+          "docs": "Sets primary color RGB values of the component. Defaults to var(--kul-primary-color-rgb)."
+        },
+        {
+          "name": "--kul-toggle-thumb-color",
+          "annotation": "prop",
+          "docs": "Sets thumb color. Defaults to var(--kul-border-color)."
+        }
+      ],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-showcase-toggle"
+      ],
+      "dependencies": [],
+      "dependencyGraph": {
+        "kul-showcase-toggle": [
+          "kul-toggle"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-tree/kul-tree.tsx",
       "encapsulation": "shadow",
       "tag": "kul-tree",
@@ -16799,15 +16819,15 @@
       "docstring": "",
       "path": "src/types/GenericTypes.ts"
     },
-    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchEventPayload": {
-      "declaration": "export interface KulSwitchEventPayload\n    extends KulEventPayload<'KulSwitch', KulSwitchEvent> {\n    value: string;\n}",
+    "src/components/kul-toggle/kul-toggle-declarations.ts::KulToggleEventPayload": {
+      "declaration": "export interface KulToggleEventPayload\n    extends KulEventPayload<'KulToggle', KulToggleEvent> {\n    value: string;\n    valueAsBoolean: boolean;\n}",
       "docstring": "",
-      "path": "src/components/kul-switch/kul-switch-declarations.ts"
+      "path": "src/components/kul-toggle/kul-toggle-declarations.ts"
     },
-    "src/components/kul-switch/kul-switch-declarations.ts::KulSwitchState": {
-      "declaration": "export type KulSwitchState = 'off' | 'on';",
+    "src/components/kul-toggle/kul-toggle-declarations.ts::KulToggleState": {
+      "declaration": "export type KulToggleState = 'off' | 'on';",
       "docstring": "",
-      "path": "src/components/kul-switch/kul-switch-declarations.ts"
+      "path": "src/components/kul-toggle/kul-toggle-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset": {
       "declaration": "export interface KulDataDataset {\n    columns?: KulDataColumn[];\n    nodes?: KulDataNode[];\n}",
@@ -16950,7 +16970,7 @@
       "path": "src/components/kul-badge/kul-badge-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataShapes": {
-      "declaration": "export type KulDataShapes =\n    | 'badge'\n    | 'button'\n    | 'card'\n    | 'chart'\n    | 'chat'\n    | 'chip'\n    | 'code'\n    | 'image'\n    | 'number'\n    | 'switch'\n    | 'text'\n    | 'upload';",
+      "declaration": "export type KulDataShapes =\n    | 'badge'\n    | 'button'\n    | 'card'\n    | 'chart'\n    | 'chat'\n    | 'chip'\n    | 'code'\n    | 'image'\n    | 'number'\n    | 'toggle'\n    | 'text'\n    | 'upload';",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },

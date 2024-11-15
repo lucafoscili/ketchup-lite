@@ -700,7 +700,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulShape",
         docs: "Sets the type of shapes to compare.",
-        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "switch" | "text" | "upload"',
+        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "text" | "toggle" | "upload"',
       },
       {
         name: "kulStyle",
@@ -1273,7 +1273,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulShape",
         docs: "Sets the type of shapes to compare.",
-        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "switch" | "text" | "upload"',
+        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "text" | "toggle" | "upload"',
       },
       {
         name: "kulStyle",
@@ -2275,7 +2275,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulShape",
         docs: "Sets the type of shapes to compare.",
-        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "switch" | "text" | "upload"',
+        type: '"badge" | "button" | "card" | "chart" | "chat" | "chip" | "code" | "image" | "number" | "text" | "toggle" | "upload"',
       },
       {
         name: "kulStyle",
@@ -2871,11 +2871,6 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [],
     styles: [],
   },
-  "kul-showcase-switch": {
-    methods: [],
-    props: [],
-    styles: [],
-  },
   "kul-showcase-tabbar": {
     methods: [],
     props: [],
@@ -2887,6 +2882,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-toast": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-toggle": {
     methods: [],
     props: [],
     styles: [],
@@ -3036,6 +3036,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets font weight of the slider's label. Defaults to 400.",
       },
       {
+        name: "--kul-slider-input-height",
+        docs: "Sets the height of the hidden input element. Defaults to 48px.",
+      },
+      {
         name: "--kul-slider-label-color",
         docs: "Sets text color of the slider's label. Defaults to var(--kul-text-color).",
       },
@@ -3052,12 +3056,24 @@ export const KUL_DOC: KulShowcaseDoc = {
         docs: "Sets line height of the slider's label. Defaults to 2em.",
       },
       {
+        name: "--kul-slider-label-min-width",
+        docs: "Sets the min. width of the label. Defaults to 0px.",
+      },
+      {
+        name: "--kul-slider-label-overflow",
+        docs: "Sets the behavior of the label's overflow. Defaults to unset.",
+      },
+      {
         name: "--kul-slider-label-padding-left",
-        docs: "Sets left padding of the slider's label. Defaults to 4px.",
+        docs: "Sets left padding of the slider's label. Defaults to 8px.",
       },
       {
         name: "--kul-slider-label-padding-right",
-        docs: "Sets right padding of the slider's label. Defaults to 4px.",
+        docs: "Sets right padding of the slider's label. Defaults to 8px.",
+      },
+      {
+        name: "--kul-slider-label-white-space",
+        docs: "Sets the behavior of the label's white spaces. Defaults to pre-wrap.",
       },
       {
         name: "--kul-slider-margin",
@@ -3065,7 +3081,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "--kul-slider-min-width",
-        docs: "Sets minimum width of the slider component. Defaults to 120px.",
+        docs: "Sets minimum width of the slider component. Defaults to 128px.",
       },
       {
         name: "--kul-slider-primary-color",
@@ -3317,126 +3333,6 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-splash-widget-width",
         docs: "Sets the width of the widget. Defaults to 150px.",
-      },
-    ],
-  },
-  "kul-switch": {
-    methods: [
-      {
-        name: "getDebugInfo",
-        docs: "Fetches debug information of the component's current state.",
-        returns: {
-          type: "Promise<KulDebugLifecycleInfo>",
-          docs: "A promise that resolves with the debug information object.",
-        },
-        signature: "() => Promise<KulDebugLifecycleInfo>",
-      },
-      {
-        name: "getProps",
-        docs: "Used to retrieve component's properties and descriptions.",
-        returns: {
-          type: "Promise<GenericObject<unknown>>",
-          docs: "Promise resolved with an object containing the component's properties.",
-        },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
-      },
-      {
-        name: "getValue",
-        docs: "Used to retrieve the component's current state.",
-        returns: {
-          type: "Promise<KulSwitchState>",
-          docs: "Promise resolved with the current state of the component.",
-        },
-        signature: "() => Promise<KulSwitchState>",
-      },
-      {
-        name: "refresh",
-        docs: "This method is used to trigger a new render of the component.",
-        returns: {
-          type: "Promise<void>",
-          docs: "",
-        },
-        signature: "() => Promise<void>",
-      },
-      {
-        name: "setValue",
-        docs: "Sets the component's state.",
-        returns: {
-          type: "Promise<void>",
-          docs: "",
-        },
-        signature: "(value: KulSwitchState) => Promise<void>",
-      },
-      {
-        name: "unmount",
-        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
-        returns: {
-          type: "Promise<void>",
-          docs: "",
-        },
-        signature: "(ms?: number) => Promise<void>",
-      },
-    ],
-    props: [
-      {
-        name: "kulDisabled",
-        docs: "Defaults at false. When set to true, the component is disabled.",
-        type: "boolean",
-      },
-      {
-        name: "kulLabel",
-        docs: "Defines text to display along with the switch.",
-        type: "string",
-      },
-      {
-        name: "kulLeadingLabel",
-        docs: "Defaults at false. When set to true, the label will be displayed before the component.",
-        type: "boolean",
-      },
-      {
-        name: "kulRipple",
-        docs: "When set to true, the pointerdown event will trigger a ripple effect.",
-        type: "boolean",
-      },
-      {
-        name: "kulStyle",
-        docs: "Custom style of the component.",
-        type: "string",
-      },
-      {
-        name: "kulValue",
-        docs: "Sets the initial boolean state of the switch.",
-        type: "boolean",
-      },
-    ],
-    styles: [
-      {
-        name: "--kul-switch-font-family",
-        docs: "Sets font family of the switch's label. Defaults to var(--kul-font-family).",
-      },
-      {
-        name: "--kul-switch-font-size",
-        docs: "Sets font size of the switch's label. Defaults to var(--kul-font-size).",
-      },
-      {
-        name: "--kul-switch-font-weight",
-        docs: "Sets font weight of the switch's label. Defaults to 400.",
-      },
-      {
-        name: "--kul-switch-label-color",
-        docs: "Sets text color of the switch's label. Defaults to var(--kul-text-color).",
-      },
-      {
-        name: "--kul-switch-primary-color",
-        docs: "Sets primary color of the component. Defaults to var(--kul-primary-color).",
-      },
-      {
-        name: "--kul-switch-primary-color-rgb",
-        docs: "Sets primary color RGB values of the component. Defaults to var(--kul-primary-color-rgb).",
-      },
-      {
-        name: "--kul-switch-thumb-color",
-        docs: "Sets thumb color. Defaults to var(--kul-border-color).",
       },
     ],
   },
@@ -3835,6 +3731,126 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "--kul-toast-slidein-to",
         docs: "Sets the animation ending point. Defaults to translateX(0).",
+      },
+    ],
+  },
+  "kul-toggle": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's properties and descriptions.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "Promise resolved with an object containing the component's properties.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "getValue",
+        docs: "Used to retrieve the component's current state.",
+        returns: {
+          type: "Promise<KulToggleState>",
+          docs: "Promise resolved with the current state of the component.",
+        },
+        signature: "() => Promise<KulToggleState>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "setValue",
+        docs: "Sets the component's state.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value: KulToggleState | boolean) => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulDisabled",
+        docs: "Defaults at false. When set to true, the component is disabled.",
+        type: "boolean",
+      },
+      {
+        name: "kulLabel",
+        docs: "Defines text to display along with the toggle.",
+        type: "string",
+      },
+      {
+        name: "kulLeadingLabel",
+        docs: "Defaults at false. When set to true, the label will be displayed before the component.",
+        type: "boolean",
+      },
+      {
+        name: "kulRipple",
+        docs: "When set to true, the pointerdown event will trigger a ripple effect.",
+        type: "boolean",
+      },
+      {
+        name: "kulStyle",
+        docs: "Custom style of the component.",
+        type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "Sets the initial boolean state of the toggle.",
+        type: "boolean",
+      },
+    ],
+    styles: [
+      {
+        name: "--kul-toggle-font-family",
+        docs: "Sets font family of the toggle's label. Defaults to var(--kul-font-family).",
+      },
+      {
+        name: "--kul-toggle-font-size",
+        docs: "Sets font size of the toggle's label. Defaults to var(--kul-font-size).",
+      },
+      {
+        name: "--kul-toggle-font-weight",
+        docs: "Sets font weight of the toggle's label. Defaults to 400.",
+      },
+      {
+        name: "--kul-toggle-label-color",
+        docs: "Sets text color of the toggle's label. Defaults to var(--kul-text-color).",
+      },
+      {
+        name: "--kul-toggle-primary-color",
+        docs: "Sets primary color of the component. Defaults to var(--kul-primary-color).",
+      },
+      {
+        name: "--kul-toggle-primary-color-rgb",
+        docs: "Sets primary color RGB values of the component. Defaults to var(--kul-primary-color-rgb).",
+      },
+      {
+        name: "--kul-toggle-thumb-color",
+        docs: "Sets thumb color. Defaults to var(--kul-border-color).",
       },
     ],
   },

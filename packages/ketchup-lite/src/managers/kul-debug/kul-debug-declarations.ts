@@ -1,5 +1,5 @@
 import { KulCode } from '../../components/kul-code/kul-code';
-import { KulSwitch } from '../../components/kul-switch/kul-switch';
+import { KulToggle } from '../../components/kul-toggle/kul-toggle';
 import { KulGenericComponent } from '../../types/GenericTypes';
 import { KulData } from '../kul-data/kul-data';
 import { KulDates } from '../kul-dates/kul-dates';
@@ -28,7 +28,7 @@ export interface KulDebugLogFactory {
     ) => Promise<void>;
     print: () => void;
 }
-export type KulDebugManagedComponents = KulCode | KulSwitch;
+export type KulDebugManagedComponents = KulCode | KulToggle;
 export interface KulDebugLog {
     category: KulDebugCategory;
     class: KulDebugLogClass;

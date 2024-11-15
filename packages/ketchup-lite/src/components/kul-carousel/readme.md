@@ -12,7 +12,7 @@
 | `kulAutoPlay` | `kul-auto-play` | Enable or disable autoplay for the carousel. | `boolean`                                                                                                                         | `false`   |
 | `kulData`     | --              | Actual data of the carousel.                 | `KulDataDataset`                                                                                                                  | `null`    |
 | `kulInterval` | `kul-interval`  | Interval in milliseconds for autoplay.       | `number`                                                                                                                          | `3000`    |
-| `kulShape`    | `kul-shape`     | Sets the type of shapes to compare.          | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "switch" \| "text" \| "upload"` | `'image'` |
+| `kulShape`    | `kul-shape`     | Sets the type of shapes to compare.          | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "text" \| "toggle" \| "upload"` | `'image'` |
 | `kulStyle`    | `kul-style`     | Custom style of the component.               | `string`                                                                                                                          | `''`      |
 
 

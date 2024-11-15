@@ -135,10 +135,10 @@ Type: `Promise<void>`
  - [kul-showcase-slider](../kul-showcase/components/slider)
  - [kul-showcase-spinner](../kul-showcase/components/spinner)
  - [kul-showcase-splash](../kul-showcase/components/splash)
- - [kul-showcase-switch](../kul-showcase/components/switch)
  - [kul-showcase-tabbar](../kul-showcase/components/tabbar)
  - [kul-showcase-textfield](../kul-showcase/components/textfield)
  - [kul-showcase-toast](../kul-showcase/components/toast)
+ - [kul-showcase-toggle](../kul-showcase/components/toggle)
  - [kul-showcase-tree](../kul-showcase/components/tree)
  - [kul-showcase-typewriter](../kul-showcase/components/typewriter)
  - [kul-showcase-upload](../kul-showcase/components/upload)
@@ -181,10 +181,10 @@ graph TD;
   kul-showcase-slider --> kul-article
   kul-showcase-spinner --> kul-article
   kul-showcase-splash --> kul-article
-  kul-showcase-switch --> kul-article
   kul-showcase-tabbar --> kul-article
   kul-showcase-textfield --> kul-article
   kul-showcase-toast --> kul-article
+  kul-showcase-toggle --> kul-article
   kul-showcase-tree --> kul-article
   kul-showcase-typewriter --> kul-article
   kul-showcase-upload --> kul-article

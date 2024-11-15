@@ -25,7 +25,7 @@ export const COMPONENTS = [
     'slider',
     'splash',
     'spinner',
-    'switch',
+    'toggle',
     'tabbar',
     'textfield',
     'toast',
@@ -259,13 +259,6 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             value: 'Spinner',
         },
         {
-            description:
-                'Simple component to toggle a boolean state on and off.',
-            icon: 'toll',
-            id: 'Switch',
-            value: 'Switch',
-        },
-        {
             description: 'Provides a bar of clickable tabs for navigation.',
             icon: 'featured_play_list',
             id: 'Tabbar',
@@ -282,6 +275,13 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'information-variant',
             id: 'Toast',
             value: 'Toast',
+        },
+        {
+            description:
+                'Simple component to toggle a boolean state on and off.',
+            icon: 'toll',
+            id: 'Toggle',
+            value: 'Toggle',
         },
         {
             description:
@@ -422,7 +422,7 @@ export const KUL_DOC: KulArticleDataset = {
                             children: [
                                 {
                                     id: DOC_IDS.contentWrapper,
-                                    value: 'Notable for a clean glassmorphism design, Ketchup Lite’s components are perfect for intuitive and visually appealing UIs.',
+                                    value: "Notable for a clean glassmorphism design, Ketchup Lite's components are perfect for intuitive and visually appealing UIs.",
                                 },
                             ],
                         },
@@ -476,7 +476,7 @@ export const KUL_DOC: KulArticleDataset = {
                             children: [
                                 {
                                     id: DOC_IDS.contentWrapper,
-                                    value: "Whether you're building with React, Vue, Angular, or vanilla JavaScript, Ketchup Lite’s components integrate smoothly with your stack of choice.",
+                                    value: "Whether you're building with React, Vue, Angular, or vanilla JavaScript, Ketchup Lite's components integrate smoothly with your stack of choice.",
                                 },
                             ],
                         },
