@@ -45,7 +45,7 @@ jobs:
                   yarn workspace ketchup-lite-react run build
 
             - name: Publish Ketchup Lite
-              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
+              if: github.ref == 'refs/heads/candidate' # Ensure this only runs on candidate
               run: |
                   cd packages/ketchup-lite
                   npm publish --rc
@@ -53,7 +53,7 @@ jobs:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
             - name: Publish Ketchup Lite React
-              if: github.ref == 'refs/heads/main' # Ensure this only runs on main
+              if: github.ref == 'refs/heads/candidate' # Ensure this only runs on candidate
               run: |
                   cd packages/ketchup-lite-react
                   npm publish --rc
