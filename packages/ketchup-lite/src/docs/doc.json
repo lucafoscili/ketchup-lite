@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-15T21:19:32",
+  "timestamp": "2024-11-16T13:21:02",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -2449,7 +2449,7 @@
       "filePath": "src/components/kul-carousel/kul-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-carousel",
-      "readme": "# kul-carousel\n\n\n",
+      "readme": "# kul-carousel\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6655,7 +6655,7 @@
               "docs": ""
             }
           ],
-          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
           "docsTags": []
         },
         {
@@ -6689,7 +6689,7 @@
               "docs": ""
             }
           ],
-          "docs": "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
+          "docs": "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
           "docsTags": []
         },
         {
@@ -10381,7 +10381,7 @@
       "filePath": "src/components/kul-showcase/components/carousel/kul-showcase-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-carousel",
-      "readme": "# kul-showcase-carousel\n\n\n",
+      "readme": "# kul-showcase-carousel\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11551,7 +11551,7 @@
       "filePath": "src/components/kul-showcase/components/slider/kul-showcase-slider.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-slider",
-      "readme": "# kul-showcase-slider\n\n\n",
+      "readme": "# kul-showcase-slider\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
