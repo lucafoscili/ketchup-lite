@@ -64,7 +64,6 @@ export const config: Config = {
             serviceWorker: null,
         },
         reactOutputTarget({
-            esModules: true,
             outDir: '../ketchup-lite-react/src',
         }),
         {

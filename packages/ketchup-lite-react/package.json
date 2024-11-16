@@ -17,6 +17,15 @@
     "scripts": {
         "build": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && tsc"
     },
+    "dependencies": {
+        "@stencil/react-output-target": "0.7.4",
+        "react": "18.3.1",
+        "react-dom": "18.3.1"
+    },
+    "devDependencies": {
+        "@types/react": "18.3.3",
+        "@types/react-dom": "18.3.0"
+    },
     "description": "Ketchup Lite React Components library",
     "license": "Apache-2.0",
     "installConfig": {
