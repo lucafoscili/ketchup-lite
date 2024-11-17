@@ -1,9 +1,9 @@
 {
-  "timestamp": "2024-11-17T10:38:06",
+  "timestamp": "2024-11-17T11:15:49",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.22.2",
-    "typescriptVersion": "5.5.4"
+    "version": "4.20.0",
+    "typescriptVersion": "5.5.3"
   },
   "components": [
     {
@@ -10443,7 +10443,7 @@
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
-      "readme": "# kul-showcase-chart\n\n\n",
+      "readme": "# kul-showcase-chart\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11214,7 +11214,7 @@
       "filePath": "src/components/kul-showcase/components/lazy/kul-showcase-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-lazy",
-      "readme": "# kul-showcase-lazy\n\n\n",
+      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11262,7 +11262,7 @@
       "filePath": "src/components/kul-showcase/components/list/kul-showcase-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-list",
-      "readme": "# kul-showcase-list\n\n\n",
+      "readme": "# kul-showcase-list\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11455,7 +11455,7 @@
       "filePath": "src/components/kul-showcase/components/photoframe/kul-showcase-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-photoframe",
-      "readme": "# kul-showcase-photoframe\n\n\n",
+      "readme": "# kul-showcase-photoframe\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
