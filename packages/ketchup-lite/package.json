@@ -1,6 +1,6 @@
 {
     "name": "ketchup-lite",
-    "version": "1.7.1",
+    "version": "1.7.2",
     "keywords": [
         "ketchup lite",
         "web component",
@@ -19,6 +19,15 @@
     "unpkg": "dist/ionic.js",
     "types": "dist/types/components.d.ts",
     "collection": "dist/collection/collection-manifest.json",
+    "dependencies": {
+        "dayjs": "^1.11.13",
+        "echarts": "5.5.1",
+        "prismjs": "^1.29.0"
+    },
+    "devDependencies": {
+        "@stencil/core": "^4.20.0",
+        "@stencil/sass": "^3.0.12"
+    },
     "files": [
         "dist/"
     ],

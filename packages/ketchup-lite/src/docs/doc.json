@@ -1,9 +1,9 @@
 {
-  "timestamp": "2024-11-15T21:19:32",
+  "timestamp": "2024-11-17T14:46:03",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.22.2",
-    "typescriptVersion": "5.5.4"
+    "version": "4.20.0",
+    "typescriptVersion": "5.5.3"
   },
   "components": [
     {
@@ -269,7 +269,7 @@
               "Event": {
                 "location": "import",
                 "path": "@stencil/core",
-                "id": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event"
+                "id": "node_modules::Event"
               }
             },
             "return": "Promise<void>"
@@ -2449,7 +2449,7 @@
       "filePath": "src/components/kul-carousel/kul-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-carousel",
-      "readme": "# kul-carousel\n\n\n",
+      "readme": "# kul-carousel\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6655,7 +6655,7 @@
               "docs": ""
             }
           ],
-          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
           "docsTags": []
         },
         {
@@ -6689,7 +6689,7 @@
               "docs": ""
             }
           ],
-          "docs": "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
+          "docs": "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
           "docsTags": []
         },
         {
@@ -10381,7 +10381,7 @@
       "filePath": "src/components/kul-showcase/components/carousel/kul-showcase-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-carousel",
-      "readme": "# kul-showcase-carousel\n\n\n",
+      "readme": "# kul-showcase-carousel\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10443,7 +10443,7 @@
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
-      "readme": "# kul-showcase-chart\n\n\n",
+      "readme": "# kul-showcase-chart\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11214,7 +11214,7 @@
       "filePath": "src/components/kul-showcase/components/lazy/kul-showcase-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-lazy",
-      "readme": "# kul-showcase-lazy\n\n\n",
+      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11262,7 +11262,7 @@
       "filePath": "src/components/kul-showcase/components/list/kul-showcase-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-list",
-      "readme": "# kul-showcase-list\n\n\n",
+      "readme": "# kul-showcase-list\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11455,7 +11455,7 @@
       "filePath": "src/components/kul-showcase/components/photoframe/kul-showcase-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-photoframe",
-      "readme": "# kul-showcase-photoframe\n\n\n",
+      "readme": "# kul-showcase-photoframe\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11551,7 +11551,7 @@
       "filePath": "src/components/kul-showcase/components/slider/kul-showcase-slider.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-slider",
-      "readme": "# kul-showcase-slider\n\n\n",
+      "readme": "# kul-showcase-slider\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -16943,11 +16943,6 @@
       "declaration": "export interface KulAccordionEventPayload\n    extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}",
       "docstring": "",
       "path": "src/components/kul-accordion/kul-accordion-declarations.ts"
-    },
-    "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts"
     },
     "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
       "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",

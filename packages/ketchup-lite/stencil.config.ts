@@ -64,7 +64,9 @@ export const config: Config = {
             serviceWorker: null,
         },
         reactOutputTarget({
-            outDir: '../ketchup-lite-react/src',
+            componentCorePackage: 'ketchup-lite',
+            proxiesFile: '../ketchup-lite-react/src/index.ts',
+            includeDefineCustomElements: true,
         }),
         {
             type: 'dist',
@@ -72,7 +74,7 @@ export const config: Config = {
         },
         {
             type: 'dist-custom-elements',
-            externalRuntime: false,
+            generateTypeDeclarations: true,
         },
     ],
     plugins: [

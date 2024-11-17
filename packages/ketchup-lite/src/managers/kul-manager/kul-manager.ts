@@ -17,8 +17,6 @@ import type {
 } from './kul-manager-declarations';
 import { KulLLM } from '../kul-llm/kul-llm';
 
-const dom: KulDom = document.documentElement as KulDom;
-
 export class KulManager {
     data: KulData;
     dates: KulDates;
@@ -141,6 +139,8 @@ export class KulManager {
     }
 }
 export function kulManagerInstance(): KulManager {
+    const dom: KulDom = document.documentElement as KulDom;
+
     if (!dom.ketchupLite) {
         const overrides: KulManagerInitialization = dom.ketchupLiteInit ?? null;
         dom.ketchupLite = new KulManager(overrides);
