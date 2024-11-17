@@ -9,8 +9,8 @@ import {
 import { KulDynamicPositionPlacement } from './kul-dynamic-position-declarations';
 
 export class KulDynamicPosition {
+    #DOM = document.documentElement as KulDom;
     container: HTMLElement;
-    dom: KulDom = document.documentElement as KulDom;
     managedElements: Set<KulDynamicPositionElement>;
     constructor() {
         this.container = document.createElement('div');
@@ -34,6 +34,7 @@ export class KulDynamicPosition {
             this.changeAnchor(el, anchorEl);
             return;
         }
+        const runCb = () => this.#DOM.ketchupLite.dynamicPosition.run(el);
         el.setAttribute(kulDynamicPositionAttribute, '');
         if (this.anchorIsHTMLElement(anchorEl)) {
             anchorEl.setAttribute(kulDynamicPositionAnchorAttribute, '');
@@ -70,9 +71,7 @@ export class KulDynamicPosition {
                     KUL_DROPDOWN_CLASS_VISIBLE
                 )
             ) {
-                requestAnimationFrame(function () {
-                    this.dom.ketchupLite.dynamicPosition.run(el);
-                });
+                requestAnimationFrame(runCb);
             }
         });
         mutObserver.observe(el, {
@@ -105,7 +104,7 @@ export class KulDynamicPosition {
     }
     run(el: KulDynamicPositionElement): void {
         if (!el.isConnected) {
-            this.dom.ketchupLite.dynamicPosition.managedElements.delete(el);
+            this.#DOM.ketchupLite.dynamicPosition.managedElements.delete(el);
             cancelAnimationFrame(el.kulDynamicPosition.rAF);
             return;
         }
@@ -141,9 +140,9 @@ export class KulDynamicPosition {
             }
             return;
         }
-        const detached: boolean = !!el.kulDynamicPosition.detach;
-        const offsetH: number = el.clientHeight;
-        const offsetW: number = el.clientWidth;
+        const detached = !!el.kulDynamicPosition.detach;
+        const offsetH = el.clientHeight;
+        const offsetW = el.clientWidth;
         const rect: DOMRect = (
             el.kulDynamicPosition.anchor as HTMLElement
         ).getBoundingClientRect();
@@ -231,10 +230,9 @@ export class KulDynamicPosition {
                 el.style.left = `${left}px`;
             }
         }
-        // Recursive
         if (!el.kulDynamicPosition.detach) {
             el.kulDynamicPosition.rAF = requestAnimationFrame(function () {
-                this.dom.ketchupLite.dynamicPosition.run(el);
+                this.#DOM.ketchupLite.dynamicPosition.run(el);
             });
         } else {
             cancelAnimationFrame(el.kulDynamicPosition.rAF);
