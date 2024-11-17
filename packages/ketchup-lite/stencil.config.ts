@@ -65,6 +65,7 @@ export const config: Config = {
         },
         reactOutputTarget({
             outDir: '../ketchup-lite-react/src',
+            esModules: true,
         }),
         {
             type: 'dist',
@@ -72,6 +73,9 @@ export const config: Config = {
         },
         {
             type: 'dist-custom-elements',
+            generateTypeDeclarations: true,
+            isPrimaryPackageOutputTarget: true,
+            customElementsExportBehavior: 'bundle',
             externalRuntime: false,
         },
     ],

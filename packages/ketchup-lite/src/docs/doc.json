@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-17T00:28:19",
+  "timestamp": "2024-11-17T10:38:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.2",
@@ -269,7 +269,7 @@
               "Event": {
                 "location": "import",
                 "path": "@stencil/core",
-                "id": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event"
+                "id": "node_modules::Event"
               }
             },
             "return": "Promise<void>"
@@ -16943,11 +16943,6 @@
       "declaration": "export interface KulAccordionEventPayload\n    extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}",
       "docstring": "",
       "path": "src/components/kul-accordion/kul-accordion-declarations.ts"
-    },
-    "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts"
     },
     "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
       "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
