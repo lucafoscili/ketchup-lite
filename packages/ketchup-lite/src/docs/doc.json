@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-17T19:13:41",
+  "timestamp": "2024-11-17T19:15:32",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -6489,6 +6489,7 @@
       "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-imageviewer",
+      "readme": "# kul-imageviewer\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},

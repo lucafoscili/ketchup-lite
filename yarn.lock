@@ -4076,7 +4076,7 @@ __metadata:
     "@stencil/react-output-target": 0.5.3
     "@types/react": 18.3.3
     "@types/react-dom": 18.3.0
-    ketchup-lite: 1.7.2
+    ketchup-lite: 1.7.3
     react: 18.3.1
     react-dom: 18.3.1
   languageName: unknown
@@ -4098,7 +4098,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ketchup-lite@1.7.2, ketchup-lite@workspace:packages/ketchup-lite":
+"ketchup-lite@1.7.3, ketchup-lite@workspace:packages/ketchup-lite":
   version: 0.0.0-use.local
   resolution: "ketchup-lite@workspace:packages/ketchup-lite"
   dependencies:
