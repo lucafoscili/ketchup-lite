@@ -88,12 +88,6 @@ p {
   margin-bottom: 20px;
 }
 
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-}
-
 .navigation {
   --kul-button-border-radius: 0;
 
@@ -193,6 +187,12 @@ p {
     --template-columns: repeat(4, 1fr);
 
     padding: 20px 72px;
+  }
+
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
   }
 }
 
