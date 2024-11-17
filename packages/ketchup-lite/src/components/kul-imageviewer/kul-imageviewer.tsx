@@ -63,13 +63,17 @@ export class KulImageviewer {
      */
     @State() currentShape: KulMasonrySelectedShape = {};
     /**
+     * Currently selected image.
+     */
+    @State() history: KulImageviewerHistory = {};
+    /**
      * The history index of the image displayed in the preview.
      */
     @State() historyIndex = null;
     /**
-     * Currently selected image.
+     * Reflects the status of the spinner.
      */
-    @State() history: KulImageviewerHistory = {};
+    @State() isSpinnerActive = false;
 
     /*-------------------------------------------------*/
     /*                    P r o p s                    */
@@ -212,6 +216,13 @@ export class KulImageviewer {
         await this.#adapter.actions.clearSelection(this.#adapter);
     }
     /**
+     * Displays/hides the spinner over the preview.
+     */
+    @Method()
+    async setSpinnerStatus(status: boolean): Promise<void> {
+        this.isSpinnerActive = status;
+    }
+    /**
      * Initiates the unmount sequence, which removes the component from the DOM after a delay.
      * @param {number} ms - Number of milliseconds
      */
@@ -253,6 +264,7 @@ export class KulImageviewer {
                     full: () => this.history,
                     index: () => this.historyIndex,
                 },
+                spinnerStatus: () => this.isSpinnerActive,
             },
         },
         set: {
@@ -291,6 +303,8 @@ export class KulImageviewer {
                         this.historyIndex = historyByIndex.length - 1;
                     },
                 },
+                spinnerStatus: (active) =>
+                    (this.#adapter.components.refs.spinner.kulActive = active),
             },
         },
     };
@@ -311,7 +325,10 @@ export class KulImageviewer {
         const jsx = this.#adapter.components.jsx;
         return (
             <div class="details-grid">
-                {jsx.image(this.#adapter)}
+                <div class="details-grid__preview">
+                    {jsx.image(this.#adapter)}
+                    {jsx.spinner(this.#adapter)}
+                </div>
                 <div class="details-grid__actions">
                     {jsx.delete(this.#adapter)}
                     {jsx.clearHistory(this.#adapter)}

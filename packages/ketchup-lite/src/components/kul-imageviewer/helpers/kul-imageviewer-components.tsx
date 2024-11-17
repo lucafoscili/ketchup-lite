@@ -22,6 +22,7 @@ export const COMPONENTS: KulImageviewerAdapterComponents = {
         masonry: (adapter) => prepMasonry(adapter),
         redo: (adapter) => prepRedo(adapter),
         save: (adapter) => prepSave(adapter),
+        spinner: (adapter) => prepSpinner(adapter),
         textfield: (adapter) => prepTextfield(adapter),
         tree: (adapter) => prepTree(adapter),
         undo: (adapter) => prepUndo(adapter),
@@ -34,6 +35,7 @@ export const COMPONENTS: KulImageviewerAdapterComponents = {
         masonry: null,
         redo: null,
         save: null,
+        spinner: null,
         textfield: null,
         tree: null,
         undo: null,
@@ -345,6 +347,29 @@ const prepSave = (adapter: KulImageviewerAdapter) => {
                 slot="spinner"
             ></kul-spinner>
         </kul-button>
+    );
+};
+// #endregion
+// #region Spinner
+const prepSpinner = (adapter: KulImageviewerAdapter) => {
+    const className = {
+        'details-grid__spinner': true,
+    };
+
+    return (
+        <kul-spinner
+            class={className}
+            kulActive={adapter.get.state.spinnerStatus()}
+            kulDimensions="16px"
+            kulFader={true}
+            kulFaderTimeout={125}
+            kulLayout={14}
+            ref={(el) => {
+                if (el) {
+                    adapter.components.refs.spinner = el;
+                }
+            }}
+        ></kul-spinner>
     );
 };
 // #endregion

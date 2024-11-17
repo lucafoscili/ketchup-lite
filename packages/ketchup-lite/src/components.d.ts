@@ -901,6 +901,10 @@ export namespace Components {
          */
         "reset": () => Promise<void>;
         /**
+          * Displays/hides the spinner over the preview.
+         */
+        "setSpinnerStatus": (status: boolean) => Promise<void>;
+        /**
           * Initiates the unmount sequence, which removes the component from the DOM after a delay.
           * @param ms - Number of milliseconds
          */

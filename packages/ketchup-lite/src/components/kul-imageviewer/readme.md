@@ -134,6 +134,22 @@ Type: `Promise<void>`
 
 
 
+### `setSpinnerStatus(status: boolean) => Promise<void>`
+
+Displays/hides the spinner over the preview.
+
+#### Parameters
+
+| Name     | Type      | Description |
+| -------- | --------- | ----------- |
+| `status` | `boolean` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `unmount(ms?: number) => Promise<void>`
 
 Initiates the unmount sequence, which removes the component from the DOM after a delay.

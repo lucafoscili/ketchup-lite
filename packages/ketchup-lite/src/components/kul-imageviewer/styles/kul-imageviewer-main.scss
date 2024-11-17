@@ -491,7 +491,19 @@
       var(--kul_imageviewer_details_grid_image_border_bottom_style)
       var(--kul_imageviewer_details_grid_image_border_bottom_color);
     box-sizing: var(--kul_imageviewer_details_grid_image_box_sizing);
+  }
+
+  &__preview {
     grid-area: var(--kul_imageviewer_details_grid_image_grid_area);
+    position: relative;
+  }
+
+  &__spinner {
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
   }
 
   &__tree {

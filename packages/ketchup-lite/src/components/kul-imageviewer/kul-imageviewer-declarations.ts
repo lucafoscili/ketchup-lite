@@ -44,6 +44,7 @@ export interface KulImageviewerAdapterJsx {
     masonry: (adapter: KulImageviewerAdapter) => VNode;
     redo: (adapter: KulImageviewerAdapter) => VNode;
     save: (adapter: KulImageviewerAdapter) => VNode;
+    spinner: (adapter: KulImageviewerAdapter) => VNode;
     textfield: (adapter: KulImageviewerAdapter) => VNode;
     tree: (adapter: KulImageviewerAdapter) => VNode;
     undo: (adapter: KulImageviewerAdapter) => VNode;
@@ -56,6 +57,7 @@ export interface KulImageviewerAdapterRefs {
     masonry: HTMLKulMasonryElement;
     redo: HTMLKulButtonElement;
     save: HTMLKulButtonElement;
+    spinner: HTMLKulSpinnerElement;
     textfield: HTMLKulTextfieldElement;
     tree: HTMLKulTreeElement;
     undo: HTMLKulButtonElement;
@@ -74,6 +76,7 @@ export interface KulImageviewerAdapterGetters {
             full: () => KulImageviewerHistory;
             index: () => number;
         };
+        spinnerStatus: () => boolean;
     };
 }
 export interface KulImageviewerAdapterSetters {
@@ -84,6 +87,7 @@ export interface KulImageviewerAdapterSetters {
             index: (index: number) => void;
             new: (shape: KulMasonrySelectedShape, isSnapshot?: boolean) => void;
         };
+        spinnerStatus: (active: boolean) => void;
     };
 }
 //#endregion

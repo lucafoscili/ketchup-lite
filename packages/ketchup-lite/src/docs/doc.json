@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-17T14:46:03",
+  "timestamp": "2024-11-17T19:13:41",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -6489,7 +6489,6 @@
       "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-imageviewer",
-      "readme": "# kul-imageviewer\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6655,7 +6654,7 @@
               "docs": ""
             }
           ],
-          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
           "docsTags": []
         },
         {
@@ -6689,7 +6688,7 @@
               "docs": ""
             }
           ],
-          "docs": "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
+          "docs": "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
           "docsTags": []
         },
         {
@@ -6895,6 +6894,40 @@
           "signature": "reset() => Promise<void>",
           "parameters": [],
           "docs": "Clears the full history and clears the current selection.",
+          "docsTags": []
+        },
+        {
+          "name": "setSpinnerStatus",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(status: boolean) => Promise<void>",
+            "parameters": [
+              {
+                "name": "status",
+                "type": "boolean",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setSpinnerStatus(status: boolean) => Promise<void>",
+          "parameters": [
+            {
+              "name": "status",
+              "type": "boolean",
+              "docs": ""
+            }
+          ],
+          "docs": "Displays/hides the spinner over the preview.",
           "docsTags": []
         },
         {
@@ -17125,7 +17158,7 @@
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     },
     "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerAdapterRefs": {
-      "declaration": "export interface KulImageviewerAdapterRefs {\n    clearHistory: HTMLKulButtonElement;\n    delete: HTMLKulButtonElement;\n    image: HTMLKulImageElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
+      "declaration": "export interface KulImageviewerAdapterRefs {\n    clearHistory: HTMLKulButtonElement;\n    delete: HTMLKulButtonElement;\n    image: HTMLKulImageElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    spinner: HTMLKulSpinnerElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
       "docstring": "",
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     }
