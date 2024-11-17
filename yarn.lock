@@ -529,8 +529,8 @@ __metadata:
   linkType: hard
 
 "@nx/devkit@npm:>=17.1.2 < 21":
-  version: 20.1.0
-  resolution: "@nx/devkit@npm:20.1.0"
+  version: 20.1.2
+  resolution: "@nx/devkit@npm:20.1.2"
   dependencies:
     ejs: ^3.1.7
     enquirer: ~2.3.6
@@ -542,76 +542,76 @@ __metadata:
     yargs-parser: 21.1.1
   peerDependencies:
     nx: ">= 19 <= 21"
-  checksum: 7392c4316eb371a45d1d2f499ae739d9a0eb95cbed9dfb98dffdbbdad9d7f92efa766c0ec058c07b009bf63e4a490b586599d152872fc6d5487d2b76411e86b1
+  checksum: da2efffdef38fe1078f5f6ef7dfb15ab8610e1ed10d1e6a24c7633e3a86f427a4ac3da001130152b3be2091100022de8e0ec6c1259ec14e674a56dcdf49909dd
   languageName: node
   linkType: hard
 
-"@nx/nx-darwin-arm64@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-darwin-arm64@npm:20.1.0"
+"@nx/nx-darwin-arm64@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-darwin-arm64@npm:20.1.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@nx/nx-darwin-x64@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-darwin-x64@npm:20.1.0"
+"@nx/nx-darwin-x64@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-darwin-x64@npm:20.1.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@nx/nx-freebsd-x64@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-freebsd-x64@npm:20.1.0"
+"@nx/nx-freebsd-x64@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-freebsd-x64@npm:20.1.2"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm-gnueabihf@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-linux-arm-gnueabihf@npm:20.1.0"
+"@nx/nx-linux-arm-gnueabihf@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-linux-arm-gnueabihf@npm:20.1.2"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm64-gnu@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-linux-arm64-gnu@npm:20.1.0"
+"@nx/nx-linux-arm64-gnu@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-linux-arm64-gnu@npm:20.1.2"
   conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-arm64-musl@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-linux-arm64-musl@npm:20.1.0"
+"@nx/nx-linux-arm64-musl@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-linux-arm64-musl@npm:20.1.2"
   conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-x64-gnu@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-linux-x64-gnu@npm:20.1.0"
+"@nx/nx-linux-x64-gnu@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-linux-x64-gnu@npm:20.1.2"
   conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@nx/nx-linux-x64-musl@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-linux-x64-musl@npm:20.1.0"
+"@nx/nx-linux-x64-musl@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-linux-x64-musl@npm:20.1.2"
   conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@nx/nx-win32-arm64-msvc@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-win32-arm64-msvc@npm:20.1.0"
+"@nx/nx-win32-arm64-msvc@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-win32-arm64-msvc@npm:20.1.2"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"@nx/nx-win32-x64-msvc@npm:20.1.0":
-  version: 20.1.0
-  resolution: "@nx/nx-win32-x64-msvc@npm:20.1.0"
+"@nx/nx-win32-x64-msvc@npm:20.1.2":
+  version: 20.1.2
+  resolution: "@nx/nx-win32-x64-msvc@npm:20.1.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
@@ -2421,15 +2421,15 @@ __metadata:
   linkType: hard
 
 "dotenv-expand@npm:~11.0.6":
-  version: 11.0.6
-  resolution: "dotenv-expand@npm:11.0.6"
+  version: 11.0.7
+  resolution: "dotenv-expand@npm:11.0.7"
   dependencies:
-    dotenv: ^16.4.4
-  checksum: dbbe1ecbdf17f4ba5556744b259801bdbc8c221c0d167f4f3ef079206ebf658f487fe96ea1fd504dc15172328d25f6c665581eb8d873298904a52d48a2004b49
+    dotenv: ^16.4.5
+  checksum: 58455ad9ffedbf6180b49f8f35596da54f10b02efcaabcba5400363f432e1da057113eee39b42365535da41df1e794d54a4aa67b22b37c41686c3dce4e6a28c5
   languageName: node
   linkType: hard
 
-"dotenv@npm:^16.4.4, dotenv@npm:~16.4.5":
+"dotenv@npm:^16.4.5, dotenv@npm:~16.4.5":
   version: 16.4.5
   resolution: "dotenv@npm:16.4.5"
   checksum: 301a12c3d44fd49888b74eb9ccf9f07a1f5df43f489e7fcb89647a2edcd84c42d6bc349dc8df099cd18f07c35c7b04685c1a4f3e6a6a9e6b30f8d48c15b7f49c
@@ -4192,9 +4192,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ketchup-lite-react@workspace:packages/ketchup-lite-react"
   dependencies:
-    "@stencil/react-output-target": 0.7.4
     "@types/react": 18.3.3
     "@types/react-dom": 18.3.0
+    ketchup-lite: 2.0.0
     react: 18.3.1
     react-dom: 18.3.1
   languageName: unknown
@@ -4212,7 +4212,6 @@ __metadata:
     cypress: ^13.15.1
     dayjs: ^1.11.13
     echarts: 5.5.1
-    ketchup-lite: 2.0.0
     lerna: ^8.1.9
     prettier-eslint: 16.3.0
     prismjs: ^1.29.0
@@ -4224,6 +4223,8 @@ __metadata:
 "ketchup-lite@2.0.0, ketchup-lite@workspace:packages/ketchup-lite":
   version: 0.0.0-use.local
   resolution: "ketchup-lite@workspace:packages/ketchup-lite"
+  dependencies:
+    "@stencil/react-output-target": 0.7.4
   languageName: unknown
   linkType: soft
 
@@ -5145,20 +5146,20 @@ __metadata:
   linkType: hard
 
 "nx@npm:>=17.1.2 < 21":
-  version: 20.1.0
-  resolution: "nx@npm:20.1.0"
+  version: 20.1.2
+  resolution: "nx@npm:20.1.2"
   dependencies:
     "@napi-rs/wasm-runtime": 0.2.4
-    "@nx/nx-darwin-arm64": 20.1.0
-    "@nx/nx-darwin-x64": 20.1.0
-    "@nx/nx-freebsd-x64": 20.1.0
-    "@nx/nx-linux-arm-gnueabihf": 20.1.0
-    "@nx/nx-linux-arm64-gnu": 20.1.0
-    "@nx/nx-linux-arm64-musl": 20.1.0
-    "@nx/nx-linux-x64-gnu": 20.1.0
-    "@nx/nx-linux-x64-musl": 20.1.0
-    "@nx/nx-win32-arm64-msvc": 20.1.0
-    "@nx/nx-win32-x64-msvc": 20.1.0
+    "@nx/nx-darwin-arm64": 20.1.2
+    "@nx/nx-darwin-x64": 20.1.2
+    "@nx/nx-freebsd-x64": 20.1.2
+    "@nx/nx-linux-arm-gnueabihf": 20.1.2
+    "@nx/nx-linux-arm64-gnu": 20.1.2
+    "@nx/nx-linux-arm64-musl": 20.1.2
+    "@nx/nx-linux-x64-gnu": 20.1.2
+    "@nx/nx-linux-x64-musl": 20.1.2
+    "@nx/nx-win32-arm64-msvc": 20.1.2
+    "@nx/nx-win32-x64-msvc": 20.1.2
     "@yarnpkg/lockfile": ^1.1.0
     "@yarnpkg/parsers": 3.0.2
     "@zkochan/js-yaml": 0.0.7
@@ -5222,7 +5223,7 @@ __metadata:
   bin:
     nx: bin/nx.js
     nx-cloud: bin/nx-cloud.js
-  checksum: 1703518c2b4fe952a4643ca17f83b7574f5edbb564db47663da853ebdc7cc165bf527cbcafe23f00b0e6ec4da9c2d1ff03a33547cf91bfeb4ba80889029825ef
+  checksum: 8c761d5c9c169ccffe977741f0d8e7aca6cea1fde5f5ea4328ac11589e9275a6ad5dbec5181a3dfb8abfe2198c2036822863a4c2a8d04d3919369605882ed495
   languageName: node
   linkType: hard
 
@@ -6569,8 +6570,8 @@ __metadata:
   linkType: hard
 
 "streamx@npm:^2.15.0, streamx@npm:^2.20.0":
-  version: 2.20.1
-  resolution: "streamx@npm:2.20.1"
+  version: 2.20.2
+  resolution: "streamx@npm:2.20.2"
   dependencies:
     bare-events: ^2.2.0
     fast-fifo: ^1.3.2
@@ -6579,7 +6580,7 @@ __metadata:
   dependenciesMeta:
     bare-events:
       optional: true
-  checksum: 48605ddd3abdd86d2e3ee945ec7c9317f36abb5303347a8fff6e4c7926a72c33ec7ac86b50734ccd1cf65602b6a38e247966e8199b24e5a7485d9cec8f5327bd
+  checksum: 4e18ed425e42f800463c0c891f0b773a76a2e64921a9857abe58f89197af484956fc3105df80658a69f5e5797c67f6de7b66628e34bbe1ace50151e0c85fbcf1
   languageName: node
   linkType: hard
 
@@ -6864,21 +6865,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tldts-core@npm:^6.1.60":
-  version: 6.1.60
-  resolution: "tldts-core@npm:6.1.60"
-  checksum: 00d4b9a3d7cc79185ce28d82687ceac5f7d0fea1c8c59fa37fa9eb8550caf681f798f699cb25b31d1378bf56aeb74a470fcfc2e1aac0aa2aa2ded2917da94818
+"tldts-core@npm:^6.1.61":
+  version: 6.1.61
+  resolution: "tldts-core@npm:6.1.61"
+  checksum: 659411060be80658bd492cf0f3a38223c0cc15e2ffb402e219e51dcfcffcdd581c00e63e494944d4e7ff0a0aeb321058f7811d9089fac455ae0c10b4f5beffd1
   languageName: node
   linkType: hard
 
 "tldts@npm:^6.1.32":
-  version: 6.1.60
-  resolution: "tldts@npm:6.1.60"
+  version: 6.1.61
+  resolution: "tldts@npm:6.1.61"
   dependencies:
-    tldts-core: ^6.1.60
+    tldts-core: ^6.1.61
   bin:
     tldts: bin/cli.js
-  checksum: 59070f010ad94ec7ab5abe56854216eb89bae071e93f092a70fdfb8e385208daf2a7eecadbf5f5e4804e5e5f067e1493300cd5caf57eb65e3b035556d95e437b
+  checksum: 1d2feafe6160147a2f5ea520ebc84c77153edacd0d69510726ee0c13b2fce8b84d1bad79f2c5337ac361d297d0d16815fe5d3c51c88a7822d2320a75f6d2dea3
   languageName: node
   linkType: hard
 
