@@ -19,7 +19,7 @@
     "unpkg": "dist/ionic.js",
     "types": "dist/types/components.d.ts",
     "collection": "dist/collection/collection-manifest.json",
-    "dependencies": {
+    "devDependencies": {
         "@stencil/react-output-target": "0.7.4"
     },
     "files": [

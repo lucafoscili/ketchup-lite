@@ -16,9 +16,8 @@ import {
 import { KulCode } from '../../components/kul-code/kul-code';
 import { KulToggle } from '../../components/kul-toggle/kul-toggle';
 
-const dom: KulDom = document.documentElement as KulDom;
-
 export class KulDebug {
+    #DOM = document.documentElement as KulDom;
     #IS_ENABLED: boolean;
     #LOG_LIMIT: number;
     #LOGS: KulDebugLog[];
@@ -82,7 +81,7 @@ export class KulDebug {
             if (this.#LOGS.length > this.#LOG_LIMIT) {
                 if (this.#IS_ENABLED) {
                     console.warn(
-                        dom.ketchupLite.dates.format(log.date, 'LLL:ms') +
+                        this.#DOM.ketchupLite.dates.format(log.date, 'LLL:ms') +
                             ' kul-debug => ' +
                             'Too many logs (> ' +
                             this.#LOG_LIMIT +
@@ -96,7 +95,7 @@ export class KulDebug {
             switch (category) {
                 case 'error':
                     console.error(
-                        dom.ketchupLite.dates.format(log.date, 'LLL:ms') +
+                        this.#DOM.ketchupLite.dates.format(log.date, 'LLL:ms') +
                             log.id +
                             log.message,
                         log.class
@@ -104,7 +103,7 @@ export class KulDebug {
                     break;
                 case 'warning':
                     console.warn(
-                        dom.ketchupLite.dates.format(log.date, 'LLL:ms') +
+                        this.#DOM.ketchupLite.dates.format(log.date, 'LLL:ms') +
                             log.id +
                             log.message,
                         log.class
@@ -127,7 +126,10 @@ export class KulDebug {
                 const log = this.#LOGS[index];
                 const printEntry: KulDebugLogToPrintEntry = {
                     class: log.class,
-                    date: dom.ketchupLite.dates.format(log.date, 'LLL:ms'),
+                    date: this.#DOM.ketchupLite.dates.format(
+                        log.date,
+                        'LLL:ms'
+                    ),
                     message: log.id + log.message,
                 };
                 logsToPrint[log.type].push(printEntry);

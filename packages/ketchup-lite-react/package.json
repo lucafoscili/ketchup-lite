@@ -18,7 +18,7 @@
         "build": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && tsc"
     },
     "dependencies": {
-        "ketchup-lite": "2.0.0",
+        "ketchup-lite": "^2.0.0",
         "react": "18.3.1",
         "react-dom": "18.3.1"
     },

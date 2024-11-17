@@ -5,14 +5,13 @@ import {
     ScrollOnHoverDirection,
 } from './kul-scroll-on-hover-declarations';
 
-const dom: KulDom = document.documentElement as KulDom;
-
 export class KulScrollOnHover {
     container: HTMLElement;
     delay: number;
     managedElements: Set<KulScrollOnHoverElement>;
     step: number;
     #arrowsContainer: HTMLElement;
+    #DOM: KulDom = document.documentElement as KulDom;
     #leftArrows: HTMLElement[];
     #rightArrows: HTMLElement[];
     #scrollEvent: (event: Event) => void;
@@ -153,7 +152,7 @@ export class KulScrollOnHover {
                     this.#timeout = setTimeout(() => {
                         el.scrollOnHover.active = true;
                         this.#rAF = requestAnimationFrame(function () {
-                            dom.ketchupLite.scrollOnHover.run(
+                            this.#DOM.ketchupLite.scrollOnHover.run(
                                 el,
                                 maxScrollLeft,
                                 percRight,
@@ -185,7 +184,7 @@ export class KulScrollOnHover {
                     this.#timeout = setTimeout(() => {
                         el.scrollOnHover.active = true;
                         this.#rAF = requestAnimationFrame(function () {
-                            dom.ketchupLite.scrollOnHover.run(
+                            this.#DOM.ketchupLite.scrollOnHover.run(
                                 el,
                                 maxScrollTop,
                                 percBottom,
@@ -322,7 +321,7 @@ export class KulScrollOnHover {
         }
 
         this.#rAF = requestAnimationFrame(function () {
-            dom.ketchupLite.scrollOnHover.run(
+            this.#DOM.ketchupLite.scrollOnHover.run(
                 el,
                 maxScrollLeft,
                 percForward,

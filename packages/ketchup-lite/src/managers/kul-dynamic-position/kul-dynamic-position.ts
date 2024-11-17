@@ -8,10 +8,9 @@ import {
 } from './kul-dynamic-position-declarations';
 import { KulDynamicPositionPlacement } from './kul-dynamic-position-declarations';
 
-const dom: KulDom = document.documentElement as KulDom;
-
 export class KulDynamicPosition {
     container: HTMLElement;
+    dom: KulDom = document.documentElement as KulDom;
     managedElements: Set<KulDynamicPositionElement>;
     constructor() {
         this.container = document.createElement('div');
@@ -72,7 +71,7 @@ export class KulDynamicPosition {
                 )
             ) {
                 requestAnimationFrame(function () {
-                    dom.ketchupLite.dynamicPosition.run(el);
+                    this.dom.ketchupLite.dynamicPosition.run(el);
                 });
             }
         });
@@ -106,7 +105,7 @@ export class KulDynamicPosition {
     }
     run(el: KulDynamicPositionElement): void {
         if (!el.isConnected) {
-            dom.ketchupLite.dynamicPosition.managedElements.delete(el);
+            this.dom.ketchupLite.dynamicPosition.managedElements.delete(el);
             cancelAnimationFrame(el.kulDynamicPosition.rAF);
             return;
         }
@@ -235,7 +234,7 @@ export class KulDynamicPosition {
         // Recursive
         if (!el.kulDynamicPosition.detach) {
             el.kulDynamicPosition.rAF = requestAnimationFrame(function () {
-                dom.ketchupLite.dynamicPosition.run(el);
+                this.dom.ketchupLite.dynamicPosition.run(el);
             });
         } else {
             cancelAnimationFrame(el.kulDynamicPosition.rAF);

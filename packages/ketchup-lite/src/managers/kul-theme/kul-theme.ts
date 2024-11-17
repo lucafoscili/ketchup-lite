@@ -16,9 +16,8 @@ import {
 import { themesJson } from './kul-theme-values';
 import { RIPPLE_SURFACE_CLASS } from '../../variables/GenericVariables';
 
-const DOM = document.documentElement as KulDom;
-
 export class KulTheme {
+    #DOM = document.documentElement as KulDom;
     #MASTER_CUSTOM_STYLE = 'MASTER';
     cssVars: Partial<KulThemeCSSVariables>;
     isDarkTheme: boolean;
@@ -32,9 +31,9 @@ export class KulTheme {
         this.list = list ? list : themesJson;
         this.managedComponents = new Set();
         this.name = name ? name : 'silver';
-        this.styleTag = DOM.querySelector('head').appendChild(
-            document.createElement('style')
-        );
+        this.styleTag = this.#DOM
+            .querySelector('head')
+            .appendChild(document.createElement('style'));
     }
 
     #cssVariables = () => {
@@ -117,14 +116,14 @@ export class KulTheme {
         if (list) {
             this.list = list;
         }
-        DOM.ketchupLite.debug.logs.new(
+        this.#DOM.ketchupLite.debug.logs.new(
             this,
             'Setting theme to: ' + this.name + '.'
         );
 
         const theme = this.list?.[this.name];
         if (!theme) {
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
                 'Invalid theme name, falling back to default ("silver").'
             );
@@ -143,13 +142,13 @@ export class KulTheme {
 
         this.#customStyle();
 
-        DOM.setAttribute('kul-theme', this.name);
+        this.#DOM.setAttribute('kul-theme', this.name);
         if (this.isDarkTheme) {
-            DOM.removeAttribute(KulThemeAttribute.LIGHT);
-            DOM.setAttribute(KulThemeAttribute.DARK, '');
+            this.#DOM.removeAttribute(KulThemeAttribute.LIGHT);
+            this.#DOM.setAttribute(KulThemeAttribute.DARK, '');
         } else {
-            DOM.removeAttribute(KulThemeAttribute.DARK);
-            DOM.setAttribute(KulThemeAttribute.LIGHT, '');
+            this.#DOM.removeAttribute(KulThemeAttribute.DARK);
+            this.#DOM.setAttribute(KulThemeAttribute.LIGHT, '');
         }
         document.dispatchEvent(new CustomEvent('kul-theme-change'));
     };
@@ -174,13 +173,13 @@ export class KulTheme {
                 this.#icons() +
                 '}';
             this.#customStyle();
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
-                'Theme ' + DOM.getAttribute('kul-theme') + ' refreshed.'
+                'Theme ' + this.#DOM.getAttribute('kul-theme') + ' refreshed.'
             );
             document.dispatchEvent(new CustomEvent('kul-theme-refresh'));
         } catch (error) {
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
                 'Theme not refreshed.',
                 'warning'
@@ -286,7 +285,7 @@ export class KulTheme {
             }
             this.set(themes[index]);
         } else {
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
                 "Couldn't set a random theme: no themes available!",
                 'warning'
@@ -297,7 +296,7 @@ export class KulTheme {
     colorCheck = (color: string) => {
         if (color === 'transparent') {
             color = this.cssVars['--kul-background-color'];
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
                 'Received TRANSPARENT color, converted to ' +
                     color +
@@ -320,7 +319,7 @@ export class KulTheme {
             const oldColor = color;
             color = this.codeToHex(color);
             isHex = color.substring(0, 1) === '#' ? true : false;
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
                 'Received CODE NAME color ' +
                     oldColor +
@@ -385,7 +384,7 @@ export class KulTheme {
                         rgbColorObj.b
                     );
                 }
-                DOM.ketchupLite.debug.logs.new(
+                this.#DOM.ketchupLite.debug.logs.new(
                     this,
                     'Received HEX color ' +
                         oldColor +
@@ -394,7 +393,7 @@ export class KulTheme {
                         '.'
                 );
             } catch (error) {
-                DOM.ketchupLite.debug.logs.new(
+                this.#DOM.ketchupLite.debug.logs.new(
                     this,
                     'Invalid color: ' + color + '.'
                 );
@@ -410,7 +409,7 @@ export class KulTheme {
             rgbValues = values[1] + ',' + values[2] + ',' + values[3];
             rgbColor = color;
         } catch (error) {
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
                 'Color not converted to rgb values: ' + color + '.'
             );
@@ -424,7 +423,7 @@ export class KulTheme {
                     parseInt(values[3])
                 );
             } catch (error) {
-                DOM.ketchupLite.debug.logs.new(
+                this.#DOM.ketchupLite.debug.logs.new(
                     this,
                     'Color not converted to hex value: ' + color + '.'
                 );
@@ -444,7 +443,7 @@ export class KulTheme {
                 hslValues = hsl.h + ',' + hsl.s + '%,' + hsl.l + '%';
                 hslColor = 'hsl(' + hsl.h + ',' + hsl.s + '%,' + hsl.l + '%)';
             } catch (error) {
-                DOM.ketchupLite.debug.logs.new(
+                this.#DOM.ketchupLite.debug.logs.new(
                     this,
                     'Color not converted to hex value: ' + color + '.'
                 );
@@ -719,7 +718,7 @@ export class KulTheme {
         if (colorCodes[color.toLowerCase()]) {
             return colorCodes[color.toLowerCase()];
         } else {
-            DOM.ketchupLite.debug.logs.new(
+            this.#DOM.ketchupLite.debug.logs.new(
                 this,
                 'Could not decode color ' + color + '!'
             );
