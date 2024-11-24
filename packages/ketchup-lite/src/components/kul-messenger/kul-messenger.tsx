@@ -260,7 +260,7 @@ export class KulMessenger {
     }
 
     #initStates() {
-        if (this.#hasNodes) {
+        if (this.#hasNodes()) {
             const imageRootGetter = this.#adapter.get.image.root;
             for (let index = 0; index < this.kulData.nodes.length; index++) {
                 const character = this.kulData.nodes[index];
