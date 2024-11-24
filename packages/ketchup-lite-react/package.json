@@ -1,6 +1,6 @@
 {
     "name": "ketchup-lite-react",
-    "version": "1.7.3",
+    "version": "1.7.4",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
     "keywords": [
@@ -17,7 +17,7 @@
         "build": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && tsc"
     },
     "dependencies": {
-        "ketchup-lite": "1.7.3",
+        "ketchup-lite": "1.7.4",
         "react": "18.3.1",
         "react-dom": "18.3.1"
     },
