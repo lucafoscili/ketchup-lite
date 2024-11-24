@@ -533,6 +533,111 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
   },
+  "kul-canvas": {
+    methods: [
+      {
+        name: "getDebugInfo",
+        docs: "Fetches debug information of the component's current state.",
+        returns: {
+          type: "Promise<KulDebugLifecycleInfo>",
+          docs: "A promise that resolves with the debug information object.",
+        },
+        signature: "() => Promise<KulDebugLifecycleInfo>",
+      },
+      {
+        name: "getImage",
+        docs: "Returns the image component.",
+        returns: {
+          type: "Promise<HTMLKulImageElement>",
+          docs: "",
+        },
+        signature: "() => Promise<HTMLKulImageElement>",
+      },
+      {
+        name: "getProps",
+        docs: "Used to retrieve component's props values.",
+        returns: {
+          type: "Promise<GenericObject<unknown>>",
+          docs: "List of props as object, each key will be a prop.",
+        },
+        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+      },
+      {
+        name: "refresh",
+        docs: "This method is used to trigger a new render of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "setCanvasHeight",
+        docs: "Sets the height of the canvas.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value?: number) => Promise<void>",
+      },
+      {
+        name: "setCanvasWidth",
+        docs: "Sets the width of the canvas.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value?: number) => Promise<void>",
+      },
+      {
+        name: "unmount",
+        docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(ms?: number) => Promise<void>",
+      },
+    ],
+    props: [
+      {
+        name: "kulBrush",
+        docs: "The shape of the brush.",
+        type: '"round" | "square"',
+      },
+      {
+        name: "kulColor",
+        docs: "The color of the brush.",
+        type: "string",
+      },
+      {
+        name: "kulImageProps",
+        docs: "The props of the image displayed inside the badge.",
+        type: "KulImagePropsInterface",
+      },
+      {
+        name: "kulOpacity",
+        docs: "The opacity of the brush.",
+        type: "number",
+      },
+      {
+        name: "kulPreview",
+        docs: "Displays the brush track of the current stroke.",
+        type: "boolean",
+      },
+      {
+        name: "kulSize",
+        docs: "The size of the brush.",
+        type: "number",
+      },
+      {
+        name: "kulStyle",
+        docs: "Customizes the style of the component.",
+        type: "string",
+      },
+    ],
+    styles: [],
+  },
   "kul-card": {
     methods: [
       {
@@ -2726,6 +2831,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     styles: [],
   },
   "kul-showcase-button": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-canvas": {
     methods: [],
     props: [],
     styles: [],

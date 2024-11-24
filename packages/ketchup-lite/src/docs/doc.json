@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-24T00:39:02",
+  "timestamp": "2024-11-24T20:12:36",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -767,6 +767,7 @@
         "kul-showcase-article",
         "kul-showcase-badge",
         "kul-showcase-button",
+        "kul-showcase-canvas",
         "kul-showcase-card",
         "kul-showcase-carousel",
         "kul-showcase-chart",
@@ -820,6 +821,9 @@
           "kul-article"
         ],
         "kul-showcase-button": [
+          "kul-article"
+        ],
+        "kul-showcase-canvas": [
           "kul-article"
         ],
         "kul-showcase-card": [
@@ -2052,6 +2056,510 @@
         ],
         "kul-upload": [
           "kul-button"
+        ]
+      }
+    },
+    {
+      "filePath": "src/components/kul-canvas/kul-canvas.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-canvas",
+      "readme": "# kul-canvas\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [
+        {
+          "name": "kulBrush",
+          "type": "\"round\" | \"square\"",
+          "complexType": {
+            "original": "KulCanvasBrush",
+            "resolved": "\"round\" | \"square\"",
+            "references": {
+              "KulCanvasBrush": {
+                "location": "import",
+                "path": "./kul-canvas-declarations",
+                "id": "src/components/kul-canvas/kul-canvas-declarations.ts::KulCanvasBrush"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-brush",
+          "reflectToAttr": true,
+          "docs": "The shape of the brush.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'round'"
+            }
+          ],
+          "default": "'round'",
+          "values": [
+            {
+              "value": "round",
+              "type": "string"
+            },
+            {
+              "value": "square",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulColor",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-color",
+          "reflectToAttr": true,
+          "docs": "The color of the brush.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'#ff0000'"
+            }
+          ],
+          "default": "'#ff0000'",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulImageProps",
+          "type": "KulImagePropsInterface",
+          "complexType": {
+            "original": "KulImagePropsInterface",
+            "resolved": "KulImagePropsInterface",
+            "references": {
+              "KulImagePropsInterface": {
+                "location": "import",
+                "path": "../kul-image/kul-image-declarations",
+                "id": "src/components/kul-image/kul-image-declarations.ts::KulImagePropsInterface"
+              }
+            }
+          },
+          "mutable": true,
+          "reflectToAttr": false,
+          "docs": "The props of the image displayed inside the badge.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
+          "values": [
+            {
+              "type": "KulImagePropsInterface"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulOpacity",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-opacity",
+          "reflectToAttr": true,
+          "docs": "The opacity of the brush.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "1.0"
+            }
+          ],
+          "default": "1.0",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulPreview",
+          "type": "boolean",
+          "complexType": {
+            "original": "boolean",
+            "resolved": "boolean",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-preview",
+          "reflectToAttr": true,
+          "docs": "Displays the brush track of the current stroke.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "true"
+            }
+          ],
+          "default": "true",
+          "values": [
+            {
+              "type": "boolean"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulSize",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-size",
+          "reflectToAttr": true,
+          "docs": "The size of the brush.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "10"
+            }
+          ],
+          "default": "10",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStyle",
+          "type": "string",
+          "complexType": {
+            "original": "string",
+            "resolved": "string",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-style",
+          "reflectToAttr": true,
+          "docs": "Customizes the style of the component.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "\"\""
+            }
+          ],
+          "default": "''",
+          "values": [
+            {
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        }
+      ],
+      "methods": [
+        {
+          "name": "getDebugInfo",
+          "returns": {
+            "type": "Promise<KulDebugLifecycleInfo>",
+            "docs": "A promise that resolves with the debug information object."
+          },
+          "complexType": {
+            "signature": "() => Promise<KulDebugLifecycleInfo>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "KulDebugLifecycleInfo": {
+                "location": "import",
+                "path": "../../managers/kul-debug/kul-debug-declarations",
+                "id": "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo"
+              }
+            },
+            "return": "Promise<KulDebugLifecycleInfo>"
+          },
+          "signature": "getDebugInfo() => Promise<KulDebugLifecycleInfo>",
+          "parameters": [],
+          "docs": "Fetches debug information of the component's current state.",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "A promise that resolves with the debug information object."
+            }
+          ]
+        },
+        {
+          "name": "getImage",
+          "returns": {
+            "type": "Promise<HTMLKulImageElement>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<HTMLKulImageElement>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "HTMLKulImageElement": {
+                "location": "global",
+                "id": "global::HTMLKulImageElement"
+              }
+            },
+            "return": "Promise<HTMLKulImageElement>"
+          },
+          "signature": "getImage() => Promise<HTMLKulImageElement>",
+          "parameters": [],
+          "docs": "Returns the image component.",
+          "docsTags": []
+        },
+        {
+          "name": "getProps",
+          "returns": {
+            "type": "Promise<GenericObject<unknown>>",
+            "docs": "List of props as object, each key will be a prop."
+          },
+          "complexType": {
+            "signature": "(descriptions?: boolean) => Promise<GenericObject>",
+            "parameters": [
+              {
+                "name": "descriptions",
+                "type": "boolean",
+                "docs": "- When provided and true, the result will be the list of props with their description."
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "GenericObject": {
+                "location": "import",
+                "path": "../../components",
+                "id": "src/components.d.ts::GenericObject"
+              }
+            },
+            "return": "Promise<GenericObject<unknown>>"
+          },
+          "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
+          "parameters": [
+            {
+              "name": "descriptions",
+              "type": "boolean",
+              "docs": "- When provided and true, the result will be the list of props with their description."
+            }
+          ],
+          "docs": "Used to retrieve component's props values.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "descriptions - When provided and true, the result will be the list of props with their description."
+            },
+            {
+              "name": "returns",
+              "text": "List of props as object, each key will be a prop."
+            }
+          ]
+        },
+        {
+          "name": "refresh",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<void>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "refresh() => Promise<void>",
+          "parameters": [],
+          "docs": "This method is used to trigger a new render of the component.",
+          "docsTags": []
+        },
+        {
+          "name": "setCanvasHeight",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "number",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setCanvasHeight(value?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "docs": ""
+            }
+          ],
+          "docs": "Sets the height of the canvas.",
+          "docsTags": []
+        },
+        {
+          "name": "setCanvasWidth",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "number",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setCanvasWidth(value?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "docs": ""
+            }
+          ],
+          "docs": "Sets the width of the canvas.",
+          "docsTags": []
+        },
+        {
+          "name": "unmount",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(ms?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "ms",
+                "type": "number",
+                "docs": "- Number of milliseconds"
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "unmount(ms?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "ms",
+              "type": "number",
+              "docs": "- Number of milliseconds"
+            }
+          ],
+          "docs": "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
+          "docsTags": [
+            {
+              "name": "param",
+              "text": "ms - Number of milliseconds"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "event": "kul-canvas-event",
+          "detail": "KulCanvasEventPayload",
+          "bubbles": true,
+          "complexType": {
+            "original": "KulCanvasEventPayload",
+            "resolved": "KulCanvasEventPayload",
+            "references": {
+              "KulCanvasEventPayload": {
+                "location": "import",
+                "path": "./kul-canvas-declarations",
+                "id": "src/components/kul-canvas/kul-canvas-declarations.ts::KulCanvasEventPayload"
+              }
+            }
+          },
+          "cancelable": false,
+          "composed": true,
+          "docs": "",
+          "docsTags": []
+        }
+      ],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [],
+      "dependents": [
+        "kul-imageviewer",
+        "kul-showcase-canvas"
+      ],
+      "dependencies": [
+        "kul-image"
+      ],
+      "dependencyGraph": {
+        "kul-canvas": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-imageviewer": [
+          "kul-canvas"
+        ],
+        "kul-showcase-canvas": [
+          "kul-canvas"
         ]
       }
     },
@@ -6439,8 +6947,8 @@
       "dependents": [
         "kul-badge",
         "kul-button",
+        "kul-canvas",
         "kul-chat",
-        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-image",
         "kul-tabbar",
@@ -6462,10 +6970,10 @@
         "kul-button": [
           "kul-image"
         ],
-        "kul-chat": [
+        "kul-canvas": [
           "kul-image"
         ],
-        "kul-imageviewer": [
+        "kul-chat": [
           "kul-image"
         ],
         "kul-messenger": [
@@ -7252,25 +7760,24 @@
         "kul-showcase-imageviewer"
       ],
       "dependencies": [
+        "kul-canvas",
         "kul-button",
         "kul-spinner",
-        "kul-image",
         "kul-masonry",
         "kul-textfield",
         "kul-tree"
       ],
       "dependencyGraph": {
         "kul-imageviewer": [
+          "kul-canvas",
           "kul-button",
           "kul-spinner",
-          "kul-image",
           "kul-masonry",
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+        "kul-canvas": [
+          "kul-image"
         ],
         "kul-image": [
           "kul-spinner",
@@ -7278,6 +7785,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-masonry": [
           "kul-button"
@@ -10356,6 +10867,64 @@
       }
     },
     {
+      "filePath": "src/components/kul-showcase/components/canvas/kul-showcase-canvas.tsx",
+      "encapsulation": "shadow",
+      "tag": "kul-showcase-canvas",
+      "readme": "# kul-showcase-canvas\n\n\n",
+      "docs": "",
+      "docsTags": [],
+      "usage": {},
+      "props": [],
+      "methods": [],
+      "events": [],
+      "listeners": [],
+      "styles": [],
+      "slots": [],
+      "parts": [
+        {
+          "name": "comp-wrapper",
+          "docs": ""
+        },
+        {
+          "name": "description",
+          "docs": ""
+        },
+        {
+          "name": "example",
+          "docs": ""
+        },
+        {
+          "name": "examples-title",
+          "docs": ""
+        },
+        {
+          "name": "grid",
+          "docs": ""
+        }
+      ],
+      "dependents": [],
+      "dependencies": [
+        "kul-canvas",
+        "kul-article"
+      ],
+      "dependencyGraph": {
+        "kul-showcase-canvas": [
+          "kul-canvas",
+          "kul-article"
+        ],
+        "kul-canvas": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
+      }
+    },
+    {
       "filePath": "src/components/kul-showcase/components/card/kul-showcase-card.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-card",
@@ -10993,16 +11562,15 @@
           "kul-article"
         ],
         "kul-imageviewer": [
+          "kul-canvas",
           "kul-button",
           "kul-spinner",
-          "kul-image",
           "kul-masonry",
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+        "kul-canvas": [
+          "kul-image"
         ],
         "kul-image": [
           "kul-spinner",
@@ -11010,6 +11578,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-masonry": [
           "kul-button"
@@ -16998,6 +17570,21 @@
       "docstring": "",
       "path": "src/components/kul-badge/kul-badge-declarations.ts"
     },
+    "src/components/kul-canvas/kul-canvas-declarations.ts::KulCanvasBrush": {
+      "declaration": "export type KulCanvasBrush = 'round' | 'square';",
+      "docstring": "",
+      "path": "src/components/kul-canvas/kul-canvas-declarations.ts"
+    },
+    "src/components/kul-canvas/kul-canvas-declarations.ts::KulCanvasEventPayload": {
+      "declaration": "export interface KulCanvasEventPayload\n    extends KulEventPayload<'KulCanvas', KulCanvasEvent> {\n    points: Array<{ x: number; y: number }>;\n}",
+      "docstring": "",
+      "path": "src/components/kul-canvas/kul-canvas-declarations.ts"
+    },
+    "src/components.d.ts::GenericObject": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "src/components.d.ts"
+    },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataShapes": {
       "declaration": "export type KulDataShapes =\n    | 'badge'\n    | 'button'\n    | 'card'\n    | 'chart'\n    | 'chat'\n    | 'chip'\n    | 'code'\n    | 'image'\n    | 'number'\n    | 'toggle'\n    | 'text'\n    | 'upload';",
       "docstring": "",
@@ -17159,7 +17746,7 @@
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     },
     "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerAdapterRefs": {
-      "declaration": "export interface KulImageviewerAdapterRefs {\n    clearHistory: HTMLKulButtonElement;\n    delete: HTMLKulButtonElement;\n    image: HTMLKulImageElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    spinner: HTMLKulSpinnerElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
+      "declaration": "export interface KulImageviewerAdapterRefs {\n    canvas: HTMLKulCanvasElement;\n    clearHistory: HTMLKulButtonElement;\n    delete: HTMLKulButtonElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    spinner: HTMLKulSpinnerElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
       "docstring": "",
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     }

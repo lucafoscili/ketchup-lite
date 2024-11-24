@@ -11,6 +11,10 @@ import {
     KulButtonProps,
 } from '../components/kul-button/kul-button-declarations';
 import {
+    KulCanvasEvent,
+    KulCanvasProps,
+} from '../components/kul-canvas/kul-canvas-declarations';
+import {
     KulCardEvent,
     KulCardProps,
 } from '../components/kul-card/kul-card-declarations';
@@ -103,6 +107,7 @@ import { KulAccordion } from '../components/kul-accordion/kul-accordion';
 import { KulArticle } from '../components/kul-article/kul-article';
 import { KulBadge } from '../components/kul-badge/kul-badge';
 import { KulButton } from '../components/kul-button/kul-button';
+import { KulCanvas } from '../components/kul-canvas/kul-canvas';
 import { KulCard } from '../components/kul-card/kul-card';
 import { KulChart } from '../components/kul-chart/kul-chart';
 import { KulChat } from '../components/kul-chat/kul-chat';
@@ -166,6 +171,7 @@ export type KulComponentName =
     | 'KulArticle'
     | 'KulBadge'
     | 'KulButton'
+    | 'KulCanvas'
     | 'KulCard'
     | 'KulCarousel'
     | 'KulChart'
@@ -198,6 +204,7 @@ export type KulComponentElementMap = {
     KulArticle: HTMLKulArticleElement;
     KulBadge: HTMLKulBadgeElement;
     KulButton: HTMLKulButtonElement;
+    KulCanvas: HTMLKulCanvasElement;
     KulCard: HTMLKulCardElement;
     KulCarousel: HTMLKulCarouselElement;
     KulChart: HTMLKulChartElement;
@@ -231,6 +238,7 @@ export type KulComponentClassMap = {
     KulArticle: KulArticle;
     KulBadge: KulBadge;
     KulButton: KulButton;
+    KulCanvas: KulCanvas;
     KulCard: KulCard;
     KulCarousel: KulCarousel;
     KulChart: KulChart;
@@ -264,6 +272,7 @@ export type KulComponentTagMap = {
     KulArticle: 'kul-article';
     KulBadge: 'kul-badge';
     KulButton: 'kul-button';
+    KulCanvas: 'kul-canvas';
     KulCard: 'kul-card';
     KulCarousel: 'kul-carousel';
     KulChart: 'kul-chart';
@@ -337,6 +346,7 @@ export type ComponentEventMap = {
     KulArticle: KulArticleEvent;
     KulBadge: KulBadgeEvent;
     KulButton: KulButtonEvent;
+    KulCanvas: KulCanvasEvent;
     KulCard: KulCardEvent;
     KulCarousel: KulCarouselEvent;
     KulChart: KulChartEvent;
@@ -370,6 +380,7 @@ export type ComponentPropsMap = {
     KulArticle: KulArticleProps;
     KulBadge: KulBadgeProps;
     KulButton: KulButtonProps;
+    KulCanvas: KulCanvasProps;
     KulCard: KulCardProps;
     KulCarousel: KulCarouselProps;
     KulChart: KulChartProps;

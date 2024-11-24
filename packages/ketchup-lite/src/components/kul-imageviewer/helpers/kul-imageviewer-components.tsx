@@ -7,7 +7,10 @@ import { KulTreeEventPayload } from '../../kul-tree/kul-tree-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulMasonryEventPayload } from '../../kul-masonry/kul-masonry-declarations';
 import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
-import { KulImageEventPayload } from '../../kul-image/kul-image-declarations';
+import {
+    KulImageEventPayload,
+    KulImagePropsInterface,
+} from '../../kul-image/kul-image-declarations';
 import {
     KulDataCyAttributes,
     KulGenericEvent,
@@ -15,9 +18,9 @@ import {
 
 export const COMPONENTS: KulImageviewerAdapterComponents = {
     jsx: {
+        canvas: (adapter) => prepCanvas(adapter),
         clearHistory: (adapter) => prepClearHistory(adapter),
         delete: (adapter) => prepDelete(adapter),
-        image: (adapter) => prepImage(adapter),
         load: (adapter) => prepLoad(adapter),
         masonry: (adapter) => prepMasonry(adapter),
         redo: (adapter) => prepRedo(adapter),
@@ -28,9 +31,9 @@ export const COMPONENTS: KulImageviewerAdapterComponents = {
         undo: (adapter) => prepUndo(adapter),
     },
     refs: {
+        canvas: null,
         clearHistory: null,
         delete: null,
-        image: null,
         load: null,
         masonry: null,
         redo: null,
@@ -42,6 +45,39 @@ export const COMPONENTS: KulImageviewerAdapterComponents = {
     },
 };
 
+// #region Canvas
+const prepCanvas = (adapter: KulImageviewerAdapter) => {
+    const imageviewer = adapter.get.imageviewer();
+    const className = {
+        'details-grid__canvas': true,
+    };
+    const eventHandler = (e: CustomEvent<KulImageEventPayload>) => {
+        imageviewer.onKulEvent(e, 'kul-event');
+    };
+
+    const currentSnapshot = adapter.get.state.history.currentSnapshot();
+    if (!currentSnapshot) {
+        return;
+    }
+
+    const imageProps: KulImagePropsInterface = {
+        kulValue: currentSnapshot.value,
+    };
+
+    return (
+        <kul-canvas
+            class={className}
+            kulImageProps={imageProps}
+            onKul-image-event={eventHandler}
+            ref={(el) => {
+                if (el) {
+                    adapter.components.refs.canvas = el;
+                }
+            }}
+        ></kul-canvas>
+    );
+};
+// #endregion
 // #region Clear history
 const prepClearHistory = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -133,36 +169,6 @@ const prepDelete = (adapter: KulImageviewerAdapter) => {
                 slot="spinner"
             ></kul-spinner>
         </kul-button>
-    );
-};
-// #endregion
-// #region Image
-const prepImage = (adapter: KulImageviewerAdapter) => {
-    const imageviewer = adapter.get.imageviewer();
-    const className = {
-        'details-grid__image': true,
-        'kul-fit': true,
-    };
-    const eventHandler = (e: CustomEvent<KulImageEventPayload>) => {
-        imageviewer.onKulEvent(e, 'kul-event');
-    };
-
-    const currentSnapshot = adapter.get.state.history.currentSnapshot();
-    if (!currentSnapshot) {
-        return;
-    }
-
-    return (
-        <kul-image
-            class={className}
-            kulValue={currentSnapshot.value}
-            onKul-image-event={eventHandler}
-            ref={(el) => {
-                if (el) {
-                    adapter.components.refs.image = el;
-                }
-            }}
-        ></kul-image>
     );
 };
 // #endregion

@@ -8,6 +8,7 @@ export const COMPONENTS = [
     'article',
     'badge',
     'button',
+    'canvas',
     'card',
     'carousel',
     'chart',
@@ -128,6 +129,13 @@ export const KUL_SHOWCASE_COMPONENTS: KulDataDataset = {
             icon: 'brightness-1',
             id: 'Button',
             value: 'Button',
+        },
+        {
+            description:
+                'Invisible canvas to draw upon, emitting stroke-related events.',
+            icon: 'palette',
+            id: 'Canvas',
+            value: 'Canvas',
         },
         {
             description:

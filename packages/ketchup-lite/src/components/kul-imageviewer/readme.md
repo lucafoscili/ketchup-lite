@@ -231,9 +231,9 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [kul-canvas](../kul-canvas)
 - [kul-button](../kul-button)
 - [kul-spinner](../kul-spinner)
-- [kul-image](../kul-image)
 - [kul-masonry](../kul-masonry)
 - [kul-textfield](../kul-textfield)
 - [kul-tree](../kul-tree)
@@ -241,17 +241,18 @@ Type: `Promise<void>`
 ### Graph
 ```mermaid
 graph TD;
+  kul-imageviewer --> kul-canvas
   kul-imageviewer --> kul-button
   kul-imageviewer --> kul-spinner
-  kul-imageviewer --> kul-image
   kul-imageviewer --> kul-masonry
   kul-imageviewer --> kul-textfield
   kul-imageviewer --> kul-tree
-  kul-button --> kul-image
-  kul-button --> kul-list
+  kul-canvas --> kul-image
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-button --> kul-image
+  kul-button --> kul-list
   kul-masonry --> kul-button
   kul-tree --> kul-textfield
   kul-showcase-imageviewer --> kul-imageviewer

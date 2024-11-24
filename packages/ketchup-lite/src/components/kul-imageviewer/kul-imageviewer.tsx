@@ -326,7 +326,7 @@ export class KulImageviewer {
         return (
             <div class="details-grid">
                 <div class="details-grid__preview">
-                    {jsx.image(this.#adapter)}
+                    {jsx.canvas(this.#adapter)}
                     {jsx.spinner(this.#adapter)}
                 </div>
                 <div class="details-grid__actions">
