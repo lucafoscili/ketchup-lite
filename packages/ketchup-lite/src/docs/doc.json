@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-24T20:12:36",
+  "timestamp": "2024-11-24T21:05:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -2063,7 +2063,7 @@
       "filePath": "src/components/kul-canvas/kul-canvas.tsx",
       "encapsulation": "shadow",
       "tag": "kul-canvas",
-      "readme": "# kul-canvas\n\n\n",
+      "readme": "# kul-canvas\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6997,7 +6997,7 @@
       "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-imageviewer",
-      "readme": "# kul-imageviewer\n\n\n",
+      "readme": "# kul-imageviewer\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7163,7 +7163,7 @@
               "docs": ""
             }
           ],
-          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
           "docsTags": []
         },
         {
@@ -7197,7 +7197,7 @@
               "docs": ""
             }
           ],
-          "docs": "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
+          "docs": "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
           "docsTags": []
         },
         {
@@ -10870,7 +10870,7 @@
       "filePath": "src/components/kul-showcase/components/canvas/kul-showcase-canvas.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-canvas",
-      "readme": "# kul-showcase-canvas\n\n\n",
+      "readme": "# kul-showcase-canvas\r\n\r\n\r\n\r",
       "docs": "",
       "docsTags": [],
       "usage": {},

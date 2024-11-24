@@ -1711,7 +1711,7 @@ export const KUL_DOC: KulShowcaseDoc = {
     methods: [
       {
         name: "addSnapshot",
-        docs: "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
+        docs: "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
         returns: {
           type: "Promise<void>",
           docs: "",
@@ -1720,7 +1720,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "clearHistory",
-        docs: "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
+        docs: "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
         returns: {
           type: "Promise<void>",
           docs: "",
