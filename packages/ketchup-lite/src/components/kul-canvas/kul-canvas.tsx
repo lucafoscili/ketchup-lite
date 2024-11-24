@@ -103,6 +103,8 @@ export class KulCanvas {
     #cursorCtx: CanvasRenderingContext2D;
     #image: HTMLKulImageElement;
     #kulManager = kulManagerInstance();
+    #resizeObserver: ResizeObserver;
+    #resizeTimeout: NodeJS.Timeout;
     //#endregion
     //#region Events
     @Event({
@@ -198,7 +200,68 @@ export class KulCanvas {
     }
     //#endregion
     //#region Private methods
+    #normalizeCoordinate(event: PointerEvent, rect: DOMRect) {
+        let x = (event.clientX - rect.left) / rect.width;
+        let y = (event.clientY - rect.top) / rect.height;
+
+        x = Math.max(0, Math.min(1, x));
+        y = Math.max(0, Math.min(1, y));
+
+        return { x, y };
+    }
+
+    #getCanvasCoordinate(event: PointerEvent, rect: DOMRect) {
+        let x = event.clientX - rect.left;
+        let y = event.clientY - rect.top;
+
+        x = Math.max(0, Math.min(rect.width, x));
+        y = Math.max(0, Math.min(rect.height, y));
+
+        return { x, y };
+    }
+
+    #setupContext(ctx: CanvasRenderingContext2D, isFill = false) {
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.globalAlpha = this.kulOpacity;
+        if (isFill) {
+            ctx.fillStyle = this.kulColor;
+        } else {
+            ctx.strokeStyle = this.kulColor;
+            ctx.lineWidth = this.kulSize;
+        }
+    }
+
+    #drawBrushShape(
+        ctx: CanvasRenderingContext2D,
+        x: number,
+        y: number,
+        isFill = true
+    ) {
+        ctx.beginPath();
+        switch (this.kulBrush) {
+            case 'round':
+                ctx.arc(x, y, this.kulSize / 2, 0, Math.PI * 2);
+                break;
+            case 'square':
+                const halfSize = this.kulSize / 2;
+                ctx.rect(
+                    x - halfSize,
+                    y - halfSize,
+                    this.kulSize,
+                    this.kulSize
+                );
+                break;
+        }
+        if (isFill) {
+            ctx.fill();
+        } else {
+            ctx.stroke();
+        }
+    }
+
     #handlePointerDown(event: PointerEvent) {
+        event.preventDefault();
         this.isPainting = true;
         this.points = [];
         this.#addPoint(event);
@@ -207,8 +270,6 @@ export class KulCanvas {
 
         this.#board.addEventListener('pointermove', this.#handlePointerMove);
         this.#board.addEventListener('pointerup', this.#handlePointerUp);
-
-        event.preventDefault();
     }
 
     #handlePointerMove = (event: PointerEvent) => {
@@ -221,40 +282,26 @@ export class KulCanvas {
         }
 
         this.#addPoint(event);
-        if (this.kulPreview) {
-            this.#drawLastSegment();
-        }
+        this.#drawLastSegment();
     };
 
     #handlePointerUp = (event: PointerEvent) => {
+        event.preventDefault();
         this.isPainting = false;
 
         this.onKulEvent(event, 'stroke');
 
         this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
-        this.#cursorCtx.clearRect(
-            0,
-            0,
-            this.#cursor.width,
-            this.#cursor.height
-        );
 
         this.#board.releasePointerCapture(event.pointerId);
 
         this.#board.removeEventListener('pointermove', this.#handlePointerMove);
         this.#board.removeEventListener('pointerup', this.#handlePointerUp);
-
-        event.preventDefault();
     };
 
     #addPoint(event: PointerEvent) {
         const rect = this.#board.getBoundingClientRect();
-        let x = (event.clientX - rect.left) / rect.width;
-        let y = (event.clientY - rect.top) / rect.height;
-
-        x = Math.max(0, Math.min(1, x));
-        y = Math.max(0, Math.min(1, y));
-
+        const { x, y } = this.#normalizeCoordinate(event, rect);
         this.points.push({ x, y });
     }
 
@@ -267,34 +314,10 @@ export class KulCanvas {
         );
 
         const rect = this.#board.getBoundingClientRect();
-        let x = event.clientX - rect.left;
-        let y = event.clientY - rect.top;
+        const { x, y } = this.#getCanvasCoordinate(event, rect);
 
-        x = Math.max(0, Math.min(rect.width, x));
-        y = Math.max(0, Math.min(rect.height, y));
-
-        this.#cursorCtx.beginPath();
-        this.#cursorCtx.lineCap = 'round';
-        this.#cursorCtx.lineJoin = 'round';
-
-        switch (this.kulBrush) {
-            case 'round':
-                this.#cursorCtx.arc(x, y, this.kulSize / 2, 0, Math.PI * 2);
-                break;
-            case 'square':
-                const halfSize = this.kulSize / 2;
-                this.#cursorCtx.rect(
-                    x - halfSize,
-                    y - halfSize,
-                    this.kulSize,
-                    this.kulSize
-                );
-                break;
-        }
-
-        this.#cursorCtx.fillStyle = this.kulColor;
-        this.#cursorCtx.globalAlpha = this.kulOpacity;
-        this.#cursorCtx.fill();
+        this.#setupContext(this.#cursorCtx, true);
+        this.#drawBrushShape(this.#cursorCtx, x, y, true);
     }
 
     #drawLastSegment() {
@@ -306,37 +329,21 @@ export class KulCanvas {
         const lastPoint = this.points[len - 1];
         const secondLastPoint = this.points[len - 2];
 
-        this.#boardCtx.beginPath();
-        this.#boardCtx.lineCap = 'round';
-        this.#boardCtx.lineJoin = 'round';
+        const x1 = secondLastPoint.x * this.#board.width;
+        const y1 = secondLastPoint.y * this.#board.height;
+        const x2 = lastPoint.x * this.#board.width;
+        const y2 = lastPoint.y * this.#board.height;
 
-        switch (this.kulBrush) {
-            case 'round':
-                this.#boardCtx.moveTo(
-                    secondLastPoint.x * this.#board.width,
-                    secondLastPoint.y * this.#board.height
-                );
-                this.#boardCtx.lineTo(
-                    lastPoint.x * this.#board.width,
-                    lastPoint.y * this.#board.height
-                );
-                break;
+        this.#setupContext(this.#boardCtx, false);
 
-            case 'square':
-                const halfSize = this.kulSize / 2;
-                this.#boardCtx.rect(
-                    lastPoint.x * this.#board.width - halfSize,
-                    lastPoint.y * this.#board.height - halfSize,
-                    this.kulSize,
-                    this.kulSize
-                );
-                break;
+        if (this.kulBrush === 'round') {
+            this.#boardCtx.beginPath();
+            this.#boardCtx.moveTo(x1, y1);
+            this.#boardCtx.lineTo(x2, y2);
+            this.#boardCtx.stroke();
+        } else if (this.kulBrush === 'square') {
+            this.#drawBrushShape(this.#boardCtx, x2, y2, false);
         }
-
-        this.#boardCtx.strokeStyle = this.kulColor;
-        this.#boardCtx.lineWidth = this.kulSize;
-        this.#boardCtx.globalAlpha = this.kulOpacity;
-        this.#boardCtx.stroke();
     }
     //#endregion
     //#region Lifecycle hooks
@@ -347,8 +354,19 @@ export class KulCanvas {
     componentDidLoad() {
         this.#boardCtx = this.#board.getContext('2d');
         this.#cursorCtx = this.#cursor.getContext('2d');
+
         this.setCanvasHeight();
         this.setCanvasWidth();
+
+        this.#resizeObserver = new ResizeObserver(() => {
+            clearTimeout(this.#resizeTimeout);
+            this.#resizeTimeout = setTimeout(() => {
+                this.setCanvasHeight();
+                this.setCanvasWidth();
+            }, 100);
+        });
+        this.#resizeObserver.observe(this.#container);
+
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
@@ -359,10 +377,6 @@ export class KulCanvas {
 
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
-    }
-
-    disconnectedCallback() {
-        this.#kulManager.theme.unregister(this);
     }
 
     render() {
@@ -415,6 +429,14 @@ export class KulCanvas {
                 </div>
             </Host>
         );
+    }
+
+    disconnectedCallback() {
+        this.#kulManager.theme.unregister(this);
+
+        if (this.#resizeObserver) {
+            this.#resizeObserver.disconnect();
+        }
     }
 }
 //#endregion

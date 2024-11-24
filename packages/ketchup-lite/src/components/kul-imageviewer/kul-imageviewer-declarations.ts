@@ -37,9 +37,9 @@ export interface KulImageviewerAdapterComponents {
     refs: KulImageviewerAdapterRefs;
 }
 export interface KulImageviewerAdapterJsx {
+    canvas: (adapter: KulImageviewerAdapter) => VNode;
     clearHistory: (adapter: KulImageviewerAdapter) => VNode;
     delete: (adapter: KulImageviewerAdapter) => VNode;
-    image: (adapter: KulImageviewerAdapter) => VNode;
     load: (adapter: KulImageviewerAdapter) => VNode;
     masonry: (adapter: KulImageviewerAdapter) => VNode;
     redo: (adapter: KulImageviewerAdapter) => VNode;
@@ -50,9 +50,9 @@ export interface KulImageviewerAdapterJsx {
     undo: (adapter: KulImageviewerAdapter) => VNode;
 }
 export interface KulImageviewerAdapterRefs {
+    canvas: HTMLKulCanvasElement;
     clearHistory: HTMLKulButtonElement;
     delete: HTMLKulButtonElement;
-    image: HTMLKulImageElement;
     load: HTMLKulButtonElement;
     masonry: HTMLKulMasonryElement;
     redo: HTMLKulButtonElement;

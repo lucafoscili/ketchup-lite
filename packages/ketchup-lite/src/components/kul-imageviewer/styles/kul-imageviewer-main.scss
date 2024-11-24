@@ -313,7 +313,7 @@
      * @prop --kul-imageviewer-details-grid-image-border-bottom-width: Sets the bottom border width of .details-grid__image.
      * Defaults to 2px.
      */
-  --kul_imageviewer_details_grid_image_border_bottom_width: var(
+  --kul_imageviewer_details_grid_canvas_border_bottom_width: var(
     --kul-imageviewer-details-grid-image-border-bottom-width,
     2px
   );
@@ -321,7 +321,7 @@
      * @prop --kul-imageviewer-details-grid-image-border-bottom-style: Sets the bottom border style of .details-grid__image.
      * Defaults to solid.
      */
-  --kul_imageviewer_details_grid_image_border_bottom_style: var(
+  --kul_imageviewer_details_grid_canvas_border_bottom_style: var(
     --kul-imageviewer-details-grid-image-border-bottom-style,
     solid
   );
@@ -329,7 +329,7 @@
      * @prop --kul-imageviewer-details-grid-image-border-bottom-color: Sets the bottom border color of .details-grid__image.
      * Defaults to var(--kul-border-color).
      */
-  --kul_imageviewer_details_grid_image_border_bottom_color: var(
+  --kul_imageviewer_details_grid_canvas_border_bottom_color: var(
     --kul-imageviewer-details-grid-image-border-bottom-color,
     var(--kul-border-color)
   );
@@ -337,7 +337,7 @@
      * @prop --kul-imageviewer-details-grid-image-box-sizing: Sets the box-sizing of .details-grid__image.
      * Defaults to border-box.
      */
-  --kul_imageviewer_details_grid_image_box_sizing: var(
+  --kul_imageviewer_details_grid_canvas_box_sizing: var(
     --kul-imageviewer-details-grid-image-box-sizing,
     border-box
   );
@@ -345,7 +345,7 @@
      * @prop --kul-imageviewer-details-grid-image-grid-area: Sets the grid-area of .details-grid__image.
      * Defaults to image.
      */
-  --kul_imageviewer_details_grid_image_grid_area: var(
+  --kul_imageviewer_details_grid_canvas_grid_area: var(
     --kul-imageviewer-details-grid-image-grid-area,
     image
   );
@@ -486,21 +486,24 @@
     grid-area: var(--kul_imageviewer_details_grid_actions_grid_area);
   }
 
-  &__image {
-    border-bottom: var(--kul_imageviewer_details_grid_image_border_bottom_width)
-      var(--kul_imageviewer_details_grid_image_border_bottom_style)
-      var(--kul_imageviewer_details_grid_image_border_bottom_color);
-    box-sizing: var(--kul_imageviewer_details_grid_image_box_sizing);
+  &__canvas {
+    border-bottom: var(
+        --kul_imageviewer_details_grid_canvas_border_bottom_width
+      )
+      var(--kul_imageviewer_details_grid_canvas_border_bottom_style)
+      var(--kul_imageviewer_details_grid_canvas_border_bottom_color);
+    box-sizing: var(--kul_imageviewer_details_grid_canvas_box_sizing);
   }
 
   &__preview {
-    grid-area: var(--kul_imageviewer_details_grid_image_grid_area);
+    grid-area: var(--kul_imageviewer_details_grid_canvas_grid_area);
     position: relative;
   }
 
   &__spinner {
     height: 100%;
     left: 0;
+    pointer-events: none;
     position: absolute;
     top: 0;
     width: 100%;
