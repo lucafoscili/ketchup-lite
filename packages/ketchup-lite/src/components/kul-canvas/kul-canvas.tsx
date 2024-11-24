@@ -232,6 +232,72 @@ export class KulCanvas {
         }
     }
 
+    #handlePointerDown(e: PointerEvent) {
+        e.preventDefault();
+        this.isPainting = true;
+        this.points = [];
+        this.#addPoint(e);
+
+        this.#board.setPointerCapture(e.pointerId);
+
+        this.#board.addEventListener('pointermove', this.#handlePointerMove);
+        this.#board.addEventListener('pointerup', this.#handlePointerUp);
+    }
+
+    #handlePointerMove = (e: PointerEvent) => {
+        e.preventDefault();
+
+        this.#drawBrushCursor(e);
+
+        if (!this.isPainting) {
+            return;
+        }
+
+        this.#addPoint(e);
+        this.#drawLastSegment();
+    };
+
+    #handlePointerOut = (e: PointerEvent) => {
+        this.#endCapture(e);
+    };
+
+    #handlePointerUp = (e: PointerEvent) => {
+        this.#endCapture(e);
+    };
+
+    #addPoint(e: PointerEvent) {
+        const rect = this.#board.getBoundingClientRect();
+        const { x, y } = this.#normalizeCoordinate(e, rect);
+        this.points.push({ x, y });
+    }
+
+    #endCapture(e: PointerEvent) {
+        e.preventDefault();
+        this.isPainting = false;
+
+        this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
+
+        this.#board.releasePointerCapture(e.pointerId);
+
+        this.#board.removeEventListener('pointermove', this.#handlePointerMove);
+        this.#board.removeEventListener('pointerup', this.#handlePointerUp);
+    }
+
+    #drawBrushCursor(event: PointerEvent) {
+        this.#cursorCtx.clearRect(
+            0,
+            0,
+            this.#cursor.width,
+            this.#cursor.height
+        );
+
+        const rect = this.#board.getBoundingClientRect();
+        const { x, y } = this.#getCanvasCoordinate(event, rect);
+
+        this.#setupContext(this.#cursorCtx, true);
+        this.#drawBrushShape(this.#cursorCtx, x, y, true);
+    }
+
     #drawBrushShape(
         ctx: CanvasRenderingContext2D,
         x: number,
@@ -258,66 +324,6 @@ export class KulCanvas {
         } else {
             ctx.stroke();
         }
-    }
-
-    #handlePointerDown(event: PointerEvent) {
-        event.preventDefault();
-        this.isPainting = true;
-        this.points = [];
-        this.#addPoint(event);
-
-        this.#board.setPointerCapture(event.pointerId);
-
-        this.#board.addEventListener('pointermove', this.#handlePointerMove);
-        this.#board.addEventListener('pointerup', this.#handlePointerUp);
-    }
-
-    #handlePointerMove = (event: PointerEvent) => {
-        event.preventDefault();
-
-        this.#drawBrushCursor(event);
-
-        if (!this.isPainting) {
-            return;
-        }
-
-        this.#addPoint(event);
-        this.#drawLastSegment();
-    };
-
-    #handlePointerUp = (event: PointerEvent) => {
-        event.preventDefault();
-        this.isPainting = false;
-
-        this.onKulEvent(event, 'stroke');
-
-        this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
-
-        this.#board.releasePointerCapture(event.pointerId);
-
-        this.#board.removeEventListener('pointermove', this.#handlePointerMove);
-        this.#board.removeEventListener('pointerup', this.#handlePointerUp);
-    };
-
-    #addPoint(event: PointerEvent) {
-        const rect = this.#board.getBoundingClientRect();
-        const { x, y } = this.#normalizeCoordinate(event, rect);
-        this.points.push({ x, y });
-    }
-
-    #drawBrushCursor(event: PointerEvent) {
-        this.#cursorCtx.clearRect(
-            0,
-            0,
-            this.#cursor.width,
-            this.#cursor.height
-        );
-
-        const rect = this.#board.getBoundingClientRect();
-        const { x, y } = this.#getCanvasCoordinate(event, rect);
-
-        this.#setupContext(this.#cursorCtx, true);
-        this.#drawBrushShape(this.#cursorCtx, x, y, true);
     }
 
     #drawLastSegment() {
@@ -409,8 +415,8 @@ export class KulCanvas {
                             class="canvas__board"
                             onPointerDown={(e) => this.#handlePointerDown(e)}
                             onPointerMove={(e) => this.#handlePointerMove(e)}
-                            onPointerUp={(e) => this.#handlePointerUp(e)}
-                            onPointerOut={(e) => this.#handlePointerUp(e)}
+                            onPointerUp={(e) => this.onKulEvent(e, 'stroke')}
+                            onPointerOut={(e) => this.#handlePointerOut(e)}
                             ref={(el) => {
                                 if (el) {
                                     this.#board = el;
