@@ -9,6 +9,7 @@
 
 | Property        | Attribute     | Description                                        | Type                     | Default     |
 | --------------- | ------------- | -------------------------------------------------- | ------------------------ | ----------- |
+| `kulBrush`      | `kul-brush`   | The shape of the brush.                            | `"round" \| "square"`    | `'round'`   |
 | `kulColor`      | `kul-color`   | The color of the brush.                            | `string`                 | `'#ff0000'` |
 | `kulImageProps` | --            | The props of the image displayed inside the badge. | `KulImagePropsInterface` | `null`      |
 | `kulOpacity`    | `kul-opacity` | The opacity of the brush.                          | `number`                 | `1.0`       |
@@ -19,9 +20,9 @@
 
 ## Events
 
-| Event              | Description                                | Type                                 |
-| ------------------ | ------------------------------------------ | ------------------------------------ |
-| `kul-canvas-event` | Describes events emitted by the component. | `CustomEvent<KulCanvasEventPayload>` |
+| Event              | Description | Type                                 |
+| ------------------ | ----------- | ------------------------------------ |
+| `kul-canvas-event` |             | `CustomEvent<KulCanvasEventPayload>` |
 
 
 ## Methods
@@ -55,6 +56,38 @@ List of props as object, each key will be a prop.
 ### `refresh() => Promise<void>`
 
 This method is used to trigger a new render of the component.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `setCanvasHeight(value?: number) => Promise<void>`
+
+Sets the height of the canvas.
+
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `value` | `number` |             |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `setCanvasWidth(value?: number) => Promise<void>`
+
+Sets the width of the canvas.
+
+#### Parameters
+
+| Name    | Type     | Description |
+| ------- | -------- | ----------- |
+| `value` | `number` |             |
 
 #### Returns
 

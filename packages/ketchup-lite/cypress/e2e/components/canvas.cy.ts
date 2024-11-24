@@ -68,6 +68,7 @@ describe('Methods', () => {
 
     it(`getProps: check keys against Kul${canvasCapitalized}PropsInterface.`, () => {
         cy.checkPropsInterface(canvasTag, {
+            kulBrush: null,
             kulColor: null,
             kulImageProps: null,
             kulOpacity: null,

@@ -563,6 +563,24 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<void>",
       },
       {
+        name: "setCanvasHeight",
+        docs: "Sets the height of the canvas.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value?: number) => Promise<void>",
+      },
+      {
+        name: "setCanvasWidth",
+        docs: "Sets the width of the canvas.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "(value?: number) => Promise<void>",
+      },
+      {
         name: "unmount",
         docs: "Initiates the unmount sequence, which removes the component from the DOM after a delay.",
         returns: {
@@ -573,6 +591,11 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
     ],
     props: [
+      {
+        name: "kulBrush",
+        docs: "The shape of the brush.",
+        type: '"round" | "square"',
+      },
       {
         name: "kulColor",
         docs: "The color of the brush.",

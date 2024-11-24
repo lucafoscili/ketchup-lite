@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-24T16:40:41",
+  "timestamp": "2024-11-24T17:51:06",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -2069,6 +2069,44 @@
       "usage": {},
       "props": [
         {
+          "name": "kulBrush",
+          "type": "\"round\" | \"square\"",
+          "complexType": {
+            "original": "KulCanvasBrush",
+            "resolved": "\"round\" | \"square\"",
+            "references": {
+              "KulCanvasBrush": {
+                "location": "import",
+                "path": "./kul-canvas-declarations",
+                "id": "src/components/kul-canvas/kul-canvas-declarations.ts::KulCanvasBrush"
+              }
+            }
+          },
+          "mutable": true,
+          "attr": "kul-brush",
+          "reflectToAttr": true,
+          "docs": "The shape of the brush.",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "'round'"
+            }
+          ],
+          "default": "'round'",
+          "values": [
+            {
+              "value": "round",
+              "type": "string"
+            },
+            {
+              "value": "square",
+              "type": "string"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
           "name": "kulColor",
           "type": "string",
           "complexType": {
@@ -2340,6 +2378,74 @@
           "docsTags": []
         },
         {
+          "name": "setCanvasHeight",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "number",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setCanvasHeight(value?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "docs": ""
+            }
+          ],
+          "docs": "Sets the height of the canvas.",
+          "docsTags": []
+        },
+        {
+          "name": "setCanvasWidth",
+          "returns": {
+            "type": "Promise<void>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "(value?: number) => Promise<void>",
+            "parameters": [
+              {
+                "name": "value",
+                "type": "number",
+                "docs": ""
+              }
+            ],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              }
+            },
+            "return": "Promise<void>"
+          },
+          "signature": "setCanvasWidth(value?: number) => Promise<void>",
+          "parameters": [
+            {
+              "name": "value",
+              "type": "number",
+              "docs": ""
+            }
+          ],
+          "docs": "Sets the width of the canvas.",
+          "docsTags": []
+        },
+        {
           "name": "unmount",
           "returns": {
             "type": "Promise<void>",
@@ -2397,7 +2503,7 @@
           },
           "cancelable": false,
           "composed": true,
-          "docs": "Describes events emitted by the component.",
+          "docs": "",
           "docsTags": []
         }
       ],
@@ -17431,6 +17537,11 @@
       "declaration": "export interface KulBadgeEventPayload\n    extends KulEventPayload<'KulBadge', KulBadgeEvent> {}",
       "docstring": "",
       "path": "src/components/kul-badge/kul-badge-declarations.ts"
+    },
+    "src/components/kul-canvas/kul-canvas-declarations.ts::KulCanvasBrush": {
+      "declaration": "export type KulCanvasBrush = 'round' | 'square';",
+      "docstring": "",
+      "path": "src/components/kul-canvas/kul-canvas-declarations.ts"
     },
     "src/components/kul-canvas/kul-canvas-declarations.ts::KulCanvasEventPayload": {
       "declaration": "export interface KulCanvasEventPayload\n    extends KulEventPayload<'KulCanvas', KulCanvasEvent> {\n    points: Array<{ x: number; y: number }>;\n}",
