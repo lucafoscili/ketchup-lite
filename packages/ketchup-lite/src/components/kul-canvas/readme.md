@@ -37,6 +37,16 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
+### `getImage() => Promise<HTMLKulImageElement>`
+
+Returns the image component.
+
+#### Returns
+
+Type: `Promise<HTMLKulImageElement>`
+
+
+
 ### `getProps(descriptions?: boolean) => Promise<GenericObject>`
 
 Used to retrieve component's props values.
@@ -116,6 +126,7 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-imageviewer](../kul-imageviewer)
  - [kul-showcase-canvas](../kul-showcase/components/canvas)
 
 ### Depends on
@@ -129,6 +140,7 @@ graph TD;
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-imageviewer --> kul-canvas
   kul-showcase-canvas --> kul-canvas
   style kul-canvas fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -545,6 +545,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<KulDebugLifecycleInfo>",
       },
       {
+        name: "getImage",
+        docs: "Returns the image component.",
+        returns: {
+          type: "Promise<HTMLKulImageElement>",
+          docs: "",
+        },
+        signature: "() => Promise<HTMLKulImageElement>",
+      },
+      {
         name: "getProps",
         docs: "Used to retrieve component's props values.",
         returns: {

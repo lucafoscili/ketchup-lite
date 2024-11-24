@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-24T17:51:06",
+  "timestamp": "2024-11-24T20:10:10",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -2308,6 +2308,32 @@
           ]
         },
         {
+          "name": "getImage",
+          "returns": {
+            "type": "Promise<HTMLKulImageElement>",
+            "docs": ""
+          },
+          "complexType": {
+            "signature": "() => Promise<HTMLKulImageElement>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "HTMLKulImageElement": {
+                "location": "global",
+                "id": "global::HTMLKulImageElement"
+              }
+            },
+            "return": "Promise<HTMLKulImageElement>"
+          },
+          "signature": "getImage() => Promise<HTMLKulImageElement>",
+          "parameters": [],
+          "docs": "Returns the image component.",
+          "docsTags": []
+        },
+        {
           "name": "getProps",
           "returns": {
             "type": "Promise<GenericObject<unknown>>",
@@ -2512,6 +2538,7 @@
       "slots": [],
       "parts": [],
       "dependents": [
+        "kul-imageviewer",
         "kul-showcase-canvas"
       ],
       "dependencies": [
@@ -2527,6 +2554,9 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-imageviewer": [
+          "kul-canvas"
         ],
         "kul-showcase-canvas": [
           "kul-canvas"
@@ -6919,7 +6949,6 @@
         "kul-button",
         "kul-canvas",
         "kul-chat",
-        "kul-imageviewer",
         "kul-messenger",
         "kul-showcase-image",
         "kul-tabbar",
@@ -6945,9 +6974,6 @@
           "kul-image"
         ],
         "kul-chat": [
-          "kul-image"
-        ],
-        "kul-imageviewer": [
           "kul-image"
         ],
         "kul-messenger": [
@@ -7734,25 +7760,24 @@
         "kul-showcase-imageviewer"
       ],
       "dependencies": [
+        "kul-canvas",
         "kul-button",
         "kul-spinner",
-        "kul-image",
         "kul-masonry",
         "kul-textfield",
         "kul-tree"
       ],
       "dependencyGraph": {
         "kul-imageviewer": [
+          "kul-canvas",
           "kul-button",
           "kul-spinner",
-          "kul-image",
           "kul-masonry",
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+        "kul-canvas": [
+          "kul-image"
         ],
         "kul-image": [
           "kul-spinner",
@@ -7760,6 +7785,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-masonry": [
           "kul-button"
@@ -11533,16 +11562,15 @@
           "kul-article"
         ],
         "kul-imageviewer": [
+          "kul-canvas",
           "kul-button",
           "kul-spinner",
-          "kul-image",
           "kul-masonry",
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
+        "kul-canvas": [
+          "kul-image"
         ],
         "kul-image": [
           "kul-spinner",
@@ -11550,6 +11578,10 @@
         ],
         "kul-badge": [
           "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
         ],
         "kul-masonry": [
           "kul-button"
@@ -17714,7 +17746,7 @@
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     },
     "src/components/kul-imageviewer/kul-imageviewer-declarations.ts::KulImageviewerAdapterRefs": {
-      "declaration": "export interface KulImageviewerAdapterRefs {\n    clearHistory: HTMLKulButtonElement;\n    delete: HTMLKulButtonElement;\n    image: HTMLKulImageElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    spinner: HTMLKulSpinnerElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
+      "declaration": "export interface KulImageviewerAdapterRefs {\n    canvas: HTMLKulCanvasElement;\n    clearHistory: HTMLKulButtonElement;\n    delete: HTMLKulButtonElement;\n    load: HTMLKulButtonElement;\n    masonry: HTMLKulMasonryElement;\n    redo: HTMLKulButtonElement;\n    save: HTMLKulButtonElement;\n    spinner: HTMLKulSpinnerElement;\n    textfield: HTMLKulTextfieldElement;\n    tree: HTMLKulTreeElement;\n    undo: HTMLKulButtonElement;\n}",
       "docstring": "",
       "path": "src/components/kul-imageviewer/kul-imageviewer-declarations.ts"
     }

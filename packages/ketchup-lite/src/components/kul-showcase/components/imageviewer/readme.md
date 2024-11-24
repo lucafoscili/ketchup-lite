@@ -28,17 +28,18 @@
 graph TD;
   kul-showcase-imageviewer --> kul-imageviewer
   kul-showcase-imageviewer --> kul-article
+  kul-imageviewer --> kul-canvas
   kul-imageviewer --> kul-button
   kul-imageviewer --> kul-spinner
-  kul-imageviewer --> kul-image
   kul-imageviewer --> kul-masonry
   kul-imageviewer --> kul-textfield
   kul-imageviewer --> kul-tree
-  kul-button --> kul-image
-  kul-button --> kul-list
+  kul-canvas --> kul-image
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-button --> kul-image
+  kul-button --> kul-list
   kul-masonry --> kul-button
   kul-tree --> kul-textfield
   style kul-showcase-imageviewer fill:#f9f,stroke:#333,stroke-width:4px
