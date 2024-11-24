@@ -74,6 +74,7 @@ describe('Methods', () => {
             kulOpacity: null,
             kulPreview: null,
             kulSize: null,
+            kulStrokeTolerance: null,
             kulStyle: null,
         } as Required<KulCanvasPropsInterface>);
     });

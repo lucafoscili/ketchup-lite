@@ -344,6 +344,11 @@ export namespace Components {
          */
         "kulSize": number;
         /**
+          * Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm. This prop sets the tolerance of the algorithm (null to disable).
+          * @default null
+         */
+        "kulStrokeTolerance": number;
+        /**
           * Customizes the style of the component.
           * @default ""
          */
@@ -3176,6 +3181,11 @@ declare namespace LocalJSX {
           * @default 10
          */
         "kulSize"?: number;
+        /**
+          * Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm. This prop sets the tolerance of the algorithm (null to disable).
+          * @default null
+         */
+        "kulStrokeTolerance"?: number;
         /**
           * Customizes the style of the component.
           * @default ""

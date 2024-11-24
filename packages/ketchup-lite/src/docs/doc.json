@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-24T23:19:32",
+  "timestamp": "2024-11-24T23:38:51",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -2238,6 +2238,33 @@
             }
           ],
           "default": "10",
+          "values": [
+            {
+              "type": "number"
+            }
+          ],
+          "optional": false,
+          "required": false
+        },
+        {
+          "name": "kulStrokeTolerance",
+          "type": "number",
+          "complexType": {
+            "original": "number",
+            "resolved": "number",
+            "references": {}
+          },
+          "mutable": true,
+          "attr": "kul-stroke-tolerance",
+          "reflectToAttr": true,
+          "docs": "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\nThis prop sets the tolerance of the algorithm (null to disable).",
+          "docsTags": [
+            {
+              "name": "default",
+              "text": "null"
+            }
+          ],
+          "default": "null",
           "values": [
             {
               "type": "number"

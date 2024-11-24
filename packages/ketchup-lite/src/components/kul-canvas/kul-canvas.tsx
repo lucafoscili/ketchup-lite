@@ -85,6 +85,12 @@ export class KulCanvas {
      */
     @Prop({ mutable: true, reflect: true }) kulPreview = true;
     /**
+     * Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.
+     * This prop sets the tolerance of the algorithm (null to disable).
+     * @default null
+     */
+    @Prop({ mutable: true, reflect: true }) kulStrokeTolerance: number = null;
+    /**
      * The size of the brush.
      * @default 10
      */
@@ -121,9 +127,10 @@ export class KulCanvas {
             id: this.rootElement.id,
             originalEvent: e,
             eventType,
-            points: this.points?.length
-                ? simplifyStroke(this.points, 0.01)
-                : this.points,
+            points:
+                this.kulStrokeTolerance !== null && this.points?.length
+                    ? simplifyStroke(this.points, this.kulStrokeTolerance)
+                    : this.points,
         });
     }
     //#endregion

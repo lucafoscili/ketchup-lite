@@ -19,6 +19,7 @@ export enum KulCanvasProps {
     kulOpacity = 'The opacity of the brush.',
     kulPreview = 'Displays the brush track of the current stroke.',
     kulSize = 'The size of the brush.',
+    kulStrokeTolerance = 'Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm. This prop sets the tolerance of the algorithm (null to disable)',
     kulStyle = 'Custom style of the component.',
 }
 export interface KulCanvasPropsInterface {
@@ -28,6 +29,7 @@ export interface KulCanvasPropsInterface {
     kulOpacity?: number;
     kulPreview?: boolean;
     kulSize?: number;
+    kulStrokeTolerance?: number;
     kulStyle?: string;
 }
 export type KulCanvasBrush = 'round' | 'square';
