@@ -12,6 +12,7 @@ import {
 } from '@stencil/core';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
+    KulCanvasBrush,
     KulCanvasEvent,
     KulCanvasEventPayload,
     KulCanvasPoints,
@@ -22,6 +23,7 @@ import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declar
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
 import { GenericObject } from '../../components';
+import { simplifyStroke } from './helpers/kul-canvas-helpers';
 
 @Component({
     tag: 'kul-canvas',
@@ -58,6 +60,11 @@ export class KulCanvas {
     //#endregion
     //#region Props
     /**
+     * The shape of the brush.
+     * @default 'round'
+     */
+    @Prop({ mutable: true, reflect: true }) kulBrush: KulCanvasBrush = 'round';
+    /**
      * The color of the brush.
      * @default '#ff0000'
      */
@@ -89,14 +96,14 @@ export class KulCanvas {
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
     //#endregion
     //#region Internal variables
-    #canvas: HTMLCanvasElement;
-    #ctx: CanvasRenderingContext2D;
+    #board: HTMLCanvasElement;
+    #boardCtx: CanvasRenderingContext2D;
+    #container: HTMLDivElement;
+    #cursor: HTMLCanvasElement;
+    #cursorCtx: CanvasRenderingContext2D;
     #kulManager = kulManagerInstance();
     //#endregion
     //#region Events
-    /**
-     * Describes events emitted by the component.
-     */
     @Event({
         eventName: 'kul-canvas-event',
         composed: true,
@@ -111,7 +118,9 @@ export class KulCanvas {
             id: this.rootElement.id,
             originalEvent: e,
             eventType,
-            points: this.points,
+            points: this.points?.length
+                ? simplifyStroke(this.points, 0.01)
+                : this.points,
         });
     }
     //#endregion
@@ -141,6 +150,34 @@ export class KulCanvas {
         forceUpdate(this);
     }
     /**
+     * Sets the height of the canvas.
+     */
+    @Method()
+    async setCanvasHeight(value?: number): Promise<void> {
+        if (value !== undefined) {
+            this.#board.height = value;
+            this.#cursor.height = value;
+        } else {
+            const h = this.#container.clientHeight;
+            this.#board.height = h;
+            this.#cursor.height = h;
+        }
+    }
+    /**
+     * Sets the width of the canvas.
+     */
+    @Method()
+    async setCanvasWidth(value?: number): Promise<void> {
+        if (value !== undefined) {
+            this.#board.width = value;
+            this.#cursor.width = value;
+        } else {
+            const w = this.#container.clientWidth;
+            this.#board.width = w;
+            this.#cursor.width = w;
+        }
+    }
+    /**
      * Initiates the unmount sequence, which removes the component from the DOM after a delay.
      * @param {number} ms - Number of milliseconds
      */
@@ -161,13 +198,14 @@ export class KulCanvas {
 
     #handlePointerMove(event: PointerEvent) {
         if (!this.isPainting) {
+            this.#drawBrushCursor(event);
             return;
         }
 
         this.#addPoint(event);
 
         if (this.kulPreview) {
-            this.#drawPreview();
+            this.#drawLastSegment();
         }
     }
 
@@ -176,37 +214,85 @@ export class KulCanvas {
 
         this.onKulEvent(event, 'stroke');
 
-        this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
+        this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
     }
 
     #addPoint(event: PointerEvent) {
-        const rect = this.#canvas.getBoundingClientRect();
+        const rect = this.#board.getBoundingClientRect();
         const x = (event.clientX - rect.left) / rect.width;
         const y = (event.clientY - rect.top) / rect.height;
         this.points.push({ x, y });
     }
 
-    #drawPreview() {
-        this.#ctx.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
-        if (this.points.length === 0) {
+    #drawBrushCursor(event: PointerEvent) {
+        this.#cursorCtx.clearRect(0, 0, this.#board.width, this.#board.height);
+
+        const rect = this.#board.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+
+        this.#cursorCtx.beginPath();
+        this.#boardCtx.lineCap = 'round';
+        this.#boardCtx.lineJoin = 'round';
+
+        switch (this.kulBrush) {
+            case 'round':
+                this.#cursorCtx.arc(x, y, this.kulSize / 2, 0, Math.PI * 2);
+                break;
+            case 'square':
+                const halfSize = this.kulSize / 2;
+                this.#cursorCtx.rect(
+                    x - halfSize,
+                    y - halfSize,
+                    this.kulSize,
+                    this.kulSize
+                );
+                break;
+        }
+
+        this.#cursorCtx.fillStyle = this.kulColor;
+        this.#cursorCtx.globalAlpha = this.kulOpacity;
+        this.#cursorCtx.fill();
+    }
+
+    #drawLastSegment() {
+        const len = this.points.length;
+        if (len < 2) {
             return;
         }
 
-        this.#ctx.beginPath();
-        this.#ctx.moveTo(
-            this.points[0].x * this.#canvas.width,
-            this.points[0].y * this.#canvas.height
-        );
-        for (const point of this.points) {
-            this.#ctx.lineTo(
-                point.x * this.#canvas.width,
-                point.y * this.#canvas.height
-            );
+        const lastPoint = this.points[len - 1];
+        const secondLastPoint = this.points[len - 2];
+
+        this.#boardCtx.beginPath();
+
+        switch (this.kulBrush) {
+            case 'round':
+                this.#boardCtx.moveTo(
+                    secondLastPoint.x * this.#board.width,
+                    secondLastPoint.y * this.#board.height
+                );
+                this.#boardCtx.lineTo(
+                    lastPoint.x * this.#board.width,
+                    lastPoint.y * this.#board.height
+                );
+                break;
+
+            case 'square':
+                const halfSize = this.kulSize / 2;
+                this.#boardCtx.rect(
+                    lastPoint.x * this.#board.width - halfSize,
+                    lastPoint.y * this.#board.height - halfSize,
+                    this.kulSize,
+                    this.kulSize
+                );
+                break;
         }
-        this.#ctx.strokeStyle = this.kulColor;
-        this.#ctx.lineWidth = this.kulSize;
-        this.#ctx.globalAlpha = this.kulOpacity;
-        this.#ctx.stroke();
+
+        this.#boardCtx.strokeStyle = this.kulColor;
+        this.#boardCtx.lineWidth = this.kulSize;
+        this.#boardCtx.globalAlpha = this.kulOpacity;
+        this.#boardCtx.stroke();
     }
     //#endregion
     //#region Lifecycle hooks
@@ -215,7 +301,10 @@ export class KulCanvas {
     }
 
     componentDidLoad() {
-        this.#ctx = this.#canvas.getContext('2d');
+        this.#boardCtx = this.#board.getContext('2d');
+        this.#cursorCtx = this.#cursor.getContext('2d');
+        this.setCanvasHeight();
+        this.setCanvasWidth();
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
@@ -241,22 +330,37 @@ export class KulCanvas {
                     </style>
                 ) : undefined}
                 <div id={KUL_WRAPPER_ID}>
-                    <div class="canvas">
+                    <div
+                        class="canvas"
+                        ref={(el) => {
+                            if (el) {
+                                this.#container = el;
+                            }
+                        }}
+                    >
                         <kul-image
                             class="canvas__image"
                             {...this.kulImageProps}
                         ></kul-image>
                         <canvas
-                            class="canvas__canvas"
-                            ref={(el) => {
-                                if (el) {
-                                    this.#canvas = el;
-                                }
-                            }}
+                            class="canvas__board"
                             onPointerDown={(e) => this.#handlePointerDown(e)}
                             onPointerMove={(e) => this.#handlePointerMove(e)}
                             onPointerUp={(e) => this.#handlePointerUp(e)}
                             onPointerOut={(e) => this.#handlePointerUp(e)}
+                            ref={(el) => {
+                                if (el) {
+                                    this.#board = el;
+                                }
+                            }}
+                        ></canvas>
+                        <canvas
+                            class="canvas__cursor"
+                            ref={(el) => {
+                                if (el) {
+                                    this.#cursor = el;
+                                }
+                            }}
                         ></canvas>
                     </div>
                 </div>

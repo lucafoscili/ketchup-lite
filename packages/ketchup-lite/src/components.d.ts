@@ -14,7 +14,7 @@ import { KulArticleDataset, KulArticleEventPayload } from "./components/kul-arti
 import { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
 import { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 import { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
-import { KulCanvasEventPayload } from "./components/kul-canvas/kul-canvas-declarations";
+import { KulCanvasBrush, KulCanvasEventPayload } from "./components/kul-canvas/kul-canvas-declarations";
 import { GenericObject as GenericObject1 } from "./components";
 import { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
 import { KulCarouselEventPayload } from "./components/kul-carousel/kul-carousel-declarations";
@@ -51,7 +51,7 @@ export { KulArticleDataset, KulArticleEventPayload } from "./components/kul-arti
 export { KulImageEventPayload, KulImagePropsInterface } from "./components/kul-image/kul-image-declarations";
 export { KulBadgeEventPayload, KulBadgePropsInterface } from "./components/kul-badge/kul-badge-declarations";
 export { KulButtonEventPayload, KulButtonState, KulButtonStyling } from "./components/kul-button/kul-button-declarations";
-export { KulCanvasEventPayload } from "./components/kul-canvas/kul-canvas-declarations";
+export { KulCanvasBrush, KulCanvasEventPayload } from "./components/kul-canvas/kul-canvas-declarations";
 export { GenericObject as GenericObject1 } from "./components";
 export { KulCardEventPayload, KulCardLayout } from "./components/kul-card/kul-card-declarations";
 export { KulCarouselEventPayload } from "./components/kul-carousel/kul-carousel-declarations";
@@ -310,6 +310,11 @@ export namespace Components {
          */
         "getProps": (descriptions?: boolean) => Promise<GenericObject1>;
         /**
+          * The shape of the brush.
+          * @default 'round'
+         */
+        "kulBrush": KulCanvasBrush;
+        /**
           * The color of the brush.
           * @default '#ff0000'
          */
@@ -343,6 +348,14 @@ export namespace Components {
           * This method is used to trigger a new render of the component.
          */
         "refresh": () => Promise<void>;
+        /**
+          * Sets the height of the canvas.
+         */
+        "setCanvasHeight": (value?: number) => Promise<void>;
+        /**
+          * Sets the width of the canvas.
+         */
+        "setCanvasWidth": (value?: number) => Promise<void>;
         /**
           * Initiates the unmount sequence, which removes the component from the DOM after a delay.
           * @param ms - Number of milliseconds
@@ -3130,6 +3143,11 @@ declare namespace LocalJSX {
     }
     interface KulCanvas {
         /**
+          * The shape of the brush.
+          * @default 'round'
+         */
+        "kulBrush"?: KulCanvasBrush;
+        /**
           * The color of the brush.
           * @default '#ff0000'
          */
@@ -3159,9 +3177,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes events emitted by the component.
-         */
         "onKul-canvas-event"?: (event: KulCanvasCustomEvent<KulCanvasEventPayload>) => void;
     }
     interface KulCard {

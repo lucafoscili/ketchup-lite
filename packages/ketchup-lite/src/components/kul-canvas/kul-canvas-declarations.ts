@@ -13,6 +13,7 @@ export type KulCanvasPoints = Array<{ x: number; y: number }>;
 //#endregion
 //#region Props
 export enum KulCanvasProps {
+    kulBrush = 'The shape of the brush.',
     kulColor = 'The color of the brush.',
     kulImageProps = 'The props of the image displayed inside the badge.',
     kulOpacity = 'The opacity of the brush.',
@@ -21,6 +22,7 @@ export enum KulCanvasProps {
     kulStyle = 'Custom style of the component.',
 }
 export interface KulCanvasPropsInterface {
+    kulBrush?: KulCanvasBrush;
     kulColor?: string;
     kulImageProps?: KulImagePropsInterface;
     kulOpacity?: number;
@@ -28,4 +30,5 @@ export interface KulCanvasPropsInterface {
     kulSize?: number;
     kulStyle?: string;
 }
+export type KulCanvasBrush = 'round' | 'square';
 //#endregion
