@@ -304,6 +304,10 @@ export namespace Components {
          */
         "getDebugInfo": () => Promise<KulDebugLifecycleInfo>;
         /**
+          * Returns the image component.
+         */
+        "getImage": () => Promise<HTMLKulImageElement>;
+        /**
           * Used to retrieve component's props values.
           * @param descriptions - When provided and true, the result will be the list of props with their description.
           * @returns List of props as object, each key will be a prop.

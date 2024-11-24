@@ -202,46 +202,80 @@ export class KulCanvas {
         this.isPainting = true;
         this.points = [];
         this.#addPoint(event);
+
+        this.#board.setPointerCapture(event.pointerId);
+
+        this.#board.addEventListener('pointermove', this.#handlePointerMove);
+        this.#board.addEventListener('pointerup', this.#handlePointerUp);
+
+        event.preventDefault();
     }
 
-    #handlePointerMove(event: PointerEvent) {
+    #handlePointerMove = (event: PointerEvent) => {
+        event.preventDefault();
+
+        this.#drawBrushCursor(event);
+
         if (!this.isPainting) {
-            this.#drawBrushCursor(event);
             return;
         }
 
         this.#addPoint(event);
-
         if (this.kulPreview) {
             this.#drawLastSegment();
         }
-    }
+    };
 
-    #handlePointerUp(event: PointerEvent) {
+    #handlePointerUp = (event: PointerEvent) => {
         this.isPainting = false;
 
         this.onKulEvent(event, 'stroke');
 
         this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
-    }
+        this.#cursorCtx.clearRect(
+            0,
+            0,
+            this.#cursor.width,
+            this.#cursor.height
+        );
+
+        this.#board.releasePointerCapture(event.pointerId);
+
+        this.#board.removeEventListener('pointermove', this.#handlePointerMove);
+        this.#board.removeEventListener('pointerup', this.#handlePointerUp);
+
+        event.preventDefault();
+    };
 
     #addPoint(event: PointerEvent) {
         const rect = this.#board.getBoundingClientRect();
-        const x = (event.clientX - rect.left) / rect.width;
-        const y = (event.clientY - rect.top) / rect.height;
+        let x = (event.clientX - rect.left) / rect.width;
+        let y = (event.clientY - rect.top) / rect.height;
+
+        x = Math.max(0, Math.min(1, x));
+        y = Math.max(0, Math.min(1, y));
+
         this.points.push({ x, y });
     }
 
     #drawBrushCursor(event: PointerEvent) {
-        this.#cursorCtx.clearRect(0, 0, this.#board.width, this.#board.height);
+        this.#cursorCtx.clearRect(
+            0,
+            0,
+            this.#cursor.width,
+            this.#cursor.height
+        );
 
         const rect = this.#board.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
+        let x = event.clientX - rect.left;
+        let y = event.clientY - rect.top;
+
+        x = Math.max(0, Math.min(rect.width, x));
+        y = Math.max(0, Math.min(rect.height, y));
 
         this.#cursorCtx.beginPath();
-        this.#boardCtx.lineCap = 'round';
-        this.#boardCtx.lineJoin = 'round';
+        this.#cursorCtx.lineCap = 'round';
+        this.#cursorCtx.lineJoin = 'round';
 
         switch (this.kulBrush) {
             case 'round':
@@ -273,6 +307,8 @@ export class KulCanvas {
         const secondLastPoint = this.points[len - 2];
 
         this.#boardCtx.beginPath();
+        this.#boardCtx.lineCap = 'round';
+        this.#boardCtx.lineJoin = 'round';
 
         switch (this.kulBrush) {
             case 'round':
@@ -347,7 +383,7 @@ export class KulCanvas {
                         }}
                     >
                         <kul-image
-                            class="canvas__image"
+                            class="canvas__image kul-fit"
                             {...this.kulImageProps}
                             ref={(el) => {
                                 if (el) {
