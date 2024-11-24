@@ -294,8 +294,8 @@ export class KulMessenger {
         }
         if (this.kulValue) {
             const currentCharacter = this.kulValue.currentCharacter;
-            const filters = this.kulValue.ui.filters;
-            const panels = this.kulValue.ui.panels;
+            const filters = this.kulValue.ui?.filters || {};
+            const panels = this.kulValue.ui?.panels || {};
             if (currentCharacter) {
                 this.currentCharacter =
                     this.#adapter.get.character.byId(currentCharacter);
