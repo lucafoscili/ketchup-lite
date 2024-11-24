@@ -101,6 +101,7 @@ export class KulCanvas {
     #container: HTMLDivElement;
     #cursor: HTMLCanvasElement;
     #cursorCtx: CanvasRenderingContext2D;
+    #image: HTMLKulImageElement;
     #kulManager = kulManagerInstance();
     //#endregion
     //#region Events
@@ -132,6 +133,13 @@ export class KulCanvas {
     @Method()
     async getDebugInfo(): Promise<KulDebugLifecycleInfo> {
         return this.debugInfo;
+    }
+    /**
+     * Returns the image component.
+     */
+    @Method()
+    async getImage(): Promise<HTMLKulImageElement> {
+        return this.#image;
     }
     /**
      * Used to retrieve component's props values.
@@ -341,6 +349,11 @@ export class KulCanvas {
                         <kul-image
                             class="canvas__image"
                             {...this.kulImageProps}
+                            ref={(el) => {
+                                if (el) {
+                                    this.#image = el;
+                                }
+                            }}
                         ></kul-image>
                         <canvas
                             class="canvas__board"
