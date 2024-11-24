@@ -1,9 +1,7 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulImageEvent =
     | 'click'
     | 'contextmenu'
@@ -13,9 +11,8 @@ export type KulImageEvent =
     | 'unmount';
 export interface KulImageEventPayload
     extends KulEventPayload<'KulImage', KulImageEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+//#region Props
 export enum KulImageProps {
     kulBadgeProps = 'Sets the props to show a badge.',
     kulColor = 'The color of the icon, defaults to the CSS variable --kul-icon-color.',
@@ -34,3 +31,4 @@ export interface KulImagePropsInterface {
     kulStyle?: string;
     kulValue?: string;
 }
+//#endregion

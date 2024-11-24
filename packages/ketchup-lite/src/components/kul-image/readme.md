@@ -102,6 +102,7 @@ Type: `Promise<void>`
 
  - [kul-badge](../kul-badge)
  - [kul-button](../kul-button)
+ - [kul-canvas](../kul-canvas)
  - [kul-chat](../kul-chat)
  - [kul-imageviewer](../kul-imageviewer)
  - [kul-messenger](../kul-messenger)
@@ -122,6 +123,7 @@ graph TD;
   kul-image --> kul-badge
   kul-badge --> kul-image
   kul-button --> kul-image
+  kul-canvas --> kul-image
   kul-chat --> kul-image
   kul-imageviewer --> kul-image
   kul-messenger --> kul-image

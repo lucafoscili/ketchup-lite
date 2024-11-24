@@ -21,6 +21,7 @@ export const config: Config = {
                 'kul-showcase-article',
                 'kul-showcase-badge',
                 'kul-showcase-button',
+                'kul-showcase-canvas',
                 'kul-showcase-card',
                 'kul-showcase-carousel',
                 'kul-showcase-chart',
