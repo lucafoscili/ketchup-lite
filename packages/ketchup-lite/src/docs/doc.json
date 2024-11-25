@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-11-24T23:40:35",
+  "timestamp": "2024-11-25T18:33:43",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.20.0",
@@ -2302,6 +2302,37 @@
         }
       ],
       "methods": [
+        {
+          "name": "getCanvas",
+          "returns": {
+            "type": "Promise<HTMLCanvasElement>",
+            "docs": "The painting canvas."
+          },
+          "complexType": {
+            "signature": "() => Promise<HTMLCanvasElement>",
+            "parameters": [],
+            "references": {
+              "Promise": {
+                "location": "global",
+                "id": "global::Promise"
+              },
+              "HTMLCanvasElement": {
+                "location": "global",
+                "id": "global::HTMLCanvasElement"
+              }
+            },
+            "return": "Promise<HTMLCanvasElement>"
+          },
+          "signature": "getCanvas() => Promise<HTMLCanvasElement>",
+          "parameters": [],
+          "docs": "Returns the painting canvas .",
+          "docsTags": [
+            {
+              "name": "returns",
+              "text": "The painting canvas."
+            }
+          ]
+        },
         {
           "name": "getDebugInfo",
           "returns": {

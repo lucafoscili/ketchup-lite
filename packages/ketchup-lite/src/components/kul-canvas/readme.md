@@ -28,6 +28,16 @@
 
 ## Methods
 
+### `getCanvas() => Promise<HTMLCanvasElement>`
+
+Returns the painting canvas .
+
+#### Returns
+
+Type: `Promise<HTMLCanvasElement>`
+
+The painting canvas.
+
 ### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
 Fetches debug information of the component's current state.

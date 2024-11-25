@@ -299,6 +299,11 @@ export namespace Components {
     }
     interface KulCanvas {
         /**
+          * Returns the painting canvas .
+          * @returns The painting canvas.
+         */
+        "getCanvas": () => Promise<HTMLCanvasElement>;
+        /**
           * Fetches debug information of the component's current state.
           * @returns A promise that resolves with the debug information object.
          */

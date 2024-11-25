@@ -536,6 +536,15 @@ export const KUL_DOC: KulShowcaseDoc = {
   "kul-canvas": {
     methods: [
       {
+        name: "getCanvas",
+        docs: "Returns the painting canvas .",
+        returns: {
+          type: "Promise<HTMLCanvasElement>",
+          docs: "The painting canvas.",
+        },
+        signature: "() => Promise<HTMLCanvasElement>",
+      },
+      {
         name: "getDebugInfo",
         docs: "Fetches debug information of the component's current state.",
         returns: {

@@ -136,6 +136,14 @@ export class KulCanvas {
     //#endregion
     //#region Public methods
     /**
+     * Returns the painting canvas .
+     * @returns {Promise<HTMLCanvasElement>} The painting canvas.
+     */
+    @Method()
+    async getCanvas(): Promise<HTMLCanvasElement> {
+        return this.#board;
+    }
+    /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
      */
