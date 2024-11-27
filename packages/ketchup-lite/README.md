@@ -65,7 +65,7 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
 
 ### KulChart
 
-![KulChart]()
+![KulChart](https://github.com/lucafoscili/ketchup-lite/blob/f3291bb78e2c56eda38d97d182e03cdbacd1ff75/docs/images/chart.png)
 
 **Description:**  
 The **KulChart** component provides an advanced charting solution built on top of the Echarts library. It supports various chart types, including line, bar, bubble, and candlestick charts, as well as unique options like dual-axis and heatmap calendars.
@@ -82,7 +82,7 @@ Perfect for building real-time dashboards, financial data visualizations, and mu
 
 ### KulMasonry
 
-![KulMasonry]()
+![KulMasonry](https://github.com/lucafoscili/ketchup-lite/blob/f3291bb78e2c56eda38d97d182e03cdbacd1ff75/docs/images/masonry.png)
 
 **Description:**  
 The **KulMasonry** component is perfect for creating visually appealing layouts with items of varying sizes. It supports a dynamic masonry or waterfall grid style, making it ideal for galleries, portfolios, and content-heavy applications.
@@ -98,7 +98,7 @@ Display dynamic content, such as photo galleries or portfolio showcases, where i
 
 ### KulMessenger
 
-![KulMessenger]()
+![KulMessenger](https://github.com/lucafoscili/ketchup-lite/blob/f3291bb78e2c56eda38d97d182e03cdbacd1ff75/docs/images/messenger.png)
 
 **Description:**  
 The **KulMessenger** component provides a customizable interface for interactive roleplay or conversational experiences. Users can define a JSON dataset of characters and initiate conversations through a third-party API (local endpoint required).
