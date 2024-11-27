@@ -15,6 +15,7 @@ import {
     KulDataCyAttributes,
     KulGenericEvent,
 } from '../../../types/GenericTypes';
+import { KulCanvasEventPayload } from '../../kul-canvas/kul-canvas-declarations';
 
 export const COMPONENTS: KulImageviewerAdapterComponents = {
     jsx: {
@@ -51,7 +52,7 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
     const className = {
         'details-grid__canvas': true,
     };
-    const eventHandler = (e: CustomEvent<KulImageEventPayload>) => {
+    const eventHandler = (e: CustomEvent<KulCanvasEventPayload>) => {
         imageviewer.onKulEvent(e, 'kul-event');
     };
 
@@ -68,7 +69,7 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
         <kul-canvas
             class={className}
             kulImageProps={imageProps}
-            onKul-image-event={eventHandler}
+            onKul-canvas-event={eventHandler}
             ref={(el) => {
                 if (el) {
                     adapter.components.refs.canvas = el;

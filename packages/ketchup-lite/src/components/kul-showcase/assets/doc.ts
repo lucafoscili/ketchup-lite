@@ -641,7 +641,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulStrokeTolerance",
-        docs: "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\nThis prop sets the tolerance of the algorithm (null to disable).",
+        docs: "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\r\nThis prop sets the tolerance of the algorithm (null to disable).",
         type: "number",
       },
       {

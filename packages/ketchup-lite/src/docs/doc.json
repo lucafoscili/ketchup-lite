@@ -1,9 +1,9 @@
 {
-  "timestamp": "2024-11-25T18:35:00",
+  "timestamp": "2024-11-27T20:23:10",
   "compiler": {
     "name": "@stencil/core",
-    "version": "4.20.0",
-    "typescriptVersion": "5.5.3"
+    "version": "4.22.3",
+    "typescriptVersion": "5.5.4"
   },
   "components": [
     {
@@ -269,7 +269,7 @@
               "Event": {
                 "location": "import",
                 "path": "@stencil/core",
-                "id": "node_modules::Event"
+                "id": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event"
               }
             },
             "return": "Promise<void>"
@@ -2257,7 +2257,7 @@
           "mutable": true,
           "attr": "kul-stroke-tolerance",
           "reflectToAttr": true,
-          "docs": "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\nThis prop sets the tolerance of the algorithm (null to disable).",
+          "docs": "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\r\nThis prop sets the tolerance of the algorithm (null to disable).",
           "docsTags": [
             {
               "name": "default",
@@ -17607,6 +17607,11 @@
       "declaration": "export interface KulAccordionEventPayload\n    extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}",
       "docstring": "",
       "path": "src/components/kul-accordion/kul-accordion-declarations.ts"
+    },
+    "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts::Event": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "../../node_modules/@stencil/core/internal/stencil-core/index.d.ts"
     },
     "src/components/kul-article/kul-article-declarations.ts::KulArticleDataset": {
       "declaration": "export interface KulArticleDataset extends KulDataDataset {\n    nodes: KulArticleNode[];\n}",
