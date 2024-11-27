@@ -1,8 +1,6 @@
 import {
-    KulDataCell,
     KulDataNode,
     KulDataShapeDefaults,
-    KulDataShapes,
 } from '../../../managers/kul-data/kul-data-declarations';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { KulCardLayout, KulCardShapesIds } from '../kul-card-declarations';
@@ -25,6 +23,7 @@ const getThemes = () => {
 export const DEFAULTS: {
     [L in KulCardLayout]: KulDataShapeDefaults;
 } = {
+    //#region debug
     debug: {
         button: () => [
             {
@@ -61,6 +60,9 @@ export const DEFAULTS: {
             },
         ],
     },
+    //#endregion
+
+    //#region keywords
     keywords: {
         button: () => [
             {
@@ -85,6 +87,9 @@ export const DEFAULTS: {
             },
         ],
     },
+    //#endregion
+
+    //#region material
     material: {
         image: () => [
             {
@@ -96,6 +101,9 @@ export const DEFAULTS: {
             },
         ],
     },
+    //#endregion
+
+    //#region upload
     upload: {
         button: () => [
             {
@@ -107,4 +115,5 @@ export const DEFAULTS: {
             },
         ],
     },
+    //#endregion
 };

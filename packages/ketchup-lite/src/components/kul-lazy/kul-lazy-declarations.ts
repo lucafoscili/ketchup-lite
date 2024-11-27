@@ -1,14 +1,12 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulLazyEvent = 'kul-event' | 'load' | 'ready' | 'unmount';
 export interface KulLazyEventPayload
     extends KulEventPayload<'KulLazy', KulLazyEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulLazyProps {
     kulComponentName = 'Sets the tag name of the component to be lazy loaded.',
     kulComponentProps = 'Sets the data of the component to be lazy loaded.',
@@ -24,3 +22,4 @@ export interface KulLazyPropsInterface {
     kulStyle?: string;
 }
 export type KulLazyRenderMode = 'both' | 'props' | 'viewport';
+//#endregion

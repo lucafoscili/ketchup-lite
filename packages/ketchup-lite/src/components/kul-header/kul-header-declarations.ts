@@ -1,17 +1,16 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulHeaderEvent = 'ready' | 'unmount';
 export interface KulHeaderEventPayload
     extends KulEventPayload<'KulHeader', KulHeaderEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulHeaderProps {
     kulStyle = 'Custom style of the component.',
 }
 export interface KulHeaderPropsInterface {
     kulStyle?: string;
 }
+//#endregion

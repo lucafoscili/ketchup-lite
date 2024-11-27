@@ -10,12 +10,12 @@ import {
     Prop,
     State,
 } from '@stencil/core';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataCyAttributes,
     type GenericObject,
 } from '../../types/GenericTypes';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
@@ -36,10 +36,7 @@ export class KulToggle {
      */
     @Element() rootElement: HTMLKulToggleElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -57,11 +54,9 @@ export class KulToggle {
      * @see KulToggleState - For a list of possible states.
      */
     @State() value: KulToggleState = 'off';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Defaults at false. When set to true, the component is disabled.
      * @default false
@@ -92,21 +87,14 @@ export class KulToggle {
      * @default false
      */
     @Prop({ mutable: false }) kulValue = false;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #rippleSurface: HTMLElement;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted for various toggle interactions like click, focus, blur.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-toggle-event',
         composed: true,
@@ -114,7 +102,6 @@ export class KulToggle {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulToggleEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulToggleEvent) {
         switch (eventType) {
             case 'pointerdown':
@@ -136,11 +123,9 @@ export class KulToggle {
             valueAsBoolean: this.value === 'on' ? true : false,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -193,11 +178,9 @@ export class KulToggle {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #isOn() {
         return this.value === 'on' ? true : false;
     }
@@ -214,11 +197,9 @@ export class KulToggle {
             this.onKulEvent(e, 'change');
         }
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         if (this.kulValue) {
             this.value = 'on';
@@ -226,7 +207,6 @@ export class KulToggle {
 
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         if (this.#rippleSurface) {
             this.#kulManager.theme.ripple.setup(this.#rippleSurface);
@@ -234,15 +214,12 @@ export class KulToggle {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         const className: Record<string, boolean> = {
             toggle: true,
@@ -313,8 +290,8 @@ export class KulToggle {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

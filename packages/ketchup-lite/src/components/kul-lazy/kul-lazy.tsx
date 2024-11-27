@@ -10,17 +10,17 @@ import {
     State,
 } from '@stencil/core';
 import { Method } from '@stencil/core/internal';
-import { GenericObject } from '../../types/GenericTypes';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulLazyEvent,
     KulLazyEventPayload,
     KulLazyProps,
     KulLazyRenderMode,
 } from './kul-lazy-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 
 @Component({
     tag: 'kul-lazy',
@@ -33,10 +33,7 @@ export class KulLazy {
      */
     @Element() rootElement: HTMLKulLazyElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -51,11 +48,9 @@ export class KulLazy {
      * Sets whether the lazy entered the viewport or not.
      */
     @State() isInViewport = false;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Sets the tag name of the component to be lazy loaded.
      * @default ""
@@ -82,23 +77,16 @@ export class KulLazy {
      * @default ""
      */
     @Prop() kulStyle = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #intObserver: IntersectionObserver = null;
     #lazyComponent: HTMLElement = null;
     #lazyComponentLoaded = false;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes the component's events.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-lazy-event',
         composed: true,
@@ -106,7 +94,6 @@ export class KulLazy {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulLazyEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulLazyEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -115,11 +102,9 @@ export class KulLazy {
             eventType,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Returns the HTMLElement of the component to lazy load.
      * @returns {HTMLElement} Lazy loaded component.
@@ -163,11 +148,9 @@ export class KulLazy {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #setObserver(): void {
         const callback: IntersectionObserverCallback = (
             entries: IntersectionObserverEntry[]
@@ -190,11 +173,9 @@ export class KulLazy {
         };
         this.#intObserver = new IntersectionObserver(callback, options);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.rootElement.addEventListener(
             `${this.kulComponentName}-event`,
@@ -205,17 +186,14 @@ export class KulLazy {
         this.#kulManager.theme.register(this);
         this.#setObserver();
     }
-
     componentDidLoad() {
         this.#intObserver.observe(this.rootElement);
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         if (this.#lazyComponent && !this.#lazyComponentLoaded) {
             this.#lazyComponentLoaded = true;
@@ -223,7 +201,6 @@ export class KulLazy {
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         let content: HTMLElement;
         let resource: HTMLElement;
@@ -340,9 +317,9 @@ export class KulLazy {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
         this.#intObserver?.unobserve(this.rootElement);
     }
+    //#endregion
 }

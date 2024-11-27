@@ -15,13 +15,11 @@ import {
     KulDataNode,
     KulDataShapes,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulManager } from '../../managers/kul-manager/kul-manager';
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulChart } from './kul-chart';
-import { KulManager } from '../../managers/kul-manager/kul-manager';
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
+//#region Adapter
 export interface KulChartAdapter {
     actions: {
         mapType: (type: KulChartType) => SeriesOption['type'];
@@ -80,9 +78,9 @@ export interface KulChartAdapterOptions {
     radar: (adapter: KulChartAdapter) => EChartsOption;
     sankey: (adapter: KulChartAdapter) => EChartsOption;
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Events
 export type KulChartEvent = 'click' | 'ready' | 'unmount';
 export interface KulChartEventPayload
     extends KulEventPayload<'KulChart', KulChartEvent> {
@@ -94,9 +92,59 @@ export interface KulChartEventData {
     x: number | string;
     y: number | string;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Internal usage
+export interface KulChartSeriesData {
+    name: string;
+    data: number[];
+    axisIndex: number;
+    type: KulChartType;
+}
+export type KulChartTooltipDataArray = number[];
+export type KulChartTooltipDataDictionary = {
+    name?: string;
+    source?: string;
+    target?: string;
+    value?: number;
+};
+export type KulChartTooltipData =
+    | KulChartTooltipDataDictionary
+    | KulChartTooltipDataArray;
+export interface KulChartTooltipArguments<D extends KulChartTooltipData> {
+    data: D;
+    dataType: string;
+    name: string;
+    percent: number;
+    seriesName: string;
+    source: D extends {
+        name?: string;
+        source?: string;
+        target?: string;
+        value?: number;
+    }
+        ? string
+        : undefined;
+    target: D extends {
+        name?: string;
+        source?: string;
+        target?: string;
+        value?: number;
+    }
+        ? string
+        : undefined;
+    value: D extends {
+        name?: string;
+        source?: string;
+        target?: string;
+        value?: number;
+    }
+        ? number
+        : undefined;
+}
+//#endregion
+
+//#region Props
 export enum KulChartProps {
     kulAxis = 'Sets the axis of the chart.',
     kulColors = "Overrides theme's colors.",
@@ -148,50 +196,4 @@ export type KulChartLegendPlacement =
 export type KulChartXAxis = XAXisComponentOption;
 export type KulChartYAxis = YAXisComponentOption;
 export type KulChartAxis = string | string[];
-export interface KulChartSeriesData {
-    name: string;
-    data: number[];
-    axisIndex: number;
-    type: KulChartType;
-}
-export type KulChartTooltipDataArray = number[];
-export type KulChartTooltipDataDictionary = {
-    name?: string;
-    source?: string;
-    target?: string;
-    value?: number;
-};
-export type KulChartTooltipData =
-    | KulChartTooltipDataDictionary
-    | KulChartTooltipDataArray;
-export interface KulChartTooltipArguments<D extends KulChartTooltipData> {
-    data: D;
-    dataType: string;
-    name: string;
-    percent: number;
-    seriesName: string;
-    source: D extends {
-        name?: string;
-        source?: string;
-        target?: string;
-        value?: number;
-    }
-        ? string
-        : undefined;
-    target: D extends {
-        name?: string;
-        source?: string;
-        target?: string;
-        value?: number;
-    }
-        ? string
-        : undefined;
-    value: D extends {
-        name?: string;
-        source?: string;
-        target?: string;
-        value?: number;
-    }
-        ? number
-        : undefined;
-}
+//#endregion

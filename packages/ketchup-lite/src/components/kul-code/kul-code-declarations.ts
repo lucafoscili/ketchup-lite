@@ -1,13 +1,12 @@
 import { KulEventPayload } from '../../types/GenericTypes';
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+
+//#region Events
 export type KulCodeEvent = 'ready' | 'unmount';
 export interface KulCodeEventPayload
     extends KulEventPayload<'KulCode', KulCodeEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulCodeProps {
     kulFormat = 'Automatically formats the value.',
     kulLanguage = 'Sets the language of the snippet.',
@@ -22,3 +21,4 @@ export interface KulCodePropsInterface {
     kulStyle?: string;
     kulValue?: string;
 }
+//#endregion

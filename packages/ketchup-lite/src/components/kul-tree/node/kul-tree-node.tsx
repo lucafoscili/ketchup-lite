@@ -1,11 +1,7 @@
 import { FunctionalComponent, h } from '@stencil/core';
-import { KulTreeNodeProps } from './kul-tree-node-declarations';
-import { TreeNodeContent } from './kul-tree-node-content';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
-
-/*-------------------------------------------------*/
-/*                C o m p o n e n t                */
-/*-------------------------------------------------*/
+import { TreeNodeContent } from './kul-tree-node-content';
+import { KulTreeNodeProps } from './kul-tree-node-declarations';
 
 export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
     props: KulTreeNodeProps
@@ -29,6 +25,7 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
         ['node--expanded']: expanded ? true : false,
         ['node--selected']: selected ? true : false,
     };
+    //#region accordion layout
     if (accordionLayout) {
         return (
             <div
@@ -55,7 +52,9 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
                 </div>
             </div>
         );
+        //#endregion
     } else {
+        //#region standard layout
         return (
             <div
                 class={`node ${expanded ? 'node--expanded' : ''} ${
@@ -90,4 +89,5 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
             </div>
         );
     }
+    //#endregion
 };

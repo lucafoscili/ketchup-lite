@@ -12,6 +12,11 @@ import {
     State,
     VNode,
 } from '@stencil/core';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulTextfieldEvent,
     KulTextfieldEventPayload,
@@ -20,11 +25,6 @@ import {
     KulTextfieldStatus,
     KulTextfieldStyling,
 } from './kul-textfield-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
 
 @Component({
     tag: 'kul-textfield',
@@ -37,10 +37,7 @@ export class KulTextfield {
      */
     @Element() rootElement: HTMLKulTextfieldElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -59,11 +56,9 @@ export class KulTextfield {
      * Value of the text field.
      */
     @State() value = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Enables or disables the text field to prevent user interaction.
      * @default false
@@ -124,23 +119,16 @@ export class KulTextfield {
      * @default ""
      */
     @Prop({ mutable: false }) kulValue = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #hasOutline: boolean;
     #input: HTMLInputElement | HTMLTextAreaElement;
     #kulManager = kulManagerInstance();
     #maxLength: number;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-textfield-event',
         composed: true,
@@ -148,7 +136,6 @@ export class KulTextfield {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulTextfieldEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulTextfieldEvent) {
         const target = e.target as HTMLInputElement;
         const inputValue = target?.value;
@@ -171,11 +158,9 @@ export class KulTextfield {
             value: this.value,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -242,11 +227,9 @@ export class KulTextfield {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #updateState(
         value: string,
         e: CustomEvent<unknown> | Event = new CustomEvent('change')
@@ -256,11 +239,9 @@ export class KulTextfield {
             this.onKulEvent(e, 'change');
         }
     }
-
     #outlineCheck() {
         return this.kulStyling === 'outlined' || this.kulStyling === 'textarea';
     }
-
     #prepCounter() {
         if (!this.#maxLength) {
             return;
@@ -272,7 +253,6 @@ export class KulTextfield {
             </div>
         );
     }
-
     #prepHelper() {
         if (!this.kulHelper) {
             return;
@@ -292,7 +272,6 @@ export class KulTextfield {
             </div>
         );
     }
-
     #prepIcon() {
         if (!this.kulIcon) {
             return;
@@ -307,7 +286,6 @@ export class KulTextfield {
             <div class="textfield__icon" onClick={() => {}} style={style}></div>
         );
     }
-
     #prepInput() {
         return (
             <input
@@ -342,7 +320,6 @@ export class KulTextfield {
             ></input>
         );
     }
-
     #prepLabel() {
         if (this.kulFullWidth) {
             return;
@@ -367,13 +344,11 @@ export class KulTextfield {
 
         return labelEl;
     }
-
     #prepRipple() {
         return (
             !this.#hasOutline && <span class="textfield__line-ripple"></span>
         );
     }
-
     #prepTextArea() {
         return (
             <span class="textfield__resizer">
@@ -410,7 +385,6 @@ export class KulTextfield {
             </span>
         );
     }
-
     #updateStatus() {
         const propertiesToUpdateStatus: {
             prop: string;
@@ -433,10 +407,9 @@ export class KulTextfield {
             }
         });
     }
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
+    //#endregion
 
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         if (this.kulValue) {
@@ -444,23 +417,19 @@ export class KulTextfield {
             this.value = this.kulValue;
         }
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
         this.#hasOutline = this.#outlineCheck();
         this.#maxLength = this.kulHtmlAttributes?.maxLength as number;
         this.#updateStatus();
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         const classList = ['textfield', 'textfield--' + this.kulStyling];
         this.status.forEach((status) => {
@@ -497,8 +466,8 @@ export class KulTextfield {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

@@ -4,9 +4,7 @@ import {
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulChipEvent =
     | 'blur'
     | 'click'
@@ -20,16 +18,16 @@ export interface KulChipEventPayload
     node: KulDataNode;
     selectedNodes: Set<KulDataNode>;
 }
-/*-------------------------------------------------*/
-/*                 I n t e r n a l                 */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Internal usage
 export interface KulChipEventArguments {
     expansion?: boolean;
     node?: KulDataNode;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulChipProps {
     kulData = 'The data of the chip chip.',
     kulRipple = 'When set to true, the pointerdown event will trigger a ripple effect.',
@@ -43,3 +41,4 @@ export interface KulChipPropsInterface {
     kulStyling?: KulChipStyling;
 }
 export type KulChipStyling = 'choice' | 'filter' | 'input' | 'standard';
+//#endregion

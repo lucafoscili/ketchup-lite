@@ -1,8 +1,8 @@
-import type { KulEventPayload } from '../../types/GenericTypes';
 import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
+import type { KulEventPayload } from '../../types/GenericTypes';
 import {
     KulChatPropsInterface,
     KulChatStatus,
@@ -145,6 +145,7 @@ export interface KulMessengerAdapterSetMessenger {
     };
 }
 //#endregion
+
 //#region Character node
 export interface KulMessengerDataset extends KulDataDataset {
     nodes?: KulMessengerCharacterNode[];
@@ -164,6 +165,7 @@ export interface KulMessengerCharacterNode extends KulDataNode {
     value: string;
 }
 //#endregion
+
 //#region Root nodes
 export interface KulMessengerBaseRootNode<T extends KulMessengerTypes>
     extends KulDataNode {
@@ -232,6 +234,7 @@ export interface KulMessengerTimeframeRootNode
     id: KulMessengerImageRootIds<'timeframes'>;
 }
 //#endregion
+
 //#region Children nodes
 export interface KulMessengerBaseChildNode<T extends KulMessengerUnionChildIds>
     extends KulDataNode {
@@ -281,6 +284,15 @@ export interface KulMessengerTimeframeNode
     id: KulMessengerChildIds<KulMessengerTimeframeId>;
 }
 //#endregion
+
+//#region Events
+export type KulMessengerEvent = 'ready' | 'save' | 'unmount';
+export interface KulMessengerEventPayload
+    extends KulEventPayload<'KulMessenger', KulMessengerEvent> {
+    config: KulMessengerConfig;
+}
+//#endregion
+
 //#region States
 export interface KulMessengerChat {
     [index: KulMessengerCharacterId]: KulChatPropsInterface;
@@ -325,13 +337,7 @@ export interface KulMessengerUI {
 }
 export type KulMessengerPanelsValue = 'left' | 'right';
 //#endregion
-//#region Events
-export type KulMessengerEvent = 'ready' | 'save' | 'unmount';
-export interface KulMessengerEventPayload
-    extends KulEventPayload<'KulMessenger', KulMessengerEvent> {
-    config: KulMessengerConfig;
-}
-//#endregion
+
 //#region Props
 export enum KulMessengerProps {
     kulAutosave = 'Automatically saves the dataset when a chat updates.',

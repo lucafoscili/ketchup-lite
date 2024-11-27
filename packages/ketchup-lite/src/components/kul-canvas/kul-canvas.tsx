@@ -10,7 +10,13 @@ import {
     Prop,
     State,
 } from '@stencil/core';
+import { GenericObject } from '../../components';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
+import { simplifyStroke } from './helpers/kul-canvas-helpers';
 import {
     KulCanvasBrush,
     KulCanvasEvent,
@@ -18,12 +24,6 @@ import {
     KulCanvasPoints,
     KulCanvasProps,
 } from './kul-canvas-declarations';
-import { getProps } from '../../utils/componentUtils';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
-import { GenericObject } from '../../components';
-import { simplifyStroke } from './helpers/kul-canvas-helpers';
 
 @Component({
     tag: 'kul-canvas',
@@ -58,6 +58,7 @@ export class KulCanvas {
      */
     @State() points: KulCanvasPoints = [];
     //#endregion
+
     //#region Props
     /**
      * The shape of the brush.
@@ -101,6 +102,7 @@ export class KulCanvas {
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
     //#endregion
+
     //#region Internal variables
     #board: HTMLCanvasElement;
     #boardCtx: CanvasRenderingContext2D;
@@ -112,6 +114,7 @@ export class KulCanvas {
     #resizeObserver: ResizeObserver;
     #resizeTimeout: NodeJS.Timeout;
     //#endregion
+
     //#region Events
     @Event({
         eventName: 'kul-canvas-event',
@@ -120,7 +123,6 @@ export class KulCanvas {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulCanvasEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulCanvasEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -134,6 +136,7 @@ export class KulCanvas {
         });
     }
     //#endregion
+
     //#region Public methods
     /**
      * Returns the painting canvas .
@@ -214,6 +217,7 @@ export class KulCanvas {
         }, ms);
     }
     //#endregion
+
     //#region Private methods
     #normalizeCoordinate(event: PointerEvent, rect: DOMRect) {
         let x = (event.clientX - rect.left) / rect.width;
@@ -367,6 +371,7 @@ export class KulCanvas {
         }
     }
     //#endregion
+
     //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);

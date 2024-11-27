@@ -1,5 +1,6 @@
 import { KulCanvasPoints } from '../kul-canvas-declarations';
 
+//#region simplifyStroke
 export const simplifyStroke = (points: KulCanvasPoints, tolerance: number) => {
     if (points.length <= 2) {
         return points;
@@ -58,3 +59,4 @@ export const simplifyStroke = (points: KulCanvasPoints, tolerance: number) => {
     simplified.push(points[points.length - 1]);
     return simplified;
 };
+//#endregion

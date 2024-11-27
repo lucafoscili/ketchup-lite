@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event                  | Description              | Type                                     |
-| ---------------------- | ------------------------ | ---------------------------------------- |
-| `kul-photoframe-event` | Describes event emitted. | `CustomEvent<KulPhotoframeEventPayload>` |
+| Event                  | Description | Type                                     |
+| ---------------------- | ----------- | ---------------------------------------- |
+| `kul-photoframe-event` |             | `CustomEvent<KulPhotoframeEventPayload>` |
 
 
 ## Methods

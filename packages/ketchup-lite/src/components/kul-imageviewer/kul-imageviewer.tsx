@@ -11,15 +11,18 @@ import {
     State,
     VNode,
 } from '@stencil/core';
-import { type GenericObject } from '../../types/GenericTypes';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataCell,
     KulDataDataset,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { type GenericObject } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { KulMasonrySelectedShape } from '../kul-masonry/kul-masonry-declarations';
+import { ACTIONS } from './helpers/kul-imageviewer-actions';
+import { COMPONENTS } from './helpers/kul-imageviewer-components';
 import {
     KulImageviewerAdapter,
     KulImageviewerAdapterRefs,
@@ -29,9 +32,6 @@ import {
     KulImageviewerLoadCallback,
     KulImageviewerProps,
 } from './kul-imageviewer-declarations';
-import { ACTIONS } from './helpers/kul-imageviewer-actions';
-import { COMPONENTS } from './helpers/kul-imageviewer-components';
-import { KulMasonrySelectedShape } from '../kul-masonry/kul-masonry-declarations';
 
 @Component({
     tag: 'kul-imageviewer',
@@ -44,10 +44,7 @@ export class KulImageviewer {
      */
     @Element() rootElement: HTMLKulImageviewerElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -74,11 +71,9 @@ export class KulImageviewer {
      * Reflects the status of the spinner.
      */
     @State() isSpinnerActive = false;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Actual data of the image viewer.
      * @default {}
@@ -99,21 +94,14 @@ export class KulImageviewer {
      * @default {}
      */
     @Prop({ mutable: true }) kulValue: KulDataDataset = {};
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #stringify = this.#kulManager.data.cell.stringify;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-imageviewer-event',
         composed: true,
@@ -121,7 +109,6 @@ export class KulImageviewer {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulImageviewerEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulImageviewerEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -130,11 +117,9 @@ export class KulImageviewer {
             originalEvent: e,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Appends a new snapshot to the current shape's history by duplicating it with an updated value.
      * It has no effect when the current shape is not set.
@@ -233,11 +218,9 @@ export class KulImageviewer {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #adapter: KulImageviewerAdapter = {
         actions: ACTIONS,
         components: COMPONENTS,
@@ -308,7 +291,6 @@ export class KulImageviewer {
             },
         },
     };
-
     #getSelectedShapeValue(selectedShape: KulMasonrySelectedShape) {
         if (selectedShape.index !== undefined) {
             const value =
@@ -320,7 +302,6 @@ export class KulImageviewer {
             };
         }
     }
-
     #prepDetails(): VNode {
         const jsx = this.#adapter.components.jsx;
         return (
@@ -343,7 +324,6 @@ export class KulImageviewer {
             </div>
         );
     }
-
     #prepImageviewer(): VNode {
         const className = {
             'main-grid': true,
@@ -358,7 +338,6 @@ export class KulImageviewer {
             </div>
         );
     }
-
     #prepNavigation(): VNode {
         return (
             <div class="navigation-grid">
@@ -368,28 +347,22 @@ export class KulImageviewer {
             </div>
         );
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         return (
             <Host>
@@ -404,8 +377,8 @@ export class KulImageviewer {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

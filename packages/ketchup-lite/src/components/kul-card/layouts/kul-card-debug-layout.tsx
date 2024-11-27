@@ -1,12 +1,13 @@
 import { h, VNode } from '@stencil/core';
-import { KulCardAdapter, KulCardShapesIds } from '../kul-card-declarations';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
 import { KulCodeEventPayload } from '../../kul-code/kul-code-declarations';
-import { DEFAULTS } from '../helpers/kul-card-defaults';
+import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
 import { KulToggleEventPayload } from '../../kul-toggle/kul-toggle-declarations';
+import { DEFAULTS } from '../helpers/kul-card-defaults';
+import { KulCardAdapter, KulCardShapesIds } from '../kul-card-declarations';
 
+//#region Debug layout
 export function getDebugLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
@@ -56,7 +57,9 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
         </div>
     );
 }
+//#endregion
 
+//#region Event handlers
 const buttonEventHandler = (e: CustomEvent<KulButtonEventPayload>) => {
     const { eventType, id, originalEvent } = e.detail;
 
@@ -90,7 +93,6 @@ const buttonEventHandler = (e: CustomEvent<KulButtonEventPayload>) => {
             break;
     }
 };
-
 const codeEventHandler = (e: CustomEvent<KulCodeEventPayload>) => {
     const { comp, eventType } = e.detail;
 
@@ -103,7 +105,6 @@ const codeEventHandler = (e: CustomEvent<KulCodeEventPayload>) => {
             break;
     }
 };
-
 const listEventHandler = (e: CustomEvent<KulListEventPayload>) => {
     const { eventType, node } = e.detail;
 
@@ -113,7 +114,6 @@ const listEventHandler = (e: CustomEvent<KulListEventPayload>) => {
             break;
     }
 };
-
 const toggleEventHandler = (e: CustomEvent<KulToggleEventPayload>) => {
     const { comp, eventType, value } = e.detail;
     const boolValue = value === 'on' ? true : false;
@@ -130,3 +130,4 @@ const toggleEventHandler = (e: CustomEvent<KulToggleEventPayload>) => {
             break;
     }
 };
+//#endregion

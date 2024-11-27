@@ -5,6 +5,7 @@ const BACK_ICON = 'chevron_left';
 const FORWARD_ICON = 'chevron_right';
 
 export const COMPONENTS: KulCarouselAdapterComponents = {
+    //#region Back
     back: (adapter) => {
         return (
             <kul-button
@@ -16,6 +17,9 @@ export const COMPONENTS: KulCarouselAdapterComponents = {
             ></kul-button>
         );
     },
+    //#endregion
+
+    //#region Forward
     forward: (adapter) => {
         return (
             <kul-button
@@ -27,4 +31,5 @@ export const COMPONENTS: KulCarouselAdapterComponents = {
             ></kul-button>
         );
     },
+    //#endregion
 };

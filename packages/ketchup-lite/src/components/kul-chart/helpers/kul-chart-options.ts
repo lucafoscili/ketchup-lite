@@ -22,6 +22,7 @@ import {
 } from '../kul-chart-declarations';
 
 export const CHART_OPTIONS: KulChartAdapterOptions = {
+    //#region Bubble
     bubble: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -96,6 +97,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Calendar
     calendar: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -189,6 +193,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Candlestick
     candlestick: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -264,6 +271,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Default
     default: (adapter) => {
         const design = adapter.get.design;
         const colors = design.colors(adapter, adapter.get.seriesData().length);
@@ -435,6 +445,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Funnel
     funnel: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -497,6 +510,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Heatmap
     heatmap: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -598,6 +614,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Pie
     pie: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -637,6 +656,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Radar
     radar: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -722,6 +744,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
+
+    //#region Sankey
     sankey: (adapter) => {
         const chart = adapter.get.chart();
         const design = adapter.get.design;
@@ -785,4 +810,5 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         return options;
     },
+    //#endregion
 };

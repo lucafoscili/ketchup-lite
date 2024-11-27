@@ -1,8 +1,6 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulUploadEvent =
     | 'delete'
     | 'pointerdown'
@@ -13,9 +11,9 @@ export interface KulUploadEventPayload
     extends KulEventPayload<'KulUpload', KulUploadEvent> {
     selectedFiles: File[];
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulUploadProps {
     kulLabel = "Sets the button's label.",
     kulRipple = 'When set to true, the pointerdown event will trigger a ripple effect.',
@@ -28,3 +26,4 @@ export interface KulUploadPropsInterface {
     kulStyle?: string;
     kulValue?: File[];
 }
+//#endregion

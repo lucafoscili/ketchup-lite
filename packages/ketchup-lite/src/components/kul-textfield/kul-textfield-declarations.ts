@@ -1,8 +1,6 @@
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulTextfieldEvent =
     | 'blur'
     | 'change'
@@ -16,9 +14,19 @@ export interface KulTextfieldEventPayload
     inputValue?: string;
     value?: string;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region States
+export type KulTextfieldStatus =
+    | 'disabled'
+    | 'filled'
+    | 'focused'
+    | 'full-width'
+    | 'has-icon'
+    | 'has-label';
+//#endregion
+
+//#region Props
 export enum KulTextfieldProps {
     kulDisabled = 'Enables or disables the text field to prevent user interaction.',
     kulFullWidth = 'Applies a full-width styling to the text field, making it occupy all available horizontal space.',
@@ -48,13 +56,4 @@ export interface KulTextfieldHelper {
     value: string;
 }
 export type KulTextfieldStyling = 'flat' | 'outlined' | 'raised' | 'textarea';
-/*-------------------------------------------------*/
-/*                    S t a t e                    */
-/*-------------------------------------------------*/
-export type KulTextfieldStatus =
-    | 'disabled'
-    | 'filled'
-    | 'focused'
-    | 'full-width'
-    | 'has-icon'
-    | 'has-label';
+//#endregion

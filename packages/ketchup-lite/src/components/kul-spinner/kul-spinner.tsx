@@ -1,4 +1,3 @@
-import { KulEventPayload } from '../../types/GenericTypes';
 import {
     Component,
     Element,
@@ -13,16 +12,16 @@ import {
     VNode,
     Watch,
 } from '@stencil/core';
-import { GenericObject } from '../../types/GenericTypes';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulSpinnerEvent,
     KulSpinnerEventPayload,
     KulSpinnerProps,
 } from './kul-spinner-declarations';
-import { getProps } from '../../utils/componentUtils';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     BAR_SPINNER_CONFIGS,
     SPINNER_CONFIGS,
@@ -34,12 +33,10 @@ import {
     shadow: true,
 })
 export class KulSpinner {
-    //#region Root
     /**
      * References the root HTML element of the component (<kul-spinner>).
      */
     @Element() rootElement: HTMLKulSpinnerElement;
-    //#endregion
     //#region States
     /**
      * Debug information.
@@ -56,6 +53,7 @@ export class KulSpinner {
      */
     @State() kulProgress = 0;
     //#endregion
+
     //#region Props
     /**
      * Specifies if the spinner is animating.
@@ -103,10 +101,12 @@ export class KulSpinner {
      */
     @Prop({ mutable: true, reflect: true }) kulTimeout: number;
     //#endregion
+
     //#region Internal variables
     #kulManager = kulManagerInstance();
     #progressAnimationFrame: number;
     //#endregion
+
     //#region Watchers
     @Watch('kulTimeout')
     kulTimeoutChanged(newValue: number, oldValue: number) {
@@ -124,6 +124,7 @@ export class KulSpinner {
         }
     }
     //#endregion
+
     //#region Event
     @Event({
         eventName: 'kul-spinner-event',
@@ -132,7 +133,6 @@ export class KulSpinner {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulSpinnerEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulSpinnerEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -142,6 +142,7 @@ export class KulSpinner {
         });
     }
     //#endregion
+
     //#region Public methods
     /**
      * Fetches debug information of the component's current state.
@@ -179,6 +180,28 @@ export class KulSpinner {
         }, ms);
     }
     //#endregion
+
+    //#region Private methods
+    #startProgressBar() {
+        this.kulProgress = 0;
+        const startTime = Date.now();
+        const duration = this.kulTimeout;
+
+        const updateProgress = () => {
+            const elapsed = Date.now() - startTime;
+            this.kulProgress = Math.min((elapsed / duration) * 100, 100);
+            if (this.kulProgress < 100) {
+                this.#progressAnimationFrame =
+                    requestAnimationFrame(updateProgress);
+            } else {
+                cancelAnimationFrame(this.#progressAnimationFrame);
+            }
+        };
+
+        this.#progressAnimationFrame = requestAnimationFrame(updateProgress);
+    }
+    //#endregion
+
     //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
@@ -216,7 +239,6 @@ export class KulSpinner {
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         let masterClass = '';
         let wrapperClass = '';
@@ -294,25 +316,6 @@ export class KulSpinner {
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
         cancelAnimationFrame(this.#progressAnimationFrame);
-    }
-    //#region Private methods
-    #startProgressBar() {
-        this.kulProgress = 0;
-        const startTime = Date.now();
-        const duration = this.kulTimeout;
-
-        const updateProgress = () => {
-            const elapsed = Date.now() - startTime;
-            this.kulProgress = Math.min((elapsed / duration) * 100, 100);
-            if (this.kulProgress < 100) {
-                this.#progressAnimationFrame =
-                    requestAnimationFrame(updateProgress);
-            } else {
-                cancelAnimationFrame(this.#progressAnimationFrame);
-            }
-        };
-
-        this.#progressAnimationFrame = requestAnimationFrame(updateProgress);
     }
     //#endregion
 }

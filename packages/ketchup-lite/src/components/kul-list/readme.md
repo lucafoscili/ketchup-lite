@@ -20,9 +20,9 @@
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-list-event` | Describes event emitted. | `CustomEvent<KulListEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-list-event` |             | `CustomEvent<KulListEventPayload>` |
 
 
 ## Methods

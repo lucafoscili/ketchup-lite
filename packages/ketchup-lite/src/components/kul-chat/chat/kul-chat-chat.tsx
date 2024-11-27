@@ -3,6 +3,7 @@ import { KulChatAdapter } from '../kul-chat-declarations';
 import { prepButtons, prepInputArea } from './kul-chat-input';
 import { prepMessages } from './kul-chat-messages';
 
+//#region prepChat
 export const prepChat = (adapter: KulChatAdapter) => {
     return (
         <Fragment>
@@ -24,3 +25,4 @@ export const prepChat = (adapter: KulChatAdapter) => {
         </Fragment>
     );
 };
+//#endregion

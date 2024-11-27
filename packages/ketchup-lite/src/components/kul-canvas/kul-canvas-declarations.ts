@@ -8,9 +8,11 @@ export interface KulCanvasEventPayload
     points: Array<{ x: number; y: number }>;
 }
 //#endregion
+
 //#region States
 export type KulCanvasPoints = Array<{ x: number; y: number }>;
 //#endregion
+
 //#region Props
 export enum KulCanvasProps {
     kulBrush = 'The shape of the brush.',

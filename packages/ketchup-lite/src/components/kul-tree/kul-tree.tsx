@@ -12,27 +12,27 @@ import {
     VNode,
 } from '@stencil/core';
 import {
+    KulDataDataset,
+    KulDataNode,
+} from '../../managers/kul-data/kul-data-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import {
+    KulLanguageGeneric,
+    KulLanguageSearch,
+} from '../../managers/kul-language/kul-language-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { KulTextfieldEventPayload } from '../kul-textfield/kul-textfield-declarations';
+import {
     KulTreeEvent,
     KulTreeEventArguments,
     KulTreeEventPayload,
     KulTreeProps,
 } from './kul-tree-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject } from '../../types/GenericTypes';
-import {
-    KulDataDataset,
-    KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
 import { TreeNode } from './node/kul-tree-node';
 import { KulTreeNodeProps } from './node/kul-tree-node-declarations';
-import {
-    KulLanguageGeneric,
-    KulLanguageSearch,
-} from '../../managers/kul-language/kul-language-declarations';
-import { KulTextfieldEventPayload } from '../kul-textfield/kul-textfield-declarations';
 
 @Component({
     tag: 'kul-tree',
@@ -45,10 +45,7 @@ export class KulTree {
      */
     @Element() rootElement: HTMLKulTreeElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -71,11 +68,9 @@ export class KulTree {
      * Selected node.
      */
     @State() selectedNode: KulDataNode = null;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * When enabled, the first level of depth will create an accordion-style appearance for nodes.
      * @default false
@@ -112,23 +107,16 @@ export class KulTree {
      * @default ""
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #filterTimeout: ReturnType<typeof setTimeout>;
     #filterValue = '';
     #kulManager = kulManagerInstance();
     #rippleSurface: { [id: string]: HTMLElement } = {};
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-tree-event',
         composed: true,
@@ -136,7 +124,6 @@ export class KulTree {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulTreeEventPayload>;
-
     onKulEvent(
         e: Event | CustomEvent,
         eventType: KulTreeEvent,
@@ -173,11 +160,9 @@ export class KulTree {
             node,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Retrieves the debug information reflecting the current state of the component.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -213,11 +198,9 @@ export class KulTree {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #filter(e: CustomEvent<KulTextfieldEventPayload>) {
         clearTimeout(this.#filterTimeout);
         this.#filterTimeout = setTimeout(() => {
@@ -239,7 +222,6 @@ export class KulTree {
             }
         }, 300);
     }
-
     #prepTree(): VNode[] {
         const elements: VNode[] = [];
         const nodes = this.kulData.nodes;
@@ -262,7 +244,6 @@ export class KulTree {
             </div>
         ) : undefined;
     }
-
     #recursive(elements: VNode[], node: KulDataNode, depth: number) {
         if (!this.debugInfo.endTime) {
             if (
@@ -322,7 +303,6 @@ export class KulTree {
             }
         }
     }
-
     #setExpansion(node: KulDataNode) {
         if (this.expandedNodes.has(node)) {
             this.expandedNodes.delete(node);
@@ -336,24 +316,19 @@ export class KulTree {
             });
         }
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         if (Object.keys(this.#rippleSurface).length) {
             for (const key in this.#rippleSurface) {
@@ -371,7 +346,6 @@ export class KulTree {
 
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         const isEmpty = !!!this.kulData?.nodes?.length;
         this.#rippleSurface = {};
@@ -417,8 +391,8 @@ export class KulTree {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

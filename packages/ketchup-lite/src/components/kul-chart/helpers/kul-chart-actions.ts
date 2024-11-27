@@ -1,6 +1,7 @@
 import { ECElementEvent } from 'echarts';
 import { KulChartAdapter } from '../kul-chart-declarations';
 
+//#region Click
 export const onClick = (adapter: KulChartAdapter, e: ECElementEvent) => {
     const chart = adapter.get.chart();
     const dataset = chart.kulData;
@@ -30,3 +31,4 @@ export const onClick = (adapter: KulChartAdapter, e: ECElementEvent) => {
         y: yValue,
     });
 };
+//#endregion

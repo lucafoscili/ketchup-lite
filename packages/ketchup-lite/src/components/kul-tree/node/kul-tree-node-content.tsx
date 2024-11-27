@@ -1,10 +1,6 @@
 import { FunctionalComponent, getAssetPath, h } from '@stencil/core';
 import { KulDataNode } from '../../../managers/kul-data/kul-data-declarations';
 
-/*-------------------------------------------------*/
-/*                C o m p o n e n t                */
-/*-------------------------------------------------*/
-
 export const TreeNodeContent: FunctionalComponent<{
     depth?: number;
     expanded?: boolean;
@@ -13,6 +9,7 @@ export const TreeNodeContent: FunctionalComponent<{
     onClickExpand?: (e: MouseEvent) => void;
 }> = ({ depth, expanded = false, node, onClickExpand, type }) => {
     switch (type) {
+        //#region dropdown
         case 'dropdown':
             return (
                 <div
@@ -21,6 +18,9 @@ export const TreeNodeContent: FunctionalComponent<{
                     } `}
                 ></div>
             );
+        //#endregion
+
+        //#region expand
         case 'expand':
             return (
                 <div
@@ -30,6 +30,9 @@ export const TreeNodeContent: FunctionalComponent<{
                     onClick={onClickExpand}
                 ></div>
             );
+        //#endregion
+
+        //#region icon
         case 'icon':
             const path = getAssetPath(`./assets/svg/${node.icon}.svg`);
             const style = {
@@ -37,6 +40,9 @@ export const TreeNodeContent: FunctionalComponent<{
                 webkitMask: `url('${path}') no-repeat center`,
             };
             return <div class={'node__icon'} style={style}></div>;
+        //#endregion
+
+        //#region padding
         case 'padding':
             return (
                 <div
@@ -46,6 +52,7 @@ export const TreeNodeContent: FunctionalComponent<{
                     }}
                 ></div>
             );
+        //#endregion
         default:
             return <div class={'node__expand node__expand--placeholder'}></div>;
     }

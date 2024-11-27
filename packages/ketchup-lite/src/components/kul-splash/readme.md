@@ -15,9 +15,9 @@
 
 ## Events
 
-| Event              | Description              | Type                                 |
-| ------------------ | ------------------------ | ------------------------------------ |
-| `kul-splash-event` | Describes event emitted. | `CustomEvent<KulSplashEventPayload>` |
+| Event              | Description | Type                                 |
+| ------------------ | ----------- | ------------------------------------ |
+| `kul-splash-event` |             | `CustomEvent<KulSplashEventPayload>` |
 
 
 ## Methods

@@ -14,12 +14,14 @@ export interface KulSliderEventPayload
     value: KulSliderValue;
 }
 //#endregion
+
 //#region State
 export interface KulSliderValue {
     display: number;
     real: number;
 }
 //#endregion
+
 //#region Props
 export enum KulSliderProps {
     kulDisabled = 'When true, the component is disabled, preventing user interaction.',

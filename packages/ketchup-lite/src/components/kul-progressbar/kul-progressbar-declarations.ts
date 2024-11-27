@@ -1,16 +1,14 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulProgressbarEvent = 'ready' | 'unmount';
 export interface KulProgressbarEventPayload
     extends KulEventPayload<'KulProgressbar', KulProgressbarEvent> {
     isPlaceholder?: boolean;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulProgressbarProps {
     kulCenteredLabel = "Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed.",
     kulIcon = 'Specifies an icon to replace the label.',
@@ -29,3 +27,4 @@ export interface KulProgressbarPropsInterface {
     kulStyle?: string;
     kulValue?: number;
 }
+//#endregion

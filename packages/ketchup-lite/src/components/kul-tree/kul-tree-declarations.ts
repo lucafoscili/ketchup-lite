@@ -4,9 +4,7 @@ import {
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulTreeEvent =
     | 'click'
     | 'kul-event'
@@ -21,9 +19,9 @@ export interface KulTreeEventArguments {
     expansion?: boolean;
     node?: KulDataNode;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulTreeProps {
     kulAccordionLayout = 'When enabled, the first level of depth will create an accordion-style appearance for nodes.',
     kulData = 'Actual data of the tree.',
@@ -42,3 +40,4 @@ export interface KulTreePropsInterface {
     kulSelectable?: boolean;
     kulStyle?: string;
 }
+//#endregion

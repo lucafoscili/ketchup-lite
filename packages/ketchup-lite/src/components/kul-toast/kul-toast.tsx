@@ -10,17 +10,17 @@ import {
     Prop,
     State,
 } from '@stencil/core';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
 import {
     KulToastEvent,
     KulToastEventPayload,
     KulToastProps,
 } from './kul-toast-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject } from '../../types/GenericTypes';
-import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
 
 @Component({
     tag: 'kul-toast',
@@ -33,10 +33,7 @@ export class KulToast {
      */
     @Element() rootElement: HTMLKulToastElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -47,11 +44,9 @@ export class KulToast {
         renderStart: 0,
         startTime: performance.now(),
     };
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Sets the props of the clickable icon used to close the toast.
      * @default { kulSizeX: '18px', kulSizeY: '18px', kulValue: 'clear' }
@@ -93,20 +88,13 @@ export class KulToast {
      * @default "" - No custom style applied by default.
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-toast-event',
         composed: true,
@@ -114,7 +102,6 @@ export class KulToast {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulToastEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulToastEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -123,11 +110,9 @@ export class KulToast {
             originalEvent: e,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Retrieves the debug information reflecting the current state of the component.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -163,31 +148,25 @@ export class KulToast {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         if (this.kulTimer) {
             setTimeout(() => {}, this.kulTimer);
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         return (
             <Host>
@@ -230,8 +209,8 @@ export class KulToast {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

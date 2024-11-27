@@ -1,16 +1,17 @@
 import { h } from '@stencil/core';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
+import { KulButton } from '../../kul-button/kul-button';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulChat } from '../../kul-chat/kul-chat';
+import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
+import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
 import {
     LEFT_EXPANDER_ICON,
     NAV_DATASET,
     RIGHT_EXPANDER_ICON,
 } from '../kul-messenger-constants';
-import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
-import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulButton } from '../../kul-button/kul-button';
-import { KulChat } from '../../kul-chat/kul-chat';
+import { KulMessengerAdapter } from '../kul-messenger-declarations';
 
+//#region prepCenter
 export const prepCenter = (adapter: KulMessengerAdapter) => {
     const buttons = prepExpanderButtons(adapter);
     return (
@@ -26,7 +27,9 @@ export const prepCenter = (adapter: KulMessengerAdapter) => {
         </div>
     );
 };
+//#endregion
 
+//#region prepExpanderButtons
 const prepExpanderButtons = (adapter: KulMessengerAdapter) => {
     const left = (
         <kul-button
@@ -59,7 +62,9 @@ const prepExpanderButtons = (adapter: KulMessengerAdapter) => {
         right,
     };
 };
+//#endregion
 
+//#region prepNavigation
 const prepNavigation = (adapter: KulMessengerAdapter) => {
     return (
         <kul-tabbar
@@ -72,7 +77,9 @@ const prepNavigation = (adapter: KulMessengerAdapter) => {
         ></kul-tabbar>
     );
 };
+//#endregion
 
+//#region prepChat
 const prepChat = (adapter: KulMessengerAdapter) => {
     const prompts = getDynamicPrompts(adapter);
 
@@ -110,7 +117,9 @@ Begin your performance...
         ></kul-chat>
     );
 };
+//#endregion
 
+//#region tabbarEventHandler
 const tabbarEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulTabbarEventPayload>
@@ -127,7 +136,9 @@ const tabbarEventHandler = (
             }
     }
 };
+//#endregion
 
+//#region chatEventHandler
 const chatEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChatEventPayload>
@@ -152,7 +163,9 @@ const chatEventHandler = (
             break;
     }
 };
+//#endregion
 
+//#region expanderEventHandler
 const expanderEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulButtonEventPayload>
@@ -178,7 +191,9 @@ const expanderEventHandler = (
             }
     }
 };
+//#endregion
 
+//#region getDynamicPrompts
 const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
     const { biography } = adapter.get.character;
     const location = adapter.get.image.asCover('locations').node;
@@ -207,3 +222,4 @@ const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
 
     return prompts;
 };
+//#endregion

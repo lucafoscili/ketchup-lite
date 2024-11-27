@@ -1,7 +1,7 @@
 import { Fragment, h } from '@stencil/core';
-import { KulChatAdapter } from '../kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
+import { KulChatAdapter } from '../kul-chat-declarations';
 
 export const OPTIONS_IDS = {
     contextWindow: 'context-option',
@@ -12,6 +12,7 @@ export const OPTIONS_IDS = {
     temperature: 'temperature-option',
 };
 
+//#region prepSettings
 export const prepSettings = (adapter: KulChatAdapter) => {
     return (
         <Fragment>
@@ -36,7 +37,9 @@ export const prepSettings = (adapter: KulChatAdapter) => {
         </Fragment>
     );
 };
+//#endregion
 
+//#region prepButton
 const prepButton = (adapter: KulChatAdapter) => {
     return (
         <kul-button
@@ -50,7 +53,9 @@ const prepButton = (adapter: KulChatAdapter) => {
         ></kul-button>
     );
 };
+//#endregion
 
+//#region prepFields
 const prepFields = (adapter: KulChatAdapter) => {
     return (
         <Fragment>
@@ -127,7 +132,9 @@ const prepFields = (adapter: KulChatAdapter) => {
         </Fragment>
     );
 };
+//#endregion
 
+//#region backEventHandler
 const backEventHandler = (
     adapter: KulChatAdapter,
     e: CustomEvent<KulButtonEventPayload>
@@ -141,7 +148,9 @@ const backEventHandler = (
             break;
     }
 };
+//#endregion
 
+//#region textfieldEventHandler
 const textfieldEventHandler = (
     adapter: KulChatAdapter,
     e: CustomEvent<KulTextfieldEventPayload>
@@ -173,3 +182,4 @@ const textfieldEventHandler = (
             break;
     }
 };
+//#endregion

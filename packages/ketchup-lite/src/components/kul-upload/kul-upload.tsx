@@ -10,14 +10,14 @@ import {
     Prop,
     State,
 } from '@stencil/core';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject } from '../../types/GenericTypes';
 import {
-    KulUploadEventPayload,
     KulUploadEvent,
+    KulUploadEventPayload,
     KulUploadProps,
 } from './kul-upload-declarations';
 
@@ -32,10 +32,7 @@ export class KulUpload {
      */
     @Element() rootElement: HTMLKulUploadElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -51,11 +48,9 @@ export class KulUpload {
      * @default []
      */
     @State() selectedFiles: File[] = [];
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Sets the button's label.
      * @default "Upload files..."
@@ -76,22 +71,15 @@ export class KulUpload {
      * @default null
      */
     @Prop({ mutable: false }) kulValue = null;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #input: HTMLInputElement;
     #kulManager = kulManagerInstance();
     #rippleSurface: HTMLElement;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-upload-event',
         composed: true,
@@ -99,7 +87,6 @@ export class KulUpload {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulUploadEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulUploadEvent, file?: File) {
         switch (eventType) {
             case 'delete':
@@ -125,11 +112,9 @@ export class KulUpload {
             selectedFiles: this.selectedFiles,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Retrieves the debug information reflecting the current state of the component.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -172,11 +157,9 @@ export class KulUpload {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #formatFileSize(size: number): string {
         const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
         let unitIndex = 0;
@@ -194,7 +177,6 @@ export class KulUpload {
 
         return `${size.toFixed(2)} ${units[unitIndex]}`;
     }
-
     #handleFileChange() {
         if (this.#input.files) {
             this.selectedFiles = Array.from(this.#input.files);
@@ -203,7 +185,6 @@ export class KulUpload {
         }
         this.onKulEvent(new CustomEvent('upload'), 'upload');
     }
-
     #prepFileInfo() {
         return this.selectedFiles.map((file, index) => (
             <div class="file-info__item" key={index}>
@@ -240,18 +221,15 @@ export class KulUpload {
             </div>
         ));
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         if (Array.isArray(this.kulValue)) {
             this.selectedFiles = this.kulValue;
         }
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         if (this.#rippleSurface) {
@@ -259,15 +237,12 @@ export class KulUpload {
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         const hasSelectedFiles =
             this.selectedFiles && this.selectedFiles.length;
@@ -326,8 +301,8 @@ export class KulUpload {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

@@ -13,14 +13,10 @@ import {
     VNode,
     Watch,
 } from '@stencil/core';
-import type { GenericObject } from '../../types/GenericTypes';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import {
-    KulImageEvent,
-    KulImageEventPayload,
-    KulImageProps,
-} from './kul-image-declarations';
 import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
+import type { GenericObject } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
 import {
     CSS_VAR_PREFIX,
@@ -28,7 +24,11 @@ import {
     KUL_WRAPPER_ID,
 } from '../../variables/GenericVariables';
 import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import {
+    KulImageEvent,
+    KulImageEventPayload,
+    KulImageProps,
+} from './kul-image-declarations';
 
 @Component({
     tag: 'kul-image',
@@ -42,10 +42,7 @@ export class KulImage {
      */
     @Element() rootElement: HTMLKulImageElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -61,11 +58,9 @@ export class KulImage {
      * @default false
      */
     @State() error = false;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * This property is used to attach a badge to the component.
      * @default null
@@ -104,20 +99,13 @@ export class KulImage {
      * @default ""
      */
     @Prop({ mutable: true, reflect: true }) kulValue = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*        I n t e r n a l   V a r i a b l e s      */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-image-event',
         composed: true,
@@ -125,7 +113,6 @@ export class KulImage {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulImageEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulImageEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -134,20 +121,16 @@ export class KulImage {
             eventType,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                 W a t c h e r s                 */
-    /*-------------------------------------------------*/
-
+    //#region Watchers
     @Watch('kulValue')
     async resetState() {
         this.error = false;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -183,12 +166,10 @@ export class KulImage {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
-    createIcon(): VNode {
+    //#region Private methods
+    #createIcon(): VNode {
         const className = {
             image__icon: true,
         };
@@ -216,8 +197,7 @@ export class KulImage {
 
         return <div class={className} style={style}></div>;
     }
-
-    createImage(): VNode {
+    #createImage(): VNode {
         return (
             <img
                 onError={(e) => {
@@ -232,8 +212,7 @@ export class KulImage {
             ></img>
         );
     }
-
-    isResourceUrl(): boolean {
+    #isResourceUrl(): boolean {
         return !!(
             this.kulValue &&
             (this.kulValue.indexOf('.') > -1 ||
@@ -241,28 +220,22 @@ export class KulImage {
                 this.kulValue.indexOf('\\') > -1)
         );
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecylce hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         if (!this.kulValue) {
             this.#kulManager.debug.logs.new(this, 'Empty image.');
@@ -271,7 +244,7 @@ export class KulImage {
 
         let el: VNode;
         let feedback: HTMLElement;
-        const isUrl = this.isResourceUrl();
+        const isUrl = this.#isResourceUrl();
         let spinnerLayout: number;
         let style = {
             '--kul_image_height': this.kulSizeY ? this.kulSizeY : 'auto',
@@ -279,9 +252,9 @@ export class KulImage {
         };
 
         if (isUrl && !this.error) {
-            el = this.createImage();
+            el = this.#createImage();
         } else {
-            el = this.createIcon();
+            el = this.#createIcon();
         }
 
         if (this.kulShowSpinner && isUrl) {
@@ -325,4 +298,5 @@ export class KulImage {
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

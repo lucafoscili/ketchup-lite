@@ -1,14 +1,12 @@
-import { KulEventPayload } from '../../types/GenericTypes';
 import {
     KulDataDataset,
     KulDataShapeEventDispatcher,
     KulDataShapesMap,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulEventPayload } from '../../types/GenericTypes';
 import { KulCard } from './kul-card';
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
+//#region Adapter
 export interface KulCardAdapter {
     actions: {
         dispatchEvent: KulDataShapeEventDispatcher;
@@ -18,9 +16,9 @@ export interface KulCardAdapter {
         shapes: () => KulDataShapesMap;
     };
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Events
 export type KulCardEvent =
     | 'click'
     | 'contextmenu'
@@ -30,21 +28,20 @@ export type KulCardEvent =
     | 'unmount';
 export interface KulCardEventPayload
     extends KulEventPayload<'KulCard', KulCardEvent> {}
-/*-------------------------------------------------*/
-/*                 I n t e r n a l                 */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Internal usage
 export enum KulCardCSSClasses {
     HAS_ACTIONS = 'has-actions',
     HAS_CONTENT = 'has-content',
 }
-
 export enum KulCardShapesIds {
     CLEAR = 'clear',
     THEME = 'theme',
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulCardProps {
     kulData = 'The actual data of the card.',
     kulLayout = 'Sets the layout.',
@@ -60,3 +57,4 @@ export interface KulCardPropsInterface {
     kulStyle?: string;
 }
 export type KulCardLayout = 'debug' | 'keywords' | 'material' | 'upload';
+//#endregion

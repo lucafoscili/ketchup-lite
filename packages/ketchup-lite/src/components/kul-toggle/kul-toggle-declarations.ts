@@ -1,8 +1,6 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulToggleEvent =
     | 'blur'
     | 'change'
@@ -15,9 +13,13 @@ export interface KulToggleEventPayload
     value: string;
     valueAsBoolean: boolean;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region States
+export type KulToggleState = 'off' | 'on';
+//#endregion
+
+//#region Props
 export enum KulToggleProps {
     kulDisabled = 'When true, the component is disabled.',
     kulLabel = 'Defines text to display along with the toggle.',
@@ -34,7 +36,4 @@ export interface KulTogglePropsInterface {
     kulStyle?: string;
     kulValue?: boolean;
 }
-/*-------------------------------------------------*/
-/*                    S t a t e                    */
-/*-------------------------------------------------*/
-export type KulToggleState = 'off' | 'on';
+//#endregion
