@@ -1,6 +1,7 @@
 import { h, VNode } from '@stencil/core';
 import { KulMessengerAdapter } from '../kul-messenger-declarations';
 
+//#region prepGrid
 export const prepGrid = (adapter: KulMessengerAdapter) => {
     const avatars: VNode[] = [];
 
@@ -34,3 +35,4 @@ export const prepGrid = (adapter: KulMessengerAdapter) => {
         <div class="empty-dataset">There are no characters to display!</div>
     );
 };
+//#endregion

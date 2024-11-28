@@ -16,9 +16,9 @@
 
 ## Events
 
-| Event             | Description              | Type                                |
-| ----------------- | ------------------------ | ----------------------------------- |
-| `kul-badge-event` | Describes event emitted. | `CustomEvent<KulBadgeEventPayload>` |
+| Event             | Description | Type                                |
+| ----------------- | ----------- | ----------------------------------- |
+| `kul-badge-event` |             | `CustomEvent<KulBadgeEventPayload>` |
 
 
 ## Methods

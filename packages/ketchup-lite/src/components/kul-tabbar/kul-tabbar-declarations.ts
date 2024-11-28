@@ -4,18 +4,23 @@ import {
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulTabbarEvent = 'click' | 'pointerdown' | 'ready' | 'unmount';
 export interface KulTabbarEventPayload
     extends KulEventPayload<'KulTabbar', KulTabbarEvent> {
     index?: number;
     node?: KulDataNode;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region States
+export interface KulTabbarState {
+    index?: number;
+    node?: KulDataNode;
+}
+//#endregion
+
+//#region Props
 export enum KulTabbarProps {
     kulData = 'Actual data of the component.',
     kulRipple = 'When set to true, the pointerdown event will trigger a ripple effect.',
@@ -28,10 +33,4 @@ export interface KulTabbarPropsInterface {
     kulStyle?: string;
     kulValue?: number;
 }
-/*-------------------------------------------------*/
-/*                    S t a t e                    */
-/*-------------------------------------------------*/
-export interface KulTabbarState {
-    index?: number;
-    node?: KulDataNode;
-}
+//#endregion

@@ -1,6 +1,7 @@
 import { KulCarouselAdapterActions } from '../kul-carousel-declarations';
 
 export const ACTIONS: KulCarouselAdapterActions = {
+    //#region Autoplay
     autoplay: {
         start(adapter) {
             const carousel = adapter.get.carousel();
@@ -23,12 +24,18 @@ export const ACTIONS: KulCarouselAdapterActions = {
             }
         },
     },
+    //#endregion
+
+    //#region Next
     next: (adapter) => {
         const currentIndex = adapter.get.state.currentIndex();
         const totalSlides = adapter.get.totalSlides();
 
         adapter.set.state.currentIndex((currentIndex + 1) % totalSlides);
     },
+    //#endregion
+
+    //#region Previous
     previous: (adapter) => {
         const currentIndex = adapter.get.state.currentIndex();
         const totalSlides = adapter.get.totalSlides();
@@ -37,7 +44,11 @@ export const ACTIONS: KulCarouselAdapterActions = {
             (currentIndex - 1 + totalSlides) % totalSlides
         );
     },
+    //#endregion
+
+    //#region ToSlide
     toSlide: (adapter, value) => {
         adapter.set.state.currentIndex(value);
     },
+    //#endregion
 };

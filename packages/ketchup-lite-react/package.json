@@ -1,8 +1,9 @@
 {
     "name": "ketchup-lite-react",
-    "version": "1.7.10",
-    "module": "dist/index.js",
-    "typings": "dist/index.d.ts",
+    "version": "2.0.0",
+    "main": "dist/components.js",
+    "module": "dist/components.js",
+    "typings": "dist/components.d.ts",
     "keywords": [
         "letchup lite",
         "react",
@@ -17,15 +18,14 @@
         "build": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && tsc"
     },
     "dependencies": {
-        "ketchup-lite": "1.7.10",
-        "react": "18.3.1",
-        "react-dom": "18.3.1"
+        "@stencil/react-output-target": "^0",
+        "ketchup-lite": "2.0.0",
+        "react": "^18",
+        "react-dom": "^18"
     },
     "devDependencies": {
-        "@stencil/core": "4.20.0",
-        "@stencil/react-output-target": "0.5.3",
-        "@types/react": "18.3.3",
-        "@types/react-dom": "18.3.0"
+        "@types/react": "^18",
+        "@types/react-dom": "^18"
     },
     "description": "Ketchup Lite React Components library",
     "license": "Apache-2.0",

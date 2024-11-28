@@ -1,9 +1,10 @@
 import { h, VNode } from '@stencil/core';
-import { KulCardAdapter } from '../kul-card-declarations';
+import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
-import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
+import { KulCardAdapter } from '../kul-card-declarations';
 
+//#region Keywords layout
 export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
@@ -66,3 +67,4 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
         </div>
     );
 }
+//#endregion

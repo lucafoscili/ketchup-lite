@@ -1,10 +1,8 @@
-import { KulEventPayload } from '../../types/GenericTypes';
 import { KulLLMChoiceMessage } from '../../managers/kul-llm/kul-llm-declarations';
 import { KulManager } from '../../managers/kul-manager/kul-manager';
+import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
+//#region Adapter
 export interface KulChatAdapter {
     actions: {
         delete: (message: KulLLMChoiceMessage) => void;
@@ -62,9 +60,9 @@ export interface KulChatAdapter {
         };
     };
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Events
 export type KulChatEvent =
     | 'config'
     | 'polling'
@@ -76,9 +74,15 @@ export interface KulChatEventPayload
     history: string;
     status: KulChatStatus;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region States
+export type KulChatHistory = KulLLMChoiceMessage[];
+export type KulChatStatus = 'connecting' | 'offline' | 'ready';
+export type KulChatView = 'chat' | 'settings';
+//#endregion
+
+//#region Props
 export enum KulChatProps {
     kulContextWindow = 'How many tokens the context window can handle, used to calculate the occupied space.',
     kulEndpointUrl = 'URL of the endpoint where the LLM is hosted.',
@@ -104,9 +108,4 @@ export interface KulChatPropsInterface {
     kulValue?: KulChatHistory;
 }
 export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
-/*-------------------------------------------------*/
-/*                    S t a t e                    */
-/*-------------------------------------------------*/
-export type KulChatHistory = KulLLMChoiceMessage[];
-export type KulChatStatus = 'connecting' | 'offline' | 'ready';
-export type KulChatView = 'chat' | 'settings';
+//#endregion

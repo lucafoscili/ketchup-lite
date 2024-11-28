@@ -6,8 +6,8 @@ import {
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulManager } from '../../managers/kul-manager/kul-manager';
 import { KulEventPayload } from '../../types/GenericTypes';
-import { KulImageviewer } from './kul-imageviewer';
 import { KulMasonrySelectedShape } from '../kul-masonry/kul-masonry-declarations';
+import { KulImageviewer } from './kul-imageviewer';
 
 //#region Adapter
 export interface KulImageviewerAdapter {
@@ -91,16 +91,19 @@ export interface KulImageviewerAdapterSetters {
     };
 }
 //#endregion
+
 //#region Events
 export type KulImageviewerEvent = 'kul-event' | 'ready' | 'unmount';
 export interface KulImageviewerEventPayload
     extends KulEventPayload<'KulImageviewer', KulImageviewerEvent> {}
 //#endregion
+
 //#region State
 export type KulImageviewerHistory = {
     [index: number]: Array<KulMasonrySelectedShape>;
 };
 //#endregion
+
 //#region Props
 export enum KulImageviewerProps {
     kulData = 'Actual data of the image viewer.',

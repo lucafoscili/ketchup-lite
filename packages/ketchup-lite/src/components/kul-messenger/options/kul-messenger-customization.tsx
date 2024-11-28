@@ -1,6 +1,12 @@
 import { Fragment, h, VNode } from '@stencil/core';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulChip } from '../../kul-chip/kul-chip';
 import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
+import {
+    CHILD_ROOT_MAP,
+    FILTER_DATASET,
+    IMAGE_TYPE_IDS,
+} from '../kul-messenger-constants';
 import {
     KulMessengerAdapter,
     KulMessengerBaseChildNode,
@@ -11,13 +17,8 @@ import {
     KulMessengerImageTypes,
     KulMessengerUnionChildIds,
 } from '../kul-messenger-declarations';
-import {
-    CHILD_ROOT_MAP,
-    FILTER_DATASET,
-    IMAGE_TYPE_IDS,
-} from '../kul-messenger-constants';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 
+//#region prepFilters
 export const prepFilters = (adapter: KulMessengerAdapter) => {
     for (let index = 0; index < FILTER_DATASET.nodes.length; index++) {
         const filter = FILTER_DATASET.nodes[index] as KulMessengerBaseRootNode<
@@ -34,7 +35,9 @@ export const prepFilters = (adapter: KulMessengerAdapter) => {
         ></kul-chip>
     );
 };
+//#endregion
 
+//#region prepList
 export const prepList = (adapter: KulMessengerAdapter) => {
     const elements = [];
     const editing = adapter.get.messenger.ui().editing;
@@ -118,7 +121,9 @@ export const prepList = (adapter: KulMessengerAdapter) => {
     }
     return elements;
 };
+//#endregion
 
+//#region prepCovers
 const prepCovers = (
     adapter: KulMessengerAdapter,
     type: KulMessengerImageTypes,
@@ -146,7 +151,9 @@ const prepCovers = (
         </Fragment>
     );
 };
+//#endregion
 
+//#region prepEditPanel
 const prepEditPanel = (
     adapter: KulMessengerAdapter,
     type: KulMessengerImageTypes
@@ -227,7 +234,9 @@ const prepEditPanel = (
         </div>
     );
 };
+//#endregion
 
+//#region buttonEventHandler
 const buttonEventHandler = async <
     T1 extends KulMessengerImageTypes,
     T2 extends KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
@@ -277,7 +286,9 @@ const buttonEventHandler = async <
         }
     }
 };
+//#endregion
 
+//#region chipEventHandler
 const chipEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulChipEventPayload>
@@ -315,7 +326,9 @@ const chipEventHandler = (
             );
     }
 };
+//#endregion
 
+//#region imageEventHandler
 const imageEventHandler = <T extends KulMessengerUnionChildIds>(
     adapter: KulMessengerAdapter,
     node: KulMessengerBaseChildNode<T>,
@@ -331,7 +344,9 @@ const imageEventHandler = <T extends KulMessengerUnionChildIds>(
         coverSetter(CHILD_ROOT_MAP[matchedType], index);
     }
 };
+//#endregion
 
+//#region createNode
 const createNode = async <
     T extends KulMessengerImageRootIds<KulMessengerImageTypes>,
 >(
@@ -365,3 +380,4 @@ const createNode = async <
         images.push(node);
     }
 };
+//#endregion

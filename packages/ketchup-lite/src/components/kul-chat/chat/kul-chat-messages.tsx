@@ -1,7 +1,8 @@
 import { h, VNode } from '@stencil/core';
-import { KulChatAdapter } from '../kul-chat-declarations';
 import { KulLLMChoiceMessage } from '../../../managers/kul-llm/kul-llm-declarations';
+import { KulChatAdapter } from '../kul-chat-declarations';
 
+//#region prepMessages
 export const prepMessages = (adapter: KulChatAdapter) => {
     const elements: VNode[] = [];
     const history = adapter.get.history();
@@ -35,7 +36,9 @@ export const prepMessages = (adapter: KulChatAdapter) => {
 
     return elements;
 };
+//#endregion
 
+//#region prepToolbar
 export const prepToolbar = (
     adapter: KulChatAdapter,
     m: KulLLMChoiceMessage
@@ -66,7 +69,9 @@ export const prepToolbar = (
         </div>
     );
 };
+//#endregion
 
+//#region prepContent
 export const prepContent = (message: KulLLMChoiceMessage): VNode[] => {
     const elements: VNode[] = [];
     const messageContent = message.content;
@@ -102,3 +107,4 @@ export const prepContent = (message: KulLLMChoiceMessage): VNode[] => {
 
     return elements;
 };
+//#endregion

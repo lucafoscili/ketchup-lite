@@ -4,36 +4,36 @@ import {
     Event,
     EventEmitter,
     forceUpdate,
-    Host,
     h,
+    Host,
     Method,
     Prop,
     State,
 } from '@stencil/core';
-import {
-    KulChartEventPayload,
-    KulChartEvent,
-    KulChartType,
-    KulChartProps,
-    KulChartLegendPlacement,
-    KulChartAdapter,
-    KulChartEventData,
-    KulChartXAxis,
-    KulChartYAxis,
-    KulChartAxis,
-    KulChartSeriesData,
-} from './kul-chart-declarations';
-import { ECharts, dispose, init } from 'echarts';
+import { dispose, ECharts, init } from 'echarts';
+import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { getProps } from '../../utils/componentUtils';
 import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
 import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import { onClick } from './helpers/kul-chart-actions';
 import { CHART_DESIGN } from './helpers/kul-chart-design';
 import { CHART_OPTIONS } from './helpers/kul-chart-options';
+import {
+    KulChartAdapter,
+    KulChartAxis,
+    KulChartEvent,
+    KulChartEventData,
+    KulChartEventPayload,
+    KulChartLegendPlacement,
+    KulChartProps,
+    KulChartSeriesData,
+    KulChartType,
+    KulChartXAxis,
+    KulChartYAxis,
+} from './kul-chart-declarations';
 
 @Component({
     tag: 'kul-chart',
@@ -46,10 +46,7 @@ export class KulChart {
      */
     @Element() rootElement: HTMLKulChartElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -60,11 +57,9 @@ export class KulChart {
         renderStart: 0,
         startTime: performance.now(),
     };
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Sets the axis of the chart.
      * @default ""
@@ -120,25 +115,19 @@ export class KulChart {
      * @default null
      */
     @Prop() kulYAxis: KulChartYAxis = null;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #findColumn = this.#kulManager.data.column.find;
     #stringify = this.#kulManager.data.cell.stringify;
-
     #chartContainer: HTMLDivElement;
     #chartEl: ECharts;
-
     #axesData: { id: string; data: string[] }[] = [];
     #seriesData: KulChartSeriesData[] = [];
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
+    //#region Events
     @Event({
         eventName: 'kul-chart-event',
         composed: true,
@@ -146,7 +135,6 @@ export class KulChart {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulChartEventPayload>;
-
     onKulEvent(
         e: Event | CustomEvent,
         eventType: KulChartEvent,
@@ -160,11 +148,9 @@ export class KulChart {
             data,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -200,11 +186,9 @@ export class KulChart {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #adapter: KulChartAdapter = {
         actions: {
             mapType: (type) => {
@@ -243,7 +227,6 @@ export class KulChart {
             xAxesData: () => this.#axesData,
         },
     };
-
     #init() {
         if (this.#chartEl) {
             dispose(this.#chartContainer);
@@ -259,7 +242,6 @@ export class KulChart {
             );
         }
     }
-
     #updateThemeColors() {
         const theme = this.#adapter.get.design.theme;
         const themeVars = this.#kulManager.theme.cssVars;
@@ -270,7 +252,6 @@ export class KulChart {
         theme.successColor = themeVars[KulThemeColorValues.SUCCESS];
         theme.textColor = themeVars[KulThemeColorValues.TEXT];
     }
-
     #createAxisData() {
         this.#axesData = [];
         const axisIds = this.kulAxis || [];
@@ -289,13 +270,11 @@ export class KulChart {
             }
         }
     }
-
     #stringToIndexMap(array: string[]): Map<string, number> {
         const map = new Map<string, number>();
         array.forEach((value, index) => map.set(value, index));
         return map;
     }
-
     #createSeriesData() {
         this.#seriesData = [];
         const seriesIds = this.kulSeries || [];
@@ -331,7 +310,6 @@ export class KulChart {
                         ]);
                     }
                 } else {
-                    // For line series
                     const lineDataMap = new Map<string, number>();
                     for (const node of dataset.nodes) {
                         const xValue = this.#stringify(
@@ -342,7 +320,6 @@ export class KulChart {
                         );
                         lineDataMap.set(xValue, value);
                     }
-                    // Ensure data aligns with x-axis categories
                     for (const xValue of xCategories) {
                         seriesValues.push(lineDataMap.get(xValue) ?? 0);
                     }
@@ -351,7 +328,7 @@ export class KulChart {
                 const seriesName =
                     this.#findColumn(dataset, { id: seriesId })?.[0]?.title ||
                     seriesId;
-                const axisIndex = 0; // Assign to the primary axis or adjust as needed
+                const axisIndex = 0;
 
                 this.#seriesData.push({
                     name: seriesName,
@@ -362,7 +339,6 @@ export class KulChart {
             }
         }
     }
-
     async #createChart() {
         this.#createAxisData();
         this.#createSeriesData();
@@ -371,7 +347,6 @@ export class KulChart {
 
         this.#chartEl.on('click', this.#adapter.actions.onClick);
     }
-
     #createChartOptions() {
         const options = this.#adapter.get.options;
         const firstType = this.kulTypes?.[0] || 'line';
@@ -398,28 +373,23 @@ export class KulChart {
                 return options.default(this.#adapter);
         }
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         if (typeof this.kulAxis === 'string') {
             this.kulAxis = [this.kulAxis];
         }
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#updateThemeColors();
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         if (this.kulData && this.kulData.columns && this.kulData.nodes) {
             this.#init();
@@ -432,7 +402,6 @@ export class KulChart {
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         const style = {
             '--kul_chart_height': this.kulSizeY || '100%',
@@ -455,8 +424,8 @@ export class KulChart {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

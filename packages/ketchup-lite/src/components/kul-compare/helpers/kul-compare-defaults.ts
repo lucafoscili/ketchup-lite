@@ -5,6 +5,7 @@ export const DEFAULTS: (isOverlay: boolean) => {
     right: KulDataShapeDefaults;
 } = (_isOverlay) => {
     return {
+        //#region Left
         left: {
             image: () => [
                 {
@@ -14,6 +15,9 @@ export const DEFAULTS: (isOverlay: boolean) => {
                 },
             ],
         },
+        //#endregion
+
+        //#region Right
         right: {
             image: () => [
                 {
@@ -23,5 +27,6 @@ export const DEFAULTS: (isOverlay: boolean) => {
                 },
             ],
         },
+        //#endregion
     };
 };

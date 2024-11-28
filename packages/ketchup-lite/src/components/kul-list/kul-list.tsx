@@ -16,17 +16,17 @@ import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { KulLanguageGeneric } from '../../managers/kul-language/kul-language-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulListEvent,
     KulListEventPayload,
     KulListProps,
 } from './kul-list-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulLanguageGeneric } from '../../managers/kul-language/kul-language-declarations';
 
 @Component({
     tag: 'kul-list',
@@ -39,10 +39,7 @@ export class KulList {
      */
     @Element() rootElement: HTMLKulListElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -63,11 +60,9 @@ export class KulList {
      * @default undefined
      */
     @State() selected: number;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * The data of the list.
      * @default []
@@ -103,22 +98,15 @@ export class KulList {
      * @default ""
      */
     @Prop({ mutable: true }) kulStyle = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #listItems: HTMLDivElement[] = [];
     #rippleSurface: HTMLElement[] = [];
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-list-event',
         composed: true,
@@ -126,7 +114,6 @@ export class KulList {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulListEventPayload>;
-
     onKulEvent(
         e: Event | CustomEvent,
         eventType: KulListEvent,
@@ -168,11 +155,9 @@ export class KulList {
             node,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                L i s t e n e r s                */
-    /*-------------------------------------------------*/
-
+    //#region Listeners
     @Listen('keydown')
     listenKeydown(e: KeyboardEvent) {
         if (this.kulNavigation) {
@@ -195,11 +180,9 @@ export class KulList {
             }
         }
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Focuses the next element of the list.
      */
@@ -292,11 +275,9 @@ export class KulList {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #handleSelection(index: number): void {
         if (
             this.kulSelectable &&
@@ -307,7 +288,6 @@ export class KulList {
             this.selected = index;
         }
     }
-
     #prepDeleteIcon(node: KulDataNode) {
         const path = getAssetPath(`./assets/svg/clear.svg`);
         const style = {
@@ -331,7 +311,6 @@ export class KulList {
             </div>
         );
     }
-
     #prepIcon(node: KulDataNode) {
         const path = getAssetPath(`./assets/svg/${node.icon}.svg`);
         const style = {
@@ -340,7 +319,6 @@ export class KulList {
         };
         return <div class="node__icon" style={style}></div>;
     }
-
     #prepNode(node: KulDataNode, index: number) {
         const isFocused =
             this.focused ===
@@ -393,27 +371,22 @@ export class KulList {
             </li>
         );
     }
-
     #prepSubtitle(node: KulDataNode) {
         return node.description ? (
             <div class="node__subtitle">{node.description}</div>
         ) : undefined;
     }
-
     #prepTitle(node: KulDataNode) {
         return String(node.value).valueOf() ? (
             <div class="node__title">{String(node.value).valueOf()}</div>
         ) : undefined;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         if (this.#rippleSurface?.length) {
             this.#rippleSurface.forEach((el) => {
@@ -423,15 +396,12 @@ export class KulList {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         const isEmpty = !!!this.kulData?.nodes?.length;
         this.#listItems = [];
@@ -473,8 +443,8 @@ export class KulList {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

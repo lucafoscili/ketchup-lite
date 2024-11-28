@@ -1,9 +1,10 @@
 import { Fragment, h } from '@stencil/core';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { prepOptions } from '../options/kul-messenger-active';
 import { prepFilters, prepList } from '../options/kul-messenger-customization';
 
+//#region prepRight
 export const prepRight = (adapter: KulMessengerAdapter) => {
     const ui = adapter.get.messenger.ui();
     const className = {
@@ -52,7 +53,9 @@ export const prepRight = (adapter: KulMessengerAdapter) => {
         </div>
     );
 };
+//#endregion
 
+//#region buttonEventHandler
 const buttonEventHandler = (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulButtonEventPayload>
@@ -73,3 +76,4 @@ const buttonEventHandler = (
             break;
     }
 };
+//#endregion

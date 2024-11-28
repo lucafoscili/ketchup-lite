@@ -2,6 +2,7 @@ import { KulDataCell } from '../../../managers/kul-data/kul-data-declarations';
 import { KulImageviewerAdapterActions } from '../kul-imageviewer-declarations';
 
 export const ACTIONS: KulImageviewerAdapterActions = {
+    //#region clearHistory
     async clearHistory(adapter, index = null) {
         const history = adapter.set.state.history;
 
@@ -12,6 +13,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
             history.clear(index);
         }
     },
+    //#endregion
+
+    //#region clearSelection
     async clearSelection(adapter) {
         const stateSetter = adapter.set.state;
 
@@ -19,6 +23,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
         stateSetter.history.index(null);
         adapter.components.refs.masonry.setSelectedShape(null);
     },
+    //#endregion
+
+    //#region delete
     async delete(adapter) {
         const getters = adapter.get;
 
@@ -39,6 +46,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
 
         await adapter.actions.clearSelection(adapter);
     },
+    //#endregion
+
+    //#region findImage
     findImage(adapter) {
         const imageviewer = adapter.get.imageviewer();
         const manager = adapter.get.manager();
@@ -55,6 +65,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
                 c.kulValue === currentSelectedShape.value
         );
     },
+    //#endregion
+
+    //#region load
     async load(adapter) {
         const imageviewer = adapter.get.imageviewer();
         const refs = adapter.components.refs;
@@ -70,6 +83,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
             console.error('Load operation failed:', error);
         }
     },
+    //#endregion
+
+    //#region redo
     async redo(adapter) {
         const currentHistory = adapter.get.state.history.current();
         const index = adapter.get.state.history.index();
@@ -77,6 +93,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
             adapter.set.state.history.index(index + 1);
         }
     },
+    //#endregion
+
+    //#region save
     async save(adapter) {
         const currentSelectedShape = adapter.get.state.currentShape();
         if (!currentSelectedShape) {
@@ -98,6 +117,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
 
         imageviewer.kulData = { ...imageviewer.kulData };
     },
+    //#endregion
+
+    //#region undo
     async undo(adapter) {
         const index = adapter.get.state.history.index();
         if (index > 0) {
@@ -105,6 +127,9 @@ export const ACTIONS: KulImageviewerAdapterActions = {
             adapter.set.state.history.index(newIndex);
         }
     },
+    //#endregion
+
+    //#region updateValue
     updateValue(shape, value) {
         const s = shape as Partial<KulDataCell<'image'>>;
         shape.value = value;
@@ -112,4 +137,5 @@ export const ACTIONS: KulImageviewerAdapterActions = {
             s.kulValue = value;
         }
     },
+    //#endregion
 };

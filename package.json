@@ -13,15 +13,15 @@
     "author": "Luca Foscili",
     "repository": "https://github.com/lucafoscili/ketchup-lite",
     "devDependencies": {
-        "@stencil/core": "4.20.0",
-        "@stencil/react-output-target": "0.5.3",
-        "@types/node": "^22.8.7",
-        "@types/prismjs": "^1.26.5",
-        "cypress": "^13.15.1",
-        "lerna": "^8.1.9",
-        "prettier-eslint": "16.3.0",
+        "@stencil/core": "^4",
+        "@stencil/react-output-target": "^0",
+        "@types/node": "^22",
+        "@types/prismjs": "^1",
+        "cypress": "^13",
+        "lerna": "^8",
+        "prettier-eslint": "^16",
         "puppeteer": "^22.9.0",
-        "typescript": "^5.6.3"
+        "typescript": "^5"
     },
     "scripts": {
         "lerna": "lerna",

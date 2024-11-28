@@ -7,9 +7,7 @@ import {
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulMasonry } from './kul-masonry';
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
+//#region Adapter
 export interface KulMasonryAdapter {
     actions: KulMasonryAdapterActions;
     components: {
@@ -32,24 +30,24 @@ export interface KulMasonryAdapterActions {
     removeColumn: () => Promise<void>;
     changeView: () => Promise<void>;
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Events
 export type KulMasonryEvent = 'kul-event' | 'ready' | 'unmount';
 export interface KulMasonryEventPayload
     extends KulEventPayload<'KulMasonry', KulMasonryEvent> {
     selectedShape: KulMasonrySelectedShape;
 }
-/*-------------------------------------------------*/
-/*                   S t a t e s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region States
 export type KulMasonrySelectedShape = {
     index?: number;
     shape?: Partial<KulDataCell<KulDataShapes>>;
 };
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulMasonryProps {
     kulColumns = 'Number of columns of the masonry.',
     kulData = 'Actual data to masonry.',
@@ -67,3 +65,4 @@ export interface KulMasonryPropsInterface {
     kulView?: KulMasonryView;
 }
 export type KulMasonryView = 'horizontal' | 'masonry' | 'vertical';
+//#endregion

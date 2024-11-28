@@ -7,9 +7,7 @@ import { KulManager } from '../../managers/kul-manager/kul-manager';
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulCarousel } from './kul-carousel';
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
+//#region Adapter
 export interface KulCarouselAdapter {
     actions: KulCarouselAdapterActions;
     components: KulCarouselAdapterComponents;
@@ -42,15 +40,15 @@ export interface KulCarouselAdapterSetters {
     interval: (value: NodeJS.Timeout) => void;
     state: { currentIndex: (value: number) => void };
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Events
 export type KulCarouselEvent = 'kul-event' | 'ready' | 'unmount';
 export interface KulCarouselEventPayload
     extends KulEventPayload<'KulCarousel', KulCarouselEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulCarouselProps {
     kulAutoPlay = 'Enable or disable autoplay for the carousel.',
     kulData = 'Actual data to carousel.',
@@ -65,3 +63,4 @@ export interface KulCarouselPropsInterface {
     kulShape?: KulDataShapes;
     kulStyle?: string;
 }
+//#endregion

@@ -9,6 +9,7 @@ export const setters: (
 ) => KulMessengerAdapterSetters = (adapter, hasCharacters) => {
     const messenger = adapter.components.messenger;
     return {
+        //#region character
         character: {
             chat: (chat, character = messenger.currentCharacter) =>
                 (messenger.chat[character.id] = chat),
@@ -39,12 +40,18 @@ export const setters: (
                 adapter.set.character.current(previousC);
             },
         },
+        //#endregion
+
+        //#region image
         image: {
             cover: (type, value, character = messenger.currentCharacter) => {
                 messenger.covers[character.id][type] = value;
                 messenger.refresh();
             },
         },
+        //#endregion
+
+        //#region messenger
         messenger: {
             data: () => {
                 messenger.saveInProgress = true;
@@ -129,5 +136,6 @@ export const setters: (
                 },
             },
         },
+        //#endregion
     };
 };

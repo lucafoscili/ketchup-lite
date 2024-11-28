@@ -18,9 +18,9 @@
 
 ## Events
 
-| Event                | Description              | Type                                   |
-| -------------------- | ------------------------ | -------------------------------------- |
-| `kul-carousel-event` | Describes event emitted. | `CustomEvent<KulCarouselEventPayload>` |
+| Event                | Description | Type                                   |
+| -------------------- | ----------- | -------------------------------------- |
+| `kul-carousel-event` |             | `CustomEvent<KulCarouselEventPayload>` |
 
 
 ## Methods

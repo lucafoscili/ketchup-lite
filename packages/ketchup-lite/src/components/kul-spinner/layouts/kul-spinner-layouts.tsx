@@ -1,5 +1,6 @@
 import { h, VNode } from '@stencil/core';
 
+//#region Spinner configs
 export const SPINNER_CONFIGS: {
     [key: number]: { className: string; elements: () => VNode[] };
 } = {
@@ -54,7 +55,9 @@ export const SPINNER_CONFIGS: {
                 )),
     },
 };
+//#endregion
 
+//#region Bar configs
 export const BAR_SPINNER_CONFIGS: {
     [key: number]: {
         className: string;
@@ -76,3 +79,4 @@ export const BAR_SPINNER_CONFIGS: {
         ],
     },
 };
+//#endregion

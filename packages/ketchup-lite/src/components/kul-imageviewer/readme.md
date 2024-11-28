@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event                   | Description              | Type                                      |
-| ----------------------- | ------------------------ | ----------------------------------------- |
-| `kul-imageviewer-event` | Describes event emitted. | `CustomEvent<KulImageviewerEventPayload>` |
+| Event                   | Description | Type                                      |
+| ----------------------- | ----------- | ----------------------------------------- |
+| `kul-imageviewer-event` |             | `CustomEvent<KulImageviewerEventPayload>` |
 
 
 ## Methods

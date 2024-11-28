@@ -1,8 +1,9 @@
 import { h } from '@stencil/core';
-import { KulChatAdapter } from '../kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulProgressbarEventPayload } from '../../kul-progressbar/kul-progressbar-declarations';
+import { KulChatAdapter } from '../kul-chat-declarations';
 
+//#region prepInputArea
 export const prepInputArea = (adapter: KulChatAdapter) => {
     return (
         <div class="chat__request__input">
@@ -36,7 +37,9 @@ export const prepInputArea = (adapter: KulChatAdapter) => {
         </div>
     );
 };
+//#endregion
 
+//#region prepButtons
 export const prepButtons = (adapter: KulChatAdapter) => {
     return (
         <div class="chat__request__buttons">
@@ -102,7 +105,9 @@ export const prepButtons = (adapter: KulChatAdapter) => {
         </div>
     );
 };
+//#endregion
 
+//#region prepProgressBar
 const prepProgressBar = (adapter: KulChatAdapter) => {
     const cssClass = {
         chat__request__input__progressbar: true,
@@ -127,7 +132,9 @@ const prepProgressBar = (adapter: KulChatAdapter) => {
         ></kul-progressbar>
     );
 };
+//#endregion
 
+//#region buttonEventHandler
 const buttonEventHandler = async (
     adapter: KulChatAdapter,
     e: CustomEvent<KulButtonEventPayload>
@@ -154,7 +161,9 @@ const buttonEventHandler = async (
             }
     }
 };
+//#endregion
 
+//#region progressbarEventHandler
 const progressbarEventHandler = async (
     adapter: KulChatAdapter,
     e: CustomEvent<KulProgressbarEventPayload>
@@ -167,3 +176,4 @@ const progressbarEventHandler = async (
             break;
     }
 };
+//#endregion

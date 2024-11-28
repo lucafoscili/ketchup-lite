@@ -13,15 +13,15 @@ import {
     VNode,
 } from '@stencil/core';
 import {
-    KulDataCyAttributes,
-    type GenericObject,
-} from '../../types/GenericTypes';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import {
+    KulDataCyAttributes,
+    type GenericObject,
+} from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
@@ -41,10 +41,7 @@ export class KulAccordion {
      */
     @Element() rootElement: HTMLKulAccordionElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -63,11 +60,9 @@ export class KulAccordion {
      * Selected nodes.
      */
     @State() selectedNodes: Set<KulDataNode> = new Set();
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Actual data of the accordion.
      * @default null
@@ -83,22 +78,15 @@ export class KulAccordion {
      * @default ""
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #rippleSurface: { [id: string]: HTMLElement } = {};
     #slotsNames: string[] = [];
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-accordion-event',
         composed: true,
@@ -106,7 +94,6 @@ export class KulAccordion {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulAccordionEventPayload>;
-
     onKulEvent(
         e: Event | CustomEvent,
         eventType: KulAccordionEvent,
@@ -130,11 +117,9 @@ export class KulAccordion {
             originalEvent: e,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -205,23 +190,18 @@ export class KulAccordion {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #isExpanded(node: KulDataNode): boolean {
         return this.expandedNodes.has(node);
     }
-
     #isExpandible(node: KulDataNode): boolean {
         return this.#slotsNames.includes(node.id);
     }
-
     #isSelected(node: KulDataNode): boolean {
         return this.selectedNodes.has(node);
     }
-
     #prepIcon(icon: string) {
         const path = getAssetPath(`./assets/svg/${icon}.svg`);
         const style = {
@@ -230,7 +210,6 @@ export class KulAccordion {
         };
         return <div class={'node__icon'} style={style}></div>;
     }
-
     #prepAccordion(): VNode[] {
         const nodes: VNode[] = [];
         const slots: Array<HTMLElement> = Array.prototype.slice.call(
@@ -302,24 +281,19 @@ export class KulAccordion {
         }
         return nodes;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         if (Object.keys(this.#rippleSurface).length) {
             for (const key in this.#rippleSurface) {
@@ -336,7 +310,6 @@ export class KulAccordion {
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         this.#rippleSurface = {};
 
@@ -353,8 +326,8 @@ export class KulAccordion {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

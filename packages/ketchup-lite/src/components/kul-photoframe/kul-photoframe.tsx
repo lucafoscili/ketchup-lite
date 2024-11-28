@@ -10,16 +10,16 @@ import {
     State,
 } from '@stencil/core';
 import { Method } from '@stencil/core/internal';
-import { GenericObject } from '../../types/GenericTypes';
-import {
-    KulPhotoframeEventPayload,
-    KulPhotoframeEvent,
-    KulPhotoframeProps,
-} from './kul-photoframe-declarations';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { GenericObject } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import {
+    KulPhotoframeEvent,
+    KulPhotoframeEventPayload,
+    KulPhotoframeProps,
+} from './kul-photoframe-declarations';
 
 @Component({
     tag: 'kul-photoframe',
@@ -32,10 +32,7 @@ export class KulPhotoframe {
      */
     @Element() rootElement: HTMLKulPhotoframeElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -51,11 +48,9 @@ export class KulPhotoframe {
      * @default false
      */
     @State() isInViewport = false;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Html attributes of the picture before the component enters the viewport.
      * @default null
@@ -76,25 +71,18 @@ export class KulPhotoframe {
      * @default null
      */
     @Prop() kulValue: GenericObject = null;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #intObserver: IntersectionObserver;
     #kulManager = kulManagerInstance();
     #placeholderEl: HTMLImageElement;
     #valueEl: HTMLImageElement;
     #renderValue = false;
     #wrapperEl: HTMLElement;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-photoframe-event',
         composed: true,
@@ -102,7 +90,6 @@ export class KulPhotoframe {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulPhotoframeEventPayload>;
-
     onKulEvent(
         e: Event | CustomEvent,
         eventType: KulPhotoframeEvent,
@@ -116,11 +103,9 @@ export class KulPhotoframe {
             isPlaceholder,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -156,11 +141,9 @@ export class KulPhotoframe {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #setObserver(): void {
         const callback = (entries: IntersectionObserverEntry[]) => {
             entries.forEach((entry) => {
@@ -175,29 +158,23 @@ export class KulPhotoframe {
         };
         this.#intObserver = new IntersectionObserver(callback, options);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         this.#setObserver();
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         if (this.isInViewport && !this.#renderValue) {
             this.#renderValue = true;
@@ -253,9 +230,9 @@ export class KulPhotoframe {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
         this.#intObserver?.unobserve(this.rootElement);
     }
+    //#endregion
 }

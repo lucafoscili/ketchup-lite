@@ -18,9 +18,9 @@
 
 ## Events
 
-| Event            | Description                       | Type                               |
-| ---------------- | --------------------------------- | ---------------------------------- |
-| `kul-lazy-event` | Describes the component's events. | `CustomEvent<KulLazyEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-lazy-event` |             | `CustomEvent<KulLazyEventPayload>` |
 
 
 ## Methods

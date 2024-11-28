@@ -5,6 +5,7 @@ export type KulSpinnerEvent = 'ready' | 'unmount';
 export interface KulSpinnerEventPayload
     extends KulEventPayload<'KulSpinner', KulSpinnerEvent> {}
 //#endregion
+
 //#region Props
 export enum KulSpinnerProps {
     kulActive = 'Specifies if the spinner is animating.',

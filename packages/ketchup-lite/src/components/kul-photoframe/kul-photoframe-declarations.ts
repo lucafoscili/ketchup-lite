@@ -1,16 +1,14 @@
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulPhotoframeEvent = 'load' | 'ready' | 'unmount';
 export interface KulPhotoframeEventPayload
     extends KulEventPayload<'KulPhotoframe', KulPhotoframeEvent> {
     isPlaceholder?: boolean;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulPhotoframeProps {
     kulPlaceholder = 'Html attributes of the picture before the component enters the viewport.',
     kulStyle = 'Custom style of the component.',
@@ -23,3 +21,4 @@ export interface KulPhotoframePropsInterface {
     kulThreshold?: number;
     kulValue?: GenericObject;
 }
+//#endregion

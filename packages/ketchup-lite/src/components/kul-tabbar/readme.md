@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event              | Description               | Type                                 |
-| ------------------ | ------------------------- | ------------------------------------ |
-| `kul-tabbar-event` | Describes events emitted. | `CustomEvent<KulTabbarEventPayload>` |
+| Event              | Description | Type                                 |
+| ------------------ | ----------- | ------------------------------------ |
+| `kul-tabbar-event` |             | `CustomEvent<KulTabbarEventPayload>` |
 
 
 ## Methods

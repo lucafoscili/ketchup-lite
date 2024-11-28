@@ -10,12 +10,12 @@ import {
     Prop,
     State,
 } from '@stencil/core';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
 import {
     KulDataCyAttributes,
     type GenericObject,
 } from '../../types/GenericTypes';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
@@ -31,9 +31,7 @@ import {
     shadow: true,
 })
 export class KulSlider {
-    //#region Root Element
     @Element() rootElement: HTMLKulSliderElement;
-    //#endregion
     //#region States
     /**
      * Debug information.
@@ -50,6 +48,7 @@ export class KulSlider {
      */
     @State() value: KulSliderValue = { display: 0, real: 0 };
     //#endregion
+
     //#region Props
     /**
      * When true, the component is disabled, preventing user interaction.
@@ -97,15 +96,14 @@ export class KulSlider {
      */
     @Prop({ mutable: true, reflect: true }) kulValue = 50;
     //#endregion
+
     //#region Internal variables
     #input: HTMLInputElement;
     #kulManager = kulManagerInstance();
     #rippleSurface: HTMLElement;
     //#endregion
+
     //#region Events
-    /**
-     * Describes event emitted for various slider interactions like click, focus, blur.
-     */
     @Event({
         eventName: 'kul-slider-event',
         composed: true,
@@ -140,6 +138,7 @@ export class KulSlider {
         });
     }
     //#endregion
+
     //#region Public methods
     /**
      * Fetches debug information of the component's current state.
@@ -194,6 +193,7 @@ export class KulSlider {
         }, ms);
     }
     //#endregion
+
     //#region Lifecycle hooks
     componentWillLoad() {
         if (this.kulValue) {
@@ -295,5 +295,5 @@ export class KulSlider {
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }
-//#endregion

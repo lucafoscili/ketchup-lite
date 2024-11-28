@@ -1,10 +1,11 @@
 import { h, VNode } from '@stencil/core';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
-import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
-import { KulCardAdapter, KulCardCSSClasses } from '../kul-card-declarations';
 import { KulDataCyAttributes } from '../../../types/GenericTypes';
+import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
 import { DEFAULTS } from '../helpers/kul-card-defaults';
+import { KulCardAdapter, KulCardCSSClasses } from '../kul-card-declarations';
 
+//#region Material layout
 export function getMaterialLayout(adapter: KulCardAdapter): VNode {
     const card = adapter.get.card();
     const shapes = adapter.get.shapes();
@@ -70,3 +71,4 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
         </div>
     );
 }
+//#endregion

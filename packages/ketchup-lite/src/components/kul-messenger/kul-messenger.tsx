@@ -10,42 +10,42 @@ import {
     Prop,
     State,
 } from '@stencil/core';
-import {
-    KulMessengerProps,
-    KulMessengerEvent,
-    KulMessengerAdapter,
-    KulMessengerCharacterNode,
-    KulMessengerDataset,
-    KulMessengerHistory,
-    KulMessengerCovers,
-    KulMessengerConfig,
-    KulMessengerEventPayload,
-    KulMessengerUI,
-    KulMessengerChat,
-    KulMessengerEditingStatus,
-    KulMessengerBaseChildNode,
-    KulMessengerChildIds,
-    KulMessengerImageTypes,
-    KulMessengerUnionChildIds,
-} from './kul-messenger-declarations';
-import type { GenericObject } from '../../types/GenericTypes';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { KulDataCell } from '../../managers/kul-data/kul-data-declarations';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import type { GenericObject } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { prepLeft } from './layout/kul-messenger-left';
-import { prepCenter } from './layout/kul-messenger-center';
-import { prepRight } from './layout/kul-messenger-right';
-import { prepGrid } from './selection-grid/kul-messenger-selection-grid';
+import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
+import { getters } from './helpers/kul-messenger-getters';
+import { setters } from './helpers/kul-messenger-setters';
 import {
     CLEAN_COMPONENTS,
     CLEAN_UI_JSON,
     IMAGE_TYPE_IDS,
 } from './kul-messenger-constants';
-import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
-import { getters } from './helpers/kul-messenger-getters';
-import { setters } from './helpers/kul-messenger-setters';
-import { KulDataCell } from '../../managers/kul-data/kul-data-declarations';
+import {
+    KulMessengerAdapter,
+    KulMessengerBaseChildNode,
+    KulMessengerCharacterNode,
+    KulMessengerChat,
+    KulMessengerChildIds,
+    KulMessengerConfig,
+    KulMessengerCovers,
+    KulMessengerDataset,
+    KulMessengerEditingStatus,
+    KulMessengerEvent,
+    KulMessengerEventPayload,
+    KulMessengerHistory,
+    KulMessengerImageTypes,
+    KulMessengerProps,
+    KulMessengerUI,
+    KulMessengerUnionChildIds,
+} from './kul-messenger-declarations';
+import { prepCenter } from './layout/kul-messenger-center';
+import { prepLeft } from './layout/kul-messenger-left';
+import { prepRight } from './layout/kul-messenger-right';
+import { prepGrid } from './selection-grid/kul-messenger-selection-grid';
 
 @Component({
     tag: 'kul-messenger',
@@ -58,10 +58,7 @@ export class KulMessenger {
      */
     @Element() rootElement: HTMLKulMessengerElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -114,11 +111,9 @@ export class KulMessenger {
      * State of options' filters.
      */
     @State() ui: KulMessengerUI = CLEAN_UI_JSON;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Automatically saves the dataset when a chat updates.
      * @default true
@@ -139,20 +134,13 @@ export class KulMessenger {
      * @default ""
      */
     @Prop() kulValue: KulMessengerConfig = null;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-messenger-event',
         composed: true,
@@ -160,7 +148,6 @@ export class KulMessenger {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulMessengerEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
         const config: KulMessengerConfig = {
             currentCharacter: this.currentCharacter?.id,
@@ -174,11 +161,9 @@ export class KulMessenger {
             config,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Fetches debug information of the component's current state.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -226,11 +211,9 @@ export class KulMessenger {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #adapter: KulMessengerAdapter = {
         actions: {
             delete: {
@@ -249,16 +232,13 @@ export class KulMessenger {
         get: null,
         set: null,
     };
-
     #hasCharacters() {
         const nodes = this.kulData?.nodes || [];
         return !!nodes.length;
     }
-
     #hasNodes() {
         return !!this.kulData?.nodes?.length;
     }
-
     #initStates() {
         if (this.#hasNodes()) {
             const imageRootGetter = this.#adapter.get.image.root;
@@ -314,7 +294,6 @@ export class KulMessenger {
             }
         }
     }
-
     async #save() {
         for (let index = 0; index < this.kulData.nodes.length; index++) {
             const character = this.kulData.nodes[index];
@@ -357,11 +336,9 @@ export class KulMessenger {
         }
         this.onKulEvent(new CustomEvent('save'), 'save');
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         this.#adapter.get = getters(
@@ -372,20 +349,16 @@ export class KulMessenger {
         this.#adapter.set = setters(this.#adapter, this.#hasCharacters());
         this.#initStates();
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         if (!this.#hasNodes()) {
             return;
@@ -414,8 +387,8 @@ export class KulMessenger {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

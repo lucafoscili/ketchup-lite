@@ -1,7 +1,8 @@
 import { Fragment, h } from '@stencil/core';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
 import { OPTION_TYPE_IDS } from '../kul-messenger-constants';
+import { KulMessengerAdapter } from '../kul-messenger-declarations';
 
+//#region prepOptions
 export const prepOptions = (adapter: KulMessengerAdapter) => {
     return OPTION_TYPE_IDS.map((options) => {
         const image = adapter.get.image.asCover(options);
@@ -63,3 +64,4 @@ export const prepOptions = (adapter: KulMessengerAdapter) => {
         );
     });
 };
+//#endregion

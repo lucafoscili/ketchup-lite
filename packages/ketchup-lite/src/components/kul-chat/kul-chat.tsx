@@ -14,6 +14,16 @@ import {
     VNode,
     Watch,
 } from '@stencil/core';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import {
+    KulLLMChoiceMessage,
+    KulLLMRequest,
+} from '../../managers/kul-llm/kul-llm-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { prepChat } from './chat/kul-chat-chat';
 import {
     KulChatAdapter,
     KulChatEvent,
@@ -24,17 +34,7 @@ import {
     KulChatStatus,
     KulChatView,
 } from './kul-chat-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject } from '../../types/GenericTypes';
 import { prepSettings } from './settings/kul-chat-settings';
-import { prepChat } from './chat/kul-chat-chat';
-import {
-    KulLLMChoiceMessage,
-    KulLLMRequest,
-} from '../../managers/kul-llm/kul-llm-declarations';
 
 @Component({
     tag: 'kul-chat',
@@ -47,10 +47,7 @@ export class KulChat {
      */
     @Element() rootElement: HTMLKulChatElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -77,11 +74,9 @@ export class KulChat {
      * State of the connection.
      */
     @State() view: KulChatView = 'chat';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * How many tokens the context window can handle, used to calculate the occupied space.
      * @default ""
@@ -134,21 +129,14 @@ export class KulChat {
      * @default ""
      */
     @Prop({ mutable: true }) kulValue: KulChatHistory = [];
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #statusinterval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-chat-event',
         composed: true,
@@ -156,7 +144,6 @@ export class KulChat {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulChatEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulChatEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -167,11 +154,9 @@ export class KulChat {
             status: this.status,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                L i s t e n e r s                */
-    /*-------------------------------------------------*/
-
+    //#region Listeners
     @Listen('keydown')
     listenKeydown(e: KeyboardEvent) {
         switch (e.key) {
@@ -186,11 +171,9 @@ export class KulChat {
                 e.stopPropagation();
         }
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                 W a t c h e r s                 */
-    /*-------------------------------------------------*/
-
+    //#region Watchers
     @Watch('kulSystem')
     async updateTokensCount() {
         const progressbar = this.#adapter.components.progressbar;
@@ -217,11 +200,9 @@ export class KulChat {
             }
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Retrieves the debug information reflecting the current state of the component.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -287,11 +268,9 @@ export class KulChat {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #adapter: KulChatAdapter = {
         actions: {
             delete: (m) => {
@@ -390,7 +369,6 @@ export class KulChat {
             },
         },
     };
-
     async #checkLLMStatus() {
         if (this.status === 'offline') {
             this.status = 'connecting';
@@ -410,7 +388,6 @@ export class KulChat {
         }
         this.onKulEvent(new CustomEvent('polling'), 'polling');
     }
-
     #prepConnecting: () => VNode[] = () => {
         return (
             <Fragment>
@@ -426,7 +403,6 @@ export class KulChat {
             </Fragment>
         );
     };
-
     #prepOffline: () => VNode[] = () => {
         return (
             <Fragment>
@@ -458,7 +434,6 @@ export class KulChat {
             </Fragment>
         );
     };
-
     async #sendPrompt() {
         const disabler = this.#adapter.actions.disableInteractivity;
         const textarea = this.#adapter.components.textareas.prompt;
@@ -505,17 +480,14 @@ export class KulChat {
             this.#updateHistory(cb);
         }
     }
-
     #updateHistory(cb: () => unknown) {
         cb();
         this.#adapter.actions.updateTokenCount();
         this.onKulEvent(new CustomEvent('update'), 'update');
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         if (this.kulValue) {
@@ -535,7 +507,6 @@ export class KulChat {
             }
         }
     }
-
     componentDidLoad() {
         this.#statusinterval = setInterval(() => {
             this.#checkLLMStatus();
@@ -544,15 +515,12 @@ export class KulChat {
         this.#checkLLMStatus();
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         return (
             <Host>
@@ -577,9 +545,9 @@ export class KulChat {
             </Host>
         );
     }
-
     disconnectedCallback() {
         clearInterval(this.#statusinterval);
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

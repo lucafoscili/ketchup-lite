@@ -12,6 +12,7 @@ export type KulImageEvent =
 export interface KulImageEventPayload
     extends KulEventPayload<'KulImage', KulImageEvent> {}
 //#endregion
+
 //#region Props
 export enum KulImageProps {
     kulBadgeProps = 'Sets the props to show a badge.',

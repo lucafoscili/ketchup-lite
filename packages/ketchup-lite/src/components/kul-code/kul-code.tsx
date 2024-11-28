@@ -11,17 +11,17 @@ import {
     Prop,
     State,
 } from '@stencil/core';
+import Prism from 'prismjs';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulCodeEvent,
     KulCodeEventPayload,
     KulCodeProps,
 } from './kul-code-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { GenericObject } from '../../types/GenericTypes';
-import Prism from 'prismjs';
 import { STATIC_LANGUAGES } from './languages/static-languages';
 
 @Component({
@@ -36,10 +36,7 @@ export class KulCode {
      */
     @Element() rootElement: HTMLKulCodeElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -54,11 +51,9 @@ export class KulCode {
      * Value.
      */
     @State() value = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Automatically formats the value.
      * @default true
@@ -84,21 +79,14 @@ export class KulCode {
      * @default ""
      */
     @Prop({ mutable: true, reflect: false }) kulValue = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #el: HTMLPreElement | HTMLDivElement;
     #kulManager = kulManagerInstance();
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes event emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-code-event',
         composed: true,
@@ -106,7 +94,6 @@ export class KulCode {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulCodeEventPayload>;
-
     onKulEvent(e: Event | CustomEvent, eventType: KulCodeEvent) {
         this.kulEvent.emit({
             comp: this,
@@ -115,11 +102,9 @@ export class KulCode {
             originalEvent: e,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Retrieves the debug information reflecting the current state of the component.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -155,11 +140,9 @@ export class KulCode {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #format(value: string) {
         if (typeof value === 'string' && /^[\{\}]\s*$/i.test(value)) {
             return value.trim();
@@ -170,7 +153,6 @@ export class KulCode {
             return this.#kulManager.data.cell.stringify(value);
         }
     }
-
     async #highlightCode(): Promise<void> {
         try {
             if (!Prism.languages[this.kulLanguage]) {
@@ -186,13 +168,11 @@ export class KulCode {
             this.#el.innerHTML = this.value;
         }
     }
-
     #isObjectLike(
         obj: unknown
     ): obj is Record<string | number | symbol, unknown> {
         return typeof obj === 'object' && obj !== null;
     }
-
     #isDictionary(
         obj: unknown
     ): obj is Record<string | number | symbol, unknown> {
@@ -201,14 +181,12 @@ export class KulCode {
             Object.values(obj).every((value) => value != null)
         );
     }
-
     #isJson(value: string | Record<string, unknown>) {
         return (
             this.kulLanguage?.toLowerCase() === 'json' ||
             this.#isDictionary(value)
         );
     }
-
     async #loadLanguage() {
         try {
             const module = getAssetPath(
@@ -223,17 +201,14 @@ export class KulCode {
             );
         }
     }
-
     #updateValue() {
         this.value = this.kulFormat
             ? this.#format(this.kulValue)
             : this.kulValue;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         this.#kulManager.theme.register(this);
         STATIC_LANGUAGES.css(Prism);
@@ -249,27 +224,22 @@ export class KulCode {
         STATIC_LANGUAGES.typescript(Prism);
         this.#updateValue();
     }
-
     componentDidLoad() {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillUpdate() {
         this.value = this.#format(this.kulValue);
     }
-
     componentWillRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         if (this.#el) {
             this.#highlightCode();
         }
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         const isPreserveSpaceMissing = !!(
             this.kulPreserveSpaces !== true && this.kulPreserveSpaces !== false
@@ -342,8 +312,8 @@ export class KulCode {
             </Host>
         );
     }
-
     disconnectedCallback() {
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }

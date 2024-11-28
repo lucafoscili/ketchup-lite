@@ -1,8 +1,6 @@
 import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                     D a t a                     */
-/*-------------------------------------------------*/
+//#region Data
 export interface KulShowcaseDocMethod {
     docs: string;
     name: string;
@@ -32,12 +30,13 @@ export type KulShowcaseDynamicExampleType =
     | 'state-colors'
     | 'positions';
 export type KulShowcaseTitle = 'Components' | 'Framework' | 'Utilities';
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulShowcaseProps {
     kulStyle = 'Custom style of the component.',
 }
 export interface KulShowcasePropsInterface {
     kulStyle: string;
 }
+//#endregion

@@ -1,16 +1,16 @@
 import { Component, Element, h, Host, Prop, State, VNode } from '@stencil/core';
+import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulShowcaseTitle } from './kul-showcase-declarations';
 import { KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import { KulCardEventPayload } from '../kul-card/kul-card-declarations';
 import {
     KUL_DOC,
     KUL_SHOWCASE_COMPONENTS,
     KUL_SHOWCASE_FRAMEWORK,
     KUL_SHOWCASE_UTILITIES,
 } from './kul-showcase-data';
-import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
-import { KulCardEventPayload } from '../kul-card/kul-card-declarations';
+import { KulShowcaseTitle } from './kul-showcase-declarations';
 
 @Component({
     assetsDirs: ['assets/media'],
@@ -24,10 +24,7 @@ export class KulShowcase {
      */
     @Element() rootElement: HTMLKulShowcaseElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -53,27 +50,21 @@ export class KulShowcase {
      * @default ""
      */
     @State() currentUtility = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Custom style of the component.
      * @default ""
      */
     @Prop({ mutable: true, reflect: true }) kulStyle = '';
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #comps(type: KulShowcaseTitle): VNode {
         const switchType = () => {
             switch (type) {
@@ -88,7 +79,6 @@ export class KulShowcase {
         const Tag = 'kul-showcase-' + switchType();
         return Tag ? <Tag /> : null;
     }
-
     #cards(type: KulShowcaseTitle) {
         const cards: VNode[] = [];
         const dataset =
@@ -161,7 +151,6 @@ export class KulShowcase {
         });
         return cards;
     }
-
     #prepHeader(title: KulShowcaseTitle): VNode {
         const current =
             title === 'Components'
@@ -194,11 +183,9 @@ export class KulShowcase {
             </div>
         );
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     render() {
         return (
             <Host>
@@ -264,4 +251,5 @@ export class KulShowcase {
             </Host>
         );
     }
+    //#endregion
 }

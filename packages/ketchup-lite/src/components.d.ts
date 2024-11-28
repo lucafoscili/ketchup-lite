@@ -3039,9 +3039,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-accordion-event"?: (event: KulAccordionCustomEvent<KulAccordionEventPayload>) => void;
     }
     interface KulArticle {
@@ -3055,9 +3052,6 @@ declare namespace LocalJSX {
           * @default "" - No custom style applied by default.
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-article-event"?: (event: KulArticleCustomEvent<KulArticleEventPayload>) => void;
     }
     interface KulBadge {
@@ -3076,9 +3070,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-badge-event"?: (event: KulBadgeCustomEvent<KulBadgeEventPayload>) => void;
     }
     interface KulButton {
@@ -3150,9 +3141,6 @@ declare namespace LocalJSX {
           * @default false
          */
         "kulValue"?: boolean;
-        /**
-          * Describes event emitted for various button interactions like click, focus, blur.
-         */
         "onKul-button-event"?: (event: KulButtonCustomEvent<KulButtonEventPayload>) => void;
     }
     interface KulCanvas {
@@ -3224,9 +3212,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Triggered when an event is fired.
-         */
         "onKul-card-event"?: (event: KulCardCustomEvent<KulCardEventPayload>) => void;
     }
     interface KulCarousel {
@@ -3255,9 +3240,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-carousel-event"?: (event: KulCarouselCustomEvent<KulCarouselEventPayload>) => void;
     }
     interface KulChart {
@@ -3369,9 +3351,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulValue"?: KulChatHistory;
-        /**
-          * Describes event emitted.
-         */
         "onKul-chat-event"?: (event: KulChatCustomEvent<KulChatEventPayload>) => void;
     }
     interface KulChip {
@@ -3395,9 +3374,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyling"?: KulChipStyling;
-        /**
-          * Describes event emitted.
-         */
         "onKul-chip-event"?: (event: KulChipCustomEvent<KulChipEventPayload>) => void;
     }
     interface KulCode {
@@ -3426,9 +3402,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulValue"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-code-event"?: (event: KulCodeCustomEvent<KulCodeEventPayload>) => void;
     }
     interface KulCompare {
@@ -3452,9 +3425,6 @@ declare namespace LocalJSX {
           * @default null
          */
         "kulView"?: KulCompareView;
-        /**
-          * Describes event emitted.
-         */
         "onKul-compare-event"?: (event: KulCompareCustomEvent<KulCompareEventPayload>) => void;
     }
     interface KulDrawer {
@@ -3463,9 +3433,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted by the component.
-         */
         "onKul-drawer-event"?: (event: KulDrawerCustomEvent<KulDrawerEventPayload>) => void;
     }
     interface KulHeader {
@@ -3474,9 +3441,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-header-event"?: (event: KulHeaderCustomEvent<KulHeaderEventPayload>) => void;
     }
     interface KulImage {
@@ -3516,9 +3480,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulValue"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-image-event"?: (event: KulImageCustomEvent<KulImageEventPayload>) => void;
     }
     interface KulImageviewer {
@@ -3542,9 +3503,6 @@ declare namespace LocalJSX {
           * @default {}
          */
         "kulValue"?: KulDataDataset;
-        /**
-          * Describes event emitted.
-         */
         "onKul-imageviewer-event"?: (event: KulImageviewerCustomEvent<KulImageviewerEventPayload>) => void;
     }
     interface KulLazy {
@@ -3573,9 +3531,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes the component's events.
-         */
         "onKul-lazy-event"?: (event: KulLazyCustomEvent<KulLazyEventPayload>) => void;
     }
     interface KulList {
@@ -3614,9 +3569,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-list-event"?: (event: KulListCustomEvent<KulListEventPayload>) => void;
     }
     interface KulMasonry {
@@ -3650,9 +3602,6 @@ declare namespace LocalJSX {
           * @default null
          */
         "kulView"?: KulMasonryView;
-        /**
-          * Describes event emitted.
-         */
         "onKul-masonry-event"?: (event: KulMasonryCustomEvent<KulMasonryEventPayload>) => void;
     }
     interface KulMessenger {
@@ -3676,9 +3625,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulValue"?: KulMessengerConfig;
-        /**
-          * Describes event emitted.
-         */
         "onKul-messenger-event"?: (event: KulMessengerCustomEvent<KulMessengerEventPayload>) => void;
     }
     interface KulPhotoframe {
@@ -3702,9 +3648,6 @@ declare namespace LocalJSX {
           * @default null
          */
         "kulValue"?: GenericObject;
-        /**
-          * Describes event emitted.
-         */
         "onKul-photoframe-event"?: (event: KulPhotoframeCustomEvent<KulPhotoframeEventPayload>) => void;
     }
     interface KulProgressbar {
@@ -3738,9 +3681,6 @@ declare namespace LocalJSX {
           * @default 0
          */
         "kulValue"?: number;
-        /**
-          * Describes event emitted.
-         */
         "onKul-progressbar-event"?: (event: KulProgressbarCustomEvent<KulProgressbarEventPayload>) => void;
     }
     interface KulShowcase {
@@ -3880,9 +3820,6 @@ declare namespace LocalJSX {
           * @default 50
          */
         "kulValue"?: number;
-        /**
-          * Describes event emitted for various slider interactions like click, focus, blur.
-         */
         "onKul-slider-event"?: (event: KulSliderCustomEvent<KulSliderEventPayload>) => void;
     }
     interface KulSpinner {
@@ -3944,9 +3881,6 @@ declare namespace LocalJSX {
           * @default "" - No custom style applied by default.
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-splash-event"?: (event: KulSplashCustomEvent<KulSplashEventPayload>) => void;
     }
     interface KulTabbar {
@@ -3970,9 +3904,6 @@ declare namespace LocalJSX {
           * @default null
          */
         "kulValue"?: number | string;
-        /**
-          * Describes events emitted.
-         */
         "onKul-tabbar-event"?: (event: KulTabbarCustomEvent<KulTabbarEventPayload>) => void;
     }
     interface KulTextfield {
@@ -4026,9 +3957,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulValue"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-textfield-event"?: (event: KulTextfieldCustomEvent<KulTextfieldEventPayload>) => void;
     }
     interface KulToast {
@@ -4062,9 +3990,6 @@ declare namespace LocalJSX {
           * @default ''
          */
         "kulTimer"?: number;
-        /**
-          * Describes event emitted.
-         */
         "onKul-toast-event"?: (event: KulToastCustomEvent<KulToastEventPayload>) => void;
     }
     interface KulToggle {
@@ -4098,9 +4023,6 @@ declare namespace LocalJSX {
           * @default false
          */
         "kulValue"?: boolean;
-        /**
-          * Describes event emitted for various toggle interactions like click, focus, blur.
-         */
         "onKul-toggle-event"?: (event: KulToggleCustomEvent<KulToggleEventPayload>) => void;
     }
     interface KulTree {
@@ -4139,9 +4061,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulStyle"?: string;
-        /**
-          * Describes event emitted.
-         */
         "onKul-tree-event"?: (event: KulTreeCustomEvent<KulTreeEventPayload>) => void;
     }
     interface KulTypewriter {
@@ -4180,9 +4099,6 @@ declare namespace LocalJSX {
           * @default ""
          */
         "kulValue"?: KulTypewriterValue;
-        /**
-          * Describes the component's events.
-         */
         "onKul-typewriter-event"?: (event: KulTypewriterCustomEvent<KulTypewriterEventPayload>) => void;
     }
     interface KulUpload {
@@ -4206,9 +4122,6 @@ declare namespace LocalJSX {
           * @default null
          */
         "kulValue"?: any;
-        /**
-          * Describes event emitted.
-         */
         "onKul-upload-event"?: (event: KulUploadCustomEvent<KulUploadEventPayload>) => void;
     }
     interface IntrinsicElements {

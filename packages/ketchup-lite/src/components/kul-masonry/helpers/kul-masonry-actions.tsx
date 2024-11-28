@@ -1,9 +1,9 @@
 import { h } from '@stencil/core';
-import { KulMasonryAdapter } from '../kul-masonry-declarations';
 import {
     KulButtonEventPayload,
     KulButtonStyling,
 } from '../../kul-button/kul-button-declarations';
+import { KulMasonryAdapter } from '../kul-masonry-declarations';
 
 const STYLING: KulButtonStyling = 'floating';
 
@@ -13,6 +13,7 @@ const MINUS_ICON = 'remove';
 const PLUS_ICON = 'plus';
 const VERTICAL_ICON = 'view_day';
 
+//#region buttonHandler
 const buttonHandler = (
     adapter: KulMasonryAdapter,
     e: CustomEvent<KulButtonEventPayload>
@@ -35,9 +36,11 @@ const buttonHandler = (
             break;
     }
 };
+//#endregion
 
 export const ACTIONS = {
     masonry: {
+        //#region add
         add: (adapter: KulMasonryAdapter) => {
             return (
                 <kul-button
@@ -59,6 +62,9 @@ export const ACTIONS = {
                 ></kul-button>
             );
         },
+        //#endregion
+
+        //#region remove
         remove: (adapter: KulMasonryAdapter) => {
             return (
                 <kul-button
@@ -81,6 +87,9 @@ export const ACTIONS = {
             );
         },
     },
+    //#endregion
+
+    //#region changeView
     changeView: (adapter: KulMasonryAdapter) => {
         return (
             <kul-button
@@ -111,4 +120,5 @@ export const ACTIONS = {
             ></kul-button>
         );
     },
+    //#endregion
 };

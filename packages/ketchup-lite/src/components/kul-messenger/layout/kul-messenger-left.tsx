@@ -1,12 +1,13 @@
 import { Fragment, h } from '@stencil/core';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
-import { MENU_DATASET } from '../kul-messenger-constants';
 import {
     KulButtonEventPayload,
     KulButtonPropsInterface,
 } from '../../kul-button/kul-button-declarations';
 import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
+import { MENU_DATASET } from '../kul-messenger-constants';
+import { KulMessengerAdapter } from '../kul-messenger-declarations';
 
+//#region prepLeft
 export const prepLeft = (adapter: KulMessengerAdapter) => {
     const isCollapsed = adapter.get.messenger.ui().panels.isLeftCollapsed;
     return (
@@ -18,7 +19,9 @@ export const prepLeft = (adapter: KulMessengerAdapter) => {
         </div>
     );
 };
+//#endregion
 
+//#region prepAvatar
 const prepAvatar = (adapter: KulMessengerAdapter) => {
     const image = adapter.get.image.asCover('avatars');
     const status = adapter.get.messenger.status.connection();
@@ -61,7 +64,9 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
         </Fragment>
     );
 };
+//#endregion
 
+//#region prepSaveButton
 const prepSaveButton = (adapter: KulMessengerAdapter) => {
     const saveInProgress = adapter.get.messenger.status.save.inProgress();
     const props: KulButtonPropsInterface = {
@@ -93,7 +98,9 @@ const prepSaveButton = (adapter: KulMessengerAdapter) => {
         </kul-button>
     );
 };
+//#endregion
 
+//#region prepBiography
 const prepBiography = (adapter: KulMessengerAdapter) => {
     return (
         <kul-code
@@ -102,7 +109,9 @@ const prepBiography = (adapter: KulMessengerAdapter) => {
         ></kul-code>
     );
 };
+//#endregion
 
+//#region buttonClickHandler
 const buttonClickHandler = async (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulButtonEventPayload>
@@ -124,7 +133,9 @@ const buttonClickHandler = async (
             break;
     }
 };
+//#endregion
 
+//#region listClickHandler
 const listClickHandler = async (
     adapter: KulMessengerAdapter,
     e: CustomEvent<KulListEventPayload>
@@ -172,3 +183,4 @@ const listClickHandler = async (
             link.parentNode.removeChild(link);
     }
 };
+//#endregion

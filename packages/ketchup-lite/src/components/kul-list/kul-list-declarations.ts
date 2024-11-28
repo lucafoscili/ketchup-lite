@@ -4,9 +4,7 @@ import {
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulListEvent =
     | 'blur'
     | 'click'
@@ -19,9 +17,9 @@ export interface KulListEventPayload
     extends KulEventPayload<'KulList', KulListEvent> {
     node: KulDataNode;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulListProps {
     kulData = 'The actual data of the list.',
     kulEmptyLabel = 'Text displayed when the list is empty.',
@@ -40,3 +38,4 @@ export interface KulListPropsInterface {
     kulSelectable?: boolean;
     kulStyle?: string;
 }
+//#endregion

@@ -25,6 +25,7 @@ export const getters: (
 ) => KulMessengerAdapterGetters = (adapter, kulManager, hasCharacters) => {
     const messenger = adapter.components.messenger;
     return {
+        //#region character
         character: {
             biography: (character = messenger.currentCharacter) => {
                 try {
@@ -72,6 +73,9 @@ export const getters: (
                 return nodes[prevIdx];
             },
         },
+        //#endregion
+
+        //#region image
         image: {
             asCover: (type, character = messenger.currentCharacter) => {
                 try {
@@ -164,6 +168,9 @@ export const getters: (
                         : '';
             },
         },
+        //#endregion
+
+        //#region messenger
         messenger: {
             config: () => {
                 return {
@@ -184,5 +191,6 @@ export const getters: (
             },
             ui: () => messenger.ui,
         },
+        //#endregion
     };
 };

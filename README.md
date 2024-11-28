@@ -34,12 +34,17 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
 - [Ketchup Lite](#ketchup-lite)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
+  - [Key components](#key-components)
+    - [KulChart](#kulchart)
+    - [KulMasonry](#kulmasonry)
+    - [KulMessenger](#kulmessenger)
   - [Getting Started](#getting-started)
     - [Installation](#installation)
     - [Usage](#usage)
   - [Main differences from Ketchup](#main-differences-from-ketchup)
   - [Documentation](#documentation)
   - [Contributing](#contributing)
+  - [A `Comfy` Marriage](#a-comfy-marriage)
   - [Credits](#credits)
 
 ## Features
@@ -55,6 +60,61 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
 [(Back to Top)](#ketchup-lite)
 
 </div>
+
+## Key components
+
+### KulChart
+
+![KulChart](https://github.com/lucafoscili/ketchup-lite/blob/f3291bb78e2c56eda38d97d182e03cdbacd1ff75/docs/images/chart.png)
+
+**Description:**  
+The **KulChart** component provides an advanced charting solution built on top of the Echarts library. It supports various chart types, including line, bar, bubble, and candlestick charts, as well as unique options like dual-axis and heatmap calendars.
+
+**Features:**
+
+- Multiple chart types (e.g., line, bar, bubble, candlestick).
+- Highly customizable with Echarts options.
+- Responsive and interactive visuals.
+- Ideal for dashboards, analytics, and data visualizations.
+
+**Use Case Highlight:**  
+Perfect for building real-time dashboards, financial data visualizations, and multi-dimensional analytics with polished and professional aesthetics.
+
+### KulMasonry
+
+![KulMasonry](https://github.com/lucafoscili/ketchup-lite/blob/f3291bb78e2c56eda38d97d182e03cdbacd1ff75/docs/images/masonry.png)
+
+**Description:**  
+The **KulMasonry** component is perfect for creating visually appealing layouts with items of varying sizes. It supports a dynamic masonry or waterfall grid style, making it ideal for galleries, portfolios, and content-heavy applications.
+
+**Features:**
+
+- Dynamically arranges items for an optimized layout.
+- Supports responsive behavior for various screen sizes.
+- Ideal for showcasing images, cards, or any visual elements.
+
+**Use Case Highlight:**  
+Display dynamic content, such as photo galleries or portfolio showcases, where items vary in size and need an elegant, responsive layout.
+
+### KulMessenger
+
+![KulMessenger](https://github.com/lucafoscili/ketchup-lite/blob/f3291bb78e2c56eda38d97d182e03cdbacd1ff75/docs/images/messenger.png)
+
+**Description:**  
+The **KulMessenger** component provides a customizable interface for interactive roleplay or conversational experiences. Users can define a JSON dataset of characters and initiate conversations through a third-party API (local endpoint required).
+
+**Features:**
+
+- Dynamic list of characters generated from a JSON dataset.
+- Interactive chat interface.
+- Supports integration with custom LLM endpoints for advanced interactions.
+- Configurable visuals and metadata for each character.
+
+**Use Case Highlight:**  
+Perfect for creating immersive role-playing experiences, educational tools, or conversational agents where users can interact with pre-defined characters.
+
+**Note:**  
+A functional local endpoint is required for chat functionality. If the endpoint is offline, the chat interface will remain static.
 
 ## Getting Started
 
@@ -137,13 +197,39 @@ For detailed information about each component, including available properties, e
 
 ## Contributing
 
-I'm working on this project primarily for fun and for my portfolio website during my free time, but P.R. from other users that find this library useful are welcome!
+If you discover a new bug or have an exciting idea for a new component, feel free to open an issue or a discussion! Check out the [issues](https://github.com/lucafoscili/ketchup-lite/issues) or [discussions](https://github.com/lucafoscili/ketchup-lite/discussions) tabs to see how you can get involved.
+
+Pull requests are also welcome if you want to contribute firsthand. Just clone the repository and run from the root:
+
+```sh
+yarn install
+```
+
+Then you can launch the development environment with the command:
+
+```sh
+yarn dev
+```
 
 <div align="right">
 
 [(Back to Top)](#ketchup-lite)
 
 </div>
+
+## A `Comfy` Marriage
+
+Ketchup Lite forms the backbone of [LF Nodes for ComfyUI](https://github.com/lucafoscili/comfyui-lf), a suite of custom nodes designed for **ComfyUI** workflows. This integration showcases the power and flexibility of web components, making it clear just how effortless it is to introduce new widgets into complex systems.
+
+**Why it works:**
+
+- **Simplicity:** Adding a new widget feels as natural as snapping pieces together.
+- **Style:** The sleek design of Ketchup Lite components enhances any workflow.
+- **Scalability:** The flexibility of web components ensures seamless integration, even as workflows grow more complex.
+
+And… they look fantastic in action!
+
+![LoRA Tester Workflow](https://github.com/lucafoscili/comfyui-lf/blob/0b438784ecce5bb2a3bde66cf3029d91ced61911/docs/images/Screenshot%202024-11-01%20204059.png "Screenshot taken from the LoRA tester workflow")
 
 ## Credits
 

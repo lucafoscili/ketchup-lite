@@ -8,7 +8,11 @@ import {
 import { KulChartAdapterDesign } from '../kul-chart-declarations';
 
 export const CHART_DESIGN: KulChartAdapterDesign = {
+    //#region Opacity
     applyOpacity: (color, opacity) => `${color}${opacity}`,
+    //#endregion
+
+    //#region Axis
     axis: (adapter, axisType) => {
         const theme = adapter.get.design.theme;
 
@@ -52,6 +56,9 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
             } as YAXisComponentOption;
         }
     },
+    //#endregion
+
+    //#region Colors
     colors: (adapter, count) => {
         const hex = (color: string) => {
             return adapter.get.manager().theme.colorCheck(color).hexColor;
@@ -79,6 +86,9 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
 
         return colorArray.slice(0, count);
     },
+    //#endregion
+
+    //#region Label
     label: (adapter) => {
         const theme = adapter.get.design.theme;
         const label: EChartsOption = {
@@ -98,6 +108,9 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         };
         return label;
     },
+    //#endregion
+
+    //#region Legend
     legend: (adapter) => {
         const chart = adapter.get.chart();
         if (chart.kulLegend === 'hidden') {
@@ -124,6 +137,9 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         successColor: '',
         textColor: '',
     },
+    //#endregion
+
+    //#region Tooltip
     tooltip: (adapter, formatter?) => {
         const theme = adapter.get.design.theme;
         const tooltip: TooltipComponentOption = {
@@ -136,4 +152,5 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         };
         return tooltip;
     },
+    //#endregion
 };

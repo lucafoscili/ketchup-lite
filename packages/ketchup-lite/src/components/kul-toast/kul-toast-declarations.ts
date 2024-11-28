@@ -1,15 +1,13 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulToastEvent = 'ready' | 'unmount';
 export interface KulToastEventPayload
     extends KulEventPayload<'KulToast', KulToastEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulToastProps {
     kulCloseCallback = 'Callback invoked when the toast is closed.',
     kulCloseIcon = 'Sets the props of the clickable icon used to close the toast.',
@@ -26,3 +24,4 @@ export interface KulToastPropsInterface {
     kulStyle?: string;
     kulTimer?: number;
 }
+//#endregion

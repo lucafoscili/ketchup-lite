@@ -1,14 +1,12 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulTypewriterEvent = 'ready' | 'unmount';
 export interface KulTypewriterEventPayload
     extends KulEventPayload<'KulTypewriter', KulTypewriterEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulTypewriterProps {
     kulCursor = 'Enables or disables the blinking cursor.',
     kulDeleteSpeed = 'Sets the deleting speed in milliseconds.',
@@ -28,3 +26,4 @@ export interface KulTypewriterPropsInterface {
     kulValue?: KulTypewriterValue;
 }
 export type KulTypewriterValue = string | string[];
+//#endregion

@@ -1,20 +1,18 @@
 import { h } from '@stencil/core';
 import {
-    KulImageviewerAdapter,
-    KulImageviewerAdapterComponents,
-} from '../kul-imageviewer-declarations';
-import { KulTreeEventPayload } from '../../kul-tree/kul-tree-declarations';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulMasonryEventPayload } from '../../kul-masonry/kul-masonry-declarations';
-import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
-import {
-    KulImageEventPayload,
-    KulImagePropsInterface,
-} from '../../kul-image/kul-image-declarations';
-import {
     KulDataCyAttributes,
     KulGenericEvent,
 } from '../../../types/GenericTypes';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulCanvasEventPayload } from '../../kul-canvas/kul-canvas-declarations';
+import { KulImagePropsInterface } from '../../kul-image/kul-image-declarations';
+import { KulMasonryEventPayload } from '../../kul-masonry/kul-masonry-declarations';
+import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
+import { KulTreeEventPayload } from '../../kul-tree/kul-tree-declarations';
+import {
+    KulImageviewerAdapter,
+    KulImageviewerAdapterComponents,
+} from '../kul-imageviewer-declarations';
 
 export const COMPONENTS: KulImageviewerAdapterComponents = {
     jsx: {
@@ -51,7 +49,7 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
     const className = {
         'details-grid__canvas': true,
     };
-    const eventHandler = (e: CustomEvent<KulImageEventPayload>) => {
+    const eventHandler = (e: CustomEvent<KulCanvasEventPayload>) => {
         imageviewer.onKulEvent(e, 'kul-event');
     };
 
@@ -68,7 +66,7 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
         <kul-canvas
             class={className}
             kulImageProps={imageProps}
-            onKul-image-event={eventHandler}
+            onKul-canvas-event={eventHandler}
             ref={(el) => {
                 if (el) {
                     adapter.components.refs.canvas = el;
@@ -78,6 +76,7 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Clear history
 const prepClearHistory = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -128,6 +127,7 @@ const prepClearHistory = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Delete
 const prepDelete = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -172,6 +172,7 @@ const prepDelete = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Load
 const prepLoad = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -215,6 +216,7 @@ const prepLoad = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Masonry
 const prepMasonry = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -265,6 +267,7 @@ const prepMasonry = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Redo
 const prepRedo = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -308,6 +311,7 @@ const prepRedo = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Save
 const prepSave = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -356,6 +360,7 @@ const prepSave = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Spinner
 const prepSpinner = (adapter: KulImageviewerAdapter) => {
     const className = {
@@ -379,6 +384,7 @@ const prepSpinner = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Textfield
 const prepTextfield = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -405,6 +411,7 @@ const prepTextfield = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Tree
 const prepTree = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();
@@ -432,6 +439,7 @@ const prepTree = (adapter: KulImageviewerAdapter) => {
     );
 };
 // #endregion
+
 // #region Undo
 const prepUndo = (adapter: KulImageviewerAdapter) => {
     const imageviewer = adapter.get.imageviewer();

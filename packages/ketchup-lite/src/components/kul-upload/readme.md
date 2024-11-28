@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event              | Description              | Type                                 |
-| ------------------ | ------------------------ | ------------------------------------ |
-| `kul-upload-event` | Describes event emitted. | `CustomEvent<KulUploadEventPayload>` |
+| Event              | Description | Type                                 |
+| ------------------ | ----------- | ------------------------------------ |
+| `kul-upload-event` |             | `CustomEvent<KulUploadEventPayload>` |
 
 
 ## Methods

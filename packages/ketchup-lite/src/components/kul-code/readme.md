@@ -18,9 +18,9 @@
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-code-event` | Describes event emitted. | `CustomEvent<KulCodeEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-code-event` |             | `CustomEvent<KulCodeEventPayload>` |
 
 
 ## Methods

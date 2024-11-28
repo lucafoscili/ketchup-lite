@@ -12,22 +12,22 @@ import {
     VNode,
 } from '@stencil/core';
 import {
-    KulTabbarEventPayload,
-    KulTabbarEvent,
-    KulTabbarProps,
-    KulTabbarState,
-} from './kul-tabbar-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
-import { KulScrollOnHoverElement } from '../../managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations';
-import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
-import {
     KulDataDataset,
     KulDataNode,
 } from '../../managers/kul-data/kul-data-declarations';
 import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { KulScrollOnHoverElement } from '../../managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations';
+import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
+import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+import {
+    KulTabbarEvent,
+    KulTabbarEventPayload,
+    KulTabbarProps,
+    KulTabbarState,
+} from './kul-tabbar-declarations';
 
 @Component({
     tag: 'kul-tabbar',
@@ -40,10 +40,7 @@ export class KulTabbar {
      */
     @Element() rootElement: HTMLKulTabbarElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * Debug information.
      */
@@ -58,11 +55,9 @@ export class KulTabbar {
      * The node currently selected.
      */
     @State() value: KulTabbarState = null;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                    P r o p s                    */
-    /*-------------------------------------------------*/
-
+    //#region Props
     /**
      * Actual data of the component.
      * @default null
@@ -83,22 +78,15 @@ export class KulTabbar {
      * @default null
      */
     @Prop({ mutable: false, reflect: true }) kulValue: number | string = 0;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #kulManager = kulManagerInstance();
     #rippleSurface: HTMLElement[];
     #scrollArea: KulScrollOnHoverElement;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*                   E v e n t s                   */
-    /*-------------------------------------------------*/
-
-    /**
-     * Describes events emitted.
-     */
+    //#region Events
     @Event({
         eventName: 'kul-tabbar-event',
         composed: true,
@@ -106,7 +94,6 @@ export class KulTabbar {
         bubbles: true,
     })
     kulEvent: EventEmitter<KulTabbarEventPayload>;
-
     onKulEvent(
         e: Event | CustomEvent,
         eventType: KulTabbarEvent,
@@ -136,11 +123,9 @@ export class KulTabbar {
             node,
         });
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P u b l i c   M e t h o d s           */
-    /*-------------------------------------------------*/
-
+    //#region Public methods
     /**
      * Retrieves the debug information reflecting the current state of the component.
      * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -209,11 +194,9 @@ export class KulTabbar {
             this.rootElement.remove();
         }, ms);
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentWillLoad() {
         try {
             if (this.kulValue !== null) {
@@ -243,7 +226,6 @@ export class KulTabbar {
 
         this.#kulManager.theme.register(this);
     }
-
     componentDidLoad() {
         if (this.#scrollArea) {
             this.#kulManager.scrollOnHover.register(this.#scrollArea);
@@ -251,7 +233,6 @@ export class KulTabbar {
         this.onKulEvent(new CustomEvent('ready'), 'ready');
         this.#kulManager.debug.updateDebugInfo(this, 'did-load');
     }
-
     componentWillRender() {
         if (this.#rippleSurface?.length) {
             this.#rippleSurface.forEach((el) => {
@@ -260,11 +241,9 @@ export class KulTabbar {
         }
         this.#kulManager.debug.updateDebugInfo(this, 'will-render');
     }
-
     componentDidRender() {
         this.#kulManager.debug.updateDebugInfo(this, 'did-render');
     }
-
     render() {
         if (!this.#kulManager.data.node.exists(this.kulData)) {
             return;
@@ -356,11 +335,11 @@ export class KulTabbar {
             </Host>
         );
     }
-
     disconnectedCallback() {
         if (this.#scrollArea) {
             this.#kulManager.scrollOnHover.unregister(this.#scrollArea);
         }
         this.#kulManager.theme.unregister(this);
     }
+    //#endregion
 }
