@@ -1,7 +1,11 @@
 {
-  "npmClient": "npm",
-  "packages": [
-    "packages/*"
-  ],
-  "version": "independent"
+    "npmClient": "npm",
+    "packages": ["packages/*"],
+    "version": "independent",
+    "command": {
+        "version": {
+            "preversion": "yarn install",
+            "postversion": "yarn prettier --write 'packages/*/package.json'"
+        }
+    }
 }

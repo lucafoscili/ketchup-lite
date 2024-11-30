@@ -23,31 +23,19 @@ jobs:
             - name: Install Dependencies
               run: yarn install --no-immutable
 
-            - name: Update Versions for All Packages
+            - name: Update Versions with Lerna
               run: |
-                  PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
-                  for pkg in "${PACKAGES[@]}"; do
-                    CURRENT_VERSION=$(node -p "require('./packages/${pkg}/package.json').version")
-                    echo "Current version of ${pkg}: $CURRENT_VERSION"
-                    
-                    # Extract base version and pre-release
-                    BASE_VERSION=$(echo "$CURRENT_VERSION" | sed -E 's/-rc\.[0-9]+$//')
-                    PRE_RELEASE=$(echo "$CURRENT_VERSION" | grep -o 'rc\.[0-9]\+$' || echo "rc.0")
-                    
-                    # Increment pre-release number
-                    PRE_RELEASE_NUMBER=$(echo "$PRE_RELEASE" | grep -o '[0-9]\+$')
-                    NEW_PRE_RELEASE_NUMBER=$((PRE_RELEASE_NUMBER + 1))
-                    NEW_VERSION="${BASE_VERSION}-rc.${NEW_PRE_RELEASE_NUMBER}"
-                    
-                    echo "Updating ${pkg} version to ${NEW_VERSION}"
-                    jq ".version = \"${NEW_VERSION}\"" packages/${pkg}/package.json > temp.json && mv temp.json packages/${pkg}/package.json
-                  done
+                  # Bump versions with Lerna in prerelease mode
+                  npx lerna version prerelease --preid=rc --no-push --yes
+
+            - name: Format with Prettier
+              run: yarn prettier --write packages/*/package.json
 
             - name: Commit Version Bumps
               run: |
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git add packages/*/package.json
+                  git add .
                   git commit -m "Bump versions for candidate release [version-bump]" || echo "No changes to commit"
 
             - name: Create Pull Request
