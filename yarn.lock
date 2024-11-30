@@ -4178,7 +4178,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ketchup-lite-hydrate@^2.0.1, ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate":
+"ketchup-lite-hydrate@^2.0.0, ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate":
   version: 0.0.0-use.local
   resolution: "ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate"
   languageName: unknown
@@ -4192,8 +4192,8 @@ __metadata:
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
-    ketchup-lite: ^2.0.1
-    ketchup-lite-hydrate: ^2.0.1
+    ketchup-lite: ^2.0.0
+    ketchup-lite-hydrate: ^2.0.0
     react: ^18
     react-dom: ^18
   languageName: unknown
@@ -4207,7 +4207,7 @@ __metadata:
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
-    ketchup-lite: 2.0.1
+    ketchup-lite: 2.0.0
     react: ^18
     react-dom: ^18
   languageName: unknown
@@ -4223,14 +4223,14 @@ __metadata:
     "@types/prismjs": ^1
     cypress: ^13
     lerna: ^8
-    prettier: ^3.4.1
+    prettier: ^3
     prettier-eslint: ^16
     puppeteer: ^22.9.0
     typescript: ^5
   languageName: unknown
   linkType: soft
 
-"ketchup-lite@2.0.1, ketchup-lite@^2.0.1, ketchup-lite@workspace:packages/ketchup-lite":
+"ketchup-lite@2.0.0, ketchup-lite@^2.0.0, ketchup-lite@workspace:packages/ketchup-lite":
   version: 0.0.0-use.local
   resolution: "ketchup-lite@workspace:packages/ketchup-lite"
   dependencies:
@@ -5768,7 +5768,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^3.0.1, prettier@npm:^3.4.1":
+"prettier@npm:^3, prettier@npm:^3.0.1":
   version: 3.4.1
   resolution: "prettier@npm:3.4.1"
   bin:

@@ -6,7 +6,16 @@ on:
             - main
 
 jobs:
+    setup:
+        uses: ./.github/workflows/setup.yml
+        with:
+            node-version: '18.x'
+            install-immutable: true
+        secrets:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     cypress-test:
+        needs: setup
         runs-on: ubuntu-latest
         concurrency:
             group: cypress-${{ github.workflow }}-${{ github.head_ref }}

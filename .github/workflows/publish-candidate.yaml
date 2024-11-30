@@ -1,4 +1,5 @@
-name: Publish Candidate - Publish on Candidate Update
+# .github/workflows/publish-candidate.yml
+name: Publish Candidate - Version Bump and PR Creation
 
 on:
     push:
@@ -6,51 +7,57 @@ on:
             - candidate
 
 jobs:
-    publish-candidate:
+    setup:
+        uses: ./.github/workflows/setup.yml
+        with:
+            node-version: '18.x'
+            install-immutable: true
+        secrets:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    version-and-format:
+        needs: setup
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository
               uses: actions/checkout@v4
-
-            - name: Check if Commit is a Version Bump
-              id: check_commit
-              run: |
-                  COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-                  echo "Latest commit message: $COMMIT_MESSAGE"
-                  if [[ "$COMMIT_MESSAGE" == *"[version-bump]"* ]]; then
-                    echo "is_version_bump=true" >> $GITHUB_OUTPUT
-                  else
-                    echo "is_version_bump=false" >> $GITHUB_OUTPUT
-                  fi
-
-            - name: Notify Non-Version Bump Commit
-              if: steps.check_commit.outputs.is_version_bump != 'true'
-              run: echo "Not a version bump commit. Exiting workflow."
-
-            - name: Set Up Node.js
-              if: steps.check_commit.outputs.is_version_bump == 'true'
-              uses: actions/setup-node@v4
               with:
-                  node-version: '18.x'
-                  registry-url: 'https://registry.npmjs.org'
+                  fetch-depth: 0 # Required for accessing full history
 
-            - name: Install Dependencies
-              if: steps.check_commit.outputs.is_version_bump == 'true'
-              run: yarn install --no-immutable
-
-            - name: Build Packages
-              if: steps.check_commit.outputs.is_version_bump == 'true'
-              run: yarn build
-
-            - name: Publish Packages to NPM
-              if: steps.check_commit.outputs.is_version_bump == 'true'
+            - name: Configure Git
               run: |
-                  PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
-                  for pkg in "${PACKAGES[@]}"; do
-                    echo "Publishing ${pkg}"
-                    cd packages/${pkg}
-                    npm publish --tag rc
-                    cd ../../
-                  done
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Bump Versions with Lerna (Prerelease)
+              run: |
+                  npx lerna version prerelease --preid=rc --no-push --yes
+
+            - name: Format Code with Prettier
+              run: yarn format --write "packages/*/src/**/*.{js,jsx,ts,tsx,json,md,css,scss}"
+
+            - name: Lint Code
+              run: yarn lint --write "packages/*/src/**/*.{scss,css,js,jsx,ts,tsx,json,md}"
+
+            - name: Commit Version Bumps and Formatting
+              run: |
+                  git add .
+                  git commit -m "Bump versions to pre-release and format code with Prettier [version-bump]" || echo "No changes to commit"
+
+            - name: Push Changes to Candidate Branch
+              uses: ad-m/github-push-action@v0.6.0
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  branch: candidate
+                  force: false
+
+            - name: Create Pull Request
+              uses: peter-evans/create-pull-request@v5
+              with:
+                  commit-message: 'Bump versions to pre-release and format code with Prettier [version-bump]'
+                  branch: 'version-bump-${{ github.run_id }}'
+                  title: 'Bump Versions and Format Code for Candidate Release'
+                  body: |
+                      This PR bumps the versions of all packages to a pre-release and applies formatting changes using Prettier to prepare for a candidate release.
+                  base: 'candidate'
+                  labels: 'automated PR'

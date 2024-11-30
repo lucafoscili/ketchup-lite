@@ -19,7 +19,7 @@
         "@types/prismjs": "^1",
         "cypress": "^13",
         "lerna": "^8",
-        "prettier": "^3.4.1",
+        "prettier": "^3",
         "prettier-eslint": "^16",
         "puppeteer": "^22.9.0",
         "typescript": "^5"
@@ -32,7 +32,8 @@
         "build": "yarn build:kul && yarn doc && yarn build:kul-react && yarn build:kul-react-ssr",
         "dev": "lerna run dev --scope ketchup-lite --stream",
         "doc": "node ./packages/ketchup-lite/src/scripts/doc.js",
-        "lint": "prettier",
+        "format": "prettier",
+        "lint": "eslint --fix",
         "test": "lerna run test --scope ketchup-lite --stream",
         "test:open": "lerna run test:open --scope ketchup-lite --stream"
     },

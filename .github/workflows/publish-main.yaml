@@ -4,9 +4,20 @@ on:
     push:
         branches:
             - main
+    workflow_dispatch:
+        inputs:
+            bump:
+                description: 'Type of version bump'
+                required: true
+                default: 'patch'
+                type: choice
+                options:
+                    - major
+                    - minor
+                    - patch
 
 jobs:
-    publish-main:
+    setup:
         uses: ./.github/workflows/setup.yml
         with:
             node-version: '18.x'
@@ -15,18 +26,25 @@ jobs:
             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
     publish:
-        needs: publish-main
+        needs: setup
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v4
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0 # Required for Lerna to access the full history
 
-            - name: Publish Packages to NPM
+            - name: Configure Git
               run: |
-                  PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
-                  for pkg in "${PACKAGES[@]}"; do
-                    cd packages/${pkg}
-                    npm publish --tag dist
-                    cd ../../
-                  done
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Bump Versions with Lerna (Release)
+              run: |
+                  npx lerna version ${{ github.event.inputs.bump }} --no-push --yes
+
+            - name: Publish Packages with Lerna
+              run: |
+                  npx lerna publish from-package --yes --npm-tag=dist
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

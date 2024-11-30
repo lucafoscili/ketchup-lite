@@ -6,7 +6,16 @@ on:
     workflow_dispatch: # Allows manual triggering
 
 jobs:
+    setup:
+        uses: ./.github/workflows/setup.yml
+        with:
+            node-version: '18.x'
+            install-immutable: true
+        secrets:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     prettier:
+        needs: setup
         runs-on: ubuntu-latest
 
         steps:
@@ -23,10 +32,11 @@ jobs:
             - name: Install Dependencies
               run: yarn install
 
-            - name: Run Prettier
-              run: |
-                  # Adjust the paths as necessary
-                  yarn lint --write "packages/**/*.{scss,css,js,jsx,ts,tsx,json,md}"
+            - name: Format Code with Prettier
+              run: yarn format --write "packages/*/src/**/*.{scss,ts,tsx,json}"
+
+            - name: Lint Code
+              run: yarn lint --write "packages/*/src/**/*.{scss,ts,tsx,json}"
 
             - name: Check for Changes
               id: git-check

@@ -3,7 +3,7 @@ name: Update Component Count
 on:
     push:
         branches:
-            - main
+            - candidate
 
 jobs:
     update-count:
