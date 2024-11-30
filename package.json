@@ -19,6 +19,7 @@
         "@types/prismjs": "^1",
         "cypress": "^13",
         "lerna": "^8",
+        "prettier": "^3.4.1",
         "prettier-eslint": "^16",
         "puppeteer": "^22.9.0",
         "typescript": "^5"
