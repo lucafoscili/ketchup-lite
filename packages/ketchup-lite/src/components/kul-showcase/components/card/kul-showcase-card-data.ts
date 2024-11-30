@@ -1,14 +1,14 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
-import { CardData } from './kul-showcase-card-declarations';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { CARD_KULDATA_FACTORY } from '../../assets/fixtures/card';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { CardData } from './kul-showcase-card-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulCard';
 const EVENT_NAME: KulComponentEventName<'KulCard'> = 'kul-card-event';
@@ -16,7 +16,7 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCard'> =
     'KulCardEventPayload';
 const TAG_NAME: KulComponentTag<'KulCard'> = 'kul-card';
 
-export const CARD_EXAMPLES: CardData = {
+export const CARD_EXAMPLES: () => CardData = () => ({
     debug: {
         image: {
             ['data-description']: 'Card with custom style',
@@ -77,7 +77,7 @@ export const CARD_EXAMPLES: CardData = {
             kulData: CARD_KULDATA_FACTORY.upload(),
         },
     },
-};
+});
 
 export const CARD_DOC: KulArticleDataset = {
     nodes: [

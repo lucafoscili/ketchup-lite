@@ -149,10 +149,11 @@ export class KulScrollOnHover {
                             this.#rightArrows[i].classList.add('kul-activated');
                         }
                     }
+                    const dom = this.#DOM;
                     this.#timeout = setTimeout(() => {
                         el.scrollOnHover.active = true;
                         this.#rAF = requestAnimationFrame(function () {
-                            this.#DOM.ketchupLite.scrollOnHover.run(
+                            dom.ketchupLite.scrollOnHover.run(
                                 el,
                                 maxScrollLeft,
                                 percRight,
@@ -181,10 +182,11 @@ export class KulScrollOnHover {
                           ? ScrollOnHoverDirection.BOTTOM
                           : null;
                 if (direction) {
+                    const dom = this.#DOM;
                     this.#timeout = setTimeout(() => {
                         el.scrollOnHover.active = true;
                         this.#rAF = requestAnimationFrame(function () {
-                            this.#DOM.ketchupLite.scrollOnHover.run(
+                            dom.ketchupLite.scrollOnHover.run(
                                 el,
                                 maxScrollTop,
                                 percBottom,
@@ -320,8 +322,9 @@ export class KulScrollOnHover {
             arrow[i].classList.add('kul-animated');
         }
 
+        const dom = this.#DOM;
         this.#rAF = requestAnimationFrame(function () {
-            this.#DOM.ketchupLite.scrollOnHover.run(
+            dom.ketchupLite.scrollOnHover.run(
                 el,
                 maxScrollLeft,
                 percForward,

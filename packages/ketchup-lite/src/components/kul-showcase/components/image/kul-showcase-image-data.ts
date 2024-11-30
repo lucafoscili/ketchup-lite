@@ -1,15 +1,15 @@
 import { getAssetPath } from '@stencil/core';
-import { random2digitsNumber } from '../../helpers/kul-showcase-dyn-sample';
-import { ImageData } from './kul-showcase-image-declarations';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
+import { random2digitsNumber } from '../../helpers/kul-showcase-dyn-sample';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { ImageData } from './kul-showcase-image-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulImage';
 const EVENT_NAME: KulComponentEventName<'KulImage'> = 'kul-image-event';
@@ -17,29 +17,29 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulImage'> =
     'KulImageEventPayload';
 const TAG_NAME: KulComponentTag<'KulImage'> = 'kul-image';
 
-const image = getAssetPath(`./assets/media/color_splash.jpg`);
+const getImage = () => getAssetPath(`./assets/media/color_splash.jpg`);
 
-export const IMAGE_EXAMPLES: ImageData = {
+export const IMAGE_EXAMPLES: () => ImageData = () => ({
     badge: {
         ['data-description']: 'Image with badge',
         kulBadgeProps: { kulLabel: random2digitsNumber().toString() },
         kulSizeX: '128px',
         kulSizeY: '128px',
-        kulValue: image,
+        kulValue: getImage(),
     },
     cover: {
         ['data-description']: 'Image set as cover of a container',
         className: 'kul-cover',
         kulSizeX: '128px',
         kulSizeY: '256px',
-        kulValue: image,
+        kulValue: getImage(),
     },
     fit: {
         ['data-description']: 'Image fitting a container',
         className: 'kul-fit',
         kulSizeX: '128px',
         kulSizeY: '256px',
-        kulValue: image,
+        kulValue: getImage(),
     },
     icon: {
         ['data-description']: 'Icon',
@@ -51,7 +51,7 @@ export const IMAGE_EXAMPLES: ImageData = {
         ['data-description']: 'Image',
         kulSizeX: '256px',
         kulSizeY: '256px',
-        kulValue: image,
+        kulValue: getImage(),
     },
     style: {
         ['data-description']: 'Icon with custom style',
@@ -60,7 +60,7 @@ export const IMAGE_EXAMPLES: ImageData = {
         kulSizeY: '256px',
         kulValue: 'widgets',
     },
-};
+});
 
 export const IMAGE_DOC: KulArticleDataset = {
     nodes: [

@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { COMPARE_DOC, COMPARE_EXAMPLES } from './kul-showcase-compare-data';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { COMPARE_DOC, COMPARE_EXAMPLES } from './kul-showcase-compare-data';
 import { CompareExample } from './kul-showcase-compare-declarations';
 
 @Component({
@@ -15,23 +15,19 @@ export class KulShowcaseCompare {
      */
     @Element() rootElement: HTMLKulShowcaseCompareElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #dynamicExamples: HTMLKulCompareElement[] = [];
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in COMPARE_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(COMPARE_EXAMPLES, key)) {
-                const props: CompareExample = COMPARE_EXAMPLES[key];
+        const examples = COMPARE_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: CompareExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -55,11 +51,9 @@ export class KulShowcaseCompare {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -94,4 +88,5 @@ export class KulShowcaseCompare {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

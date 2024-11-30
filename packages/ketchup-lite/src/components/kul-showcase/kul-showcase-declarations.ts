@@ -1,4 +1,4 @@
-import { GenericObject, KulEventPayload } from '../../types/GenericTypes';
+import { GenericObject } from '../../types/GenericTypes';
 
 /*-------------------------------------------------*/
 /*                     D a t a                     */

@@ -1,13 +1,13 @@
-import { SliderData } from './kul-showcase-slider-declarations';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { SliderData } from './kul-showcase-slider-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulSlider';
 const EVENT_NAME: KulComponentEventName<'KulSlider'> = 'kul-slider-event';

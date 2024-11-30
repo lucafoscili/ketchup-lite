@@ -8,8 +8,8 @@ import { KulArticleDataset } from '../../../kul-article/kul-article-declarations
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import { DOC_IDS } from '../../kul-showcase-data';
 import {
-    SpinnerData,
     SPINNER_EXAMPLES_KEYS,
+    SpinnerData,
 } from './kul-showcase-spinner-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulSpinner';

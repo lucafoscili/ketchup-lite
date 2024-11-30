@@ -1,14 +1,14 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { LazyData } from './kul-showcase-lazy-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
-import { KulButtonPropsInterface } from '../../../kul-button/kul-button-declarations';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
+import { KulButtonPropsInterface } from '../../../kul-button/kul-button-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { LazyData } from './kul-showcase-lazy-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulLazy';
 const EVENT_NAME: KulComponentEventName<'KulLazy'> = 'kul-lazy-event';

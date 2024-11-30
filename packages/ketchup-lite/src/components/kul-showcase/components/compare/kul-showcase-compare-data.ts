@@ -1,14 +1,14 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { CompareData } from './kul-showcase-compare-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
-import { DOC_IDS } from '../../kul-showcase-data';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { COMPARE_KULDATA_FACTORY } from '../../assets/fixtures/compare';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { CompareData } from './kul-showcase-compare-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulCompare';
 const EVENT_NAME: KulComponentEventName<'KulCompare'> = 'kul-compare-event';
@@ -16,7 +16,7 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCompare'> =
     'KulCompareEventPayload';
 const TAG_NAME: KulComponentTag<'KulCompare'> = 'kul-compare';
 
-export const COMPARE_EXAMPLES: CompareData = {
+export const COMPARE_EXAMPLES: () => CompareData = () => ({
     simple: {
         ['data-description']: 'Simple compare',
         kulData: COMPARE_KULDATA_FACTORY.KulImage(),
@@ -26,7 +26,7 @@ export const COMPARE_EXAMPLES: CompareData = {
         ['data-dynamic']: 'custom',
         kulData: COMPARE_KULDATA_FACTORY.KulImage(),
     },
-};
+});
 
 export const COMPARE_DOC: KulArticleDataset = {
     nodes: [

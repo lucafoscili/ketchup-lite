@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import {
     IMAGEVIEWER_DOC,
     IMAGEVIEWER_EXAMPLES,
 } from './kul-showcase-imageviewer-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { ImageviewerExample } from './kul-showcase-imageviewer-declarations';
 
 @Component({
@@ -18,25 +18,19 @@ export class KulShowcaseImageviewer {
      */
     @Element() rootElement: HTMLKulShowcaseImageviewerElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulImageviewerElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulImageviewerElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in IMAGEVIEWER_EXAMPLES) {
-            if (
-                Object.prototype.hasOwnProperty.call(IMAGEVIEWER_EXAMPLES, key)
-            ) {
-                const props: ImageviewerExample = IMAGEVIEWER_EXAMPLES[key];
+        const examples = IMAGEVIEWER_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: ImageviewerExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -60,11 +54,9 @@ export class KulShowcaseImageviewer {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -99,4 +91,5 @@ export class KulShowcaseImageviewer {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

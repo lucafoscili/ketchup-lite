@@ -1,7 +1,7 @@
 import { getAssetPath } from '@stencil/core';
 import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 
-export const IMAGEVIEWER_DATA: KulDataDataset = {
+export const IMAGEVIEWER_DATA: () => KulDataDataset = () => ({
     nodes: [
         {
             cells: {
@@ -124,7 +124,7 @@ export const IMAGEVIEWER_DATA: KulDataDataset = {
             value: 'Node 11',
         },
     ],
-};
+});
 
 export const IMAGEVIEWER_VALUE: KulDataDataset = {
     nodes: [

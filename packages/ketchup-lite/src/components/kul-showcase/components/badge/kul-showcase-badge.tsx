@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { BADGE_DOC, BADGE_EXAMPLES } from './kul-showcase-badge-data';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
-import { BadgeExample } from './kul-showcase-badge-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { BADGE_DOC, BADGE_EXAMPLES } from './kul-showcase-badge-data';
+import { BadgeExample } from './kul-showcase-badge-declarations';
 
 @Component({
     tag: 'kul-showcase-badge',
@@ -16,18 +16,13 @@ export class KulShowcaseBadge {
      */
     @Element() rootElement: HTMLKulShowcaseBadgeElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulBadgeElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulBadgeElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in BADGE_EXAMPLES) {
@@ -59,11 +54,9 @@ export class KulShowcaseBadge {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -113,4 +106,5 @@ export class KulShowcaseBadge {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

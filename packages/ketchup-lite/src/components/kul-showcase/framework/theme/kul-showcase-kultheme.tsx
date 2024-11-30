@@ -13,10 +13,7 @@ export class KulShowcaseKultheme {
      */
     @Element() rootElement: HTMLKulShowcaseKulthemeElement;
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     render() {
         return (
             <Fragment>
@@ -26,4 +23,5 @@ export class KulShowcaseKultheme {
             </Fragment>
         );
     }
+    //#endregion
 }

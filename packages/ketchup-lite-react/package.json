@@ -1,33 +1,35 @@
 {
     "name": "ketchup-lite-react",
-    "version": "1.7.10",
-    "main": "dist/components.js",
-    "module": "dist/components.js",
-    "typings": "dist/components.d.ts",
+    "version": "2.0.0",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/types/index.d.ts",
     "keywords": [
-        "letchup lite",
-        "react",
-        "pwa",
+        "components",
         "custom elements",
-        "components"
+        "ketchup lite",
+        "pwa",
+        "react",
+        "react components"
     ],
     "files": [
         "dist/"
     ],
     "scripts": {
-        "build": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && tsc"
+        "build": "yarn clean && tsc",
+        "clean": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && node -e \"require('fs').rmSync('.components.ts', { recursive: true, force: true })\""
     },
     "dependencies": {
         "@stencil/react-output-target": "^0",
-        "ketchup-lite": "1.7.10",
-        "react": "18.3.1",
-        "react-dom": "18.3.1"
+        "ketchup-lite": "*",
+        "react": "^18",
+        "react-dom": "^18"
     },
     "devDependencies": {
         "@types/react": "^18",
         "@types/react-dom": "^18"
     },
-    "description": "Ketchup Lite React Components library",
+    "description": "Ketchup Lite - React Components library",
     "license": "Apache-2.0",
     "installConfig": {
         "hoistingLimits": "workspaces"

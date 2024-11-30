@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { SLIDER_DOC, SLIDER_EXAMPLES } from './kul-showcase-slider-data';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { SLIDER_DOC, SLIDER_EXAMPLES } from './kul-showcase-slider-data';
 import { SliderExample } from './kul-showcase-slider-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-slider',
@@ -16,18 +16,13 @@ export class KulShowcaseSlider {
      */
     @Element() rootElement: HTMLKulShowcaseSliderElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulSliderElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulSliderElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in SLIDER_EXAMPLES) {
@@ -56,11 +51,9 @@ export class KulShowcaseSlider {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -106,4 +99,5 @@ export class KulShowcaseSlider {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

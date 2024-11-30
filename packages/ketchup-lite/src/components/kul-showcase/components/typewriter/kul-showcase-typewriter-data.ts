@@ -1,13 +1,13 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { TypewriterData } from './kul-showcase-typewriter-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { TypewriterData } from './kul-showcase-typewriter-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulTypewriter';
 const EVENT_NAME: KulComponentEventName<'KulTypewriter'> =

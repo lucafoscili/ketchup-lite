@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { LAZY_DOC, LAZY_EXAMPLES } from './kul-showcase-lazy-data';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { LAZY_DOC, LAZY_EXAMPLES } from './kul-showcase-lazy-data';
 import { LazyExample } from './kul-showcase-lazy-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-lazy',
@@ -16,18 +16,13 @@ export class KulShowcaseLazy {
      */
     @Element() rootElement: HTMLKulShowcaseLazyElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulLazyElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulLazyElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in LAZY_EXAMPLES) {
@@ -56,11 +51,9 @@ export class KulShowcaseLazy {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -99,4 +92,5 @@ export class KulShowcaseLazy {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

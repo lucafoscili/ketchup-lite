@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { DRAWER_DOC, DRAWER_EXAMPLES } from './kul-showcase-drawer-data';
 import { DrawerExample } from './kul-showcase-drawer-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-drawer',
@@ -14,10 +14,7 @@ export class KulShowcaseDrawer {
      */
     @Element() rootElement: HTMLKulShowcaseDrawerElement;
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in DRAWER_EXAMPLES) {
@@ -41,11 +38,9 @@ export class KulShowcaseDrawer {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     render() {
         return (
             <Fragment>
@@ -63,4 +58,5 @@ export class KulShowcaseDrawer {
             </Fragment>
         );
     }
+    //#endregion
 }

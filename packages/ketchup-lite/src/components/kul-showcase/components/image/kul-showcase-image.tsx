@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { IMAGE_DOC, IMAGE_EXAMPLES } from './kul-showcase-image-data';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { IMAGE_DOC, IMAGE_EXAMPLES } from './kul-showcase-image-data';
 import { ImageExample } from './kul-showcase-image-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-image',
@@ -16,23 +16,19 @@ export class KulShowcaseImage {
      */
     @Element() rootElement: HTMLKulShowcaseImageElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulImageElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulImageElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in IMAGE_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(IMAGE_EXAMPLES, key)) {
-                const props: ImageExample = IMAGE_EXAMPLES[key];
+        const examples = IMAGE_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: ImageExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -56,11 +52,9 @@ export class KulShowcaseImage {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -99,4 +93,5 @@ export class KulShowcaseImage {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

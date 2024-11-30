@@ -1,12 +1,12 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import {
     PHOTOFRAME_DOC,
     PHOTOFRAME_EXAMPLES,
 } from './kul-showcase-photoframe-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { PhotoframeExample } from './kul-showcase-photoframe-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-photoframe',
@@ -19,25 +19,19 @@ export class KulShowcasePhotoframe {
      */
     @Element() rootElement: HTMLKulShowcasePhotoframeElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulPhotoframeElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulPhotoframeElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in PHOTOFRAME_EXAMPLES) {
-            if (
-                Object.prototype.hasOwnProperty.call(PHOTOFRAME_EXAMPLES, key)
-            ) {
-                const props: PhotoframeExample = PHOTOFRAME_EXAMPLES[key];
+        const examples = PHOTOFRAME_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: PhotoframeExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -61,11 +55,9 @@ export class KulShowcasePhotoframe {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -104,4 +96,5 @@ export class KulShowcasePhotoframe {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

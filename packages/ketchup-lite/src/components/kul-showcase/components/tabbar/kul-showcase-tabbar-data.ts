@@ -1,6 +1,3 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { TabbarData } from './kul-showcase-tabbar-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
 import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
 import {
     KulComponentEventName,
@@ -8,7 +5,10 @@ import {
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { TabbarData } from './kul-showcase-tabbar-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulTabbar';
 const EVENT_NAME: KulComponentEventName<'KulTabbar'> = 'kul-tabbar-event';

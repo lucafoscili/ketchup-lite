@@ -1,13 +1,13 @@
-import { ToggleData } from './kul-showcase-toggle-declarations';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { ToggleData } from './kul-showcase-toggle-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulToggle';
 const EVENT_NAME: KulComponentEventName<'KulToggle'> = 'kul-toggle-event';

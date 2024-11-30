@@ -1,6 +1,3 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { PhotoframeData } from './kul-showcase-photoframe-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
 import { getAssetPath } from '@stencil/core';
 import {
     KulComponentEventName,
@@ -8,7 +5,10 @@ import {
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { PhotoframeData } from './kul-showcase-photoframe-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulPhotoframe';
 const EVENT_NAME: KulComponentEventName<'KulPhotoframe'> =
@@ -17,30 +17,35 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulPhotoframe'> =
     'KulPhotoframeEventPayload';
 const TAG_NAME: KulComponentTag<'KulPhotoframe'> = 'kul-photoframe';
 
-const placeholder = getAssetPath(`./assets/media/blur_color_splash.jpg`);
-const value = getAssetPath(`./assets/media/color_splash.jpg`);
-const kulPlaceholder = {
-    alt: null,
-    src: placeholder,
-};
-const kulValue = {
-    alt: null,
-    src: value,
-};
+const getPlaceholder = () =>
+    getAssetPath(`./assets/media/blur_color_splash.jpg`);
+const getValue = () => getAssetPath(`./assets/media/color_splash.jpg`);
 
-export const PHOTOFRAME_EXAMPLES: PhotoframeData = {
+export const PHOTOFRAME_EXAMPLES: () => PhotoframeData = () => ({
     simple: {
         ['data-description']: 'Simple photoframe',
-        kulPlaceholder,
-        kulValue,
+        kulPlaceholder: {
+            alt: null,
+            src: getPlaceholder(),
+        },
+        kulValue: {
+            alt: null,
+            src: getValue(),
+        },
     },
     style: {
         ['data-description']: 'Photoframe with custom style',
         'data-dynamic': 'custom',
-        kulPlaceholder,
-        kulValue,
+        kulPlaceholder: {
+            alt: null,
+            src: getPlaceholder(),
+        },
+        kulValue: {
+            alt: null,
+            src: getValue(),
+        },
     },
-};
+});
 
 export const PHOTOFRAME_DOC: KulArticleDataset = {
     nodes: [

@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { CAROUSEL_DOC, CAROUSEL_EXAMPLES } from './kul-showcase-carousel-data';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { CAROUSEL_DOC, CAROUSEL_EXAMPLES } from './kul-showcase-carousel-data';
 import { CarouselExample } from './kul-showcase-carousel-declarations';
 
 @Component({
@@ -15,23 +15,19 @@ export class KulShowcaseCarousel {
      */
     @Element() rootElement: HTMLKulShowcaseCarouselElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulCarouselElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulCarouselElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in CAROUSEL_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(CAROUSEL_EXAMPLES, key)) {
-                const props: CarouselExample = CAROUSEL_EXAMPLES[key];
+        const examples = CAROUSEL_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: CarouselExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -55,11 +51,9 @@ export class KulShowcaseCarousel {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -94,4 +88,5 @@ export class KulShowcaseCarousel {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

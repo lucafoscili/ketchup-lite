@@ -1,12 +1,12 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import {
     MESSENGER_DOC,
     MESSENGER_EXAMPLES,
 } from './kul-showcase-messenger-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { MessengerExample } from './kul-showcase-messenger-declarations';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-messenger',
@@ -19,23 +19,19 @@ export class KulShowcaseMessenger {
      */
     @Element() rootElement: HTMLKulShowcaseMessengerElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulMessengerElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulMessengerElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in MESSENGER_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(MESSENGER_EXAMPLES, key)) {
-                const props: MessengerExample = MESSENGER_EXAMPLES[key];
+        const examples = MESSENGER_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: MessengerExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -59,11 +55,9 @@ export class KulShowcaseMessenger {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -102,4 +96,5 @@ export class KulShowcaseMessenger {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

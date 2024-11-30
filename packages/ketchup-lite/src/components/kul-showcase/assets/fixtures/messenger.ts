@@ -1,6 +1,7 @@
 import { getAssetPath } from '@stencil/core';
 import {
     KulMessengerAvatarNode,
+    KulMessengerDataset,
     KulMessengerLocationNode,
     KulMessengerOutfitNode,
     KulMessengerStyleNode,
@@ -42,7 +43,7 @@ Freya is one of the most prominent goddesses in Norse mythology, associated with
 Freya embodies the complex nature of feminine power in Norse mythology, combining attributes of love, war, and fertility. Her enduring presence in Norse literature and cultural heritage testifies to her significance as a multifaceted goddess.
 `;
 
-export const FREYA_AVATARS: KulMessengerAvatarNode[] = [
+export const FREYA_AVATARS: () => KulMessengerAvatarNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -67,7 +68,7 @@ export const FREYA_AVATARS: KulMessengerAvatarNode[] = [
     },
 ];
 
-export const FREYA_LOCATIONS: KulMessengerLocationNode[] = [
+export const FREYA_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -93,7 +94,7 @@ export const FREYA_LOCATIONS: KulMessengerLocationNode[] = [
     },
 ];
 
-export const FREYA_OUTFITS: KulMessengerOutfitNode[] = [
+export const FREYA_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -118,7 +119,7 @@ export const FREYA_OUTFITS: KulMessengerOutfitNode[] = [
     },
 ];
 
-export const FREYA_STYLES: KulMessengerStyleNode[] = [
+export const FREYA_STYLES: () => KulMessengerStyleNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -183,7 +184,7 @@ Thor is one of the most iconic figures in Norse mythology, known as the god of t
 As one of the most prominent gods in Norse mythology, Thor remains a significant cultural figure, inspiring artistic works and appearing in modern popular culture. His association with thunder and strength has made him a lasting symbol in Germanic cultures.
 `;
 
-export const THOR_AVATARS: KulMessengerAvatarNode[] = [
+export const THOR_AVATARS: () => KulMessengerAvatarNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -208,7 +209,7 @@ export const THOR_AVATARS: KulMessengerAvatarNode[] = [
     },
 ];
 
-export const THOR_LOCATIONS: KulMessengerLocationNode[] = [
+export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -257,7 +258,7 @@ export const THOR_LOCATIONS: KulMessengerLocationNode[] = [
     },
 ];
 
-export const THOR_OUTFITS: KulMessengerOutfitNode[] = [
+export const THOR_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -282,7 +283,7 @@ export const THOR_OUTFITS: KulMessengerOutfitNode[] = [
     },
 ];
 
-export const THOR_STYLES: KulMessengerStyleNode[] = [
+export const THOR_STYLES: () => KulMessengerStyleNode[] = () => [
     {
         cells: {
             kulImage: {
@@ -306,3 +307,74 @@ export const THOR_STYLES: KulMessengerStyleNode[] = [
         value: 'Painting',
     },
 ];
+
+export const MESSENGER_KULDATA: () => KulMessengerDataset = () => ({
+    nodes: [
+        {
+            children: [
+                {
+                    children: THOR_AVATARS(),
+                    id: 'avatars',
+                    value: 0,
+                },
+                { id: 'biography', value: THOR_BIO },
+                { id: 'chat', value: '' },
+                {
+                    children: THOR_LOCATIONS(),
+                    id: 'locations',
+                    value: 0,
+                },
+                {
+                    children: THOR_OUTFITS(),
+                    id: 'outfits',
+                    value: 0,
+                },
+                {
+                    children: THOR_STYLES(),
+                    id: 'styles',
+                    value: 0,
+                },
+                {
+                    children: [],
+                    id: 'timeframes',
+                    value: null,
+                },
+            ],
+            id: 'character_Thor',
+            value: 'Thor',
+        },
+        {
+            children: [
+                {
+                    children: FREYA_AVATARS(),
+                    id: 'avatars',
+                    value: 1,
+                },
+                { id: 'biography', value: FREYA_BIO },
+                { id: 'chat', value: '' },
+                {
+                    children: FREYA_LOCATIONS(),
+                    id: 'locations',
+                    value: 0,
+                },
+                {
+                    children: FREYA_OUTFITS(),
+                    id: 'outfits',
+                    value: 0,
+                },
+                {
+                    children: FREYA_STYLES(),
+                    id: 'styles',
+                    value: 0,
+                },
+                {
+                    children: [],
+                    id: 'timeframes',
+                    value: null,
+                },
+            ],
+            id: 'character_Freya',
+            value: 'Freya',
+        },
+    ],
+});

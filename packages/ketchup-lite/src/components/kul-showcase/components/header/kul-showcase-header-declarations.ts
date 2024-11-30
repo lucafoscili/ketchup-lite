@@ -1,6 +1,6 @@
+import { GenericObject } from '../../../../types/GenericTypes';
 import { KulHeaderPropsInterface } from '../../../kul-header/kul-header-declarations';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
-import { GenericObject } from '../../../../types/GenericTypes';
 
 export const HEADER_EXAMPLES_KEYS = ['simple', 'style'] as const;
 

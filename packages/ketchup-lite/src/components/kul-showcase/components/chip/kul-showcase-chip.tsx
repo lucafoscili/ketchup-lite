@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { CHIP_DOC, CHIP_EXAMPLES } from './kul-showcase-chip-data';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { CHIP_DOC, CHIP_EXAMPLES } from './kul-showcase-chip-data';
 import { ChipExample } from './kul-showcase-chip-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-chip',
@@ -16,18 +16,13 @@ export class KulShowcaseChip {
      */
     @Element() rootElement: HTMLKulShowcaseChipElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #dynamicExamples: HTMLKulChipElement[] = [];
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in CHIP_EXAMPLES) {
@@ -56,11 +51,9 @@ export class KulShowcaseChip {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -106,4 +99,5 @@ export class KulShowcaseChip {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import {
     ACCORDION_DOC,
     ACCORDION_EXAMPLES,
 } from './kul-showcase-accordion-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { AccordionExample } from './kul-showcase-accordion-declarations';
 
 @Component({
@@ -18,23 +18,19 @@ export class KulShowcaseAccordion {
      */
     @Element() rootElement: HTMLKulShowcaseAccordionElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #dynamicExamples: HTMLKulAccordionElement[] = [];
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in ACCORDION_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(ACCORDION_EXAMPLES, key)) {
-                const props: AccordionExample = ACCORDION_EXAMPLES[key];
+        const examples = ACCORDION_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: AccordionExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -68,11 +64,9 @@ export class KulShowcaseAccordion {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -107,4 +101,5 @@ export class KulShowcaseAccordion {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

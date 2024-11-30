@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { CARD_DOC, CARD_EXAMPLES } from './kul-showcase-card-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
-import { CardExample } from './kul-showcase-card-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { KulCardLayout } from '../../../kul-card/kul-card-declarations';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { CARD_DOC, CARD_EXAMPLES } from './kul-showcase-card-data';
+import { CardExample } from './kul-showcase-card-declarations';
 
 @Component({
     tag: 'kul-showcase-card',
@@ -17,23 +17,19 @@ export class KulShowcaseCard {
      */
     @Element() rootElement: HTMLKulShowcaseCardElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulCardElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulCardElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const k1 in CARD_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(CARD_EXAMPLES, k1)) {
-                const layout: CardExample = CARD_EXAMPLES[k1];
+        const examples = CARD_EXAMPLES();
+        for (const k1 in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, k1)) {
+                const layout: CardExample = examples[k1];
                 const layoutWrapper: VNode[] = [];
 
                 for (const k2 in layout) {
@@ -75,11 +71,9 @@ export class KulShowcaseCard {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -114,4 +108,5 @@ export class KulShowcaseCard {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

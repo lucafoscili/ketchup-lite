@@ -9,7 +9,6 @@ import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations'
 import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
 import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulButton } from '../../kul-button/kul-button';
-import { KulChat } from '../../kul-chat/kul-chat';
 
 export const prepCenter = (adapter: KulMessengerAdapter) => {
     const buttons = prepExpanderButtons(adapter);
@@ -133,7 +132,7 @@ const chatEventHandler = (
     e: CustomEvent<KulChatEventPayload>
 ) => {
     const { comp, eventType, history, status } = e.detail;
-    const chat = comp as KulChat;
+    const chat = comp;
     switch (eventType) {
         case 'config':
             adapter.set.character.chat({

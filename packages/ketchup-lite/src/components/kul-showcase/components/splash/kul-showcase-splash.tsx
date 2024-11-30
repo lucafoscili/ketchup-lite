@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { SPLASH_DOC, SPLASH_EXAMPLES } from './kul-showcase-splash-data';
 import { SplashExample } from './kul-showcase-splash-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-splash',
@@ -14,10 +14,7 @@ export class KulShowcaseSplash {
      */
     @Element() rootElement: HTMLKulShowcaseSplashElement;
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in SPLASH_EXAMPLES) {
@@ -59,11 +56,9 @@ export class KulShowcaseSplash {
         }
         return elements;
     }
+    //#endregion Private methods
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     render() {
         return (
             <Fragment>
@@ -81,4 +76,5 @@ export class KulShowcaseSplash {
             </Fragment>
         );
     }
+    //#endregion
 }

@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { CANVAS_DOC, CANVAS_EXAMPLES } from './kul-showcase-canvas-data';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { CANVAS_DOC, CANVAS_EXAMPLES } from './kul-showcase-canvas-data';
 import { CanvasExample } from './kul-showcase-canvas-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-canvas',
@@ -16,23 +16,19 @@ export class KulShowcaseCanvas {
      */
     @Element() rootElement: HTMLKulShowcaseCanvasElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulCanvasElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulCanvasElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
-        for (const key in CANVAS_EXAMPLES) {
-            if (Object.prototype.hasOwnProperty.call(CANVAS_EXAMPLES, key)) {
-                const props: CanvasExample = CANVAS_EXAMPLES[key];
+        const examples = CANVAS_EXAMPLES();
+        for (const key in examples) {
+            if (Object.prototype.hasOwnProperty.call(examples, key)) {
+                const props: CanvasExample = examples[key];
                 elements.push(
                     <div class="example" part="example">
                         <div class="description" part="description">
@@ -56,11 +52,9 @@ export class KulShowcaseCanvas {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -99,4 +93,5 @@ export class KulShowcaseCanvas {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

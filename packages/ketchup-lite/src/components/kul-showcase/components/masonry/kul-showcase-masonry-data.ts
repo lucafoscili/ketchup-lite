@@ -1,14 +1,14 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { MasonryData } from './kul-showcase-masonry-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
-import { DOC_IDS } from '../../kul-showcase-data';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { MASONRY_KULDATA_FACTORY } from '../../assets/fixtures/masonry';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { MasonryData } from './kul-showcase-masonry-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulMasonry';
 const EVENT_NAME: KulComponentEventName<'KulMasonry'> = 'kul-masonry-event';
@@ -16,7 +16,7 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulMasonry'> =
     'KulMasonryEventPayload';
 const TAG_NAME: KulComponentTag<'KulMasonry'> = 'kul-masonry';
 
-export const MASONRY_EXAMPLES: MasonryData = {
+export const MASONRY_EXAMPLES: () => MasonryData = () => ({
     selectable: {
         ['data-description']: 'Selectable masonry',
         kulData: MASONRY_KULDATA_FACTORY.KulImage(),
@@ -31,7 +31,7 @@ export const MASONRY_EXAMPLES: MasonryData = {
         ['data-dynamic']: 'custom',
         kulData: MASONRY_KULDATA_FACTORY.KulImage(),
     },
-};
+});
 
 export const MASONRY_DOC: KulArticleDataset = {
     nodes: [

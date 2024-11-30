@@ -1,13 +1,13 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
-import { ToastData } from './kul-showcase-toast-declarations';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { ToastData } from './kul-showcase-toast-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulToast';
 const EVENT_NAME: KulComponentEventName<'KulToast'> = 'kul-toast-event';

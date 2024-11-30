@@ -4,7 +4,6 @@ import {
     Event,
     EventEmitter,
     forceUpdate,
-    getAssetPath,
     h,
     Host,
     Method,
@@ -173,9 +172,6 @@ export class KulCode {
 
     async #highlightCode(): Promise<void> {
         try {
-            if (!Prism.languages[this.kulLanguage]) {
-                await this.#loadLanguage();
-            }
             Prism.highlightElement(this.#el);
         } catch (error) {
             this.#kulManager.debug.logs.new(
@@ -208,22 +204,6 @@ export class KulCode {
             this.#isDictionary(value)
         );
     }
-
-    async #loadLanguage() {
-        try {
-            const module = getAssetPath(
-                `./assets/prism/prism-${this.kulLanguage}.min.js`
-            );
-            await import(module);
-            Prism.highlightAll();
-        } catch (error) {
-            console.error(
-                `Failed to load Prism.js component for ${this.kulLanguage}:`,
-                error
-            );
-        }
-    }
-
     #updateValue() {
         this.value = this.kulFormat
             ? this.#format(this.kulValue)

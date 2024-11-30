@@ -1,9 +1,8 @@
-import { columnFind } from './utils/kul-data-column-utils';
+import { KulComponentName } from '../../types/GenericTypes';
 import {
     KulDataCell,
     KulDataColumn,
     KulDataDataset,
-    KulDataGenericCell,
     KulDataNode,
     KulDataNodeOperations,
     KulDataShapeCallback,
@@ -18,6 +17,7 @@ import {
     cellGetShape,
     cellStringify,
 } from './utils/kul-data-cell-utils';
+import { columnFind } from './utils/kul-data-column-utils';
 import {
     findNodeByCell,
     nodeExists,
@@ -29,7 +29,6 @@ import {
     nodeSetProperties,
     nodeToStream,
 } from './utils/kul-data-node-utils';
-import { KulComponentName } from '../../types/GenericTypes';
 
 export class KulData {
     #SHAPES_MAP: KulDataShapeComponentMap = {

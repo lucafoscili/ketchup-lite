@@ -1,12 +1,12 @@
 import { Component, Element, Fragment, State, h } from '@stencil/core';
-import { KUL_WRAPPER_ID } from '../../../../variables/GenericVariables';
-import { DEBUG_DOC } from './kul-showcase-debug-data';
-import { KulButtonEventPayload } from '../../../kul-button/kul-button-declarations';
-import { KulListEventPayload } from '../../../kul-list/kul-list-declarations';
 import {
     GenericObject,
     KulDataCyAttributes,
 } from '../../../../types/GenericTypes';
+import { KUL_WRAPPER_ID } from '../../../../variables/GenericVariables';
+import { KulButtonEventPayload } from '../../../kul-button/kul-button-declarations';
+import { KulListEventPayload } from '../../../kul-list/kul-list-declarations';
+import { DEBUG_DOC } from './kul-showcase-debug-data';
 
 @Component({
     tag: 'kul-showcase-debug',
@@ -19,10 +19,7 @@ export class KulShowcaseDebug {
      */
     @Element() rootElement: HTMLKulShowcaseDebugElement;
 
-    /*-------------------------------------------------*/
-    /*                   S t a t e s                   */
-    /*-------------------------------------------------*/
-
+    //#region States
     /**
      * String keeping track of the current component selected by the dropdown.
      * @default ""
@@ -38,17 +35,13 @@ export class KulShowcaseDebug {
      * @default undefined
      */
     @State() invalidJson = false;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
+    //#region Internal variables
     #propsTemplate = JSON.stringify(JSON.parse('{ "kulProp": "" }'), null, 2);
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepComponent() {
         const ComponentTag = this.currentComponent
             ? 'kul-' + this.currentComponent
@@ -69,7 +62,6 @@ export class KulShowcaseDebug {
             </div>
         );
     }
-
     #prepTextarea() {
         return this.currentComponent ? (
             <kul-textfield
@@ -101,11 +93,9 @@ export class KulShowcaseDebug {
             ></kul-textfield>
         );
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     render() {
         return (
             <Fragment>
@@ -140,4 +130,5 @@ export class KulShowcaseDebug {
             </Fragment>
         );
     }
+    //#endregion
 }

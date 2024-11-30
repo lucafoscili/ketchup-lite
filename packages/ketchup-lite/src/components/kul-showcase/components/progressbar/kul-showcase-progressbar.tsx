@@ -1,12 +1,12 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import {
     PROGRESSBAR_DOC,
     PROGRESSBAR_EXAMPLES,
 } from './kul-showcase-progressbar-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import { ProgressbarExample } from './kul-showcase-progressbar-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-progressbar',
@@ -19,18 +19,13 @@ export class KulShowcaseProgressbar {
      */
     @Element() rootElement: HTMLKulShowcaseProgressbarElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulProgressbarElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulProgressbarElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in PROGRESSBAR_EXAMPLES) {
@@ -61,11 +56,9 @@ export class KulShowcaseProgressbar {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -111,4 +104,5 @@ export class KulShowcaseProgressbar {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

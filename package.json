@@ -25,7 +25,10 @@
     },
     "scripts": {
         "lerna": "lerna",
-        "build": "lerna run build --scope ketchup-lite --stream && lerna run build --scope ketchup-lite-react --stream && npm run doc",
+        "build:kul": "lerna run build --scope ketchup-lite --stream",
+        "build:kul-react": "lerna run build --scope ketchup-lite-react --stream",
+        "build:kul-react-ssr": "lerna run build --scope ketchup-lite-react-ssr --stream",
+        "build": "yarn build:kul && yarn doc && yarn build:kul-react && yarn build:kul-react-ssr",
         "dev": "lerna run dev --scope ketchup-lite --stream",
         "doc": "node ./packages/ketchup-lite/src/scripts/doc.js",
         "test": "lerna run test --scope ketchup-lite --stream",
@@ -33,7 +36,9 @@
     },
     "workspaces": [
         "packages/ketchup-lite",
-        "packages/ketchup-lite-react"
+        "packages/ketchup-lite-hydrate",
+        "packages/ketchup-lite-react",
+        "packages/ketchup-lite-react-ssr"
     ],
     "packageManager": "yarn@3.6.1"
 }

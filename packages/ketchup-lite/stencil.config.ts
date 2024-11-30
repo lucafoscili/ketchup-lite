@@ -1,6 +1,7 @@
 import { Config } from '@stencil/core';
-import { sass } from '@stencil/sass';
 import { reactOutputTarget } from '@stencil/react-output-target';
+import { sass } from '@stencil/sass';
+import { resolve } from 'path';
 
 export const config: Config = {
     bundles: [
@@ -55,27 +56,41 @@ export const config: Config = {
     namespace: 'ketchup-lite',
     outputTargets: [
         {
-            file: 'src/docs/doc.json',
-            type: 'docs-json',
-        },
-        { type: 'docs-readme' },
-        {
-            copy: [{ src: 'assets' }],
-            type: 'www',
-            serviceWorker: null,
-        },
-        reactOutputTarget({
-            outDir: '../ketchup-lite-react',
-        }),
-        {
             type: 'dist',
             esmLoaderPath: './loader',
         },
         {
             type: 'dist-custom-elements',
-            generateTypeDeclarations: true,
             externalRuntime: false,
+            generateTypeDeclarations: true,
         },
+        {
+            type: 'dist-hydrate-script',
+            dir: 'hydrate-tmp',
+        },
+        {
+            type: 'docs-json',
+            file: 'src/docs/doc.json',
+        },
+        { type: 'docs-readme' },
+        {
+            type: 'www',
+            copy: [{ src: 'assets' }],
+            serviceWorker: null,
+        },
+        reactOutputTarget({
+            outDir: resolve(
+                __dirname,
+                '../ketchup-lite-react/lib/components/stencil-generated/'
+            ).replace(/\\/g, '/'),
+        }),
+        reactOutputTarget({
+            outDir: resolve(
+                __dirname,
+                '../ketchup-lite-react-ssr/lib/components/stencil-generated/'
+            ).replace(/\\/g, '/'),
+            hydrateModule: 'ketchup-lite-hydrate',
+        }),
     ],
     plugins: [
         sass({

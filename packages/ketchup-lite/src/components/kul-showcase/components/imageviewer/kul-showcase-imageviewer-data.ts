@@ -1,17 +1,17 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { ImageviewerData } from './kul-showcase-imageviewer-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
-import { DOC_IDS } from '../../kul-showcase-data';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import {
     IMAGEVIEWER_DATA,
     IMAGEVIEWER_VALUE,
 } from '../../assets/fixtures/imageviewer';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { ImageviewerData } from './kul-showcase-imageviewer-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulImageviewer';
 const EVENT_NAME: KulComponentEventName<'KulImageviewer'> =
@@ -20,11 +20,11 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulImageviewer'> =
     'KulImageviewerEventPayload';
 const TAG_NAME: KulComponentTag<'KulImageviewer'> = 'kul-imageviewer';
 
-export const IMAGEVIEWER_EXAMPLES: ImageviewerData = {
+export const IMAGEVIEWER_EXAMPLES: () => ImageviewerData = () => ({
     simple: {
         ['data-description']: 'Simple imageviewer',
         kulLoadCallback: async (imageviewer, _val) => {
-            imageviewer.kulData = IMAGEVIEWER_DATA;
+            imageviewer.kulData = IMAGEVIEWER_DATA();
         },
         kulValue: IMAGEVIEWER_VALUE,
     },
@@ -32,11 +32,11 @@ export const IMAGEVIEWER_EXAMPLES: ImageviewerData = {
         ['data-description']: 'Imageviewer with custom style',
         ['data-dynamic']: 'custom',
         kulLoadCallback: async (imageviewer, _val) => {
-            imageviewer.kulData = IMAGEVIEWER_DATA;
+            imageviewer.kulData = IMAGEVIEWER_DATA();
         },
         kulValue: IMAGEVIEWER_VALUE,
     },
-};
+});
 
 export const IMAGEVIEWER_DOC: KulArticleDataset = {
     nodes: [

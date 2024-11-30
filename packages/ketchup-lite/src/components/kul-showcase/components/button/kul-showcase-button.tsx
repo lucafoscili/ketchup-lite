@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
-import { BUTTON_DOC, BUTTON_EXAMPLES } from './kul-showcase-button-data';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
-import { KulButtonStyling } from '../../../kul-button/kul-button-declarations';
-import { ButtonExample } from './kul-showcase-button-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { KulButtonStyling } from '../../../kul-button/kul-button-declarations';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { BUTTON_DOC, BUTTON_EXAMPLES } from './kul-showcase-button-data';
+import { ButtonExample } from './kul-showcase-button-declarations';
 
 @Component({
     tag: 'kul-showcase-button',
@@ -17,18 +17,13 @@ export class KulShowcaseButton {
      */
     @Element() rootElement: HTMLKulShowcaseButtonElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulButtonElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulButtonElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const k1 in BUTTON_EXAMPLES) {
@@ -84,11 +79,9 @@ export class KulShowcaseButton {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -130,4 +123,5 @@ export class KulShowcaseButton {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

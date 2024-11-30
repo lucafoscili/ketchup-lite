@@ -1,13 +1,13 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { KulTextfieldStyling } from '../../../kul-textfield/kul-textfield-declarations';
+import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
+import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 import {
     TEXTFIELD_DOC,
     TEXTFIELD_EXAMPLES,
 } from './kul-showcase-textfield-data';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
-import { KulTextfieldStyling } from '../../../kul-textfield/kul-textfield-declarations';
 import { TextfieldExample } from './kul-showcase-textfield-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-textfield',
@@ -20,18 +20,13 @@ export class KulShowcaseTextfield {
      */
     @Element() rootElement: HTMLKulShowcaseTextfieldElement;
 
-    /*-------------------------------------------------*/
-    /*       I n t e r n a l   V a r i a b l e s       */
-    /*-------------------------------------------------*/
-
-    #dynamicExamples: HTMLKulTextfieldElement[] = [];
+    //#region Internal variables
     #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
+    #dynamicExamples: HTMLKulTextfieldElement[] = [];
     #interval: NodeJS.Timeout;
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const k1 in TEXTFIELD_EXAMPLES) {
@@ -79,11 +74,9 @@ export class KulShowcaseTextfield {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     componentDidLoad() {
         if (this.#dynamicExamples.length > 0) {
             this.#interval = setInterval(() => {
@@ -125,4 +118,5 @@ export class KulShowcaseTextfield {
     disconnectedCallback() {
         clearInterval(this.#interval);
     }
+    //#endregion
 }

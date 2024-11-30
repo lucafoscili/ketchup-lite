@@ -1,14 +1,14 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { CarouselData } from './kul-showcase-carousel-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
-import { DOC_IDS } from '../../kul-showcase-data';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { MASONRY_KULDATA_FACTORY } from '../../assets/fixtures/masonry';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { CarouselData } from './kul-showcase-carousel-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulCarousel';
 const EVENT_NAME: KulComponentEventName<'KulCarousel'> = 'kul-carousel-event';
@@ -16,7 +16,7 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCarousel'> =
     'KulCarouselEventPayload';
 const TAG_NAME: KulComponentTag<'KulCarousel'> = 'kul-carousel';
 
-export const CAROUSEL_EXAMPLES: CarouselData = {
+export const CAROUSEL_EXAMPLES: () => CarouselData = () => ({
     autoplay: {
         ['data-description']: 'Carousel with autoplay',
         kulAutoPlay: true,
@@ -31,7 +31,7 @@ export const CAROUSEL_EXAMPLES: CarouselData = {
         ['data-dynamic']: 'custom',
         kulData: MASONRY_KULDATA_FACTORY.KulImage(),
     },
-};
+});
 
 export const CAROUSEL_DOC: KulArticleDataset = {
     nodes: [

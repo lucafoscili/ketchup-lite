@@ -1,18 +1,18 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { ChartData } from './kul-showcase-chart-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
+import { KulDataDataset } from '../../../../components';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import {
     CHART_KULDATA_FACTORY,
     MIXED_HEATMAP,
 } from '../../assets/fixtures/chart';
-import { KulDataDataset } from '../../../../components';
+import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { ChartData } from './kul-showcase-chart-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulChart';
 const EVENT_NAME: KulComponentEventName<'KulChart'> = 'kul-chart-event';

@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { HEADER_DOC, HEADER_EXAMPLES } from './kul-showcase-header-data';
 import { HeaderExample } from './kul-showcase-header-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 
 @Component({
     tag: 'kul-showcase-header',
@@ -14,10 +14,7 @@ export class KulShowcaseHeader {
      */
     @Element() rootElement: HTMLKulShowcaseHeaderElement;
 
-    /*-------------------------------------------------*/
-    /*           P r i v a t e   M e t h o d s         */
-    /*-------------------------------------------------*/
-
+    //#region Private methods
     #prepExamples() {
         const elements: VNode[] = [];
         for (const key in HEADER_EXAMPLES) {
@@ -41,11 +38,9 @@ export class KulShowcaseHeader {
         }
         return elements;
     }
+    //#endregion
 
-    /*-------------------------------------------------*/
-    /*          L i f e c y c l e   H o o k s          */
-    /*-------------------------------------------------*/
-
+    //#region Lifecycle hooks
     render() {
         return (
             <Fragment>
@@ -63,4 +58,5 @@ export class KulShowcaseHeader {
             </Fragment>
         );
     }
+    //#endregion
 }

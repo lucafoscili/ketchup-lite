@@ -1,13 +1,13 @@
 import { getAssetPath } from '@stencil/core';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
 import { CanvasData } from './kul-showcase-canvas-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulCanvas';
@@ -16,15 +16,13 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCanvas'> =
     'KulCanvasEventPayload';
 const TAG_NAME: KulComponentTag<'KulCanvas'> = 'kul-canvas';
 
-const kulValue = getAssetPath(`./assets/media/color_splash.jpg`);
-
-export const CANVAS_EXAMPLES: CanvasData = {
+export const CANVAS_EXAMPLES: () => CanvasData = () => ({
     simple: {
         ['data-description']: 'Canvas over image',
         kulImageProps: {
             kulSizeX: '256px',
             kulSizeY: '256px',
-            kulValue,
+            kulValue: getAssetPath(`./assets/media/color_splash.jpg`),
         },
     },
     style: {
@@ -33,10 +31,10 @@ export const CANVAS_EXAMPLES: CanvasData = {
         kulImageProps: {
             kulSizeX: '256px',
             kulSizeY: '256px',
-            kulValue,
+            kulValue: getAssetPath(`./assets/media/color_splash.jpg`),
         },
     },
-};
+});
 
 export const CANVAS_DOC: KulArticleDataset = {
     nodes: [

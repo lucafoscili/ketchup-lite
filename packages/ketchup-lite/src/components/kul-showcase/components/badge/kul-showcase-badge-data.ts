@@ -1,14 +1,14 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { DOC_IDS } from '../../kul-showcase-data';
-import { random2digitsNumber } from '../../helpers/kul-showcase-dyn-sample';
-import { BadgeData } from './kul-showcase-badge-declarations';
 import {
     KulComponentEventName,
     KulComponentEventPayloadName,
     KulComponentName,
     KulComponentTag,
 } from '../../../../types/GenericTypes';
+import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
+import { random2digitsNumber } from '../../helpers/kul-showcase-dyn-sample';
 import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
+import { DOC_IDS } from '../../kul-showcase-data';
+import { BadgeData } from './kul-showcase-badge-declarations';
 
 const COMPONENT_NAME: KulComponentName = 'KulBadge';
 const EVENT_NAME: KulComponentEventName<'KulBadge'> = 'kul-badge-event';
