@@ -12,6 +12,21 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v4
 
+            - name: Check if Commit is a Version Bump
+              id: check_commit
+              run: |
+                  COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+                  echo "Latest commit message: $COMMIT_MESSAGE"
+                  if [[ "$COMMIT_MESSAGE" == *"[version-bump]"* ]]; then
+                    echo "is_version_bump=true" >> $GITHUB_OUTPUT
+                  else
+                    echo "is_version_bump=false" >> $GITHUB_OUTPUT
+                  fi
+
+            - name: Exit if Not a Version Bump
+              if: steps.check_commit.outputs.is_version_bump != 'true'
+              run: echo "Not a version bump commit. Exiting." && exit 0
+
             - name: Set Up Node.js
               uses: actions/setup-node@v4
               with:

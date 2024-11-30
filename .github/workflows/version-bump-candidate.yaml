@@ -26,10 +26,19 @@ jobs:
             - name: Update Versions for All Packages
               run: |
                   PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
-                  TIMESTAMP=$(date +%Y%m%d%H%M%S)
                   for pkg in "${PACKAGES[@]}"; do
-                    VERSION=$(node -p "require('./packages/${pkg}/package.json').version")
-                    NEW_VERSION="${VERSION}-${TIMESTAMP}"
+                    CURRENT_VERSION=$(node -p "require('./packages/${pkg}/package.json').version")
+                    echo "Current version of ${pkg}: ${CURRENT_VERSION}"
+                    
+                    # Extract base version and pre-release
+                    BASE_VERSION=$(echo "$CURRENT_VERSION" | sed -E 's/-rc\.[0-9]+$//')
+                    PRE_RELEASE=$(echo "$CURRENT_VERSION" | grep -o 'rc\.[0-9]\+$' || echo "rc.0")
+                    
+                    # Increment pre-release number
+                    PRE_RELEASE_NUMBER=$(echo "$PRE_RELEASE" | grep -o '[0-9]\+$')
+                    NEW_PRE_RELEASE_NUMBER=$((PRE_RELEASE_NUMBER + 1))
+                    NEW_VERSION="${BASE_VERSION}-rc.${NEW_PRE_RELEASE_NUMBER}"
+                    
                     echo "Updating ${pkg} version to ${NEW_VERSION}"
                     jq ".version = \"${NEW_VERSION}\"" packages/${pkg}/package.json > temp.json && mv temp.json packages/${pkg}/package.json
                   done
@@ -39,12 +48,12 @@ jobs:
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
                   git add packages/*/package.json
-                  git commit -m "Bump versions for candidate release [skip ci]" || echo "No changes to commit"
+                  git commit -m "Bump versions for candidate release [version-bump]" || echo "No changes to commit"
 
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v5
               with:
-                  commit-message: 'Bump versions for candidate release [skip ci]'
+                  commit-message: 'Bump versions for candidate release [version-bump]'
                   branch: 'version-bump-${{ github.run_id }}'
                   title: 'Bump Versions for Candidate Release'
                   body: |
