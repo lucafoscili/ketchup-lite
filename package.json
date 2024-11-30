@@ -31,6 +31,7 @@
         "build": "yarn build:kul && yarn doc && yarn build:kul-react && yarn build:kul-react-ssr",
         "dev": "lerna run dev --scope ketchup-lite --stream",
         "doc": "node ./packages/ketchup-lite/src/scripts/doc.js",
+        "lint": "prettier",
         "test": "lerna run test --scope ketchup-lite --stream",
         "test:open": "lerna run test:open --scope ketchup-lite --stream"
     },

@@ -26,7 +26,7 @@ jobs:
             - name: Run Prettier
               run: |
                   # Adjust the paths as necessary
-                  yarn prettier --write "packages/**/*.{scss,css,js,jsx,ts,tsx,json,md}"
+                  yarn lint --write "packages/**/*.{scss,css,js,jsx,ts,tsx,json,md}"
 
             - name: Check for Changes
               id: git-check

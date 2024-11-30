@@ -34,7 +34,7 @@ jobs:
                   npx lerna version prerelease --preid=rc --no-push --yes
 
             - name: Format with Prettier
-              run: yarn prettier --write "packages/**/*.{js,jsx,ts,tsx,json,md}"
+              run: yarn lint --write "packages/**/*.{js,jsx,ts,tsx,json,md}"
 
             - name: Commit Version Bumps and Formatting
               run: |
