@@ -28,7 +28,7 @@ jobs:
                   PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
                   for pkg in "${PACKAGES[@]}"; do
                     CURRENT_VERSION=$(node -p "require('./packages/${pkg}/package.json').version")
-                    echo "Current version of ${pkg}: ${CURRENT_VERSION}"
+                    echo "Current version of ${pkg}: $CURRENT_VERSION"
                     
                     # Extract base version and pre-release
                     BASE_VERSION=$(echo "$CURRENT_VERSION" | sed -E 's/-rc\.[0-9]+$//')

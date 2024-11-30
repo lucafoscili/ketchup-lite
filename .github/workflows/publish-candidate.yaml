@@ -23,23 +23,27 @@ jobs:
                     echo "is_version_bump=false" >> $GITHUB_OUTPUT
                   fi
 
-            - name: Exit if Not a Version Bump
+            - name: Notify Non-Version Bump Commit
               if: steps.check_commit.outputs.is_version_bump != 'true'
-              run: echo "Not a version bump commit. Exiting." && exit 0
+              run: echo "Not a version bump commit. Exiting workflow."
 
             - name: Set Up Node.js
+              if: steps.check_commit.outputs.is_version_bump == 'true'
               uses: actions/setup-node@v4
               with:
                   node-version: '18.x'
                   registry-url: 'https://registry.npmjs.org'
 
             - name: Install Dependencies
+              if: steps.check_commit.outputs.is_version_bump == 'true'
               run: yarn install --no-immutable
 
             - name: Build Packages
+              if: steps.check_commit.outputs.is_version_bump == 'true'
               run: yarn build
 
             - name: Publish Packages to NPM
+              if: steps.check_commit.outputs.is_version_bump == 'true'
               run: |
                   PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
                   for pkg in "${PACKAGES[@]}"; do
