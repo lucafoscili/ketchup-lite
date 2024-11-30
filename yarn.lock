@@ -4188,6 +4188,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ketchup-lite-react-ssr@workspace:packages/ketchup-lite-react-ssr"
   dependencies:
+    "@stencil/core": ^4
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
@@ -4202,6 +4203,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ketchup-lite-react@workspace:packages/ketchup-lite-react"
   dependencies:
+    "@stencil/core": ^4
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
