@@ -1,8 +1,6 @@
 import {
-    KulDataCell,
     KulDataNode,
     KulDataShapeDefaults,
-    KulDataShapes,
 } from '../../../managers/kul-data/kul-data-declarations';
 import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
 import { KulCardLayout, KulCardShapesIds } from '../kul-card-declarations';

@@ -13,14 +13,10 @@ import {
     VNode,
     Watch,
 } from '@stencil/core';
-import type { GenericObject } from '../../types/GenericTypes';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import {
-    KulImageEvent,
-    KulImageEventPayload,
-    KulImageProps,
-} from './kul-image-declarations';
 import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
+import type { GenericObject } from '../../types/GenericTypes';
 import { getProps } from '../../utils/componentUtils';
 import {
     CSS_VAR_PREFIX,
@@ -28,7 +24,11 @@ import {
     KUL_WRAPPER_ID,
 } from '../../variables/GenericVariables';
 import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+import {
+    KulImageEvent,
+    KulImageEventPayload,
+    KulImageProps,
+} from './kul-image-declarations';
 
 @Component({
     tag: 'kul-image',

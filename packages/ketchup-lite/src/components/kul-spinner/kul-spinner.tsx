@@ -1,4 +1,3 @@
-import { KulEventPayload } from '../../types/GenericTypes';
 import {
     Component,
     Element,
@@ -13,16 +12,16 @@ import {
     VNode,
     Watch,
 } from '@stencil/core';
-import { GenericObject } from '../../types/GenericTypes';
+import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
 import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+import { GenericObject } from '../../types/GenericTypes';
+import { getProps } from '../../utils/componentUtils';
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     KulSpinnerEvent,
     KulSpinnerEventPayload,
     KulSpinnerProps,
 } from './kul-spinner-declarations';
-import { getProps } from '../../utils/componentUtils';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
 import {
     BAR_SPINNER_CONFIGS,
     SPINNER_CONFIGS,

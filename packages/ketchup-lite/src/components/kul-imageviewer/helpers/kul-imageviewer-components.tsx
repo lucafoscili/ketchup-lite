@@ -1,21 +1,18 @@
 import { h } from '@stencil/core';
 import {
-    KulImageviewerAdapter,
-    KulImageviewerAdapterComponents,
-} from '../kul-imageviewer-declarations';
-import { KulTreeEventPayload } from '../../kul-tree/kul-tree-declarations';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulMasonryEventPayload } from '../../kul-masonry/kul-masonry-declarations';
-import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
-import {
-    KulImageEventPayload,
-    KulImagePropsInterface,
-} from '../../kul-image/kul-image-declarations';
-import {
     KulDataCyAttributes,
     KulGenericEvent,
 } from '../../../types/GenericTypes';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
 import { KulCanvasEventPayload } from '../../kul-canvas/kul-canvas-declarations';
+import { KulImagePropsInterface } from '../../kul-image/kul-image-declarations';
+import { KulMasonryEventPayload } from '../../kul-masonry/kul-masonry-declarations';
+import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
+import { KulTreeEventPayload } from '../../kul-tree/kul-tree-declarations';
+import {
+    KulImageviewerAdapter,
+    KulImageviewerAdapterComponents,
+} from '../kul-imageviewer-declarations';
 
 export const COMPONENTS: KulImageviewerAdapterComponents = {
     jsx: {
