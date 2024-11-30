@@ -8,7 +8,6 @@ on:
 jobs:
     candidate-package:
         runs-on: ubuntu-latest
-        timeout-minutes: 5
         strategy:
             matrix:
                 package:
@@ -42,16 +41,13 @@ jobs:
                   # Extract the base version (e.g., 2.0.1 from 2.0.1)
                   BASE_VERSION=$(echo $CURRENT_VERSION | grep -oE '^[0-9]+\.[0-9]+\.[0-9]+')
 
-                  # Initialize NEXT_PRE_RELEASE
-                  NEXT_PRE_RELEASE=1
-
                   # Check if the base version exists in the registry
                   if npm view ${{ matrix.package }}@${BASE_VERSION} versions --json > /dev/null 2>&1; then
                     # Find the next pre-release number
                     NEXT_PRE_RELEASE=$(npm view ${{ matrix.package }}@${BASE_VERSION} versions --json | \
                       jq -r 'map(select(test("-rc\\.[0-9]+$"))) | map(split("-rc.") | .[1] | tonumber) | max + 1 // 1')
                   else
-                    echo "Base version $BASE_VERSION does not exist in the registry. Starting with rc.1"
+                    # Base version not found, start with rc.1
                     NEXT_PRE_RELEASE=1
                   fi
 
@@ -61,7 +57,7 @@ jobs:
                   # Update package.json
                   jq ".version = \"$NEW_VERSION\"" $PACKAGE_DIR/package.json > temp.json && mv temp.json $PACKAGE_DIR/package.json
 
-                  # Output the new version for later steps using the new syntax
+                  # Output the new version for later steps
                   echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
 
             - name: Validate Version
@@ -85,14 +81,6 @@ jobs:
               uses: ad-m/github-push-action@v0.6.0
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  branch: master
-                  directory: .
-
-            - name: Debug Info Before Build
-              run: |
-                  echo "Starting build for ${{ matrix.package }}"
-                  ls -la packages/${{ matrix.package }}
-                  cat packages/${{ matrix.package }}/package.json
 
             - name: Build Packages
               run: yarn build
