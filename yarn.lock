@@ -4178,7 +4178,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ketchup-lite-hydrate@*, ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate":
+"ketchup-lite-hydrate@^2.0.1, ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate":
   version: 0.0.0-use.local
   resolution: "ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate"
   languageName: unknown
@@ -4191,8 +4191,8 @@ __metadata:
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
-    ketchup-lite: "*"
-    ketchup-lite-hydrate: "*"
+    ketchup-lite: ^2.0.1
+    ketchup-lite-hydrate: ^2.0.1
     react: ^18
     react-dom: ^18
   languageName: unknown
@@ -4205,7 +4205,7 @@ __metadata:
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
-    ketchup-lite: "*"
+    ketchup-lite: 2.0.1
     react: ^18
     react-dom: ^18
   languageName: unknown
@@ -4227,7 +4227,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ketchup-lite@*, ketchup-lite@workspace:packages/ketchup-lite":
+"ketchup-lite@2.0.1, ketchup-lite@^2.0.1, ketchup-lite@workspace:packages/ketchup-lite":
   version: 0.0.0-use.local
   resolution: "ketchup-lite@workspace:packages/ketchup-lite"
   dependencies:

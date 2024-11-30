@@ -1,0 +1,32 @@
+name: Publish NPM Package (Main)
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    publish-main:
+        uses: ./.github/workflows/setup.yml
+        with:
+            node-version: '18.x'
+            install-immutable: true
+        secrets:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    publish:
+        needs: publish-main
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Publish Packages to NPM
+              run: |
+                  PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
+                  for pkg in "${PACKAGES[@]}"; do
+                    cd packages/${pkg}
+                    npm publish --tag dist
+                    cd ../../
+                  done
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

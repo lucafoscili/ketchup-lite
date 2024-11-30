@@ -23,8 +23,8 @@
     },
     "dependencies": {
         "@stencil/react-output-target": "^0",
-        "ketchup-lite": "*",
-        "ketchup-lite-hydrate": "*",
+        "ketchup-lite": "^2.0.1",
+        "ketchup-lite-hydrate": "^2.0.1",
         "react": "^18",
         "react-dom": "^18"
     },

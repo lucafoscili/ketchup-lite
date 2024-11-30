@@ -1,4 +1,4 @@
-name: Cypress tests
+name: Cypress Tests
 
 on:
     pull_request:
@@ -9,8 +9,9 @@ jobs:
     cypress-test:
         runs-on: ubuntu-latest
         concurrency:
-            group: generate-docs-${{ github.workflow }}-${{ github.ref }}
+            group: cypress-${{ github.workflow }}-${{ github.head_ref }}
             cancel-in-progress: true
+
         steps:
             - uses: actions/checkout@v4
 
@@ -20,7 +21,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: '18.16.0'
+                  node-version: '18.x'
                   cache: 'yarn'
 
             - name: Install dependencies
@@ -62,5 +63,4 @@ jobs:
                   fi
 
             - name: Cypress Run
-              run: |
-                  yarn workspace ketchup-lite run test
+              run: yarn workspace ketchup-lite run test

@@ -1,0 +1,42 @@
+name: Update Component Count
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    update-count:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Count Components
+              id: count
+              run: |
+                  COUNT=$(ls -l packages/ketchup-lite/src/components | grep '^d' | wc -l)
+                  echo "::set-output name=components::$COUNT"
+                  echo "{ \"components\": $COUNT }" > count.json
+
+            - name: Commit Component Count
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+                  git add count.json
+                  git commit -m "Update component count to ${{ steps.count.outputs.components }} [skip ci]" || echo "No changes to commit"
+
+            - name: Push Changes
+              uses: ad-m/github-push-action@v0.6.0
+              with:
+                  github_token: ${{ secrets.GITHUB_TOKEN }}
+                  branch: main
+
+            - name: Create Pull Request
+              if: github.ref == 'refs/heads/main'
+              uses: peter-evans/create-pull-request@v5
+              with:
+                  commit-message: 'Update component count'
+                  branch: 'update-component-count-${{ github.run_id }}'
+                  title: 'Update component count'
+                  body: 'Automatically updates the component count.'
+                  labels: 'automated PR'
