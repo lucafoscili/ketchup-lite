@@ -1,9 +1,6 @@
 # kul-showcase-badge
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Shadow Parts
 
@@ -15,7 +12,6 @@
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
-
 ## Dependencies
 
 ### Depends on
@@ -24,6 +20,7 @@
 - [kul-article](../../../kul-article)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-showcase-tree --> kul-tree
@@ -32,6 +29,6 @@ graph TD;
   style kul-showcase-tree fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

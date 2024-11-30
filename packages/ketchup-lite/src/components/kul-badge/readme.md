@@ -1,25 +1,20 @@
 # kul-badge
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property        | Attribute   | Description                                        | Type                     | Default |
-| --------------- | ----------- | -------------------------------------------------- | ------------------------ | ------- |
-| `kulImageProps` | --          | The props of the image displayed inside the badge. | `KulImagePropsInterface` | `null`  |
-| `kulLabel`      | `kul-label` | The text displayed inside the badge.               | `string`                 | `''`    |
-| `kulStyle`      | `kul-style` | Custom style of the component.                     | `string`                 | `''`    |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulImageProps` | -- | The props of the image displayed inside the badge. | `KulImagePropsInterface` | `null` |
+| `kulLabel` | `kul-label` | The text displayed inside the badge. | `string` | `''` |
+| `kulStyle` | `kul-style` | Custom style of the component. | `string` | `''` |
 
 ## Events
 
-| Event             | Description              | Type                                |
-| ----------------- | ------------------------ | ----------------------------------- |
+| Event | Description | Type |
+| --- | --- | --- |
 | `kul-badge-event` | Describes event emitted. | `CustomEvent<KulBadgeEventPayload>` |
-
 
 ## Methods
 
@@ -39,8 +34,8 @@ Used to retrieve component's props values.
 
 #### Parameters
 
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
 
 #### Returns
@@ -57,8 +52,6 @@ This method is used to trigger a new render of the component.
 
 Type: `Promise<void>`
 
-
-
 ### `unmount(ms?: number) => Promise<void>`
 
 Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -73,34 +66,31 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 
 Type: `Promise<void>`
 
-
-
-
 ## CSS Custom Properties
 
-| Name                                | Description                                                                                          |
-| ----------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `--kul-badge-border-radius`         | Sets the border radius of the badge. Defaults to 30px.                                               |
-| `--kul-badge-font-family`           | Sets the font family of the badge. Defaults to var(--kul-font-family).                               |
-| `--kul-badge-font-size`             | Sets the font size of the badge. Defaults to var(--kul-font-size).                                   |
-| `--kul-badge-min-size`              | Sets the minimum size of the badge. Defaults to 1.5em.                                               |
-| `--kul-badge-padding`               | Sets the padding of the badge. Defaults to 0.25em.                                                   |
-| `--kul-badge-primary-color`         | Sets the primary color of the badge. Defaults to var(--kul-primary-color).                           |
+| Name | Description |
+| --- | --- |
+| `--kul-badge-border-radius` | Sets the border radius of the badge. Defaults to 30px. |
+| `--kul-badge-font-family` | Sets the font family of the badge. Defaults to var(--kul-font-family). |
+| `--kul-badge-font-size` | Sets the font size of the badge. Defaults to var(--kul-font-size). |
+| `--kul-badge-min-size` | Sets the minimum size of the badge. Defaults to 1.5em. |
+| `--kul-badge-padding` | Sets the padding of the badge. Defaults to 0.25em. |
+| `--kul-badge-primary-color` | Sets the primary color of the badge. Defaults to var(--kul-primary-color). |
 | `--kul-badge-text-on-primary-color` | Sets the text color on the primary color of the badge. Defaults to var(--kul-text-on-primary-color). |
-
 
 ## Dependencies
 
 ### Used by
 
- - [kul-image](../kul-image)
- - [kul-showcase-badge](../kul-showcase/components/badge)
+- [kul-image](../kul-image)
+- [kul-showcase-badge](../kul-showcase/components/badge)
 
 ### Depends on
 
 - [kul-image](../kul-image)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-badge --> kul-image
@@ -109,6 +99,6 @@ graph TD;
   style kul-badge fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

@@ -1,27 +1,22 @@
 # kul-badge
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property            | Attribute             | Description                                                              | Type      | Default        |
-| ------------------- | --------------------- | ------------------------------------------------------------------------ | --------- | -------------- |
-| `kulFormat`         | `kul-format`          | Automatically formats the value.                                         | `boolean` | `true`         |
-| `kulLanguage`       | `kul-language`        | Sets the language of the snippet.                                        | `string`  | `'javascript'` |
-| `kulPreserveSpaces` | `kul-preserve-spaces` | Whether to preserve spaces or not. When missing it is set automatically. | `boolean` | `undefined`    |
-| `kulStyle`          | `kul-style`           | Enables customization of the component's style.                          | `string`  | `''`           |
-| `kulValue`          | `kul-value`           | String containing the snippet of code to display.                        | `string`  | `''`           |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulFormat` | `kul-format` | Automatically formats the value. | `boolean` | `true` |
+| `kulLanguage` | `kul-language` | Sets the language of the snippet. | `string` | `'javascript'` |
+| `kulPreserveSpaces` | `kul-preserve-spaces` | Whether to preserve spaces or not. When missing it is set automatically. | `boolean` | `undefined` |
+| `kulStyle` | `kul-style` | Enables customization of the component's style. | `string` | `''` |
+| `kulValue` | `kul-value` | String containing the snippet of code to display. | `string` | `''` |
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
+| Event | Description | Type |
+| --- | --- | --- |
 | `kul-code-event` | Describes event emitted. | `CustomEvent<KulCodeEventPayload>` |
-
 
 ## Methods
 
@@ -41,8 +36,8 @@ Retrieves the properties of the component, with optional descriptions.
 
 #### Parameters
 
-| Name           | Type      | Description                                                                          |
-| -------------- | --------- | ------------------------------------------------------------------------------------ |
+| Name | Type | Description |
+| --- | --- | --- |
 | `descriptions` | `boolean` | - If true, returns properties with descriptions; otherwise, returns properties only. |
 
 #### Returns
@@ -59,8 +54,6 @@ Triggers a re-render of the component to reflect any state changes.
 
 Type: `Promise<void>`
 
-
-
 ### `unmount(ms?: number) => Promise<void>`
 
 Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -75,39 +68,36 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 
 Type: `Promise<void>`
 
-
-
-
 ## CSS Custom Properties
 
-| Name                                    | Description                                                                                                           |
-| --------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `--kul-code-background-color`           | Sets the background color of the component. Defaults to rgba(var(--kul-background-color-rgb) 0.275)                   |
-| `--kul-code-font-family`                | Sets the font family of the component. Defaults to var(--kul-font-family-monospace)                                   |
-| `--kul-code-header-background-color`    | Sets the background color of the header. Defaults to var(--kul-title-background-color)                                |
-| `--kul-code-header-color`               | Sets the color of the header. Defaults to var(--kul-title-color)                                                      |
-| `--kul-code-selection-background-color` | Sets the background color of selected text. Defaults to rgba(var(--kul-border-color-rgb, 0.275))                      |
-| `--kul-code-text-color`                 | Sets the color of the text. Defaults to var(--kul-text-color)                                                         |
-| `--kul-code-token-color-1`              | Sets the background color of: boolean, constant, deleted, number, property, symbol, tag. Defaults to rgb(231, 0, 127) |
-| `--kul-code-token-color-2`              | Sets the background color of: attr-name, builtin, char, inserted, selector, string. Defaults to rgb(146, 219, 0)      |
-| `--kul-code-token-color-3`              | Sets the background color of: atrule, attr-value, keyword. Defaults to rgb(0, 165, 236)                               |
-| `--kul-code-token-color-4`              | Sets the background color of: class-name, function. Defaults to #ff6363                                               |
-| `--kul-code-token-color-5`              | Sets the background color of: important, regex, variable. Defaults to rgb(255, 196, 86)                               |
-
+| Name | Description |
+| --- | --- |
+| `--kul-code-background-color` | Sets the background color of the component. Defaults to rgba(var(--kul-background-color-rgb) 0.275) |
+| `--kul-code-font-family` | Sets the font family of the component. Defaults to var(--kul-font-family-monospace) |
+| `--kul-code-header-background-color` | Sets the background color of the header. Defaults to var(--kul-title-background-color) |
+| `--kul-code-header-color` | Sets the color of the header. Defaults to var(--kul-title-color) |
+| `--kul-code-selection-background-color` | Sets the background color of selected text. Defaults to rgba(var(--kul-border-color-rgb, 0.275)) |
+| `--kul-code-text-color` | Sets the color of the text. Defaults to var(--kul-text-color) |
+| `--kul-code-token-color-1` | Sets the background color of: boolean, constant, deleted, number, property, symbol, tag. Defaults to rgb(231, 0, 127) |
+| `--kul-code-token-color-2` | Sets the background color of: attr-name, builtin, char, inserted, selector, string. Defaults to rgb(146, 219, 0) |
+| `--kul-code-token-color-3` | Sets the background color of: atrule, attr-value, keyword. Defaults to rgb(0, 165, 236) |
+| `--kul-code-token-color-4` | Sets the background color of: class-name, function. Defaults to #ff6363 |
+| `--kul-code-token-color-5` | Sets the background color of: important, regex, variable. Defaults to rgb(255, 196, 86) |
 
 ## Dependencies
 
 ### Used by
 
- - [kul-chat](../kul-chat)
- - [kul-messenger](../kul-messenger)
- - [kul-showcase-code](../kul-showcase/components/code)
+- [kul-chat](../kul-chat)
+- [kul-messenger](../kul-messenger)
+- [kul-showcase-code](../kul-showcase/components/code)
 
 ### Depends on
 
 - [kul-button](../kul-button)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-code --> kul-button
@@ -122,6 +112,6 @@ graph TD;
   style kul-code fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

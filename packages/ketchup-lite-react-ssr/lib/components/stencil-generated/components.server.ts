@@ -8,1529 +8,2522 @@
 
 /* eslint-disable */
 
-import type { EventName, StencilReactComponent } from '@stencil/react-output-target/runtime';
-import { createComponent, createSSRComponent } from '@stencil/react-output-target/runtime';
-import { type KulAccordionCustomEvent, type KulAccordionEventPayload, type KulArticleCustomEvent, type KulArticleEventPayload, type KulBadgeCustomEvent, type KulBadgeEventPayload, type KulButtonCustomEvent, type KulButtonEventPayload, type KulCanvasCustomEvent, type KulCanvasEventPayload, type KulCardCustomEvent, type KulCardEventPayload, type KulCarouselCustomEvent, type KulCarouselEventPayload, type KulChartCustomEvent, type KulChartEventPayload, type KulChatCustomEvent, type KulChatEventPayload, type KulChipCustomEvent, type KulChipEventPayload, type KulCodeCustomEvent, type KulCodeEventPayload, type KulCompareCustomEvent, type KulCompareEventPayload, type KulDrawerCustomEvent, type KulDrawerEventPayload, type KulHeaderCustomEvent, type KulHeaderEventPayload, type KulImageCustomEvent, type KulImageEventPayload, type KulImageviewerCustomEvent, type KulImageviewerEventPayload, type KulLazyCustomEvent, type KulLazyEventPayload, type KulListCustomEvent, type KulListEventPayload, type KulMasonryCustomEvent, type KulMasonryEventPayload, type KulMessengerCustomEvent, type KulMessengerEventPayload, type KulPhotoframeCustomEvent, type KulPhotoframeEventPayload, type KulProgressbarCustomEvent, type KulProgressbarEventPayload, type KulSliderCustomEvent, type KulSliderEventPayload, type KulSpinnerCustomEvent, type KulSpinnerEventPayload, type KulSplashCustomEvent, type KulSplashEventPayload, type KulTabbarCustomEvent, type KulTabbarEventPayload, type KulTextfieldCustomEvent, type KulTextfieldEventPayload, type KulToastCustomEvent, type KulToastEventPayload, type KulToggleCustomEvent, type KulToggleEventPayload, type KulTreeCustomEvent, type KulTreeEventPayload, type KulTypewriterCustomEvent, type KulTypewriterEventPayload, type KulUploadCustomEvent, type KulUploadEventPayload } from "ketchup-lite";
-import { KulAccordion as KulAccordionElement, defineCustomElement as defineKulAccordion } from "ketchup-lite/dist/components/kul-accordion.js";
-import { KulArticle as KulArticleElement, defineCustomElement as defineKulArticle } from "ketchup-lite/dist/components/kul-article.js";
-import { KulBadge as KulBadgeElement, defineCustomElement as defineKulBadge } from "ketchup-lite/dist/components/kul-badge.js";
-import { KulButton as KulButtonElement, defineCustomElement as defineKulButton } from "ketchup-lite/dist/components/kul-button.js";
-import { KulCanvas as KulCanvasElement, defineCustomElement as defineKulCanvas } from "ketchup-lite/dist/components/kul-canvas.js";
-import { KulCard as KulCardElement, defineCustomElement as defineKulCard } from "ketchup-lite/dist/components/kul-card.js";
-import { KulCarousel as KulCarouselElement, defineCustomElement as defineKulCarousel } from "ketchup-lite/dist/components/kul-carousel.js";
-import { KulChart as KulChartElement, defineCustomElement as defineKulChart } from "ketchup-lite/dist/components/kul-chart.js";
-import { KulChat as KulChatElement, defineCustomElement as defineKulChat } from "ketchup-lite/dist/components/kul-chat.js";
-import { KulChip as KulChipElement, defineCustomElement as defineKulChip } from "ketchup-lite/dist/components/kul-chip.js";
-import { KulCode as KulCodeElement, defineCustomElement as defineKulCode } from "ketchup-lite/dist/components/kul-code.js";
-import { KulCompare as KulCompareElement, defineCustomElement as defineKulCompare } from "ketchup-lite/dist/components/kul-compare.js";
-import { KulDrawer as KulDrawerElement, defineCustomElement as defineKulDrawer } from "ketchup-lite/dist/components/kul-drawer.js";
-import { KulHeader as KulHeaderElement, defineCustomElement as defineKulHeader } from "ketchup-lite/dist/components/kul-header.js";
-import { KulImage as KulImageElement, defineCustomElement as defineKulImage } from "ketchup-lite/dist/components/kul-image.js";
-import { KulImageviewer as KulImageviewerElement, defineCustomElement as defineKulImageviewer } from "ketchup-lite/dist/components/kul-imageviewer.js";
-import { KulLazy as KulLazyElement, defineCustomElement as defineKulLazy } from "ketchup-lite/dist/components/kul-lazy.js";
-import { KulList as KulListElement, defineCustomElement as defineKulList } from "ketchup-lite/dist/components/kul-list.js";
-import { KulMasonry as KulMasonryElement, defineCustomElement as defineKulMasonry } from "ketchup-lite/dist/components/kul-masonry.js";
-import { KulMessenger as KulMessengerElement, defineCustomElement as defineKulMessenger } from "ketchup-lite/dist/components/kul-messenger.js";
-import { KulPhotoframe as KulPhotoframeElement, defineCustomElement as defineKulPhotoframe } from "ketchup-lite/dist/components/kul-photoframe.js";
-import { KulProgressbar as KulProgressbarElement, defineCustomElement as defineKulProgressbar } from "ketchup-lite/dist/components/kul-progressbar.js";
-import { KulShowcaseAccordion as KulShowcaseAccordionElement, defineCustomElement as defineKulShowcaseAccordion } from "ketchup-lite/dist/components/kul-showcase-accordion.js";
-import { KulShowcaseArticle as KulShowcaseArticleElement, defineCustomElement as defineKulShowcaseArticle } from "ketchup-lite/dist/components/kul-showcase-article.js";
-import { KulShowcaseBadge as KulShowcaseBadgeElement, defineCustomElement as defineKulShowcaseBadge } from "ketchup-lite/dist/components/kul-showcase-badge.js";
-import { KulShowcaseButton as KulShowcaseButtonElement, defineCustomElement as defineKulShowcaseButton } from "ketchup-lite/dist/components/kul-showcase-button.js";
-import { KulShowcaseCanvas as KulShowcaseCanvasElement, defineCustomElement as defineKulShowcaseCanvas } from "ketchup-lite/dist/components/kul-showcase-canvas.js";
-import { KulShowcaseCard as KulShowcaseCardElement, defineCustomElement as defineKulShowcaseCard } from "ketchup-lite/dist/components/kul-showcase-card.js";
-import { KulShowcaseCarousel as KulShowcaseCarouselElement, defineCustomElement as defineKulShowcaseCarousel } from "ketchup-lite/dist/components/kul-showcase-carousel.js";
-import { KulShowcaseChart as KulShowcaseChartElement, defineCustomElement as defineKulShowcaseChart } from "ketchup-lite/dist/components/kul-showcase-chart.js";
-import { KulShowcaseChat as KulShowcaseChatElement, defineCustomElement as defineKulShowcaseChat } from "ketchup-lite/dist/components/kul-showcase-chat.js";
-import { KulShowcaseChip as KulShowcaseChipElement, defineCustomElement as defineKulShowcaseChip } from "ketchup-lite/dist/components/kul-showcase-chip.js";
-import { KulShowcaseCode as KulShowcaseCodeElement, defineCustomElement as defineKulShowcaseCode } from "ketchup-lite/dist/components/kul-showcase-code.js";
-import { KulShowcaseCompare as KulShowcaseCompareElement, defineCustomElement as defineKulShowcaseCompare } from "ketchup-lite/dist/components/kul-showcase-compare.js";
-import { KulShowcaseDebug as KulShowcaseDebugElement, defineCustomElement as defineKulShowcaseDebug } from "ketchup-lite/dist/components/kul-showcase-debug.js";
-import { KulShowcaseDrawer as KulShowcaseDrawerElement, defineCustomElement as defineKulShowcaseDrawer } from "ketchup-lite/dist/components/kul-showcase-drawer.js";
-import { KulShowcaseHeader as KulShowcaseHeaderElement, defineCustomElement as defineKulShowcaseHeader } from "ketchup-lite/dist/components/kul-showcase-header.js";
-import { KulShowcaseImage as KulShowcaseImageElement, defineCustomElement as defineKulShowcaseImage } from "ketchup-lite/dist/components/kul-showcase-image.js";
-import { KulShowcaseImageviewer as KulShowcaseImageviewerElement, defineCustomElement as defineKulShowcaseImageviewer } from "ketchup-lite/dist/components/kul-showcase-imageviewer.js";
-import { KulShowcaseKuldata as KulShowcaseKuldataElement, defineCustomElement as defineKulShowcaseKuldata } from "ketchup-lite/dist/components/kul-showcase-kuldata.js";
-import { KulShowcaseKuldates as KulShowcaseKuldatesElement, defineCustomElement as defineKulShowcaseKuldates } from "ketchup-lite/dist/components/kul-showcase-kuldates.js";
-import { KulShowcaseKuldebug as KulShowcaseKuldebugElement, defineCustomElement as defineKulShowcaseKuldebug } from "ketchup-lite/dist/components/kul-showcase-kuldebug.js";
-import { KulShowcaseKuldynamicposition as KulShowcaseKuldynamicpositionElement, defineCustomElement as defineKulShowcaseKuldynamicposition } from "ketchup-lite/dist/components/kul-showcase-kuldynamicposition.js";
-import { KulShowcaseKullanguage as KulShowcaseKullanguageElement, defineCustomElement as defineKulShowcaseKullanguage } from "ketchup-lite/dist/components/kul-showcase-kullanguage.js";
-import { KulShowcaseKulllm as KulShowcaseKulllmElement, defineCustomElement as defineKulShowcaseKulllm } from "ketchup-lite/dist/components/kul-showcase-kulllm.js";
-import { KulShowcaseKulmanager as KulShowcaseKulmanagerElement, defineCustomElement as defineKulShowcaseKulmanager } from "ketchup-lite/dist/components/kul-showcase-kulmanager.js";
-import { KulShowcaseKulscrollonhover as KulShowcaseKulscrollonhoverElement, defineCustomElement as defineKulShowcaseKulscrollonhover } from "ketchup-lite/dist/components/kul-showcase-kulscrollonhover.js";
-import { KulShowcaseKultheme as KulShowcaseKulthemeElement, defineCustomElement as defineKulShowcaseKultheme } from "ketchup-lite/dist/components/kul-showcase-kultheme.js";
-import { KulShowcaseLazy as KulShowcaseLazyElement, defineCustomElement as defineKulShowcaseLazy } from "ketchup-lite/dist/components/kul-showcase-lazy.js";
-import { KulShowcaseList as KulShowcaseListElement, defineCustomElement as defineKulShowcaseList } from "ketchup-lite/dist/components/kul-showcase-list.js";
-import { KulShowcaseMasonry as KulShowcaseMasonryElement, defineCustomElement as defineKulShowcaseMasonry } from "ketchup-lite/dist/components/kul-showcase-masonry.js";
-import { KulShowcaseMessenger as KulShowcaseMessengerElement, defineCustomElement as defineKulShowcaseMessenger } from "ketchup-lite/dist/components/kul-showcase-messenger.js";
-import { KulShowcasePhotoframe as KulShowcasePhotoframeElement, defineCustomElement as defineKulShowcasePhotoframe } from "ketchup-lite/dist/components/kul-showcase-photoframe.js";
-import { KulShowcaseProgressbar as KulShowcaseProgressbarElement, defineCustomElement as defineKulShowcaseProgressbar } from "ketchup-lite/dist/components/kul-showcase-progressbar.js";
-import { KulShowcaseSlider as KulShowcaseSliderElement, defineCustomElement as defineKulShowcaseSlider } from "ketchup-lite/dist/components/kul-showcase-slider.js";
-import { KulShowcaseSpinner as KulShowcaseSpinnerElement, defineCustomElement as defineKulShowcaseSpinner } from "ketchup-lite/dist/components/kul-showcase-spinner.js";
-import { KulShowcaseSplash as KulShowcaseSplashElement, defineCustomElement as defineKulShowcaseSplash } from "ketchup-lite/dist/components/kul-showcase-splash.js";
-import { KulShowcaseTabbar as KulShowcaseTabbarElement, defineCustomElement as defineKulShowcaseTabbar } from "ketchup-lite/dist/components/kul-showcase-tabbar.js";
-import { KulShowcaseTextfield as KulShowcaseTextfieldElement, defineCustomElement as defineKulShowcaseTextfield } from "ketchup-lite/dist/components/kul-showcase-textfield.js";
-import { KulShowcaseToast as KulShowcaseToastElement, defineCustomElement as defineKulShowcaseToast } from "ketchup-lite/dist/components/kul-showcase-toast.js";
-import { KulShowcaseToggle as KulShowcaseToggleElement, defineCustomElement as defineKulShowcaseToggle } from "ketchup-lite/dist/components/kul-showcase-toggle.js";
-import { KulShowcaseTree as KulShowcaseTreeElement, defineCustomElement as defineKulShowcaseTree } from "ketchup-lite/dist/components/kul-showcase-tree.js";
-import { KulShowcaseTypewriter as KulShowcaseTypewriterElement, defineCustomElement as defineKulShowcaseTypewriter } from "ketchup-lite/dist/components/kul-showcase-typewriter.js";
-import { KulShowcaseUpload as KulShowcaseUploadElement, defineCustomElement as defineKulShowcaseUpload } from "ketchup-lite/dist/components/kul-showcase-upload.js";
-import { KulShowcase as KulShowcaseElement, defineCustomElement as defineKulShowcase } from "ketchup-lite/dist/components/kul-showcase.js";
-import { KulSlider as KulSliderElement, defineCustomElement as defineKulSlider } from "ketchup-lite/dist/components/kul-slider.js";
-import { KulSpinner as KulSpinnerElement, defineCustomElement as defineKulSpinner } from "ketchup-lite/dist/components/kul-spinner.js";
-import { KulSplash as KulSplashElement, defineCustomElement as defineKulSplash } from "ketchup-lite/dist/components/kul-splash.js";
-import { KulTabbar as KulTabbarElement, defineCustomElement as defineKulTabbar } from "ketchup-lite/dist/components/kul-tabbar.js";
-import { KulTextfield as KulTextfieldElement, defineCustomElement as defineKulTextfield } from "ketchup-lite/dist/components/kul-textfield.js";
-import { KulToast as KulToastElement, defineCustomElement as defineKulToast } from "ketchup-lite/dist/components/kul-toast.js";
-import { KulToggle as KulToggleElement, defineCustomElement as defineKulToggle } from "ketchup-lite/dist/components/kul-toggle.js";
-import { KulTree as KulTreeElement, defineCustomElement as defineKulTree } from "ketchup-lite/dist/components/kul-tree.js";
-import { KulTypewriter as KulTypewriterElement, defineCustomElement as defineKulTypewriter } from "ketchup-lite/dist/components/kul-typewriter.js";
-import { KulUpload as KulUploadElement, defineCustomElement as defineKulUpload } from "ketchup-lite/dist/components/kul-upload.js";
+import type {
+    EventName,
+    StencilReactComponent,
+} from '@stencil/react-output-target/runtime';
+import {
+    createComponent,
+    createSSRComponent,
+} from '@stencil/react-output-target/runtime';
+import {
+    type KulAccordionCustomEvent,
+    type KulAccordionEventPayload,
+    type KulArticleCustomEvent,
+    type KulArticleEventPayload,
+    type KulBadgeCustomEvent,
+    type KulBadgeEventPayload,
+    type KulButtonCustomEvent,
+    type KulButtonEventPayload,
+    type KulCanvasCustomEvent,
+    type KulCanvasEventPayload,
+    type KulCardCustomEvent,
+    type KulCardEventPayload,
+    type KulCarouselCustomEvent,
+    type KulCarouselEventPayload,
+    type KulChartCustomEvent,
+    type KulChartEventPayload,
+    type KulChatCustomEvent,
+    type KulChatEventPayload,
+    type KulChipCustomEvent,
+    type KulChipEventPayload,
+    type KulCodeCustomEvent,
+    type KulCodeEventPayload,
+    type KulCompareCustomEvent,
+    type KulCompareEventPayload,
+    type KulDrawerCustomEvent,
+    type KulDrawerEventPayload,
+    type KulHeaderCustomEvent,
+    type KulHeaderEventPayload,
+    type KulImageCustomEvent,
+    type KulImageEventPayload,
+    type KulImageviewerCustomEvent,
+    type KulImageviewerEventPayload,
+    type KulLazyCustomEvent,
+    type KulLazyEventPayload,
+    type KulListCustomEvent,
+    type KulListEventPayload,
+    type KulMasonryCustomEvent,
+    type KulMasonryEventPayload,
+    type KulMessengerCustomEvent,
+    type KulMessengerEventPayload,
+    type KulPhotoframeCustomEvent,
+    type KulPhotoframeEventPayload,
+    type KulProgressbarCustomEvent,
+    type KulProgressbarEventPayload,
+    type KulSliderCustomEvent,
+    type KulSliderEventPayload,
+    type KulSpinnerCustomEvent,
+    type KulSpinnerEventPayload,
+    type KulSplashCustomEvent,
+    type KulSplashEventPayload,
+    type KulTabbarCustomEvent,
+    type KulTabbarEventPayload,
+    type KulTextfieldCustomEvent,
+    type KulTextfieldEventPayload,
+    type KulToastCustomEvent,
+    type KulToastEventPayload,
+    type KulToggleCustomEvent,
+    type KulToggleEventPayload,
+    type KulTreeCustomEvent,
+    type KulTreeEventPayload,
+    type KulTypewriterCustomEvent,
+    type KulTypewriterEventPayload,
+    type KulUploadCustomEvent,
+    type KulUploadEventPayload,
+} from 'ketchup-lite';
+import {
+    KulAccordion as KulAccordionElement,
+    defineCustomElement as defineKulAccordion,
+} from 'ketchup-lite/dist/components/kul-accordion.js';
+import {
+    KulArticle as KulArticleElement,
+    defineCustomElement as defineKulArticle,
+} from 'ketchup-lite/dist/components/kul-article.js';
+import {
+    KulBadge as KulBadgeElement,
+    defineCustomElement as defineKulBadge,
+} from 'ketchup-lite/dist/components/kul-badge.js';
+import {
+    KulButton as KulButtonElement,
+    defineCustomElement as defineKulButton,
+} from 'ketchup-lite/dist/components/kul-button.js';
+import {
+    KulCanvas as KulCanvasElement,
+    defineCustomElement as defineKulCanvas,
+} from 'ketchup-lite/dist/components/kul-canvas.js';
+import {
+    KulCard as KulCardElement,
+    defineCustomElement as defineKulCard,
+} from 'ketchup-lite/dist/components/kul-card.js';
+import {
+    KulCarousel as KulCarouselElement,
+    defineCustomElement as defineKulCarousel,
+} from 'ketchup-lite/dist/components/kul-carousel.js';
+import {
+    KulChart as KulChartElement,
+    defineCustomElement as defineKulChart,
+} from 'ketchup-lite/dist/components/kul-chart.js';
+import {
+    KulChat as KulChatElement,
+    defineCustomElement as defineKulChat,
+} from 'ketchup-lite/dist/components/kul-chat.js';
+import {
+    KulChip as KulChipElement,
+    defineCustomElement as defineKulChip,
+} from 'ketchup-lite/dist/components/kul-chip.js';
+import {
+    KulCode as KulCodeElement,
+    defineCustomElement as defineKulCode,
+} from 'ketchup-lite/dist/components/kul-code.js';
+import {
+    KulCompare as KulCompareElement,
+    defineCustomElement as defineKulCompare,
+} from 'ketchup-lite/dist/components/kul-compare.js';
+import {
+    KulDrawer as KulDrawerElement,
+    defineCustomElement as defineKulDrawer,
+} from 'ketchup-lite/dist/components/kul-drawer.js';
+import {
+    KulHeader as KulHeaderElement,
+    defineCustomElement as defineKulHeader,
+} from 'ketchup-lite/dist/components/kul-header.js';
+import {
+    KulImage as KulImageElement,
+    defineCustomElement as defineKulImage,
+} from 'ketchup-lite/dist/components/kul-image.js';
+import {
+    KulImageviewer as KulImageviewerElement,
+    defineCustomElement as defineKulImageviewer,
+} from 'ketchup-lite/dist/components/kul-imageviewer.js';
+import {
+    KulLazy as KulLazyElement,
+    defineCustomElement as defineKulLazy,
+} from 'ketchup-lite/dist/components/kul-lazy.js';
+import {
+    KulList as KulListElement,
+    defineCustomElement as defineKulList,
+} from 'ketchup-lite/dist/components/kul-list.js';
+import {
+    KulMasonry as KulMasonryElement,
+    defineCustomElement as defineKulMasonry,
+} from 'ketchup-lite/dist/components/kul-masonry.js';
+import {
+    KulMessenger as KulMessengerElement,
+    defineCustomElement as defineKulMessenger,
+} from 'ketchup-lite/dist/components/kul-messenger.js';
+import {
+    KulPhotoframe as KulPhotoframeElement,
+    defineCustomElement as defineKulPhotoframe,
+} from 'ketchup-lite/dist/components/kul-photoframe.js';
+import {
+    KulProgressbar as KulProgressbarElement,
+    defineCustomElement as defineKulProgressbar,
+} from 'ketchup-lite/dist/components/kul-progressbar.js';
+import {
+    KulShowcaseAccordion as KulShowcaseAccordionElement,
+    defineCustomElement as defineKulShowcaseAccordion,
+} from 'ketchup-lite/dist/components/kul-showcase-accordion.js';
+import {
+    KulShowcaseArticle as KulShowcaseArticleElement,
+    defineCustomElement as defineKulShowcaseArticle,
+} from 'ketchup-lite/dist/components/kul-showcase-article.js';
+import {
+    KulShowcaseBadge as KulShowcaseBadgeElement,
+    defineCustomElement as defineKulShowcaseBadge,
+} from 'ketchup-lite/dist/components/kul-showcase-badge.js';
+import {
+    KulShowcaseButton as KulShowcaseButtonElement,
+    defineCustomElement as defineKulShowcaseButton,
+} from 'ketchup-lite/dist/components/kul-showcase-button.js';
+import {
+    KulShowcaseCanvas as KulShowcaseCanvasElement,
+    defineCustomElement as defineKulShowcaseCanvas,
+} from 'ketchup-lite/dist/components/kul-showcase-canvas.js';
+import {
+    KulShowcaseCard as KulShowcaseCardElement,
+    defineCustomElement as defineKulShowcaseCard,
+} from 'ketchup-lite/dist/components/kul-showcase-card.js';
+import {
+    KulShowcaseCarousel as KulShowcaseCarouselElement,
+    defineCustomElement as defineKulShowcaseCarousel,
+} from 'ketchup-lite/dist/components/kul-showcase-carousel.js';
+import {
+    KulShowcaseChart as KulShowcaseChartElement,
+    defineCustomElement as defineKulShowcaseChart,
+} from 'ketchup-lite/dist/components/kul-showcase-chart.js';
+import {
+    KulShowcaseChat as KulShowcaseChatElement,
+    defineCustomElement as defineKulShowcaseChat,
+} from 'ketchup-lite/dist/components/kul-showcase-chat.js';
+import {
+    KulShowcaseChip as KulShowcaseChipElement,
+    defineCustomElement as defineKulShowcaseChip,
+} from 'ketchup-lite/dist/components/kul-showcase-chip.js';
+import {
+    KulShowcaseCode as KulShowcaseCodeElement,
+    defineCustomElement as defineKulShowcaseCode,
+} from 'ketchup-lite/dist/components/kul-showcase-code.js';
+import {
+    KulShowcaseCompare as KulShowcaseCompareElement,
+    defineCustomElement as defineKulShowcaseCompare,
+} from 'ketchup-lite/dist/components/kul-showcase-compare.js';
+import {
+    KulShowcaseDebug as KulShowcaseDebugElement,
+    defineCustomElement as defineKulShowcaseDebug,
+} from 'ketchup-lite/dist/components/kul-showcase-debug.js';
+import {
+    KulShowcaseDrawer as KulShowcaseDrawerElement,
+    defineCustomElement as defineKulShowcaseDrawer,
+} from 'ketchup-lite/dist/components/kul-showcase-drawer.js';
+import {
+    KulShowcaseHeader as KulShowcaseHeaderElement,
+    defineCustomElement as defineKulShowcaseHeader,
+} from 'ketchup-lite/dist/components/kul-showcase-header.js';
+import {
+    KulShowcaseImage as KulShowcaseImageElement,
+    defineCustomElement as defineKulShowcaseImage,
+} from 'ketchup-lite/dist/components/kul-showcase-image.js';
+import {
+    KulShowcaseImageviewer as KulShowcaseImageviewerElement,
+    defineCustomElement as defineKulShowcaseImageviewer,
+} from 'ketchup-lite/dist/components/kul-showcase-imageviewer.js';
+import {
+    KulShowcaseKuldata as KulShowcaseKuldataElement,
+    defineCustomElement as defineKulShowcaseKuldata,
+} from 'ketchup-lite/dist/components/kul-showcase-kuldata.js';
+import {
+    KulShowcaseKuldates as KulShowcaseKuldatesElement,
+    defineCustomElement as defineKulShowcaseKuldates,
+} from 'ketchup-lite/dist/components/kul-showcase-kuldates.js';
+import {
+    KulShowcaseKuldebug as KulShowcaseKuldebugElement,
+    defineCustomElement as defineKulShowcaseKuldebug,
+} from 'ketchup-lite/dist/components/kul-showcase-kuldebug.js';
+import {
+    KulShowcaseKuldynamicposition as KulShowcaseKuldynamicpositionElement,
+    defineCustomElement as defineKulShowcaseKuldynamicposition,
+} from 'ketchup-lite/dist/components/kul-showcase-kuldynamicposition.js';
+import {
+    KulShowcaseKullanguage as KulShowcaseKullanguageElement,
+    defineCustomElement as defineKulShowcaseKullanguage,
+} from 'ketchup-lite/dist/components/kul-showcase-kullanguage.js';
+import {
+    KulShowcaseKulllm as KulShowcaseKulllmElement,
+    defineCustomElement as defineKulShowcaseKulllm,
+} from 'ketchup-lite/dist/components/kul-showcase-kulllm.js';
+import {
+    KulShowcaseKulmanager as KulShowcaseKulmanagerElement,
+    defineCustomElement as defineKulShowcaseKulmanager,
+} from 'ketchup-lite/dist/components/kul-showcase-kulmanager.js';
+import {
+    KulShowcaseKulscrollonhover as KulShowcaseKulscrollonhoverElement,
+    defineCustomElement as defineKulShowcaseKulscrollonhover,
+} from 'ketchup-lite/dist/components/kul-showcase-kulscrollonhover.js';
+import {
+    KulShowcaseKultheme as KulShowcaseKulthemeElement,
+    defineCustomElement as defineKulShowcaseKultheme,
+} from 'ketchup-lite/dist/components/kul-showcase-kultheme.js';
+import {
+    KulShowcaseLazy as KulShowcaseLazyElement,
+    defineCustomElement as defineKulShowcaseLazy,
+} from 'ketchup-lite/dist/components/kul-showcase-lazy.js';
+import {
+    KulShowcaseList as KulShowcaseListElement,
+    defineCustomElement as defineKulShowcaseList,
+} from 'ketchup-lite/dist/components/kul-showcase-list.js';
+import {
+    KulShowcaseMasonry as KulShowcaseMasonryElement,
+    defineCustomElement as defineKulShowcaseMasonry,
+} from 'ketchup-lite/dist/components/kul-showcase-masonry.js';
+import {
+    KulShowcaseMessenger as KulShowcaseMessengerElement,
+    defineCustomElement as defineKulShowcaseMessenger,
+} from 'ketchup-lite/dist/components/kul-showcase-messenger.js';
+import {
+    KulShowcasePhotoframe as KulShowcasePhotoframeElement,
+    defineCustomElement as defineKulShowcasePhotoframe,
+} from 'ketchup-lite/dist/components/kul-showcase-photoframe.js';
+import {
+    KulShowcaseProgressbar as KulShowcaseProgressbarElement,
+    defineCustomElement as defineKulShowcaseProgressbar,
+} from 'ketchup-lite/dist/components/kul-showcase-progressbar.js';
+import {
+    KulShowcaseSlider as KulShowcaseSliderElement,
+    defineCustomElement as defineKulShowcaseSlider,
+} from 'ketchup-lite/dist/components/kul-showcase-slider.js';
+import {
+    KulShowcaseSpinner as KulShowcaseSpinnerElement,
+    defineCustomElement as defineKulShowcaseSpinner,
+} from 'ketchup-lite/dist/components/kul-showcase-spinner.js';
+import {
+    KulShowcaseSplash as KulShowcaseSplashElement,
+    defineCustomElement as defineKulShowcaseSplash,
+} from 'ketchup-lite/dist/components/kul-showcase-splash.js';
+import {
+    KulShowcaseTabbar as KulShowcaseTabbarElement,
+    defineCustomElement as defineKulShowcaseTabbar,
+} from 'ketchup-lite/dist/components/kul-showcase-tabbar.js';
+import {
+    KulShowcaseTextfield as KulShowcaseTextfieldElement,
+    defineCustomElement as defineKulShowcaseTextfield,
+} from 'ketchup-lite/dist/components/kul-showcase-textfield.js';
+import {
+    KulShowcaseToast as KulShowcaseToastElement,
+    defineCustomElement as defineKulShowcaseToast,
+} from 'ketchup-lite/dist/components/kul-showcase-toast.js';
+import {
+    KulShowcaseToggle as KulShowcaseToggleElement,
+    defineCustomElement as defineKulShowcaseToggle,
+} from 'ketchup-lite/dist/components/kul-showcase-toggle.js';
+import {
+    KulShowcaseTree as KulShowcaseTreeElement,
+    defineCustomElement as defineKulShowcaseTree,
+} from 'ketchup-lite/dist/components/kul-showcase-tree.js';
+import {
+    KulShowcaseTypewriter as KulShowcaseTypewriterElement,
+    defineCustomElement as defineKulShowcaseTypewriter,
+} from 'ketchup-lite/dist/components/kul-showcase-typewriter.js';
+import {
+    KulShowcaseUpload as KulShowcaseUploadElement,
+    defineCustomElement as defineKulShowcaseUpload,
+} from 'ketchup-lite/dist/components/kul-showcase-upload.js';
+import {
+    KulShowcase as KulShowcaseElement,
+    defineCustomElement as defineKulShowcase,
+} from 'ketchup-lite/dist/components/kul-showcase.js';
+import {
+    KulSlider as KulSliderElement,
+    defineCustomElement as defineKulSlider,
+} from 'ketchup-lite/dist/components/kul-slider.js';
+import {
+    KulSpinner as KulSpinnerElement,
+    defineCustomElement as defineKulSpinner,
+} from 'ketchup-lite/dist/components/kul-spinner.js';
+import {
+    KulSplash as KulSplashElement,
+    defineCustomElement as defineKulSplash,
+} from 'ketchup-lite/dist/components/kul-splash.js';
+import {
+    KulTabbar as KulTabbarElement,
+    defineCustomElement as defineKulTabbar,
+} from 'ketchup-lite/dist/components/kul-tabbar.js';
+import {
+    KulTextfield as KulTextfieldElement,
+    defineCustomElement as defineKulTextfield,
+} from 'ketchup-lite/dist/components/kul-textfield.js';
+import {
+    KulToast as KulToastElement,
+    defineCustomElement as defineKulToast,
+} from 'ketchup-lite/dist/components/kul-toast.js';
+import {
+    KulToggle as KulToggleElement,
+    defineCustomElement as defineKulToggle,
+} from 'ketchup-lite/dist/components/kul-toggle.js';
+import {
+    KulTree as KulTreeElement,
+    defineCustomElement as defineKulTree,
+} from 'ketchup-lite/dist/components/kul-tree.js';
+import {
+    KulTypewriter as KulTypewriterElement,
+    defineCustomElement as defineKulTypewriter,
+} from 'ketchup-lite/dist/components/kul-typewriter.js';
+import {
+    KulUpload as KulUploadElement,
+    defineCustomElement as defineKulUpload,
+} from 'ketchup-lite/dist/components/kul-upload.js';
 import React from 'react';
 
-type KulAccordionEvents = { onKulAccordionEvent: EventName<KulAccordionCustomEvent<KulAccordionEventPayload>> };
+type KulAccordionEvents = {
+    onKulAccordionEvent: EventName<
+        KulAccordionCustomEvent<KulAccordionEventPayload>
+    >;
+};
 
-export const KulAccordion: StencilReactComponent<KulAccordionElement, KulAccordionEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulAccordionElement, KulAccordionEvents>({
-        tagName: 'kul-accordion',
-        elementClass: KulAccordionElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulAccordionEvent: 'kul-accordion-event' } as KulAccordionEvents,
-        defineCustomElement: defineKulAccordion
-    })
-    : /*@__PURE__*/ createSSRComponent<KulAccordionElement, KulAccordionEvents>({
-        tagName: 'kul-accordion',
-        properties: {
-            kulRipple: 'kul-ripple',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulAccordion: StencilReactComponent<
+    KulAccordionElement,
+    KulAccordionEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulAccordionElement,
+              KulAccordionEvents
+          >({
+              tagName: 'kul-accordion',
+              elementClass: KulAccordionElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulAccordionEvent: 'kul-accordion-event',
+              } as KulAccordionEvents,
+              defineCustomElement: defineKulAccordion,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulAccordionElement,
+              KulAccordionEvents
+          >({
+              tagName: 'kul-accordion',
+              properties: {
+                  kulRipple: 'kul-ripple',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulArticleEvents = { onKulArticleEvent: EventName<KulArticleCustomEvent<KulArticleEventPayload>> };
+type KulArticleEvents = {
+    onKulArticleEvent: EventName<KulArticleCustomEvent<KulArticleEventPayload>>;
+};
 
-export const KulArticle: StencilReactComponent<KulArticleElement, KulArticleEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulArticleElement, KulArticleEvents>({
-        tagName: 'kul-article',
-        elementClass: KulArticleElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulArticleEvent: 'kul-article-event' } as KulArticleEvents,
-        defineCustomElement: defineKulArticle
-    })
-    : /*@__PURE__*/ createSSRComponent<KulArticleElement, KulArticleEvents>({
-        tagName: 'kul-article',
-        properties: { kulStyle: 'kul-style' },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulArticle: StencilReactComponent<
+    KulArticleElement,
+    KulArticleEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulArticleElement, KulArticleEvents>({
+              tagName: 'kul-article',
+              elementClass: KulArticleElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulArticleEvent: 'kul-article-event',
+              } as KulArticleEvents,
+              defineCustomElement: defineKulArticle,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulArticleElement, KulArticleEvents>(
+              {
+                  tagName: 'kul-article',
+                  properties: { kulStyle: 'kul-style' },
+                  hydrateModule: import('ketchup-lite-hydrate'),
+              }
+          );
 
-type KulBadgeEvents = { onKulBadgeEvent: EventName<KulBadgeCustomEvent<KulBadgeEventPayload>> };
+type KulBadgeEvents = {
+    onKulBadgeEvent: EventName<KulBadgeCustomEvent<KulBadgeEventPayload>>;
+};
 
-export const KulBadge: StencilReactComponent<KulBadgeElement, KulBadgeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulBadgeElement, KulBadgeEvents>({
-        tagName: 'kul-badge',
-        elementClass: KulBadgeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulBadgeEvent: 'kul-badge-event' } as KulBadgeEvents,
-        defineCustomElement: defineKulBadge
-    })
-    : /*@__PURE__*/ createSSRComponent<KulBadgeElement, KulBadgeEvents>({
-        tagName: 'kul-badge',
-        properties: {
-            kulLabel: 'kul-label',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulBadge: StencilReactComponent<KulBadgeElement, KulBadgeEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulBadgeElement, KulBadgeEvents>({
+              tagName: 'kul-badge',
+              elementClass: KulBadgeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulBadgeEvent: 'kul-badge-event' } as KulBadgeEvents,
+              defineCustomElement: defineKulBadge,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulBadgeElement, KulBadgeEvents>({
+              tagName: 'kul-badge',
+              properties: {
+                  kulLabel: 'kul-label',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulButtonEvents = { onKulButtonEvent: EventName<KulButtonCustomEvent<KulButtonEventPayload>> };
+type KulButtonEvents = {
+    onKulButtonEvent: EventName<KulButtonCustomEvent<KulButtonEventPayload>>;
+};
 
-export const KulButton: StencilReactComponent<KulButtonElement, KulButtonEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulButtonElement, KulButtonEvents>({
-        tagName: 'kul-button',
-        elementClass: KulButtonElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulButtonEvent: 'kul-button-event' } as KulButtonEvents,
-        defineCustomElement: defineKulButton
-    })
-    : /*@__PURE__*/ createSSRComponent<KulButtonElement, KulButtonEvents>({
-        tagName: 'kul-button',
-        properties: {
-            kulDisabled: 'kul-disabled',
-            kulIcon: 'kul-icon',
-            kulIconOff: 'kul-icon-off',
-            kulLabel: 'kul-label',
-            kulRipple: 'kul-ripple',
-            kulShowSpinner: 'kul-show-spinner',
-            kulStyle: 'kul-style',
-            kulStyling: 'kul-styling',
-            kulToggable: 'kul-toggable',
-            kulTrailingIcon: 'kul-trailing-icon',
-            kulType: 'kul-type',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulButton: StencilReactComponent<
+    KulButtonElement,
+    KulButtonEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulButtonElement, KulButtonEvents>({
+              tagName: 'kul-button',
+              elementClass: KulButtonElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulButtonEvent: 'kul-button-event',
+              } as KulButtonEvents,
+              defineCustomElement: defineKulButton,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulButtonElement, KulButtonEvents>({
+              tagName: 'kul-button',
+              properties: {
+                  kulDisabled: 'kul-disabled',
+                  kulIcon: 'kul-icon',
+                  kulIconOff: 'kul-icon-off',
+                  kulLabel: 'kul-label',
+                  kulRipple: 'kul-ripple',
+                  kulShowSpinner: 'kul-show-spinner',
+                  kulStyle: 'kul-style',
+                  kulStyling: 'kul-styling',
+                  kulToggable: 'kul-toggable',
+                  kulTrailingIcon: 'kul-trailing-icon',
+                  kulType: 'kul-type',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulCanvasEvents = { onKulCanvasEvent: EventName<KulCanvasCustomEvent<KulCanvasEventPayload>> };
+type KulCanvasEvents = {
+    onKulCanvasEvent: EventName<KulCanvasCustomEvent<KulCanvasEventPayload>>;
+};
 
-export const KulCanvas: StencilReactComponent<KulCanvasElement, KulCanvasEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulCanvasElement, KulCanvasEvents>({
-        tagName: 'kul-canvas',
-        elementClass: KulCanvasElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulCanvasEvent: 'kul-canvas-event' } as KulCanvasEvents,
-        defineCustomElement: defineKulCanvas
-    })
-    : /*@__PURE__*/ createSSRComponent<KulCanvasElement, KulCanvasEvents>({
-        tagName: 'kul-canvas',
-        properties: {
-            kulBrush: 'kul-brush',
-            kulColor: 'kul-color',
-            kulOpacity: 'kul-opacity',
-            kulPreview: 'kul-preview',
-            kulStrokeTolerance: 'kul-stroke-tolerance',
-            kulSize: 'kul-size',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulCanvas: StencilReactComponent<
+    KulCanvasElement,
+    KulCanvasEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulCanvasElement, KulCanvasEvents>({
+              tagName: 'kul-canvas',
+              elementClass: KulCanvasElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulCanvasEvent: 'kul-canvas-event',
+              } as KulCanvasEvents,
+              defineCustomElement: defineKulCanvas,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulCanvasElement, KulCanvasEvents>({
+              tagName: 'kul-canvas',
+              properties: {
+                  kulBrush: 'kul-brush',
+                  kulColor: 'kul-color',
+                  kulOpacity: 'kul-opacity',
+                  kulPreview: 'kul-preview',
+                  kulStrokeTolerance: 'kul-stroke-tolerance',
+                  kulSize: 'kul-size',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulCardEvents = { onKulCardEvent: EventName<KulCardCustomEvent<KulCardEventPayload>> };
+type KulCardEvents = {
+    onKulCardEvent: EventName<KulCardCustomEvent<KulCardEventPayload>>;
+};
 
-export const KulCard: StencilReactComponent<KulCardElement, KulCardEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulCardElement, KulCardEvents>({
-        tagName: 'kul-card',
-        elementClass: KulCardElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulCardEvent: 'kul-card-event' } as KulCardEvents,
-        defineCustomElement: defineKulCard
-    })
-    : /*@__PURE__*/ createSSRComponent<KulCardElement, KulCardEvents>({
-        tagName: 'kul-card',
-        properties: {
-            kulLayout: 'kul-layout',
-            kulSizeX: 'kul-size-x',
-            kulSizeY: 'kul-size-y',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulCard: StencilReactComponent<KulCardElement, KulCardEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulCardElement, KulCardEvents>({
+              tagName: 'kul-card',
+              elementClass: KulCardElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulCardEvent: 'kul-card-event' } as KulCardEvents,
+              defineCustomElement: defineKulCard,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulCardElement, KulCardEvents>({
+              tagName: 'kul-card',
+              properties: {
+                  kulLayout: 'kul-layout',
+                  kulSizeX: 'kul-size-x',
+                  kulSizeY: 'kul-size-y',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulCarouselEvents = { onKulCarouselEvent: EventName<KulCarouselCustomEvent<KulCarouselEventPayload>> };
+type KulCarouselEvents = {
+    onKulCarouselEvent: EventName<
+        KulCarouselCustomEvent<KulCarouselEventPayload>
+    >;
+};
 
-export const KulCarousel: StencilReactComponent<KulCarouselElement, KulCarouselEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulCarouselElement, KulCarouselEvents>({
-        tagName: 'kul-carousel',
-        elementClass: KulCarouselElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulCarouselEvent: 'kul-carousel-event' } as KulCarouselEvents,
-        defineCustomElement: defineKulCarousel
-    })
-    : /*@__PURE__*/ createSSRComponent<KulCarouselElement, KulCarouselEvents>({
-        tagName: 'kul-carousel',
-        properties: {
-            kulAutoPlay: 'kul-auto-play',
-            kulInterval: 'kul-interval',
-            kulShape: 'kul-shape',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulCarousel: StencilReactComponent<
+    KulCarouselElement,
+    KulCarouselEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulCarouselElement, KulCarouselEvents>({
+              tagName: 'kul-carousel',
+              elementClass: KulCarouselElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulCarouselEvent: 'kul-carousel-event',
+              } as KulCarouselEvents,
+              defineCustomElement: defineKulCarousel,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulCarouselElement,
+              KulCarouselEvents
+          >({
+              tagName: 'kul-carousel',
+              properties: {
+                  kulAutoPlay: 'kul-auto-play',
+                  kulInterval: 'kul-interval',
+                  kulShape: 'kul-shape',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulChartEvents = { onKulChartEvent: EventName<KulChartCustomEvent<KulChartEventPayload>> };
+type KulChartEvents = {
+    onKulChartEvent: EventName<KulChartCustomEvent<KulChartEventPayload>>;
+};
 
-export const KulChart: StencilReactComponent<KulChartElement, KulChartEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulChartElement, KulChartEvents>({
-        tagName: 'kul-chart',
-        elementClass: KulChartElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulChartEvent: 'kul-chart-event' } as KulChartEvents,
-        defineCustomElement: defineKulChart
-    })
-    : /*@__PURE__*/ createSSRComponent<KulChartElement, KulChartEvents>({
-        tagName: 'kul-chart',
-        properties: {
-            kulAxis: 'kul-axis',
-            kulLegend: 'kul-legend',
-            kulSizeX: 'kul-size-x',
-            kulSizeY: 'kul-size-y',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulChart: StencilReactComponent<KulChartElement, KulChartEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulChartElement, KulChartEvents>({
+              tagName: 'kul-chart',
+              elementClass: KulChartElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulChartEvent: 'kul-chart-event' } as KulChartEvents,
+              defineCustomElement: defineKulChart,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulChartElement, KulChartEvents>({
+              tagName: 'kul-chart',
+              properties: {
+                  kulAxis: 'kul-axis',
+                  kulLegend: 'kul-legend',
+                  kulSizeX: 'kul-size-x',
+                  kulSizeY: 'kul-size-y',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulChatEvents = { onKulChatEvent: EventName<KulChatCustomEvent<KulChatEventPayload>> };
+type KulChatEvents = {
+    onKulChatEvent: EventName<KulChatCustomEvent<KulChatEventPayload>>;
+};
 
-export const KulChat: StencilReactComponent<KulChatElement, KulChatEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulChatElement, KulChatEvents>({
-        tagName: 'kul-chat',
-        elementClass: KulChatElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulChatEvent: 'kul-chat-event' } as KulChatEvents,
-        defineCustomElement: defineKulChat
-    })
-    : /*@__PURE__*/ createSSRComponent<KulChatElement, KulChatEvents>({
-        tagName: 'kul-chat',
-        properties: {
-            kulContextWindow: 'kul-context-window',
-            kulEndpointUrl: 'kul-endpoint-url',
-            kulLayout: 'kul-layout',
-            kulMaxTokens: 'kul-max-tokens',
-            kulPollingInterval: 'kul-polling-interval',
-            kulSeed: 'kul-seed',
-            kulStyle: 'kul-style',
-            kulSystem: 'kul-system',
-            kulTemperature: 'kul-temperature'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulChat: StencilReactComponent<KulChatElement, KulChatEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulChatElement, KulChatEvents>({
+              tagName: 'kul-chat',
+              elementClass: KulChatElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulChatEvent: 'kul-chat-event' } as KulChatEvents,
+              defineCustomElement: defineKulChat,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulChatElement, KulChatEvents>({
+              tagName: 'kul-chat',
+              properties: {
+                  kulContextWindow: 'kul-context-window',
+                  kulEndpointUrl: 'kul-endpoint-url',
+                  kulLayout: 'kul-layout',
+                  kulMaxTokens: 'kul-max-tokens',
+                  kulPollingInterval: 'kul-polling-interval',
+                  kulSeed: 'kul-seed',
+                  kulStyle: 'kul-style',
+                  kulSystem: 'kul-system',
+                  kulTemperature: 'kul-temperature',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulChipEvents = { onKulChipEvent: EventName<KulChipCustomEvent<KulChipEventPayload>> };
+type KulChipEvents = {
+    onKulChipEvent: EventName<KulChipCustomEvent<KulChipEventPayload>>;
+};
 
-export const KulChip: StencilReactComponent<KulChipElement, KulChipEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulChipElement, KulChipEvents>({
-        tagName: 'kul-chip',
-        elementClass: KulChipElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulChipEvent: 'kul-chip-event' } as KulChipEvents,
-        defineCustomElement: defineKulChip
-    })
-    : /*@__PURE__*/ createSSRComponent<KulChipElement, KulChipEvents>({
-        tagName: 'kul-chip',
-        properties: {
-            kulRipple: 'kul-ripple',
-            kulStyle: 'kul-style',
-            kulStyling: 'kul-styling'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulChip: StencilReactComponent<KulChipElement, KulChipEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulChipElement, KulChipEvents>({
+              tagName: 'kul-chip',
+              elementClass: KulChipElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulChipEvent: 'kul-chip-event' } as KulChipEvents,
+              defineCustomElement: defineKulChip,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulChipElement, KulChipEvents>({
+              tagName: 'kul-chip',
+              properties: {
+                  kulRipple: 'kul-ripple',
+                  kulStyle: 'kul-style',
+                  kulStyling: 'kul-styling',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulCodeEvents = { onKulCodeEvent: EventName<KulCodeCustomEvent<KulCodeEventPayload>> };
+type KulCodeEvents = {
+    onKulCodeEvent: EventName<KulCodeCustomEvent<KulCodeEventPayload>>;
+};
 
-export const KulCode: StencilReactComponent<KulCodeElement, KulCodeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulCodeElement, KulCodeEvents>({
-        tagName: 'kul-code',
-        elementClass: KulCodeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulCodeEvent: 'kul-code-event' } as KulCodeEvents,
-        defineCustomElement: defineKulCode
-    })
-    : /*@__PURE__*/ createSSRComponent<KulCodeElement, KulCodeEvents>({
-        tagName: 'kul-code',
-        properties: {
-            kulFormat: 'kul-format',
-            kulLanguage: 'kul-language',
-            kulPreserveSpaces: 'kul-preserve-spaces',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulCode: StencilReactComponent<KulCodeElement, KulCodeEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulCodeElement, KulCodeEvents>({
+              tagName: 'kul-code',
+              elementClass: KulCodeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulCodeEvent: 'kul-code-event' } as KulCodeEvents,
+              defineCustomElement: defineKulCode,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulCodeElement, KulCodeEvents>({
+              tagName: 'kul-code',
+              properties: {
+                  kulFormat: 'kul-format',
+                  kulLanguage: 'kul-language',
+                  kulPreserveSpaces: 'kul-preserve-spaces',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulCompareEvents = { onKulCompareEvent: EventName<KulCompareCustomEvent<KulCompareEventPayload>> };
+type KulCompareEvents = {
+    onKulCompareEvent: EventName<KulCompareCustomEvent<KulCompareEventPayload>>;
+};
 
-export const KulCompare: StencilReactComponent<KulCompareElement, KulCompareEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulCompareElement, KulCompareEvents>({
-        tagName: 'kul-compare',
-        elementClass: KulCompareElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulCompareEvent: 'kul-compare-event' } as KulCompareEvents,
-        defineCustomElement: defineKulCompare
-    })
-    : /*@__PURE__*/ createSSRComponent<KulCompareElement, KulCompareEvents>({
-        tagName: 'kul-compare',
-        properties: {
-            kulShape: 'kul-shape',
-            kulStyle: 'kul-style',
-            kulView: 'kul-view'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulCompare: StencilReactComponent<
+    KulCompareElement,
+    KulCompareEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulCompareElement, KulCompareEvents>({
+              tagName: 'kul-compare',
+              elementClass: KulCompareElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulCompareEvent: 'kul-compare-event',
+              } as KulCompareEvents,
+              defineCustomElement: defineKulCompare,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulCompareElement, KulCompareEvents>(
+              {
+                  tagName: 'kul-compare',
+                  properties: {
+                      kulShape: 'kul-shape',
+                      kulStyle: 'kul-style',
+                      kulView: 'kul-view',
+                  },
+                  hydrateModule: import('ketchup-lite-hydrate'),
+              }
+          );
 
-type KulDrawerEvents = { onKulDrawerEvent: EventName<KulDrawerCustomEvent<KulDrawerEventPayload>> };
+type KulDrawerEvents = {
+    onKulDrawerEvent: EventName<KulDrawerCustomEvent<KulDrawerEventPayload>>;
+};
 
-export const KulDrawer: StencilReactComponent<KulDrawerElement, KulDrawerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulDrawerElement, KulDrawerEvents>({
-        tagName: 'kul-drawer',
-        elementClass: KulDrawerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulDrawerEvent: 'kul-drawer-event' } as KulDrawerEvents,
-        defineCustomElement: defineKulDrawer
-    })
-    : /*@__PURE__*/ createSSRComponent<KulDrawerElement, KulDrawerEvents>({
-        tagName: 'kul-drawer',
-        properties: { kulStyle: 'kul-style' },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulDrawer: StencilReactComponent<
+    KulDrawerElement,
+    KulDrawerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulDrawerElement, KulDrawerEvents>({
+              tagName: 'kul-drawer',
+              elementClass: KulDrawerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulDrawerEvent: 'kul-drawer-event',
+              } as KulDrawerEvents,
+              defineCustomElement: defineKulDrawer,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulDrawerElement, KulDrawerEvents>({
+              tagName: 'kul-drawer',
+              properties: { kulStyle: 'kul-style' },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulHeaderEvents = { onKulHeaderEvent: EventName<KulHeaderCustomEvent<KulHeaderEventPayload>> };
+type KulHeaderEvents = {
+    onKulHeaderEvent: EventName<KulHeaderCustomEvent<KulHeaderEventPayload>>;
+};
 
-export const KulHeader: StencilReactComponent<KulHeaderElement, KulHeaderEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulHeaderElement, KulHeaderEvents>({
-        tagName: 'kul-header',
-        elementClass: KulHeaderElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulHeaderEvent: 'kul-header-event' } as KulHeaderEvents,
-        defineCustomElement: defineKulHeader
-    })
-    : /*@__PURE__*/ createSSRComponent<KulHeaderElement, KulHeaderEvents>({
-        tagName: 'kul-header',
-        properties: { kulStyle: 'kul-style' },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulHeader: StencilReactComponent<
+    KulHeaderElement,
+    KulHeaderEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulHeaderElement, KulHeaderEvents>({
+              tagName: 'kul-header',
+              elementClass: KulHeaderElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulHeaderEvent: 'kul-header-event',
+              } as KulHeaderEvents,
+              defineCustomElement: defineKulHeader,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulHeaderElement, KulHeaderEvents>({
+              tagName: 'kul-header',
+              properties: { kulStyle: 'kul-style' },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulImageEvents = { onKulImageEvent: EventName<KulImageCustomEvent<KulImageEventPayload>> };
+type KulImageEvents = {
+    onKulImageEvent: EventName<KulImageCustomEvent<KulImageEventPayload>>;
+};
 
-export const KulImage: StencilReactComponent<KulImageElement, KulImageEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulImageElement, KulImageEvents>({
-        tagName: 'kul-image',
-        elementClass: KulImageElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulImageEvent: 'kul-image-event' } as KulImageEvents,
-        defineCustomElement: defineKulImage
-    })
-    : /*@__PURE__*/ createSSRComponent<KulImageElement, KulImageEvents>({
-        tagName: 'kul-image',
-        properties: {
-            kulColor: 'kul-color',
-            kulShowSpinner: 'kul-show-spinner',
-            kulSizeX: 'kul-size-x',
-            kulSizeY: 'kul-size-y',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulImage: StencilReactComponent<KulImageElement, KulImageEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulImageElement, KulImageEvents>({
+              tagName: 'kul-image',
+              elementClass: KulImageElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulImageEvent: 'kul-image-event' } as KulImageEvents,
+              defineCustomElement: defineKulImage,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulImageElement, KulImageEvents>({
+              tagName: 'kul-image',
+              properties: {
+                  kulColor: 'kul-color',
+                  kulShowSpinner: 'kul-show-spinner',
+                  kulSizeX: 'kul-size-x',
+                  kulSizeY: 'kul-size-y',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulImageviewerEvents = { onKulImageviewerEvent: EventName<KulImageviewerCustomEvent<KulImageviewerEventPayload>> };
+type KulImageviewerEvents = {
+    onKulImageviewerEvent: EventName<
+        KulImageviewerCustomEvent<KulImageviewerEventPayload>
+    >;
+};
 
-export const KulImageviewer: StencilReactComponent<KulImageviewerElement, KulImageviewerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulImageviewerElement, KulImageviewerEvents>({
-        tagName: 'kul-imageviewer',
-        elementClass: KulImageviewerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulImageviewerEvent: 'kul-imageviewer-event' } as KulImageviewerEvents,
-        defineCustomElement: defineKulImageviewer
-    })
-    : /*@__PURE__*/ createSSRComponent<KulImageviewerElement, KulImageviewerEvents>({
-        tagName: 'kul-imageviewer',
-        properties: { kulStyle: 'kul-style' },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulImageviewer: StencilReactComponent<
+    KulImageviewerElement,
+    KulImageviewerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulImageviewerElement,
+              KulImageviewerEvents
+          >({
+              tagName: 'kul-imageviewer',
+              elementClass: KulImageviewerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulImageviewerEvent: 'kul-imageviewer-event',
+              } as KulImageviewerEvents,
+              defineCustomElement: defineKulImageviewer,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulImageviewerElement,
+              KulImageviewerEvents
+          >({
+              tagName: 'kul-imageviewer',
+              properties: { kulStyle: 'kul-style' },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulLazyEvents = { onKulLazyEvent: EventName<KulLazyCustomEvent<KulLazyEventPayload>> };
+type KulLazyEvents = {
+    onKulLazyEvent: EventName<KulLazyCustomEvent<KulLazyEventPayload>>;
+};
 
-export const KulLazy: StencilReactComponent<KulLazyElement, KulLazyEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulLazyElement, KulLazyEvents>({
-        tagName: 'kul-lazy',
-        elementClass: KulLazyElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulLazyEvent: 'kul-lazy-event' } as KulLazyEvents,
-        defineCustomElement: defineKulLazy
-    })
-    : /*@__PURE__*/ createSSRComponent<KulLazyElement, KulLazyEvents>({
-        tagName: 'kul-lazy',
-        properties: {
-            kulComponentName: 'kul-component-name',
-            kulRenderMode: 'kul-render-mode',
-            kulShowPlaceholder: 'kul-show-placeholder',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulLazy: StencilReactComponent<KulLazyElement, KulLazyEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulLazyElement, KulLazyEvents>({
+              tagName: 'kul-lazy',
+              elementClass: KulLazyElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulLazyEvent: 'kul-lazy-event' } as KulLazyEvents,
+              defineCustomElement: defineKulLazy,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulLazyElement, KulLazyEvents>({
+              tagName: 'kul-lazy',
+              properties: {
+                  kulComponentName: 'kul-component-name',
+                  kulRenderMode: 'kul-render-mode',
+                  kulShowPlaceholder: 'kul-show-placeholder',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulListEvents = { onKulListEvent: EventName<KulListCustomEvent<KulListEventPayload>> };
+type KulListEvents = {
+    onKulListEvent: EventName<KulListCustomEvent<KulListEventPayload>>;
+};
 
-export const KulList: StencilReactComponent<KulListElement, KulListEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulListElement, KulListEvents>({
-        tagName: 'kul-list',
-        elementClass: KulListElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulListEvent: 'kul-list-event' } as KulListEvents,
-        defineCustomElement: defineKulList
-    })
-    : /*@__PURE__*/ createSSRComponent<KulListElement, KulListEvents>({
-        tagName: 'kul-list',
-        properties: {
-            kulEmptyLabel: 'kul-empty-label',
-            kulEnableDeletions: 'kul-enable-deletions',
-            kulNavigation: 'kul-navigation',
-            kulRipple: 'kul-ripple',
-            kulSelectable: 'kul-selectable',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulList: StencilReactComponent<KulListElement, KulListEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulListElement, KulListEvents>({
+              tagName: 'kul-list',
+              elementClass: KulListElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulListEvent: 'kul-list-event' } as KulListEvents,
+              defineCustomElement: defineKulList,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulListElement, KulListEvents>({
+              tagName: 'kul-list',
+              properties: {
+                  kulEmptyLabel: 'kul-empty-label',
+                  kulEnableDeletions: 'kul-enable-deletions',
+                  kulNavigation: 'kul-navigation',
+                  kulRipple: 'kul-ripple',
+                  kulSelectable: 'kul-selectable',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulMasonryEvents = { onKulMasonryEvent: EventName<KulMasonryCustomEvent<KulMasonryEventPayload>> };
+type KulMasonryEvents = {
+    onKulMasonryEvent: EventName<KulMasonryCustomEvent<KulMasonryEventPayload>>;
+};
 
-export const KulMasonry: StencilReactComponent<KulMasonryElement, KulMasonryEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulMasonryElement, KulMasonryEvents>({
-        tagName: 'kul-masonry',
-        elementClass: KulMasonryElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulMasonryEvent: 'kul-masonry-event' } as KulMasonryEvents,
-        defineCustomElement: defineKulMasonry
-    })
-    : /*@__PURE__*/ createSSRComponent<KulMasonryElement, KulMasonryEvents>({
-        tagName: 'kul-masonry',
-        properties: {
-            kulColumns: 'kul-columns',
-            kulSelectable: 'kul-selectable',
-            kulShape: 'kul-shape',
-            kulStyle: 'kul-style',
-            kulView: 'kul-view'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulMasonry: StencilReactComponent<
+    KulMasonryElement,
+    KulMasonryEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulMasonryElement, KulMasonryEvents>({
+              tagName: 'kul-masonry',
+              elementClass: KulMasonryElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulMasonryEvent: 'kul-masonry-event',
+              } as KulMasonryEvents,
+              defineCustomElement: defineKulMasonry,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulMasonryElement, KulMasonryEvents>(
+              {
+                  tagName: 'kul-masonry',
+                  properties: {
+                      kulColumns: 'kul-columns',
+                      kulSelectable: 'kul-selectable',
+                      kulShape: 'kul-shape',
+                      kulStyle: 'kul-style',
+                      kulView: 'kul-view',
+                  },
+                  hydrateModule: import('ketchup-lite-hydrate'),
+              }
+          );
 
-type KulMessengerEvents = { onKulMessengerEvent: EventName<KulMessengerCustomEvent<KulMessengerEventPayload>> };
+type KulMessengerEvents = {
+    onKulMessengerEvent: EventName<
+        KulMessengerCustomEvent<KulMessengerEventPayload>
+    >;
+};
 
-export const KulMessenger: StencilReactComponent<KulMessengerElement, KulMessengerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulMessengerElement, KulMessengerEvents>({
-        tagName: 'kul-messenger',
-        elementClass: KulMessengerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulMessengerEvent: 'kul-messenger-event' } as KulMessengerEvents,
-        defineCustomElement: defineKulMessenger
-    })
-    : /*@__PURE__*/ createSSRComponent<KulMessengerElement, KulMessengerEvents>({
-        tagName: 'kul-messenger',
-        properties: {
-            kulAutosave: 'kul-autosave',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulMessenger: StencilReactComponent<
+    KulMessengerElement,
+    KulMessengerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulMessengerElement,
+              KulMessengerEvents
+          >({
+              tagName: 'kul-messenger',
+              elementClass: KulMessengerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulMessengerEvent: 'kul-messenger-event',
+              } as KulMessengerEvents,
+              defineCustomElement: defineKulMessenger,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulMessengerElement,
+              KulMessengerEvents
+          >({
+              tagName: 'kul-messenger',
+              properties: {
+                  kulAutosave: 'kul-autosave',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulPhotoframeEvents = { onKulPhotoframeEvent: EventName<KulPhotoframeCustomEvent<KulPhotoframeEventPayload>> };
+type KulPhotoframeEvents = {
+    onKulPhotoframeEvent: EventName<
+        KulPhotoframeCustomEvent<KulPhotoframeEventPayload>
+    >;
+};
 
-export const KulPhotoframe: StencilReactComponent<KulPhotoframeElement, KulPhotoframeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulPhotoframeElement, KulPhotoframeEvents>({
-        tagName: 'kul-photoframe',
-        elementClass: KulPhotoframeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulPhotoframeEvent: 'kul-photoframe-event' } as KulPhotoframeEvents,
-        defineCustomElement: defineKulPhotoframe
-    })
-    : /*@__PURE__*/ createSSRComponent<KulPhotoframeElement, KulPhotoframeEvents>({
-        tagName: 'kul-photoframe',
-        properties: {
-            kulStyle: 'kul-style',
-            kulThreshold: 'kul-threshold'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulPhotoframe: StencilReactComponent<
+    KulPhotoframeElement,
+    KulPhotoframeEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulPhotoframeElement,
+              KulPhotoframeEvents
+          >({
+              tagName: 'kul-photoframe',
+              elementClass: KulPhotoframeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulPhotoframeEvent: 'kul-photoframe-event',
+              } as KulPhotoframeEvents,
+              defineCustomElement: defineKulPhotoframe,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulPhotoframeElement,
+              KulPhotoframeEvents
+          >({
+              tagName: 'kul-photoframe',
+              properties: {
+                  kulStyle: 'kul-style',
+                  kulThreshold: 'kul-threshold',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulProgressbarEvents = { onKulProgressbarEvent: EventName<KulProgressbarCustomEvent<KulProgressbarEventPayload>> };
+type KulProgressbarEvents = {
+    onKulProgressbarEvent: EventName<
+        KulProgressbarCustomEvent<KulProgressbarEventPayload>
+    >;
+};
 
-export const KulProgressbar: StencilReactComponent<KulProgressbarElement, KulProgressbarEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulProgressbarElement, KulProgressbarEvents>({
-        tagName: 'kul-progressbar',
-        elementClass: KulProgressbarElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulProgressbarEvent: 'kul-progressbar-event' } as KulProgressbarEvents,
-        defineCustomElement: defineKulProgressbar
-    })
-    : /*@__PURE__*/ createSSRComponent<KulProgressbarElement, KulProgressbarEvents>({
-        tagName: 'kul-progressbar',
-        properties: {
-            kulCenteredLabel: 'kul-centered-label',
-            kulIcon: 'kul-icon',
-            kulIsRadial: 'kul-is-radial',
-            kulLabel: 'kul-label',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulProgressbar: StencilReactComponent<
+    KulProgressbarElement,
+    KulProgressbarEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulProgressbarElement,
+              KulProgressbarEvents
+          >({
+              tagName: 'kul-progressbar',
+              elementClass: KulProgressbarElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulProgressbarEvent: 'kul-progressbar-event',
+              } as KulProgressbarEvents,
+              defineCustomElement: defineKulProgressbar,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulProgressbarElement,
+              KulProgressbarEvents
+          >({
+              tagName: 'kul-progressbar',
+              properties: {
+                  kulCenteredLabel: 'kul-centered-label',
+                  kulIcon: 'kul-icon',
+                  kulIsRadial: 'kul-is-radial',
+                  kulLabel: 'kul-label',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseEvents = NonNullable<unknown>;
 
-export const KulShowcase: StencilReactComponent<KulShowcaseElement, KulShowcaseEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseElement, KulShowcaseEvents>({
-        tagName: 'kul-showcase',
-        elementClass: KulShowcaseElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseEvents,
-        defineCustomElement: defineKulShowcase
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseElement, KulShowcaseEvents>({
-        tagName: 'kul-showcase',
-        properties: { kulStyle: 'kul-style' },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcase: StencilReactComponent<
+    KulShowcaseElement,
+    KulShowcaseEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulShowcaseElement, KulShowcaseEvents>({
+              tagName: 'kul-showcase',
+              elementClass: KulShowcaseElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseEvents,
+              defineCustomElement: defineKulShowcase,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseElement,
+              KulShowcaseEvents
+          >({
+              tagName: 'kul-showcase',
+              properties: { kulStyle: 'kul-style' },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseAccordionEvents = NonNullable<unknown>;
 
-export const KulShowcaseAccordion: StencilReactComponent<KulShowcaseAccordionElement, KulShowcaseAccordionEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseAccordionElement, KulShowcaseAccordionEvents>({
-        tagName: 'kul-showcase-accordion',
-        elementClass: KulShowcaseAccordionElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseAccordionEvents,
-        defineCustomElement: defineKulShowcaseAccordion
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseAccordionElement, KulShowcaseAccordionEvents>({
-        tagName: 'kul-showcase-accordion',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseAccordion: StencilReactComponent<
+    KulShowcaseAccordionElement,
+    KulShowcaseAccordionEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseAccordionElement,
+              KulShowcaseAccordionEvents
+          >({
+              tagName: 'kul-showcase-accordion',
+              elementClass: KulShowcaseAccordionElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseAccordionEvents,
+              defineCustomElement: defineKulShowcaseAccordion,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseAccordionElement,
+              KulShowcaseAccordionEvents
+          >({
+              tagName: 'kul-showcase-accordion',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseArticleEvents = NonNullable<unknown>;
 
-export const KulShowcaseArticle: StencilReactComponent<KulShowcaseArticleElement, KulShowcaseArticleEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseArticleElement, KulShowcaseArticleEvents>({
-        tagName: 'kul-showcase-article',
-        elementClass: KulShowcaseArticleElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseArticleEvents,
-        defineCustomElement: defineKulShowcaseArticle
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseArticleElement, KulShowcaseArticleEvents>({
-        tagName: 'kul-showcase-article',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseArticle: StencilReactComponent<
+    KulShowcaseArticleElement,
+    KulShowcaseArticleEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseArticleElement,
+              KulShowcaseArticleEvents
+          >({
+              tagName: 'kul-showcase-article',
+              elementClass: KulShowcaseArticleElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseArticleEvents,
+              defineCustomElement: defineKulShowcaseArticle,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseArticleElement,
+              KulShowcaseArticleEvents
+          >({
+              tagName: 'kul-showcase-article',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseBadgeEvents = NonNullable<unknown>;
 
-export const KulShowcaseBadge: StencilReactComponent<KulShowcaseBadgeElement, KulShowcaseBadgeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseBadgeElement, KulShowcaseBadgeEvents>({
-        tagName: 'kul-showcase-badge',
-        elementClass: KulShowcaseBadgeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseBadgeEvents,
-        defineCustomElement: defineKulShowcaseBadge
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseBadgeElement, KulShowcaseBadgeEvents>({
-        tagName: 'kul-showcase-badge',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseBadge: StencilReactComponent<
+    KulShowcaseBadgeElement,
+    KulShowcaseBadgeEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseBadgeElement,
+              KulShowcaseBadgeEvents
+          >({
+              tagName: 'kul-showcase-badge',
+              elementClass: KulShowcaseBadgeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseBadgeEvents,
+              defineCustomElement: defineKulShowcaseBadge,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseBadgeElement,
+              KulShowcaseBadgeEvents
+          >({
+              tagName: 'kul-showcase-badge',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseButtonEvents = NonNullable<unknown>;
 
-export const KulShowcaseButton: StencilReactComponent<KulShowcaseButtonElement, KulShowcaseButtonEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseButtonElement, KulShowcaseButtonEvents>({
-        tagName: 'kul-showcase-button',
-        elementClass: KulShowcaseButtonElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseButtonEvents,
-        defineCustomElement: defineKulShowcaseButton
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseButtonElement, KulShowcaseButtonEvents>({
-        tagName: 'kul-showcase-button',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseButton: StencilReactComponent<
+    KulShowcaseButtonElement,
+    KulShowcaseButtonEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseButtonElement,
+              KulShowcaseButtonEvents
+          >({
+              tagName: 'kul-showcase-button',
+              elementClass: KulShowcaseButtonElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseButtonEvents,
+              defineCustomElement: defineKulShowcaseButton,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseButtonElement,
+              KulShowcaseButtonEvents
+          >({
+              tagName: 'kul-showcase-button',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseCanvasEvents = NonNullable<unknown>;
 
-export const KulShowcaseCanvas: StencilReactComponent<KulShowcaseCanvasElement, KulShowcaseCanvasEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseCanvasElement, KulShowcaseCanvasEvents>({
-        tagName: 'kul-showcase-canvas',
-        elementClass: KulShowcaseCanvasElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseCanvasEvents,
-        defineCustomElement: defineKulShowcaseCanvas
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseCanvasElement, KulShowcaseCanvasEvents>({
-        tagName: 'kul-showcase-canvas',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseCanvas: StencilReactComponent<
+    KulShowcaseCanvasElement,
+    KulShowcaseCanvasEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseCanvasElement,
+              KulShowcaseCanvasEvents
+          >({
+              tagName: 'kul-showcase-canvas',
+              elementClass: KulShowcaseCanvasElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseCanvasEvents,
+              defineCustomElement: defineKulShowcaseCanvas,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseCanvasElement,
+              KulShowcaseCanvasEvents
+          >({
+              tagName: 'kul-showcase-canvas',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseCardEvents = NonNullable<unknown>;
 
-export const KulShowcaseCard: StencilReactComponent<KulShowcaseCardElement, KulShowcaseCardEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseCardElement, KulShowcaseCardEvents>({
-        tagName: 'kul-showcase-card',
-        elementClass: KulShowcaseCardElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseCardEvents,
-        defineCustomElement: defineKulShowcaseCard
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseCardElement, KulShowcaseCardEvents>({
-        tagName: 'kul-showcase-card',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseCard: StencilReactComponent<
+    KulShowcaseCardElement,
+    KulShowcaseCardEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseCardElement,
+              KulShowcaseCardEvents
+          >({
+              tagName: 'kul-showcase-card',
+              elementClass: KulShowcaseCardElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseCardEvents,
+              defineCustomElement: defineKulShowcaseCard,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseCardElement,
+              KulShowcaseCardEvents
+          >({
+              tagName: 'kul-showcase-card',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseCarouselEvents = NonNullable<unknown>;
 
-export const KulShowcaseCarousel: StencilReactComponent<KulShowcaseCarouselElement, KulShowcaseCarouselEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseCarouselElement, KulShowcaseCarouselEvents>({
-        tagName: 'kul-showcase-carousel',
-        elementClass: KulShowcaseCarouselElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseCarouselEvents,
-        defineCustomElement: defineKulShowcaseCarousel
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseCarouselElement, KulShowcaseCarouselEvents>({
-        tagName: 'kul-showcase-carousel',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseCarousel: StencilReactComponent<
+    KulShowcaseCarouselElement,
+    KulShowcaseCarouselEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseCarouselElement,
+              KulShowcaseCarouselEvents
+          >({
+              tagName: 'kul-showcase-carousel',
+              elementClass: KulShowcaseCarouselElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseCarouselEvents,
+              defineCustomElement: defineKulShowcaseCarousel,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseCarouselElement,
+              KulShowcaseCarouselEvents
+          >({
+              tagName: 'kul-showcase-carousel',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseChartEvents = NonNullable<unknown>;
 
-export const KulShowcaseChart: StencilReactComponent<KulShowcaseChartElement, KulShowcaseChartEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseChartElement, KulShowcaseChartEvents>({
-        tagName: 'kul-showcase-chart',
-        elementClass: KulShowcaseChartElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseChartEvents,
-        defineCustomElement: defineKulShowcaseChart
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseChartElement, KulShowcaseChartEvents>({
-        tagName: 'kul-showcase-chart',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseChart: StencilReactComponent<
+    KulShowcaseChartElement,
+    KulShowcaseChartEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseChartElement,
+              KulShowcaseChartEvents
+          >({
+              tagName: 'kul-showcase-chart',
+              elementClass: KulShowcaseChartElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseChartEvents,
+              defineCustomElement: defineKulShowcaseChart,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseChartElement,
+              KulShowcaseChartEvents
+          >({
+              tagName: 'kul-showcase-chart',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseChatEvents = NonNullable<unknown>;
 
-export const KulShowcaseChat: StencilReactComponent<KulShowcaseChatElement, KulShowcaseChatEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseChatElement, KulShowcaseChatEvents>({
-        tagName: 'kul-showcase-chat',
-        elementClass: KulShowcaseChatElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseChatEvents,
-        defineCustomElement: defineKulShowcaseChat
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseChatElement, KulShowcaseChatEvents>({
-        tagName: 'kul-showcase-chat',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseChat: StencilReactComponent<
+    KulShowcaseChatElement,
+    KulShowcaseChatEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseChatElement,
+              KulShowcaseChatEvents
+          >({
+              tagName: 'kul-showcase-chat',
+              elementClass: KulShowcaseChatElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseChatEvents,
+              defineCustomElement: defineKulShowcaseChat,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseChatElement,
+              KulShowcaseChatEvents
+          >({
+              tagName: 'kul-showcase-chat',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseChipEvents = NonNullable<unknown>;
 
-export const KulShowcaseChip: StencilReactComponent<KulShowcaseChipElement, KulShowcaseChipEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseChipElement, KulShowcaseChipEvents>({
-        tagName: 'kul-showcase-chip',
-        elementClass: KulShowcaseChipElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseChipEvents,
-        defineCustomElement: defineKulShowcaseChip
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseChipElement, KulShowcaseChipEvents>({
-        tagName: 'kul-showcase-chip',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseChip: StencilReactComponent<
+    KulShowcaseChipElement,
+    KulShowcaseChipEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseChipElement,
+              KulShowcaseChipEvents
+          >({
+              tagName: 'kul-showcase-chip',
+              elementClass: KulShowcaseChipElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseChipEvents,
+              defineCustomElement: defineKulShowcaseChip,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseChipElement,
+              KulShowcaseChipEvents
+          >({
+              tagName: 'kul-showcase-chip',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseCodeEvents = NonNullable<unknown>;
 
-export const KulShowcaseCode: StencilReactComponent<KulShowcaseCodeElement, KulShowcaseCodeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseCodeElement, KulShowcaseCodeEvents>({
-        tagName: 'kul-showcase-code',
-        elementClass: KulShowcaseCodeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseCodeEvents,
-        defineCustomElement: defineKulShowcaseCode
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseCodeElement, KulShowcaseCodeEvents>({
-        tagName: 'kul-showcase-code',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseCode: StencilReactComponent<
+    KulShowcaseCodeElement,
+    KulShowcaseCodeEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseCodeElement,
+              KulShowcaseCodeEvents
+          >({
+              tagName: 'kul-showcase-code',
+              elementClass: KulShowcaseCodeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseCodeEvents,
+              defineCustomElement: defineKulShowcaseCode,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseCodeElement,
+              KulShowcaseCodeEvents
+          >({
+              tagName: 'kul-showcase-code',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseCompareEvents = NonNullable<unknown>;
 
-export const KulShowcaseCompare: StencilReactComponent<KulShowcaseCompareElement, KulShowcaseCompareEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseCompareElement, KulShowcaseCompareEvents>({
-        tagName: 'kul-showcase-compare',
-        elementClass: KulShowcaseCompareElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseCompareEvents,
-        defineCustomElement: defineKulShowcaseCompare
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseCompareElement, KulShowcaseCompareEvents>({
-        tagName: 'kul-showcase-compare',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseCompare: StencilReactComponent<
+    KulShowcaseCompareElement,
+    KulShowcaseCompareEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseCompareElement,
+              KulShowcaseCompareEvents
+          >({
+              tagName: 'kul-showcase-compare',
+              elementClass: KulShowcaseCompareElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseCompareEvents,
+              defineCustomElement: defineKulShowcaseCompare,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseCompareElement,
+              KulShowcaseCompareEvents
+          >({
+              tagName: 'kul-showcase-compare',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseDebugEvents = NonNullable<unknown>;
 
-export const KulShowcaseDebug: StencilReactComponent<KulShowcaseDebugElement, KulShowcaseDebugEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseDebugElement, KulShowcaseDebugEvents>({
-        tagName: 'kul-showcase-debug',
-        elementClass: KulShowcaseDebugElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseDebugEvents,
-        defineCustomElement: defineKulShowcaseDebug
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseDebugElement, KulShowcaseDebugEvents>({
-        tagName: 'kul-showcase-debug',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseDebug: StencilReactComponent<
+    KulShowcaseDebugElement,
+    KulShowcaseDebugEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseDebugElement,
+              KulShowcaseDebugEvents
+          >({
+              tagName: 'kul-showcase-debug',
+              elementClass: KulShowcaseDebugElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseDebugEvents,
+              defineCustomElement: defineKulShowcaseDebug,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseDebugElement,
+              KulShowcaseDebugEvents
+          >({
+              tagName: 'kul-showcase-debug',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseDrawerEvents = NonNullable<unknown>;
 
-export const KulShowcaseDrawer: StencilReactComponent<KulShowcaseDrawerElement, KulShowcaseDrawerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseDrawerElement, KulShowcaseDrawerEvents>({
-        tagName: 'kul-showcase-drawer',
-        elementClass: KulShowcaseDrawerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseDrawerEvents,
-        defineCustomElement: defineKulShowcaseDrawer
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseDrawerElement, KulShowcaseDrawerEvents>({
-        tagName: 'kul-showcase-drawer',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseDrawer: StencilReactComponent<
+    KulShowcaseDrawerElement,
+    KulShowcaseDrawerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseDrawerElement,
+              KulShowcaseDrawerEvents
+          >({
+              tagName: 'kul-showcase-drawer',
+              elementClass: KulShowcaseDrawerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseDrawerEvents,
+              defineCustomElement: defineKulShowcaseDrawer,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseDrawerElement,
+              KulShowcaseDrawerEvents
+          >({
+              tagName: 'kul-showcase-drawer',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseHeaderEvents = NonNullable<unknown>;
 
-export const KulShowcaseHeader: StencilReactComponent<KulShowcaseHeaderElement, KulShowcaseHeaderEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseHeaderElement, KulShowcaseHeaderEvents>({
-        tagName: 'kul-showcase-header',
-        elementClass: KulShowcaseHeaderElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseHeaderEvents,
-        defineCustomElement: defineKulShowcaseHeader
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseHeaderElement, KulShowcaseHeaderEvents>({
-        tagName: 'kul-showcase-header',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseHeader: StencilReactComponent<
+    KulShowcaseHeaderElement,
+    KulShowcaseHeaderEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseHeaderElement,
+              KulShowcaseHeaderEvents
+          >({
+              tagName: 'kul-showcase-header',
+              elementClass: KulShowcaseHeaderElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseHeaderEvents,
+              defineCustomElement: defineKulShowcaseHeader,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseHeaderElement,
+              KulShowcaseHeaderEvents
+          >({
+              tagName: 'kul-showcase-header',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseImageEvents = NonNullable<unknown>;
 
-export const KulShowcaseImage: StencilReactComponent<KulShowcaseImageElement, KulShowcaseImageEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseImageElement, KulShowcaseImageEvents>({
-        tagName: 'kul-showcase-image',
-        elementClass: KulShowcaseImageElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseImageEvents,
-        defineCustomElement: defineKulShowcaseImage
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseImageElement, KulShowcaseImageEvents>({
-        tagName: 'kul-showcase-image',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseImage: StencilReactComponent<
+    KulShowcaseImageElement,
+    KulShowcaseImageEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseImageElement,
+              KulShowcaseImageEvents
+          >({
+              tagName: 'kul-showcase-image',
+              elementClass: KulShowcaseImageElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseImageEvents,
+              defineCustomElement: defineKulShowcaseImage,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseImageElement,
+              KulShowcaseImageEvents
+          >({
+              tagName: 'kul-showcase-image',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseImageviewerEvents = NonNullable<unknown>;
 
-export const KulShowcaseImageviewer: StencilReactComponent<KulShowcaseImageviewerElement, KulShowcaseImageviewerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseImageviewerElement, KulShowcaseImageviewerEvents>({
-        tagName: 'kul-showcase-imageviewer',
-        elementClass: KulShowcaseImageviewerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseImageviewerEvents,
-        defineCustomElement: defineKulShowcaseImageviewer
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseImageviewerElement, KulShowcaseImageviewerEvents>({
-        tagName: 'kul-showcase-imageviewer',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseImageviewer: StencilReactComponent<
+    KulShowcaseImageviewerElement,
+    KulShowcaseImageviewerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseImageviewerElement,
+              KulShowcaseImageviewerEvents
+          >({
+              tagName: 'kul-showcase-imageviewer',
+              elementClass: KulShowcaseImageviewerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseImageviewerEvents,
+              defineCustomElement: defineKulShowcaseImageviewer,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseImageviewerElement,
+              KulShowcaseImageviewerEvents
+          >({
+              tagName: 'kul-showcase-imageviewer',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKuldataEvents = NonNullable<unknown>;
 
-export const KulShowcaseKuldata: StencilReactComponent<KulShowcaseKuldataElement, KulShowcaseKuldataEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKuldataElement, KulShowcaseKuldataEvents>({
-        tagName: 'kul-showcase-kuldata',
-        elementClass: KulShowcaseKuldataElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKuldataEvents,
-        defineCustomElement: defineKulShowcaseKuldata
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKuldataElement, KulShowcaseKuldataEvents>({
-        tagName: 'kul-showcase-kuldata',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKuldata: StencilReactComponent<
+    KulShowcaseKuldataElement,
+    KulShowcaseKuldataEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKuldataElement,
+              KulShowcaseKuldataEvents
+          >({
+              tagName: 'kul-showcase-kuldata',
+              elementClass: KulShowcaseKuldataElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKuldataEvents,
+              defineCustomElement: defineKulShowcaseKuldata,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKuldataElement,
+              KulShowcaseKuldataEvents
+          >({
+              tagName: 'kul-showcase-kuldata',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKuldatesEvents = NonNullable<unknown>;
 
-export const KulShowcaseKuldates: StencilReactComponent<KulShowcaseKuldatesElement, KulShowcaseKuldatesEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKuldatesElement, KulShowcaseKuldatesEvents>({
-        tagName: 'kul-showcase-kuldates',
-        elementClass: KulShowcaseKuldatesElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKuldatesEvents,
-        defineCustomElement: defineKulShowcaseKuldates
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKuldatesElement, KulShowcaseKuldatesEvents>({
-        tagName: 'kul-showcase-kuldates',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKuldates: StencilReactComponent<
+    KulShowcaseKuldatesElement,
+    KulShowcaseKuldatesEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKuldatesElement,
+              KulShowcaseKuldatesEvents
+          >({
+              tagName: 'kul-showcase-kuldates',
+              elementClass: KulShowcaseKuldatesElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKuldatesEvents,
+              defineCustomElement: defineKulShowcaseKuldates,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKuldatesElement,
+              KulShowcaseKuldatesEvents
+          >({
+              tagName: 'kul-showcase-kuldates',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKuldebugEvents = NonNullable<unknown>;
 
-export const KulShowcaseKuldebug: StencilReactComponent<KulShowcaseKuldebugElement, KulShowcaseKuldebugEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKuldebugElement, KulShowcaseKuldebugEvents>({
-        tagName: 'kul-showcase-kuldebug',
-        elementClass: KulShowcaseKuldebugElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKuldebugEvents,
-        defineCustomElement: defineKulShowcaseKuldebug
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKuldebugElement, KulShowcaseKuldebugEvents>({
-        tagName: 'kul-showcase-kuldebug',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKuldebug: StencilReactComponent<
+    KulShowcaseKuldebugElement,
+    KulShowcaseKuldebugEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKuldebugElement,
+              KulShowcaseKuldebugEvents
+          >({
+              tagName: 'kul-showcase-kuldebug',
+              elementClass: KulShowcaseKuldebugElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKuldebugEvents,
+              defineCustomElement: defineKulShowcaseKuldebug,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKuldebugElement,
+              KulShowcaseKuldebugEvents
+          >({
+              tagName: 'kul-showcase-kuldebug',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKuldynamicpositionEvents = NonNullable<unknown>;
 
-export const KulShowcaseKuldynamicposition: StencilReactComponent<KulShowcaseKuldynamicpositionElement, KulShowcaseKuldynamicpositionEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKuldynamicpositionElement, KulShowcaseKuldynamicpositionEvents>({
-        tagName: 'kul-showcase-kuldynamicposition',
-        elementClass: KulShowcaseKuldynamicpositionElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKuldynamicpositionEvents,
-        defineCustomElement: defineKulShowcaseKuldynamicposition
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKuldynamicpositionElement, KulShowcaseKuldynamicpositionEvents>({
-        tagName: 'kul-showcase-kuldynamicposition',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKuldynamicposition: StencilReactComponent<
+    KulShowcaseKuldynamicpositionElement,
+    KulShowcaseKuldynamicpositionEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKuldynamicpositionElement,
+              KulShowcaseKuldynamicpositionEvents
+          >({
+              tagName: 'kul-showcase-kuldynamicposition',
+              elementClass: KulShowcaseKuldynamicpositionElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKuldynamicpositionEvents,
+              defineCustomElement: defineKulShowcaseKuldynamicposition,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKuldynamicpositionElement,
+              KulShowcaseKuldynamicpositionEvents
+          >({
+              tagName: 'kul-showcase-kuldynamicposition',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKullanguageEvents = NonNullable<unknown>;
 
-export const KulShowcaseKullanguage: StencilReactComponent<KulShowcaseKullanguageElement, KulShowcaseKullanguageEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKullanguageElement, KulShowcaseKullanguageEvents>({
-        tagName: 'kul-showcase-kullanguage',
-        elementClass: KulShowcaseKullanguageElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKullanguageEvents,
-        defineCustomElement: defineKulShowcaseKullanguage
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKullanguageElement, KulShowcaseKullanguageEvents>({
-        tagName: 'kul-showcase-kullanguage',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKullanguage: StencilReactComponent<
+    KulShowcaseKullanguageElement,
+    KulShowcaseKullanguageEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKullanguageElement,
+              KulShowcaseKullanguageEvents
+          >({
+              tagName: 'kul-showcase-kullanguage',
+              elementClass: KulShowcaseKullanguageElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKullanguageEvents,
+              defineCustomElement: defineKulShowcaseKullanguage,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKullanguageElement,
+              KulShowcaseKullanguageEvents
+          >({
+              tagName: 'kul-showcase-kullanguage',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKulllmEvents = NonNullable<unknown>;
 
-export const KulShowcaseKulllm: StencilReactComponent<KulShowcaseKulllmElement, KulShowcaseKulllmEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKulllmElement, KulShowcaseKulllmEvents>({
-        tagName: 'kul-showcase-kulllm',
-        elementClass: KulShowcaseKulllmElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKulllmEvents,
-        defineCustomElement: defineKulShowcaseKulllm
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKulllmElement, KulShowcaseKulllmEvents>({
-        tagName: 'kul-showcase-kulllm',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKulllm: StencilReactComponent<
+    KulShowcaseKulllmElement,
+    KulShowcaseKulllmEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKulllmElement,
+              KulShowcaseKulllmEvents
+          >({
+              tagName: 'kul-showcase-kulllm',
+              elementClass: KulShowcaseKulllmElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKulllmEvents,
+              defineCustomElement: defineKulShowcaseKulllm,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKulllmElement,
+              KulShowcaseKulllmEvents
+          >({
+              tagName: 'kul-showcase-kulllm',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKulmanagerEvents = NonNullable<unknown>;
 
-export const KulShowcaseKulmanager: StencilReactComponent<KulShowcaseKulmanagerElement, KulShowcaseKulmanagerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKulmanagerElement, KulShowcaseKulmanagerEvents>({
-        tagName: 'kul-showcase-kulmanager',
-        elementClass: KulShowcaseKulmanagerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKulmanagerEvents,
-        defineCustomElement: defineKulShowcaseKulmanager
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKulmanagerElement, KulShowcaseKulmanagerEvents>({
-        tagName: 'kul-showcase-kulmanager',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKulmanager: StencilReactComponent<
+    KulShowcaseKulmanagerElement,
+    KulShowcaseKulmanagerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKulmanagerElement,
+              KulShowcaseKulmanagerEvents
+          >({
+              tagName: 'kul-showcase-kulmanager',
+              elementClass: KulShowcaseKulmanagerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKulmanagerEvents,
+              defineCustomElement: defineKulShowcaseKulmanager,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKulmanagerElement,
+              KulShowcaseKulmanagerEvents
+          >({
+              tagName: 'kul-showcase-kulmanager',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKulscrollonhoverEvents = NonNullable<unknown>;
 
-export const KulShowcaseKulscrollonhover: StencilReactComponent<KulShowcaseKulscrollonhoverElement, KulShowcaseKulscrollonhoverEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKulscrollonhoverElement, KulShowcaseKulscrollonhoverEvents>({
-        tagName: 'kul-showcase-kulscrollonhover',
-        elementClass: KulShowcaseKulscrollonhoverElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKulscrollonhoverEvents,
-        defineCustomElement: defineKulShowcaseKulscrollonhover
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKulscrollonhoverElement, KulShowcaseKulscrollonhoverEvents>({
-        tagName: 'kul-showcase-kulscrollonhover',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKulscrollonhover: StencilReactComponent<
+    KulShowcaseKulscrollonhoverElement,
+    KulShowcaseKulscrollonhoverEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKulscrollonhoverElement,
+              KulShowcaseKulscrollonhoverEvents
+          >({
+              tagName: 'kul-showcase-kulscrollonhover',
+              elementClass: KulShowcaseKulscrollonhoverElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKulscrollonhoverEvents,
+              defineCustomElement: defineKulShowcaseKulscrollonhover,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKulscrollonhoverElement,
+              KulShowcaseKulscrollonhoverEvents
+          >({
+              tagName: 'kul-showcase-kulscrollonhover',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseKulthemeEvents = NonNullable<unknown>;
 
-export const KulShowcaseKultheme: StencilReactComponent<KulShowcaseKulthemeElement, KulShowcaseKulthemeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseKulthemeElement, KulShowcaseKulthemeEvents>({
-        tagName: 'kul-showcase-kultheme',
-        elementClass: KulShowcaseKulthemeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseKulthemeEvents,
-        defineCustomElement: defineKulShowcaseKultheme
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseKulthemeElement, KulShowcaseKulthemeEvents>({
-        tagName: 'kul-showcase-kultheme',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseKultheme: StencilReactComponent<
+    KulShowcaseKulthemeElement,
+    KulShowcaseKulthemeEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseKulthemeElement,
+              KulShowcaseKulthemeEvents
+          >({
+              tagName: 'kul-showcase-kultheme',
+              elementClass: KulShowcaseKulthemeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseKulthemeEvents,
+              defineCustomElement: defineKulShowcaseKultheme,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseKulthemeElement,
+              KulShowcaseKulthemeEvents
+          >({
+              tagName: 'kul-showcase-kultheme',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseLazyEvents = NonNullable<unknown>;
 
-export const KulShowcaseLazy: StencilReactComponent<KulShowcaseLazyElement, KulShowcaseLazyEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseLazyElement, KulShowcaseLazyEvents>({
-        tagName: 'kul-showcase-lazy',
-        elementClass: KulShowcaseLazyElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseLazyEvents,
-        defineCustomElement: defineKulShowcaseLazy
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseLazyElement, KulShowcaseLazyEvents>({
-        tagName: 'kul-showcase-lazy',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseLazy: StencilReactComponent<
+    KulShowcaseLazyElement,
+    KulShowcaseLazyEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseLazyElement,
+              KulShowcaseLazyEvents
+          >({
+              tagName: 'kul-showcase-lazy',
+              elementClass: KulShowcaseLazyElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseLazyEvents,
+              defineCustomElement: defineKulShowcaseLazy,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseLazyElement,
+              KulShowcaseLazyEvents
+          >({
+              tagName: 'kul-showcase-lazy',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseListEvents = NonNullable<unknown>;
 
-export const KulShowcaseList: StencilReactComponent<KulShowcaseListElement, KulShowcaseListEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseListElement, KulShowcaseListEvents>({
-        tagName: 'kul-showcase-list',
-        elementClass: KulShowcaseListElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseListEvents,
-        defineCustomElement: defineKulShowcaseList
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseListElement, KulShowcaseListEvents>({
-        tagName: 'kul-showcase-list',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseList: StencilReactComponent<
+    KulShowcaseListElement,
+    KulShowcaseListEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseListElement,
+              KulShowcaseListEvents
+          >({
+              tagName: 'kul-showcase-list',
+              elementClass: KulShowcaseListElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseListEvents,
+              defineCustomElement: defineKulShowcaseList,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseListElement,
+              KulShowcaseListEvents
+          >({
+              tagName: 'kul-showcase-list',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseMasonryEvents = NonNullable<unknown>;
 
-export const KulShowcaseMasonry: StencilReactComponent<KulShowcaseMasonryElement, KulShowcaseMasonryEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseMasonryElement, KulShowcaseMasonryEvents>({
-        tagName: 'kul-showcase-masonry',
-        elementClass: KulShowcaseMasonryElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseMasonryEvents,
-        defineCustomElement: defineKulShowcaseMasonry
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseMasonryElement, KulShowcaseMasonryEvents>({
-        tagName: 'kul-showcase-masonry',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseMasonry: StencilReactComponent<
+    KulShowcaseMasonryElement,
+    KulShowcaseMasonryEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseMasonryElement,
+              KulShowcaseMasonryEvents
+          >({
+              tagName: 'kul-showcase-masonry',
+              elementClass: KulShowcaseMasonryElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseMasonryEvents,
+              defineCustomElement: defineKulShowcaseMasonry,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseMasonryElement,
+              KulShowcaseMasonryEvents
+          >({
+              tagName: 'kul-showcase-masonry',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseMessengerEvents = NonNullable<unknown>;
 
-export const KulShowcaseMessenger: StencilReactComponent<KulShowcaseMessengerElement, KulShowcaseMessengerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseMessengerElement, KulShowcaseMessengerEvents>({
-        tagName: 'kul-showcase-messenger',
-        elementClass: KulShowcaseMessengerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseMessengerEvents,
-        defineCustomElement: defineKulShowcaseMessenger
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseMessengerElement, KulShowcaseMessengerEvents>({
-        tagName: 'kul-showcase-messenger',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseMessenger: StencilReactComponent<
+    KulShowcaseMessengerElement,
+    KulShowcaseMessengerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseMessengerElement,
+              KulShowcaseMessengerEvents
+          >({
+              tagName: 'kul-showcase-messenger',
+              elementClass: KulShowcaseMessengerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseMessengerEvents,
+              defineCustomElement: defineKulShowcaseMessenger,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseMessengerElement,
+              KulShowcaseMessengerEvents
+          >({
+              tagName: 'kul-showcase-messenger',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcasePhotoframeEvents = NonNullable<unknown>;
 
-export const KulShowcasePhotoframe: StencilReactComponent<KulShowcasePhotoframeElement, KulShowcasePhotoframeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcasePhotoframeElement, KulShowcasePhotoframeEvents>({
-        tagName: 'kul-showcase-photoframe',
-        elementClass: KulShowcasePhotoframeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcasePhotoframeEvents,
-        defineCustomElement: defineKulShowcasePhotoframe
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcasePhotoframeElement, KulShowcasePhotoframeEvents>({
-        tagName: 'kul-showcase-photoframe',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcasePhotoframe: StencilReactComponent<
+    KulShowcasePhotoframeElement,
+    KulShowcasePhotoframeEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcasePhotoframeElement,
+              KulShowcasePhotoframeEvents
+          >({
+              tagName: 'kul-showcase-photoframe',
+              elementClass: KulShowcasePhotoframeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcasePhotoframeEvents,
+              defineCustomElement: defineKulShowcasePhotoframe,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcasePhotoframeElement,
+              KulShowcasePhotoframeEvents
+          >({
+              tagName: 'kul-showcase-photoframe',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseProgressbarEvents = NonNullable<unknown>;
 
-export const KulShowcaseProgressbar: StencilReactComponent<KulShowcaseProgressbarElement, KulShowcaseProgressbarEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseProgressbarElement, KulShowcaseProgressbarEvents>({
-        tagName: 'kul-showcase-progressbar',
-        elementClass: KulShowcaseProgressbarElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseProgressbarEvents,
-        defineCustomElement: defineKulShowcaseProgressbar
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseProgressbarElement, KulShowcaseProgressbarEvents>({
-        tagName: 'kul-showcase-progressbar',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseProgressbar: StencilReactComponent<
+    KulShowcaseProgressbarElement,
+    KulShowcaseProgressbarEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseProgressbarElement,
+              KulShowcaseProgressbarEvents
+          >({
+              tagName: 'kul-showcase-progressbar',
+              elementClass: KulShowcaseProgressbarElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseProgressbarEvents,
+              defineCustomElement: defineKulShowcaseProgressbar,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseProgressbarElement,
+              KulShowcaseProgressbarEvents
+          >({
+              tagName: 'kul-showcase-progressbar',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseSliderEvents = NonNullable<unknown>;
 
-export const KulShowcaseSlider: StencilReactComponent<KulShowcaseSliderElement, KulShowcaseSliderEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseSliderElement, KulShowcaseSliderEvents>({
-        tagName: 'kul-showcase-slider',
-        elementClass: KulShowcaseSliderElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseSliderEvents,
-        defineCustomElement: defineKulShowcaseSlider
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseSliderElement, KulShowcaseSliderEvents>({
-        tagName: 'kul-showcase-slider',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseSlider: StencilReactComponent<
+    KulShowcaseSliderElement,
+    KulShowcaseSliderEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseSliderElement,
+              KulShowcaseSliderEvents
+          >({
+              tagName: 'kul-showcase-slider',
+              elementClass: KulShowcaseSliderElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseSliderEvents,
+              defineCustomElement: defineKulShowcaseSlider,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseSliderElement,
+              KulShowcaseSliderEvents
+          >({
+              tagName: 'kul-showcase-slider',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseSpinnerEvents = NonNullable<unknown>;
 
-export const KulShowcaseSpinner: StencilReactComponent<KulShowcaseSpinnerElement, KulShowcaseSpinnerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseSpinnerElement, KulShowcaseSpinnerEvents>({
-        tagName: 'kul-showcase-spinner',
-        elementClass: KulShowcaseSpinnerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseSpinnerEvents,
-        defineCustomElement: defineKulShowcaseSpinner
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseSpinnerElement, KulShowcaseSpinnerEvents>({
-        tagName: 'kul-showcase-spinner',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseSpinner: StencilReactComponent<
+    KulShowcaseSpinnerElement,
+    KulShowcaseSpinnerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseSpinnerElement,
+              KulShowcaseSpinnerEvents
+          >({
+              tagName: 'kul-showcase-spinner',
+              elementClass: KulShowcaseSpinnerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseSpinnerEvents,
+              defineCustomElement: defineKulShowcaseSpinner,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseSpinnerElement,
+              KulShowcaseSpinnerEvents
+          >({
+              tagName: 'kul-showcase-spinner',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseSplashEvents = NonNullable<unknown>;
 
-export const KulShowcaseSplash: StencilReactComponent<KulShowcaseSplashElement, KulShowcaseSplashEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseSplashElement, KulShowcaseSplashEvents>({
-        tagName: 'kul-showcase-splash',
-        elementClass: KulShowcaseSplashElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseSplashEvents,
-        defineCustomElement: defineKulShowcaseSplash
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseSplashElement, KulShowcaseSplashEvents>({
-        tagName: 'kul-showcase-splash',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseSplash: StencilReactComponent<
+    KulShowcaseSplashElement,
+    KulShowcaseSplashEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseSplashElement,
+              KulShowcaseSplashEvents
+          >({
+              tagName: 'kul-showcase-splash',
+              elementClass: KulShowcaseSplashElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseSplashEvents,
+              defineCustomElement: defineKulShowcaseSplash,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseSplashElement,
+              KulShowcaseSplashEvents
+          >({
+              tagName: 'kul-showcase-splash',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseTabbarEvents = NonNullable<unknown>;
 
-export const KulShowcaseTabbar: StencilReactComponent<KulShowcaseTabbarElement, KulShowcaseTabbarEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseTabbarElement, KulShowcaseTabbarEvents>({
-        tagName: 'kul-showcase-tabbar',
-        elementClass: KulShowcaseTabbarElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseTabbarEvents,
-        defineCustomElement: defineKulShowcaseTabbar
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseTabbarElement, KulShowcaseTabbarEvents>({
-        tagName: 'kul-showcase-tabbar',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseTabbar: StencilReactComponent<
+    KulShowcaseTabbarElement,
+    KulShowcaseTabbarEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseTabbarElement,
+              KulShowcaseTabbarEvents
+          >({
+              tagName: 'kul-showcase-tabbar',
+              elementClass: KulShowcaseTabbarElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseTabbarEvents,
+              defineCustomElement: defineKulShowcaseTabbar,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseTabbarElement,
+              KulShowcaseTabbarEvents
+          >({
+              tagName: 'kul-showcase-tabbar',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseTextfieldEvents = NonNullable<unknown>;
 
-export const KulShowcaseTextfield: StencilReactComponent<KulShowcaseTextfieldElement, KulShowcaseTextfieldEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseTextfieldElement, KulShowcaseTextfieldEvents>({
-        tagName: 'kul-showcase-textfield',
-        elementClass: KulShowcaseTextfieldElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseTextfieldEvents,
-        defineCustomElement: defineKulShowcaseTextfield
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseTextfieldElement, KulShowcaseTextfieldEvents>({
-        tagName: 'kul-showcase-textfield',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseTextfield: StencilReactComponent<
+    KulShowcaseTextfieldElement,
+    KulShowcaseTextfieldEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseTextfieldElement,
+              KulShowcaseTextfieldEvents
+          >({
+              tagName: 'kul-showcase-textfield',
+              elementClass: KulShowcaseTextfieldElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseTextfieldEvents,
+              defineCustomElement: defineKulShowcaseTextfield,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseTextfieldElement,
+              KulShowcaseTextfieldEvents
+          >({
+              tagName: 'kul-showcase-textfield',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseToastEvents = NonNullable<unknown>;
 
-export const KulShowcaseToast: StencilReactComponent<KulShowcaseToastElement, KulShowcaseToastEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseToastElement, KulShowcaseToastEvents>({
-        tagName: 'kul-showcase-toast',
-        elementClass: KulShowcaseToastElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseToastEvents,
-        defineCustomElement: defineKulShowcaseToast
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseToastElement, KulShowcaseToastEvents>({
-        tagName: 'kul-showcase-toast',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseToast: StencilReactComponent<
+    KulShowcaseToastElement,
+    KulShowcaseToastEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseToastElement,
+              KulShowcaseToastEvents
+          >({
+              tagName: 'kul-showcase-toast',
+              elementClass: KulShowcaseToastElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseToastEvents,
+              defineCustomElement: defineKulShowcaseToast,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseToastElement,
+              KulShowcaseToastEvents
+          >({
+              tagName: 'kul-showcase-toast',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseToggleEvents = NonNullable<unknown>;
 
-export const KulShowcaseToggle: StencilReactComponent<KulShowcaseToggleElement, KulShowcaseToggleEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseToggleElement, KulShowcaseToggleEvents>({
-        tagName: 'kul-showcase-toggle',
-        elementClass: KulShowcaseToggleElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseToggleEvents,
-        defineCustomElement: defineKulShowcaseToggle
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseToggleElement, KulShowcaseToggleEvents>({
-        tagName: 'kul-showcase-toggle',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseToggle: StencilReactComponent<
+    KulShowcaseToggleElement,
+    KulShowcaseToggleEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseToggleElement,
+              KulShowcaseToggleEvents
+          >({
+              tagName: 'kul-showcase-toggle',
+              elementClass: KulShowcaseToggleElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseToggleEvents,
+              defineCustomElement: defineKulShowcaseToggle,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseToggleElement,
+              KulShowcaseToggleEvents
+          >({
+              tagName: 'kul-showcase-toggle',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseTreeEvents = NonNullable<unknown>;
 
-export const KulShowcaseTree: StencilReactComponent<KulShowcaseTreeElement, KulShowcaseTreeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseTreeElement, KulShowcaseTreeEvents>({
-        tagName: 'kul-showcase-tree',
-        elementClass: KulShowcaseTreeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseTreeEvents,
-        defineCustomElement: defineKulShowcaseTree
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseTreeElement, KulShowcaseTreeEvents>({
-        tagName: 'kul-showcase-tree',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseTree: StencilReactComponent<
+    KulShowcaseTreeElement,
+    KulShowcaseTreeEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseTreeElement,
+              KulShowcaseTreeEvents
+          >({
+              tagName: 'kul-showcase-tree',
+              elementClass: KulShowcaseTreeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseTreeEvents,
+              defineCustomElement: defineKulShowcaseTree,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseTreeElement,
+              KulShowcaseTreeEvents
+          >({
+              tagName: 'kul-showcase-tree',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseTypewriterEvents = NonNullable<unknown>;
 
-export const KulShowcaseTypewriter: StencilReactComponent<KulShowcaseTypewriterElement, KulShowcaseTypewriterEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseTypewriterElement, KulShowcaseTypewriterEvents>({
-        tagName: 'kul-showcase-typewriter',
-        elementClass: KulShowcaseTypewriterElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseTypewriterEvents,
-        defineCustomElement: defineKulShowcaseTypewriter
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseTypewriterElement, KulShowcaseTypewriterEvents>({
-        tagName: 'kul-showcase-typewriter',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseTypewriter: StencilReactComponent<
+    KulShowcaseTypewriterElement,
+    KulShowcaseTypewriterEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseTypewriterElement,
+              KulShowcaseTypewriterEvents
+          >({
+              tagName: 'kul-showcase-typewriter',
+              elementClass: KulShowcaseTypewriterElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseTypewriterEvents,
+              defineCustomElement: defineKulShowcaseTypewriter,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseTypewriterElement,
+              KulShowcaseTypewriterEvents
+          >({
+              tagName: 'kul-showcase-typewriter',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
 type KulShowcaseUploadEvents = NonNullable<unknown>;
 
-export const KulShowcaseUpload: StencilReactComponent<KulShowcaseUploadElement, KulShowcaseUploadEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulShowcaseUploadElement, KulShowcaseUploadEvents>({
-        tagName: 'kul-showcase-upload',
-        elementClass: KulShowcaseUploadElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: {} as KulShowcaseUploadEvents,
-        defineCustomElement: defineKulShowcaseUpload
-    })
-    : /*@__PURE__*/ createSSRComponent<KulShowcaseUploadElement, KulShowcaseUploadEvents>({
-        tagName: 'kul-showcase-upload',
-        properties: {},
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulShowcaseUpload: StencilReactComponent<
+    KulShowcaseUploadElement,
+    KulShowcaseUploadEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulShowcaseUploadElement,
+              KulShowcaseUploadEvents
+          >({
+              tagName: 'kul-showcase-upload',
+              elementClass: KulShowcaseUploadElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {} as KulShowcaseUploadEvents,
+              defineCustomElement: defineKulShowcaseUpload,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulShowcaseUploadElement,
+              KulShowcaseUploadEvents
+          >({
+              tagName: 'kul-showcase-upload',
+              properties: {},
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulSliderEvents = { onKulSliderEvent: EventName<KulSliderCustomEvent<KulSliderEventPayload>> };
+type KulSliderEvents = {
+    onKulSliderEvent: EventName<KulSliderCustomEvent<KulSliderEventPayload>>;
+};
 
-export const KulSlider: StencilReactComponent<KulSliderElement, KulSliderEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulSliderElement, KulSliderEvents>({
-        tagName: 'kul-slider',
-        elementClass: KulSliderElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulSliderEvent: 'kul-slider-event' } as KulSliderEvents,
-        defineCustomElement: defineKulSlider
-    })
-    : /*@__PURE__*/ createSSRComponent<KulSliderElement, KulSliderEvents>({
-        tagName: 'kul-slider',
-        properties: {
-            kulDisabled: 'kul-disabled',
-            kulLabel: 'kul-label',
-            kulLeadingLabel: 'kul-leading-label',
-            kulMax: 'kul-max',
-            kulMin: 'kul-min',
-            kulStep: 'kul-step',
-            kulRipple: 'kul-ripple',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulSlider: StencilReactComponent<
+    KulSliderElement,
+    KulSliderEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulSliderElement, KulSliderEvents>({
+              tagName: 'kul-slider',
+              elementClass: KulSliderElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulSliderEvent: 'kul-slider-event',
+              } as KulSliderEvents,
+              defineCustomElement: defineKulSlider,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulSliderElement, KulSliderEvents>({
+              tagName: 'kul-slider',
+              properties: {
+                  kulDisabled: 'kul-disabled',
+                  kulLabel: 'kul-label',
+                  kulLeadingLabel: 'kul-leading-label',
+                  kulMax: 'kul-max',
+                  kulMin: 'kul-min',
+                  kulStep: 'kul-step',
+                  kulRipple: 'kul-ripple',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulSpinnerEvents = { onKulSpinnerEvent: EventName<KulSpinnerCustomEvent<KulSpinnerEventPayload>> };
+type KulSpinnerEvents = {
+    onKulSpinnerEvent: EventName<KulSpinnerCustomEvent<KulSpinnerEventPayload>>;
+};
 
-export const KulSpinner: StencilReactComponent<KulSpinnerElement, KulSpinnerEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulSpinnerElement, KulSpinnerEvents>({
-        tagName: 'kul-spinner',
-        elementClass: KulSpinnerElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulSpinnerEvent: 'kul-spinner-event' } as KulSpinnerEvents,
-        defineCustomElement: defineKulSpinner
-    })
-    : /*@__PURE__*/ createSSRComponent<KulSpinnerElement, KulSpinnerEvents>({
-        tagName: 'kul-spinner',
-        properties: {
-            kulActive: 'kul-active',
-            kulBarVariant: 'kul-bar-variant',
-            kulDimensions: 'kul-dimensions',
-            kulFader: 'kul-fader',
-            kulFaderTimeout: 'kul-fader-timeout',
-            kulFullScreen: 'kul-full-screen',
-            kulLayout: 'kul-layout',
-            kulStyle: 'kul-style',
-            kulTimeout: 'kul-timeout'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulSpinner: StencilReactComponent<
+    KulSpinnerElement,
+    KulSpinnerEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulSpinnerElement, KulSpinnerEvents>({
+              tagName: 'kul-spinner',
+              elementClass: KulSpinnerElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulSpinnerEvent: 'kul-spinner-event',
+              } as KulSpinnerEvents,
+              defineCustomElement: defineKulSpinner,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulSpinnerElement, KulSpinnerEvents>(
+              {
+                  tagName: 'kul-spinner',
+                  properties: {
+                      kulActive: 'kul-active',
+                      kulBarVariant: 'kul-bar-variant',
+                      kulDimensions: 'kul-dimensions',
+                      kulFader: 'kul-fader',
+                      kulFaderTimeout: 'kul-fader-timeout',
+                      kulFullScreen: 'kul-full-screen',
+                      kulLayout: 'kul-layout',
+                      kulStyle: 'kul-style',
+                      kulTimeout: 'kul-timeout',
+                  },
+                  hydrateModule: import('ketchup-lite-hydrate'),
+              }
+          );
 
-type KulSplashEvents = { onKulSplashEvent: EventName<KulSplashCustomEvent<KulSplashEventPayload>> };
+type KulSplashEvents = {
+    onKulSplashEvent: EventName<KulSplashCustomEvent<KulSplashEventPayload>>;
+};
 
-export const KulSplash: StencilReactComponent<KulSplashElement, KulSplashEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulSplashElement, KulSplashEvents>({
-        tagName: 'kul-splash',
-        elementClass: KulSplashElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulSplashEvent: 'kul-splash-event' } as KulSplashEvents,
-        defineCustomElement: defineKulSplash
-    })
-    : /*@__PURE__*/ createSSRComponent<KulSplashElement, KulSplashEvents>({
-        tagName: 'kul-splash',
-        properties: {
-            kulLabel: 'kul-label',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulSplash: StencilReactComponent<
+    KulSplashElement,
+    KulSplashEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulSplashElement, KulSplashEvents>({
+              tagName: 'kul-splash',
+              elementClass: KulSplashElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulSplashEvent: 'kul-splash-event',
+              } as KulSplashEvents,
+              defineCustomElement: defineKulSplash,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulSplashElement, KulSplashEvents>({
+              tagName: 'kul-splash',
+              properties: {
+                  kulLabel: 'kul-label',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulTabbarEvents = { onKulTabbarEvent: EventName<KulTabbarCustomEvent<KulTabbarEventPayload>> };
+type KulTabbarEvents = {
+    onKulTabbarEvent: EventName<KulTabbarCustomEvent<KulTabbarEventPayload>>;
+};
 
-export const KulTabbar: StencilReactComponent<KulTabbarElement, KulTabbarEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulTabbarElement, KulTabbarEvents>({
-        tagName: 'kul-tabbar',
-        elementClass: KulTabbarElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulTabbarEvent: 'kul-tabbar-event' } as KulTabbarEvents,
-        defineCustomElement: defineKulTabbar
-    })
-    : /*@__PURE__*/ createSSRComponent<KulTabbarElement, KulTabbarEvents>({
-        tagName: 'kul-tabbar',
-        properties: {
-            kulRipple: 'kul-ripple',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulTabbar: StencilReactComponent<
+    KulTabbarElement,
+    KulTabbarEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulTabbarElement, KulTabbarEvents>({
+              tagName: 'kul-tabbar',
+              elementClass: KulTabbarElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulTabbarEvent: 'kul-tabbar-event',
+              } as KulTabbarEvents,
+              defineCustomElement: defineKulTabbar,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulTabbarElement, KulTabbarEvents>({
+              tagName: 'kul-tabbar',
+              properties: {
+                  kulRipple: 'kul-ripple',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulTextfieldEvents = { onKulTextfieldEvent: EventName<KulTextfieldCustomEvent<KulTextfieldEventPayload>> };
+type KulTextfieldEvents = {
+    onKulTextfieldEvent: EventName<
+        KulTextfieldCustomEvent<KulTextfieldEventPayload>
+    >;
+};
 
-export const KulTextfield: StencilReactComponent<KulTextfieldElement, KulTextfieldEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulTextfieldElement, KulTextfieldEvents>({
-        tagName: 'kul-textfield',
-        elementClass: KulTextfieldElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulTextfieldEvent: 'kul-textfield-event' } as KulTextfieldEvents,
-        defineCustomElement: defineKulTextfield
-    })
-    : /*@__PURE__*/ createSSRComponent<KulTextfieldElement, KulTextfieldEvents>({
-        tagName: 'kul-textfield',
-        properties: {
-            kulDisabled: 'kul-disabled',
-            kulFullWidth: 'kul-full-width',
-            kulIcon: 'kul-icon',
-            kulLabel: 'kul-label',
-            kulStyle: 'kul-style',
-            kulStyling: 'kul-styling',
-            kulTrailingIcon: 'kul-trailing-icon',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulTextfield: StencilReactComponent<
+    KulTextfieldElement,
+    KulTextfieldEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulTextfieldElement,
+              KulTextfieldEvents
+          >({
+              tagName: 'kul-textfield',
+              elementClass: KulTextfieldElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulTextfieldEvent: 'kul-textfield-event',
+              } as KulTextfieldEvents,
+              defineCustomElement: defineKulTextfield,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulTextfieldElement,
+              KulTextfieldEvents
+          >({
+              tagName: 'kul-textfield',
+              properties: {
+                  kulDisabled: 'kul-disabled',
+                  kulFullWidth: 'kul-full-width',
+                  kulIcon: 'kul-icon',
+                  kulLabel: 'kul-label',
+                  kulStyle: 'kul-style',
+                  kulStyling: 'kul-styling',
+                  kulTrailingIcon: 'kul-trailing-icon',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulToastEvents = { onKulToastEvent: EventName<KulToastCustomEvent<KulToastEventPayload>> };
+type KulToastEvents = {
+    onKulToastEvent: EventName<KulToastCustomEvent<KulToastEventPayload>>;
+};
 
-export const KulToast: StencilReactComponent<KulToastElement, KulToastEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulToastElement, KulToastEvents>({
-        tagName: 'kul-toast',
-        elementClass: KulToastElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulToastEvent: 'kul-toast-event' } as KulToastEvents,
-        defineCustomElement: defineKulToast
-    })
-    : /*@__PURE__*/ createSSRComponent<KulToastElement, KulToastEvents>({
-        tagName: 'kul-toast',
-        properties: {
-            kulTimer: 'kul-timer',
-            kulMessage: 'kul-message',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulToast: StencilReactComponent<KulToastElement, KulToastEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulToastElement, KulToastEvents>({
+              tagName: 'kul-toast',
+              elementClass: KulToastElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulToastEvent: 'kul-toast-event' } as KulToastEvents,
+              defineCustomElement: defineKulToast,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulToastElement, KulToastEvents>({
+              tagName: 'kul-toast',
+              properties: {
+                  kulTimer: 'kul-timer',
+                  kulMessage: 'kul-message',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulToggleEvents = { onKulToggleEvent: EventName<KulToggleCustomEvent<KulToggleEventPayload>> };
+type KulToggleEvents = {
+    onKulToggleEvent: EventName<KulToggleCustomEvent<KulToggleEventPayload>>;
+};
 
-export const KulToggle: StencilReactComponent<KulToggleElement, KulToggleEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulToggleElement, KulToggleEvents>({
-        tagName: 'kul-toggle',
-        elementClass: KulToggleElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulToggleEvent: 'kul-toggle-event' } as KulToggleEvents,
-        defineCustomElement: defineKulToggle
-    })
-    : /*@__PURE__*/ createSSRComponent<KulToggleElement, KulToggleEvents>({
-        tagName: 'kul-toggle',
-        properties: {
-            kulDisabled: 'kul-disabled',
-            kulLabel: 'kul-label',
-            kulLeadingLabel: 'kul-leading-label',
-            kulRipple: 'kul-ripple',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulToggle: StencilReactComponent<
+    KulToggleElement,
+    KulToggleEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulToggleElement, KulToggleEvents>({
+              tagName: 'kul-toggle',
+              elementClass: KulToggleElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulToggleEvent: 'kul-toggle-event',
+              } as KulToggleEvents,
+              defineCustomElement: defineKulToggle,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulToggleElement, KulToggleEvents>({
+              tagName: 'kul-toggle',
+              properties: {
+                  kulDisabled: 'kul-disabled',
+                  kulLabel: 'kul-label',
+                  kulLeadingLabel: 'kul-leading-label',
+                  kulRipple: 'kul-ripple',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulTreeEvents = { onKulTreeEvent: EventName<KulTreeCustomEvent<KulTreeEventPayload>> };
+type KulTreeEvents = {
+    onKulTreeEvent: EventName<KulTreeCustomEvent<KulTreeEventPayload>>;
+};
 
-export const KulTree: StencilReactComponent<KulTreeElement, KulTreeEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulTreeElement, KulTreeEvents>({
-        tagName: 'kul-tree',
-        elementClass: KulTreeElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulTreeEvent: 'kul-tree-event' } as KulTreeEvents,
-        defineCustomElement: defineKulTree
-    })
-    : /*@__PURE__*/ createSSRComponent<KulTreeElement, KulTreeEvents>({
-        tagName: 'kul-tree',
-        properties: {
-            kulAccordionLayout: 'kul-accordion-layout',
-            kulFilter: 'kul-filter',
-            kulInitialExpansionDepth: 'kul-initial-expansion-depth',
-            kulRipple: 'kul-ripple',
-            kulSelectable: 'kul-selectable',
-            kulStyle: 'kul-style'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulTree: StencilReactComponent<KulTreeElement, KulTreeEvents> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulTreeElement, KulTreeEvents>({
+              tagName: 'kul-tree',
+              elementClass: KulTreeElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: { onKulTreeEvent: 'kul-tree-event' } as KulTreeEvents,
+              defineCustomElement: defineKulTree,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulTreeElement, KulTreeEvents>({
+              tagName: 'kul-tree',
+              properties: {
+                  kulAccordionLayout: 'kul-accordion-layout',
+                  kulFilter: 'kul-filter',
+                  kulInitialExpansionDepth: 'kul-initial-expansion-depth',
+                  kulRipple: 'kul-ripple',
+                  kulSelectable: 'kul-selectable',
+                  kulStyle: 'kul-style',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulTypewriterEvents = { onKulTypewriterEvent: EventName<KulTypewriterCustomEvent<KulTypewriterEventPayload>> };
+type KulTypewriterEvents = {
+    onKulTypewriterEvent: EventName<
+        KulTypewriterCustomEvent<KulTypewriterEventPayload>
+    >;
+};
 
-export const KulTypewriter: StencilReactComponent<KulTypewriterElement, KulTypewriterEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulTypewriterElement, KulTypewriterEvents>({
-        tagName: 'kul-typewriter',
-        elementClass: KulTypewriterElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulTypewriterEvent: 'kul-typewriter-event' } as KulTypewriterEvents,
-        defineCustomElement: defineKulTypewriter
-    })
-    : /*@__PURE__*/ createSSRComponent<KulTypewriterElement, KulTypewriterEvents>({
-        tagName: 'kul-typewriter',
-        properties: {
-            kulCursor: 'kul-cursor',
-            kulDeleteSpeed: 'kul-delete-speed',
-            kulLoop: 'kul-loop',
-            kulPause: 'kul-pause',
-            kulSpeed: 'kul-speed',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulTypewriter: StencilReactComponent<
+    KulTypewriterElement,
+    KulTypewriterEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<
+              KulTypewriterElement,
+              KulTypewriterEvents
+          >({
+              tagName: 'kul-typewriter',
+              elementClass: KulTypewriterElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulTypewriterEvent: 'kul-typewriter-event',
+              } as KulTypewriterEvents,
+              defineCustomElement: defineKulTypewriter,
+          })
+        : /*@__PURE__*/ createSSRComponent<
+              KulTypewriterElement,
+              KulTypewriterEvents
+          >({
+              tagName: 'kul-typewriter',
+              properties: {
+                  kulCursor: 'kul-cursor',
+                  kulDeleteSpeed: 'kul-delete-speed',
+                  kulLoop: 'kul-loop',
+                  kulPause: 'kul-pause',
+                  kulSpeed: 'kul-speed',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });
 
-type KulUploadEvents = { onKulUploadEvent: EventName<KulUploadCustomEvent<KulUploadEventPayload>> };
+type KulUploadEvents = {
+    onKulUploadEvent: EventName<KulUploadCustomEvent<KulUploadEventPayload>>;
+};
 
-export const KulUpload: StencilReactComponent<KulUploadElement, KulUploadEvents> = typeof window !== 'undefined'
-    ? /*@__PURE__*/ createComponent<KulUploadElement, KulUploadEvents>({
-        tagName: 'kul-upload',
-        elementClass: KulUploadElement,
-        // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
-        react: React,
-        events: { onKulUploadEvent: 'kul-upload-event' } as KulUploadEvents,
-        defineCustomElement: defineKulUpload
-    })
-    : /*@__PURE__*/ createSSRComponent<KulUploadElement, KulUploadEvents>({
-        tagName: 'kul-upload',
-        properties: {
-            kulLabel: 'kul-label',
-            kulRipple: 'kul-ripple',
-            kulStyle: 'kul-style',
-            kulValue: 'kul-value'
-        },
-        hydrateModule: import('ketchup-lite-hydrate')
-    });
+export const KulUpload: StencilReactComponent<
+    KulUploadElement,
+    KulUploadEvents
+> =
+    typeof window !== 'undefined'
+        ? /*@__PURE__*/ createComponent<KulUploadElement, KulUploadEvents>({
+              tagName: 'kul-upload',
+              elementClass: KulUploadElement,
+              // @ts-ignore - React type of Stencil Output Target may differ from the React version used in the Nuxt.js project, this can be ignored.
+              react: React,
+              events: {
+                  onKulUploadEvent: 'kul-upload-event',
+              } as KulUploadEvents,
+              defineCustomElement: defineKulUpload,
+          })
+        : /*@__PURE__*/ createSSRComponent<KulUploadElement, KulUploadEvents>({
+              tagName: 'kul-upload',
+              properties: {
+                  kulLabel: 'kul-label',
+                  kulRipple: 'kul-ripple',
+                  kulStyle: 'kul-style',
+                  kulValue: 'kul-value',
+              },
+              hydrateModule: import('ketchup-lite-hydrate'),
+          });

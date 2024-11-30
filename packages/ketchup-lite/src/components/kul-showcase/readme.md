@@ -1,16 +1,12 @@
 # kul-showcase
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property   | Attribute   | Description                    | Type     | Default |
-| ---------- | ----------- | ------------------------------ | -------- | ------- |
-| `kulStyle` | `kul-style` | Custom style of the component. | `string` | `''`    |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulStyle` | `kul-style` | Custom style of the component. | `string` | `''` |
 
 ## Dependencies
 
@@ -21,6 +17,7 @@
 - [kul-article](../kul-article)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-showcase --> kul-card
@@ -34,6 +31,6 @@ graph TD;
   style kul-showcase fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

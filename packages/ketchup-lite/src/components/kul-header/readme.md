@@ -2,20 +2,17 @@
 
 <!-- Auto Generated Below -->
 
-
 ## Properties
 
-| Property   | Attribute   | Description                                                                                                   | Type     | Default |
-| ---------- | ----------- | ------------------------------------------------------------------------------------------------------------- | -------- | ------- |
-| `kulStyle` | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string` | `''`    |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulStyle` | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string` | `''` |
 
 ## Events
 
-| Event              | Description              | Type                                 |
-| ------------------ | ------------------------ | ------------------------------------ |
+| Event | Description | Type |
+| --- | --- | --- |
 | `kul-header-event` | Describes event emitted. | `CustomEvent<KulHeaderEventPayload>` |
-
 
 ## Methods
 
@@ -35,8 +32,8 @@ Used to retrieve component's props values.
 
 #### Parameters
 
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
 
 #### Returns
@@ -53,8 +50,6 @@ This method is used to trigger a new render of the component.
 
 Type: `Promise<void>`
 
-
-
 ### `unmount(ms?: number) => Promise<void>`
 
 Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -69,20 +64,16 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 
 Type: `Promise<void>`
 
-
-
-
 ## CSS Custom Properties
 
-| Name                      | Description                                                                                    |
-| ------------------------- | ---------------------------------------------------------------------------------------------- |
-| `--kul-header-box-shadow` | Sets the box shadow of the header component. Defaults to a combination of shadows for depth.   |
-| `--kul-header-padding`    | Sets the padding of the header component. Defaults to 8px top and bottom, 12px left and right. |
-| `--kul-header-position`   | Sets the CSS positioning of the header component. Defaults to fixed.                           |
-| `--kul-header-transition` | Sets the transition time of the header component. Defaults to 250ms.                           |
-| `--kul-header-width`      | Sets the width of the header component. Defaults to 100%.                                      |
+| Name | Description |
+| --- | --- |
+| `--kul-header-box-shadow` | Sets the box shadow of the header component. Defaults to a combination of shadows for depth. |
+| `--kul-header-padding` | Sets the padding of the header component. Defaults to 8px top and bottom, 12px left and right. |
+| `--kul-header-position` | Sets the CSS positioning of the header component. Defaults to fixed. |
+| `--kul-header-transition` | Sets the transition time of the header component. Defaults to 250ms. |
+| `--kul-header-width` | Sets the width of the header component. Defaults to 100%. |
 
+---
 
-----------------------------------------------
-
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

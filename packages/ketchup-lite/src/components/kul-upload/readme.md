@@ -1,26 +1,21 @@
 # kul-badge
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property    | Attribute    | Description                                                           | Type      | Default             |
-| ----------- | ------------ | --------------------------------------------------------------------- | --------- | ------------------- |
-| `kulLabel`  | `kul-label`  | Sets the button's label.                                              | `string`  | `'Upload files...'` |
-| `kulRipple` | `kul-ripple` | When set to true, the pointerdown event will trigger a ripple effect. | `boolean` | `true`              |
-| `kulStyle`  | `kul-style`  | Enables customization of the component's style.                       | `string`  | `''`                |
-| `kulValue`  | `kul-value`  | Initializes the component with these files.                           | `any`     | `null`              |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulLabel` | `kul-label` | Sets the button's label. | `string` | `'Upload files...'` |
+| `kulRipple` | `kul-ripple` | When set to true, the pointerdown event will trigger a ripple effect. | `boolean` | `true` |
+| `kulStyle` | `kul-style` | Enables customization of the component's style. | `string` | `''` |
+| `kulValue` | `kul-value` | Initializes the component with these files. | `any` | `null` |
 
 ## Events
 
-| Event              | Description              | Type                                 |
-| ------------------ | ------------------------ | ------------------------------------ |
+| Event | Description | Type |
+| --- | --- | --- |
 | `kul-upload-event` | Describes event emitted. | `CustomEvent<KulUploadEventPayload>` |
-
 
 ## Methods
 
@@ -40,8 +35,8 @@ Retrieves the properties of the component, with optional descriptions.
 
 #### Parameters
 
-| Name           | Type      | Description                                                                          |
-| -------------- | --------- | ------------------------------------------------------------------------------------ |
+| Name | Type | Description |
+| --- | --- | --- |
 | `descriptions` | `boolean` | - If true, returns properties with descriptions; otherwise, returns properties only. |
 
 #### Returns
@@ -58,8 +53,6 @@ Returns the component's internal value.
 
 Type: `Promise<File[]>`
 
-
-
 ### `refresh() => Promise<void>`
 
 Triggers a re-render of the component to reflect any state changes.
@@ -67,8 +60,6 @@ Triggers a re-render of the component to reflect any state changes.
 #### Returns
 
 Type: `Promise<void>`
-
-
 
 ### `unmount(ms?: number) => Promise<void>`
 
@@ -84,29 +75,25 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 
 Type: `Promise<void>`
 
-
-
-
 ## CSS Custom Properties
 
-| Name                                 | Description                                                                                                              |
-| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
-| `--kul-upload-backdrop-filter`       | Sets the backdrop filter for the upload component. Defaults to a blur effect of 5px.                                     |
-| `--kul-upload-backdrop-filter-hover` | Sets the backdrop filter for the upload component on hover. Defaults to a blur effect of 10px.                           |
-| `--kul-upload-border`                | Sets the border for the upload component. Defaults to a 1px solid border with a color defined by --kul-border-color-rgb. |
-| `--kul-upload-border-radius`         | Sets the border radius for the upload component. Defaults to 4px.                                                        |
-| `--kul-upload-button-height`         | Sets the height of the upload button. Defaults to 42px.                                                                  |
-| `--kul-upload-button-text-transform` | Sets the text transformation for the upload button. Defaults to uppercase.                                               |
-| `--kul-upload-grid-gap`              | Sets the grid gap for the upload component. Defaults to 20px.                                                            |
-| `--kul-upload-info-height`           | Sets the height of the info section in the upload component. Defaults to 1fr.                                            |
-| `--kul-upload-padding`               | Sets the padding for the upload component. Defaults to 1em.                                                              |
-
+| Name | Description |
+| --- | --- |
+| `--kul-upload-backdrop-filter` | Sets the backdrop filter for the upload component. Defaults to a blur effect of 5px. |
+| `--kul-upload-backdrop-filter-hover` | Sets the backdrop filter for the upload component on hover. Defaults to a blur effect of 10px. |
+| `--kul-upload-border` | Sets the border for the upload component. Defaults to a 1px solid border with a color defined by --kul-border-color-rgb. |
+| `--kul-upload-border-radius` | Sets the border radius for the upload component. Defaults to 4px. |
+| `--kul-upload-button-height` | Sets the height of the upload button. Defaults to 42px. |
+| `--kul-upload-button-text-transform` | Sets the text transformation for the upload button. Defaults to uppercase. |
+| `--kul-upload-grid-gap` | Sets the grid gap for the upload component. Defaults to 20px. |
+| `--kul-upload-info-height` | Sets the height of the info section in the upload component. Defaults to 1fr. |
+| `--kul-upload-padding` | Sets the padding for the upload component. Defaults to 1em. |
 
 ## Dependencies
 
 ### Used by
 
- - [kul-showcase-upload](../kul-showcase/components/upload)
+- [kul-showcase-upload](../kul-showcase/components/upload)
 
 ### Depends on
 
@@ -114,6 +101,7 @@ Type: `Promise<void>`
 - [kul-button](../kul-button)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-upload --> kul-image
@@ -127,6 +115,6 @@ graph TD;
   style kul-upload fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

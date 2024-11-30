@@ -1,30 +1,25 @@
 # kul-canvas
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property             | Attribute              | Description                                                                                                                                        | Type                     | Default     |
-| -------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ----------- |
-| `kulBrush`           | `kul-brush`            | The shape of the brush.                                                                                                                            | `"round" \| "square"`    | `'round'`   |
-| `kulColor`           | `kul-color`            | The color of the brush.                                                                                                                            | `string`                 | `'#ff0000'` |
-| `kulImageProps`      | --                     | The props of the image displayed inside the badge.                                                                                                 | `KulImagePropsInterface` | `null`      |
-| `kulOpacity`         | `kul-opacity`          | The opacity of the brush.                                                                                                                          | `number`                 | `1.0`       |
-| `kulPreview`         | `kul-preview`          | Displays the brush track of the current stroke.                                                                                                    | `boolean`                | `true`      |
-| `kulSize`            | `kul-size`             | The size of the brush.                                                                                                                             | `number`                 | `10`        |
-| `kulStrokeTolerance` | `kul-stroke-tolerance` | Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm. This prop sets the tolerance of the algorithm (null to disable). | `number`                 | `null`      |
-| `kulStyle`           | `kul-style`            | Customizes the style of the component.                                                                                                             | `string`                 | `''`        |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulBrush` | `kul-brush` | The shape of the brush. | `"round" \| "square"` | `'round'` |
+| `kulColor` | `kul-color` | The color of the brush. | `string` | `'#ff0000'` |
+| `kulImageProps` | -- | The props of the image displayed inside the badge. | `KulImagePropsInterface` | `null` |
+| `kulOpacity` | `kul-opacity` | The opacity of the brush. | `number` | `1.0` |
+| `kulPreview` | `kul-preview` | Displays the brush track of the current stroke. | `boolean` | `true` |
+| `kulSize` | `kul-size` | The size of the brush. | `number` | `10` |
+| `kulStrokeTolerance` | `kul-stroke-tolerance` | Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm. This prop sets the tolerance of the algorithm (null to disable). | `number` | `null` |
+| `kulStyle` | `kul-style` | Customizes the style of the component. | `string` | `''` |
 
 ## Events
 
 | Event              | Description | Type                                 |
 | ------------------ | ----------- | ------------------------------------ |
 | `kul-canvas-event` |             | `CustomEvent<KulCanvasEventPayload>` |
-
 
 ## Methods
 
@@ -56,16 +51,14 @@ Returns the image component.
 
 Type: `Promise<HTMLKulImageElement>`
 
-
-
 ### `getProps(descriptions?: boolean) => Promise<GenericObject>`
 
 Used to retrieve component's props values.
 
 #### Parameters
 
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
 
 #### Returns
@@ -82,8 +75,6 @@ This method is used to trigger a new render of the component.
 
 Type: `Promise<void>`
 
-
-
 ### `setCanvasHeight(value?: number) => Promise<void>`
 
 Sets the height of the canvas.
@@ -97,8 +88,6 @@ Sets the height of the canvas.
 #### Returns
 
 Type: `Promise<void>`
-
-
 
 ### `setCanvasWidth(value?: number) => Promise<void>`
 
@@ -114,8 +103,6 @@ Sets the width of the canvas.
 
 Type: `Promise<void>`
 
-
-
 ### `unmount(ms?: number) => Promise<void>`
 
 Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -130,21 +117,19 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 
 Type: `Promise<void>`
 
-
-
-
 ## Dependencies
 
 ### Used by
 
- - [kul-imageviewer](../kul-imageviewer)
- - [kul-showcase-canvas](../kul-showcase/components/canvas)
+- [kul-imageviewer](../kul-imageviewer)
+- [kul-showcase-canvas](../kul-showcase/components/canvas)
 
 ### Depends on
 
 - [kul-image](../kul-image)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-canvas --> kul-image
@@ -156,6 +141,6 @@ graph TD;
   style kul-canvas fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

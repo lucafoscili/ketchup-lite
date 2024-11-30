@@ -1,35 +1,30 @@
 # kul-button
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property          | Attribute           | Description                                                                                                                 | Type                                                       | Default    |
-| ----------------- | ------------------- | --------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- | ---------- |
-| `kulData`         | --                  | Actual data of the button, used to render dropdown buttons.                                                                 | `KulDataDataset`                                           | `null`     |
-| `kulDisabled`     | `kul-disabled`      | Defaults at false. When set to true, the component is disabled.                                                             | `boolean`                                                  | `false`    |
-| `kulIcon`         | `kul-icon`          | When set, the button will show this icon.                                                                                   | `string`                                                   | `''`       |
-| `kulIconOff`      | `kul-icon-off`      | When set, the icon button off state will show this icon. Otherwise, an outlined version of the icon prop will be displayed. | `string`                                                   | `''`       |
-| `kulLabel`        | `kul-label`         | When set, the button will show this text.                                                                                   | `string`                                                   | `''`       |
-| `kulRipple`       | `kul-ripple`        | When set to true, the pointerdown event will trigger a ripple effect.                                                       | `boolean`                                                  | `true`     |
-| `kulShowSpinner`  | `kul-show-spinner`  | When set to true, the button show a spinner received in slot.                                                               | `boolean`                                                  | `false`    |
-| `kulStyle`        | `kul-style`         | Custom style of the component.                                                                                              | `string`                                                   | `''`       |
-| `kulStyling`      | `kul-styling`       | Defines the style of the button. This property controls the visual appearance of the button.                                | `"flat" \| "floating" \| "icon" \| "outlined" \| "raised"` | `'raised'` |
-| `kulToggable`     | `kul-toggable`      | When set to true, the icon button will be toggable on/off.                                                                  | `boolean`                                                  | `false`    |
-| `kulTrailingIcon` | `kul-trailing-icon` | When set, the icon will be shown after the text.                                                                            | `boolean`                                                  | `false`    |
-| `kulType`         | `kul-type`          | Sets the type of the button.                                                                                                | `"button" \| "reset" \| "submit"`                          | `'button'` |
-| `kulValue`        | `kul-value`         | When set to true, the icon button state will be on.                                                                         | `boolean`                                                  | `false`    |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulData` | -- | Actual data of the button, used to render dropdown buttons. | `KulDataDataset` | `null` |
+| `kulDisabled` | `kul-disabled` | Defaults at false. When set to true, the component is disabled. | `boolean` | `false` |
+| `kulIcon` | `kul-icon` | When set, the button will show this icon. | `string` | `''` |
+| `kulIconOff` | `kul-icon-off` | When set, the icon button off state will show this icon. Otherwise, an outlined version of the icon prop will be displayed. | `string` | `''` |
+| `kulLabel` | `kul-label` | When set, the button will show this text. | `string` | `''` |
+| `kulRipple` | `kul-ripple` | When set to true, the pointerdown event will trigger a ripple effect. | `boolean` | `true` |
+| `kulShowSpinner` | `kul-show-spinner` | When set to true, the button show a spinner received in slot. | `boolean` | `false` |
+| `kulStyle` | `kul-style` | Custom style of the component. | `string` | `''` |
+| `kulStyling` | `kul-styling` | Defines the style of the button. This property controls the visual appearance of the button. | `"flat" \| "floating" \| "icon" \| "outlined" \| "raised"` | `'raised'` |
+| `kulToggable` | `kul-toggable` | When set to true, the icon button will be toggable on/off. | `boolean` | `false` |
+| `kulTrailingIcon` | `kul-trailing-icon` | When set, the icon will be shown after the text. | `boolean` | `false` |
+| `kulType` | `kul-type` | Sets the type of the button. | `"button" \| "reset" \| "submit"` | `'button'` |
+| `kulValue` | `kul-value` | When set to true, the icon button state will be on. | `boolean` | `false` |
 
 ## Events
 
-| Event              | Description                                                                      | Type                                 |
-| ------------------ | -------------------------------------------------------------------------------- | ------------------------------------ |
+| Event | Description | Type |
+| --- | --- | --- |
 | `kul-button-event` | Describes event emitted for various button interactions like click, focus, blur. | `CustomEvent<KulButtonEventPayload>` |
-
 
 ## Methods
 
@@ -49,8 +44,8 @@ Used to retrieve component's properties and descriptions.
 
 #### Parameters
 
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | `descriptions` | `boolean` | - When true, includes descriptions for each property. |
 
 #### Returns
@@ -77,8 +72,6 @@ This method is used to trigger a new render of the component.
 
 Type: `Promise<void>`
 
-
-
 ### `setValue(value: KulButtonState) => Promise<void>`
 
 Sets the component's state.
@@ -92,8 +85,6 @@ Sets the component's state.
 #### Returns
 
 Type: `Promise<void>`
-
-
 
 ### `unmount(ms?: number) => Promise<void>`
 
@@ -109,47 +100,43 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 
 Type: `Promise<void>`
 
-
-
-
 ## CSS Custom Properties
 
-| Name                                 | Description                                                                                                                   |
-| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `--kul-button-backdrop-filter`       | Sets the backdrop filter of buttons. Defaults to blur(3.5px).                                                                 |
-| `--kul-button-backdrop-filter-hover` | Sets the backdrop filter of buttons when hovering. Defaults to blur(5px).                                                     |
-| `--kul-button-border-radius`         | Sets border radius of the button. Defaults to 4px.                                                                            |
-| `--kul-button-disabled-color`        | Sets disabled color of the button. Defaults to var(--kul-disabled-color).                                                     |
-| `--kul-button-font-family`           | Sets font family of the button. Defaults to var(--kul-font-family).                                                           |
-| `--kul-button-font-size`             | Sets font size of the button. Defaults to var(--kul-font-size).                                                               |
-| `--kul-button-font-weight`           | Sets font weight of the button. Defaults to 400.                                                                              |
-| `--kul-button-height`                | Sets height of the button. Defaults to 3em.                                                                                   |
-| `--kul-button-padding`               | Sets padding of the button. Defaults to 0 1.25em.                                                                             |
-| `--kul-button-primary-color`         | Sets the primary color of the button. Defaults to var(--kul-primary-color).                                                   |
-| `--kul-button-primary-color-h`       | Sets the primary color Hue value of the button (used for focus/hover effects). Defaults to var(--kul-primary-color-h).        |
-| `--kul-button-primary-color-l`       | Sets the primary color Lightness value of the button (used for focus/hover effects). Defaults to var(--kul-primary-color-l).  |
-| `--kul-button-primary-color-rgb`     | Sets the primary color RGB values of the button (used for shaders). Defaults to var(--kul-primary-color-rgb).                 |
-| `--kul-button-primary-color-s`       | Sets the primary color Saturation value of the button (used for focus/hover effects). Defaults to var(--kul-primary-color-s). |
-| `--kul-button-text-on-primary-color` | Sets text and icon color for raised buttons. Defaults to var(--kul-text-on-primary-color).                                    |
-| `--kul-button-text-transform`        | Set the label case, default is uppercase. Defaults to uppercase.                                                              |
-| `--kul-spinner-color`                | Sets the spinner color. Defaults to var(--kul-button-primary-color).                                                          |
-
+| Name | Description |
+| --- | --- |
+| `--kul-button-backdrop-filter` | Sets the backdrop filter of buttons. Defaults to blur(3.5px). |
+| `--kul-button-backdrop-filter-hover` | Sets the backdrop filter of buttons when hovering. Defaults to blur(5px). |
+| `--kul-button-border-radius` | Sets border radius of the button. Defaults to 4px. |
+| `--kul-button-disabled-color` | Sets disabled color of the button. Defaults to var(--kul-disabled-color). |
+| `--kul-button-font-family` | Sets font family of the button. Defaults to var(--kul-font-family). |
+| `--kul-button-font-size` | Sets font size of the button. Defaults to var(--kul-font-size). |
+| `--kul-button-font-weight` | Sets font weight of the button. Defaults to 400. |
+| `--kul-button-height` | Sets height of the button. Defaults to 3em. |
+| `--kul-button-padding` | Sets padding of the button. Defaults to 0 1.25em. |
+| `--kul-button-primary-color` | Sets the primary color of the button. Defaults to var(--kul-primary-color). |
+| `--kul-button-primary-color-h` | Sets the primary color Hue value of the button (used for focus/hover effects). Defaults to var(--kul-primary-color-h). |
+| `--kul-button-primary-color-l` | Sets the primary color Lightness value of the button (used for focus/hover effects). Defaults to var(--kul-primary-color-l). |
+| `--kul-button-primary-color-rgb` | Sets the primary color RGB values of the button (used for shaders). Defaults to var(--kul-primary-color-rgb). |
+| `--kul-button-primary-color-s` | Sets the primary color Saturation value of the button (used for focus/hover effects). Defaults to var(--kul-primary-color-s). |
+| `--kul-button-text-on-primary-color` | Sets text and icon color for raised buttons. Defaults to var(--kul-text-on-primary-color). |
+| `--kul-button-text-transform` | Set the label case, default is uppercase. Defaults to uppercase. |
+| `--kul-spinner-color` | Sets the spinner color. Defaults to var(--kul-button-primary-color). |
 
 ## Dependencies
 
 ### Used by
 
- - [kul-carousel](../kul-carousel)
- - [kul-chat](../kul-chat)
- - [kul-code](../kul-code)
- - [kul-compare](../kul-compare)
- - [kul-imageviewer](../kul-imageviewer)
- - [kul-masonry](../kul-masonry)
- - [kul-messenger](../kul-messenger)
- - [kul-showcase](../kul-showcase)
- - [kul-showcase-button](../kul-showcase/components/button)
- - [kul-showcase-splash](../kul-showcase/components/splash)
- - [kul-upload](../kul-upload)
+- [kul-carousel](../kul-carousel)
+- [kul-chat](../kul-chat)
+- [kul-code](../kul-code)
+- [kul-compare](../kul-compare)
+- [kul-imageviewer](../kul-imageviewer)
+- [kul-masonry](../kul-masonry)
+- [kul-messenger](../kul-messenger)
+- [kul-showcase](../kul-showcase)
+- [kul-showcase-button](../kul-showcase/components/button)
+- [kul-showcase-splash](../kul-showcase/components/splash)
+- [kul-upload](../kul-upload)
 
 ### Depends on
 
@@ -157,6 +144,7 @@ Type: `Promise<void>`
 - [kul-list](../kul-list)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-button --> kul-image
@@ -178,6 +166,6 @@ graph TD;
   style kul-button fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

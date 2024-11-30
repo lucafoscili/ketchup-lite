@@ -1,27 +1,22 @@
 # kul-card
 
-
-
 <!-- Auto Generated Below -->
-
 
 ## Properties
 
-| Property    | Attribute    | Description                                                                               | Type                                              | Default      |
-| ----------- | ------------ | ----------------------------------------------------------------------------------------- | ------------------------------------------------- | ------------ |
-| `kulData`   | --           | The actual data of the card.                                                              | `KulDataDataset`                                  | `null`       |
-| `kulLayout` | `kul-layout` | Sets the layout.                                                                          | `"debug" \| "keywords" \| "material" \| "upload"` | `'material'` |
-| `kulSizeX`  | `kul-size-x` | The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).  | `string`                                          | `'100%'`     |
-| `kulSizeY`  | `kul-size-y` | The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.). | `string`                                          | `'100%'`     |
-| `kulStyle`  | `kul-style`  | Custom style of the component.                                                            | `string`                                          | `''`         |
-
+| Property | Attribute | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `kulData` | -- | The actual data of the card. | `KulDataDataset` | `null` |
+| `kulLayout` | `kul-layout` | Sets the layout. | `"debug" \| "keywords" \| "material" \| "upload"` | `'material'` |
+| `kulSizeX` | `kul-size-x` | The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.). | `string` | `'100%'` |
+| `kulSizeY` | `kul-size-y` | The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.). | `string` | `'100%'` |
+| `kulStyle` | `kul-style` | Custom style of the component. | `string` | `''` |
 
 ## Events
 
-| Event            | Description                       | Type                               |
-| ---------------- | --------------------------------- | ---------------------------------- |
+| Event | Description | Type |
+| --- | --- | --- |
 | `kul-card-event` | Triggered when an event is fired. | `CustomEvent<KulCardEventPayload>` |
-
 
 ## Methods
 
@@ -41,8 +36,8 @@ Used to retrieve component's props values.
 
 #### Parameters
 
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
+| Name | Type | Description |
+| --- | --- | --- |
 | `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
 
 #### Returns
@@ -69,8 +64,6 @@ This method is used to trigger a new render of the component.
 
 Type: `Promise<void>`
 
-
-
 ### `unmount(ms?: number) => Promise<void>`
 
 Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -85,24 +78,21 @@ Initiates the unmount sequence, which removes the component from the DOM after a
 
 Type: `Promise<void>`
 
-
-
-
 ## CSS Custom Properties
 
-| Name                  | Description                                                                             |
-| --------------------- | --------------------------------------------------------------------------------------- |
+| Name | Description |
+| --- | --- |
 | `--kul-card-backdrop` | Sets the backdrop color of the component when visible. Defaults to rgba(0, 0, 0, 0.32). |
-
 
 ## Dependencies
 
 ### Used by
 
- - [kul-showcase](../kul-showcase)
- - [kul-showcase-card](../kul-showcase/components/card)
+- [kul-showcase](../kul-showcase)
+- [kul-showcase-card](../kul-showcase/components/card)
 
 ### Graph
+
 ```mermaid
 graph TD;
   kul-showcase --> kul-card
@@ -110,6 +100,6 @@ graph TD;
   style kul-card fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
-----------------------------------------------
+---
 
-*Built with [StencilJS](https://stenciljs.com/)*
+_Built with [StencilJS](https://stenciljs.com/)_

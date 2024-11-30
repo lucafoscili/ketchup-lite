@@ -1,15 +1,16 @@
 <!-- markdownlint-disable MD033 -->
+
 # Ketchup Lite
 
 <div align="center">
 
-   ![Components](https://img.shields.io/badge/dynamic/json?logo=stencil&logoColor=black&labelColor=white&color=black&label=Components&query=components&url=https://raw.githubusercontent.com/lucafoscili/ketchup-lite/main/count.json) ![npm Package](https://img.shields.io/npm/v/ketchup-lite.svg?logo=npm&logoColor=black&labelColor=white&color=black)
+![Components](https://img.shields.io/badge/dynamic/json?logo=stencil&logoColor=black&labelColor=white&color=black&label=Components&query=components&url=https://raw.githubusercontent.com/lucafoscili/ketchup-lite/main/count.json) ![npm Package](https://img.shields.io/npm/v/ketchup-lite.svg?logo=npm&logoColor=black&labelColor=white&color=black)
 
 </div>
 
 <div align="center">
 
-   ![Ketchup Lite Logo](https://github.com/lucafoscili/ketchup-lite/blob/375581f13119ec393256ac4162212936ecf29d3d/docs/images/Logo.png 'Ketchup Lite logo')
+![Ketchup Lite Logo](https://github.com/lucafoscili/ketchup-lite/blob/375581f13119ec393256ac4162212936ecf29d3d/docs/images/Logo.png 'Ketchup Lite logo')
 
 </div>
 
@@ -32,20 +33,20 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
 ## Table of Contents
 
 - [Ketchup Lite](#ketchup-lite)
-  - [Table of Contents](#table-of-contents)
-  - [Features](#features)
-  - [Key components](#key-components)
-    - [KulChart](#kulchart)
-    - [KulMasonry](#kulmasonry)
-    - [KulMessenger](#kulmessenger)
-  - [Getting Started](#getting-started)
-    - [Installation](#installation)
-    - [Usage](#usage)
-  - [Main differences from Ketchup](#main-differences-from-ketchup)
-  - [Documentation](#documentation)
-  - [Contributing](#contributing)
-  - [A `Comfy` Marriage](#a-comfy-marriage)
-  - [Credits](#credits)
+    - [Table of Contents](#table-of-contents)
+    - [Features](#features)
+    - [Key components](#key-components)
+        - [KulChart](#kulchart)
+        - [KulMasonry](#kulmasonry)
+        - [KulMessenger](#kulmessenger)
+    - [Getting Started](#getting-started)
+        - [Installation](#installation)
+        - [Usage](#usage)
+    - [Main differences from Ketchup](#main-differences-from-ketchup)
+    - [Documentation](#documentation)
+    - [Contributing](#contributing)
+    - [A `Comfy` Marriage](#a-comfy-marriage)
+    - [Credits](#credits)
 
 ## Features
 
@@ -54,7 +55,7 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
 - **Efficient**: Lightweight components that won't slow down your application.
 - **Cross-Browser Compatible**: Works across all major browsers without additional polyfills.
 - **Framework Agnostic**: Use with React, Vue, Angular, or just plain JavaScript.
-  
+
 <div align="right">
 
 [(Back to Top)](#ketchup-lite)
@@ -229,7 +230,7 @@ Ketchup Lite forms the backbone of [LF Nodes for ComfyUI](https://github.com/luc
 
 And… they look fantastic in action!
 
-![LoRA Tester Workflow](https://github.com/lucafoscili/comfyui-lf/blob/0b438784ecce5bb2a3bde66cf3029d91ced61911/docs/images/Screenshot%202024-11-01%20204059.png "Screenshot taken from the LoRA tester workflow")
+![LoRA Tester Workflow](https://github.com/lucafoscili/comfyui-lf/blob/0b438784ecce5bb2a3bde66cf3029d91ced61911/docs/images/Screenshot%202024-11-01%20204059.png 'Screenshot taken from the LoRA tester workflow')
 
 ## Credits
 
