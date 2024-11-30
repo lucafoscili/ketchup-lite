@@ -3,7 +3,6 @@ name: Cypress tests
 on:
     pull_request:
         branches:
-            - candidate
             - main
 
 jobs:

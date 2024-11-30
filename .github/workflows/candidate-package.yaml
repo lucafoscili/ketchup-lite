@@ -1,4 +1,4 @@
-name: Publish NPM Packages on Merge (Candidate)
+name: Publish NPM Package on merge (candidate)
 
 on:
     push:
@@ -6,120 +6,83 @@ on:
             - candidate
 
 jobs:
-    bump-versions:
-        name: Bump Versions and Commit
+    candidate-package:
         runs-on: ubuntu-latest
-        outputs:
-            updated: ${{ steps.bump.outputs.updated }}
         steps:
             - uses: actions/checkout@v4
+
+            - name: Clear Yarn cache
+              run: yarn cache clean
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
                   node-version: '18.x'
-                  cache: 'yarn'
-                  registry-url: 'https://registry.npmjs.org'
-
-            - name: Install jq
-              run: sudo apt-get update && sudo apt-get install -y jq
-
-            - name: Install dependencies
-              run: yarn install --immutable
-
-            - name: Bump Versions and Create Pre-releases
-              id: bump
-              run: |
-                  UPDATED=false
-                  PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
-                  for PACKAGE in "${PACKAGES[@]}"; do
-                    PACKAGE_DIR="packages/$PACKAGE"
-                    CURRENT_VERSION=$(node -p "require('./$PACKAGE_DIR/package.json').version")
-                    PRE_RELEASE_TAG="rc"
-
-                    # Extract the base version
-                    BASE_VERSION=$(echo "$CURRENT_VERSION" | grep -oE '^[0-9]+\.[0-9]+\.[0-9]+')
-
-                    # Determine next pre-release number
-                    if npm view "$PACKAGE@$BASE_VERSION" versions --json > /dev/null 2>&1; then
-                      NEXT_PRE_RELEASE=$(npm view "$PACKAGE@$BASE_VERSION" versions --json | \
-                        jq -r 'map(select(test("-rc\\.[0-9]+$"))) | map(split("-rc.") | .[1] | tonumber) | max + 1 // 1')
-                    else
-                      NEXT_PRE_RELEASE=1
-                    fi
-
-                    NEW_VERSION="${BASE_VERSION}-rc.${NEXT_PRE_RELEASE}"
-                    echo "New version for $PACKAGE: $NEW_VERSION"
-
-                    # Update package.json
-                    jq ".version = \"$NEW_VERSION\"" "$PACKAGE_DIR/package.json" > temp.json && mv temp.json "$PACKAGE_DIR/package.json"
-
-                    UPDATED=true
-                    echo "new_version_$PACKAGE=$NEW_VERSION" >> "$GITHUB_OUTPUT"
-                  done
-
-                  echo "updated=$UPDATED" >> "$GITHUB_OUTPUT"
-
-            - name: Validate Versions
-              run: |
-                  PACKAGES=("ketchup-lite" "ketchup-lite-react" "ketchup-lite-react-ssr" "ketchup-lite-hydrate")
-                  for PACKAGE in "${PACKAGES[@]}"; do
-                    PACKAGE_DIR="packages/$PACKAGE"
-                    VERSION=$(node -p "require('./$PACKAGE_DIR/package.json').version")
-                    if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+-rc\.[0-9]+$ ]]; then
-                      echo "Version $VERSION for $PACKAGE does not follow the rc pre-release format."
-                      exit 1
-                    fi
-                  done
-
-            - name: Commit Version Bumps
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git add packages/**/package.json
-                  git commit -m "chore: bump versions for pre-releases" || echo "No changes to commit"
-
-            - name: Push Version Bumps
-              if: steps.bump.outputs.updated == 'true'
-              uses: ad-m/github-push-action@v0.6.0
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  branch: candidate
-
-    publish-packages:
-        name: Publish Packages
-        needs: bump-versions
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                package:
-                    - ketchup-lite
-                    - ketchup-lite-react
-                    - ketchup-lite-react-ssr
-                    - ketchup-lite-hydrate
-
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '18.x'
-                  cache: 'yarn'
                   registry-url: 'https://registry.npmjs.org'
 
             - name: Install dependencies
-              run: yarn install --immutable
+              run: yarn install --no-immutable
 
-            - name: Build Package
+            - name: Update Version for Ketchup Lite
               run: |
-                  PACKAGE_DIR=packages/${{ matrix.package }}
-                  yarn workspace "${{ matrix.package }}" build
+                  VERSION=$(node -p "require('./packages/ketchup-lite/package.json').version")
+                  TIMESTAMP=$(date +%Y%m%d%H%M%S)
+                  NEW_VERSION="${VERSION}-${TIMESTAMP}"
+                  echo "New version: $NEW_VERSION"
+                  jq ".version = \"$NEW_VERSION\"" packages/ketchup-lite/package.json > temp.json && mv temp.json packages/ketchup-lite/package.json
 
-            - name: Publish Package
+            - name: Update Version for Ketchup Lite React
               run: |
-                  PACKAGE_DIR=packages/${{ matrix.package }}
-                  cd "$PACKAGE_DIR"
+                  VERSION=$(node -p "require('./packages/ketchup-lite-react/package.json').version")
+                  TIMESTAMP=$(date +%Y%m%d%H%M%S)
+                  NEW_VERSION="${VERSION}-${TIMESTAMP}"
+                  echo "New version: $NEW_VERSION"
+                  jq ".version = \"$NEW_VERSION\"" packages/ketchup-lite-react/package.json > temp.json && mv temp.json packages/ketchup-lite-react/package.json
+
+            - name: Update Version for Ketchup Lite React (SSR)
+              run: |
+                  VERSION=$(node -p "require('./packages/ketchup-lite-react-ssr/package.json').version")
+                  TIMESTAMP=$(date +%Y%m%d%H%M%S)
+                  NEW_VERSION="${VERSION}-${TIMESTAMP}"
+                  echo "New version: $NEW_VERSION"
+                  jq ".version = \"$NEW_VERSION\"" packages/ketchup-lite-react-ssr/package.json > temp.json && mv temp.json packages/ketchup-lite-react-ssr/package.json
+
+            - name: Update Version for Ketchup Lite (Hydrate for SSR)
+              run: |
+                  VERSION=$(node -p "require('./packages/ketchup-lite-hydrate/package.json').version")
+                  TIMESTAMP=$(date +%Y%m%d%H%M%S)
+                  NEW_VERSION="${VERSION}-${TIMESTAMP}"
+                  echo "New version: $NEW_VERSION"
+                  jq ".version = \"$NEW_VERSION\"" packages/ketchup-lite-hydrate/package.json > temp.json && mv temp.json packages/ketchup-lite-hydrate/package.json
+
+            - name: Build Packages
+              run: |
+                  yarn build
+
+            - name: Publish Ketchup Lite
+              run: |
+                  cd packages/ketchup-lite
+                  npm publish --tag rc
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Publish Ketchup Lite React
+              run: |
+                  cd packages/ketchup-lite-react
+                  npm publish --tag rc
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Publish Ketchup Lite React (SSR)
+              run: |
+                  cd packages/ketchup-lite-react-ssr
+                  npm publish --tag rc
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Publish Ketchup Lite (Hydrate for SSR)
+              run: |
+                  cd packages/ketchup-lite-hydrate
                   npm publish --tag rc
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
