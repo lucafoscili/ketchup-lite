@@ -1,4 +1,4 @@
-name: Version Bump and PR Creation
+name: Version bump (candidate)
 
 on:
   push:
@@ -13,6 +13,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # Set to false to prevent using the token in the checkout, as the action will handle authentication
           persist-credentials: false
 
       - name: Setup and Build
@@ -23,42 +24,22 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Setup Authentication
-        run: |
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git config --global user.name "github-actions[bot]"
-          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
-
-      - name: Fetch All Branches
-        run: git fetch --all
-
-      - name: Checkout or Create Version Bump RC Branch
-        run: |
-          if git show-ref --verify --quiet refs/heads/version-bump-rc; then
-            git checkout version-bump-rc
-            git merge origin/candidate
-          else
-            git checkout -b version-bump-rc origin/candidate
-          fi
-
       - name: Bump Versions with Lerna (Prerelease)
         run: |
           npx lerna version prerelease --preid=rc --no-push --yes
 
       - name: Build Packages
-        shell: bash
         run: yarn build
 
       - name: Format Code with Prettier
         run: yarn format
 
-      - name: Commit Changes
+      - name: Check for Changes
         run: |
-          git add .
-          git commit -m "chore: bump versions for release candidate [skip ci]" || echo "No changes to commit"
-
-      - name: Push Changes to Branch
-        run: git push origin version-bump-rc
+          if git diff --quiet && git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
 
       - name: Create or Update Pull Request
         uses: peter-evans/create-pull-request@v5

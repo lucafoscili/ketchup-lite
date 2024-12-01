@@ -1,20 +1,9 @@
-name: Publish NPM Package (Main)
+name: Publish NPM Package (main)
 
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      bump:
-        description: 'Type of version bump'
-        required: true
-        default: 'patch'
-        type: choice
-        options:
-          - major
-          - minor
-          - patch
 
 jobs:
   publish:
@@ -24,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Required for Lerna to access the full history
+          fetch-depth: 0
 
       - name: Setup and Build
         uses: ./.github/actions/setup
@@ -34,25 +23,11 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Configure Git
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Bump Versions with Lerna (Release)
-        run: |
-          npx lerna version ${{ github.event.inputs.bump }} --no-push --yes
-        if: ${{ github.event_name == 'workflow_dispatch' }}
-
-      - name: Bump Versions with Lerna (Release) - Conventional Commits
-        run: |
-          npx lerna version --conventional-commits --no-push --yes
-        if: ${{ github.event_name == 'push' }}
-
       - name: Build Packages
-        shell: bash
         run: yarn build
 
       - name: Publish Packages with Lerna
         run: |
           npx lerna publish from-package --yes --npm-tag=latest
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
