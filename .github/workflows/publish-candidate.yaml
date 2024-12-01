@@ -7,32 +7,23 @@ on:
     types: [closed]
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup.yml
-    with:
-      node-version: '18.x'
-      install-immutable: true
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
   publish-rc:
-    needs: setup
     if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'version-bump-rc'
     runs-on: ubuntu-latest
+    environment: Development
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set Up Node.js
-        uses: actions/setup-node@v4
+      - name: Setup and Build
+        uses: ./.github/actions/setup
         with:
           node-version: '18.x'
-          registry-url: 'https://registry.npmjs.org'
-
-      - name: Install Dependencies
-        run: yarn install --immutable
+          install-immutable: 'true'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Configure Git
         run: |

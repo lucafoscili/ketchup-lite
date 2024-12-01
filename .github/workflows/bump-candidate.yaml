@@ -6,22 +6,22 @@ on:
       - candidate
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup.yml
-    with:
-      node-version: '18.x'
-      install-immutable: true
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
   version-bump:
-    needs: setup
     runs-on: ubuntu-latest
+    environment: Development
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
           persist-credentials: false
+
+      - name: Setup and Build
+        uses: ./.github/actions/setup
+        with:
+          node-version: '18.x'
+          install-immutable: 'true'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Setup Authentication
         run: |
