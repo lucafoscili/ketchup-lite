@@ -92,10 +92,13 @@ export class KulMessenger {
   /**
    * Node representing the current active character.
    */
-  @State() editingStatus: KulMessengerEditingStatus<KulMessengerImageTypes> =
-    IMAGE_TYPE_IDS.reduce(() => {
-      return null;
-    }, {});
+  @State()
+  editingStatus: KulMessengerEditingStatus<KulMessengerImageTypes> =
+    IMAGE_TYPE_IDS.reduce((acc, type) => {
+      acc[type] = null;
+      return acc;
+    }, {} as KulMessengerEditingStatus<KulMessengerImageTypes>);
+
   /**
    * History of this session's chats.
    */
