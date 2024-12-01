@@ -22,13 +22,16 @@
   "dependencies": {
     "@stencil/core": "^4",
     "@stencil/react-output-target": "^0",
-    "ketchup-lite": "^2.0.1-rc.6",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
     "@types/react": "^18",
-    "@types/react-dom": "^18"
+    "@types/react-dom": "^18",
+    "ketchup-lite": "^2.0.1-rc.6"
+  },
+  "peerDependencies": {
+    "ketchup-lite": "^2.0.1-rc.6"
   },
   "description": "Ketchup Lite - React Components library",
   "license": "Apache-2.0",

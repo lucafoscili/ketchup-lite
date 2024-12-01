@@ -3757,7 +3757,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ketchup-lite-hydrate@^2.0.1-rc.6, ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate":
+"ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate":
   version: 0.0.0-use.local
   resolution: "ketchup-lite-hydrate@workspace:packages/ketchup-lite-hydrate"
   languageName: unknown
@@ -3772,9 +3772,11 @@ __metadata:
     "@types/react": ^18
     "@types/react-dom": ^18
     ketchup-lite: ^2.0.1-rc.6
-    ketchup-lite-hydrate: ^2.0.1-rc.6
     react: ^18
     react-dom: ^18
+  peerDependencies:
+    ketchup-lite: ^2.0.1-rc.6
+    ketchup-lite-hydrate: ^2.0.1-rc.6
   languageName: unknown
   linkType: soft
 
@@ -3789,6 +3791,8 @@ __metadata:
     ketchup-lite: ^2.0.1-rc.6
     react: ^18
     react-dom: ^18
+  peerDependencies:
+    ketchup-lite: ^2.0.1-rc.6
   languageName: unknown
   linkType: soft
 
