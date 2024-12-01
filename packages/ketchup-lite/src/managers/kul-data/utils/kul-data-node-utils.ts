@@ -1,309 +1,303 @@
 import {
-    KulDataDataset,
-    KulDataGenericCell,
-    KulDataNode,
+  KulDataDataset,
+  KulDataGenericCell,
+  KulDataNode,
 } from '../kul-data-declarations';
 import { cellStringify } from './kul-data-cell-utils';
 
 export const findNodeByCell = (
-    dataset: KulDataDataset,
-    targetCell: KulDataGenericCell
+  dataset: KulDataDataset,
+  targetCell: KulDataGenericCell,
 ) => {
-    function recursive(nodes: KulDataNode[]): KulDataNode | null {
-        for (const node of nodes) {
-            if (node.cells) {
-                for (const cellKey in node.cells) {
-                    if (node.cells[cellKey] === targetCell) {
-                        return node;
-                    }
-                }
-            }
-            if (node.children) {
-                const foundNode = recursive(node.children);
-                if (foundNode) return foundNode;
-            }
+  function recursive(nodes: KulDataNode[]): KulDataNode | null {
+    for (const node of nodes) {
+      if (node.cells) {
+        for (const cellKey in node.cells) {
+          if (node.cells[cellKey] === targetCell) {
+            return node;
+          }
         }
-        return null;
+      }
+      if (node.children) {
+        const foundNode = recursive(node.children);
+        if (foundNode) return foundNode;
+      }
     }
+    return null;
+  }
 
-    return recursive(dataset.nodes);
+  return recursive(dataset.nodes);
 };
 export const nodeExists = (dataset: KulDataDataset) => {
-    return !!(dataset && dataset.nodes?.length);
+  return !!(dataset && dataset.nodes?.length);
 };
 export const nodeFilter = (
-    dataset: KulDataDataset,
-    filters: Partial<KulDataNode>,
-    partialMatch: boolean = false
+  dataset: KulDataDataset,
+  filters: Partial<KulDataNode>,
+  partialMatch: boolean = false,
 ) => {
-    const matchingNodes: Set<KulDataNode> = new Set();
-    const remainingNodes: Set<KulDataNode> = new Set();
-    const ancestorNodes: Set<KulDataNode> = new Set();
+  const matchingNodes: Set<KulDataNode> = new Set();
+  const remainingNodes: Set<KulDataNode> = new Set();
+  const ancestorNodes: Set<KulDataNode> = new Set();
 
-    const recursive = (
-        node: KulDataNode,
-        ancestor: KulDataNode,
-        ancestorSet: Set<KulDataNode>
-    ) => {
-        const hasChildren = node.children?.length;
-        let matches = false;
-        for (const key in filters) {
-            const nodeValue = node[key];
-            const filterValue = filters[key];
-            const nodeValueStr = cellStringify(nodeValue).toLowerCase();
-            const filterValueStr = cellStringify(filterValue).toLowerCase();
+  const recursive = (
+    node: KulDataNode,
+    ancestor: KulDataNode,
+    ancestorSet: Set<KulDataNode>,
+  ) => {
+    const hasChildren = node.children?.length;
+    let matches = false;
+    for (const key in filters) {
+      const nodeValue = node[key];
+      const filterValue = filters[key];
+      const nodeValueStr = cellStringify(nodeValue).toLowerCase();
+      const filterValueStr = cellStringify(filterValue).toLowerCase();
 
-            if (partialMatch) {
-                if (!nodeValueStr.includes(filterValueStr)) {
-                    continue;
-                }
-            } else {
-                if (nodeValue !== filterValue) {
-                    continue;
-                }
-            }
-            matches = true;
-            break;
+      if (partialMatch) {
+        if (!nodeValueStr.includes(filterValueStr)) {
+          continue;
         }
-
-        if (ancestor) {
-            ancestorSet.add(ancestor);
+      } else {
+        if (nodeValue !== filterValue) {
+          continue;
         }
+      }
+      matches = true;
+      break;
+    }
 
-        if (matches) {
-            matchingNodes.add(node);
-        } else {
-            remainingNodes.add(node);
-        }
+    if (ancestor) {
+      ancestorSet.add(ancestor);
+    }
 
-        if (hasChildren) {
-            node.children.forEach((child) => {
-                recursive(child, node, ancestorSet);
-            });
-        } else {
-            if (matches) {
-                ancestorSet.forEach((node) => {
-                    ancestorNodes.add(node);
-                });
-            }
-        }
-    };
+    if (matches) {
+      matchingNodes.add(node);
+    } else {
+      remainingNodes.add(node);
+    }
 
-    dataset.nodes.forEach((node) => {
-        const ancestorSet: Set<KulDataNode> = new Set();
-        recursive(node, null, ancestorSet);
-    });
+    if (hasChildren) {
+      node.children.forEach((child) => {
+        recursive(child, node, ancestorSet);
+      });
+    } else {
+      if (matches) {
+        ancestorSet.forEach((node) => {
+          ancestorNodes.add(node);
+        });
+      }
+    }
+  };
 
-    return {
-        matchingNodes,
-        remainingNodes,
-        ancestorNodes,
-    };
+  dataset.nodes.forEach((node) => {
+    const ancestorSet: Set<KulDataNode> = new Set();
+    recursive(node, null, ancestorSet);
+  });
+
+  return {
+    matchingNodes,
+    remainingNodes,
+    ancestorNodes,
+  };
 };
 export const nodeFixIds = (nodes: KulDataNode[]) => {
-    function updateNodeIds(node: KulDataNode, depth: string = '0'): void {
-        node.id = depth;
+  function updateNodeIds(node: KulDataNode, depth: string = '0'): void {
+    node.id = depth;
 
-        if (node.children) {
-            node.children.forEach((child: any, index: number) => {
-                const newDepth = `${depth}.${index}`;
-                updateNodeIds(child, newDepth);
-            });
-        }
+    if (node.children) {
+      node.children.forEach((child: any, index: number) => {
+        const newDepth = `${depth}.${index}`;
+        updateNodeIds(child, newDepth);
+      });
     }
-    nodes.forEach((node: KulDataNode) => {
-        updateNodeIds(node, '0');
-    });
-    return nodes;
+  }
+  nodes.forEach((node: KulDataNode) => {
+    updateNodeIds(node, '0');
+  });
+  return nodes;
 };
 export const nodeGetAncestors = (node: KulDataNode, nodes: KulDataNode[]) => {
-    const ancestors: KulDataNode[] = [];
-    let current: KulDataNode = node;
+  const ancestors: KulDataNode[] = [];
+  let current: KulDataNode = node;
 
-    while (current) {
-        ancestors.push(current);
-        current = nodeGetParent(nodes, current);
-    }
-    ancestors.reverse();
-    return ancestors;
+  while (current) {
+    ancestors.push(current);
+    current = nodeGetParent(nodes, current);
+  }
+  ancestors.reverse();
+  return ancestors;
 };
 export const nodeGetDrilldownInfo = (nodes: KulDataNode[]) => {
-    let maxChildren = 0;
-    let maxDepth = 0;
+  let maxChildren = 0;
+  let maxDepth = 0;
 
-    const getDepth = function (n: KulDataNode) {
-        const depth = 0;
-        if (n.children) {
-            n.children.forEach(function (d) {
-                const tmpDepth = getDepth(d);
-                if (tmpDepth > depth) {
-                    maxDepth = tmpDepth;
-                }
-            });
+  const getDepth = function (n: KulDataNode) {
+    const depth = 0;
+    if (n.children) {
+      n.children.forEach(function (d) {
+        const tmpDepth = getDepth(d);
+        if (tmpDepth > depth) {
+          maxDepth = tmpDepth;
         }
-        return depth;
-    };
+      });
+    }
+    return depth;
+  };
 
-    const recursive = (arr: KulDataNode[]) => {
-        maxDepth++;
-        for (let index = 0; index < arr.length; index++) {
-            const node = arr[index];
-            getDepth(node);
-            if (
-                Array.isArray(node.children) &&
-                maxChildren < node.children.length
-            ) {
-                maxChildren = node.children.length;
-                recursive(node.children);
-            }
-        }
-    };
+  const recursive = (arr: KulDataNode[]) => {
+    maxDepth++;
+    for (let index = 0; index < arr.length; index++) {
+      const node = arr[index];
+      getDepth(node);
+      if (Array.isArray(node.children) && maxChildren < node.children.length) {
+        maxChildren = node.children.length;
+        recursive(node.children);
+      }
+    }
+  };
 
-    recursive(nodes);
-    return {
-        maxChildren,
-        maxDepth,
-    };
+  recursive(nodes);
+  return {
+    maxChildren,
+    maxDepth,
+  };
 };
 export const nodeGetParent = (nodes: KulDataNode[], child: KulDataNode) => {
-    let parent: KulDataNode = null;
-    for (let index = 0; index < nodes.length; index++) {
-        const node = nodes[index];
-        recursive(node);
+  let parent: KulDataNode = null;
+  for (let index = 0; index < nodes.length; index++) {
+    const node = nodes[index];
+    recursive(node);
 
-        // Recursive function to traverse nodes and find the parent node
-        function recursive(node: KulDataNode) {
-            const hasChildren = !!node.children;
+    // Recursive function to traverse nodes and find the parent node
+    function recursive(node: KulDataNode) {
+      const hasChildren = !!node.children;
 
-            if (hasChildren && node.children.includes(child)) {
-                parent = node;
-                return;
-            }
-            for (
-                let index = 0;
-                !parent && hasChildren && index < node.children.length;
-                index++
-            ) {
-                recursive(node.children[index]);
-            }
-        }
+      if (hasChildren && node.children.includes(child)) {
+        parent = node;
+        return;
+      }
+      for (
+        let index = 0;
+        !parent && hasChildren && index < node.children.length;
+        index++
+      ) {
+        recursive(node.children[index]);
+      }
     }
-    return parent;
+  }
+  return parent;
 };
 export const nodePop = (nodes: KulDataNode[], node2remove: KulDataNode) => {
-    let removed: KulDataNode = null;
-    for (let index = 0; index < nodes.length; index++) {
-        recursive(nodes[index], nodes);
+  let removed: KulDataNode = null;
+  for (let index = 0; index < nodes.length; index++) {
+    recursive(nodes[index], nodes);
 
-        function recursive(node: KulDataNode, array: KulDataNode[]) {
-            const i = array.indexOf(node2remove);
-            if (i > -1) {
-                removed = { ...node2remove };
-                array.splice(i, 1);
-                return;
-            }
-            for (
-                let index = 0;
-                node.children && index < node.children.length;
-                index++
-            ) {
-                if (node.children[index]) {
-                    recursive(node.children[index], node.children);
-                }
-            }
+    function recursive(node: KulDataNode, array: KulDataNode[]) {
+      const i = array.indexOf(node2remove);
+      if (i > -1) {
+        removed = { ...node2remove };
+        array.splice(i, 1);
+        return;
+      }
+      for (
+        let index = 0;
+        node.children && index < node.children.length;
+        index++
+      ) {
+        if (node.children[index]) {
+          recursive(node.children[index], node.children);
         }
+      }
     }
-    return removed;
+  }
+  return removed;
 };
 export const nodeSort = (
-    stringify: (value: unknown) => string,
-    nodes: KulDataNode[],
-    direction: 'asc' | 'desc' = 'asc'
+  stringify: (value: unknown) => string,
+  nodes: KulDataNode[],
+  direction: 'asc' | 'desc' = 'asc',
 ) => {
-    nodes.sort((a, b) => {
-        let result = 0;
-        const strA = stringify(a.value);
-        const strB = stringify(b.value);
-        if (strA < strB) {
-            result = -1;
-        } else if (strA > strB) {
-            result = 1;
-        }
+  nodes.sort((a, b) => {
+    let result = 0;
+    const strA = stringify(a.value);
+    const strB = stringify(b.value);
+    if (strA < strB) {
+      result = -1;
+    } else if (strA > strB) {
+      result = 1;
+    }
 
-        return direction === 'desc' ? result * -1 : result;
-    });
-    return nodes;
+    return direction === 'desc' ? result * -1 : result;
+  });
+  return nodes;
 };
 export const nodeSetProperties = (
-    nodes: KulDataNode[],
-    properties: Partial<KulDataNode>,
-    recursively?: boolean,
-    exclude?: KulDataNode[]
+  nodes: KulDataNode[],
+  properties: Partial<KulDataNode>,
+  recursively?: boolean,
+  exclude?: KulDataNode[],
 ) => {
-    const updated: KulDataNode[] = [];
-    if (!exclude) {
-        exclude = [];
+  const updated: KulDataNode[] = [];
+  if (!exclude) {
+    exclude = [];
+  }
+  if (recursively) {
+    nodes = nodeToStream(nodes);
+  }
+  for (let index = 0; index < nodes.length; index++) {
+    const node = nodes[index];
+    for (const key in properties) {
+      if (!exclude.includes(node)) {
+        node[key] = properties[key];
+        updated.push(node);
+      }
     }
-    if (recursively) {
-        nodes = nodeToStream(nodes);
-    }
-    for (let index = 0; index < nodes.length; index++) {
-        const node = nodes[index];
-        for (const key in properties) {
-            if (!exclude.includes(node)) {
-                node[key] = properties[key];
-                updated.push(node);
-            }
-        }
-    }
-    return updated;
+  }
+  return updated;
 };
 export const nodeToStream = (nodes: KulDataNode[]) => {
-    function recursive(node: KulDataNode) {
-        streamlined.push(node);
-        for (
-            let index = 0;
-            node.children && index < node.children.length;
-            index++
-        ) {
-            recursive(node.children[index]);
-        }
+  function recursive(node: KulDataNode) {
+    streamlined.push(node);
+    for (
+      let index = 0;
+      node.children && index < node.children.length;
+      index++
+    ) {
+      recursive(node.children[index]);
     }
+  }
 
-    const streamlined: KulDataNode[] = [];
-    for (let index = 0; index < nodes.length; index++) {
-        const node = nodes[index];
-        recursive(node);
-    }
-    return streamlined;
+  const streamlined: KulDataNode[] = [];
+  for (let index = 0; index < nodes.length; index++) {
+    const node = nodes[index];
+    recursive(node);
+  }
+  return streamlined;
 };
 export const removeNodeByCell = (
-    dataset: KulDataDataset,
-    targetCell: KulDataGenericCell
+  dataset: KulDataDataset,
+  targetCell: KulDataGenericCell,
 ) => {
-    function recursive(
-        nodes: KulDataNode[],
-        nodeToRemove: KulDataNode
-    ): boolean {
-        const index = nodes.indexOf(nodeToRemove);
-        if (index !== -1) {
-            nodes.splice(index, 1);
-            return true;
-        }
-
-        for (const node of nodes) {
-            if (node.children && recursive(node.children, nodeToRemove)) {
-                return true;
-            }
-        }
-
-        return false;
+  function recursive(nodes: KulDataNode[], nodeToRemove: KulDataNode): boolean {
+    const index = nodes.indexOf(nodeToRemove);
+    if (index !== -1) {
+      nodes.splice(index, 1);
+      return true;
     }
 
-    const targetNode = findNodeByCell(dataset, targetCell);
-    if (!targetNode) {
-        return null;
+    for (const node of nodes) {
+      if (node.children && recursive(node.children, nodeToRemove)) {
+        return true;
+      }
     }
 
-    return recursive(dataset.nodes, targetNode) ? targetNode : null;
+    return false;
+  }
+
+  const targetNode = findNodeByCell(dataset, targetCell);
+  if (!targetNode) {
+    return null;
+  }
+
+  return recursive(dataset.nodes, targetNode) ? targetNode : null;
 };

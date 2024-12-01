@@ -12,58 +12,58 @@ import { KulTheme } from '../kul-theme/kul-theme';
 import { KulDebug } from './kul-debug';
 
 export interface KulDebugLifecycleInfo {
-    endTime: number;
-    renderCount: number;
-    renderEnd: number;
-    renderStart: number;
-    startTime: number;
+  endTime: number;
+  renderCount: number;
+  renderEnd: number;
+  renderStart: number;
+  startTime: number;
 }
 export interface KulDebugLogFactory {
-    dump: () => void;
-    fromComponent(comp: KulDebugLogClass): comp is KulGenericComponent;
-    new: (
-        comp: KulDebugLogClass,
-        message: string,
-        category?: KulDebugCategory
-    ) => Promise<void>;
-    print: () => void;
+  dump: () => void;
+  fromComponent(comp: KulDebugLogClass): comp is KulGenericComponent;
+  new: (
+    comp: KulDebugLogClass,
+    message: string,
+    category?: KulDebugCategory,
+  ) => Promise<void>;
+  print: () => void;
 }
 export type KulDebugManagedComponents = KulCode | KulToggle;
 export interface KulDebugLog {
-    category: KulDebugCategory;
-    class: KulDebugLogClass;
-    date: Date;
-    id: string;
-    message: string;
-    type: KulDebugLogType;
+  category: KulDebugCategory;
+  class: KulDebugLogClass;
+  date: Date;
+  id: string;
+  message: string;
+  type: KulDebugLogType;
 }
 export type KulDebugLogToPrintEntry = {
-    class: KulDebugLogClass;
-    date: string;
-    message: string;
+  class: KulDebugLogClass;
+  date: string;
+  message: string;
 };
 export type KulDebugLogClass =
-    | KulGenericComponent
-    | KulData
-    | KulDates
-    | KulDebug
-    | KulDynamicPosition
-    | KulLanguage
-    | KulLLM
-    | KulManager
-    | KulScrollOnHover
-    | KulTheme;
+  | KulGenericComponent
+  | KulData
+  | KulDates
+  | KulDebug
+  | KulDynamicPosition
+  | KulLanguage
+  | KulLLM
+  | KulManager
+  | KulScrollOnHover
+  | KulTheme;
 export type KulDebugLogsToPrint = {
-    [index in KulDebugLogType]: KulDebugLogToPrintEntry[];
+  [index in KulDebugLogType]: KulDebugLogToPrintEntry[];
 };
 export type KulDebugCategory =
-    | 'informational'
-    | 'warning'
-    | 'error'
-    | 'success';
+  | 'informational'
+  | 'warning'
+  | 'error'
+  | 'success';
 export type KulDebugLifecycles =
-    | 'custom'
-    | 'did-load'
-    | 'did-render'
-    | 'will-render';
+  | 'custom'
+  | 'did-load'
+  | 'did-render'
+  | 'will-render';
 export type KulDebugLogType = 'load' | 'misc' | 'render' | 'resize';

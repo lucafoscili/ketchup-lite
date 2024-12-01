@@ -45,6 +45,9 @@ jobs:
         run: |
           npx lerna version prerelease --preid=rc --no-push --yes
 
+      - name: Format Code with Prettier
+        run: yarn format
+
       - name: Commit Changes
         run: |
           git add .
