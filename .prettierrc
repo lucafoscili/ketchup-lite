@@ -1,6 +1,6 @@
 {
   "printWidth": 80,
-  "tabWidth": 4,
+  "tabWidth": 2,
   "overrides": [
     {
       "files": "*.scss",
@@ -12,11 +12,11 @@
   "useTabs": false,
   "semi": true,
   "singleQuote": true,
-  "trailingComma": "es5",
+  "trailingComma": "all",
   "bracketSpacing": true,
   "jsxBracketSameLine": false,
   "arrowParens": "always",
   "proseWrap": "never",
   "htmlWhitespaceSensitivity": "strict",
-  "endOfLine": "lf"
+  "endOfLine": "auto"
 }
