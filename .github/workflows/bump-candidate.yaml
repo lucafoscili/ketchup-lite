@@ -50,7 +50,7 @@ jobs:
       - name: Create or Update Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: 'chore: bump versions for release candidate [skip ci]'
+          commit-message: 'chore: bump versions for release candidate'
           branch: 'version-bump-rc'
           title: 'chore: bump versions for release candidate'
           body: 'This PR bumps package versions for the release candidate.'

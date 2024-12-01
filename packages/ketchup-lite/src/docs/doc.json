@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-12-01T17:06:17",
+  "timestamp": "2024-12-01T20:41:37",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.3",
@@ -437,10 +437,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-accordion"],
+      "dependents": [
+        "kul-showcase-accordion"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-accordion": ["kul-accordion"]
+        "kul-showcase-accordion": [
+          "kul-accordion"
+        ]
       }
     },
     {
@@ -804,49 +808,135 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase": ["kul-article"],
-        "kul-showcase-accordion": ["kul-article"],
-        "kul-showcase-article": ["kul-article"],
-        "kul-showcase-badge": ["kul-article"],
-        "kul-showcase-button": ["kul-article"],
-        "kul-showcase-canvas": ["kul-article"],
-        "kul-showcase-card": ["kul-article"],
-        "kul-showcase-carousel": ["kul-article"],
-        "kul-showcase-chart": ["kul-article"],
-        "kul-showcase-chat": ["kul-article"],
-        "kul-showcase-chip": ["kul-article"],
-        "kul-showcase-code": ["kul-article"],
-        "kul-showcase-compare": ["kul-article"],
-        "kul-showcase-debug": ["kul-article"],
-        "kul-showcase-drawer": ["kul-article"],
-        "kul-showcase-header": ["kul-article"],
-        "kul-showcase-image": ["kul-article"],
-        "kul-showcase-imageviewer": ["kul-article"],
-        "kul-showcase-kuldata": ["kul-article"],
-        "kul-showcase-kuldates": ["kul-article"],
-        "kul-showcase-kuldebug": ["kul-article"],
-        "kul-showcase-kuldynamicposition": ["kul-article"],
-        "kul-showcase-kullanguage": ["kul-article"],
-        "kul-showcase-kulllm": ["kul-article"],
-        "kul-showcase-kulmanager": ["kul-article"],
-        "kul-showcase-kulscrollonhover": ["kul-article"],
-        "kul-showcase-kultheme": ["kul-article"],
-        "kul-showcase-lazy": ["kul-article"],
-        "kul-showcase-list": ["kul-article"],
-        "kul-showcase-masonry": ["kul-article"],
-        "kul-showcase-messenger": ["kul-article"],
-        "kul-showcase-photoframe": ["kul-article"],
-        "kul-showcase-progressbar": ["kul-article"],
-        "kul-showcase-slider": ["kul-article"],
-        "kul-showcase-spinner": ["kul-article"],
-        "kul-showcase-splash": ["kul-article"],
-        "kul-showcase-tabbar": ["kul-article"],
-        "kul-showcase-textfield": ["kul-article"],
-        "kul-showcase-toast": ["kul-article"],
-        "kul-showcase-toggle": ["kul-article"],
-        "kul-showcase-tree": ["kul-article"],
-        "kul-showcase-typewriter": ["kul-article"],
-        "kul-showcase-upload": ["kul-article"]
+        "kul-showcase": [
+          "kul-article"
+        ],
+        "kul-showcase-accordion": [
+          "kul-article"
+        ],
+        "kul-showcase-article": [
+          "kul-article"
+        ],
+        "kul-showcase-badge": [
+          "kul-article"
+        ],
+        "kul-showcase-button": [
+          "kul-article"
+        ],
+        "kul-showcase-canvas": [
+          "kul-article"
+        ],
+        "kul-showcase-card": [
+          "kul-article"
+        ],
+        "kul-showcase-carousel": [
+          "kul-article"
+        ],
+        "kul-showcase-chart": [
+          "kul-article"
+        ],
+        "kul-showcase-chat": [
+          "kul-article"
+        ],
+        "kul-showcase-chip": [
+          "kul-article"
+        ],
+        "kul-showcase-code": [
+          "kul-article"
+        ],
+        "kul-showcase-compare": [
+          "kul-article"
+        ],
+        "kul-showcase-debug": [
+          "kul-article"
+        ],
+        "kul-showcase-drawer": [
+          "kul-article"
+        ],
+        "kul-showcase-header": [
+          "kul-article"
+        ],
+        "kul-showcase-image": [
+          "kul-article"
+        ],
+        "kul-showcase-imageviewer": [
+          "kul-article"
+        ],
+        "kul-showcase-kuldata": [
+          "kul-article"
+        ],
+        "kul-showcase-kuldates": [
+          "kul-article"
+        ],
+        "kul-showcase-kuldebug": [
+          "kul-article"
+        ],
+        "kul-showcase-kuldynamicposition": [
+          "kul-article"
+        ],
+        "kul-showcase-kullanguage": [
+          "kul-article"
+        ],
+        "kul-showcase-kulllm": [
+          "kul-article"
+        ],
+        "kul-showcase-kulmanager": [
+          "kul-article"
+        ],
+        "kul-showcase-kulscrollonhover": [
+          "kul-article"
+        ],
+        "kul-showcase-kultheme": [
+          "kul-article"
+        ],
+        "kul-showcase-lazy": [
+          "kul-article"
+        ],
+        "kul-showcase-list": [
+          "kul-article"
+        ],
+        "kul-showcase-masonry": [
+          "kul-article"
+        ],
+        "kul-showcase-messenger": [
+          "kul-article"
+        ],
+        "kul-showcase-photoframe": [
+          "kul-article"
+        ],
+        "kul-showcase-progressbar": [
+          "kul-article"
+        ],
+        "kul-showcase-slider": [
+          "kul-article"
+        ],
+        "kul-showcase-spinner": [
+          "kul-article"
+        ],
+        "kul-showcase-splash": [
+          "kul-article"
+        ],
+        "kul-showcase-tabbar": [
+          "kul-article"
+        ],
+        "kul-showcase-textfield": [
+          "kul-article"
+        ],
+        "kul-showcase-toast": [
+          "kul-article"
+        ],
+        "kul-showcase-toggle": [
+          "kul-article"
+        ],
+        "kul-showcase-tree": [
+          "kul-article"
+        ],
+        "kul-showcase-typewriter": [
+          "kul-article"
+        ],
+        "kul-showcase-upload": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -1150,12 +1240,23 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-image", "kul-showcase-badge"],
-      "dependencies": ["kul-image"],
+      "dependents": [
+        "kul-image",
+        "kul-showcase-badge"
+      ],
+      "dependencies": [
+        "kul-image"
+      ],
       "dependencyGraph": {
-        "kul-badge": ["kul-image"],
-        "kul-image": ["kul-badge"],
-        "kul-showcase-badge": ["kul-badge"]
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-badge"
+        ],
+        "kul-showcase-badge": [
+          "kul-badge"
+        ]
       }
     },
     {
@@ -1907,22 +2008,55 @@
         "kul-showcase-splash",
         "kul-upload"
       ],
-      "dependencies": ["kul-image", "kul-list"],
+      "dependencies": [
+        "kul-image",
+        "kul-list"
+      ],
       "dependencyGraph": {
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-carousel": ["kul-button"],
-        "kul-chat": ["kul-button"],
-        "kul-code": ["kul-button"],
-        "kul-compare": ["kul-button"],
-        "kul-imageviewer": ["kul-button"],
-        "kul-masonry": ["kul-button"],
-        "kul-messenger": ["kul-button"],
-        "kul-showcase": ["kul-button"],
-        "kul-showcase-button": ["kul-button"],
-        "kul-showcase-splash": ["kul-button"],
-        "kul-upload": ["kul-button"]
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-carousel": [
+          "kul-button"
+        ],
+        "kul-chat": [
+          "kul-button"
+        ],
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-compare": [
+          "kul-button"
+        ],
+        "kul-imageviewer": [
+          "kul-button"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-messenger": [
+          "kul-button"
+        ],
+        "kul-showcase": [
+          "kul-button"
+        ],
+        "kul-showcase-button": [
+          "kul-button"
+        ],
+        "kul-showcase-splash": [
+          "kul-button"
+        ],
+        "kul-upload": [
+          "kul-button"
+        ]
       }
     },
     {
@@ -2461,14 +2595,30 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-imageviewer", "kul-showcase-canvas"],
-      "dependencies": ["kul-image"],
+      "dependents": [
+        "kul-imageviewer",
+        "kul-showcase-canvas"
+      ],
+      "dependencies": [
+        "kul-image"
+      ],
       "dependencyGraph": {
-        "kul-canvas": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-imageviewer": ["kul-canvas"],
-        "kul-showcase-canvas": ["kul-canvas"]
+        "kul-canvas": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-imageviewer": [
+          "kul-canvas"
+        ],
+        "kul-showcase-canvas": [
+          "kul-canvas"
+        ]
       }
     },
     {
@@ -2847,11 +2997,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase", "kul-showcase-card"],
+      "dependents": [
+        "kul-showcase",
+        "kul-showcase-card"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase": ["kul-card"],
-        "kul-showcase-card": ["kul-card"]
+        "kul-showcase": [
+          "kul-card"
+        ],
+        "kul-showcase-card": [
+          "kul-card"
+        ]
       }
     },
     {
@@ -3307,14 +3464,30 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-carousel"],
-      "dependencies": ["kul-button"],
+      "dependents": [
+        "kul-showcase-carousel"
+      ],
+      "dependencies": [
+        "kul-button"
+      ],
       "dependencyGraph": {
-        "kul-carousel": ["kul-button"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-showcase-carousel": ["kul-carousel"]
+        "kul-carousel": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-showcase-carousel": [
+          "kul-carousel"
+        ]
       }
     },
     {
@@ -3867,10 +4040,14 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-chart"],
+      "dependents": [
+        "kul-showcase-chart"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-chart": ["kul-chart"]
+        "kul-showcase-chart": [
+          "kul-chart"
+        ]
       }
     },
     {
@@ -4493,7 +4670,10 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-messenger", "kul-showcase-chat"],
+      "dependents": [
+        "kul-messenger",
+        "kul-showcase-chat"
+      ],
       "dependencies": [
         "kul-spinner",
         "kul-image",
@@ -4511,12 +4691,26 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-code": ["kul-button"],
-        "kul-messenger": ["kul-chat"],
-        "kul-showcase-chat": ["kul-chat"]
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-messenger": [
+          "kul-chat"
+        ],
+        "kul-showcase-chat": [
+          "kul-chat"
+        ]
       }
     },
     {
@@ -4987,11 +5181,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-messenger", "kul-showcase-chip"],
+      "dependents": [
+        "kul-messenger",
+        "kul-showcase-chip"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-messenger": ["kul-chip"],
-        "kul-showcase-chip": ["kul-chip"]
+        "kul-messenger": [
+          "kul-chip"
+        ],
+        "kul-showcase-chip": [
+          "kul-chip"
+        ]
       }
     },
     {
@@ -5363,16 +5564,38 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-chat", "kul-messenger", "kul-showcase-code"],
-      "dependencies": ["kul-button"],
+      "dependents": [
+        "kul-chat",
+        "kul-messenger",
+        "kul-showcase-code"
+      ],
+      "dependencies": [
+        "kul-button"
+      ],
       "dependencyGraph": {
-        "kul-code": ["kul-button"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-chat": ["kul-code"],
-        "kul-messenger": ["kul-code"],
-        "kul-showcase-code": ["kul-code"]
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-chat": [
+          "kul-code"
+        ],
+        "kul-messenger": [
+          "kul-code"
+        ],
+        "kul-showcase-code": [
+          "kul-code"
+        ]
       }
     },
     {
@@ -5755,15 +5978,35 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-compare"],
-      "dependencies": ["kul-button", "kul-tree"],
+      "dependents": [
+        "kul-showcase-compare"
+      ],
+      "dependencies": [
+        "kul-button",
+        "kul-tree"
+      ],
       "dependencyGraph": {
-        "kul-compare": ["kul-button", "kul-tree"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-tree": ["kul-textfield"],
-        "kul-showcase-compare": ["kul-compare"]
+        "kul-compare": [
+          "kul-button",
+          "kul-tree"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ],
+        "kul-showcase-compare": [
+          "kul-compare"
+        ]
       }
     },
     {
@@ -6770,18 +7013,42 @@
         "kul-toast",
         "kul-upload"
       ],
-      "dependencies": ["kul-spinner", "kul-badge"],
+      "dependencies": [
+        "kul-spinner",
+        "kul-badge"
+      ],
       "dependencyGraph": {
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-button": ["kul-image"],
-        "kul-canvas": ["kul-image"],
-        "kul-chat": ["kul-image"],
-        "kul-messenger": ["kul-image"],
-        "kul-showcase-image": ["kul-image"],
-        "kul-tabbar": ["kul-image"],
-        "kul-toast": ["kul-image"],
-        "kul-upload": ["kul-image"]
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-button": [
+          "kul-image"
+        ],
+        "kul-canvas": [
+          "kul-image"
+        ],
+        "kul-chat": [
+          "kul-image"
+        ],
+        "kul-messenger": [
+          "kul-image"
+        ],
+        "kul-showcase-image": [
+          "kul-image"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
+        "kul-toast": [
+          "kul-image"
+        ],
+        "kul-upload": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -7547,7 +7814,9 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-imageviewer"],
+      "dependents": [
+        "kul-showcase-imageviewer"
+      ],
       "dependencies": [
         "kul-canvas",
         "kul-button",
@@ -7565,13 +7834,29 @@
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-canvas": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-masonry": ["kul-button"],
-        "kul-tree": ["kul-textfield"],
-        "kul-showcase-imageviewer": ["kul-imageviewer"]
+        "kul-canvas": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ],
+        "kul-showcase-imageviewer": [
+          "kul-imageviewer"
+        ]
       }
     },
     {
@@ -7964,10 +8249,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-lazy"],
+      "dependents": [
+        "kul-showcase-lazy"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-lazy": ["kul-lazy"]
+        "kul-showcase-lazy": [
+          "kul-lazy"
+        ]
       }
     },
     {
@@ -8530,11 +8819,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-button", "kul-showcase-list"],
+      "dependents": [
+        "kul-button",
+        "kul-showcase-list"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-button": ["kul-list"],
-        "kul-showcase-list": ["kul-list"]
+        "kul-button": [
+          "kul-list"
+        ],
+        "kul-showcase-list": [
+          "kul-list"
+        ]
       }
     },
     {
@@ -9158,15 +9454,34 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-imageviewer", "kul-showcase-masonry"],
-      "dependencies": ["kul-button"],
+      "dependents": [
+        "kul-imageviewer",
+        "kul-showcase-masonry"
+      ],
+      "dependencies": [
+        "kul-button"
+      ],
       "dependencyGraph": {
-        "kul-masonry": ["kul-button"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-imageviewer": ["kul-masonry"],
-        "kul-showcase-masonry": ["kul-masonry"]
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-imageviewer": [
+          "kul-masonry"
+        ],
+        "kul-showcase-masonry": [
+          "kul-masonry"
+        ]
       }
     },
     {
@@ -9549,7 +9864,9 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-messenger"],
+      "dependents": [
+        "kul-showcase-messenger"
+      ],
       "dependencies": [
         "kul-button",
         "kul-tabbar",
@@ -9571,10 +9888,20 @@
           "kul-chip",
           "kul-textfield"
         ],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-tabbar": ["kul-image"],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
         "kul-chat": [
           "kul-spinner",
           "kul-image",
@@ -9583,8 +9910,12 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-code": ["kul-button"],
-        "kul-showcase-messenger": ["kul-messenger"]
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-showcase-messenger": [
+          "kul-messenger"
+        ]
       }
     },
     {
@@ -9895,10 +10226,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-photoframe"],
+      "dependents": [
+        "kul-showcase-photoframe"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-photoframe": ["kul-photoframe"]
+        "kul-showcase-photoframe": [
+          "kul-photoframe"
+        ]
       }
     },
     {
@@ -10293,11 +10628,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-chat", "kul-showcase-progressbar"],
+      "dependents": [
+        "kul-chat",
+        "kul-showcase-progressbar"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-chat": ["kul-progressbar"],
-        "kul-showcase-progressbar": ["kul-progressbar"]
+        "kul-chat": [
+          "kul-progressbar"
+        ],
+        "kul-showcase-progressbar": [
+          "kul-progressbar"
+        ]
       }
     },
     {
@@ -10344,12 +10686,28 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-card", "kul-button", "kul-article"],
+      "dependencies": [
+        "kul-card",
+        "kul-button",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase": ["kul-card", "kul-button", "kul-article"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase": [
+          "kul-card",
+          "kul-button",
+          "kul-article"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -10389,9 +10747,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-accordion", "kul-article"],
+      "dependencies": [
+        "kul-accordion",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-accordion": ["kul-accordion", "kul-article"]
+        "kul-showcase-accordion": [
+          "kul-accordion",
+          "kul-article"
+        ]
       }
     },
     {
@@ -10431,9 +10795,13 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-article": ["kul-article"]
+        "kul-showcase-article": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -10469,11 +10837,22 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-badge", "kul-article"],
+      "dependencies": [
+        "kul-badge",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-badge": ["kul-badge", "kul-article"],
-        "kul-badge": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"]
+        "kul-showcase-badge": [
+          "kul-badge",
+          "kul-article"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ]
       }
     },
     {
@@ -10521,12 +10900,28 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-button", "kul-spinner", "kul-article"],
+      "dependencies": [
+        "kul-button",
+        "kul-spinner",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-button": ["kul-button", "kul-spinner", "kul-article"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-button": [
+          "kul-button",
+          "kul-spinner",
+          "kul-article"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -10566,12 +10961,25 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-canvas", "kul-article"],
+      "dependencies": [
+        "kul-canvas",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-canvas": ["kul-canvas", "kul-article"],
-        "kul-canvas": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-canvas": [
+          "kul-canvas",
+          "kul-article"
+        ],
+        "kul-canvas": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -10619,9 +11027,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-card", "kul-article"],
+      "dependencies": [
+        "kul-card",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-card": ["kul-card", "kul-article"]
+        "kul-showcase-card": [
+          "kul-card",
+          "kul-article"
+        ]
       }
     },
     {
@@ -10661,13 +11075,29 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-carousel", "kul-article"],
+      "dependencies": [
+        "kul-carousel",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-carousel": ["kul-carousel", "kul-article"],
-        "kul-carousel": ["kul-button"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-carousel": [
+          "kul-carousel",
+          "kul-article"
+        ],
+        "kul-carousel": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -10707,9 +11137,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-chart", "kul-article"],
+      "dependencies": [
+        "kul-chart",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-chart": ["kul-chart", "kul-article"]
+        "kul-showcase-chart": [
+          "kul-chart",
+          "kul-article"
+        ]
       }
     },
     {
@@ -10749,9 +11185,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-chat", "kul-article"],
+      "dependencies": [
+        "kul-chat",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-chat": ["kul-chat", "kul-article"],
+        "kul-showcase-chat": [
+          "kul-chat",
+          "kul-article"
+        ],
         "kul-chat": [
           "kul-spinner",
           "kul-image",
@@ -10760,10 +11202,20 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-code": ["kul-button"]
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-code": [
+          "kul-button"
+        ]
       }
     },
     {
@@ -10803,9 +11255,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-chip", "kul-article"],
+      "dependencies": [
+        "kul-chip",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-chip": ["kul-chip", "kul-article"]
+        "kul-showcase-chip": [
+          "kul-chip",
+          "kul-article"
+        ]
       }
     },
     {
@@ -10845,13 +11303,29 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-code", "kul-article"],
+      "dependencies": [
+        "kul-code",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-code": ["kul-code", "kul-article"],
-        "kul-code": ["kul-button"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-code": [
+          "kul-code",
+          "kul-article"
+        ],
+        "kul-code": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -10891,14 +11365,33 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-compare", "kul-article"],
+      "dependencies": [
+        "kul-compare",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-compare": ["kul-compare", "kul-article"],
-        "kul-compare": ["kul-button", "kul-tree"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-tree": ["kul-textfield"]
+        "kul-showcase-compare": [
+          "kul-compare",
+          "kul-article"
+        ],
+        "kul-compare": [
+          "kul-button",
+          "kul-tree"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ]
       }
     },
     {
@@ -10922,9 +11415,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-textfield", "kul-article"],
+      "dependencies": [
+        "kul-textfield",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-debug": ["kul-textfield", "kul-article"]
+        "kul-showcase-debug": [
+          "kul-textfield",
+          "kul-article"
+        ]
       }
     },
     {
@@ -10964,9 +11463,13 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-drawer": ["kul-article"]
+        "kul-showcase-drawer": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11006,9 +11509,13 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-header": ["kul-article"]
+        "kul-showcase-header": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11048,11 +11555,22 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-image", "kul-article"],
+      "dependencies": [
+        "kul-image",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-image": ["kul-image", "kul-article"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-image": [
+          "kul-image",
+          "kul-article"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -11092,9 +11610,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-imageviewer", "kul-article"],
+      "dependencies": [
+        "kul-imageviewer",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-imageviewer": ["kul-imageviewer", "kul-article"],
+        "kul-showcase-imageviewer": [
+          "kul-imageviewer",
+          "kul-article"
+        ],
         "kul-imageviewer": [
           "kul-canvas",
           "kul-button",
@@ -11103,12 +11627,26 @@
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-canvas": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-masonry": ["kul-button"],
-        "kul-tree": ["kul-textfield"]
+        "kul-canvas": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ]
       }
     },
     {
@@ -11127,9 +11665,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kuldata": ["kul-article"]
+        "kul-showcase-kuldata": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11148,9 +11690,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kuldates": ["kul-article"]
+        "kul-showcase-kuldates": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11169,9 +11715,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kuldebug": ["kul-article"]
+        "kul-showcase-kuldebug": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11190,9 +11740,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kuldynamicposition": ["kul-article"]
+        "kul-showcase-kuldynamicposition": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11211,9 +11765,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kullanguage": ["kul-article"]
+        "kul-showcase-kullanguage": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11232,9 +11790,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kulllm": ["kul-article"]
+        "kul-showcase-kulllm": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11253,9 +11815,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kulmanager": ["kul-article"]
+        "kul-showcase-kulmanager": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11274,9 +11840,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kulscrollonhover": ["kul-article"]
+        "kul-showcase-kulscrollonhover": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11295,9 +11865,13 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": ["kul-article"],
+      "dependencies": [
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-kultheme": ["kul-article"]
+        "kul-showcase-kultheme": [
+          "kul-article"
+        ]
       }
     },
     {
@@ -11337,9 +11911,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-lazy", "kul-article"],
+      "dependencies": [
+        "kul-lazy",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-lazy": ["kul-lazy", "kul-article"]
+        "kul-showcase-lazy": [
+          "kul-lazy",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11379,9 +11959,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-list", "kul-article"],
+      "dependencies": [
+        "kul-list",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-list": ["kul-list", "kul-article"]
+        "kul-showcase-list": [
+          "kul-list",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11421,13 +12007,29 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-masonry", "kul-article"],
+      "dependencies": [
+        "kul-masonry",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-masonry": ["kul-masonry", "kul-article"],
-        "kul-masonry": ["kul-button"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-masonry": [
+          "kul-masonry",
+          "kul-article"
+        ],
+        "kul-masonry": [
+          "kul-button"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -11467,9 +12069,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-messenger", "kul-article"],
+      "dependencies": [
+        "kul-messenger",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-messenger": ["kul-messenger", "kul-article"],
+        "kul-showcase-messenger": [
+          "kul-messenger",
+          "kul-article"
+        ],
         "kul-messenger": [
           "kul-button",
           "kul-tabbar",
@@ -11480,10 +12088,20 @@
           "kul-chip",
           "kul-textfield"
         ],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-tabbar": ["kul-image"],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
         "kul-chat": [
           "kul-spinner",
           "kul-image",
@@ -11492,7 +12110,9 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-code": ["kul-button"]
+        "kul-code": [
+          "kul-button"
+        ]
       }
     },
     {
@@ -11532,9 +12152,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-photoframe", "kul-article"],
+      "dependencies": [
+        "kul-photoframe",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-photoframe": ["kul-photoframe", "kul-article"]
+        "kul-showcase-photoframe": [
+          "kul-photoframe",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11574,9 +12200,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-progressbar", "kul-article"],
+      "dependencies": [
+        "kul-progressbar",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-progressbar": ["kul-progressbar", "kul-article"]
+        "kul-showcase-progressbar": [
+          "kul-progressbar",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11616,9 +12248,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-slider", "kul-article"],
+      "dependencies": [
+        "kul-slider",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-slider": ["kul-slider", "kul-article"]
+        "kul-showcase-slider": [
+          "kul-slider",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11666,9 +12304,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-spinner", "kul-article"],
+      "dependencies": [
+        "kul-spinner",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-spinner": ["kul-spinner", "kul-article"]
+        "kul-showcase-spinner": [
+          "kul-spinner",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11721,9 +12365,17 @@
           "kul-spinner",
           "kul-article"
         ],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -11763,12 +12415,25 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-tabbar", "kul-article"],
+      "dependencies": [
+        "kul-tabbar",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-tabbar": ["kul-tabbar", "kul-article"],
-        "kul-tabbar": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-tabbar": [
+          "kul-tabbar",
+          "kul-article"
+        ],
+        "kul-tabbar": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -11816,9 +12481,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-textfield", "kul-article"],
+      "dependencies": [
+        "kul-textfield",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-textfield": ["kul-textfield", "kul-article"]
+        "kul-showcase-textfield": [
+          "kul-textfield",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11858,12 +12529,25 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-toast", "kul-article"],
+      "dependencies": [
+        "kul-toast",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-toast": ["kul-toast", "kul-article"],
-        "kul-toast": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"]
+        "kul-showcase-toast": [
+          "kul-toast",
+          "kul-article"
+        ],
+        "kul-toast": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ]
       }
     },
     {
@@ -11903,9 +12587,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-toggle", "kul-article"],
+      "dependencies": [
+        "kul-toggle",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-toggle": ["kul-toggle", "kul-article"]
+        "kul-showcase-toggle": [
+          "kul-toggle",
+          "kul-article"
+        ]
       }
     },
     {
@@ -11945,10 +12635,18 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-tree", "kul-article"],
+      "dependencies": [
+        "kul-tree",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-tree": ["kul-tree", "kul-article"],
-        "kul-tree": ["kul-textfield"]
+        "kul-showcase-tree": [
+          "kul-tree",
+          "kul-article"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ]
       }
     },
     {
@@ -11988,9 +12686,15 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-typewriter", "kul-article"],
+      "dependencies": [
+        "kul-typewriter",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-typewriter": ["kul-typewriter", "kul-article"]
+        "kul-showcase-typewriter": [
+          "kul-typewriter",
+          "kul-article"
+        ]
       }
     },
     {
@@ -12030,13 +12734,30 @@
         }
       ],
       "dependents": [],
-      "dependencies": ["kul-upload", "kul-article"],
+      "dependencies": [
+        "kul-upload",
+        "kul-article"
+      ],
       "dependencyGraph": {
-        "kul-showcase-upload": ["kul-upload", "kul-article"],
-        "kul-upload": ["kul-image", "kul-button"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-button": ["kul-image", "kul-list"]
+        "kul-showcase-upload": [
+          "kul-upload",
+          "kul-article"
+        ],
+        "kul-upload": [
+          "kul-image",
+          "kul-button"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ]
       }
     },
     {
@@ -12716,10 +13437,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-slider"],
+      "dependents": [
+        "kul-showcase-slider"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-slider": ["kul-slider"]
+        "kul-showcase-slider": [
+          "kul-slider"
+        ]
       }
     },
     {
@@ -13160,13 +13885,27 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-chat": ["kul-spinner"],
-        "kul-image": ["kul-spinner"],
-        "kul-imageviewer": ["kul-spinner"],
-        "kul-messenger": ["kul-spinner"],
-        "kul-showcase-button": ["kul-spinner"],
-        "kul-showcase-spinner": ["kul-spinner"],
-        "kul-showcase-splash": ["kul-spinner"]
+        "kul-chat": [
+          "kul-spinner"
+        ],
+        "kul-image": [
+          "kul-spinner"
+        ],
+        "kul-imageviewer": [
+          "kul-spinner"
+        ],
+        "kul-messenger": [
+          "kul-spinner"
+        ],
+        "kul-showcase-button": [
+          "kul-spinner"
+        ],
+        "kul-showcase-spinner": [
+          "kul-spinner"
+        ],
+        "kul-showcase-splash": [
+          "kul-spinner"
+        ]
       }
     },
     {
@@ -13443,10 +14182,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-splash"],
+      "dependents": [
+        "kul-showcase-splash"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-splash": ["kul-splash"]
+        "kul-showcase-splash": [
+          "kul-splash"
+        ]
       }
     },
     {
@@ -13870,14 +14613,30 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-messenger", "kul-showcase-tabbar"],
-      "dependencies": ["kul-image"],
+      "dependents": [
+        "kul-messenger",
+        "kul-showcase-tabbar"
+      ],
+      "dependencies": [
+        "kul-image"
+      ],
       "dependencyGraph": {
-        "kul-tabbar": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-messenger": ["kul-tabbar"],
-        "kul-showcase-tabbar": ["kul-tabbar"]
+        "kul-tabbar": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-messenger": [
+          "kul-tabbar"
+        ],
+        "kul-showcase-tabbar": [
+          "kul-tabbar"
+        ]
       }
     },
     {
@@ -14557,12 +15316,24 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-chat": ["kul-textfield"],
-        "kul-imageviewer": ["kul-textfield"],
-        "kul-messenger": ["kul-textfield"],
-        "kul-showcase-debug": ["kul-textfield"],
-        "kul-showcase-textfield": ["kul-textfield"],
-        "kul-tree": ["kul-textfield"]
+        "kul-chat": [
+          "kul-textfield"
+        ],
+        "kul-imageviewer": [
+          "kul-textfield"
+        ],
+        "kul-messenger": [
+          "kul-textfield"
+        ],
+        "kul-showcase-debug": [
+          "kul-textfield"
+        ],
+        "kul-showcase-textfield": [
+          "kul-textfield"
+        ],
+        "kul-tree": [
+          "kul-textfield"
+        ]
       }
     },
     {
@@ -14941,13 +15712,26 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-toast"],
-      "dependencies": ["kul-image"],
+      "dependents": [
+        "kul-showcase-toast"
+      ],
+      "dependencies": [
+        "kul-image"
+      ],
       "dependencyGraph": {
-        "kul-toast": ["kul-image"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-showcase-toast": ["kul-toast"]
+        "kul-toast": [
+          "kul-image"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-showcase-toast": [
+          "kul-toast"
+        ]
       }
     },
     {
@@ -15406,10 +16190,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-toggle"],
+      "dependents": [
+        "kul-showcase-toggle"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-toggle": ["kul-toggle"]
+        "kul-showcase-toggle": [
+          "kul-toggle"
+        ]
       }
     },
     {
@@ -15855,13 +16643,27 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-compare", "kul-imageviewer", "kul-showcase-tree"],
-      "dependencies": ["kul-textfield"],
+      "dependents": [
+        "kul-compare",
+        "kul-imageviewer",
+        "kul-showcase-tree"
+      ],
+      "dependencies": [
+        "kul-textfield"
+      ],
       "dependencyGraph": {
-        "kul-tree": ["kul-textfield"],
-        "kul-compare": ["kul-tree"],
-        "kul-imageviewer": ["kul-tree"],
-        "kul-showcase-tree": ["kul-tree"]
+        "kul-tree": [
+          "kul-textfield"
+        ],
+        "kul-compare": [
+          "kul-tree"
+        ],
+        "kul-imageviewer": [
+          "kul-tree"
+        ],
+        "kul-showcase-tree": [
+          "kul-tree"
+        ]
       }
     },
     {
@@ -16267,10 +17069,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-typewriter"],
+      "dependents": [
+        "kul-showcase-typewriter"
+      ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-typewriter": ["kul-typewriter"]
+        "kul-showcase-typewriter": [
+          "kul-typewriter"
+        ]
       }
     },
     {
@@ -16632,14 +17438,32 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": ["kul-showcase-upload"],
-      "dependencies": ["kul-image", "kul-button"],
+      "dependents": [
+        "kul-showcase-upload"
+      ],
+      "dependencies": [
+        "kul-image",
+        "kul-button"
+      ],
       "dependencyGraph": {
-        "kul-upload": ["kul-image", "kul-button"],
-        "kul-image": ["kul-spinner", "kul-badge"],
-        "kul-badge": ["kul-image"],
-        "kul-button": ["kul-image", "kul-list"],
-        "kul-showcase-upload": ["kul-upload"]
+        "kul-upload": [
+          "kul-image",
+          "kul-button"
+        ],
+        "kul-image": [
+          "kul-spinner",
+          "kul-badge"
+        ],
+        "kul-badge": [
+          "kul-image"
+        ],
+        "kul-button": [
+          "kul-image",
+          "kul-list"
+        ],
+        "kul-showcase-upload": [
+          "kul-upload"
+        ]
       }
     }
   ],
@@ -16650,12 +17474,12 @@
       "path": "src/components/kul-code/kul-code-declarations.ts"
     },
     "src/managers/kul-debug/kul-debug-declarations.ts::KulDebugLifecycleInfo": {
-      "declaration": "export interface KulDebugLifecycleInfo {\n    endTime: number;\n    renderCount: number;\n    renderEnd: number;\n    renderStart: number;\n    startTime: number;\n}",
+      "declaration": "export interface KulDebugLifecycleInfo {\n  endTime: number;\n  renderCount: number;\n  renderEnd: number;\n  renderStart: number;\n  startTime: number;\n}",
       "docstring": "",
       "path": "src/managers/kul-debug/kul-debug-declarations.ts"
     },
     "src/types/GenericTypes.ts::GenericObject": {
-      "declaration": "export interface GenericObject<T = unknown> {\n    [index: string]: T;\n}",
+      "declaration": "export interface GenericObject<T = unknown> {\n  [index: string]: T;\n}",
       "docstring": "",
       "path": "src/types/GenericTypes.ts"
     },
@@ -16670,7 +17494,7 @@
       "path": "src/components/kul-toggle/kul-toggle-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataDataset": {
-      "declaration": "export interface KulDataDataset {\n    columns?: KulDataColumn[];\n    nodes?: KulDataNode[];\n}",
+      "declaration": "export interface KulDataDataset {\n  columns?: KulDataColumn[];\n  nodes?: KulDataNode[];\n}",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
@@ -16685,7 +17509,7 @@
       "path": "src/components/kul-card/kul-card-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataShapesMap": {
-      "declaration": "{\n    [K in KulDataShapes]?: Partial<KulDataCell<K>>[];\n}",
+      "declaration": "{\n  [K in KulDataShapes]?: Partial<KulDataCell<K>>[];\n}",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
@@ -16745,7 +17569,7 @@
       "path": "src/components/kul-chip/kul-chip-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataNode": {
-      "declaration": "export interface KulDataNode {\n    id: string;\n    cells?: KulDataCellContainer;\n    children?: KulDataNode[];\n    cssStyle?: GenericMap;\n    description?: string;\n    icon?: string;\n    value?: string | number;\n}",
+      "declaration": "export interface KulDataNode {\n  id: string;\n  cells?: KulDataCellContainer;\n  children?: KulDataNode[];\n  cssStyle?: GenericMap;\n  description?: string;\n  icon?: string;\n  value?: string | number;\n}",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
@@ -16825,7 +17649,7 @@
       "path": "src/components/kul-chat/kul-chat-declarations.ts"
     },
     "src/managers/kul-data/kul-data-declarations.ts::KulDataShapes": {
-      "declaration": "export type KulDataShapes =\n    | 'badge'\n    | 'button'\n    | 'card'\n    | 'chart'\n    | 'chat'\n    | 'chip'\n    | 'code'\n    | 'image'\n    | 'number'\n    | 'toggle'\n    | 'text'\n    | 'upload';",
+      "declaration": "export type KulDataShapes =\n  | 'badge'\n  | 'button'\n  | 'card'\n  | 'chart'\n  | 'chat'\n  | 'chip'\n  | 'code'\n  | 'image'\n  | 'number'\n  | 'toggle'\n  | 'text'\n  | 'upload';",
       "docstring": "",
       "path": "src/managers/kul-data/kul-data-declarations.ts"
     },
