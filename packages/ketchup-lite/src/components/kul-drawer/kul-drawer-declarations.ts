@@ -5,13 +5,13 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 export type KulDrawerEvent = 'close' | 'open' | 'ready' | 'unmount';
 export interface KulDrawerEventPayload
-    extends KulEventPayload<'KulDrawer', KulDrawerEvent> {}
+  extends KulEventPayload<'KulDrawer', KulDrawerEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/
 export enum KulDrawerProps {
-    kulStyle = 'Custom style of the component.',
+  kulStyle = 'Custom style of the component.',
 }
 export interface KulDrawerPropsInterface {
-    kulStyle?: string;
+  kulStyle?: string;
 }

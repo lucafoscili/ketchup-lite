@@ -1,57 +1,46 @@
 {
-    "name": "ketchup-lite-root",
-    "version": "1.0.0",
-    "description": "Ketchup Lite Web Components Library",
-    "keywords": [
-        "ketchup lite",
-        "monorepo",
-        "web components",
-        "showcase",
-        "Stencil"
-    ],
-    "license": "Apache-2.0",
-    "author": "Luca Foscili",
-    "repository": "https://github.com/lucafoscili/ketchup-lite",
-    "devDependencies": {
-        "@stencil/core": "^4",
-        "@stencil/react-output-target": "^0",
-        "@types/node": "^22",
-        "@types/prismjs": "^1",
-        "@typescript-eslint/eslint-plugin": "^8.16.0",
-        "@typescript-eslint/parser": "^8.16.0",
-        "cypress": "^13",
-        "eslint": "^9.16.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-define-config": "^2.1.0",
-        "eslint-plugin-import": "^2.31.0",
-        "eslint-plugin-prettier": "^5.2.1",
-        "eslint-plugin-react": "^7.37.2",
-        "eslint-plugin-react-hooks": "^5.0.0",
-        "eslint-plugin-stencil": "^0.0.1",
-        "lerna": "^8",
-        "prettier": "^3",
-        "prettier-eslint": "^16",
-        "puppeteer": "^22.9.0",
-        "typescript": "^5"
-    },
-    "scripts": {
-        "lerna": "lerna",
-        "build:kul": "lerna run build --scope ketchup-lite --stream",
-        "build:kul-react": "lerna run build --scope ketchup-lite-react --stream",
-        "build:kul-react-ssr": "lerna run build --scope ketchup-lite-react-ssr --stream",
-        "build": "yarn build:kul && yarn doc && yarn build:kul-react && yarn build:kul-react-ssr",
-        "dev": "lerna run dev --scope ketchup-lite --stream",
-        "doc": "node ./packages/ketchup-lite/src/scripts/doc.js",
-        "format": "prettier",
-        "lint": "eslint 'packages/**/*.{js,jsx,ts,tsx}' --fix",
-        "test": "lerna run test --scope ketchup-lite --stream",
-        "test:open": "lerna run test:open --scope ketchup-lite --stream"
-    },
-    "workspaces": [
-        "packages/ketchup-lite",
-        "packages/ketchup-lite-hydrate",
-        "packages/ketchup-lite-react",
-        "packages/ketchup-lite-react-ssr"
-    ],
-    "packageManager": "yarn@3.6.1"
+  "name": "ketchup-lite-root",
+  "version": "2.0.0",
+  "description": "Ketchup Lite Web Components Library",
+  "keywords": [
+    "ketchup lite",
+    "monorepo",
+    "web components",
+    "showcase",
+    "Stencil"
+  ],
+  "license": "Apache-2.0",
+  "author": "Luca Foscili",
+  "repository": "https://github.com/lucafoscili/ketchup-lite",
+  "devDependencies": {
+    "@stencil/core": "^4",
+    "@stencil/react-output-target": "^0",
+    "@types/eslint": "^9",
+    "@types/node": "^22",
+    "@types/prismjs": "^1",
+    "cypress": "^13",
+    "lerna": "^8",
+    "prettier": "^3",
+    "puppeteer": "^22.9.0",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "lerna": "lerna",
+    "build:kul": "lerna run build --scope ketchup-lite --stream",
+    "build:kul-react": "lerna run build --scope ketchup-lite-react --stream",
+    "build:kul-react-ssr": "lerna run build --scope ketchup-lite-react-ssr --stream",
+    "build": "yarn build:kul && yarn doc && yarn build:kul-react && yarn build:kul-react-ssr",
+    "dev": "lerna run dev --scope ketchup-lite --stream",
+    "doc": "node ./packages/ketchup-lite/src/scripts/doc.js",
+    "format": "prettier --write 'packages/ketchup-lite/src/**/*.{ts,tsx,json,scss}'",
+    "test": "lerna run test --scope ketchup-lite --stream",
+    "test:open": "lerna run test:open --scope ketchup-lite --stream"
+  },
+  "workspaces": [
+    "packages/ketchup-lite",
+    "packages/ketchup-lite-hydrate",
+    "packages/ketchup-lite-react",
+    "packages/ketchup-lite-react-ssr"
+  ],
+  "packageManager": "yarn@3.6.1"
 }

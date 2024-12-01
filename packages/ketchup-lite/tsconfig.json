@@ -1,21 +1,23 @@
 {
-    "compilerOptions": {
-        "allowSyntheticDefaultImports": true,
-        "allowUnreachableCode": false,
-        "declaration": false,
-        "experimentalDecorators": true,
-        "jsx": "react",
-        "jsxFactory": "h",
-        "jsxFragmentFactory": "Fragment",
-        "lib": ["dom", "es2020"],
-        "module": "esnext",
-        "moduleResolution": "node",
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "resolveJsonModule": true,
-        "target": "ES2022",
-        "types": ["cypress", "node", "prismjs"]
-    },
-    "exclude": ["node_modules"],
-    "include": ["src"]
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "baseUrl": "./",
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment",
+    "lib": ["dom", "es2020"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "target": "ES2022",
+    "types": ["cypress", "node", "prismjs"]
+  },
+  "exclude": ["node_modules"],
+  "include": ["src"]
 }

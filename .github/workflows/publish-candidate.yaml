@@ -1,46 +1,46 @@
-name: Publish Candidate to NPM
+name: Publish NPM Package (candidate)
 
 on:
-    pull_request:
-        branches:
-            - candidate
-        types: [closed]
+  pull_request:
+    branches:
+      - candidate
+    types: [closed]
 
 jobs:
-    setup:
-        uses: ./.github/workflows/setup.yml
+  setup:
+    uses: ./.github/workflows/setup.yml
+    with:
+      node-version: '18.x'
+      install-immutable: true
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish-rc:
+    needs: setup
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'version-bump-rc'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-            node-version: '18.x'
-            install-immutable: true
-        secrets:
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          fetch-depth: 0
 
-    publish-rc:
-        needs: setup
-        if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'version-bump-rc'
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18.x'
+          registry-url: 'https://registry.npmjs.org'
 
-            - name: Set Up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '18.x'
-                  registry-url: 'https://registry.npmjs.org'
+      - name: Install Dependencies
+        run: yarn install --immutable
 
-            - name: Install Dependencies
-              run: yarn install --immutable
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-            - name: Configure Git
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-
-            - name: Publish Packages with Lerna
-              run: |
-                  npx lerna publish from-package --yes --dist-tag rc
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish Packages with Lerna
+        run: |
+          npx lerna publish from-package --yes --dist-tag rc
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,38 +1,38 @@
 name: Setup and Build
 
 on:
-    workflow_call:
-        inputs:
-            node-version:
-                description: 'Node.js version'
-                required: true
-                type: string
-            install-immutable:
-                description: 'Use --immutable flag for yarn install'
-                required: true
-                type: boolean
-        secrets:
-            NPM_TOKEN:
-                required: true
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version'
+        required: true
+        type: string
+      install-immutable:
+        description: 'Use --immutable flag for yarn install'
+        required: true
+        type: boolean
+    secrets:
+      NPM_TOKEN:
+        required: true
 
 jobs:
-    setup-and-build:
-        runs-on: ubuntu-latest
+  setup-and-build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-            - name: Clear Yarn cache
-              run: yarn cache clean
+      - name: Clear Yarn cache
+        run: yarn cache clean
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: ${{ inputs.node-version }}
-                  registry-url: 'https://registry.npmjs.org'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ inputs.node-version }}
+          registry-url: 'https://registry.npmjs.org'
 
-            - name: Install dependencies
-              run: yarn install${{ inputs.install-immutable && ' --immutable' || '' }}
+      - name: Install dependencies
+        run: yarn install${{ inputs.install-immutable && ' --immutable' || '' }}
 
-            - name: Build Packages
-              run: yarn build
+      - name: Build Packages
+        run: yarn build

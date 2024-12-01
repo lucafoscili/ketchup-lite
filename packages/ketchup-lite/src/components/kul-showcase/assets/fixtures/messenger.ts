@@ -1,10 +1,11 @@
 import { getAssetPath } from '@stencil/core';
+
 import {
-    KulMessengerAvatarNode,
-    KulMessengerDataset,
-    KulMessengerLocationNode,
-    KulMessengerOutfitNode,
-    KulMessengerStyleNode,
+  KulMessengerAvatarNode,
+  KulMessengerDataset,
+  KulMessengerLocationNode,
+  KulMessengerOutfitNode,
+  KulMessengerStyleNode,
 } from '../../../kul-messenger/kul-messenger-declarations';
 
 export const FREYA_BIO = `
@@ -44,104 +45,103 @@ Freya embodies the complex nature of feminine power in Norse mythology, combinin
 `;
 
 export const FREYA_AVATARS: () => KulMessengerAvatarNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/avatar_freya.png'),
-            },
-        },
-        description: 'Freya dressed for war',
-        id: 'avatar_0',
-        value: 'Freya',
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/avatar_freya.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/avatar_freya_2.png'),
-            },
-        },
-        description: 'Freya during a ceremony',
-        id: 'avatar_1',
-        value: 'Freya',
+    description: 'Freya dressed for war',
+    id: 'avatar_0',
+    value: 'Freya',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/avatar_freya_2.png'),
+      },
     },
+    description: 'Freya during a ceremony',
+    id: 'avatar_1',
+    value: 'Freya',
+  },
 ];
 
 export const FREYA_LOCATIONS: () => KulMessengerLocationNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/location_lake.png'),
-            },
-        },
-        description:
-            'Lake at night, the sky feats a beautiful aurora borealis.',
-        id: 'location_0',
-        value: 'Northern lake',
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/location_lake.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/location_armory.png'),
-            },
-        },
-        description: 'Armory of Asgard.',
-        id: 'location_1',
-        value: "Asgard's armory",
+    description: 'Lake at night, the sky feats a beautiful aurora borealis.',
+    id: 'location_0',
+    value: 'Northern lake',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/location_armory.png'),
+      },
     },
+    description: 'Armory of Asgard.',
+    id: 'location_1',
+    value: "Asgard's armory",
+  },
 ];
 
 export const FREYA_OUTFITS: () => KulMessengerOutfitNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/outfit_armor_2.png'),
-            },
-        },
-        description: 'Regal armor made of gold and engraved.',
-        id: 'outfit_0',
-        value: 'Golden armor',
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/outfit_armor_2.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/outfit_dress.png'),
-            },
-        },
-        description: 'Elegant summer dress fit for a goddess',
-        id: 'outfit_1',
-        value: 'Elegant summer dress',
+    description: 'Regal armor made of gold and engraved.',
+    id: 'outfit_0',
+    value: 'Golden armor',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/outfit_dress.png'),
+      },
     },
+    description: 'Elegant summer dress fit for a goddess',
+    id: 'outfit_1',
+    value: 'Elegant summer dress',
+  },
 ];
 
 export const FREYA_STYLES: () => KulMessengerStyleNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/style_photorealistic.png'),
-            },
-        },
-        description: 'Photorealistic image.',
-        id: 'style_0',
-        value: 'Photorealistic',
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/style_photorealistic.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/style_anime.png'),
-            },
-        },
-        description: 'Anime styled image.',
-        id: 'style_1',
-        value: 'Anime',
+    description: 'Photorealistic image.',
+    id: 'style_0',
+    value: 'Photorealistic',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/style_anime.png'),
+      },
     },
+    description: 'Anime styled image.',
+    id: 'style_1',
+    value: 'Anime',
+  },
 ];
 
 export const THOR_BIO = `
@@ -185,196 +185,194 @@ As one of the most prominent gods in Norse mythology, Thor remains a significant
 `;
 
 export const THOR_AVATARS: () => KulMessengerAvatarNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/avatar_thor.png'),
-            },
-        },
-        description: 'Thor with Mjollnir',
-        id: 'avatar_0',
-        value: 'Thor',
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/avatar_thor.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/avatar_thor_2.png'),
-            },
-        },
-        description: 'Thor in the land of fire',
-        id: 'avatar_1',
-        value: 'Thor',
+    description: 'Thor with Mjollnir',
+    id: 'avatar_0',
+    value: 'Thor',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/avatar_thor_2.png'),
+      },
     },
+    description: 'Thor in the land of fire',
+    id: 'avatar_1',
+    value: 'Thor',
+  },
 ];
 
 export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/location_asgard_halls.png'),
-            },
-        },
-        description: 'The halls of the Palace of Asgard',
-        id: 'location_0',
-        value: "Asgard's Palace",
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/location_asgard_halls.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath(
-                    './assets/media/location_bifrost_bridge.png'
-                ),
-            },
-        },
-        description: 'The portal to other realms.',
-        id: 'location_1',
-        value: 'Bifrost Bridge',
+    description: 'The halls of the Palace of Asgard',
+    id: 'location_0',
+    value: "Asgard's Palace",
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/location_bifrost_bridge.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/location_forest.png'),
-            },
-        },
-        description: 'A misteryous forest on Earth.',
-        id: 'location_2',
-        value: 'Forest',
+    description: 'The portal to other realms.',
+    id: 'location_1',
+    value: 'Bifrost Bridge',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/location_forest.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/location_armory.png'),
-            },
-        },
-        description: 'Armory of Asgard.',
-        id: 'location_3',
-        value: "Asgard's armory",
+    description: 'A misteryous forest on Earth.',
+    id: 'location_2',
+    value: 'Forest',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/location_armory.png'),
+      },
     },
+    description: 'Armory of Asgard.',
+    id: 'location_3',
+    value: "Asgard's armory",
+  },
 ];
 
 export const THOR_OUTFITS: () => KulMessengerOutfitNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/outfit_armor.png'),
-            },
-        },
-        description: 'Regal armor made of gold and engraved.',
-        id: 'outfit_0',
-        value: 'Golden armor',
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/outfit_armor.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/outfit_armor_3.png'),
-            },
-        },
-        description: 'Armor made of steel.',
-        id: 'outfit_1',
-        value: 'Steel armor',
+    description: 'Regal armor made of gold and engraved.',
+    id: 'outfit_0',
+    value: 'Golden armor',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/outfit_armor_3.png'),
+      },
     },
+    description: 'Armor made of steel.',
+    id: 'outfit_1',
+    value: 'Steel armor',
+  },
 ];
 
 export const THOR_STYLES: () => KulMessengerStyleNode[] = () => [
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/style_comic.png'),
-            },
-        },
-        description: 'Comic image.',
-        id: 'style_0',
-        value: 'Comic',
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/style_comic.png'),
+      },
     },
-    {
-        cells: {
-            kulImage: {
-                shape: 'image',
-                value: getAssetPath('./assets/media/style_painting.png'),
-            },
-        },
-        description: 'Painting styled image.',
-        id: 'style_1',
-        value: 'Painting',
+    description: 'Comic image.',
+    id: 'style_0',
+    value: 'Comic',
+  },
+  {
+    cells: {
+      kulImage: {
+        shape: 'image',
+        value: getAssetPath('./assets/media/style_painting.png'),
+      },
     },
+    description: 'Painting styled image.',
+    id: 'style_1',
+    value: 'Painting',
+  },
 ];
 
 export const MESSENGER_KULDATA: () => KulMessengerDataset = () => ({
-    nodes: [
+  nodes: [
+    {
+      children: [
         {
-            children: [
-                {
-                    children: THOR_AVATARS(),
-                    id: 'avatars',
-                    value: 0,
-                },
-                { id: 'biography', value: THOR_BIO },
-                { id: 'chat', value: '' },
-                {
-                    children: THOR_LOCATIONS(),
-                    id: 'locations',
-                    value: 0,
-                },
-                {
-                    children: THOR_OUTFITS(),
-                    id: 'outfits',
-                    value: 0,
-                },
-                {
-                    children: THOR_STYLES(),
-                    id: 'styles',
-                    value: 0,
-                },
-                {
-                    children: [],
-                    id: 'timeframes',
-                    value: null,
-                },
-            ],
-            id: 'character_Thor',
-            value: 'Thor',
+          children: THOR_AVATARS(),
+          id: 'avatars',
+          value: 0,
+        },
+        { id: 'biography', value: THOR_BIO },
+        { id: 'chat', value: '' },
+        {
+          children: THOR_LOCATIONS(),
+          id: 'locations',
+          value: 0,
         },
         {
-            children: [
-                {
-                    children: FREYA_AVATARS(),
-                    id: 'avatars',
-                    value: 1,
-                },
-                { id: 'biography', value: FREYA_BIO },
-                { id: 'chat', value: '' },
-                {
-                    children: FREYA_LOCATIONS(),
-                    id: 'locations',
-                    value: 0,
-                },
-                {
-                    children: FREYA_OUTFITS(),
-                    id: 'outfits',
-                    value: 0,
-                },
-                {
-                    children: FREYA_STYLES(),
-                    id: 'styles',
-                    value: 0,
-                },
-                {
-                    children: [],
-                    id: 'timeframes',
-                    value: null,
-                },
-            ],
-            id: 'character_Freya',
-            value: 'Freya',
+          children: THOR_OUTFITS(),
+          id: 'outfits',
+          value: 0,
         },
-    ],
+        {
+          children: THOR_STYLES(),
+          id: 'styles',
+          value: 0,
+        },
+        {
+          children: [],
+          id: 'timeframes',
+          value: null,
+        },
+      ],
+      id: 'character_Thor',
+      value: 'Thor',
+    },
+    {
+      children: [
+        {
+          children: FREYA_AVATARS(),
+          id: 'avatars',
+          value: 1,
+        },
+        { id: 'biography', value: FREYA_BIO },
+        { id: 'chat', value: '' },
+        {
+          children: FREYA_LOCATIONS(),
+          id: 'locations',
+          value: 0,
+        },
+        {
+          children: FREYA_OUTFITS(),
+          id: 'outfits',
+          value: 0,
+        },
+        {
+          children: FREYA_STYLES(),
+          id: 'styles',
+          value: 0,
+        },
+        {
+          children: [],
+          id: 'timeframes',
+          value: null,
+        },
+      ],
+      id: 'character_Freya',
+      value: 'Freya',
+    },
+  ],
 });

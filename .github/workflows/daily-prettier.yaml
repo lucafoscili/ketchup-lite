@@ -1,69 +1,53 @@
 name: Daily Prettier Linting
 
 on:
-    schedule:
-        - cron: '0 0 * * *' # Runs every day at 00:00 UTC
-    workflow_dispatch: # Allows manual triggering
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at 00:00 UTC
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
-    setup:
-        uses: ./.github/workflows/setup.yml
+  setup:
+    uses: ./.github/workflows/setup.yml
+    with:
+      node-version: '18.x'
+      install-immutable: true
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  prettier:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Format Code with Prettier
+        run: yarn format
+
+      - name: Check for Changes
+        id: git-check
+        run: |
+          git diff
+          echo "::set-output name=changed::$(git diff --name-only | wc -l)"
+
+      - name: Commit and Push Changes
+        if: steps.git-check.outputs.changed != '0'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: format code with Prettier [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:prettier-fix-${{ github.run_id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changed != '0'
+        uses: peter-evans/create-pull-request@v5
         with:
-            node-version: '18.x'
-            install-immutable: true
-        secrets:
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-    prettier:
-        needs: setup
-        runs-on: ubuntu-latest
-
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0 # Required to create and push branches
-
-            - name: Set Up Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '18.x'
-
-            - name: Install Dependencies
-              run: yarn install
-
-            - name: Format Code with Prettier
-              run: yarn format --write "packages/*/src/**/*.{scss,ts,tsx,json}"
-
-            - name: Lint Code
-              run: yarn lint --write "packages/*/src/**/*.{scss,ts,tsx,json}"
-
-            - name: Check for Changes
-              id: git-check
-              run: |
-                  git diff
-                  echo "::set-output name=changed::$(git diff --name-only | wc -l)"
-
-            - name: Commit and Push Changes
-              if: steps.git-check.outputs.changed != '0'
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-                  git add .
-                  git commit -m "chore: format code with Prettier [skip ci]" || echo "No changes to commit"
-                  git push origin HEAD:prettier-fix-${{ github.run_id }}
-              env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-            - name: Create Pull Request
-              if: steps.git-check.outputs.changed != '0'
-              uses: peter-evans/create-pull-request@v5
-              with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  commit-message: 'chore: format code with Prettier [skip ci]'
-                  title: 'chore: format code with Prettier'
-                  body: |
-                      This PR applies automatic formatting changes using Prettier to maintain code consistency.
-                  base: candidate
-                  branch: prettier-fix-${{ github.run_id }}
-                  labels: formatting
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: format code with Prettier [skip ci]'
+          title: 'chore: format code with Prettier'
+          body: |
+            This PR applies automatic formatting changes using Prettier to maintain code consistency.
+          base: candidate
+          branch: prettier-fix-${{ github.run_id }}
+          labels: formatting
