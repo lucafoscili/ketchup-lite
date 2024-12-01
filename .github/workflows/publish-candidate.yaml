@@ -1,12 +1,10 @@
-name: Publish NPM Package (Candidate)
+name: Publish Candidate to NPM
 
 on:
     pull_request:
         branches:
             - candidate
-    push:
-        branches:
-            - candidate
+        types: [closed]
 
 jobs:
     setup:
@@ -17,54 +15,9 @@ jobs:
         secrets:
             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    version_bump_and_component_update:
-        if: ${{ github.event_name == 'pull_request' && github.actor != 'github-actions[bot]' }}
+    publish-rc:
         needs: setup
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Feature Branch
-              uses: actions/checkout@v4
-              with:
-                  ref: ${{ github.head_ref }}
-                  fetch-depth: 0 # Required for pushing changes back to the branch
-
-            - name: Configure Git
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
-
-            - name: Install Dependencies
-              run: yarn install --immutable
-
-            - name: Bump Versions with Lerna (Prerelease)
-              run: |
-                  npx lerna version prerelease --preid=rc --no-push --yes
-
-            - name: Format and Lint Code
-              run: |
-                  yarn format --write "packages/*/src/**/*.{scss,ts,tsx,json}"
-                  yarn lint --fix "packages/*/src/**/*.{scss,ts,tsx,json}"
-
-            - name: Count Components
-              run: |
-                  COUNT=$(ls -l packages/ketchup-lite/src/components | grep '^d' | wc -l)
-                  echo "{ \"components\": $COUNT }" > count.json
-
-            - name: Commit Changes
-              run: |
-                  git add .
-                  git commit -m "chore: bump versions, format code, and update component count [skip ci]" || echo "No changes to commit"
-
-            - name: Push Changes to Feature Branch
-              uses: ad-m/github-push-action@v0.6.0
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  branch: ${{ github.head_ref }}
-                  force: false
-
-    publish_candidate:
-        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/candidate' }}
-        needs: setup
+        if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'version-bump-rc'
         runs-on: ubuntu-latest
         steps:
             - name: Checkout Repository
@@ -72,23 +25,22 @@ jobs:
               with:
                   fetch-depth: 0
 
-            - name: Configure Git
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
+            - name: Set Up Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '18.x'
+                  registry-url: 'https://registry.npmjs.org'
 
             - name: Install Dependencies
               run: yarn install --immutable
 
-            - name: Build Packages
-              run: yarn build
+            - name: Configure Git
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
 
             - name: Publish Packages with Lerna
               run: |
                   npx lerna publish from-package --yes --dist-tag rc
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-            - name: Push Tags
-              run: |
-                  git push origin candidate --tags

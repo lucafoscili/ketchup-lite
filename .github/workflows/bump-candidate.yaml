@@ -1,0 +1,69 @@
+name: Version Bump and PR Creation
+
+on:
+    push:
+        branches:
+            - candidate
+
+jobs:
+    setup:
+        uses: ./.github/workflows/setup.yml
+        with:
+            node-version: '18.x'
+            install-immutable: true
+        secrets:
+            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+    version-bump:
+        needs: setup
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+                  persist-credentials: false
+
+            - name: Setup Authentication
+              run: |
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git config --global user.name "github-actions[bot]"
+                  git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+
+            - name: Fetch All Branches
+              run: git fetch --all
+
+            - name: Checkout or Create Version Bump RC Branch
+              run: |
+                  if git show-ref --verify --quiet refs/heads/version-bump-rc; then
+                    git checkout version-bump-rc
+                    git merge origin/candidate
+                  else
+                    git checkout -b version-bump-rc origin/candidate
+                  fi
+
+            - name: Bump Versions with Lerna (Prerelease)
+              run: |
+                  npx lerna version prerelease --preid=rc --no-push --yes
+
+            - name: Format and Lint Code
+              run: |
+                  yarn format --write "packages/*/src/**/*.{scss,ts,tsx,json}"
+                  yarn lint --write "packages/*/src/**/*.{scss,ts,tsx,json}"
+
+            - name: Commit Changes
+              run: |
+                  git add .
+                  git commit -m "chore: bump versions for release candidate [skip ci]" || echo "No changes to commit"
+
+            - name: Push Changes to Branch
+              run: git push origin version-bump-rc
+
+            - name: Create or Update Pull Request
+              uses: peter-evans/create-pull-request@v5
+              with:
+                  commit-message: 'chore: bump versions for release candidate [skip ci]'
+                  branch: 'version-bump-rc'
+                  title: 'chore: bump versions for release candidate'
+                  body: 'This PR bumps package versions for the release candidate.'
+                  base: 'candidate'
+                  labels: 'automated PR'
