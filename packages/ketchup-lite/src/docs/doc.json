@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-12-01T22:31:32",
+  "timestamp": "2024-12-01T22:35:40",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.3",
@@ -10,7 +10,7 @@
       "filePath": "src/components/kul-accordion/kul-accordion.tsx",
       "encapsulation": "shadow",
       "tag": "kul-accordion",
-      "readme": "# kul-accordion\r\n\r\n\r\n\r",
+      "readme": "# kul-accordion\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -437,21 +437,17 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-accordion"
-      ],
+      "dependents": ["kul-showcase-accordion"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-accordion": [
-          "kul-accordion"
-        ]
+        "kul-showcase-accordion": ["kul-accordion"]
       }
     },
     {
       "filePath": "src/components/kul-article/kul-article.tsx",
       "encapsulation": "shadow",
       "tag": "kul-article",
-      "readme": "# kul-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -808,142 +804,56 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase": [
-          "kul-article"
-        ],
-        "kul-showcase-accordion": [
-          "kul-article"
-        ],
-        "kul-showcase-article": [
-          "kul-article"
-        ],
-        "kul-showcase-badge": [
-          "kul-article"
-        ],
-        "kul-showcase-button": [
-          "kul-article"
-        ],
-        "kul-showcase-canvas": [
-          "kul-article"
-        ],
-        "kul-showcase-card": [
-          "kul-article"
-        ],
-        "kul-showcase-carousel": [
-          "kul-article"
-        ],
-        "kul-showcase-chart": [
-          "kul-article"
-        ],
-        "kul-showcase-chat": [
-          "kul-article"
-        ],
-        "kul-showcase-chip": [
-          "kul-article"
-        ],
-        "kul-showcase-code": [
-          "kul-article"
-        ],
-        "kul-showcase-compare": [
-          "kul-article"
-        ],
-        "kul-showcase-debug": [
-          "kul-article"
-        ],
-        "kul-showcase-drawer": [
-          "kul-article"
-        ],
-        "kul-showcase-header": [
-          "kul-article"
-        ],
-        "kul-showcase-image": [
-          "kul-article"
-        ],
-        "kul-showcase-imageviewer": [
-          "kul-article"
-        ],
-        "kul-showcase-kuldata": [
-          "kul-article"
-        ],
-        "kul-showcase-kuldates": [
-          "kul-article"
-        ],
-        "kul-showcase-kuldebug": [
-          "kul-article"
-        ],
-        "kul-showcase-kuldynamicposition": [
-          "kul-article"
-        ],
-        "kul-showcase-kullanguage": [
-          "kul-article"
-        ],
-        "kul-showcase-kulllm": [
-          "kul-article"
-        ],
-        "kul-showcase-kulmanager": [
-          "kul-article"
-        ],
-        "kul-showcase-kulscrollonhover": [
-          "kul-article"
-        ],
-        "kul-showcase-kultheme": [
-          "kul-article"
-        ],
-        "kul-showcase-lazy": [
-          "kul-article"
-        ],
-        "kul-showcase-list": [
-          "kul-article"
-        ],
-        "kul-showcase-masonry": [
-          "kul-article"
-        ],
-        "kul-showcase-messenger": [
-          "kul-article"
-        ],
-        "kul-showcase-photoframe": [
-          "kul-article"
-        ],
-        "kul-showcase-progressbar": [
-          "kul-article"
-        ],
-        "kul-showcase-slider": [
-          "kul-article"
-        ],
-        "kul-showcase-spinner": [
-          "kul-article"
-        ],
-        "kul-showcase-splash": [
-          "kul-article"
-        ],
-        "kul-showcase-tabbar": [
-          "kul-article"
-        ],
-        "kul-showcase-textfield": [
-          "kul-article"
-        ],
-        "kul-showcase-toast": [
-          "kul-article"
-        ],
-        "kul-showcase-toggle": [
-          "kul-article"
-        ],
-        "kul-showcase-tree": [
-          "kul-article"
-        ],
-        "kul-showcase-typewriter": [
-          "kul-article"
-        ],
-        "kul-showcase-upload": [
-          "kul-article"
-        ]
+        "kul-showcase": ["kul-article"],
+        "kul-showcase-accordion": ["kul-article"],
+        "kul-showcase-article": ["kul-article"],
+        "kul-showcase-badge": ["kul-article"],
+        "kul-showcase-button": ["kul-article"],
+        "kul-showcase-canvas": ["kul-article"],
+        "kul-showcase-card": ["kul-article"],
+        "kul-showcase-carousel": ["kul-article"],
+        "kul-showcase-chart": ["kul-article"],
+        "kul-showcase-chat": ["kul-article"],
+        "kul-showcase-chip": ["kul-article"],
+        "kul-showcase-code": ["kul-article"],
+        "kul-showcase-compare": ["kul-article"],
+        "kul-showcase-debug": ["kul-article"],
+        "kul-showcase-drawer": ["kul-article"],
+        "kul-showcase-header": ["kul-article"],
+        "kul-showcase-image": ["kul-article"],
+        "kul-showcase-imageviewer": ["kul-article"],
+        "kul-showcase-kuldata": ["kul-article"],
+        "kul-showcase-kuldates": ["kul-article"],
+        "kul-showcase-kuldebug": ["kul-article"],
+        "kul-showcase-kuldynamicposition": ["kul-article"],
+        "kul-showcase-kullanguage": ["kul-article"],
+        "kul-showcase-kulllm": ["kul-article"],
+        "kul-showcase-kulmanager": ["kul-article"],
+        "kul-showcase-kulscrollonhover": ["kul-article"],
+        "kul-showcase-kultheme": ["kul-article"],
+        "kul-showcase-lazy": ["kul-article"],
+        "kul-showcase-list": ["kul-article"],
+        "kul-showcase-masonry": ["kul-article"],
+        "kul-showcase-messenger": ["kul-article"],
+        "kul-showcase-photoframe": ["kul-article"],
+        "kul-showcase-progressbar": ["kul-article"],
+        "kul-showcase-slider": ["kul-article"],
+        "kul-showcase-spinner": ["kul-article"],
+        "kul-showcase-splash": ["kul-article"],
+        "kul-showcase-tabbar": ["kul-article"],
+        "kul-showcase-textfield": ["kul-article"],
+        "kul-showcase-toast": ["kul-article"],
+        "kul-showcase-toggle": ["kul-article"],
+        "kul-showcase-tree": ["kul-article"],
+        "kul-showcase-typewriter": ["kul-article"],
+        "kul-showcase-upload": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-badge/kul-badge.tsx",
       "encapsulation": "shadow",
       "tag": "kul-badge",
-      "readme": "# kul-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -1240,30 +1150,19 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-image",
-        "kul-showcase-badge"
-      ],
-      "dependencies": [
-        "kul-image"
-      ],
+      "dependents": ["kul-image", "kul-showcase-badge"],
+      "dependencies": ["kul-image"],
       "dependencyGraph": {
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-badge"
-        ],
-        "kul-showcase-badge": [
-          "kul-badge"
-        ]
+        "kul-badge": ["kul-image"],
+        "kul-image": ["kul-badge"],
+        "kul-showcase-badge": ["kul-badge"]
       }
     },
     {
       "filePath": "src/components/kul-button/kul-button.tsx",
       "encapsulation": "shadow",
       "tag": "kul-button",
-      "readme": "# kul-button\r\n\r\n\r\n\r",
+      "readme": "# kul-button\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -1601,7 +1500,7 @@
           "name": "kulType",
           "type": "\"button\" | \"reset\" | \"submit\"",
           "complexType": {
-            "original": "| 'button'\r\n    | 'reset'\r\n    | 'submit'",
+            "original": "| 'button'\n    | 'reset'\n    | 'submit'",
             "resolved": "\"button\" | \"reset\" | \"submit\"",
             "references": {}
           },
@@ -2008,62 +1907,29 @@
         "kul-showcase-splash",
         "kul-upload"
       ],
-      "dependencies": [
-        "kul-image",
-        "kul-list"
-      ],
+      "dependencies": ["kul-image", "kul-list"],
       "dependencyGraph": {
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-carousel": [
-          "kul-button"
-        ],
-        "kul-chat": [
-          "kul-button"
-        ],
-        "kul-code": [
-          "kul-button"
-        ],
-        "kul-compare": [
-          "kul-button"
-        ],
-        "kul-imageviewer": [
-          "kul-button"
-        ],
-        "kul-masonry": [
-          "kul-button"
-        ],
-        "kul-messenger": [
-          "kul-button"
-        ],
-        "kul-showcase": [
-          "kul-button"
-        ],
-        "kul-showcase-button": [
-          "kul-button"
-        ],
-        "kul-showcase-splash": [
-          "kul-button"
-        ],
-        "kul-upload": [
-          "kul-button"
-        ]
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-carousel": ["kul-button"],
+        "kul-chat": ["kul-button"],
+        "kul-code": ["kul-button"],
+        "kul-compare": ["kul-button"],
+        "kul-imageviewer": ["kul-button"],
+        "kul-masonry": ["kul-button"],
+        "kul-messenger": ["kul-button"],
+        "kul-showcase": ["kul-button"],
+        "kul-showcase-button": ["kul-button"],
+        "kul-showcase-splash": ["kul-button"],
+        "kul-upload": ["kul-button"]
       }
     },
     {
       "filePath": "src/components/kul-canvas/kul-canvas.tsx",
       "encapsulation": "shadow",
       "tag": "kul-canvas",
-      "readme": "# kul-canvas\r\n\r\n\r\n\r",
+      "readme": "# kul-canvas\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -2257,7 +2123,7 @@
           "mutable": true,
           "attr": "kul-stroke-tolerance",
           "reflectToAttr": true,
-          "docs": "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\r\nThis prop sets the tolerance of the algorithm (null to disable).",
+          "docs": "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\nThis prop sets the tolerance of the algorithm (null to disable).",
           "docsTags": [
             {
               "name": "default",
@@ -2595,37 +2461,21 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-imageviewer",
-        "kul-showcase-canvas"
-      ],
-      "dependencies": [
-        "kul-image"
-      ],
+      "dependents": ["kul-imageviewer", "kul-showcase-canvas"],
+      "dependencies": ["kul-image"],
       "dependencyGraph": {
-        "kul-canvas": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-imageviewer": [
-          "kul-canvas"
-        ],
-        "kul-showcase-canvas": [
-          "kul-canvas"
-        ]
+        "kul-canvas": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-imageviewer": ["kul-canvas"],
+        "kul-showcase-canvas": ["kul-canvas"]
       }
     },
     {
       "filePath": "src/components/kul-card/kul-card.tsx",
       "encapsulation": "shadow",
       "tag": "kul-card",
-      "readme": "# kul-card\r\n\r\n\r\n\r",
+      "readme": "# kul-card\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -2997,25 +2847,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase",
-        "kul-showcase-card"
-      ],
+      "dependents": ["kul-showcase", "kul-showcase-card"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase": [
-          "kul-card"
-        ],
-        "kul-showcase-card": [
-          "kul-card"
-        ]
+        "kul-showcase": ["kul-card"],
+        "kul-showcase-card": ["kul-card"]
       }
     },
     {
       "filePath": "src/components/kul-carousel/kul-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-carousel",
-      "readme": "# kul-carousel\r\n\r\n\r\n\r",
+      "readme": "# kul-carousel\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -3464,37 +3307,21 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-carousel"
-      ],
-      "dependencies": [
-        "kul-button"
-      ],
+      "dependents": ["kul-showcase-carousel"],
+      "dependencies": ["kul-button"],
       "dependencyGraph": {
-        "kul-carousel": [
-          "kul-button"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-showcase-carousel": [
-          "kul-carousel"
-        ]
+        "kul-carousel": ["kul-button"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-showcase-carousel": ["kul-carousel"]
       }
     },
     {
       "filePath": "src/components/kul-chart/kul-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chart",
-      "readme": "# kul-chart\r\n\r\n\r\n\r",
+      "readme": "# kul-chart\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -4040,21 +3867,17 @@
       "styles": [],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-chart"
-      ],
+      "dependents": ["kul-showcase-chart"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-chart": [
-          "kul-chart"
-        ]
+        "kul-showcase-chart": ["kul-chart"]
       }
     },
     {
       "filePath": "src/components/kul-chat/kul-chat.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chat",
-      "readme": "# kul-chat\r\n\r\n\r\n\r",
+      "readme": "# kul-chat\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -4670,10 +4493,7 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-messenger",
-        "kul-showcase-chat"
-      ],
+      "dependents": ["kul-messenger", "kul-showcase-chat"],
       "dependencies": [
         "kul-spinner",
         "kul-image",
@@ -4691,33 +4511,19 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-code": [
-          "kul-button"
-        ],
-        "kul-messenger": [
-          "kul-chat"
-        ],
-        "kul-showcase-chat": [
-          "kul-chat"
-        ]
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-code": ["kul-button"],
+        "kul-messenger": ["kul-chat"],
+        "kul-showcase-chat": ["kul-chat"]
       }
     },
     {
       "filePath": "src/components/kul-chip/kul-chip.tsx",
       "encapsulation": "shadow",
       "tag": "kul-chip",
-      "readme": "# kul-chip\r\n\r\n\r\n\r",
+      "readme": "# kul-chip\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5181,25 +4987,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-messenger",
-        "kul-showcase-chip"
-      ],
+      "dependents": ["kul-messenger", "kul-showcase-chip"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-messenger": [
-          "kul-chip"
-        ],
-        "kul-showcase-chip": [
-          "kul-chip"
-        ]
+        "kul-messenger": ["kul-chip"],
+        "kul-showcase-chip": ["kul-chip"]
       }
     },
     {
       "filePath": "src/components/kul-code/kul-code.tsx",
       "encapsulation": "shadow",
       "tag": "kul-code",
-      "readme": "# kul-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5564,45 +5363,23 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-chat",
-        "kul-messenger",
-        "kul-showcase-code"
-      ],
-      "dependencies": [
-        "kul-button"
-      ],
+      "dependents": ["kul-chat", "kul-messenger", "kul-showcase-code"],
+      "dependencies": ["kul-button"],
       "dependencyGraph": {
-        "kul-code": [
-          "kul-button"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-chat": [
-          "kul-code"
-        ],
-        "kul-messenger": [
-          "kul-code"
-        ],
-        "kul-showcase-code": [
-          "kul-code"
-        ]
+        "kul-code": ["kul-button"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-chat": ["kul-code"],
+        "kul-messenger": ["kul-code"],
+        "kul-showcase-code": ["kul-code"]
       }
     },
     {
       "filePath": "src/components/kul-compare/kul-compare.tsx",
       "encapsulation": "shadow",
       "tag": "kul-compare",
-      "readme": "# kul-accordion\r\n\r\n\r\n\r",
+      "readme": "# kul-accordion\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -5978,42 +5755,22 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-compare"
-      ],
-      "dependencies": [
-        "kul-button",
-        "kul-tree"
-      ],
+      "dependents": ["kul-showcase-compare"],
+      "dependencies": ["kul-button", "kul-tree"],
       "dependencyGraph": {
-        "kul-compare": [
-          "kul-button",
-          "kul-tree"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-tree": [
-          "kul-textfield"
-        ],
-        "kul-showcase-compare": [
-          "kul-compare"
-        ]
+        "kul-compare": ["kul-button", "kul-tree"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-tree": ["kul-textfield"],
+        "kul-showcase-compare": ["kul-compare"]
       }
     },
     {
       "filePath": "src/components/kul-drawer/kul-drawer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-drawer",
-      "readme": "# kul-drawer\r\n\r\n\r\n\r",
+      "readme": "# kul-drawer\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6342,7 +6099,7 @@
       "filePath": "src/components/kul-header/kul-header.tsx",
       "encapsulation": "shadow",
       "tag": "kul-header",
-      "readme": "# kup-nav-bar\r\n\r",
+      "readme": "# kup-nav-bar\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -6578,7 +6335,7 @@
       "filePath": "src/components/kul-image/kul-image.tsx",
       "encapsulation": "shadow",
       "tag": "kul-image",
-      "readme": "# kul-image\r\n\r\n\r\n\r",
+      "readme": "# kul-image\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7013,49 +6770,25 @@
         "kul-toast",
         "kul-upload"
       ],
-      "dependencies": [
-        "kul-spinner",
-        "kul-badge"
-      ],
+      "dependencies": ["kul-spinner", "kul-badge"],
       "dependencyGraph": {
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-button": [
-          "kul-image"
-        ],
-        "kul-canvas": [
-          "kul-image"
-        ],
-        "kul-chat": [
-          "kul-image"
-        ],
-        "kul-messenger": [
-          "kul-image"
-        ],
-        "kul-showcase-image": [
-          "kul-image"
-        ],
-        "kul-tabbar": [
-          "kul-image"
-        ],
-        "kul-toast": [
-          "kul-image"
-        ],
-        "kul-upload": [
-          "kul-image"
-        ]
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-button": ["kul-image"],
+        "kul-canvas": ["kul-image"],
+        "kul-chat": ["kul-image"],
+        "kul-messenger": ["kul-image"],
+        "kul-showcase-image": ["kul-image"],
+        "kul-tabbar": ["kul-image"],
+        "kul-toast": ["kul-image"],
+        "kul-upload": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-imageviewer/kul-imageviewer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-imageviewer",
-      "readme": "# kul-imageviewer\r\n\r\n\r\n\r",
+      "readme": "# kul-imageviewer\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7221,7 +6954,7 @@
               "docs": ""
             }
           ],
-          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
           "docsTags": []
         },
         {
@@ -7255,7 +6988,7 @@
               "docs": ""
             }
           ],
-          "docs": "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
+          "docs": "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
           "docsTags": []
         },
         {
@@ -7814,9 +7547,7 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-imageviewer"
-      ],
+      "dependents": ["kul-showcase-imageviewer"],
       "dependencies": [
         "kul-canvas",
         "kul-button",
@@ -7834,36 +7565,20 @@
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-canvas": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-masonry": [
-          "kul-button"
-        ],
-        "kul-tree": [
-          "kul-textfield"
-        ],
-        "kul-showcase-imageviewer": [
-          "kul-imageviewer"
-        ]
+        "kul-canvas": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-masonry": ["kul-button"],
+        "kul-tree": ["kul-textfield"],
+        "kul-showcase-imageviewer": ["kul-imageviewer"]
       }
     },
     {
       "filePath": "src/components/kul-lazy/kul-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-lazy",
-      "readme": "# kul-lazy\r\n\r\n\r\n\r",
+      "readme": "# kul-lazy\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -7938,7 +7653,7 @@
           "mutable": false,
           "attr": "kul-render-mode",
           "reflectToAttr": false,
-          "docs": "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
+          "docs": "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
           "docsTags": [
             {
               "name": "default",
@@ -8249,21 +7964,17 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-lazy"
-      ],
+      "dependents": ["kul-showcase-lazy"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-lazy": [
-          "kul-lazy"
-        ]
+        "kul-showcase-lazy": ["kul-lazy"]
       }
     },
     {
       "filePath": "src/components/kul-list/kul-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-list",
-      "readme": "# kul-list\r\n\r\n\r\n\r",
+      "readme": "# kul-list\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -8819,25 +8530,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-button",
-        "kul-showcase-list"
-      ],
+      "dependents": ["kul-button", "kul-showcase-list"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-button": [
-          "kul-list"
-        ],
-        "kul-showcase-list": [
-          "kul-list"
-        ]
+        "kul-button": ["kul-list"],
+        "kul-showcase-list": ["kul-list"]
       }
     },
     {
       "filePath": "src/components/kul-masonry/kul-masonry.tsx",
       "encapsulation": "shadow",
       "tag": "kul-masonry",
-      "readme": "# kul-masonry\r\n\r\n\r\n\r",
+      "readme": "# kul-masonry\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9454,41 +9158,22 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-imageviewer",
-        "kul-showcase-masonry"
-      ],
-      "dependencies": [
-        "kul-button"
-      ],
+      "dependents": ["kul-imageviewer", "kul-showcase-masonry"],
+      "dependencies": ["kul-button"],
       "dependencyGraph": {
-        "kul-masonry": [
-          "kul-button"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-imageviewer": [
-          "kul-masonry"
-        ],
-        "kul-showcase-masonry": [
-          "kul-masonry"
-        ]
+        "kul-masonry": ["kul-button"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-imageviewer": ["kul-masonry"],
+        "kul-showcase-masonry": ["kul-masonry"]
       }
     },
     {
       "filePath": "src/components/kul-messenger/kul-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-messenger",
-      "readme": "# kul-messenger\r\n\r\n\r\n\r",
+      "readme": "# kul-messenger\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -9864,9 +9549,7 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-messenger"
-      ],
+      "dependents": ["kul-showcase-messenger"],
       "dependencies": [
         "kul-button",
         "kul-tabbar",
@@ -9888,20 +9571,10 @@
           "kul-chip",
           "kul-textfield"
         ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-tabbar": [
-          "kul-image"
-        ],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-tabbar": ["kul-image"],
         "kul-chat": [
           "kul-spinner",
           "kul-image",
@@ -9910,19 +9583,15 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-code": [
-          "kul-button"
-        ],
-        "kul-showcase-messenger": [
-          "kul-messenger"
-        ]
+        "kul-code": ["kul-button"],
+        "kul-showcase-messenger": ["kul-messenger"]
       }
     },
     {
       "filePath": "src/components/kul-photoframe/kul-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-photoframe",
-      "readme": "# kul-photoframe\r\n\r\n\r\n\r",
+      "readme": "# kul-photoframe\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10226,21 +9895,17 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-photoframe"
-      ],
+      "dependents": ["kul-showcase-photoframe"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-photoframe": [
-          "kul-photoframe"
-        ]
+        "kul-showcase-photoframe": ["kul-photoframe"]
       }
     },
     {
       "filePath": "src/components/kul-progressbar/kul-progressbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-progressbar",
-      "readme": "# kul-progressbar\r\n\r\n\r\n\r",
+      "readme": "# kul-progressbar\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10628,25 +10293,18 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-chat",
-        "kul-showcase-progressbar"
-      ],
+      "dependents": ["kul-chat", "kul-showcase-progressbar"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-chat": [
-          "kul-progressbar"
-        ],
-        "kul-showcase-progressbar": [
-          "kul-progressbar"
-        ]
+        "kul-chat": ["kul-progressbar"],
+        "kul-showcase-progressbar": ["kul-progressbar"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/kul-showcase.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase",
-      "readme": "# kul-showcase\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10686,35 +10344,19 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-card",
-        "kul-button",
-        "kul-article"
-      ],
+      "dependencies": ["kul-card", "kul-button", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase": [
-          "kul-card",
-          "kul-button",
-          "kul-article"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase": ["kul-card", "kul-button", "kul-article"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/accordion/kul-showcase-accordion.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-accordion",
-      "readme": "# kul-showcase-accordion\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-accordion\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10747,22 +10389,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-accordion",
-        "kul-article"
-      ],
+      "dependencies": ["kul-accordion", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-accordion": [
-          "kul-accordion",
-          "kul-article"
-        ]
+        "kul-showcase-accordion": ["kul-accordion", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/article/kul-showcase-article.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-article",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10795,20 +10431,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-article": [
-          "kul-article"
-        ]
+        "kul-showcase-article": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/badge/kul-showcase-badge.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-badge",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10837,29 +10469,18 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-badge",
-        "kul-article"
-      ],
+      "dependencies": ["kul-badge", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-badge": [
-          "kul-badge",
-          "kul-article"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ]
+        "kul-showcase-badge": ["kul-badge", "kul-article"],
+        "kul-badge": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/button/kul-showcase-button.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-button",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10900,35 +10521,19 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-button",
-        "kul-spinner",
-        "kul-article"
-      ],
+      "dependencies": ["kul-button", "kul-spinner", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-button": [
-          "kul-button",
-          "kul-spinner",
-          "kul-article"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-button": ["kul-button", "kul-spinner", "kul-article"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/canvas/kul-showcase-canvas.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-canvas",
-      "readme": "# kul-showcase-canvas\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-canvas\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -10961,32 +10566,19 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-canvas",
-        "kul-article"
-      ],
+      "dependencies": ["kul-canvas", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-canvas": [
-          "kul-canvas",
-          "kul-article"
-        ],
-        "kul-canvas": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-canvas": ["kul-canvas", "kul-article"],
+        "kul-canvas": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/card/kul-showcase-card.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-card",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11027,22 +10619,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-card",
-        "kul-article"
-      ],
+      "dependencies": ["kul-card", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-card": [
-          "kul-card",
-          "kul-article"
-        ]
+        "kul-showcase-card": ["kul-card", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/carousel/kul-showcase-carousel.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-carousel",
-      "readme": "# kul-showcase-carousel\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-carousel\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11075,36 +10661,20 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-carousel",
-        "kul-article"
-      ],
+      "dependencies": ["kul-carousel", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-carousel": [
-          "kul-carousel",
-          "kul-article"
-        ],
-        "kul-carousel": [
-          "kul-button"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-carousel": ["kul-carousel", "kul-article"],
+        "kul-carousel": ["kul-button"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/chart/kul-showcase-chart.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chart",
-      "readme": "# kul-showcase-chart\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-chart\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11137,22 +10707,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-chart",
-        "kul-article"
-      ],
+      "dependencies": ["kul-chart", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-chart": [
-          "kul-chart",
-          "kul-article"
-        ]
+        "kul-showcase-chart": ["kul-chart", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/chat/kul-showcase-chat.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chat",
-      "readme": "# kul-showcase-chat\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-chat\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11185,15 +10749,9 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-chat",
-        "kul-article"
-      ],
+      "dependencies": ["kul-chat", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-chat": [
-          "kul-chat",
-          "kul-article"
-        ],
+        "kul-showcase-chat": ["kul-chat", "kul-article"],
         "kul-chat": [
           "kul-spinner",
           "kul-image",
@@ -11202,27 +10760,17 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-code": [
-          "kul-button"
-        ]
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-code": ["kul-button"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/chip/kul-showcase-chip.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-chip",
-      "readme": "# kul-showcase-chip\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-chip\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11255,22 +10803,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-chip",
-        "kul-article"
-      ],
+      "dependencies": ["kul-chip", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-chip": [
-          "kul-chip",
-          "kul-article"
-        ]
+        "kul-showcase-chip": ["kul-chip", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/code/kul-showcase-code.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-code",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11303,36 +10845,20 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-code",
-        "kul-article"
-      ],
+      "dependencies": ["kul-code", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-code": [
-          "kul-code",
-          "kul-article"
-        ],
-        "kul-code": [
-          "kul-button"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-code": ["kul-code", "kul-article"],
+        "kul-code": ["kul-button"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/compare/kul-showcase-compare.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-compare",
-      "readme": "# kul-showcase-accordion\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-accordion\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11365,40 +10891,21 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-compare",
-        "kul-article"
-      ],
+      "dependencies": ["kul-compare", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-compare": [
-          "kul-compare",
-          "kul-article"
-        ],
-        "kul-compare": [
-          "kul-button",
-          "kul-tree"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-tree": [
-          "kul-textfield"
-        ]
+        "kul-showcase-compare": ["kul-compare", "kul-article"],
+        "kul-compare": ["kul-button", "kul-tree"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-tree": ["kul-textfield"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/utilities/debug/kul-showcase-debug.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-debug",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11415,22 +10922,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-textfield",
-        "kul-article"
-      ],
+      "dependencies": ["kul-textfield", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-debug": [
-          "kul-textfield",
-          "kul-article"
-        ]
+        "kul-showcase-debug": ["kul-textfield", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/drawer/kul-showcase-drawer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-drawer",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11463,20 +10964,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-drawer": [
-          "kul-article"
-        ]
+        "kul-showcase-drawer": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/header/kul-showcase-header.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-header",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11509,20 +11006,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-header": [
-          "kul-article"
-        ]
+        "kul-showcase-header": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/image/kul-showcase-image.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-image",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11555,29 +11048,18 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-image",
-        "kul-article"
-      ],
+      "dependencies": ["kul-image", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-image": [
-          "kul-image",
-          "kul-article"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-image": ["kul-image", "kul-article"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/imageviewer/kul-showcase-imageviewer.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-imageviewer",
-      "readme": "# kul-showcase-accordion\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-accordion\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11610,15 +11092,9 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-imageviewer",
-        "kul-article"
-      ],
+      "dependencies": ["kul-imageviewer", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-imageviewer": [
-          "kul-imageviewer",
-          "kul-article"
-        ],
+        "kul-showcase-imageviewer": ["kul-imageviewer", "kul-article"],
         "kul-imageviewer": [
           "kul-canvas",
           "kul-button",
@@ -11627,33 +11103,19 @@
           "kul-textfield",
           "kul-tree"
         ],
-        "kul-canvas": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-masonry": [
-          "kul-button"
-        ],
-        "kul-tree": [
-          "kul-textfield"
-        ]
+        "kul-canvas": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-masonry": ["kul-button"],
+        "kul-tree": ["kul-textfield"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/data/kul-showcase-kuldata.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kuldata",
-      "readme": "# kul-showcase-kuldata\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kuldata\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11665,20 +11127,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kuldata": [
-          "kul-article"
-        ]
+        "kul-showcase-kuldata": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/dates/kul-showcase-kuldates.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kuldates",
-      "readme": "# kul-showcase-kuldates\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kuldates\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11690,20 +11148,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kuldates": [
-          "kul-article"
-        ]
+        "kul-showcase-kuldates": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/debug/kul-showcase-kuldebug.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kuldebug",
-      "readme": "# kul-showcase-kuldebug\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kuldebug\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11715,20 +11169,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kuldebug": [
-          "kul-article"
-        ]
+        "kul-showcase-kuldebug": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/dynamicposition/kul-showcase-kuldynamicposition.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kuldynamicposition",
-      "readme": "# kul-showcase-kuldynamicposition\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kuldynamicposition\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11740,20 +11190,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kuldynamicposition": [
-          "kul-article"
-        ]
+        "kul-showcase-kuldynamicposition": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/language/kul-showcase-kullanguage.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kullanguage",
-      "readme": "# kul-showcase-kuldata\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kuldata\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11765,20 +11211,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kullanguage": [
-          "kul-article"
-        ]
+        "kul-showcase-kullanguage": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/llm/kul-showcase-kulllm.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kulllm",
-      "readme": "# kul-showcase-kulllm\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kulllm\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11790,20 +11232,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kulllm": [
-          "kul-article"
-        ]
+        "kul-showcase-kulllm": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/manager/kul-showcase-kulmanager.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kulmanager",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11815,20 +11253,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kulmanager": [
-          "kul-article"
-        ]
+        "kul-showcase-kulmanager": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/scroll-on-hover/kul-showcase-kulscrollonhover.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kulscrollonhover",
-      "readme": "# kul-showcase-kuldata\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kuldata\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11840,20 +11274,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kulscrollonhover": [
-          "kul-article"
-        ]
+        "kul-showcase-kulscrollonhover": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/framework/theme/kul-showcase-kultheme.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-kultheme",
-      "readme": "# kul-showcase-kuldata\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-kuldata\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11865,20 +11295,16 @@
       "slots": [],
       "parts": [],
       "dependents": [],
-      "dependencies": [
-        "kul-article"
-      ],
+      "dependencies": ["kul-article"],
       "dependencyGraph": {
-        "kul-showcase-kultheme": [
-          "kul-article"
-        ]
+        "kul-showcase-kultheme": ["kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/lazy/kul-showcase-lazy.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-lazy",
-      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-lazy\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11911,22 +11337,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-lazy",
-        "kul-article"
-      ],
+      "dependencies": ["kul-lazy", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-lazy": [
-          "kul-lazy",
-          "kul-article"
-        ]
+        "kul-showcase-lazy": ["kul-lazy", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/list/kul-showcase-list.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-list",
-      "readme": "# kul-showcase-list\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-list\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -11959,22 +11379,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-list",
-        "kul-article"
-      ],
+      "dependencies": ["kul-list", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-list": [
-          "kul-list",
-          "kul-article"
-        ]
+        "kul-showcase-list": ["kul-list", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/masonry/kul-showcase-masonry.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-masonry",
-      "readme": "# kul-showcase-masonry\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-masonry\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12007,36 +11421,20 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-masonry",
-        "kul-article"
-      ],
+      "dependencies": ["kul-masonry", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-masonry": [
-          "kul-masonry",
-          "kul-article"
-        ],
-        "kul-masonry": [
-          "kul-button"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-masonry": ["kul-masonry", "kul-article"],
+        "kul-masonry": ["kul-button"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/messenger/kul-showcase-messenger.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-messenger",
-      "readme": "# kul-showcase-messenger\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-messenger\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12069,15 +11467,9 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-messenger",
-        "kul-article"
-      ],
+      "dependencies": ["kul-messenger", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-messenger": [
-          "kul-messenger",
-          "kul-article"
-        ],
+        "kul-showcase-messenger": ["kul-messenger", "kul-article"],
         "kul-messenger": [
           "kul-button",
           "kul-tabbar",
@@ -12088,20 +11480,10 @@
           "kul-chip",
           "kul-textfield"
         ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-tabbar": [
-          "kul-image"
-        ],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-tabbar": ["kul-image"],
         "kul-chat": [
           "kul-spinner",
           "kul-image",
@@ -12110,16 +11492,14 @@
           "kul-progressbar",
           "kul-code"
         ],
-        "kul-code": [
-          "kul-button"
-        ]
+        "kul-code": ["kul-button"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/photoframe/kul-showcase-photoframe.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-photoframe",
-      "readme": "# kul-showcase-photoframe\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-photoframe\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12152,22 +11532,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-photoframe",
-        "kul-article"
-      ],
+      "dependencies": ["kul-photoframe", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-photoframe": [
-          "kul-photoframe",
-          "kul-article"
-        ]
+        "kul-showcase-photoframe": ["kul-photoframe", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/progressbar/kul-showcase-progressbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-progressbar",
-      "readme": "# kul-showcase-progressbar\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-progressbar\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12200,22 +11574,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-progressbar",
-        "kul-article"
-      ],
+      "dependencies": ["kul-progressbar", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-progressbar": [
-          "kul-progressbar",
-          "kul-article"
-        ]
+        "kul-showcase-progressbar": ["kul-progressbar", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/slider/kul-showcase-slider.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-slider",
-      "readme": "# kul-showcase-slider\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-slider\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12248,22 +11616,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-slider",
-        "kul-article"
-      ],
+      "dependencies": ["kul-slider", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-slider": [
-          "kul-slider",
-          "kul-article"
-        ]
+        "kul-showcase-slider": ["kul-slider", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/spinner/kul-showcase-spinner.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-spinner",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12304,22 +11666,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-spinner",
-        "kul-article"
-      ],
+      "dependencies": ["kul-spinner", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-spinner": [
-          "kul-spinner",
-          "kul-article"
-        ]
+        "kul-showcase-spinner": ["kul-spinner", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/splash/kul-showcase-splash.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-splash",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12365,24 +11721,16 @@
           "kul-spinner",
           "kul-article"
         ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/tabbar/kul-showcase-tabbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-tabbar",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12415,32 +11763,19 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-tabbar",
-        "kul-article"
-      ],
+      "dependencies": ["kul-tabbar", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-tabbar": [
-          "kul-tabbar",
-          "kul-article"
-        ],
-        "kul-tabbar": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-tabbar": ["kul-tabbar", "kul-article"],
+        "kul-tabbar": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/textfield/kul-showcase-textfield.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-textfield",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12481,22 +11816,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-textfield",
-        "kul-article"
-      ],
+      "dependencies": ["kul-textfield", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-textfield": [
-          "kul-textfield",
-          "kul-article"
-        ]
+        "kul-showcase-textfield": ["kul-textfield", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/toast/kul-showcase-toast.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-toast",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12529,32 +11858,19 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-toast",
-        "kul-article"
-      ],
+      "dependencies": ["kul-toast", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-toast": [
-          "kul-toast",
-          "kul-article"
-        ],
-        "kul-toast": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ]
+        "kul-showcase-toast": ["kul-toast", "kul-article"],
+        "kul-toast": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/toggle/kul-showcase-toggle.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-toggle",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12587,22 +11903,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-toggle",
-        "kul-article"
-      ],
+      "dependencies": ["kul-toggle", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-toggle": [
-          "kul-toggle",
-          "kul-article"
-        ]
+        "kul-showcase-toggle": ["kul-toggle", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/tree/kul-showcase-tree.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-tree",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12635,25 +11945,17 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-tree",
-        "kul-article"
-      ],
+      "dependencies": ["kul-tree", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-tree": [
-          "kul-tree",
-          "kul-article"
-        ],
-        "kul-tree": [
-          "kul-textfield"
-        ]
+        "kul-showcase-tree": ["kul-tree", "kul-article"],
+        "kul-tree": ["kul-textfield"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/typewriter/kul-showcase-typewriter.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-typewriter",
-      "readme": "# kul-showcase-lazy\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-lazy\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12686,22 +11988,16 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-typewriter",
-        "kul-article"
-      ],
+      "dependencies": ["kul-typewriter", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-typewriter": [
-          "kul-typewriter",
-          "kul-article"
-        ]
+        "kul-showcase-typewriter": ["kul-typewriter", "kul-article"]
       }
     },
     {
       "filePath": "src/components/kul-showcase/components/upload/kul-showcase-upload.tsx",
       "encapsulation": "shadow",
       "tag": "kul-showcase-upload",
-      "readme": "# kul-showcase-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-showcase-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -12734,37 +12030,20 @@
         }
       ],
       "dependents": [],
-      "dependencies": [
-        "kul-upload",
-        "kul-article"
-      ],
+      "dependencies": ["kul-upload", "kul-article"],
       "dependencyGraph": {
-        "kul-showcase-upload": [
-          "kul-upload",
-          "kul-article"
-        ],
-        "kul-upload": [
-          "kul-image",
-          "kul-button"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ]
+        "kul-showcase-upload": ["kul-upload", "kul-article"],
+        "kul-upload": ["kul-image", "kul-button"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-button": ["kul-image", "kul-list"]
       }
     },
     {
       "filePath": "src/components/kul-slider/kul-slider.tsx",
       "encapsulation": "shadow",
       "tag": "kul-slider",
-      "readme": "# kul-button\r\n\r\n\r\n\r",
+      "readme": "# kul-button\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13437,21 +12716,17 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-slider"
-      ],
+      "dependents": ["kul-showcase-slider"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-slider": [
-          "kul-slider"
-        ]
+        "kul-showcase-slider": ["kul-slider"]
       }
     },
     {
       "filePath": "src/components/kul-spinner/kul-spinner.tsx",
       "encapsulation": "shadow",
       "tag": "kul-spinner",
-      "readme": "# kul-spinner\r\n\r\n\r\n\r",
+      "readme": "# kul-spinner\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -13885,34 +13160,20 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-chat": [
-          "kul-spinner"
-        ],
-        "kul-image": [
-          "kul-spinner"
-        ],
-        "kul-imageviewer": [
-          "kul-spinner"
-        ],
-        "kul-messenger": [
-          "kul-spinner"
-        ],
-        "kul-showcase-button": [
-          "kul-spinner"
-        ],
-        "kul-showcase-spinner": [
-          "kul-spinner"
-        ],
-        "kul-showcase-splash": [
-          "kul-spinner"
-        ]
+        "kul-chat": ["kul-spinner"],
+        "kul-image": ["kul-spinner"],
+        "kul-imageviewer": ["kul-spinner"],
+        "kul-messenger": ["kul-spinner"],
+        "kul-showcase-button": ["kul-spinner"],
+        "kul-showcase-spinner": ["kul-spinner"],
+        "kul-showcase-splash": ["kul-spinner"]
       }
     },
     {
       "filePath": "src/components/kul-splash/kul-splash.tsx",
       "encapsulation": "shadow",
       "tag": "kul-splash",
-      "readme": "# kul-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14182,21 +13443,17 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-splash"
-      ],
+      "dependents": ["kul-showcase-splash"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-splash": [
-          "kul-splash"
-        ]
+        "kul-showcase-splash": ["kul-splash"]
       }
     },
     {
       "filePath": "src/components/kul-tabbar/kul-tabbar.tsx",
       "encapsulation": "shadow",
       "tag": "kul-tabbar",
-      "readme": "# kul-tabbar\r\n\r\n\r\n\r",
+      "readme": "# kul-tabbar\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14613,37 +13870,21 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-messenger",
-        "kul-showcase-tabbar"
-      ],
-      "dependencies": [
-        "kul-image"
-      ],
+      "dependents": ["kul-messenger", "kul-showcase-tabbar"],
+      "dependencies": ["kul-image"],
       "dependencyGraph": {
-        "kul-tabbar": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-messenger": [
-          "kul-tabbar"
-        ],
-        "kul-showcase-tabbar": [
-          "kul-tabbar"
-        ]
+        "kul-tabbar": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-messenger": ["kul-tabbar"],
+        "kul-showcase-tabbar": ["kul-tabbar"]
       }
     },
     {
       "filePath": "src/components/kul-textfield/kul-textfield.tsx",
       "encapsulation": "shadow",
       "tag": "kul-textfield",
-      "readme": "# kul-textfield\r\n\r\n\r\n\r",
+      "readme": "# kul-textfield\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -14718,7 +13959,7 @@
           },
           "mutable": true,
           "reflectToAttr": false,
-          "docs": "Specifies helper text to display alongside the text field.\r\nHelper text can provide additional context or instructions to the user.",
+          "docs": "Specifies helper text to display alongside the text field.\nHelper text can provide additional context or instructions to the user.",
           "docsTags": [
             {
               "name": "default",
@@ -14750,7 +13991,7 @@
           },
           "mutable": true,
           "reflectToAttr": false,
-          "docs": "Allows customization of the input or textarea element through additional HTML attributes.\r\nThis can include attributes like 'readonly', 'placeholder', etc., to further customize the behavior or appearance of the input.",
+          "docs": "Allows customization of the input or textarea element through additional HTML attributes.\nThis can include attributes like 'readonly', 'placeholder', etc., to further customize the behavior or appearance of the input.",
           "docsTags": [
             {
               "name": "default",
@@ -14777,7 +14018,7 @@
           "mutable": true,
           "attr": "kul-icon",
           "reflectToAttr": true,
-          "docs": "Defines the icon to be displayed within the text field.\r\nIcons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.",
+          "docs": "Defines the icon to be displayed within the text field.\nIcons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.",
           "docsTags": [
             {
               "name": "default",
@@ -14804,7 +14045,7 @@
           "mutable": true,
           "attr": "kul-label",
           "reflectToAttr": true,
-          "docs": "Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.\r\nLabels are especially important for screen readers and users navigating with keyboard-only controls.",
+          "docs": "Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.\nLabels are especially important for screen readers and users navigating with keyboard-only controls.",
           "docsTags": [
             {
               "name": "default",
@@ -14831,7 +14072,7 @@
           "mutable": true,
           "attr": "kul-style",
           "reflectToAttr": true,
-          "docs": "Accepts custom CSS styles to apply directly to the text field component.\r\nThis allows for fine-grained control over the appearance of the component beyond predefined styling options.",
+          "docs": "Accepts custom CSS styles to apply directly to the text field component.\nThis allows for fine-grained control over the appearance of the component beyond predefined styling options.",
           "docsTags": [
             {
               "name": "default",
@@ -14864,7 +14105,7 @@
           "mutable": true,
           "attr": "kul-styling",
           "reflectToAttr": true,
-          "docs": "Determines the overall styling theme of the text field, affecting its shape and border.\r\nOptions include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.",
+          "docs": "Determines the overall styling theme of the text field, affecting its shape and border.\nOptions include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.",
           "docsTags": [
             {
               "name": "default",
@@ -14931,7 +14172,7 @@
           "mutable": false,
           "attr": "kul-value",
           "reflectToAttr": false,
-          "docs": "Initializes the text field with a default value when the component is first rendered.\r\nThis can be used to pre-fill forms or set a starting point for user input.",
+          "docs": "Initializes the text field with a default value when the component is first rendered.\nThis can be used to pre-fill forms or set a starting point for user input.",
           "docsTags": [
             {
               "name": "default",
@@ -15316,31 +14557,19 @@
       ],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-chat": [
-          "kul-textfield"
-        ],
-        "kul-imageviewer": [
-          "kul-textfield"
-        ],
-        "kul-messenger": [
-          "kul-textfield"
-        ],
-        "kul-showcase-debug": [
-          "kul-textfield"
-        ],
-        "kul-showcase-textfield": [
-          "kul-textfield"
-        ],
-        "kul-tree": [
-          "kul-textfield"
-        ]
+        "kul-chat": ["kul-textfield"],
+        "kul-imageviewer": ["kul-textfield"],
+        "kul-messenger": ["kul-textfield"],
+        "kul-showcase-debug": ["kul-textfield"],
+        "kul-showcase-textfield": ["kul-textfield"],
+        "kul-tree": ["kul-textfield"]
       }
     },
     {
       "filePath": "src/components/kul-toast/kul-toast.tsx",
       "encapsulation": "shadow",
       "tag": "kul-toast",
-      "readme": "# kul-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -15362,7 +14591,7 @@
               "text": "() => void"
             }
           ],
-          "default": "() => {\r\n    this.rootElement.remove();\r\n  }",
+          "default": "() => {\n    this.rootElement.remove();\n  }",
           "values": [
             {
               "type": "() => void"
@@ -15394,7 +14623,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'clear' }"
             }
           ],
-          "default": "{\r\n    kulSizeX: '18px',\r\n    kulSizeY: '18px',\r\n    kulValue: 'clear',\r\n  }",
+          "default": "{\n    kulSizeX: '18px',\n    kulSizeY: '18px',\n    kulValue: 'clear',\n  }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -15426,7 +14655,7 @@
               "text": "{ kulSizeX: '18px', kulSizeY: '18px', kulValue: 'info' }"
             }
           ],
-          "default": "{\r\n    kulSizeX: '18px',\r\n    kulSizeY: '18px',\r\n    kulValue: 'info',\r\n  }",
+          "default": "{\n    kulSizeX: '18px',\n    kulSizeY: '18px',\n    kulValue: 'info',\n  }",
           "values": [
             {
               "type": "KulImagePropsInterface"
@@ -15712,33 +14941,20 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-toast"
-      ],
-      "dependencies": [
-        "kul-image"
-      ],
+      "dependents": ["kul-showcase-toast"],
+      "dependencies": ["kul-image"],
       "dependencyGraph": {
-        "kul-toast": [
-          "kul-image"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-showcase-toast": [
-          "kul-toast"
-        ]
+        "kul-toast": ["kul-image"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-showcase-toast": ["kul-toast"]
       }
     },
     {
       "filePath": "src/components/kul-toggle/kul-toggle.tsx",
       "encapsulation": "shadow",
       "tag": "kul-toggle",
-      "readme": "# kul-button\r\n\r\n\r\n\r",
+      "readme": "# kul-button\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -16190,21 +15406,17 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-toggle"
-      ],
+      "dependents": ["kul-showcase-toggle"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-toggle": [
-          "kul-toggle"
-        ]
+        "kul-showcase-toggle": ["kul-toggle"]
       }
     },
     {
       "filePath": "src/components/kul-tree/kul-tree.tsx",
       "encapsulation": "shadow",
       "tag": "kul-tree",
-      "readme": "# kul-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -16306,7 +15518,7 @@
           "mutable": true,
           "attr": "kul-initial-expansion-depth",
           "reflectToAttr": false,
-          "docs": "Sets the initial expanded nodes based on the specified depth.\r\nIf the property is not provided, all nodes in the tree will be expanded.",
+          "docs": "Sets the initial expanded nodes based on the specified depth.\nIf the property is not provided, all nodes in the tree will be expanded.",
           "docsTags": [
             {
               "name": "default",
@@ -16643,34 +15855,20 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-compare",
-        "kul-imageviewer",
-        "kul-showcase-tree"
-      ],
-      "dependencies": [
-        "kul-textfield"
-      ],
+      "dependents": ["kul-compare", "kul-imageviewer", "kul-showcase-tree"],
+      "dependencies": ["kul-textfield"],
       "dependencyGraph": {
-        "kul-tree": [
-          "kul-textfield"
-        ],
-        "kul-compare": [
-          "kul-tree"
-        ],
-        "kul-imageviewer": [
-          "kul-tree"
-        ],
-        "kul-showcase-tree": [
-          "kul-tree"
-        ]
+        "kul-tree": ["kul-textfield"],
+        "kul-compare": ["kul-tree"],
+        "kul-imageviewer": ["kul-tree"],
+        "kul-showcase-tree": ["kul-tree"]
       }
     },
     {
       "filePath": "src/components/kul-typewriter/kul-typewriter.tsx",
       "encapsulation": "shadow",
       "tag": "kul-typewriter",
-      "readme": "# kul-typewriter\r\n\r\n\r\n\r",
+      "readme": "# kul-typewriter\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17069,21 +16267,17 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-typewriter"
-      ],
+      "dependents": ["kul-showcase-typewriter"],
       "dependencies": [],
       "dependencyGraph": {
-        "kul-showcase-typewriter": [
-          "kul-typewriter"
-        ]
+        "kul-showcase-typewriter": ["kul-typewriter"]
       }
     },
     {
       "filePath": "src/components/kul-upload/kul-upload.tsx",
       "encapsulation": "shadow",
       "tag": "kul-upload",
-      "readme": "# kul-badge\r\n\r\n\r\n\r",
+      "readme": "# kul-badge\n\n\n",
       "docs": "",
       "docsTags": [],
       "usage": {},
@@ -17438,32 +16632,14 @@
       ],
       "slots": [],
       "parts": [],
-      "dependents": [
-        "kul-showcase-upload"
-      ],
-      "dependencies": [
-        "kul-image",
-        "kul-button"
-      ],
+      "dependents": ["kul-showcase-upload"],
+      "dependencies": ["kul-image", "kul-button"],
       "dependencyGraph": {
-        "kul-upload": [
-          "kul-image",
-          "kul-button"
-        ],
-        "kul-image": [
-          "kul-spinner",
-          "kul-badge"
-        ],
-        "kul-badge": [
-          "kul-image"
-        ],
-        "kul-button": [
-          "kul-image",
-          "kul-list"
-        ],
-        "kul-showcase-upload": [
-          "kul-upload"
-        ]
+        "kul-upload": ["kul-image", "kul-button"],
+        "kul-image": ["kul-spinner", "kul-badge"],
+        "kul-badge": ["kul-image"],
+        "kul-button": ["kul-image", "kul-list"],
+        "kul-showcase-upload": ["kul-upload"]
       }
     }
   ],
@@ -17519,12 +16695,12 @@
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartLegendPlacement": {
-      "declaration": "export type KulChartLegendPlacement =\r\n  | 'bottom'\r\n  | 'left'\r\n  | 'hidden'\r\n  | 'right'\r\n  | 'top';",
+      "declaration": "export type KulChartLegendPlacement =\n  | 'bottom'\n  | 'left'\n  | 'hidden'\n  | 'right'\n  | 'top';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartType": {
-      "declaration": "export type KulChartType =\r\n  | 'area'\r\n  | 'bar'\r\n  | 'bubble'\r\n  | 'calendar'\r\n  | 'candlestick'\r\n  | 'funnel'\r\n  | 'gaussian'\r\n  | 'hbar'\r\n  | 'heatmap'\r\n  | 'line'\r\n  | 'pie'\r\n  | 'radar'\r\n  | 'sankey'\r\n  | 'sbar'\r\n  | 'scatter';",
+      "declaration": "export type KulChartType =\n  | 'area'\n  | 'bar'\n  | 'bubble'\n  | 'calendar'\n  | 'candlestick'\n  | 'funnel'\n  | 'gaussian'\n  | 'hbar'\n  | 'heatmap'\n  | 'line'\n  | 'pie'\n  | 'radar'\n  | 'sankey'\n  | 'sbar'\n  | 'scatter';",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
@@ -17539,7 +16715,7 @@
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
     "src/components/kul-chart/kul-chart-declarations.tsx::KulChartEventPayload": {
-      "declaration": "export interface KulChartEventPayload\r\n  extends KulEventPayload<'KulChart', KulChartEvent> {\r\n  data?: KulChartEventData;\r\n}",
+      "declaration": "export interface KulChartEventPayload\n  extends KulEventPayload<'KulChart', KulChartEvent> {\n  data?: KulChartEventData;\n}",
       "docstring": "",
       "path": "src/components/kul-chart/kul-chart-declarations.tsx"
     },
