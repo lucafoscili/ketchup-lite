@@ -7,13 +7,14 @@ on:
 
 jobs:
   version-bump:
+    if: "${{ ! contains(github.event.head_commit.message, 'chore: bump versions for release candidate') }}"
+
     runs-on: ubuntu-latest
     environment: Development
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Set to false to prevent using the token in the checkout, as the action will handle authentication
           persist-credentials: false
 
       - name: Setup and Build
