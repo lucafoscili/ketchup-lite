@@ -26,6 +26,9 @@ jobs:
       - name: Build Packages
         run: yarn build
 
+      - name: Discard Uncommitted Changes
+        run: git reset --hard HEAD
+
       - name: Publish Packages with Lerna
         run: |
           npx lerna publish from-package --yes --npm-tag=latest
