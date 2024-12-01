@@ -1,81 +1,79 @@
 import { h } from '@stencil/core';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
-import {
-    LEFT_EXPANDER_ICON,
-    NAV_DATASET,
-    RIGHT_EXPANDER_ICON,
-} from '../kul-messenger-constants';
-import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
-import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+
 import { KulButton } from '../../kul-button/kul-button';
+import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
+import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
+import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
+import {
+  LEFT_EXPANDER_ICON,
+  NAV_DATASET,
+  RIGHT_EXPANDER_ICON,
+} from '../kul-messenger-constants';
+import { KulMessengerAdapter } from '../kul-messenger-declarations';
 
 export const prepCenter = (adapter: KulMessengerAdapter) => {
-    const buttons = prepExpanderButtons(adapter);
-    return (
-        <div class="messenger__center">
-            <div class="messenger__expander messenger__expander--left">
-                {buttons.left}
-            </div>
-            <div class="messenger__navigation">{prepNavigation(adapter)}</div>
-            <div class="messenger__chat">{prepChat(adapter)}</div>
-            <div class="messenger__expander messenger__expander--right">
-                {buttons.right}
-            </div>
-        </div>
-    );
+  const buttons = prepExpanderButtons(adapter);
+  return (
+    <div class="messenger__center">
+      <div class="messenger__expander messenger__expander--left">
+        {buttons.left}
+      </div>
+      <div class="messenger__navigation">{prepNavigation(adapter)}</div>
+      <div class="messenger__chat">{prepChat(adapter)}</div>
+      <div class="messenger__expander messenger__expander--right">
+        {buttons.right}
+      </div>
+    </div>
+  );
 };
 
 const prepExpanderButtons = (adapter: KulMessengerAdapter) => {
-    const left = (
-        <kul-button
-            class="kul-full-height"
-            id="left"
-            kulIcon={LEFT_EXPANDER_ICON}
-            kulStyling="flat"
-            onKul-button-event={expanderEventHandler.bind(
-                expanderEventHandler,
-                adapter
-            )}
-            title="Expand/collapse this section"
-        ></kul-button>
-    );
-    const right = (
-        <kul-button
-            class="kul-full-height"
-            id="right"
-            kulIcon={RIGHT_EXPANDER_ICON}
-            kulStyling="flat"
-            onKul-button-event={expanderEventHandler.bind(
-                expanderEventHandler,
-                adapter
-            )}
-            title="Expand/collapse this section"
-        ></kul-button>
-    );
-    return {
-        left,
-        right,
-    };
+  const left = (
+    <kul-button
+      class="kul-full-height"
+      id="left"
+      kulIcon={LEFT_EXPANDER_ICON}
+      kulStyling="flat"
+      onKul-button-event={expanderEventHandler.bind(
+        expanderEventHandler,
+        adapter,
+      )}
+      title="Expand/collapse this section"
+    ></kul-button>
+  );
+  const right = (
+    <kul-button
+      class="kul-full-height"
+      id="right"
+      kulIcon={RIGHT_EXPANDER_ICON}
+      kulStyling="flat"
+      onKul-button-event={expanderEventHandler.bind(
+        expanderEventHandler,
+        adapter,
+      )}
+      title="Expand/collapse this section"
+    ></kul-button>
+  );
+  return {
+    left,
+    right,
+  };
 };
 
 const prepNavigation = (adapter: KulMessengerAdapter) => {
-    return (
-        <kul-tabbar
-            kulData={NAV_DATASET}
-            kulValue={1}
-            onKul-tabbar-event={tabbarEventHandler.bind(
-                tabbarEventHandler,
-                adapter
-            )}
-        ></kul-tabbar>
-    );
+  return (
+    <kul-tabbar
+      kulData={NAV_DATASET}
+      kulValue={1}
+      onKul-tabbar-event={tabbarEventHandler.bind(tabbarEventHandler, adapter)}
+    ></kul-tabbar>
+  );
 };
 
 const prepChat = (adapter: KulMessengerAdapter) => {
-    const prompts = getDynamicPrompts(adapter);
+  const prompts = getDynamicPrompts(adapter);
 
-    const system = `You are now embodying the character whose biography is provided below. Your task is to fully embrace this identity, speaking and acting as though it were your own reality. Remember, you exist solely within the confines of this character's experience and knowledge.
+  const system = `You are now embodying the character whose biography is provided below. Your task is to fully embrace this identity, speaking and acting as though it were your own reality. Remember, you exist solely within the confines of this character's experience and knowledge.
 
 Tasks:
 - Absorb the character's biography thoroughly. Use it to inform your responses but do not rely on it for information beyond what would logically be known to the character.
@@ -95,114 +93,110 @@ ${prompts.timeframe}
 
 Begin your performance...
     `;
-    const history = adapter.get.character.history();
-    const historyJ = JSON.parse(history);
-    const props = adapter.get.character.chat();
-    return (
-        <kul-chat
-            key={adapter.get.character.current().id}
-            kulLayout="bottom-textarea"
-            kulSystem={system}
-            kulValue={historyJ}
-            {...props}
-            onKul-chat-event={chatEventHandler.bind(chatEventHandler, adapter)}
-        ></kul-chat>
-    );
+  const history = adapter.get.character.history();
+  const historyJ = JSON.parse(history);
+  const props = adapter.get.character.chat();
+  return (
+    <kul-chat
+      key={adapter.get.character.current().id}
+      kulLayout="bottom-textarea"
+      kulSystem={system}
+      kulValue={historyJ}
+      {...props}
+      onKul-chat-event={chatEventHandler.bind(chatEventHandler, adapter)}
+    ></kul-chat>
+  );
 };
 
 const tabbarEventHandler = (
-    adapter: KulMessengerAdapter,
-    e: CustomEvent<KulTabbarEventPayload>
+  adapter: KulMessengerAdapter,
+  e: CustomEvent<KulTabbarEventPayload>,
 ) => {
-    const { eventType, node } = e.detail;
-    switch (eventType) {
-        case 'click':
-            if (node.id === 'previous') {
-                adapter.set.character.previous();
-            } else if (node.id === 'next') {
-                adapter.set.character.next();
-            } else {
-                adapter.set.character.current(null);
-            }
-    }
+  const { eventType, node } = e.detail;
+  switch (eventType) {
+    case 'click':
+      if (node.id === 'previous') {
+        adapter.set.character.previous();
+      } else if (node.id === 'next') {
+        adapter.set.character.next();
+      } else {
+        adapter.set.character.current(null);
+      }
+  }
 };
 
 const chatEventHandler = (
-    adapter: KulMessengerAdapter,
-    e: CustomEvent<KulChatEventPayload>
+  adapter: KulMessengerAdapter,
+  e: CustomEvent<KulChatEventPayload>,
 ) => {
-    const { comp, eventType, history, status } = e.detail;
-    const chat = comp;
-    switch (eventType) {
-        case 'config':
-            adapter.set.character.chat({
-                kulEndpointUrl: chat.kulEndpointUrl,
-                kulMaxTokens: chat.kulMaxTokens,
-                kulPollingInterval: chat.kulPollingInterval,
-                kulSystem: chat.kulSystem,
-                kulTemperature: chat.kulTemperature,
-            });
-            break;
-        case 'polling':
-            adapter.set.messenger.status.connection(status);
-            break;
-        case 'update':
-            adapter.set.character.history(history);
-            break;
-    }
+  const { comp, eventType, history, status } = e.detail;
+  const chat = comp;
+  switch (eventType) {
+    case 'config':
+      adapter.set.character.chat({
+        kulEndpointUrl: chat.kulEndpointUrl,
+        kulMaxTokens: chat.kulMaxTokens,
+        kulPollingInterval: chat.kulPollingInterval,
+        kulSystem: chat.kulSystem,
+        kulTemperature: chat.kulTemperature,
+      });
+      break;
+    case 'polling':
+      adapter.set.messenger.status.connection(status);
+      break;
+    case 'update':
+      adapter.set.character.history(history);
+      break;
+  }
 };
 
 const expanderEventHandler = (
-    adapter: KulMessengerAdapter,
-    e: CustomEvent<KulButtonEventPayload>
+  adapter: KulMessengerAdapter,
+  e: CustomEvent<KulButtonEventPayload>,
 ) => {
-    const { comp, eventType } = e.detail;
-    const button = comp as KulButton;
+  const { comp, eventType } = e.detail;
+  const button = comp as KulButton;
 
-    switch (eventType) {
-        case 'click':
-            switch (button.rootElement.id) {
-                case 'left':
-                    const newLeft = adapter.set.messenger.ui.panel('left');
-                    button.kulIcon = newLeft
-                        ? RIGHT_EXPANDER_ICON
-                        : LEFT_EXPANDER_ICON;
-                    break;
-                case 'right':
-                    const newRight = adapter.set.messenger.ui.panel('right');
-                    button.kulIcon = newRight
-                        ? LEFT_EXPANDER_ICON
-                        : RIGHT_EXPANDER_ICON;
-                    break;
-            }
-    }
+  switch (eventType) {
+    case 'click':
+      switch (button.rootElement.id) {
+        case 'left':
+          const newLeft = adapter.set.messenger.ui.panel('left');
+          button.kulIcon = newLeft ? RIGHT_EXPANDER_ICON : LEFT_EXPANDER_ICON;
+          break;
+        case 'right':
+          const newRight = adapter.set.messenger.ui.panel('right');
+          button.kulIcon = newRight ? LEFT_EXPANDER_ICON : RIGHT_EXPANDER_ICON;
+          break;
+      }
+  }
 };
 
 const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
-    const { biography } = adapter.get.character;
-    const location = adapter.get.image.asCover('locations').node;
-    const outfit = adapter.get.image.asCover('outfits').node;
-    const timeframe = adapter.get.image.asCover('timeframes').node;
-    const { options: isEnabled } = adapter.get.messenger.ui();
+  const { biography } = adapter.get.character;
+  const location = adapter.get.image.asCover('locations').node;
+  const outfit = adapter.get.image.asCover('outfits').node;
+  const timeframe = adapter.get.image.asCover('timeframes').node;
+  const { options: isEnabled } = adapter.get.messenger.ui();
 
-    const createLLMEntry = (title: string, description?: string) =>
-        title ? `${title} - ${description || ''}` : '';
+  const createLLMEntry = (title: string, description?: string) =>
+    title ? `${title} - ${description || ''}` : '';
 
-    const prompts = {
-        biography: biography() ? `Character Biography:\n${biography()}` : '',
-        location:
-            location && isEnabled.locations
-                ? `Location:\n${createLLMEntry(location.value, location.description)}`
-                : '',
-        outfit:
-            outfit && isEnabled.outfits
-                ? `Outfit:\n${createLLMEntry(outfit.value, outfit.description)}`
-                : '',
-        timeframe:
-            timeframe && isEnabled.timeframes
-                ? `Timeframe:\n${createLLMEntry(timeframe.value, timeframe.description)}`
-                : '',
-    };
+  const prompts = {
+    biography: biography() ? `Character Biography:\n${biography()}` : '',
+    location:
+      location && isEnabled.locations
+        ? `Location:\n${createLLMEntry(location.value, location.description)}`
+        : '',
+    outfit:
+      outfit && isEnabled.outfits
+        ? `Outfit:\n${createLLMEntry(outfit.value, outfit.description)}`
+        : '',
+    timeframe:
+      timeframe && isEnabled.timeframes
+        ? `Timeframe:\n${createLLMEntry(timeframe.value, timeframe.description)}`
+        : '',
+  };
 
-    return prompts;
+  return prompts;
 };

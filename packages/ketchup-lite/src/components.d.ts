@@ -274,8 +274,8 @@ export namespace Components {
           * @default "button"
          */
         "kulType": | 'button'
-        | 'reset'
-        | 'submit';
+    | 'reset'
+    | 'submit';
         /**
           * When set to true, the icon button state will be on.
           * @default false
@@ -3143,8 +3143,8 @@ declare namespace LocalJSX {
           * @default "button"
          */
         "kulType"?: | 'button'
-        | 'reset'
-        | 'submit';
+    | 'reset'
+    | 'submit';
         /**
           * When set to true, the icon button state will be on.
           * @default false

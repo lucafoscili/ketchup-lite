@@ -6,17 +6,17 @@ import { KulEventPayload } from '../../types/GenericTypes';
 /*-------------------------------------------------*/
 export type KulAccordionEvent = 'click' | 'pointerdown' | 'ready' | 'unmount';
 export interface KulAccordionEventPayload
-    extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}
+  extends KulEventPayload<'KulAccordion', KulAccordionEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/
 export enum KulAccordionProps {
-    kulData = 'Actual data of the accordion.',
-    kulRipple = 'When set to true, the pointerdown event will trigger a ripple effect.',
-    kulStyle = 'Sets a custom CSS style for the component.',
+  kulData = 'Actual data of the accordion.',
+  kulRipple = 'When set to true, the pointerdown event will trigger a ripple effect.',
+  kulStyle = 'Sets a custom CSS style for the component.',
 }
 export interface KulAccordionPropsInterface {
-    kulData?: KulDataDataset;
-    kulRipple?: boolean;
-    kulStyle?: string;
+  kulData?: KulDataDataset;
+  kulRipple?: boolean;
+  kulStyle?: string;
 }

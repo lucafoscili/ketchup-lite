@@ -1,54 +1,54 @@
 name: Publish NPM Package (Main)
 
 on:
-    push:
-        branches:
-            - main
-    workflow_dispatch:
-        inputs:
-            bump:
-                description: 'Type of version bump'
-                required: true
-                default: 'patch'
-                type: choice
-                options:
-                    - major
-                    - minor
-                    - patch
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      bump:
+        description: 'Type of version bump'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
 
 jobs:
-    setup:
-        uses: ./.github/workflows/setup.yml
+  setup:
+    uses: ./.github/workflows/setup.yml
+    with:
+      node-version: '18.x'
+      install-immutable: true
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  publish:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
         with:
-            node-version: '18.x'
-            install-immutable: true
-        secrets:
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          fetch-depth: 0 # Required for Lerna to access the full history
 
-    publish:
-        needs: setup
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout Repository
-              uses: actions/checkout@v4
-              with:
-                  fetch-depth: 0 # Required for Lerna to access the full history
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
-            - name: Configure Git
-              run: |
-                  git config user.name "github-actions[bot]"
-                  git config user.email "github-actions[bot]@users.noreply.github.com"
+      - name: Bump Versions with Lerna (Release)
+        run: |
+          npx lerna version ${{ github.event.inputs.bump }} --no-push --yes
+        if: ${{ github.event_name == 'workflow_dispatch' }}
 
-            - name: Bump Versions with Lerna (Release)
-              run: |
-                  npx lerna version ${{ github.event.inputs.bump }} --no-push --yes
-              if: ${{ github.event_name == 'workflow_dispatch' }}
+      - name: Bump Versions with Lerna (Release) - Conventional Commits
+        run: |
+          npx lerna version --conventional-commits --no-push --yes
+        if: ${{ github.event_name == 'push' }}
 
-            - name: Bump Versions with Lerna (Release) - Conventional Commits
-              run: |
-                  npx lerna version --conventional-commits --no-push --yes
-              if: ${{ github.event_name == 'push' }}
-
-            - name: Publish Packages with Lerna
-              run: |
-                  npx lerna publish from-package --yes --npm-tag=latest
+      - name: Publish Packages with Lerna
+        run: |
+          npx lerna publish from-package --yes --npm-tag=latest

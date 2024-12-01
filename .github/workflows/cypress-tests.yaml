@@ -1,75 +1,75 @@
 name: Cypress Tests
 
 on:
-    pull_request:
-        branches:
-            - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-    setup:
-        uses: ./.github/workflows/setup.yml
+  setup:
+    uses: ./.github/workflows/setup.yml
+    with:
+      node-version: '18.x'
+      install-immutable: true
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+  cypress-test:
+    needs: setup
+    runs-on: ubuntu-latest
+    concurrency:
+      group: cypress-${{ github.workflow }}-${{ github.head_ref }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clear Yarn cache
+        run: yarn cache clean
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-            node-version: '18.x'
-            install-immutable: true
-        secrets:
-            NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          node-version: '18.x'
+          cache: 'yarn'
 
-    cypress-test:
-        needs: setup
-        runs-on: ubuntu-latest
-        concurrency:
-            group: cypress-${{ github.workflow }}-${{ github.head_ref }}
-            cancel-in-progress: true
+      - name: Install dependencies
+        run: yarn install --immutable
 
-        steps:
-            - uses: actions/checkout@v4
+      - name: Cache Node Modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-v2
+          restore-keys: |
+            ${{ runner.os }}-modules-
 
-            - name: Clear Yarn cache
-              run: yarn cache clean
+      - name: Cache Cypress Binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}-v2
+          restore-keys: |
+            ${{ runner.os }}-cypress-
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: '18.x'
-                  cache: 'yarn'
+      - name: Start Stencil Development Server
+        run: |
+          yarn workspace ketchup-lite run dev &
+          n=0
+          until [ $n -ge 10 ]
+          do
+            if curl --silent --fail http://localhost:3333; then
+              echo "Server is ready!"
+              break
+            fi
+            n=$((n+1))
+            echo "Waiting for server to be ready..."
+            sleep 5
+          done
+          if [ $n -ge 10 ]; then
+            echo "Server did not become ready in time" >&2
+            exit 1
+          fi
 
-            - name: Install dependencies
-              run: yarn install --immutable
-
-            - name: Cache Node Modules
-              uses: actions/cache@v3
-              with:
-                  path: node_modules
-                  key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-v2
-                  restore-keys: |
-                      ${{ runner.os }}-modules-
-
-            - name: Cache Cypress Binary
-              uses: actions/cache@v3
-              with:
-                  path: ~/.cache/Cypress
-                  key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}-v2
-                  restore-keys: |
-                      ${{ runner.os }}-cypress-
-
-            - name: Start Stencil Development Server
-              run: |
-                  yarn workspace ketchup-lite run dev &
-                  n=0
-                  until [ $n -ge 10 ]
-                  do
-                    if curl --silent --fail http://localhost:3333; then
-                      echo "Server is ready!"
-                      break
-                    fi
-                    n=$((n+1))
-                    echo "Waiting for server to be ready..."
-                    sleep 5
-                  done
-                  if [ $n -ge 10 ]; then
-                    echo "Server did not become ready in time" >&2
-                    exit 1
-                  fi
-
-            - name: Cypress Run
-              run: yarn workspace ketchup-lite run test
+      - name: Cypress Run
+        run: yarn workspace ketchup-lite run test
