@@ -8,7 +8,7 @@ on:
 
 jobs:
   publish-rc:
-    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'version-bump-rc'
+    if: ${{ github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'version-bump-rc' }}
     runs-on: ubuntu-latest
     environment: Development
     steps:
