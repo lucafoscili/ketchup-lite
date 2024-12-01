@@ -35,7 +35,3 @@ runs:
         else
           yarn install
         fi
-
-    - name: Build Packages
-      shell: bash
-      run: yarn build

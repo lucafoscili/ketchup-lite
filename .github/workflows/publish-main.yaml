@@ -41,13 +41,17 @@ jobs:
 
       - name: Bump Versions with Lerna (Release)
         run: |
-          npx lerna version ${{ github.event.inputs.bump }} --no-push --yes --allow-dirty
+          npx lerna version ${{ github.event.inputs.bump }} --no-push --yes
         if: ${{ github.event_name == 'workflow_dispatch' }}
 
       - name: Bump Versions with Lerna (Release) - Conventional Commits
         run: |
           npx lerna version --conventional-commits --no-push --yes
         if: ${{ github.event_name == 'push' }}
+
+      - name: Build Packages
+        shell: bash
+        run: yarn build
 
       - name: Publish Packages with Lerna
         run: |
