@@ -8,6 +8,7 @@ on:
 jobs:
   update-count:
     runs-on: ubuntu-latest
+    environment: Development
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,13 +38,21 @@ jobs:
         run: |
           COUNT=$(ls -l packages/ketchup-lite/src/components | grep '^d' | wc -l)
           echo "{ \"components\": $COUNT }" > count.json
+          echo "components=$COUNT" >> $GITHUB_OUTPUT
+
+      - name: Check for Changes
+        id: git-check
+        run: |
+          git diff --exit-code || echo "changes"
 
       - name: Commit Component Count
+        if: steps.git-check.outputs.changes == 'changes'
         run: |
           git add count.json
           git commit -m "Update component count to ${{ steps.count.outputs.components }} [skip ci]" || echo "No changes to commit"
 
       - name: Push Changes to Branch
+        if: steps.git-check.outputs.changes == 'changes'
         run: git push origin component-count-update
 
       - name: Create or Update Pull Request

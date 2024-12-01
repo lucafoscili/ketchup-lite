@@ -1,11 +1,11 @@
 {
-    "version": "0.0.0",
-    "npmClient": "yarn",
-    "command": {
-        "publish": {
-            "conventionalCommits": true,
-            "createRelease": "github",
-            "message": "chore(release): publish"
-        }
+  "version": "2.0.0",
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "message": "chore(release): publish"
     }
+  }
 }

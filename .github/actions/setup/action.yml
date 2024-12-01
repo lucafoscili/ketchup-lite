@@ -1,0 +1,38 @@
+name: 'Setup and Build'
+description: 'Sets up Node.js, installs dependencies, and builds packages.'
+
+inputs:
+  node-version:
+    description: 'Node.js version'
+    required: true
+    default: '18.x'
+  install-immutable:
+    description: 'Use --immutable flag for yarn install'
+    required: false
+    default: 'false'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Clear Yarn cache
+      run: yarn cache clean
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+        always-auth: true
+      env:
+        NPM_TOKEN: ${{ env.NPM_TOKEN }}
+
+    - name: Install dependencies
+      run: |
+        if [ "${{ inputs.install-immutable }}" == "true" ]; then
+          yarn install --immutable
+        else
+          yarn install
+        fi
+
+    - name: Build Packages
+      run: yarn build

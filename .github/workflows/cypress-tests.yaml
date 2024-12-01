@@ -6,17 +6,9 @@ on:
       - main
 
 jobs:
-  setup:
-    uses: ./.github/workflows/setup.yml
-    with:
-      node-version: '18.x'
-      install-immutable: true
-    secrets:
-      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
   cypress-test:
-    needs: setup
     runs-on: ubuntu-latest
+    environment: Development
     concurrency:
       group: cypress-${{ github.workflow }}-${{ github.head_ref }}
       cancel-in-progress: true
@@ -24,17 +16,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Clear Yarn cache
-        run: yarn cache clean
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup and Build
+        uses: ./.github/actions/setup
         with:
           node-version: '18.x'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install --immutable
+          install-immutable: 'true'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Cache Node Modules
         uses: actions/cache@v3
