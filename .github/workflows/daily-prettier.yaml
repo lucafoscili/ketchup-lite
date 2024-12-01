@@ -19,6 +19,10 @@ jobs:
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Build Packages
+        shell: bash
+        run: yarn build
+
       - name: Format Code with Prettier
         run: yarn format
 
