@@ -43,7 +43,7 @@ jobs:
 
       - name: Bump Versions with Lerna (Prerelease)
         run: |
-          npx lerna version prerelease --preid=rc --no-push --yes
+          npx lerna version prerelease --preid=rc --no-push --yes --allow-dirty
 
       - name: Format Code with Prettier
         run: yarn format
