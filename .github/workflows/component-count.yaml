@@ -8,7 +8,6 @@ on:
 jobs:
   update-count:
     runs-on: ubuntu-latest
-    environment: Development
     steps:
       - uses: actions/checkout@v4
         with:

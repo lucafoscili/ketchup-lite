@@ -15,6 +15,7 @@ runs:
   using: 'composite'
   steps:
     - name: Clear Yarn cache
+      shell: bash
       run: yarn cache clean
 
     - name: Setup Node.js
@@ -27,6 +28,7 @@ runs:
         NPM_TOKEN: ${{ env.NPM_TOKEN }}
 
     - name: Install dependencies
+      shell: bash
       run: |
         if [ "${{ inputs.install-immutable }}" == "true" ]; then
           yarn install --immutable
@@ -35,4 +37,5 @@ runs:
         fi
 
     - name: Build Packages
+      shell: bash
       run: yarn build
