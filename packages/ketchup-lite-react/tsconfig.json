@@ -11,5 +11,6 @@
         "allowSyntheticDefaultImports": true,
         "declarationDir": "./dist/types"
     },
+    "include": ["lib"],
     "exclude": ["node_modules"]
 }
