@@ -18,6 +18,7 @@
         "@types/node": "^22",
         "@types/prismjs": "^1",
         "cypress": "^13",
+        "eslint": "^9",
         "lerna": "^8",
         "prettier": "^3",
         "prettier-eslint": "^16",

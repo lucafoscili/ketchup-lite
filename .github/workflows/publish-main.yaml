@@ -42,9 +42,13 @@ jobs:
             - name: Bump Versions with Lerna (Release)
               run: |
                   npx lerna version ${{ github.event.inputs.bump }} --no-push --yes
+              if: ${{ github.event_name == 'workflow_dispatch' }}
+
+            - name: Bump Versions with Lerna (Release) - Conventional Commits
+              run: |
+                  npx lerna version --conventional-commits --no-push --yes
+              if: ${{ github.event_name == 'push' }}
 
             - name: Publish Packages with Lerna
               run: |
-                  npx lerna publish from-package --yes --npm-tag=dist
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  npx lerna publish from-package --yes --npm-tag=latest

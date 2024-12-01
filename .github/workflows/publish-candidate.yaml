@@ -1,7 +1,9 @@
-# .github/workflows/publish-candidate.yml
-name: Publish Candidate - Version Bump and PR Creation
+name: Publish NPM Package (Candidate)
 
 on:
+    pull_request:
+        branches:
+            - candidate
     push:
         branches:
             - candidate
@@ -15,49 +17,78 @@ jobs:
         secrets:
             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-    version-and-format:
+    version_bump_and_component_update:
+        if: ${{ github.event_name == 'pull_request' && github.actor != 'github-actions[bot]' }}
         needs: setup
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout Repository
+            - name: Checkout Feature Branch
               uses: actions/checkout@v4
               with:
-                  fetch-depth: 0 # Required for accessing full history
+                  ref: ${{ github.head_ref }}
+                  fetch-depth: 0 # Required for pushing changes back to the branch
 
             - name: Configure Git
               run: |
                   git config user.name "github-actions[bot]"
                   git config user.email "github-actions[bot]@users.noreply.github.com"
 
+            - name: Install Dependencies
+              run: yarn install --immutable
+
             - name: Bump Versions with Lerna (Prerelease)
               run: |
                   npx lerna version prerelease --preid=rc --no-push --yes
 
-            - name: Format Code with Prettier
-              run: yarn format --write "packages/*/src/**/*.{js,jsx,ts,tsx,json,md,css,scss}"
+            - name: Format and Lint Code
+              run: |
+                  yarn format --write "packages/*/src/**/*.{scss,ts,tsx,json}"
+                  yarn lint --fix "packages/*/src/**/*.{scss,ts,tsx,json}"
 
-            - name: Lint Code
-              run: yarn lint --write "packages/*/src/**/*.{scss,css,js,jsx,ts,tsx,json,md}"
+            - name: Count Components
+              run: |
+                  COUNT=$(ls -l packages/ketchup-lite/src/components | grep '^d' | wc -l)
+                  echo "{ \"components\": $COUNT }" > count.json
 
-            - name: Commit Version Bumps and Formatting
+            - name: Commit Changes
               run: |
                   git add .
-                  git commit -m "Bump versions to pre-release and format code with Prettier [version-bump]" || echo "No changes to commit"
+                  git commit -m "chore: bump versions, format code, and update component count [skip ci]" || echo "No changes to commit"
 
-            - name: Push Changes to Candidate Branch
+            - name: Push Changes to Feature Branch
               uses: ad-m/github-push-action@v0.6.0
               with:
                   github_token: ${{ secrets.GITHUB_TOKEN }}
-                  branch: candidate
+                  branch: ${{ github.head_ref }}
                   force: false
 
-            - name: Create Pull Request
-              uses: peter-evans/create-pull-request@v5
+    publish_candidate:
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/candidate' }}
+        needs: setup
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
               with:
-                  commit-message: 'Bump versions to pre-release and format code with Prettier [version-bump]'
-                  branch: 'version-bump-${{ github.run_id }}'
-                  title: 'Bump Versions and Format Code for Candidate Release'
-                  body: |
-                      This PR bumps the versions of all packages to a pre-release and applies formatting changes using Prettier to prepare for a candidate release.
-                  base: 'candidate'
-                  labels: 'automated PR'
+                  fetch-depth: 0
+
+            - name: Configure Git
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Install Dependencies
+              run: yarn install --immutable
+
+            - name: Build Packages
+              run: yarn build
+
+            - name: Publish Packages with Lerna
+              run: |
+                  npx lerna publish from-package --yes --dist-tag rc
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Push Tags
+              run: |
+                  git push origin candidate --tags
