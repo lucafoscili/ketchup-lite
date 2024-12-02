@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-12-02T00:30:58",
+  "timestamp": "2024-12-02T08:49:59",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.3",
@@ -2394,7 +2394,7 @@
         {
           "name": "getProps",
           "returns": {
-            "type": "Promise<GenericObject<unknown>>",
+            "type": "Promise<GenericObject>",
             "docs": "List of props as object, each key will be a prop."
           },
           "complexType": {
@@ -2412,12 +2412,11 @@
                 "id": "global::Promise"
               },
               "GenericObject": {
-                "location": "import",
-                "path": "../../components",
-                "id": "src/components.d.ts::GenericObject"
+                "location": "global",
+                "id": "global::GenericObject"
               }
             },
-            "return": "Promise<GenericObject<unknown>>"
+            "return": "Promise<GenericObject>"
           },
           "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
           "parameters": [
@@ -17195,11 +17194,6 @@
       "declaration": "export interface KulCanvasEventPayload\n  extends KulEventPayload<'KulCanvas', KulCanvasEvent> {\n  points: Array<{ x: number; y: number }>;\n}",
       "docstring": "",
       "path": "src/components/kul-canvas/kul-canvas-declarations.ts"
-    },
-    "src/components.d.ts::GenericObject": {
-      "declaration": "any",
-      "docstring": "",
-      "path": "src/components.d.ts"
     },
     "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
       "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
