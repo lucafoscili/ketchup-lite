@@ -31,22 +31,6 @@ jobs:
         shell: bash
         run: yarn build
 
-      - name: Cache Node Modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}-v2
-          restore-keys: |
-            ${{ runner.os }}-modules-
-
-      - name: Cache Cypress Binary
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/Cypress
-          key: ${{ runner.os }}-cypress-${{ hashFiles('**/yarn.lock') }}-v2
-          restore-keys: |
-            ${{ runner.os }}-cypress-
-
       - name: Start Stencil Development Server
         run: |
           yarn workspace ketchup-lite run dev &
@@ -67,4 +51,4 @@ jobs:
           fi
 
       - name: Cypress Run
-        run: yarn workspace ketchup-lite run test
+        run: yarn test
