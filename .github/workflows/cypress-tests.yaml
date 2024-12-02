@@ -16,13 +16,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup and Build
-        uses: ./.github/actions/setup
+      - name: Clear Yarn cache
+        run: yarn cache clean
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
-          install-immutable: 'true'
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          node-version: '18.16.0'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable
 
       - name: Build Packages
         shell: bash
