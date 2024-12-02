@@ -31,32 +31,33 @@ describe('Data', () => {
   });
 
   it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
-    cy.get('@kulComponentShowcase');
-    cy.get(`${articleTag}#simple`).then(($articles) => {
-      Cypress._.each($articles, ($article) => {
-        cy.wrap($article)
-          .should('have.prop', 'kulData')
-          .then(($el) => {
-            const kulData: KulArticleDataset = $el.prop('kulData');
-            const expectedSectionCount =
-              kulData.nodes[0]?.children?.length || 0;
-            if (expectedSectionCount > 0) {
-              cy.wrap($article)
-                .shadow()
-                .find('section')
-                .then(($sections) => {
-                  expect($sections.length).to.equal(expectedSectionCount);
-                  $sections.each((index, section) => {
-                    const h2Content = Cypress.$(section).find('h2').text();
-                    const expectedValue =
-                      kulData.nodes[0]?.children?.[index].value || '';
-                    expect(h2Content).to.equal(expectedValue);
-                  });
+    cy.get('@kulComponentShowcase')
+      .find(`${articleTag}#simple`)
+      .each(($article) => {
+        const articleElement = $article[0] as HTMLKulArticleElement;
+        const kulData: KulArticleDataset = articleElement.kulData;
+        const expectedSectionCount = kulData.nodes[0]?.children?.length || 0;
+
+        if (expectedSectionCount > 0) {
+          return cy
+            .wrap($article)
+            .shadow()
+            .find('section')
+            .should('have.length', expectedSectionCount)
+            .each(($section, index) => {
+              const expectedValue =
+                kulData.nodes[0]?.children?.[index].value || '';
+
+              return cy
+                .wrap($section)
+                .find('h2')
+                .invoke('text')
+                .then((h2Text) => {
+                  expect(h2Text).to.equal(expectedValue);
                 });
-            }
-          });
+            });
+        }
       });
-    });
   });
 
   it('Should check for the presence of shapes.', () => {
