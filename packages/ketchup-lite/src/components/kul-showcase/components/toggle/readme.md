@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-toggle](../../../kul-toggle)
 - [kul-article](../../../kul-article)
+- [kul-toggle](../../../kul-toggle)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-toggle --> kul-toggle
   kul-showcase-toggle --> kul-article
+  kul-showcase-toggle --> kul-toggle
   style kul-showcase-toggle fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

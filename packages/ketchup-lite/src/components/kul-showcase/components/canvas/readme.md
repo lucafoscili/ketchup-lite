@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-canvas](../../../kul-canvas)
 - [kul-article](../../../kul-article)
+- [kul-canvas](../../../kul-canvas)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-canvas --> kul-canvas
   kul-showcase-canvas --> kul-article
+  kul-showcase-canvas --> kul-canvas
   kul-canvas --> kul-image
   kul-image --> kul-spinner
   kul-image --> kul-badge

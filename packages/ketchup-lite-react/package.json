@@ -1,35 +1,38 @@
 {
-    "name": "ketchup-lite-react",
-    "version": "2.0.0",
-    "main": "dist/components.js",
-    "module": "dist/components.js",
-    "typings": "dist/components.d.ts",
-    "keywords": [
-        "letchup lite",
-        "react",
-        "pwa",
-        "custom elements",
-        "components"
-    ],
-    "files": [
-        "dist/"
-    ],
-    "scripts": {
-        "build": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && tsc"
-    },
-    "dependencies": {
-        "@stencil/react-output-target": "^0",
-        "ketchup-lite": "2.0.0",
-        "react": "^18",
-        "react-dom": "^18"
-    },
-    "devDependencies": {
-        "@types/react": "^18",
-        "@types/react-dom": "^18"
-    },
-    "description": "Ketchup Lite React Components library",
-    "license": "Apache-2.0",
-    "installConfig": {
-        "hoistingLimits": "workspaces"
-    }
+  "name": "ketchup-lite-react",
+  "version": "2.0.1-rc.8",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "keywords": [
+    "components",
+    "custom elements",
+    "ketchup lite",
+    "pwa",
+    "react",
+    "react components"
+  ],
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "yarn clean && tsc",
+    "clean": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\" && node -e \"require('fs').rmSync('.components.ts', { recursive: true, force: true })\""
+  },
+  "dependencies": {
+    "@stencil/core": "^4",
+    "@stencil/react-output-target": "^0",
+    "ketchup-lite": "^2.0.1-rc.8",
+    "react": "^18",
+    "react-dom": "^18"
+  },
+  "devDependencies": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
+  },
+  "description": "Ketchup Lite - React Components library",
+  "license": "Apache-2.0",
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  }
 }

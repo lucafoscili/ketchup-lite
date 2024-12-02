@@ -1,20 +1,20 @@
 export interface KulLLMChoice {
-    index: number;
-    message: KulLLMChoiceMessage;
-    finish_reason: string;
+  index: number;
+  message: KulLLMChoiceMessage;
+  finish_reason: string;
 }
 export interface KulLLMChoiceMessage {
-    role: KulLLMRole;
-    content: string;
-    tool_calls?: unknown[];
+  role: KulLLMRole;
+  content: string;
+  tool_calls?: unknown[];
 }
 
 export interface KulLLMCompletionObject {
-    id: string;
-    object: string;
-    created: number;
-    model: string;
-    choices: KulLLMChoice[];
+  id: string;
+  object: string;
+  created: number;
+  model: string;
+  choices: KulLLMChoice[];
 }
 
 /**
@@ -41,34 +41,34 @@ export interface KulLLMCompletionObject {
  * @property {Array<{role: 'system' | 'user' | 'assistant', content: string}>} [messages] - An array of message objects, each containing a `role` and `content`.
  */
 export interface KulLLMRequest {
-    model?: string;
-    prompt?: string;
-    suffix?: string;
-    max_tokens?: number;
-    temperature?: number;
-    top_p?: number;
-    n?: number;
-    stream?: boolean;
-    logprobs?: number | number[];
-    echo?: boolean;
-    seed?: number;
-    stop?: string | string[];
-    presence_penalty?: number;
-    frequency_penalty?: number;
-    best_of?: number;
-    logit_bias?: Record<string, number>;
-    user?: string;
-    system?: string;
-    messages?: Array<{
-        role: KulLLMRole;
-        content: string;
-    }>;
+  model?: string;
+  prompt?: string;
+  suffix?: string;
+  max_tokens?: number;
+  temperature?: number;
+  top_p?: number;
+  n?: number;
+  stream?: boolean;
+  logprobs?: number | number[];
+  echo?: boolean;
+  seed?: number;
+  stop?: string | string[];
+  presence_penalty?: number;
+  frequency_penalty?: number;
+  best_of?: number;
+  logit_bias?: Record<string, number>;
+  user?: string;
+  system?: string;
+  messages?: Array<{
+    role: KulLLMRole;
+    content: string;
+  }>;
 }
 
 export type KulLLMRole = 'system' | 'user' | 'assistant';
 
 export interface KulLLMUsage {
-    prompt_tokens: number;
-    completion_tokens: number;
-    total_tokens: number;
+  prompt_tokens: number;
+  completion_tokens: number;
+  total_tokens: number;
 }

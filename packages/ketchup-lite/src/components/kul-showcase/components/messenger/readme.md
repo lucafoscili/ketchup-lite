@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-messenger](../../../kul-messenger)
 - [kul-article](../../../kul-article)
+- [kul-messenger](../../../kul-messenger)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-messenger --> kul-messenger
   kul-showcase-messenger --> kul-article
+  kul-showcase-messenger --> kul-messenger
   kul-messenger --> kul-button
   kul-messenger --> kul-tabbar
   kul-messenger --> kul-chat

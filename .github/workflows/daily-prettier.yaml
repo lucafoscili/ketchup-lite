@@ -1,0 +1,58 @@
+name: Daily Prettier Linting
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs every day at 00:00 UTC
+  workflow_dispatch: # Allows manual triggering
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    environment: Development
+
+    steps:
+      - name: Setup and Build
+        uses: ./.github/actions/setup
+        with:
+          node-version: '18.x'
+          install-immutable: 'true'
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Build Packages
+        shell: bash
+        run: yarn build
+
+      - name: Format Code with Prettier
+        run: yarn format
+
+      - name: Check for Changes
+        id: git-check
+        run: |
+          git diff
+          echo "changed=$(git diff --name-only | wc -l)" >> $GITHUB_OUTPUT
+
+      - name: Commit and Push Changes
+        if: steps.git-check.outputs.changed != '0'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+          git add .
+          git commit -m "chore: format code with Prettier [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:prettier-fix-${{ github.run_id }}
+
+      - name: Create Pull Request
+        if: steps.git-check.outputs.changed != '0'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore: format code with Prettier [skip ci]'
+          title: 'chore: format code with Prettier'
+          body: |
+            This PR applies automatic formatting changes using Prettier to maintain code consistency.
+          base: candidate
+          branch: prettier-fix-${{ github.run_id }}
+          labels: formatting

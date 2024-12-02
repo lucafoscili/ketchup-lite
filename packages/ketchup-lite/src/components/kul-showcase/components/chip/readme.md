@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-chip](../../../kul-chip)
 - [kul-article](../../../kul-article)
+- [kul-chip](../../../kul-chip)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-chip --> kul-chip
   kul-showcase-chip --> kul-article
+  kul-showcase-chip --> kul-chip
   style kul-showcase-chip fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

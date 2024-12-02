@@ -1,46 +1,49 @@
 {
-    "name": "ketchup-lite",
-    "version": "2.0.0",
-    "keywords": [
-        "ketchup lite",
-        "web component",
-        "library",
-        "Stencil",
-        "pwa",
-        "custom elements",
-        "components"
-    ],
-    "description": "Web components library",
-    "license": "Apache-2.0",
-    "main": "./dist/index.cjs.js",
-    "module": "dist/index.js",
-    "es2015": "dist/esm/index.mjs",
-    "es2017": "dist/esm/index.mjs",
-    "unpkg": "dist/ionic.js",
-    "typings": "dist/types/components.d.ts",
-    "collection": "dist/collection/collection-manifest.json",
-    "dependencies": {
-        "dayjs": "^1",
-        "echarts": "^5",
-        "prismjs": "^1"
-    },
-    "devDependencies": {
-        "@stencil/sass": "^3"
-    },
-    "files": [
-        "dist/"
-    ],
-    "scripts": {
-        "build": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --docs",
-        "dev": "node -e \"require('fs').rmSync('./target', { recursive: true, force: true })\" && npx stencil build --dev --watch --serve",
-        "test": "npx cypress run",
-        "test:open": "npx cypress open"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/lucafoscili/ketchup-lite.git"
-    },
-    "installConfig": {
-        "hoistingLimits": "workspaces"
-    }
+  "name": "ketchup-lite",
+  "version": "2.0.1-rc.8",
+  "description": "Ketchup Lite - Web components library",
+  "main": "./dist/index.cjs.js",
+  "module": "dist/index.js",
+  "es2015": "dist/esm/index.mjs",
+  "es2017": "dist/esm/index.mjs",
+  "unpkg": "dist/ketchup-lite/ketchup-lite.esm.js",
+  "typings": "dist/types/components.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "dependencies": {
+    "dayjs": "^1",
+    "echarts": "^5",
+    "prismjs": "^1"
+  },
+  "devDependencies": {
+    "@stencil/sass": "^3"
+  },
+  "files": [
+    "dist/"
+  ],
+  "scripts": {
+    "build": "yarn clean && npx stencil build --docs && yarn hydrate",
+    "clean": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\"",
+    "dev": "yarn clean  && npx stencil build --dev --watch --serve",
+    "hydrate": "node ./src/scripts/hydrate.js",
+    "test": "npx cypress run",
+    "test:open": "npx cypress open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lucafoscili/ketchup-lite.git"
+  },
+  "installConfig": {
+    "hoistingLimits": "workspaces"
+  },
+  "keywords": [
+    "components",
+    "custom elements",
+    "ketchup lite",
+    "library",
+    "pwa",
+    "Stencil",
+    "web components"
+  ],
+  "license": "Apache-2.0"
 }

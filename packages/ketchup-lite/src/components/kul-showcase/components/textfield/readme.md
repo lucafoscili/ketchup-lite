@@ -9,27 +9,21 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
-| `"grid"`           |             |
-| `"grid-container"` |             |
-| `"grid-title"`     |             |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [kul-textfield](../../../kul-textfield)
 - [kul-article](../../../kul-article)
+- [kul-textfield](../../../kul-textfield)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-textfield --> kul-textfield
   kul-showcase-textfield --> kul-article
+  kul-showcase-textfield --> kul-textfield
   style kul-showcase-textfield fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
