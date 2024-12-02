@@ -32,23 +32,30 @@ describe('Data', () => {
 
   it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
     cy.get('@kulComponentShowcase');
-    cy.get(`${articleTag}#simple`).each(($article) => {
-      const kulData: KulArticleDataset = $article.prop('kulData');
-      const expectedSectionCount = kulData.nodes[0]?.children?.length || 0;
-      if (expectedSectionCount > 0) {
+    cy.get(`${articleTag}#simple`).then(($articles) => {
+      Cypress._.each($articles, ($article) => {
         cy.wrap($article)
-          .shadow()
-          .find('section')
-          .then(($sections) => {
-            expect($sections.length).to.equal(expectedSectionCount);
-            $sections.each((index, section) => {
-              const h2Content = Cypress.$(section).find('h2').text();
-              const expectedValue =
-                kulData.nodes[0]?.children?.[index].value || 0;
-              expect(h2Content).to.equal(expectedValue);
-            });
+          .should('have.prop', 'kulData')
+          .then(($el) => {
+            const kulData: KulArticleDataset = $el.prop('kulData');
+            const expectedSectionCount =
+              kulData.nodes[0]?.children?.length || 0;
+            if (expectedSectionCount > 0) {
+              cy.wrap($article)
+                .shadow()
+                .find('section')
+                .then(($sections) => {
+                  expect($sections.length).to.equal(expectedSectionCount);
+                  $sections.each((index, section) => {
+                    const h2Content = Cypress.$(section).find('h2').text();
+                    const expectedValue =
+                      kulData.nodes[0]?.children?.[index].value || '';
+                    expect(h2Content).to.equal(expectedValue);
+                  });
+                });
+            }
           });
-      }
+      });
     });
   });
 
