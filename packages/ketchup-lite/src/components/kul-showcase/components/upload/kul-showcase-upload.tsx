@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { UPLOAD_DOC, UPLOAD_EXAMPLES } from './kul-showcase-upload-data';
 import { UploadExample } from './kul-showcase-upload-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseUpload {
    */
   @Element() rootElement: HTMLKulShowcaseUploadElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = UPLOAD_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulUploadElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseUpload {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in UPLOAD_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(UPLOAD_EXAMPLES, key)) {
-        const props: UploadExample = UPLOAD_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: UploadExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

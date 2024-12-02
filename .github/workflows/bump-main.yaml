@@ -28,9 +28,9 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
 
-      - name: Bump Versions with Lerna (Release) - Conventional Commits
+      - name: Bump Versions with Lerna (Release)
         run: |
-          npx lerna version --conventional-commits --no-push --yes
+          npx lerna version --conventional-graduate --no-push --yes
 
       - name: Build Packages
         run: yarn build

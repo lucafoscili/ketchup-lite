@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { CHAT_DOC, CHAT_EXAMPLES } from './kul-showcase-chat-data';
 import { ChatExample } from './kul-showcase-chat-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseChat {
    */
   @Element() rootElement: HTMLKulShowcaseChatElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = CHAT_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulChatElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseChat {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in CHAT_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(CHAT_EXAMPLES, key)) {
-        const props: ChatExample = CHAT_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: ChatExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

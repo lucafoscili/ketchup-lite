@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { HEADER_DOC, HEADER_EXAMPLES } from './kul-showcase-header-data';
 import { HeaderExample } from './kul-showcase-header-declarations';
@@ -15,12 +15,19 @@ export class KulShowcaseHeader {
    */
   @Element() rootElement: HTMLKulShowcaseHeaderElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = HEADER_EXAMPLES;
+  //#endregion
+
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in HEADER_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(HEADER_EXAMPLES, key)) {
-        const props: HeaderExample = HEADER_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: HeaderExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

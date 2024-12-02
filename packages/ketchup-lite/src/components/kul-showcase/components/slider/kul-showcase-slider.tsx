@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { SLIDER_DOC, SLIDER_EXAMPLES } from './kul-showcase-slider-data';
 import { SliderExample } from './kul-showcase-slider-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseSlider {
    */
   @Element() rootElement: HTMLKulShowcaseSliderElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = SLIDER_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulSliderElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseSlider {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in SLIDER_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(SLIDER_EXAMPLES, key)) {
-        const props: SliderExample = SLIDER_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: SliderExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

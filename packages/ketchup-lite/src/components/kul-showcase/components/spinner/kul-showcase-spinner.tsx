@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { SPINNER_DOC, SPINNER_EXAMPLES } from './kul-showcase-spinner-data';
 import {
@@ -20,6 +20,13 @@ export class KulShowcaseSpinner {
    */
   @Element() rootElement: HTMLKulShowcaseSpinnerElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = SPINNER_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #interval: NodeJS.Timeout;
   #dynamicExamples: HTMLKulSpinnerElement[] = [];
@@ -29,18 +36,15 @@ export class KulShowcaseSpinner {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    // Iterate over each example category in SPINNER_EXAMPLES
-    for (const k1 in SPINNER_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(SPINNER_EXAMPLES, k1)) {
-        const type: SpinnerBranch = SPINNER_EXAMPLES[k1];
+    for (const k1 in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
+        const type: SpinnerBranch = this.examples[k1];
 
-        // Iterate over each spinner type
         for (const k2 in type) {
           if (Object.prototype.hasOwnProperty.call(type, k2)) {
             const layout: SpinnerLeaf = type[k2];
             const layoutWrapper: VNode[] = [];
 
-            // Iterate over each layout number
             for (const k3 in layout) {
               if (Object.prototype.hasOwnProperty.call(layout, k3)) {
                 const props = layout[k3];

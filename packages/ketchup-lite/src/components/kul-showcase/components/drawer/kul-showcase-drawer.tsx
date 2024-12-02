@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { DRAWER_DOC, DRAWER_EXAMPLES } from './kul-showcase-drawer-data';
 import { DrawerExample } from './kul-showcase-drawer-declarations';
@@ -15,12 +15,19 @@ export class KulShowcaseDrawer {
    */
   @Element() rootElement: HTMLKulShowcaseDrawerElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = DRAWER_EXAMPLES;
+  //#endregion
+
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in DRAWER_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(DRAWER_EXAMPLES, key)) {
-        const props: DrawerExample = DRAWER_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: DrawerExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

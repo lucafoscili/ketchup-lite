@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { IMAGE_DOC, IMAGE_EXAMPLES } from './kul-showcase-image-data';
 import { ImageExample } from './kul-showcase-image-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseImage {
    */
   @Element() rootElement: HTMLKulShowcaseImageElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = IMAGE_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulImageElement[] = [];
@@ -26,10 +33,9 @@ export class KulShowcaseImage {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = IMAGE_EXAMPLES();
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: ImageExample = examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: ImageExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { CHIP_DOC, CHIP_EXAMPLES } from './kul-showcase-chip-data';
 import { ChipExample } from './kul-showcase-chip-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseChip {
    */
   @Element() rootElement: HTMLKulShowcaseChipElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = CHIP_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExamples: HTMLKulChipElement[] = [];
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
@@ -26,9 +33,9 @@ export class KulShowcaseChip {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in CHIP_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(CHIP_EXAMPLES, key)) {
-        const props: ChipExample = CHIP_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: ChipExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

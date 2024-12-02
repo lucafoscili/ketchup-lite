@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { TREE_DOC, TREE_EXAMPLES } from './kul-showcase-tree-data';
 import { TreeExample } from './kul-showcase-tree-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseTree {
    */
   @Element() rootElement: HTMLKulShowcaseTreeElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = TREE_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulTreeElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseTree {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in TREE_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(TREE_EXAMPLES, key)) {
-        const props: TreeExample = TREE_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: TreeExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

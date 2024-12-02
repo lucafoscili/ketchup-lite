@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { LAZY_DOC, LAZY_EXAMPLES } from './kul-showcase-lazy-data';
 import { LazyExample } from './kul-showcase-lazy-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseLazy {
    */
   @Element() rootElement: HTMLKulShowcaseLazyElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = LAZY_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulLazyElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseLazy {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in LAZY_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(LAZY_EXAMPLES, key)) {
-        const props: LazyExample = LAZY_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: LazyExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

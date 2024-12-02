@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { CODE_DOC, CODE_EXAMPLES } from './kul-showcase-code-data';
 import { CodeExample } from './kul-showcase-code-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseCode {
    */
   @Element() rootElement: HTMLKulShowcaseCodeElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = CODE_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulCodeElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseCode {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in CODE_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(CODE_EXAMPLES, key)) {
-        const props: CodeExample = CODE_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: CodeExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

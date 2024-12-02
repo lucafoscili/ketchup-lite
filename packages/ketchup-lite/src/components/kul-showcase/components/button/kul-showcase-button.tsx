@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { BUTTON_DOC, BUTTON_EXAMPLES } from './kul-showcase-button-data';
 import { ButtonExample } from './kul-showcase-button-declarations';
@@ -18,6 +18,13 @@ export class KulShowcaseButton {
    */
   @Element() rootElement: HTMLKulShowcaseButtonElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = BUTTON_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulButtonElement[] = [];
@@ -27,9 +34,9 @@ export class KulShowcaseButton {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const k1 in BUTTON_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(BUTTON_EXAMPLES, k1)) {
-        const category: ButtonExample = BUTTON_EXAMPLES[k1];
+    for (const k1 in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
+        const category: ButtonExample = this.examples[k1];
         const group: VNode[] = [];
 
         for (const k2 in category) {
