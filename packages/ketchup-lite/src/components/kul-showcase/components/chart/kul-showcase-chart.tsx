@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { CHART_DOC, CHART_EXAMPLES } from './kul-showcase-chart-data';
 import { ChartExample } from './kul-showcase-chart-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseChart {
    */
   @Element() rootElement: HTMLKulShowcaseChartElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = CHART_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulChartElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseChart {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in CHART_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(CHART_EXAMPLES, key)) {
-        const props: ChartExample = CHART_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: ChartExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

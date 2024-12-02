@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { COMPARE_DOC, COMPARE_EXAMPLES } from './kul-showcase-compare-data';
 import { CompareExample } from './kul-showcase-compare-declarations';
@@ -16,6 +16,13 @@ export class KulShowcaseCompare {
    */
   @Element() rootElement: HTMLKulShowcaseCompareElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = COMPARE_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExamples: HTMLKulCompareElement[] = [];
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
@@ -25,10 +32,9 @@ export class KulShowcaseCompare {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = COMPARE_EXAMPLES();
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: CompareExample = examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: CompareExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

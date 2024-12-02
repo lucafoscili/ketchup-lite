@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import {
   ACCORDION_DOC,
@@ -19,6 +19,13 @@ export class KulShowcaseAccordion {
    */
   @Element() rootElement: HTMLKulShowcaseAccordionElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = ACCORDION_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExamples: HTMLKulAccordionElement[] = [];
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
@@ -28,10 +35,9 @@ export class KulShowcaseAccordion {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = ACCORDION_EXAMPLES();
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: AccordionExample = examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: AccordionExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { CANVAS_DOC, CANVAS_EXAMPLES } from './kul-showcase-canvas-data';
 import { CanvasExample } from './kul-showcase-canvas-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseCanvas {
    */
   @Element() rootElement: HTMLKulShowcaseCanvasElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = CANVAS_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulCanvasElement[] = [];
@@ -26,10 +33,9 @@ export class KulShowcaseCanvas {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = CANVAS_EXAMPLES();
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: CanvasExample = examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: CanvasExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import {
   MESSENGER_DOC,
@@ -20,6 +20,13 @@ export class KulShowcaseMessenger {
    */
   @Element() rootElement: HTMLKulShowcaseMessengerElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = MESSENGER_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulMessengerElement[] = [];
@@ -29,10 +36,9 @@ export class KulShowcaseMessenger {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = MESSENGER_EXAMPLES();
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: MessengerExample = examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: MessengerExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

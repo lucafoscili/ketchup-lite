@@ -1,10 +1,10 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
-import { ARTICLE_DOC, ARTICLE_EXAMPLES } from './kul-showcase-article-data';
-import { ArticleExample } from './kul-showcase-article-declarations';
 import { KulDataCyAttributes } from '../../../../types/GenericTypes';
 import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
 import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { ARTICLE_DOC, ARTICLE_EXAMPLES } from './kul-showcase-article-data';
+import { ArticleExample } from './kul-showcase-article-declarations';
 
 @Component({
   tag: 'kul-showcase-article',
@@ -17,8 +17,14 @@ export class KulShowcaseArticle {
    */
   @Element() rootElement: HTMLKulShowcaseArticleElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = ARTICLE_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
-  #examples = ARTICLE_EXAMPLES();
   #dynamicExamples: HTMLKulArticleElement[] = [];
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #interval: NodeJS.Timeout;
@@ -28,9 +34,9 @@ export class KulShowcaseArticle {
   #prepExamples() {
     const elements: VNode[] = [];
 
-    for (const key in this.#examples) {
-      if (Object.prototype.hasOwnProperty.call(this.#examples, key)) {
-        const props: ArticleExample = this.#examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: ArticleExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

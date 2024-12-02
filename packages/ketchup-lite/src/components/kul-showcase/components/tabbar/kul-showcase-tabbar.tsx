@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { TABBAR_DOC, TABBAR_EXAMPLES } from './kul-showcase-tabbar-data';
 import { TabbarExample } from './kul-showcase-tabbar-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseTabbar {
    */
   @Element() rootElement: HTMLKulShowcaseTabbarElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = TABBAR_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExamples: HTMLKulTabbarElement[] = [];
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
@@ -26,9 +33,9 @@ export class KulShowcaseTabbar {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in TABBAR_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(TABBAR_EXAMPLES, key)) {
-        const props: TabbarExample = TABBAR_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: TabbarExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

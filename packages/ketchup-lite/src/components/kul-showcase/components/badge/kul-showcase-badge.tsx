@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { BADGE_DOC, BADGE_EXAMPLES } from './kul-showcase-badge-data';
 import { BadgeExample } from './kul-showcase-badge-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseBadge {
    */
   @Element() rootElement: HTMLKulShowcaseBadgeElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = BADGE_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulBadgeElement[] = [];
@@ -26,9 +33,9 @@ export class KulShowcaseBadge {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in BADGE_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(BADGE_EXAMPLES, key)) {
-        const props: BadgeExample = BADGE_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: BadgeExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

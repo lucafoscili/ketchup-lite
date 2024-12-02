@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import {
   PROGRESSBAR_DOC,
@@ -20,6 +20,13 @@ export class KulShowcaseProgressbar {
    */
   @Element() rootElement: HTMLKulShowcaseProgressbarElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = PROGRESSBAR_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulProgressbarElement[] = [];
@@ -29,9 +36,9 @@ export class KulShowcaseProgressbar {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in PROGRESSBAR_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(PROGRESSBAR_EXAMPLES, key)) {
-        const props: ProgressbarExample = PROGRESSBAR_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: ProgressbarExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { CAROUSEL_DOC, CAROUSEL_EXAMPLES } from './kul-showcase-carousel-data';
 import { CarouselExample } from './kul-showcase-carousel-declarations';
@@ -16,6 +16,13 @@ export class KulShowcaseCarousel {
    */
   @Element() rootElement: HTMLKulShowcaseCarouselElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = CAROUSEL_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulCarouselElement[] = [];
@@ -25,10 +32,9 @@ export class KulShowcaseCarousel {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = CAROUSEL_EXAMPLES();
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: CarouselExample = examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: CarouselExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

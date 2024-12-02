@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import {
   PHOTOFRAME_DOC,
@@ -20,6 +20,13 @@ export class KulShowcasePhotoframe {
    */
   @Element() rootElement: HTMLKulShowcasePhotoframeElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = PHOTOFRAME_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulPhotoframeElement[] = [];
@@ -29,10 +36,9 @@ export class KulShowcasePhotoframe {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = PHOTOFRAME_EXAMPLES();
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: PhotoframeExample = examples[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: PhotoframeExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { CARD_DOC, CARD_EXAMPLES } from './kul-showcase-card-data';
 import { CardExample } from './kul-showcase-card-declarations';
@@ -18,6 +18,13 @@ export class KulShowcaseCard {
    */
   @Element() rootElement: HTMLKulShowcaseCardElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = CARD_EXAMPLES();
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulCardElement[] = [];
@@ -27,10 +34,9 @@ export class KulShowcaseCard {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = CARD_EXAMPLES();
-    for (const k1 in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, k1)) {
-        const layout: CardExample = examples[k1];
+    for (const k1 in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
+        const layout: CardExample = this.examples[k1];
         const layoutWrapper: VNode[] = [];
 
         for (const k2 in layout) {

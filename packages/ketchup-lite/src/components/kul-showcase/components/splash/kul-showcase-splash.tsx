@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { SPLASH_DOC, SPLASH_EXAMPLES } from './kul-showcase-splash-data';
 import { SplashExample } from './kul-showcase-splash-declarations';
@@ -15,12 +15,19 @@ export class KulShowcaseSplash {
    */
   @Element() rootElement: HTMLKulShowcaseSplashElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = SPLASH_EXAMPLES;
+  //#endregion
+
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in SPLASH_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(SPLASH_EXAMPLES, key)) {
-        const props: SplashExample = SPLASH_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: SplashExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

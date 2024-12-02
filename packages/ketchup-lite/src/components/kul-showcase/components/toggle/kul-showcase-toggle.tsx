@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import { TOGGLE_DOC, TOGGLE_EXAMPLES } from './kul-showcase-toggle-data';
 import { ToggleExample } from './kul-showcase-toggle-declarations';
@@ -17,6 +17,13 @@ export class KulShowcaseToggle {
    */
   @Element() rootElement: HTMLKulShowcaseToggleElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = TOGGLE_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExamples: HTMLKulToggleElement[] = [];
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
@@ -26,9 +33,9 @@ export class KulShowcaseToggle {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in TOGGLE_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(TOGGLE_EXAMPLES, key)) {
-        const props: ToggleExample = TOGGLE_EXAMPLES[key];
+    for (const key in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
+        const props: ToggleExample = this.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -1,4 +1,4 @@
-import { Component, Element, Fragment, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
 
 import {
   TEXTFIELD_DOC,
@@ -21,6 +21,13 @@ export class KulShowcaseTextfield {
    */
   @Element() rootElement: HTMLKulShowcaseTextfieldElement;
 
+  //#region States
+  /**
+   * Data of the examples.
+   */
+  @State() examples = TEXTFIELD_EXAMPLES;
+  //#endregion
+
   //#region Internal variables
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #dynamicExamples: HTMLKulTextfieldElement[] = [];
@@ -30,9 +37,9 @@ export class KulShowcaseTextfield {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const k1 in TEXTFIELD_EXAMPLES) {
-      if (Object.prototype.hasOwnProperty.call(TEXTFIELD_EXAMPLES, k1)) {
-        const category: TextfieldExample = TEXTFIELD_EXAMPLES[k1];
+    for (const k1 in this.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
+        const category: TextfieldExample = this.examples[k1];
         const group: VNode[] = [];
 
         for (const k2 in category) {
