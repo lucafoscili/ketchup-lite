@@ -70,7 +70,7 @@ Used to retrieve component's props values.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<GenericObject>`
 
 List of props as object, each key will be a prop.
 
