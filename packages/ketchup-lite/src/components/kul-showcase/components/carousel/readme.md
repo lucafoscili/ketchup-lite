@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-carousel](../../../kul-carousel)
 - [kul-article](../../../kul-article)
+- [kul-carousel](../../../kul-carousel)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-carousel --> kul-carousel
   kul-showcase-carousel --> kul-article
+  kul-showcase-carousel --> kul-carousel
   kul-carousel --> kul-button
   kul-button --> kul-image
   kul-button --> kul-list

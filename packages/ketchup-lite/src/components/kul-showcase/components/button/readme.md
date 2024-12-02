@@ -9,29 +9,23 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
-| `"grid"`           |             |
-| `"grid-container"` |             |
-| `"grid-title"`     |             |
 
 
 ## Dependencies
 
 ### Depends on
 
+- [kul-article](../../../kul-article)
 - [kul-button](../../../kul-button)
 - [kul-spinner](../../../kul-spinner)
-- [kul-article](../../../kul-article)
 
 ### Graph
 ```mermaid
 graph TD;
+  kul-showcase-button --> kul-article
   kul-showcase-button --> kul-button
   kul-showcase-button --> kul-spinner
-  kul-showcase-button --> kul-article
   kul-button --> kul-image
   kul-button --> kul-list
   kul-image --> kul-spinner

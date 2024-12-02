@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-imageviewer](../../../kul-imageviewer)
 - [kul-article](../../../kul-article)
+- [kul-imageviewer](../../../kul-imageviewer)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-imageviewer --> kul-imageviewer
   kul-showcase-imageviewer --> kul-article
+  kul-showcase-imageviewer --> kul-imageviewer
   kul-imageviewer --> kul-canvas
   kul-imageviewer --> kul-button
   kul-imageviewer --> kul-spinner

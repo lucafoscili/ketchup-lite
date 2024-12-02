@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-slider](../../../kul-slider)
 - [kul-article](../../../kul-article)
+- [kul-slider](../../../kul-slider)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-slider --> kul-slider
   kul-showcase-slider --> kul-article
+  kul-showcase-slider --> kul-slider
   style kul-showcase-slider fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

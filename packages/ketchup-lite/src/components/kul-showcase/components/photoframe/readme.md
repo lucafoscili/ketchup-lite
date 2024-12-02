@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-photoframe](../../../kul-photoframe)
 - [kul-article](../../../kul-article)
+- [kul-photoframe](../../../kul-photoframe)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-photoframe --> kul-photoframe
   kul-showcase-photoframe --> kul-article
+  kul-showcase-photoframe --> kul-photoframe
   style kul-showcase-photoframe fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
