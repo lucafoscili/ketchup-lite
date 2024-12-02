@@ -15,9 +15,9 @@
 
 ## Events
 
-| Event               | Description | Type                                  |
-| ------------------- | ----------- | ------------------------------------- |
-| `kul-article-event` |             | `CustomEvent<KulArticleEventPayload>` |
+| Event               | Description              | Type                                  |
+| ------------------- | ------------------------ | ------------------------------------- |
+| `kul-article-event` | Describes event emitted. | `CustomEvent<KulArticleEventPayload>` |
 
 
 ## Methods

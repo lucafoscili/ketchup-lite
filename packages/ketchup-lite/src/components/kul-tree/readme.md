@@ -20,9 +20,9 @@
 
 ## Events
 
-| Event            | Description | Type                               |
-| ---------------- | ----------- | ---------------------------------- |
-| `kul-tree-event` |             | `CustomEvent<KulTreeEventPayload>` |
+| Event            | Description              | Type                               |
+| ---------------- | ------------------------ | ---------------------------------- |
+| `kul-tree-event` | Describes event emitted. | `CustomEvent<KulTreeEventPayload>` |
 
 
 ## Methods

@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event                 | Description | Type                                    |
-| --------------------- | ----------- | --------------------------------------- |
-| `kul-messenger-event` |             | `CustomEvent<KulMessengerEventPayload>` |
+| Event                 | Description              | Type                                    |
+| --------------------- | ------------------------ | --------------------------------------- |
+| `kul-messenger-event` | Describes event emitted. | `CustomEvent<KulMessengerEventPayload>` |
 
 
 ## Methods

@@ -26,9 +26,9 @@
 
 ## Events
 
-| Event              | Description | Type                                 |
-| ------------------ | ----------- | ------------------------------------ |
-| `kul-button-event` |             | `CustomEvent<KulButtonEventPayload>` |
+| Event              | Description                                                                      | Type                                 |
+| ------------------ | -------------------------------------------------------------------------------- | ------------------------------------ |
+| `kul-button-event` | Describes event emitted for various button interactions like click, focus, blur. | `CustomEvent<KulButtonEventPayload>` |
 
 
 ## Methods

@@ -22,9 +22,9 @@
 
 ## Events
 
-| Event              | Description | Type                                 |
-| ------------------ | ----------- | ------------------------------------ |
-| `kul-slider-event` |             | `CustomEvent<KulSliderEventPayload>` |
+| Event              | Description                                                                      | Type                                 |
+| ------------------ | -------------------------------------------------------------------------------- | ------------------------------------ |
+| `kul-slider-event` | Describes event emitted for various slider interactions like click, focus, blur. | `CustomEvent<KulSliderEventPayload>` |
 
 
 ## Methods
