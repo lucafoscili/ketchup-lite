@@ -18,19 +18,19 @@ export class KulShowcaseArticle {
   @Element() rootElement: HTMLKulShowcaseArticleElement;
 
   //#region Internal variables
+  #examples = ARTICLE_EXAMPLES();
   #dynamicExamples: HTMLKulArticleElement[] = [];
   #dynamicExampleManager = SHOWCASE_DYN_EXAMPLES;
   #interval: NodeJS.Timeout;
   //#endregion
 
-  //#region Privat methods
+  //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    const examples = ARTICLE_EXAMPLES();
 
-    for (const key in examples) {
-      if (Object.prototype.hasOwnProperty.call(examples, key)) {
-        const props: ArticleExample = examples[key];
+    for (const key in this.#examples) {
+      if (Object.prototype.hasOwnProperty.call(this.#examples, key)) {
+        const props: ArticleExample = this.#examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
