@@ -8,7 +8,6 @@ on:
 jobs:
   cypress-test:
     runs-on: ubuntu-latest
-    environment: Development
     concurrency:
       group: cypress-${{ github.workflow }}-${{ github.head_ref }}
       cancel-in-progress: true
