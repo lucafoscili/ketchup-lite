@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-12-02T08:49:59",
+  "timestamp": "2024-12-02T13:11:12",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.3",
@@ -2394,7 +2394,7 @@
         {
           "name": "getProps",
           "returns": {
-            "type": "Promise<GenericObject>",
+            "type": "Promise<GenericObject<unknown>>",
             "docs": "List of props as object, each key will be a prop."
           },
           "complexType": {
@@ -2412,11 +2412,12 @@
                 "id": "global::Promise"
               },
               "GenericObject": {
-                "location": "global",
-                "id": "global::GenericObject"
+                "location": "import",
+                "path": "../../components",
+                "id": "src/components.d.ts::GenericObject"
               }
             },
-            "return": "Promise<GenericObject>"
+            "return": "Promise<GenericObject<unknown>>"
           },
           "signature": "getProps(descriptions?: boolean) => Promise<GenericObject>",
           "parameters": [
@@ -7220,7 +7221,7 @@
               "docs": ""
             }
           ],
-          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
+          "docs": "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
           "docsTags": []
         },
         {
@@ -7254,7 +7255,7 @@
               "docs": ""
             }
           ],
-          "docs": "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
+          "docs": "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
           "docsTags": []
         },
         {
@@ -17194,6 +17195,11 @@
       "declaration": "export interface KulCanvasEventPayload\n  extends KulEventPayload<'KulCanvas', KulCanvasEvent> {\n  points: Array<{ x: number; y: number }>;\n}",
       "docstring": "",
       "path": "src/components/kul-canvas/kul-canvas-declarations.ts"
+    },
+    "src/components.d.ts::GenericObject": {
+      "declaration": "any",
+      "docstring": "",
+      "path": "src/components.d.ts"
     },
     "src/components/kul-chat/kul-chat-declarations.ts::KulChatLayout": {
       "declaration": "export type KulChatLayout = 'bottom-textarea' | 'top-textarea';",
