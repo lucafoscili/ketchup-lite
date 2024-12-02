@@ -3767,16 +3767,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ketchup-lite-react-ssr@workspace:packages/ketchup-lite-react-ssr"
   dependencies:
-    "@stencil/core": ^4
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
     ketchup-lite: ^2.0.1-rc.7
     react: ^18
     react-dom: ^18
-  peerDependencies:
-    ketchup-lite: ^2.0.1-rc.6
-    ketchup-lite-hydrate: ^2.0.1-rc.6
   languageName: unknown
   linkType: soft
 
@@ -3791,8 +3787,6 @@ __metadata:
     ketchup-lite: ^2.0.1-rc.7
     react: ^18
     react-dom: ^18
-  peerDependencies:
-    ketchup-lite: ^2.0.1-rc.6
   languageName: unknown
   linkType: soft
 

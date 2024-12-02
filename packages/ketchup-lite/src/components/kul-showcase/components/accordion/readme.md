@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-accordion](../../../kul-accordion)
 - [kul-article](../../../kul-article)
+- [kul-accordion](../../../kul-accordion)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-accordion --> kul-accordion
   kul-showcase-accordion --> kul-article
+  kul-showcase-accordion --> kul-accordion
   style kul-showcase-accordion fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

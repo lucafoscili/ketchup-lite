@@ -7,26 +7,23 @@
 
 ## Shadow Parts
 
-| Part             | Description |
-| ---------------- | ----------- |
-| `"comp-wrapper"` |             |
-| `"description"`  |             |
-| `"example"`      |             |
-| `"grid"`         |             |
+| Part     | Description |
+| -------- | ----------- |
+| `"grid"` |             |
 
 
 ## Dependencies
 
 ### Depends on
 
-- [kul-badge](../../../kul-badge)
 - [kul-article](../../../kul-article)
+- [kul-badge](../../../kul-badge)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-badge --> kul-badge
   kul-showcase-badge --> kul-article
+  kul-showcase-badge --> kul-badge
   kul-badge --> kul-image
   kul-image --> kul-spinner
   kul-image --> kul-badge

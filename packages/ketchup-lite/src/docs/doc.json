@@ -1,5 +1,5 @@
 {
-  "timestamp": "2024-12-01T22:49:35",
+  "timestamp": "2024-12-02T00:03:47",
   "compiler": {
     "name": "@stencil/core",
     "version": "4.22.3",
@@ -10687,15 +10687,15 @@
       "parts": [],
       "dependents": [],
       "dependencies": [
-        "kul-card",
+        "kul-article",
         "kul-button",
-        "kul-article"
+        "kul-card"
       ],
       "dependencyGraph": {
         "kul-showcase": [
-          "kul-card",
+          "kul-article",
           "kul-button",
-          "kul-article"
+          "kul-card"
         ],
         "kul-button": [
           "kul-image",
@@ -10726,18 +10726,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -10748,13 +10736,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-accordion",
-        "kul-article"
+        "kul-article",
+        "kul-accordion"
       ],
       "dependencyGraph": {
         "kul-showcase-accordion": [
-          "kul-accordion",
-          "kul-article"
+          "kul-article",
+          "kul-accordion"
         ]
       }
     },
@@ -10773,18 +10761,6 @@
       "styles": [],
       "slots": [],
       "parts": [
-        {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
         {
           "name": "examples-title",
           "docs": ""
@@ -10820,31 +10796,19 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "grid",
           "docs": ""
         }
       ],
       "dependents": [],
       "dependencies": [
-        "kul-badge",
-        "kul-article"
+        "kul-article",
+        "kul-badge"
       ],
       "dependencyGraph": {
         "kul-showcase-badge": [
-          "kul-badge",
-          "kul-article"
+          "kul-article",
+          "kul-badge"
         ],
         "kul-badge": [
           "kul-image"
@@ -10871,45 +10835,21 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
-          "docs": ""
-        },
-        {
-          "name": "grid",
-          "docs": ""
-        },
-        {
-          "name": "grid-container",
-          "docs": ""
-        },
-        {
-          "name": "grid-title",
           "docs": ""
         }
       ],
       "dependents": [],
       "dependencies": [
+        "kul-article",
         "kul-button",
-        "kul-spinner",
-        "kul-article"
+        "kul-spinner"
       ],
       "dependencyGraph": {
         "kul-showcase-button": [
+          "kul-article",
           "kul-button",
-          "kul-spinner",
-          "kul-article"
+          "kul-spinner"
         ],
         "kul-button": [
           "kul-image",
@@ -10940,18 +10880,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -10962,13 +10890,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-canvas",
-        "kul-article"
+        "kul-article",
+        "kul-canvas"
       ],
       "dependencyGraph": {
         "kul-showcase-canvas": [
-          "kul-canvas",
-          "kul-article"
+          "kul-article",
+          "kul-canvas"
         ],
         "kul-canvas": [
           "kul-image"
@@ -10998,43 +10926,19 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
-          "docs": ""
-        },
-        {
-          "name": "grid",
-          "docs": ""
-        },
-        {
-          "name": "grid-container",
-          "docs": ""
-        },
-        {
-          "name": "grid-title",
           "docs": ""
         }
       ],
       "dependents": [],
       "dependencies": [
-        "kul-card",
-        "kul-article"
+        "kul-article",
+        "kul-card"
       ],
       "dependencyGraph": {
         "kul-showcase-card": [
-          "kul-card",
-          "kul-article"
+          "kul-article",
+          "kul-card"
         ]
       }
     },
@@ -11054,18 +10958,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11076,13 +10968,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-carousel",
-        "kul-article"
+        "kul-article",
+        "kul-carousel"
       ],
       "dependencyGraph": {
         "kul-showcase-carousel": [
-          "kul-carousel",
-          "kul-article"
+          "kul-article",
+          "kul-carousel"
         ],
         "kul-carousel": [
           "kul-button"
@@ -11116,18 +11008,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11138,13 +11018,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-chart",
-        "kul-article"
+        "kul-article",
+        "kul-chart"
       ],
       "dependencyGraph": {
         "kul-showcase-chart": [
-          "kul-chart",
-          "kul-article"
+          "kul-article",
+          "kul-chart"
         ]
       }
     },
@@ -11164,18 +11044,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11186,13 +11054,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-chat",
-        "kul-article"
+        "kul-article",
+        "kul-chat"
       ],
       "dependencyGraph": {
         "kul-showcase-chat": [
-          "kul-chat",
-          "kul-article"
+          "kul-article",
+          "kul-chat"
         ],
         "kul-chat": [
           "kul-spinner",
@@ -11234,18 +11102,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11256,13 +11112,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-chip",
-        "kul-article"
+        "kul-article",
+        "kul-chip"
       ],
       "dependencyGraph": {
         "kul-showcase-chip": [
-          "kul-chip",
-          "kul-article"
+          "kul-article",
+          "kul-chip"
         ]
       }
     },
@@ -11282,18 +11138,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11304,13 +11148,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-code",
-        "kul-article"
+        "kul-article",
+        "kul-code"
       ],
       "dependencyGraph": {
         "kul-showcase-code": [
-          "kul-code",
-          "kul-article"
+          "kul-article",
+          "kul-code"
         ],
         "kul-code": [
           "kul-button"
@@ -11344,18 +11188,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11366,13 +11198,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-compare",
-        "kul-article"
+        "kul-article",
+        "kul-compare"
       ],
       "dependencyGraph": {
         "kul-showcase-compare": [
-          "kul-compare",
-          "kul-article"
+          "kul-article",
+          "kul-compare"
         ],
         "kul-compare": [
           "kul-button",
@@ -11416,13 +11248,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-textfield",
-        "kul-article"
+        "kul-article",
+        "kul-textfield"
       ],
       "dependencyGraph": {
         "kul-showcase-debug": [
-          "kul-textfield",
-          "kul-article"
+          "kul-article",
+          "kul-textfield"
         ]
       }
     },
@@ -11441,18 +11273,6 @@
       "styles": [],
       "slots": [],
       "parts": [
-        {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
         {
           "name": "examples-title",
           "docs": ""
@@ -11488,18 +11308,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11534,18 +11342,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11556,13 +11352,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-image",
-        "kul-article"
+        "kul-article",
+        "kul-image"
       ],
       "dependencyGraph": {
         "kul-showcase-image": [
-          "kul-image",
-          "kul-article"
+          "kul-article",
+          "kul-image"
         ],
         "kul-image": [
           "kul-spinner",
@@ -11589,18 +11385,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11611,13 +11395,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-imageviewer",
-        "kul-article"
+        "kul-article",
+        "kul-imageviewer"
       ],
       "dependencyGraph": {
         "kul-showcase-imageviewer": [
-          "kul-imageviewer",
-          "kul-article"
+          "kul-article",
+          "kul-imageviewer"
         ],
         "kul-imageviewer": [
           "kul-canvas",
@@ -11890,18 +11674,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11912,13 +11684,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-lazy",
-        "kul-article"
+        "kul-article",
+        "kul-lazy"
       ],
       "dependencyGraph": {
         "kul-showcase-lazy": [
-          "kul-lazy",
-          "kul-article"
+          "kul-article",
+          "kul-lazy"
         ]
       }
     },
@@ -11938,18 +11710,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -11960,13 +11720,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-list",
-        "kul-article"
+        "kul-article",
+        "kul-list"
       ],
       "dependencyGraph": {
         "kul-showcase-list": [
-          "kul-list",
-          "kul-article"
+          "kul-article",
+          "kul-list"
         ]
       }
     },
@@ -11986,18 +11746,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12008,13 +11756,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-masonry",
-        "kul-article"
+        "kul-article",
+        "kul-masonry"
       ],
       "dependencyGraph": {
         "kul-showcase-masonry": [
-          "kul-masonry",
-          "kul-article"
+          "kul-article",
+          "kul-masonry"
         ],
         "kul-masonry": [
           "kul-button"
@@ -12048,18 +11796,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12070,13 +11806,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-messenger",
-        "kul-article"
+        "kul-article",
+        "kul-messenger"
       ],
       "dependencyGraph": {
         "kul-showcase-messenger": [
-          "kul-messenger",
-          "kul-article"
+          "kul-article",
+          "kul-messenger"
         ],
         "kul-messenger": [
           "kul-button",
@@ -12131,18 +11867,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12153,13 +11877,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-photoframe",
-        "kul-article"
+        "kul-article",
+        "kul-photoframe"
       ],
       "dependencyGraph": {
         "kul-showcase-photoframe": [
-          "kul-photoframe",
-          "kul-article"
+          "kul-article",
+          "kul-photoframe"
         ]
       }
     },
@@ -12179,18 +11903,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12201,13 +11913,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-progressbar",
-        "kul-article"
+        "kul-article",
+        "kul-progressbar"
       ],
       "dependencyGraph": {
         "kul-showcase-progressbar": [
-          "kul-progressbar",
-          "kul-article"
+          "kul-article",
+          "kul-progressbar"
         ]
       }
     },
@@ -12227,18 +11939,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12249,13 +11949,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-slider",
-        "kul-article"
+        "kul-article",
+        "kul-slider"
       ],
       "dependencyGraph": {
         "kul-showcase-slider": [
-          "kul-slider",
-          "kul-article"
+          "kul-article",
+          "kul-slider"
         ]
       }
     },
@@ -12275,43 +11975,19 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
-          "docs": ""
-        },
-        {
-          "name": "grid",
-          "docs": ""
-        },
-        {
-          "name": "grid-container",
-          "docs": ""
-        },
-        {
-          "name": "grid-title",
           "docs": ""
         }
       ],
       "dependents": [],
       "dependencies": [
-        "kul-spinner",
-        "kul-article"
+        "kul-article",
+        "kul-spinner"
       ],
       "dependencyGraph": {
         "kul-showcase-spinner": [
-          "kul-spinner",
-          "kul-article"
+          "kul-article",
+          "kul-spinner"
         ]
       }
     },
@@ -12331,18 +12007,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12353,17 +12017,17 @@
       ],
       "dependents": [],
       "dependencies": [
+        "kul-article",
         "kul-button",
         "kul-splash",
-        "kul-spinner",
-        "kul-article"
+        "kul-spinner"
       ],
       "dependencyGraph": {
         "kul-showcase-splash": [
+          "kul-article",
           "kul-button",
           "kul-splash",
-          "kul-spinner",
-          "kul-article"
+          "kul-spinner"
         ],
         "kul-button": [
           "kul-image",
@@ -12394,18 +12058,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12416,13 +12068,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-tabbar",
-        "kul-article"
+        "kul-article",
+        "kul-tabbar"
       ],
       "dependencyGraph": {
         "kul-showcase-tabbar": [
-          "kul-tabbar",
-          "kul-article"
+          "kul-article",
+          "kul-tabbar"
         ],
         "kul-tabbar": [
           "kul-image"
@@ -12452,43 +12104,19 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
-          "docs": ""
-        },
-        {
-          "name": "grid",
-          "docs": ""
-        },
-        {
-          "name": "grid-container",
-          "docs": ""
-        },
-        {
-          "name": "grid-title",
           "docs": ""
         }
       ],
       "dependents": [],
       "dependencies": [
-        "kul-textfield",
-        "kul-article"
+        "kul-article",
+        "kul-textfield"
       ],
       "dependencyGraph": {
         "kul-showcase-textfield": [
-          "kul-textfield",
-          "kul-article"
+          "kul-article",
+          "kul-textfield"
         ]
       }
     },
@@ -12508,18 +12136,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12530,13 +12146,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-toast",
-        "kul-article"
+        "kul-article",
+        "kul-toast"
       ],
       "dependencyGraph": {
         "kul-showcase-toast": [
-          "kul-toast",
-          "kul-article"
+          "kul-article",
+          "kul-toast"
         ],
         "kul-toast": [
           "kul-image"
@@ -12566,18 +12182,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12588,13 +12192,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-toggle",
-        "kul-article"
+        "kul-article",
+        "kul-toggle"
       ],
       "dependencyGraph": {
         "kul-showcase-toggle": [
-          "kul-toggle",
-          "kul-article"
+          "kul-article",
+          "kul-toggle"
         ]
       }
     },
@@ -12614,18 +12218,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12636,13 +12228,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-tree",
-        "kul-article"
+        "kul-article",
+        "kul-tree"
       ],
       "dependencyGraph": {
         "kul-showcase-tree": [
-          "kul-tree",
-          "kul-article"
+          "kul-article",
+          "kul-tree"
         ],
         "kul-tree": [
           "kul-textfield"
@@ -12665,18 +12257,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12687,13 +12267,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-typewriter",
-        "kul-article"
+        "kul-article",
+        "kul-typewriter"
       ],
       "dependencyGraph": {
         "kul-showcase-typewriter": [
-          "kul-typewriter",
-          "kul-article"
+          "kul-article",
+          "kul-typewriter"
         ]
       }
     },
@@ -12713,18 +12293,6 @@
       "slots": [],
       "parts": [
         {
-          "name": "comp-wrapper",
-          "docs": ""
-        },
-        {
-          "name": "description",
-          "docs": ""
-        },
-        {
-          "name": "example",
-          "docs": ""
-        },
-        {
           "name": "examples-title",
           "docs": ""
         },
@@ -12735,13 +12303,13 @@
       ],
       "dependents": [],
       "dependencies": [
-        "kul-upload",
-        "kul-article"
+        "kul-article",
+        "kul-upload"
       ],
       "dependencyGraph": {
         "kul-showcase-upload": [
-          "kul-upload",
-          "kul-article"
+          "kul-article",
+          "kul-upload"
         ],
         "kul-upload": [
           "kul-image",

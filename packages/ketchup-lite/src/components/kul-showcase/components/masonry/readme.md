@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-masonry](../../../kul-masonry)
 - [kul-article](../../../kul-article)
+- [kul-masonry](../../../kul-masonry)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-masonry --> kul-masonry
   kul-showcase-masonry --> kul-article
+  kul-showcase-masonry --> kul-masonry
   kul-masonry --> kul-button
   kul-button --> kul-image
   kul-button --> kul-list

@@ -16,16 +16,16 @@
 
 ### Depends on
 
-- [kul-card](../kul-card)
-- [kul-button](../kul-button)
 - [kul-article](../kul-article)
+- [kul-button](../kul-button)
+- [kul-card](../kul-card)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase --> kul-card
-  kul-showcase --> kul-button
   kul-showcase --> kul-article
+  kul-showcase --> kul-button
+  kul-showcase --> kul-card
   kul-button --> kul-image
   kul-button --> kul-list
   kul-image --> kul-spinner
