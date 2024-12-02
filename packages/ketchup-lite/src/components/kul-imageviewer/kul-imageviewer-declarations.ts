@@ -1,6 +1,5 @@
 import { VNode } from '@stencil/core';
 
-import { KulImageviewer } from './kul-imageviewer';
 import {
   KulDataCell,
   KulDataDataset,

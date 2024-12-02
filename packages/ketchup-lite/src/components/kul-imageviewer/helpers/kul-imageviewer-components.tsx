@@ -66,6 +66,7 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
   return (
     <kul-canvas
       class={className}
+      data-cy={KulDataCyAttributes.SHAPE}
       kulImageProps={imageProps}
       onKul-canvas-event={eventHandler}
       ref={(el) => {
