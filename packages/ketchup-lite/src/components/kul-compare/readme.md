@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event               | Description | Type                                  |
-| ------------------- | ----------- | ------------------------------------- |
-| `kul-compare-event` |             | `CustomEvent<KulCompareEventPayload>` |
+| Event               | Description              | Type                                  |
+| ------------------- | ------------------------ | ------------------------------------- |
+| `kul-compare-event` | Describes event emitted. | `CustomEvent<KulCompareEventPayload>` |
 
 
 ## Methods

@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event              | Description | Type                                 |
-| ------------------ | ----------- | ------------------------------------ |
-| `kul-toggle-event` |             | `CustomEvent<KulToggleEventPayload>` |
+| Event              | Description                                                                      | Type                                 |
+| ------------------ | -------------------------------------------------------------------------------- | ------------------------------------ |
+| `kul-toggle-event` | Describes event emitted for various toggle interactions like click, focus, blur. | `CustomEvent<KulToggleEventPayload>` |
 
 
 ## Methods

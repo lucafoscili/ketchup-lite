@@ -1,22 +1,23 @@
 import { KulEventPayload } from '../../types/GenericTypes';
 
-//#region Events
+/*-------------------------------------------------*/
+/*                   E v e n t s                   */
+/*-------------------------------------------------*/
 export type KulSplashEvent = 'ready' | 'unmount';
 export interface KulSplashEventPayload
-    extends KulEventPayload<'KulSplash', KulSplashEvent> {}
-//#endregion
-
-//#region States
-export type KulSplashStates = 'initializing' | 'unmounting';
-//#endregion
-
-//#region Props
+  extends KulEventPayload<'KulSplash', KulSplashEvent> {}
+/*-------------------------------------------------*/
+/*                    P r o p s                    */
+/*-------------------------------------------------*/
 export enum KulSplashProps {
-    kulLabel = 'The text displayed inside the badge.',
-    kulStyle = 'Custom style of the component.',
+  kulLabel = 'The text displayed inside the badge.',
+  kulStyle = 'Custom style of the component.',
 }
 export interface KulSplashPropsInterface {
-    kulLabel: string;
-    kulStyle: string;
+  kulLabel: string;
+  kulStyle: string;
 }
-//#endregion
+/*-------------------------------------------------*/
+/*                    S t a t e                    */
+/*-------------------------------------------------*/
+export type KulSplashStates = 'initializing' | 'unmounting';

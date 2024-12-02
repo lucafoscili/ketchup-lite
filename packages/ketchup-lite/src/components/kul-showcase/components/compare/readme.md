@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-compare](../../../kul-compare)
 - [kul-article](../../../kul-article)
+- [kul-compare](../../../kul-compare)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-compare --> kul-compare
   kul-showcase-compare --> kul-article
+  kul-showcase-compare --> kul-compare
   kul-compare --> kul-button
   kul-compare --> kul-tree
   kul-button --> kul-image

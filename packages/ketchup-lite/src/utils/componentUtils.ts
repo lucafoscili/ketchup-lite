@@ -1,8 +1,8 @@
 import {
-    GenericMap,
-    GenericObject,
-    KulComponent,
-    KulComponentName,
+  GenericMap,
+  GenericObject,
+  KulComponent,
+  KulComponentName,
 } from '../types/GenericTypes';
 
 /**
@@ -13,19 +13,19 @@ import {
  * @returns {GenericObject} - An object with prop keys and values, or keys and descriptions based on the `descriptions` parameter.
  */
 export function getProps(
-    comp: KulComponent<KulComponentName>,
-    list: GenericMap,
-    descriptions?: boolean
+  comp: KulComponent<KulComponentName>,
+  list: GenericMap,
+  descriptions?: boolean,
 ): GenericObject {
-    let props: GenericObject = {};
-    if (descriptions) {
-        props = list;
-    } else {
-        for (const key in list) {
-            if (Object.prototype.hasOwnProperty.call(list, key)) {
-                props[key] = comp[key];
-            }
-        }
+  let props: GenericObject = {};
+  if (descriptions) {
+    props = list;
+  } else {
+    for (const key in list) {
+      if (Object.prototype.hasOwnProperty.call(list, key)) {
+        props[key] = comp[key];
+      }
     }
-    return props;
+  }
+  return props;
 }

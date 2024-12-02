@@ -6,18 +6,18 @@ export const SPINNER_EXAMPLES_CATEGORIES = ['bar', 'widget'] as const;
 export const SPINNER_EXAMPLES_KEYS = ['spinner', 'spinnerActive', 'style'];
 
 export interface SpinnerBranch {
-    [index: number]: SpinnerLeaf;
+  [index: number]: SpinnerLeaf;
 }
 
 export interface SpinnerLeaf {
-    [index: string]: Partial<SpinnerExample>;
+  [index: string]: Partial<SpinnerExample>;
 }
 
 export type SpinnerData = {
-    [K in (typeof SPINNER_EXAMPLES_CATEGORIES)[number]]: SpinnerBranch;
+  [K in (typeof SPINNER_EXAMPLES_CATEGORIES)[number]]: SpinnerBranch;
 };
 
 export interface SpinnerExample extends KulSpinnerPropsInterface {
-    ['data-description']: string;
-    ['data-dynamic']?: KulShowcaseDynamicExampleType;
+  ['data-description']: string;
+  ['data-dynamic']?: KulShowcaseDynamicExampleType;
 }

@@ -4,10 +4,10 @@ import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
 export const LAZY_EXAMPLES_KEYS = ['simple', 'style'] as const;
 
 export interface LazyExample extends KulLazyPropsInterface {
-    ['data-description']: string;
-    ['data-dynamic']?: KulShowcaseDynamicExampleType;
+  ['data-description']: string;
+  ['data-dynamic']?: KulShowcaseDynamicExampleType;
 }
 
 export type LazyData = {
-    [K in (typeof LAZY_EXAMPLES_KEYS)[number]]: LazyExample;
+  [K in (typeof LAZY_EXAMPLES_KEYS)[number]]: LazyExample;
 };

@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-code](../../../kul-code)
 - [kul-article](../../../kul-article)
+- [kul-code](../../../kul-code)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-code --> kul-code
   kul-showcase-code --> kul-article
+  kul-showcase-code --> kul-code
   kul-code --> kul-button
   kul-button --> kul-image
   kul-button --> kul-list

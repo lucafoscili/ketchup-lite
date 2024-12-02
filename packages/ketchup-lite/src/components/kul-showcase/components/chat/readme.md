@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-chat](../../../kul-chat)
 - [kul-article](../../../kul-article)
+- [kul-chat](../../../kul-chat)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-chat --> kul-chat
   kul-showcase-chat --> kul-article
+  kul-showcase-chat --> kul-chat
   kul-chat --> kul-spinner
   kul-chat --> kul-image
   kul-chat --> kul-button

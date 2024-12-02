@@ -20,9 +20,9 @@
 
 ## Events
 
-| Event                  | Description | Type                                     |
-| ---------------------- | ----------- | ---------------------------------------- |
-| `kul-typewriter-event` |             | `CustomEvent<KulTypewriterEventPayload>` |
+| Event                  | Description                       | Type                                     |
+| ---------------------- | --------------------------------- | ---------------------------------------- |
+| `kul-typewriter-event` | Describes the component's events. | `CustomEvent<KulTypewriterEventPayload>` |
 
 
 ## Methods

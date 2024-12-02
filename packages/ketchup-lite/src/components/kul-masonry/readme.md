@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event               | Description | Type                                  |
-| ------------------- | ----------- | ------------------------------------- |
-| `kul-masonry-event` |             | `CustomEvent<KulMasonryEventPayload>` |
+| Event               | Description              | Type                                  |
+| ------------------- | ------------------------ | ------------------------------------- |
+| `kul-masonry-event` | Describes event emitted. | `CustomEvent<KulMasonryEventPayload>` |
 
 
 ## Methods

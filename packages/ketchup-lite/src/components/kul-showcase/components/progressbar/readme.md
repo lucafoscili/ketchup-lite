@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-progressbar](../../../kul-progressbar)
 - [kul-article](../../../kul-article)
+- [kul-progressbar](../../../kul-progressbar)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-progressbar --> kul-progressbar
   kul-showcase-progressbar --> kul-article
+  kul-showcase-progressbar --> kul-progressbar
   style kul-showcase-progressbar fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

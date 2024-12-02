@@ -23,9 +23,9 @@
 
 ## Events
 
-| Event            | Description | Type                               |
-| ---------------- | ----------- | ---------------------------------- |
-| `kul-chat-event` |             | `CustomEvent<KulChatEventPayload>` |
+| Event            | Description              | Type                               |
+| ---------------- | ------------------------ | ---------------------------------- |
+| `kul-chat-event` | Describes event emitted. | `CustomEvent<KulChatEventPayload>` |
 
 
 ## Methods

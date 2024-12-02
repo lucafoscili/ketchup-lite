@@ -1,7 +1,11 @@
 {
-  "npmClient": "npm",
-  "packages": [
-    "packages/*"
-  ],
-  "version": "independent"
+  "version": "2.0.1-rc.8",
+  "npmClient": "yarn",
+  "command": {
+    "publish": {
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "message": "chore(release): publish"
+    }
+  }
 }

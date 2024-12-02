@@ -23,9 +23,9 @@
 
 ## Events
 
-| Event                 | Description | Type                                    |
-| --------------------- | ----------- | --------------------------------------- |
-| `kul-textfield-event` |             | `CustomEvent<KulTextfieldEventPayload>` |
+| Event                 | Description              | Type                                    |
+| --------------------- | ------------------------ | --------------------------------------- |
+| `kul-textfield-event` | Describes event emitted. | `CustomEvent<KulTextfieldEventPayload>` |
 
 
 ## Methods

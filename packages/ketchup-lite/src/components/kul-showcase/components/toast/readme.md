@@ -9,9 +9,6 @@
 
 | Part               | Description |
 | ------------------ | ----------- |
-| `"comp-wrapper"`   |             |
-| `"description"`    |             |
-| `"example"`        |             |
 | `"examples-title"` |             |
 | `"grid"`           |             |
 
@@ -20,14 +17,14 @@
 
 ### Depends on
 
-- [kul-toast](../../../kul-toast)
 - [kul-article](../../../kul-article)
+- [kul-toast](../../../kul-toast)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-toast --> kul-toast
   kul-showcase-toast --> kul-article
+  kul-showcase-toast --> kul-toast
   kul-toast --> kul-image
   kul-image --> kul-spinner
   kul-image --> kul-badge
