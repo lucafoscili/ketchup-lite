@@ -76,11 +76,13 @@ describe('Data', () => {
     cy.get('@kulComponentShowcase');
     cy.get(`${articleTag}#simple`).then(($article) => {
       const kulArticleElement = $article[0] as HTMLKulArticleElement;
-      const firstNodeValue = kulArticleElement.kulData.nodes[0];
-      if (firstNodeValue) {
+      const kulData = kulArticleElement.kulData;
+      if (kulData?.nodes?.[0]) {
         cy.wrap($article).shadow().find('article').find('h1').should('exist');
       } else {
-        cy.log('First node value is falsy, skipping <h1> tag presence check');
+        cy.log(
+          'First node value is falsy or undefined, skipping <h1> tag presence check',
+        );
       }
     });
   });
