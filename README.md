@@ -16,7 +16,7 @@
 
 <div align="center">
 
-![GitHub top language](https://img.shields.io/github/languages/top/lucafoscili/ketchup-lite?logo=javascript&logoColor=black&labelColor=white&color=black) ![GitHub last commit](https://img.shields.io/github/last-commit/lucafoscili/ketchup-lite?logo=github&logoColor=black&labelColor=white&color=black) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lucafoscili/ketchup-lite/cypress-tests.yaml?logo=cypress&logoColor=black&labelColor=white&color=black)
+![GitHub last commit](https://img.shields.io/github/last-commit/lucafoscili/ketchup-lite?logo=github&logoColor=black&labelColor=white&color=black) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lucafoscili/ketchup-lite/cypress-tests.yaml?logo=cypress&logoColor=black&labelColor=white&color=black)
 
 </div>
 
