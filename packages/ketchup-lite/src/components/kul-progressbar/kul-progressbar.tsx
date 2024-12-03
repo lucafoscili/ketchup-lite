@@ -11,22 +11,22 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulProgressbarEvent,
   KulProgressbarEventPayload,
   KulProgressbarProps,
-} from './kul-progressbar-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-progressbar-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-progressbar',
-  styleUrl: 'kul-progressbar.scss',
+  tag: "kul-progressbar",
+  styleUrl: "kul-progressbar.scss",
   shadow: true,
 })
 export class KulProgressbar {
@@ -63,7 +63,7 @@ export class KulProgressbar {
    * Specifies an icon to replace the label.
    * @default ""
    */
-  @Prop() kulIcon = '';
+  @Prop() kulIcon = "";
   /**
    * Radial version.
    * @default false
@@ -73,12 +73,12 @@ export class KulProgressbar {
    * Specifies a text for the bar's label.
    * @default ""
    */
-  @Prop() kulLabel = '';
+  @Prop() kulLabel = "";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop() kulStyle = '';
+  @Prop() kulStyle = "";
   /**
    * The current value the progress bar must display.
    * @default 0
@@ -99,7 +99,7 @@ export class KulProgressbar {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-progressbar-event',
+    eventName: "kul-progressbar-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -150,7 +150,7 @@ export class KulProgressbar {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -185,7 +185,7 @@ export class KulProgressbar {
 
   #prepProgressBar() {
     return (
-      <div class={'progress-bar'}>
+      <div class={"progress-bar"}>
         <div class="progress-bar__percentage">{this.#prepLabel()}</div>
       </div>
     );
@@ -193,10 +193,10 @@ export class KulProgressbar {
 
   #prepRadialBar() {
     return (
-      <div class={'progress-bar'}>
+      <div class={"progress-bar"}>
         {this.#prepLabel()}
         <div
-          class={`pie ${this.kulValue ? 'has-value' : ''}  ${this.kulValue > 50 ? 'half-full' : 'half-empty'}`}
+          class={`pie ${this.kulValue ? "has-value" : ""}  ${this.kulValue > 50 ? "half-full" : "half-empty"}`}
         >
           <div class="left-side half-circle"></div>
           <div class="right-side half-circle"></div>
@@ -215,22 +215,22 @@ export class KulProgressbar {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
     const style = {
-      ['--kul_progressbar_percentage_width']: `${this.kulValue}%`,
-      ['--kul_progressbar_transform']: `rotate(${this.kulValue * 3.6}deg)`,
+      ["--kul_progressbar_percentage_width"]: `${this.kulValue}%`,
+      ["--kul_progressbar_transform"]: `rotate(${this.kulValue * 3.6}deg)`,
     };
 
     return (

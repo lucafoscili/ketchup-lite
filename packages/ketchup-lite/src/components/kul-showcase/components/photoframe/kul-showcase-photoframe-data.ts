@@ -1,22 +1,22 @@
-import { getAssetPath } from '@stencil/core';
+import { getAssetPath } from "@stencil/core";
 
-import { PhotoframeData } from './kul-showcase-photoframe-declarations';
+import { PhotoframeData } from "./kul-showcase-photoframe-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulPhotoframe';
-const EVENT_NAME: KulComponentEventName<'KulPhotoframe'> =
-  'kul-photoframe-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulPhotoframe'> =
-  'KulPhotoframeEventPayload';
-const TAG_NAME: KulComponentTag<'KulPhotoframe'> = 'kul-photoframe';
+const COMPONENT_NAME: KulComponentName = "KulPhotoframe";
+const EVENT_NAME: KulComponentEventName<"KulPhotoframe"> =
+  "kul-photoframe-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulPhotoframe"> =
+  "KulPhotoframeEventPayload";
+const TAG_NAME: KulComponentTag<"KulPhotoframe"> = "kul-photoframe";
 
 const getPlaceholder = () =>
   getAssetPath(`./assets/media/blur_color_splash.jpg`);
@@ -24,7 +24,7 @@ const getValue = () => getAssetPath(`./assets/media/color_splash.jpg`);
 
 export const PHOTOFRAME_EXAMPLES: () => PhotoframeData = () => ({
   simple: {
-    ['data-description']: 'Simple photoframe',
+    ["data-description"]: "Simple photoframe",
     kulPlaceholder: {
       alt: null,
       src: getPlaceholder(),
@@ -35,8 +35,8 @@ export const PHOTOFRAME_EXAMPLES: () => PhotoframeData = () => ({
     },
   },
   style: {
-    ['data-description']: 'Photoframe with custom style',
-    'data-dynamic': 'custom',
+    ["data-description"]: "Photoframe with custom style",
+    "data-dynamic": "custom",
     kulPlaceholder: {
       alt: null,
       src: getPlaceholder(),
@@ -56,7 +56,7 @@ export const PHOTOFRAME_DOC: KulArticleDataset = {
       children: [
         SECTION_FACTORY.overview(
           COMPONENT_NAME,
-          'displays a photo only when it enters the viewport. Until then, a placeholder is displayed in its place',
+          "displays a photo only when it enters the viewport. Until then, a placeholder is displayed in its place",
         ),
         SECTION_FACTORY.usage(COMPONENT_NAME, {
           tag: TAG_NAME,
@@ -67,18 +67,18 @@ export const PHOTOFRAME_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'load',
-              description: 'emitted when the image is successfully loaded',
+              type: "load",
+              description: "emitted when the image is successfully loaded",
             },
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

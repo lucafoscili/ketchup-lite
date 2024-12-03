@@ -1,11 +1,11 @@
-import { KulManager } from '../../../managers/kul-manager/kul-manager';
+import { KulManager } from "../../../managers/kul-manager/kul-manager";
 import {
   AVATAR_COVER,
   LOCATION_COVER,
   OUTFIT_COVER,
   STYLE_COVER,
   TIMEFRAME_COVER,
-} from '../kul-messenger-constants';
+} from "../kul-messenger-constants";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterGetters,
@@ -16,7 +16,7 @@ import {
   KulMessengerImageTypes,
   KulMessengerPrefix,
   KulMessengerUnionChildIds,
-} from '../kul-messenger-declarations';
+} from "../kul-messenger-declarations";
 
 export const getters: (
   adapter: KulMessengerAdapter,
@@ -29,13 +29,13 @@ export const getters: (
       biography: (character = messenger.currentCharacter) => {
         try {
           const bio = character.children.find(
-            (n) => n.id === 'biography',
+            (n) => n.id === "biography",
           ).value;
           return bio
             ? kulManager.data.cell.stringify(bio)
-            : 'You know nothing about messenger character...';
+            : "You know nothing about messenger character...";
         } catch (error) {
-          return 'You know nothing about messenger character...';
+          return "You know nothing about messenger character...";
         }
       },
       byId: (id) => messenger.kulData.nodes.find((n) => n.id === id),
@@ -46,7 +46,7 @@ export const getters: (
         messenger.history[character.id],
       list: () => messenger.kulData.nodes || [],
       name: (character = messenger.currentCharacter) =>
-        character.value || character.id || character.description || '?',
+        character.value || character.id || character.description || "?",
       next: (character = messenger.currentCharacter) => {
         if (!hasCharacters) {
           return;
@@ -85,15 +85,15 @@ export const getters: (
           };
         } catch (error) {
           switch (type) {
-            case 'avatars':
+            case "avatars":
               return { value: AVATAR_COVER };
-            case 'locations':
+            case "locations":
               return { value: LOCATION_COVER };
-            case 'outfits':
+            case "outfits":
               return { value: OUTFIT_COVER };
-            case 'styles':
+            case "styles":
               return { value: STYLE_COVER };
-            case 'timeframes':
+            case "timeframes":
               return { value: TIMEFRAME_COVER };
           }
         }
@@ -116,20 +116,20 @@ export const getters: (
         let prefix: KulMessengerPrefix<KulMessengerChildTypes>;
         let nodeId: KulMessengerChildIds<KulMessengerUnionChildIds>;
         switch (type) {
-          case 'avatars':
-            prefix = 'avatar_';
+          case "avatars":
+            prefix = "avatar_";
             break;
-          case 'locations':
-            prefix = 'location_';
+          case "locations":
+            prefix = "location_";
             break;
-          case 'outfits':
-            prefix = 'outfit_';
+          case "outfits":
+            prefix = "outfit_";
             break;
-          case 'styles':
-            prefix = 'style_';
+          case "styles":
+            prefix = "style_";
             break;
-          case 'timeframes':
-            prefix = 'timeframe_';
+          case "timeframes":
+            prefix = "timeframe_";
             break;
           default:
             throw new Error(`Unknown image type: ${type}`);
@@ -147,15 +147,15 @@ export const getters: (
         return node as KulMessengerBaseRootNode<KulMessengerImageTypes>;
       },
       title: (node) => {
-        const title = node?.value || '';
-        const description = node?.description || '';
+        const title = node?.value || "";
+        const description = node?.description || "";
         return title && description
           ? `${title} - ${description}`
           : description
             ? description
             : title
               ? title
-              : '';
+              : "";
       },
     },
     messenger: {

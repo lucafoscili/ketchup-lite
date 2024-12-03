@@ -12,29 +12,29 @@ import {
   State,
   VNode,
   Watch,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulImageEvent,
   KulImageEventPayload,
   KulImageProps,
-} from './kul-image-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
-import type { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
+} from "./kul-image-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarations";
+import type { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
 import {
   CSS_VAR_PREFIX,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
-} from '../../variables/GenericVariables';
-import { KulBadgePropsInterface } from '../kul-badge/kul-badge-declarations';
+} from "../../variables/GenericVariables";
+import { KulBadgePropsInterface } from "../kul-badge/kul-badge-declarations";
 
 @Component({
-  tag: 'kul-image',
-  assetsDirs: ['assets/svg'],
-  styleUrl: 'kul-image.scss',
+  tag: "kul-image",
+  assetsDirs: ["assets/svg"],
+  styleUrl: "kul-image.scss",
   shadow: true,
 })
 export class KulImage {
@@ -89,22 +89,22 @@ export class KulImage {
    * Sets the width of the icon. This property accepts any valid CSS measurement value (e.g., px, %, vh, etc.) and defaults to 100%.
    * @default '100%'
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeX = '100%';
+  @Prop({ mutable: true, reflect: true }) kulSizeX = "100%";
   /**
    * Sets the height of the icon. This property accepts any valid CSS measurement value (e.g., px, %, vh, etc.) and defaults to 100%.
    * @default '100%'
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeY = '100%';
+  @Prop({ mutable: true, reflect: true }) kulSizeY = "100%";
   /**
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * Defines the source URL of the image. This property is used to set the image resource that the component should display.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulValue = '';
+  @Prop({ mutable: true, reflect: true }) kulValue = "";
 
   /*-------------------------------------------------*/
   /*        I n t e r n a l   V a r i a b l e s      */
@@ -120,7 +120,7 @@ export class KulImage {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-image-event',
+    eventName: "kul-image-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -140,7 +140,7 @@ export class KulImage {
   /*                 W a t c h e r s                 */
   /*-------------------------------------------------*/
 
-  @Watch('kulValue')
+  @Watch("kulValue")
   async resetState() {
     this.error = false;
   }
@@ -180,7 +180,7 @@ export class KulImage {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -194,25 +194,25 @@ export class KulImage {
       image__icon: true,
     };
     const style = {
-      ['--kul_image_background']: this.kulColor
+      ["--kul_image_background"]: this.kulColor
         ? this.kulColor
         : `var(${KulThemeColorValues.ICON})`,
-      ['--kul_image_mask']: '',
+      ["--kul_image_mask"]: "",
     };
     const isThemeIcon = this.kulValue.indexOf(CSS_VAR_PREFIX) > -1;
     if (isThemeIcon) {
-      const themeIcon = this.kulValue.replace('--', '');
-      className['kul-icon'] = true;
+      const themeIcon = this.kulValue.replace("--", "");
+      className["kul-icon"] = true;
       className[themeIcon] = true;
     }
     const icon = this.error
-      ? 'broken_image'
+      ? "broken_image"
       : isThemeIcon
         ? this.#kulManager.theme.list[this.#kulManager.theme.name].icons[
             this.kulValue
           ]
         : this.kulValue;
-    style['--kul_image_mask'] =
+    style["--kul_image_mask"] =
       `url('${getAssetPath(`./assets/svg/${icon}.svg`)}') no-repeat center`;
 
     return <div class={className} style={style}></div>;
@@ -223,11 +223,11 @@ export class KulImage {
       <img
         onError={(e) => {
           this.error = true;
-          this.onKulEvent(e, 'error');
+          this.onKulEvent(e, "error");
         }}
         onLoad={(e) => {
           this.resetState();
-          this.onKulEvent(e, 'load');
+          this.onKulEvent(e, "load");
         }}
         src={this.kulValue}
       ></img>
@@ -237,9 +237,9 @@ export class KulImage {
   isResourceUrl(): boolean {
     return !!(
       this.kulValue &&
-      (this.kulValue.indexOf('.') > -1 ||
-        this.kulValue.indexOf('/') > -1 ||
-        this.kulValue.indexOf('\\') > -1)
+      (this.kulValue.indexOf(".") > -1 ||
+        this.kulValue.indexOf("/") > -1 ||
+        this.kulValue.indexOf("\\") > -1)
     );
   }
 
@@ -252,21 +252,21 @@ export class KulImage {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
     if (!this.kulValue) {
-      this.#kulManager.debug.logs.new(this, 'Empty image.');
+      this.#kulManager.debug.logs.new(this, "Empty image.");
       return;
     }
 
@@ -275,8 +275,8 @@ export class KulImage {
     const isUrl = this.isResourceUrl();
     let spinnerLayout: number;
     let style = {
-      '--kul_image_height': this.kulSizeY ? this.kulSizeY : 'auto',
-      '--kul_image_width': this.kulSizeX ? this.kulSizeX : '100%',
+      "--kul_image_height": this.kulSizeY ? this.kulSizeY : "auto",
+      "--kul_image_width": this.kulSizeX ? this.kulSizeX : "100%",
     };
 
     if (isUrl && !this.error) {
@@ -310,7 +310,7 @@ export class KulImage {
           <div
             class="image"
             onClick={(e) => {
-              this.onKulEvent(e, 'click');
+              this.onKulEvent(e, "click");
             }}
           >
             {el}

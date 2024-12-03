@@ -9,15 +9,15 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
-import { getters } from './helpers/kul-messenger-getters';
-import { setters } from './helpers/kul-messenger-setters';
+import { getters } from "./helpers/kul-messenger-getters";
+import { setters } from "./helpers/kul-messenger-setters";
 import {
   CLEAN_COMPONENTS,
   CLEAN_UI_JSON,
   IMAGE_TYPE_IDS,
-} from './kul-messenger-constants';
+} from "./kul-messenger-constants";
 import {
   KulMessengerProps,
   KulMessengerEvent,
@@ -35,22 +35,22 @@ import {
   KulMessengerChildIds,
   KulMessengerImageTypes,
   KulMessengerUnionChildIds,
-} from './kul-messenger-declarations';
-import { prepCenter } from './layout/kul-messenger-center';
-import { prepLeft } from './layout/kul-messenger-left';
-import { prepRight } from './layout/kul-messenger-right';
-import { prepGrid } from './selection-grid/kul-messenger-selection-grid';
-import { KulDataCell } from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import type { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulChatStatus } from '../kul-chat/kul-chat-declarations';
+} from "./kul-messenger-declarations";
+import { prepCenter } from "./layout/kul-messenger-center";
+import { prepLeft } from "./layout/kul-messenger-left";
+import { prepRight } from "./layout/kul-messenger-right";
+import { prepGrid } from "./selection-grid/kul-messenger-selection-grid";
+import { KulDataCell } from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import type { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
 
 @Component({
-  tag: 'kul-messenger',
-  styleUrl: 'kul-messenger.scss',
+  tag: "kul-messenger",
+  styleUrl: "kul-messenger.scss",
   shadow: true,
 })
 export class KulMessenger {
@@ -80,7 +80,7 @@ export class KulMessenger {
   /**
    * Tracks the connection status towards the LLM endpoint.
    */
-  @State() connectionStatus: KulChatStatus = 'offline';
+  @State() connectionStatus: KulChatStatus = "offline";
   /**
    * State for the options' covers.
    */
@@ -137,7 +137,7 @@ export class KulMessenger {
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop() kulStyle: string = '';
+  @Prop() kulStyle: string = "";
   /**
    * Sets the initial configuration, including active character and filters.
    * @default ""
@@ -158,7 +158,7 @@ export class KulMessenger {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-messenger-event',
+    eventName: "kul-messenger-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -226,7 +226,7 @@ export class KulMessenger {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -278,9 +278,9 @@ export class KulMessenger {
             {} as KulMessengerCovers[typeof character.id],
           ),
         };
-        const chat = character.children?.find((n) => n.id === 'chat');
+        const chat = character.children?.find((n) => n.id === "chat");
         this.chat[character.id] = {};
-        const chatCell = chat?.cells?.kulChat as KulDataCell<'chat'>;
+        const chatCell = chat?.cells?.kulChat as KulDataCell<"chat">;
         if (chatCell) {
           const characterChat = this.chat[character.id];
           characterChat.kulEndpointUrl = chatCell.kulEndpointUrl;
@@ -320,7 +320,7 @@ export class KulMessenger {
     for (let index = 0; index < this.kulData.nodes.length; index++) {
       const character = this.kulData.nodes[index];
       const id = character.id;
-      const chatNode = character.children.find((n) => n.id === 'chat');
+      const chatNode = character.children.find((n) => n.id === "chat");
       const chatComp = this.#adapter.get.character.chat(character);
       const saveChat = () => {
         if (this.history[id] && chatNode) {
@@ -330,12 +330,12 @@ export class KulMessenger {
           } catch (error) {
             chatNode.cells = {
               kulChat: {
-                shape: 'chat',
+                shape: "chat",
                 value: historyJson,
               },
             };
           }
-          const chatCell = chatNode.cells.kulChat as KulDataCell<'chat'>;
+          const chatCell = chatNode.cells.kulChat as KulDataCell<"chat">;
           chatCell.kulEndpointUrl = chatComp.kulEndpointUrl;
           chatCell.kulMaxTokens = chatComp.kulMaxTokens;
           chatCell.kulPollingInterval = chatComp.kulPollingInterval;
@@ -355,7 +355,7 @@ export class KulMessenger {
       saveChat();
       saveCovers();
     }
-    this.onKulEvent(new CustomEvent('save'), 'save');
+    this.onKulEvent(new CustomEvent("save"), "save");
   }
 
   /*-------------------------------------------------*/
@@ -374,16 +374,16 @@ export class KulMessenger {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {

@@ -1,12 +1,12 @@
-import { h, VNode } from '@stencil/core';
+import { h, VNode } from "@stencil/core";
 
-import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulCodeEventPayload } from '../../kul-code/kul-code-declarations';
-import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
-import { KulToggleEventPayload } from '../../kul-toggle/kul-toggle-declarations';
-import { DEFAULTS } from '../helpers/kul-card-defaults';
-import { KulCardAdapter, KulCardShapesIds } from '../kul-card-declarations';
+import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulCodeEventPayload } from "../../kul-code/kul-code-declarations";
+import { KulListEventPayload } from "../../kul-list/kul-list-declarations";
+import { KulToggleEventPayload } from "../../kul-toggle/kul-toggle-declarations";
+import { DEFAULTS } from "../helpers/kul-card-defaults";
+import { KulCardAdapter, KulCardShapesIds } from "../kul-card-declarations";
 
 export function getDebugLayout(adapter: KulCardAdapter): VNode {
   const card = adapter.get.card();
@@ -15,21 +15,21 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
   const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
   const buttons = decorator(
-    'button',
+    "button",
     shapes.button,
     eventDispatcher,
     DEFAULTS.debug.button(),
     buttonEventHandler,
   );
   const codes = decorator(
-    'code',
+    "code",
     shapes.code,
     eventDispatcher,
     DEFAULTS.debug.code(),
     codeEventHandler,
   );
   const togglees = decorator(
-    'toggle',
+    "toggle",
     shapes.toggle,
     eventDispatcher,
     DEFAULTS.debug.toggle(),
@@ -70,7 +70,7 @@ const buttonEventHandler = (e: CustomEvent<KulButtonEventPayload>) => {
   }
 
   switch (eventType) {
-    case 'click':
+    case "click":
       switch (id) {
         case KulCardShapesIds.CLEAR:
           kulManagerInstance().debug.logs.dump();
@@ -80,7 +80,7 @@ const buttonEventHandler = (e: CustomEvent<KulButtonEventPayload>) => {
           break;
       }
       break;
-    case 'kul-event':
+    case "kul-event":
       switch (id) {
         case KulCardShapesIds.THEME:
           listEventHandler(originalEvent as CustomEvent<KulListEventPayload>);
@@ -94,10 +94,10 @@ const codeEventHandler = (e: CustomEvent<KulCodeEventPayload>) => {
   const { comp, eventType } = e.detail;
 
   switch (eventType) {
-    case 'ready':
+    case "ready":
       kulManagerInstance().debug.register(comp);
       break;
-    case 'unmount':
+    case "unmount":
       kulManagerInstance().debug.unregister(comp);
       break;
   }
@@ -107,7 +107,7 @@ const listEventHandler = (e: CustomEvent<KulListEventPayload>) => {
   const { eventType, node } = e.detail;
 
   switch (eventType) {
-    case 'click':
+    case "click":
       kulManagerInstance().theme.set(node.id);
       break;
   }
@@ -115,16 +115,16 @@ const listEventHandler = (e: CustomEvent<KulListEventPayload>) => {
 
 const toggleEventHandler = (e: CustomEvent<KulToggleEventPayload>) => {
   const { comp, eventType, value } = e.detail;
-  const boolValue = value === 'on' ? true : false;
+  const boolValue = value === "on" ? true : false;
 
   switch (eventType) {
-    case 'change':
+    case "change":
       kulManagerInstance().debug.toggle(boolValue, false);
       break;
-    case 'ready':
+    case "ready":
       kulManagerInstance().debug.register(comp);
       break;
-    case 'unmount':
+    case "unmount":
       kulManagerInstance().debug.unregister(comp);
       break;
   }

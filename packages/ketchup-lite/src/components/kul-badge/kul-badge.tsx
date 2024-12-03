@@ -9,24 +9,24 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulBadgeEvent,
   KulBadgeEventPayload,
   KulBadgeProps,
-} from './kul-badge-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
+} from "./kul-badge-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarations";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 
 @Component({
-  tag: 'kul-badge',
-  styleUrl: 'kul-badge.scss',
+  tag: "kul-badge",
+  styleUrl: "kul-badge.scss",
   shadow: true,
 })
 export class KulBadge {
@@ -63,12 +63,12 @@ export class KulBadge {
    * The text displayed inside the badge.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: false }) kulLabel = '';
+  @Prop({ mutable: true, reflect: false }) kulLabel = "";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -84,7 +84,7 @@ export class KulBadge {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-badge-event',
+    eventName: "kul-badge-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -135,7 +135,7 @@ export class KulBadge {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -149,16 +149,16 @@ export class KulBadge {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -177,7 +177,7 @@ export class KulBadge {
             {this.#kulManager.theme.setKulStyle(this)}
           </style>
         ) : undefined}
-        <div id={KUL_WRAPPER_ID} onClick={(e) => this.onKulEvent(e, 'click')}>
+        <div id={KUL_WRAPPER_ID} onClick={(e) => this.onKulEvent(e, "click")}>
           {this.kulLabel}
           {imageEl}
         </div>

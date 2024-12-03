@@ -9,7 +9,7 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulCanvasBrush,
@@ -17,18 +17,18 @@ import {
   KulCanvasEventPayload,
   KulCanvasPoints,
   KulCanvasProps,
-} from './kul-canvas-declarations';
-import { GenericObject } from '../../components';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
-import { simplifyStroke } from './helpers/kul-canvas-helpers';
+} from "./kul-canvas-declarations";
+import { GenericObject } from "../../components";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
+import { simplifyStroke } from "./helpers/kul-canvas-helpers";
 
 @Component({
-  tag: 'kul-canvas',
-  styleUrl: 'kul-canvas.scss',
+  tag: "kul-canvas",
+  styleUrl: "kul-canvas.scss",
   shadow: true,
 })
 export class KulCanvas {
@@ -64,12 +64,12 @@ export class KulCanvas {
    * The shape of the brush.
    * @default 'round'
    */
-  @Prop({ mutable: true, reflect: true }) kulBrush: KulCanvasBrush = 'round';
+  @Prop({ mutable: true, reflect: true }) kulBrush: KulCanvasBrush = "round";
   /**
    * The color of the brush.
    * @default '#ff0000'
    */
-  @Prop({ mutable: true, reflect: true }) kulColor = '#ff0000';
+  @Prop({ mutable: true, reflect: true }) kulColor = "#ff0000";
   /**
    * The props of the image displayed inside the badge.
    * @default null
@@ -100,7 +100,7 @@ export class KulCanvas {
    * Customizes the style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   //#endregion
   //#region Internal variables
   #board: HTMLCanvasElement;
@@ -115,7 +115,7 @@ export class KulCanvas {
   //#endregion
   //#region Events
   @Event({
-    eventName: 'kul-canvas-event',
+    eventName: "kul-canvas-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -210,7 +210,7 @@ export class KulCanvas {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -237,8 +237,8 @@ export class KulCanvas {
   }
 
   #setupContext(ctx: CanvasRenderingContext2D, isFill = false) {
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
     ctx.globalAlpha = this.kulOpacity;
     if (isFill) {
       ctx.fillStyle = this.kulColor;
@@ -256,8 +256,8 @@ export class KulCanvas {
 
     this.#board.setPointerCapture(e.pointerId);
 
-    this.#board.addEventListener('pointermove', this.#handlePointerMove);
-    this.#board.addEventListener('pointerup', this.#handlePointerUp);
+    this.#board.addEventListener("pointermove", this.#handlePointerMove);
+    this.#board.addEventListener("pointerup", this.#handlePointerUp);
   }
 
   #handlePointerMove = (e: PointerEvent) => {
@@ -295,8 +295,8 @@ export class KulCanvas {
 
     this.#board.releasePointerCapture(e.pointerId);
 
-    this.#board.removeEventListener('pointermove', this.#handlePointerMove);
-    this.#board.removeEventListener('pointerup', this.#handlePointerUp);
+    this.#board.removeEventListener("pointermove", this.#handlePointerMove);
+    this.#board.removeEventListener("pointerup", this.#handlePointerUp);
   }
 
   #drawBrushCursor(event: PointerEvent) {
@@ -317,10 +317,10 @@ export class KulCanvas {
   ) {
     ctx.beginPath();
     switch (this.kulBrush) {
-      case 'round':
+      case "round":
         ctx.arc(x, y, this.kulSize / 2, 0, Math.PI * 2);
         break;
-      case 'square':
+      case "square":
         const halfSize = this.kulSize / 2;
         ctx.rect(x - halfSize, y - halfSize, this.kulSize, this.kulSize);
         break;
@@ -348,12 +348,12 @@ export class KulCanvas {
 
     this.#setupContext(this.#boardCtx, false);
 
-    if (this.kulBrush === 'round') {
+    if (this.kulBrush === "round") {
       this.#boardCtx.beginPath();
       this.#boardCtx.moveTo(x1, y1);
       this.#boardCtx.lineTo(x2, y2);
       this.#boardCtx.stroke();
-    } else if (this.kulBrush === 'square') {
+    } else if (this.kulBrush === "square") {
       this.#drawBrushShape(this.#boardCtx, x2, y2, false);
     }
   }
@@ -364,8 +364,8 @@ export class KulCanvas {
   }
 
   componentDidLoad() {
-    this.#boardCtx = this.#board.getContext('2d');
-    this.#cursorCtx = this.#cursor.getContext('2d');
+    this.#boardCtx = this.#board.getContext("2d");
+    this.#cursorCtx = this.#cursor.getContext("2d");
 
     this.setCanvasHeight();
     this.setCanvasWidth();
@@ -379,16 +379,16 @@ export class KulCanvas {
     });
     this.#resizeObserver.observe(this.#container);
 
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -421,7 +421,7 @@ export class KulCanvas {
               class="canvas__board"
               onPointerDown={(e) => this.#handlePointerDown(e)}
               onPointerMove={(e) => this.#handlePointerMove(e)}
-              onPointerUp={(e) => this.onKulEvent(e, 'stroke')}
+              onPointerUp={(e) => this.onKulEvent(e, "stroke")}
               onPointerOut={(e) => this.#handlePointerOut(e)}
               ref={(el) => {
                 if (el) {

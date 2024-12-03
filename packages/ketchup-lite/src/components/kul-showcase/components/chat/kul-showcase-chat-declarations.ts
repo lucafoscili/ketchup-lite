@@ -1,11 +1,11 @@
-import { KulChatPropsInterface } from '../../../kul-chat/kul-chat-declarations';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { KulChatPropsInterface } from "../../../kul-chat/kul-chat-declarations";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
-export const CHAT_EXAMPLES_KEYS = ['bottomLayout', 'simple', 'style'] as const;
+export const CHAT_EXAMPLES_KEYS = ["bottomLayout", "simple", "style"] as const;
 
 export interface ChatExample extends KulChatPropsInterface {
-  ['data-description']: string;
-  ['data-dynamic']?: KulShowcaseDynamicExampleType;
+  ["data-description"]: string;
+  ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 
 export type ChatData = {

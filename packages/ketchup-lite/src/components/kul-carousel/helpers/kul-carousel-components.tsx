@@ -1,9 +1,9 @@
-import { h } from '@stencil/core';
+import { h } from "@stencil/core";
 
-import { KulCarouselAdapterComponents } from '../kul-carousel-declarations';
+import { KulCarouselAdapterComponents } from "../kul-carousel-declarations";
 
-const BACK_ICON = 'chevron_left';
-const FORWARD_ICON = 'chevron_right';
+const BACK_ICON = "chevron_left";
+const FORWARD_ICON = "chevron_right";
 
 export const COMPONENTS: KulCarouselAdapterComponents = {
   back: (adapter) => {

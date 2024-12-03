@@ -4,16 +4,16 @@ import {
   TooltipComponentOption,
   XAXisComponentOption,
   YAXisComponentOption,
-} from 'echarts';
+} from "echarts";
 
-import { KulChartAdapterDesign } from '../kul-chart-declarations';
+import { KulChartAdapterDesign } from "../kul-chart-declarations";
 
 export const CHART_DESIGN: KulChartAdapterDesign = {
   applyOpacity: (color, opacity) => `${color}${opacity}`,
   axis: (adapter, axisType) => {
     const theme = adapter.get.design.theme;
 
-    if (axisType === 'x') {
+    if (axisType === "x") {
       return {
         axisLabel: {
           hideOverlap: true,
@@ -23,12 +23,12 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         axisLine: { lineStyle: { color: theme.textColor } },
         axisTick: { lineStyle: { color: theme.border } },
         splitLine: { lineStyle: { color: theme.border } },
-        boundaryGap: '10%',
+        boundaryGap: "10%",
         grid: {
-          left: '10%',
-          right: '10%',
-          bottom: '10%',
-          top: '10%',
+          left: "10%",
+          right: "10%",
+          bottom: "10%",
+          top: "10%",
           containLabel: true,
         },
       } as XAXisComponentOption;
@@ -42,12 +42,12 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
         axisLine: { lineStyle: { color: theme.textColor } },
         axisTick: { lineStyle: { color: theme.border } },
         splitLine: { lineStyle: { color: theme.border } },
-        boundaryGap: '10%',
+        boundaryGap: "10%",
         grid: {
-          left: '10%',
-          right: '10%',
-          bottom: '10%',
-          top: '10%',
+          left: "10%",
+          right: "10%",
+          bottom: "10%",
+          top: "10%",
           containLabel: true,
         },
       } as YAXisComponentOption;
@@ -84,15 +84,15 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
     const theme = adapter.get.design.theme;
     const label: EChartsOption = {
       show: true,
-      formatter: '{b|{b}}',
+      formatter: "{b|{b}}",
       rich: {
         b: {
           color: theme.textColor,
           fontFamily: theme.font,
-          textShadow: 'none',
+          textShadow: "none",
         },
       },
-      textShadowColor: 'transparent',
+      textShadowColor: "transparent",
       textShadowOffsetX: 0,
       textShadowOffsetY: 0,
       textShadowBlur: 0,
@@ -101,7 +101,7 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
   },
   legend: (adapter) => {
     const chart = adapter.get.chart();
-    if (chart.kulLegend === 'hidden') {
+    if (chart.kulLegend === "hidden") {
       return null;
     }
 
@@ -118,12 +118,12 @@ export const CHART_DESIGN: KulChartAdapterDesign = {
     return legend;
   },
   theme: {
-    backgroundColor: '',
-    border: '',
-    dangerColor: '',
-    font: '',
-    successColor: '',
-    textColor: '',
+    backgroundColor: "",
+    border: "",
+    dangerColor: "",
+    font: "",
+    successColor: "",
+    textColor: "",
   },
   tooltip: (adapter, formatter?) => {
     const theme = adapter.get.design.theme;

@@ -1,4 +1,4 @@
-import { GenericObject } from '../../types/GenericTypes';
+import { GenericObject } from "../../types/GenericTypes";
 
 //#region Data
 export interface KulShowcaseDocMethod {
@@ -26,15 +26,15 @@ export interface KulShowcaseDoc {
     | GenericObject;
 }
 export type KulShowcaseDynamicExampleType =
-  | 'custom'
-  | 'state-colors'
-  | 'positions';
-export type KulShowcaseTitle = 'Components' | 'Framework' | 'Utilities';
+  | "custom"
+  | "state-colors"
+  | "positions";
+export type KulShowcaseTitle = "Components" | "Framework" | "Utilities";
 //#endregion
 
 //#region Props
 export enum KulShowcaseProps {
-  kulStyle = 'Custom style of the component.',
+  kulStyle = "Custom style of the component.",
 }
 export interface KulShowcasePropsInterface {
   kulStyle: string;

@@ -1,17 +1,17 @@
-import { Component, Element, Fragment, State, h } from '@stencil/core';
+import { Component, Element, Fragment, State, h } from "@stencil/core";
 
-import { DEBUG_DOC } from './kul-showcase-debug-data';
+import { DEBUG_DOC } from "./kul-showcase-debug-data";
 import {
   GenericObject,
   KulDataCyAttributes,
-} from '../../../../types/GenericTypes';
-import { KUL_WRAPPER_ID } from '../../../../variables/GenericVariables';
-import { KulButtonEventPayload } from '../../../kul-button/kul-button-declarations';
-import { KulListEventPayload } from '../../../kul-list/kul-list-declarations';
+} from "../../../../types/GenericTypes";
+import { KUL_WRAPPER_ID } from "../../../../variables/GenericVariables";
+import { KulButtonEventPayload } from "../../../kul-button/kul-button-declarations";
+import { KulListEventPayload } from "../../../kul-list/kul-list-declarations";
 
 @Component({
-  tag: 'kul-showcase-debug',
-  styleUrl: 'kul-showcase-debug.scss',
+  tag: "kul-showcase-debug",
+  styleUrl: "kul-showcase-debug.scss",
   shadow: true,
 })
 export class KulShowcaseDebug {
@@ -25,7 +25,7 @@ export class KulShowcaseDebug {
    * String keeping track of the current component selected by the dropdown.
    * @default ""
    */
-  @State() currentComponent = '';
+  @State() currentComponent = "";
   /**
    * Object keeping track of the current specified props.
    * @default undefined
@@ -45,7 +45,7 @@ export class KulShowcaseDebug {
   //#region Private methods
   #prepComponent() {
     const ComponentTag = this.currentComponent
-      ? 'kul-' + this.currentComponent
+      ? "kul-" + this.currentComponent
       : undefined;
     return ComponentTag ? (
       <div class="component-wrapper">
@@ -66,11 +66,11 @@ export class KulShowcaseDebug {
   #prepTextarea() {
     return this.currentComponent ? (
       <kul-textfield
-        class={this.invalidJson ? 'kul-danger' : ''}
-        key={'enabled'}
-        kulLabel={this.invalidJson ? 'Invalid JSON' : 'Props'}
+        class={this.invalidJson ? "kul-danger" : ""}
+        key={"enabled"}
+        kulLabel={this.invalidJson ? "Invalid JSON" : "Props"}
         onKul-textfield-event={(e) => {
-          if (e.detail.eventType === 'change') {
+          if (e.detail.eventType === "change") {
             try {
               const json = JSON.parse(e.detail.value);
               this.currentProps = json;
@@ -85,7 +85,7 @@ export class KulShowcaseDebug {
       ></kul-textfield>
     ) : (
       <kul-textfield
-        key={'disabled'}
+        key={"disabled"}
         kulDisabled={true}
         kulFullWidth={true}
         kulLabel="Props"
@@ -109,8 +109,8 @@ export class KulShowcaseDebug {
                 articleDetail.originalEvent as CustomEvent<KulButtonEventPayload>
               ).detail;
               if (
-                articleDetail.eventType === 'kul-event' &&
-                buttonDetail?.eventType === 'kul-event'
+                articleDetail.eventType === "kul-event" &&
+                buttonDetail?.eventType === "kul-event"
               ) {
                 const listDetail = (
                   buttonDetail.originalEvent as CustomEvent<KulListEventPayload>

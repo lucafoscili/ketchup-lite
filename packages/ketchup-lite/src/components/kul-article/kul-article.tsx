@@ -11,7 +11,7 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulArticleDataset,
@@ -19,18 +19,18 @@ import {
   KulArticleEventPayload,
   KulArticleNode,
   KulArticleProps,
-} from './kul-article-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { KulLanguageGeneric } from '../../managers/kul-language/kul-language-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-article-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { KulLanguageGeneric } from "../../managers/kul-language/kul-language-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  assetsDirs: ['assets/fonts'],
-  tag: 'kul-article',
-  styleUrl: 'kul-article.scss',
+  assetsDirs: ["assets/fonts"],
+  tag: "kul-article",
+  styleUrl: "kul-article.scss",
   shadow: true,
 })
 export class KulArticle {
@@ -67,7 +67,7 @@ export class KulArticle {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -83,7 +83,7 @@ export class KulArticle {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-article-event',
+    eventName: "kul-article-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -134,7 +134,7 @@ export class KulArticle {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -193,14 +193,14 @@ export class KulArticle {
   }
 
   #wrapperTemplate(node: KulArticleNode, depth: number): VNode {
-    const ComponentTag = node.children?.some((child) => child.tagName === 'li')
-      ? 'ul'
+    const ComponentTag = node.children?.some((child) => child.tagName === "li")
+      ? "ul"
       : node.tagName
         ? node.tagName
-        : 'div';
+        : "div";
     return (
       <Fragment>
-        {node.value ? <div>{node.value}</div> : ''}
+        {node.value ? <div>{node.value}</div> : ""}
         <ComponentTag
           class="content-wrapper"
           data-depth={depth.toString()}
@@ -239,11 +239,11 @@ export class KulArticle {
 
     if (cell) {
       const shape = decorator(cell.shape, [cell], async (e) =>
-        this.onKulEvent(e, 'kul-event'),
+        this.onKulEvent(e, "kul-event"),
       );
       return shape.element[0];
     } else {
-      const ComponentTag = node.tagName ? node.tagName : 'span';
+      const ComponentTag = node.tagName ? node.tagName : "span";
       return (
         <ComponentTag
           class={`content content--${ComponentTag}`}
@@ -275,16 +275,16 @@ export class KulArticle {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {

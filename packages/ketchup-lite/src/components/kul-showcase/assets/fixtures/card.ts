@@ -1,7 +1,7 @@
-import { getAssetPath } from '@stencil/core';
+import { getAssetPath } from "@stencil/core";
 
-import { KulDataDataset } from '../../../../managers/kul-data/kul-data-declarations';
-import { KulCardLayout } from '../../../kul-card/kul-card-declarations';
+import { KulDataDataset } from "../../../../managers/kul-data/kul-data-declarations";
+import { KulCardLayout } from "../../../kul-card/kul-card-declarations";
 
 export const CARD_KULDATA_FACTORY: {
   [K in KulCardLayout]: () => KulDataDataset;
@@ -11,21 +11,21 @@ export const CARD_KULDATA_FACTORY: {
       nodes: [
         {
           cells: {
-            kulCode: { shape: 'code', value: '' },
+            kulCode: { shape: "code", value: "" },
             kulButton: {
-              shape: 'button',
-              value: '',
+              shape: "button",
+              value: "",
             },
             kulButton_2: {
-              shape: 'button',
-              value: '',
+              shape: "button",
+              value: "",
             },
             kulToggle: {
-              shape: 'toggle',
+              shape: "toggle",
               value: false,
             },
           },
-          id: 'debug',
+          id: "debug",
         },
       ],
     };
@@ -36,124 +36,124 @@ export const CARD_KULDATA_FACTORY: {
         {
           cells: {
             kulChart: {
-              kulAxis: 'Axis_0',
+              kulAxis: "Axis_0",
               kulData: {
                 columns: [
                   {
-                    id: 'Axis_0',
-                    title: 'Keyword',
+                    id: "Axis_0",
+                    title: "Keyword",
                   },
                   {
-                    id: 'Series_0',
-                    title: 'Count',
+                    id: "Series_0",
+                    title: "Count",
                   },
                 ],
                 nodes: [
                   {
                     cells: {
                       Axis_0: {
-                        value: 'key_1',
+                        value: "key_1",
                       },
                       Series_0: {
-                        shape: 'number',
+                        shape: "number",
                         value: 1,
                       },
                     },
-                    id: '0',
+                    id: "0",
                   },
                   {
                     cells: {
                       Axis_0: {
-                        value: 'key_2',
+                        value: "key_2",
                       },
                       Series_0: {
-                        shape: 'number',
+                        shape: "number",
                         value: 2,
                       },
                     },
-                    id: '1',
+                    id: "1",
                   },
                   {
                     cells: {
                       Axis_0: {
-                        value: 'key_3',
+                        value: "key_3",
                       },
                       Series_0: {
-                        shape: 'number',
+                        shape: "number",
                         value: 6,
                       },
                     },
-                    id: '2',
+                    id: "2",
                   },
                   {
                     cells: {
                       Axis_0: {
-                        value: 'key_4',
+                        value: "key_4",
                       },
                       Series_0: {
-                        shape: 'number',
+                        shape: "number",
                         value: 0,
                       },
                     },
-                    id: '3',
+                    id: "3",
                   },
                   {
                     cells: {
                       Axis_0: {
-                        value: 'key_5',
+                        value: "key_5",
                       },
                       Series_0: {
-                        shape: 'number',
+                        shape: "number",
                         value: 12,
                       },
                     },
-                    id: '4',
+                    id: "4",
                   },
                 ],
               },
-              kulSeries: ['Series_0'],
-              shape: 'chart',
-              value: '',
+              kulSeries: ["Series_0"],
+              shape: "chart",
+              value: "",
             },
             kulChip: {
               kulData: {
                 nodes: [
                   {
-                    id: 'key_1',
-                    value: 'key_1',
+                    id: "key_1",
+                    value: "key_1",
                   },
                   {
-                    id: 'key_2',
-                    value: 'key_2',
+                    id: "key_2",
+                    value: "key_2",
                   },
                   {
-                    id: 'key_3',
-                    value: 'key_3',
+                    id: "key_3",
+                    value: "key_3",
                   },
                   {
-                    id: 'key_4',
-                    value: 'key_4',
+                    id: "key_4",
+                    value: "key_4",
                   },
                   {
-                    id: 'key_5',
-                    value: 'key_5',
+                    id: "key_5",
+                    value: "key_5",
                   },
                 ],
               },
-              kulStyle: '#kul-component .chip-set { height: auto; }',
-              kulStyling: 'filter',
-              shape: 'chip',
-              value: '',
+              kulStyle: "#kul-component .chip-set { height: auto; }",
+              kulStyling: "filter",
+              shape: "chip",
+              value: "",
             },
             kulButton: {
-              kulIcon: 'content_copy',
-              kulLabel: 'Copy selected',
-              kulStyling: 'flat',
-              shape: 'button',
-              value: '',
+              kulIcon: "content_copy",
+              kulLabel: "Copy selected",
+              kulStyling: "flat",
+              shape: "button",
+              value: "",
             },
           },
-          id: 'keywords',
+          id: "keywords",
         },
       ],
     };
@@ -163,15 +163,15 @@ export const CARD_KULDATA_FACTORY: {
       nodes: [
         {
           cells: {
-            1: { value: 'Title' },
-            2: { value: 'Subtitle' },
-            3: { value: 'Description' },
+            1: { value: "Title" },
+            2: { value: "Subtitle" },
+            3: { value: "Description" },
             kulImage: {
-              shape: 'image',
+              shape: "image",
               value: getAssetPath(`./assets/media/color_splash.jpg`),
             },
           },
-          id: 'material',
+          id: "material",
         },
       ],
     };
@@ -181,13 +181,13 @@ export const CARD_KULDATA_FACTORY: {
       nodes: [
         {
           cells: {
-            kulButton: { shape: 'button', value: '' },
+            kulButton: { shape: "button", value: "" },
             kulUpload: {
-              shape: 'upload',
-              value: '',
+              shape: "upload",
+              value: "",
             },
           },
-          id: 'upload',
+          id: "upload",
         },
       ],
     };

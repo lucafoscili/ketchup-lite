@@ -1,15 +1,15 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { BUTTON_DOC, BUTTON_EXAMPLES } from './kul-showcase-button-data';
-import { ButtonExample } from './kul-showcase-button-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { KulButtonStyling } from '../../../kul-button/kul-button-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { BUTTON_DOC, BUTTON_EXAMPLES } from "./kul-showcase-button-data";
+import { ButtonExample } from "./kul-showcase-button-declarations";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { KulButtonStyling } from "../../../kul-button/kul-button-declarations";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 @Component({
-  tag: 'kul-showcase-button',
-  styleUrl: 'kul-showcase-button.scss',
+  tag: "kul-showcase-button",
+  styleUrl: "kul-showcase-button.scss",
   shadow: true,
 })
 export class KulShowcaseButton {
@@ -45,14 +45,14 @@ export class KulShowcaseButton {
             group.push(
               <div class="example" part="example">
                 <div class="description" part="description">
-                  {props['data-description']}
+                  {props["data-description"]}
                 </div>
                 <div class="comp-wrapper" part="comp-wrapper">
                   <kul-button
-                    key={k1 + '-' + k2}
-                    id={k1 + '-' + k2}
+                    key={k1 + "-" + k2}
+                    id={k1 + "-" + k2}
                     ref={(el) => {
-                      if (el && props['data-dynamic']) {
+                      if (el && props["data-dynamic"]) {
                         this.#dynamicExamples.push(el);
                       }
                     }}
@@ -95,12 +95,12 @@ export class KulShowcaseButton {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
-            case 'state-colors':
+            case "state-colors":
               comp.className =
-                'hydrated ' +
+                "hydrated " +
                 this.#dynamicExampleManager.stateColors.get(comp.id);
               break;
           }

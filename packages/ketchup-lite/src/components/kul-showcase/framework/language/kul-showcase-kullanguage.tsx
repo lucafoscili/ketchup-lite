@@ -1,11 +1,11 @@
-import { Component, Element, Fragment, h } from '@stencil/core';
+import { Component, Element, Fragment, h } from "@stencil/core";
 
-import { LANGUAGE_DATA } from './kul-showcase-kullanguage-data';
-import { KUL_WRAPPER_ID } from '../../../../variables/GenericVariables';
+import { LANGUAGE_DATA } from "./kul-showcase-kullanguage-data";
+import { KUL_WRAPPER_ID } from "../../../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-showcase-kullanguage',
-  styleUrl: 'kul-showcase-kullanguage.scss',
+  tag: "kul-showcase-kullanguage",
+  styleUrl: "kul-showcase-kullanguage.scss",
   shadow: true,
 })
 export class KulShowcaseKullanguage {

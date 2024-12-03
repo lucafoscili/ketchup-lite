@@ -1,15 +1,15 @@
-import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import minMax from 'dayjs/plugin/minMax';
-import 'dayjs/locale/es';
-import 'dayjs/locale/fr';
-import 'dayjs/locale/it';
-import 'dayjs/locale/pl';
-import 'dayjs/locale/ru';
-import 'dayjs/locale/zh';
-import { KulGenericRootElement } from '../../types/GenericTypes';
-import { KulDatesLocales, KulDatesNormalize } from './kul-dates-declarations';
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import localizedFormat from "dayjs/plugin/localizedFormat";
+import minMax from "dayjs/plugin/minMax";
+import "dayjs/locale/es";
+import "dayjs/locale/fr";
+import "dayjs/locale/it";
+import "dayjs/locale/pl";
+import "dayjs/locale/ru";
+import "dayjs/locale/zh";
+import { KulGenericRootElement } from "../../types/GenericTypes";
+import { KulDatesLocales, KulDatesNormalize } from "./kul-dates-declarations";
 export class KulDates {
   dayjs: Function;
   locale: KulDatesLocales;
@@ -32,9 +32,9 @@ export class KulDates {
         navigator.languages ||
         (navigator.language ? [navigator.language] : false);
       if (!navLangs || !navLangs.length) {
-        return 'en';
+        return "en";
       }
-      this.locale = navLangs[0].split('-')[0].toLowerCase() as KulDatesLocales;
+      this.locale = navLangs[0].split("-")[0].toLowerCase() as KulDatesLocales;
 
       let found = false;
       for (const key in KulDatesLocales) {
@@ -56,7 +56,7 @@ export class KulDates {
         comp.refresh();
       }
     });
-    document.dispatchEvent(new CustomEvent('kul-dates-localechange'));
+    document.dispatchEvent(new CustomEvent("kul-dates-localechange"));
   }
   getLocale(): string {
     return this.locale;
@@ -64,7 +64,7 @@ export class KulDates {
   getLocales(): Array<KulDatesLocales> {
     const items: Array<KulDatesLocales> = Object.keys(KulDatesLocales)
       .map((key) => KulDatesLocales[key as keyof typeof KulDatesLocales])
-      .filter((value) => typeof value === 'string');
+      .filter((value) => typeof value === "string");
     return items;
   }
   getDateFormat(): string {
@@ -75,64 +75,64 @@ export class KulDates {
     let dateFormat = formatObj
       .map((obj) => {
         switch (obj.type) {
-          case 'day':
-            return 'DD';
-          case 'month':
-            return 'MM';
-          case 'year':
-            return 'YYYY';
+          case "day":
+            return "DD";
+          case "month":
+            return "MM";
+          case "year":
+            return "YYYY";
           default:
             return obj.value;
         }
       })
-      .join('');
+      .join("");
     return dateFormat;
   }
   getTimeFormat(manageSeconds: boolean): string {
     const options: Intl.DateTimeFormatOptions = {
-      hour: '2-digit',
-      minute: '2-digit',
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: false,
     };
     if (manageSeconds == true) {
-      options.second = '2-digit';
+      options.second = "2-digit";
     }
     const formatObj = new Intl.DateTimeFormat(
-      this.getLocale() + '-u-hc-h23',
+      this.getLocale() + "-u-hc-h23",
       options,
     ).formatToParts(new Date());
     let timeFormat = formatObj
       .map((obj) => {
         switch (obj.type) {
-          case 'hour':
-            return 'HH';
-          case 'minute':
-            return 'mm';
-          case 'second':
-            return 'ss';
+          case "hour":
+            return "HH";
+          case "minute":
+            return "mm";
+          case "second":
+            return "ss";
           default:
             return obj.value;
         }
       })
-      .join('');
+      .join("");
     return timeFormat;
   }
   format(input: dayjs.ConfigType, format?: string): string {
     if (!format) {
-      format = 'L'; // MM/DD/YYYY, DD/MM/YYYY depending on locale
+      format = "L"; // MM/DD/YYYY, DD/MM/YYYY depending on locale
     }
     return dayjs(input).format(format);
   }
   formatTime(time: Date, manageSeconds: boolean): string {
     const options: Intl.DateTimeFormatOptions = {
-      hour: '2-digit',
-      minute: '2-digit',
+      hour: "2-digit",
+      minute: "2-digit",
       hour12: false,
     };
     if (manageSeconds == true) {
-      options.second = '2-digit';
+      options.second = "2-digit";
     }
-    return time.toLocaleTimeString(this.getLocale() + '-u-hc-h23', options);
+    return time.toLocaleTimeString(this.getLocale() + "-u-hc-h23", options);
   }
   isValid(date: dayjs.ConfigType, format?: string, strict?: boolean): boolean {
     if (format && format != null) {
@@ -159,18 +159,18 @@ export class KulDates {
     const l = dayjs.Ls[this.locale].formats.L;
     // array e for-each con contains
     const allowedChars: Array<string> = [
-      '0',
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
+      "0",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
     ];
-    let inputCleaned = '';
+    let inputCleaned = "";
     for (let i = 0; i < input.length; i++) {
       let ch: string = input.charAt(i);
       if (allowedChars.includes(ch)) {
@@ -192,11 +192,11 @@ export class KulDates {
 
     function normalizeDate(): Date {
       const today = new Date();
-      const dIndex = l.indexOf('DD');
-      const mIndex = l.indexOf('MM');
+      const dIndex = l.indexOf("DD");
+      const mIndex = l.indexOf("MM");
       let sub1 = 0,
         sub2 = 0,
-        year = '';
+        year = "";
       switch (input.length) {
         case 1:
         case 2:

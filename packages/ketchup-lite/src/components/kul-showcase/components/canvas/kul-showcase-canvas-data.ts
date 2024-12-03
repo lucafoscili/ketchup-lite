@@ -1,37 +1,37 @@
-import { getAssetPath } from '@stencil/core';
+import { getAssetPath } from "@stencil/core";
 
-import { CanvasData } from './kul-showcase-canvas-declarations';
+import { CanvasData } from "./kul-showcase-canvas-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulCanvas';
-const EVENT_NAME: KulComponentEventName<'KulCanvas'> = 'kul-canvas-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCanvas'> =
-  'KulCanvasEventPayload';
-const TAG_NAME: KulComponentTag<'KulCanvas'> = 'kul-canvas';
+const COMPONENT_NAME: KulComponentName = "KulCanvas";
+const EVENT_NAME: KulComponentEventName<"KulCanvas"> = "kul-canvas-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCanvas"> =
+  "KulCanvasEventPayload";
+const TAG_NAME: KulComponentTag<"KulCanvas"> = "kul-canvas";
 
 export const CANVAS_EXAMPLES: () => CanvasData = () => ({
   simple: {
-    ['data-description']: 'Canvas over image',
+    ["data-description"]: "Canvas over image",
     kulImageProps: {
-      kulSizeX: '256px',
-      kulSizeY: '256px',
+      kulSizeX: "256px",
+      kulSizeY: "256px",
       kulValue: getAssetPath(`./assets/media/color_splash.jpg`),
     },
   },
   style: {
-    ['data-description']: 'Canvas with custom style',
-    ['data-dynamic']: 'custom',
+    ["data-description"]: "Canvas with custom style",
+    ["data-dynamic"]: "custom",
     kulImageProps: {
-      kulSizeX: '256px',
-      kulSizeY: '256px',
+      kulSizeX: "256px",
+      kulSizeY: "256px",
       kulValue: getAssetPath(`./assets/media/color_splash.jpg`),
     },
   },
@@ -45,7 +45,7 @@ export const CANVAS_DOC: KulArticleDataset = {
       children: [
         SECTION_FACTORY.overview(
           COMPONENT_NAME,
-          'main purpose is to allow painting over the image. The actual canvasing must be done downstream, it just emits an event when a stroke is complete (from pointerdown to pointerup).',
+          "main purpose is to allow painting over the image. The actual canvasing must be done downstream, it just emits an event when a stroke is complete (from pointerdown to pointerup).",
         ),
         SECTION_FACTORY.usage(COMPONENT_NAME, {
           tag: TAG_NAME,
@@ -56,18 +56,18 @@ export const CANVAS_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'stroke',
-              description: 'emitted after the pointer is released',
+              type: "stroke",
+              description: "emitted after the pointer is released",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

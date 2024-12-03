@@ -1,14 +1,14 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { SLIDER_DOC, SLIDER_EXAMPLES } from './kul-showcase-slider-data';
-import { SliderExample } from './kul-showcase-slider-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { SLIDER_DOC, SLIDER_EXAMPLES } from "./kul-showcase-slider-data";
+import { SliderExample } from "./kul-showcase-slider-declarations";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 @Component({
-  tag: 'kul-showcase-slider',
-  styleUrl: 'kul-showcase-slider.scss',
+  tag: "kul-showcase-slider",
+  styleUrl: "kul-showcase-slider.scss",
   shadow: true,
 })
 export class KulShowcaseSlider {
@@ -39,14 +39,14 @@ export class KulShowcaseSlider {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-slider
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -67,12 +67,12 @@ export class KulShowcaseSlider {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
-            case 'state-colors':
+            case "state-colors":
               comp.className =
-                'hydrated ' +
+                "hydrated " +
                 this.#dynamicExampleManager.stateColors.get(comp.id);
               break;
           }

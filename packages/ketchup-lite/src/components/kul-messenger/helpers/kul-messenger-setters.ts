@@ -1,7 +1,7 @@
 import {
   KulMessengerAdapter,
   KulMessengerAdapterSetters,
-} from '../kul-messenger-declarations';
+} from "../kul-messenger-declarations";
 
 export const setters: (
   adapter: KulMessengerAdapter,
@@ -52,8 +52,8 @@ export const setters: (
         adapter.actions.save().then(() => {
           requestAnimationFrame(() => {
             const button = adapter.components.saveButton;
-            button.kulIcon = 'check';
-            button.kulLabel = 'Saved!';
+            button.kulIcon = "check";
+            button.kulLabel = "Saved!";
             button.kulShowSpinner = false;
           });
 
@@ -106,15 +106,15 @@ export const setters: (
         },
         panel: (
           panel,
-          value = panel === 'left'
+          value = panel === "left"
             ? !messenger.ui.panels.isLeftCollapsed
             : !messenger.ui.panels.isRightCollapsed,
         ) => {
           switch (panel) {
-            case 'left':
+            case "left":
               messenger.ui.panels.isLeftCollapsed = value;
               break;
-            case 'right':
+            case "right":
               messenger.ui.panels.isRightCollapsed = value;
               break;
           }

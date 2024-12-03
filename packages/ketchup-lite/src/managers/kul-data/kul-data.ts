@@ -1,4 +1,4 @@
-import { KulComponentName } from '../../types/GenericTypes';
+import { KulComponentName } from "../../types/GenericTypes";
 import {
   KulDataCell,
   KulDataColumn,
@@ -9,15 +9,15 @@ import {
   KulDataShapeComponentMap,
   KulDataShapeEventDispatcher,
   KulDataShapes,
-} from './kul-data-declarations';
+} from "./kul-data-declarations";
 import {
   cellDecorateShapes,
   cellExists,
   cellGetAllShapes,
   cellGetShape,
   cellStringify,
-} from './utils/kul-data-cell-utils';
-import { columnFind } from './utils/kul-data-column-utils';
+} from "./utils/kul-data-cell-utils";
+import { columnFind } from "./utils/kul-data-column-utils";
 import {
   findNodeByCell,
   nodeExists,
@@ -28,32 +28,32 @@ import {
   nodePop,
   nodeSetProperties,
   nodeToStream,
-} from './utils/kul-data-node-utils';
+} from "./utils/kul-data-node-utils";
 
 export class KulData {
   #SHAPES_MAP: KulDataShapeComponentMap = {
-    badge: 'KulBadge',
-    button: 'KulButton',
-    card: 'KulCard',
-    chart: 'KulChart',
-    chat: 'KulChat',
-    chip: 'KulChip',
-    code: 'KulCode',
-    image: 'KulImage',
-    number: 'KulTextfield',
-    toggle: 'KulToggle',
-    text: 'KulTextfield',
-    upload: 'KulUpload',
+    badge: "KulBadge",
+    button: "KulButton",
+    card: "KulCard",
+    chart: "KulChart",
+    chat: "KulChat",
+    chip: "KulChip",
+    code: "KulCode",
+    image: "KulImage",
+    number: "KulTextfield",
+    toggle: "KulToggle",
+    text: "KulTextfield",
+    upload: "KulUpload",
   };
   cell = {
     exists: (node: KulDataNode) => cellExists(node),
     shapes: {
-      decorate: <C extends KulComponentName, S extends KulDataShapes | 'text'>(
+      decorate: <C extends KulComponentName, S extends KulDataShapes | "text">(
         shape: S,
         items: Partial<KulDataCell<S>>[],
         eventDispatcher: KulDataShapeEventDispatcher,
         defaultProps?: Partial<KulDataCell<S>>[],
-        defaultCb?: S extends 'text' ? never : KulDataShapeCallback<C, S>,
+        defaultCb?: S extends "text" ? never : KulDataShapeCallback<C, S>,
       ) =>
         cellDecorateShapes(
           this.#SHAPES_MAP[shape],
@@ -68,7 +68,7 @@ export class KulData {
       getAll: (dataset: KulDataDataset, deepCopy = true) =>
         cellGetAllShapes(dataset, deepCopy),
     },
-    stringify: (value: KulDataCell<KulDataShapes>['value']) =>
+    stringify: (value: KulDataCell<KulDataShapes>["value"]) =>
       cellStringify(value),
   };
   column = {

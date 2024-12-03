@@ -1,42 +1,42 @@
-import { SliderData } from './kul-showcase-slider-declarations';
+import { SliderData } from "./kul-showcase-slider-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulSlider';
-const EVENT_NAME: KulComponentEventName<'KulSlider'> = 'kul-slider-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulSlider'> =
-  'KulSliderEventPayload';
-const TAG_NAME: KulComponentTag<'KulSlider'> = 'kul-slider';
+const COMPONENT_NAME: KulComponentName = "KulSlider";
+const EVENT_NAME: KulComponentEventName<"KulSlider"> = "kul-slider-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulSlider"> =
+  "KulSliderEventPayload";
+const TAG_NAME: KulComponentTag<"KulSlider"> = "kul-slider";
 
 export const SLIDER_EXAMPLES: SliderData = {
   colors: {
-    ['data-description']: 'Slider states colors',
-    ['data-dynamic']: 'state-colors',
-    kulLabel: 'States colors',
+    ["data-description"]: "Slider states colors",
+    ["data-dynamic"]: "state-colors",
+    kulLabel: "States colors",
     kulDisabled: false,
     kulValue: 100,
   },
   disabled: {
-    ['data-description']: 'Disabled slider',
+    ["data-description"]: "Disabled slider",
     kulDisabled: true,
-    kulLabel: 'Disabled',
+    kulLabel: "Disabled",
   },
   simple: {
-    ['data-description']: 'Slider with leading label',
-    kulLabel: 'Leading label',
+    ["data-description"]: "Slider with leading label",
+    kulLabel: "Leading label",
     kulLeadingLabel: true,
   },
   style: {
-    ['data-description']: 'Icon with custom style',
-    ['data-dynamic']: 'custom',
-    kulLabel: 'Custom style',
+    ["data-description"]: "Icon with custom style",
+    ["data-dynamic"]: "custom",
+    kulLabel: "Custom style",
   },
 };
 
@@ -59,31 +59,31 @@ export const SLIDER_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'blur',
-              description: 'emitted when the component loses focus',
+              type: "blur",
+              description: "emitted when the component loses focus",
             },
             {
-              type: 'focus',
-              description: 'emitted when the component is focused',
+              type: "focus",
+              description: "emitted when the component is focused",
             },
             {
-              type: 'input',
-              description: 'emitted when the component is being changed',
+              type: "input",
+              description: "emitted when the component is being changed",
             },
             {
-              type: 'pointerdown',
+              type: "pointerdown",
               description:
-                'emitted when as soon as the component is touched/clicked (before the click event)',
+                "emitted when as soon as the component is touched/clicked (before the click event)",
             },
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

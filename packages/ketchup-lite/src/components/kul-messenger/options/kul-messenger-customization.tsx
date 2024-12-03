@@ -1,13 +1,13 @@
-import { Fragment, h, VNode } from '@stencil/core';
+import { Fragment, h, VNode } from "@stencil/core";
 
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulChip } from '../../kul-chip/kul-chip';
-import { KulChipEventPayload } from '../../kul-chip/kul-chip-declarations';
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulChip } from "../../kul-chip/kul-chip";
+import { KulChipEventPayload } from "../../kul-chip/kul-chip-declarations";
 import {
   CHILD_ROOT_MAP,
   FILTER_DATASET,
   IMAGE_TYPE_IDS,
-} from '../kul-messenger-constants';
+} from "../kul-messenger-constants";
 import {
   KulMessengerAdapter,
   KulMessengerBaseChildNode,
@@ -17,7 +17,7 @@ import {
   KulMessengerImageRootIds,
   KulMessengerImageTypes,
   KulMessengerUnionChildIds,
-} from '../kul-messenger-declarations';
+} from "../kul-messenger-declarations";
 
 export const prepFilters = (adapter: KulMessengerAdapter) => {
   for (let index = 0; index < FILTER_DATASET.nodes.length; index++) {
@@ -28,7 +28,7 @@ export const prepFilters = (adapter: KulMessengerAdapter) => {
   }
   return (
     <kul-chip
-      key={'filter_' + adapter.get.character.name()}
+      key={"filter_" + adapter.get.character.name()}
       kulData={FILTER_DATASET}
       kulStyling="filter"
       onKul-chip-event={chipEventHandler.bind(chipEventHandler, adapter)}
@@ -49,7 +49,7 @@ export const prepList = (adapter: KulMessengerAdapter) => {
       const activeIndex = adapter.get.image.coverIndex(type);
       const images: VNode[] = imagesGetter(type).map((node, j) => (
         <div
-          class={`messenger__customization__image-wrapper  ${activeIndex === j ? 'messenger__customization__image-wrapper--selected' : ''}`}
+          class={`messenger__customization__image-wrapper  ${activeIndex === j ? "messenger__customization__image-wrapper--selected" : ""}`}
           onClick={imageEventHandler.bind(imageEventHandler, adapter, node, j)}
           onPointerEnter={() => {
             if (activeIndex !== j) {
@@ -78,7 +78,7 @@ export const prepList = (adapter: KulMessengerAdapter) => {
                   buttonEventHandler,
                   adapter,
                   type,
-                  'delete',
+                  "delete",
                   node,
                 )}
                 title="Delete this option."
@@ -90,7 +90,7 @@ export const prepList = (adapter: KulMessengerAdapter) => {
                   buttonEventHandler,
                   adapter,
                   type,
-                  'edit',
+                  "edit",
                   node,
                 )}
                 title="Edit this option."
@@ -129,7 +129,7 @@ const prepCovers = (
             buttonEventHandler,
             adapter,
             type,
-            'add',
+            "add",
             null,
           )}
         ></kul-button>
@@ -182,7 +182,7 @@ const prepEditPanel = (
       ></kul-textfield>
       <div class="messenger__customization__edit__confirm">
         <kul-button
-          class={'messenger__customization__edit__button'}
+          class={"messenger__customization__edit__button"}
           kulIcon="clear"
           kulLabel="Cancel"
           kulStyling="flat"
@@ -190,12 +190,12 @@ const prepEditPanel = (
             buttonEventHandler,
             adapter,
             type,
-            'cancel',
+            "cancel",
             null,
           )}
         ></kul-button>
         <kul-button
-          class={'messenger__customization__edit__button'}
+          class={"messenger__customization__edit__button"}
           kulIcon="check"
           kulLabel="Confirm"
           kulStyling="outlined"
@@ -203,7 +203,7 @@ const prepEditPanel = (
             buttonEventHandler,
             adapter,
             type,
-            'confirm',
+            "confirm",
             null,
           )}
         ></kul-button>
@@ -218,42 +218,42 @@ const buttonEventHandler = async <
 >(
   adapter: KulMessengerAdapter,
   type: T1,
-  action: 'add' | 'cancel' | 'confirm' | 'edit' | 'delete',
+  action: "add" | "cancel" | "confirm" | "edit" | "delete",
   node: T2 = null,
   e: CustomEvent<KulButtonEventPayload>,
 ) => {
   const { eventType } = e.detail;
   const editingSetter = adapter.set.messenger.ui.editing;
 
-  if (eventType === 'click') {
+  if (eventType === "click") {
     const handleEditing = (enabled: boolean) => editingSetter(enabled, type);
 
     switch (action) {
-      case 'add':
+      case "add":
         handleEditing(true);
         break;
-      case 'cancel':
+      case "cancel":
         handleEditing(false);
         break;
-      case 'confirm': {
+      case "confirm": {
         const titleTextarea = adapter.components.editing[type].titleTextarea;
         const value = await titleTextarea.getValue();
-        titleTextarea.classList.remove('kul-danger');
+        titleTextarea.classList.remove("kul-danger");
         if (value) {
           createNode(adapter, type);
           handleEditing(false);
         } else {
-          titleTextarea.classList.add('kul-danger');
+          titleTextarea.classList.add("kul-danger");
           titleTextarea.kulHelper = {
-            value: 'This field is mandatory',
+            value: "This field is mandatory",
           };
         }
         break;
       }
-      case 'delete':
+      case "delete":
         adapter.actions.delete.option(node, type);
         break;
-      case 'edit':
+      case "edit":
         handleEditing(true);
         break;
     }
@@ -268,7 +268,7 @@ const chipEventHandler = (
   const filtersSetter = adapter.set.messenger.ui.filters;
 
   switch (eventType) {
-    case 'click':
+    case "click":
       const newFilters: KulMessengerFilters = {
         avatars: false,
         locations: false,
@@ -281,7 +281,7 @@ const chipEventHandler = (
       });
       filtersSetter(newFilters);
       break;
-    case 'ready':
+    case "ready":
       const filters = adapter.get.messenger.ui().filters;
       const nodes: string[] = [];
       for (const key in filters) {
@@ -336,7 +336,7 @@ const createNode = async <
     existingImage.value = value;
   } else {
     const node: KulMessengerBaseChildNode<KulMessengerUnionChildIds> = {
-      cells: { kulImage: { shape: 'image', value: imageUrl } },
+      cells: { kulImage: { shape: "image", value: imageUrl } },
       id,
       description,
       value,
