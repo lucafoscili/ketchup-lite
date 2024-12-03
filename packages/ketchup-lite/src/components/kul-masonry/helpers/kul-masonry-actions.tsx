@@ -1,18 +1,18 @@
-import { h } from '@stencil/core';
+import { h } from "@stencil/core";
 
 import {
   KulButtonEventPayload,
   KulButtonStyling,
-} from '../../kul-button/kul-button-declarations';
-import { KulMasonryAdapter } from '../kul-masonry-declarations';
+} from "../../kul-button/kul-button-declarations";
+import { KulMasonryAdapter } from "../kul-masonry-declarations";
 
-const STYLING: KulButtonStyling = 'floating';
+const STYLING: KulButtonStyling = "floating";
 
-const MASONRY_ICON = 'view_quilt';
-const HORIZONTAL_ICON = 'view_column';
-const MINUS_ICON = 'remove';
-const PLUS_ICON = 'plus';
-const VERTICAL_ICON = 'view_day';
+const MASONRY_ICON = "view_quilt";
+const HORIZONTAL_ICON = "view_column";
+const MINUS_ICON = "remove";
+const PLUS_ICON = "plus";
+const VERTICAL_ICON = "view_day";
 
 const buttonHandler = (
   adapter: KulMasonryAdapter,
@@ -21,7 +21,7 @@ const buttonHandler = (
   const { eventType, id } = e.detail;
 
   switch (eventType) {
-    case 'click':
+    case "click":
       switch (id) {
         case MASONRY_ICON:
           adapter.actions.changeView();
@@ -42,7 +42,7 @@ export const ACTIONS = {
     add: (adapter: KulMasonryAdapter) => {
       return (
         <kul-button
-          class={'grid__add-column kul-slim'}
+          class={"grid__add-column kul-slim"}
           id={PLUS_ICON}
           key={PLUS_ICON}
           kulIcon={PLUS_ICON}
@@ -60,7 +60,7 @@ export const ACTIONS = {
     remove: (adapter: KulMasonryAdapter) => {
       return (
         <kul-button
-          class={'grid__remove-column kul-slim'}
+          class={"grid__remove-column kul-slim"}
           id={MINUS_ICON}
           key={MINUS_ICON}
           kulIcon={MINUS_ICON}
@@ -79,7 +79,7 @@ export const ACTIONS = {
   changeView: (adapter: KulMasonryAdapter) => {
     return (
       <kul-button
-        class={'grid__change-view'}
+        class={"grid__change-view"}
         id={MASONRY_ICON}
         key={MASONRY_ICON}
         kulIcon={
@@ -98,10 +98,10 @@ export const ACTIONS = {
         }}
         title={
           adapter.isMasonry()
-            ? 'Click to view the images arranged vertically.'
+            ? "Click to view the images arranged vertically."
             : adapter.isVertical()
-              ? 'Click to view the images arranged horizontally.'
-              : 'Click to view the images arranged in a masonry.'
+              ? "Click to view the images arranged horizontally."
+              : "Click to view the images arranged in a masonry."
         }
       ></kul-button>
     );

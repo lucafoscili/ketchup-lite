@@ -1,6 +1,6 @@
-import { KulLLMChoiceMessage } from '../../managers/kul-llm/kul-llm-declarations';
-import { KulManager } from '../../managers/kul-manager/kul-manager';
-import { KulEventPayload } from '../../types/GenericTypes';
+import { KulLLMChoiceMessage } from "../../managers/kul-llm/kul-llm-declarations";
+import { KulManager } from "../../managers/kul-manager/kul-manager";
+import { KulEventPayload } from "../../types/GenericTypes";
 
 //#region Adapter
 export interface KulChatAdapter {
@@ -64,13 +64,13 @@ export interface KulChatAdapter {
 
 //#region Events
 export type KulChatEvent =
-  | 'config'
-  | 'polling'
-  | 'ready'
-  | 'unmount'
-  | 'update';
+  | "config"
+  | "polling"
+  | "ready"
+  | "unmount"
+  | "update";
 export interface KulChatEventPayload
-  extends KulEventPayload<'KulChat', KulChatEvent> {
+  extends KulEventPayload<"KulChat", KulChatEvent> {
   history: string;
   status: KulChatStatus;
 }
@@ -78,22 +78,22 @@ export interface KulChatEventPayload
 
 //#region States
 export type KulChatHistory = KulLLMChoiceMessage[];
-export type KulChatStatus = 'connecting' | 'offline' | 'ready';
-export type KulChatView = 'chat' | 'settings';
+export type KulChatStatus = "connecting" | "offline" | "ready";
+export type KulChatView = "chat" | "settings";
 //#endregion
 
 //#region Props
 export enum KulChatProps {
-  kulContextWindow = 'How many tokens the context window can handle, used to calculate the occupied space.',
-  kulEndpointUrl = 'URL of the endpoint where the LLM is hosted.',
-  kulLayout = 'Sets the layout of the chat.',
+  kulContextWindow = "How many tokens the context window can handle, used to calculate the occupied space.",
+  kulEndpointUrl = "URL of the endpoint where the LLM is hosted.",
+  kulLayout = "Sets the layout of the chat.",
   kulMaxTokens = "Maximum number of tokens allowed in the LLM's answer.",
-  kulPollingInterval = 'How often the component checks whether the LLM endpoint is online or not.',
+  kulPollingInterval = "How often the component checks whether the LLM endpoint is online or not.",
   kulSeed = "Seed value for the LLM's answer generation.",
-  kulStyle = 'Custom style of the component.',
-  kulSystem = 'System message for the LLM.',
-  kulTemperature = 'Sets the creative boundaries of the LLM.',
-  kulValue = 'Initial history of the chat.',
+  kulStyle = "Custom style of the component.",
+  kulSystem = "System message for the LLM.",
+  kulTemperature = "Sets the creative boundaries of the LLM.",
+  kulValue = "Initial history of the chat.",
 }
 export interface KulChatPropsInterface {
   kulContextWindow?: number;
@@ -107,5 +107,5 @@ export interface KulChatPropsInterface {
   kulTemperature?: number;
   kulValue?: KulChatHistory;
 }
-export type KulChatLayout = 'bottom-textarea' | 'top-textarea';
+export type KulChatLayout = "bottom-textarea" | "top-textarea";
 //#endregion

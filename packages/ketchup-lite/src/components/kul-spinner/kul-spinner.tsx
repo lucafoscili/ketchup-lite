@@ -11,26 +11,26 @@ import {
   State,
   VNode,
   Watch,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulSpinnerEvent,
   KulSpinnerEventPayload,
   KulSpinnerProps,
-} from './kul-spinner-declarations';
+} from "./kul-spinner-declarations";
 import {
   BAR_SPINNER_CONFIGS,
   SPINNER_CONFIGS,
-} from './layouts/kul-spinner-layouts';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./layouts/kul-spinner-layouts";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-spinner',
-  styleUrl: 'kul-spinner.scss',
+  tag: "kul-spinner",
+  styleUrl: "kul-spinner.scss",
   shadow: true,
 })
 export class KulSpinner {
@@ -71,7 +71,7 @@ export class KulSpinner {
    * Defines the width and height of the spinner. In the bar variant, it specifies only the height.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulDimensions = '';
+  @Prop({ mutable: true, reflect: true }) kulDimensions = "";
   /**
    * Applies a blending modal over the component to darken or lighten the view, based on the theme.
    * @default false
@@ -96,7 +96,7 @@ export class KulSpinner {
    * Sets a custom style for the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * Duration for the progress bar to fill up (in milliseconds).
    * @default undefined
@@ -108,13 +108,13 @@ export class KulSpinner {
   #progressAnimationFrame: number;
   //#endregion
   //#region Watchers
-  @Watch('kulTimeout')
+  @Watch("kulTimeout")
   kulTimeoutChanged(newValue: number, oldValue: number) {
     if (newValue !== oldValue && this.kulBarVariant) {
       this.#startProgressBar();
     }
   }
-  @Watch('kulBarVariant')
+  @Watch("kulBarVariant")
   kulBarVariantChanged(newValue: boolean) {
     if (newValue && this.kulTimeout) {
       this.#startProgressBar();
@@ -126,7 +126,7 @@ export class KulSpinner {
   //#endregion
   //#region Event
   @Event({
-    eventName: 'kul-spinner-event',
+    eventName: "kul-spinner-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -174,7 +174,7 @@ export class KulSpinner {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -184,22 +184,22 @@ export class KulSpinner {
     this.#kulManager.theme.register(this);
   }
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
 
     if (this.kulBarVariant && this.kulTimeout) {
       this.#startProgressBar();
     }
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
   componentDidUpdate() {
     const root = this.rootElement.shadowRoot;
     if (root) {
       root
-        .querySelector('#loading-wrapper-master')
-        .classList.remove('loading-wrapper-big-wait');
+        .querySelector("#loading-wrapper-master")
+        .classList.remove("loading-wrapper-big-wait");
     }
   }
   componentDidRender() {
@@ -209,47 +209,47 @@ export class KulSpinner {
       if (this.kulFader) {
         setTimeout(() => {
           root
-            .querySelector('#loading-wrapper-master')
-            .classList.add('loading-wrapper-big-wait');
+            .querySelector("#loading-wrapper-master")
+            .classList.add("loading-wrapper-big-wait");
         }, this.kulFaderTimeout);
       }
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
-    let masterClass = '';
-    let wrapperClass = '';
-    let spinnerClass = '';
+    let masterClass = "";
+    let wrapperClass = "";
+    let spinnerClass = "";
     let spinnerEl: VNode[] = [];
     let elStyle = undefined;
 
     if (this.kulBarVariant) {
-      wrapperClass = 'loading-wrapper-master-bar';
+      wrapperClass = "loading-wrapper-master-bar";
       const barConfig = BAR_SPINNER_CONFIGS[this.kulLayout];
       if (barConfig) {
         spinnerClass = barConfig.className;
         spinnerEl = barConfig.elements(this.kulProgress);
       } else {
-        spinnerClass = 'spinner-bar-v' + this.kulLayout;
+        spinnerClass = "spinner-bar-v" + this.kulLayout;
       }
     } else {
-      masterClass += ' spinner-version';
-      wrapperClass = 'loading-wrapper-master-spinner';
+      masterClass += " spinner-version";
+      wrapperClass = "loading-wrapper-master-spinner";
 
       const config = SPINNER_CONFIGS[this.kulLayout];
       if (config) {
         spinnerClass = config.className;
         spinnerEl = config.elements();
       } else {
-        spinnerClass = 'spinner-v' + this.kulLayout;
+        spinnerClass = "spinner-v" + this.kulLayout;
       }
     }
 
     if (!this.kulFullScreen) {
       elStyle = {
-        height: '100%',
-        width: '100%',
+        height: "100%",
+        width: "100%",
       };
     }
 
@@ -261,12 +261,12 @@ export class KulSpinner {
     } else if (!this.kulBarVariant) {
       elStyle = {
         ...elStyle,
-        fontSize: '16px',
+        fontSize: "16px",
       };
     } else {
       elStyle = {
         ...elStyle,
-        fontSize: '3px',
+        fontSize: "3px",
       };
     }
 

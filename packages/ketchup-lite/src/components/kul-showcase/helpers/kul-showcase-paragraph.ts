@@ -1,12 +1,12 @@
-import { KulComponentName, KulComponentTag } from '../../../types/GenericTypes';
-import { KulArticleNode } from '../../kul-article/kul-article-declarations';
-import { KUL_DOC } from '../assets/doc';
-import { DOC_IDS, DOC_NODES, DOC_STYLES } from '../kul-showcase-data';
+import { KulComponentName, KulComponentTag } from "../../../types/GenericTypes";
+import { KulArticleNode } from "../../kul-article/kul-article-declarations";
+import { KUL_DOC } from "../assets/doc";
+import { DOC_IDS, DOC_NODES, DOC_STYLES } from "../kul-showcase-data";
 import {
   KulShowcaseDocMethod,
   KulShowcaseDocProp,
   KulShowcaseDocStyle,
-} from '../kul-showcase-declarations';
+} from "../kul-showcase-declarations";
 
 export const PARAGRAPH_FACTORY = {
   asBulletListEntry: (
@@ -17,12 +17,12 @@ export const PARAGRAPH_FACTORY = {
     children.forEach((child) => {
       nodes.push({
         id: DOC_IDS.content,
-        value: '- ',
+        value: "- ",
       });
       nodes.push({
         cssStyle: DOC_STYLES.monoPrimaryContent,
         id: DOC_IDS.content,
-        tagName: 'strong',
+        tagName: "strong",
         value: child.title,
       });
       nodes.push({
@@ -43,14 +43,14 @@ export const PARAGRAPH_FACTORY = {
     args?: { name: string; type: string; description: string }[],
   ): KulArticleNode => {
     const signature = (): KulArticleNode => {
-      let value = '(';
+      let value = "(";
       args?.forEach((a, index) => {
-        value += `${a.name}:${a.type}${index < args.length - 1 ? ',' : ''}`;
+        value += `${a.name}:${a.type}${index < args.length - 1 ? "," : ""}`;
       });
-      value += ')';
+      value += ")";
       return {
         id: DOC_IDS.content,
-        tagName: 'strong',
+        tagName: "strong",
         value,
       };
     };
@@ -65,7 +65,7 @@ export const PARAGRAPH_FACTORY = {
         content.push({
           id: DOC_IDS.content,
           cssStyle: DOC_STYLES.monoPrimaryContent,
-          tagName: 'strong',
+          tagName: "strong",
           value: `${a.name} (${a.type})`,
         });
         content.push({
@@ -87,7 +87,7 @@ export const PARAGRAPH_FACTORY = {
       ],
       id: DOC_IDS.paragraph,
       cssStyle: DOC_STYLES.monoPrimaryH3Large,
-      value: `${title} ${hasArgs ? signature().value : '()'}`,
+      value: `${title} ${hasArgs ? signature().value : "()"}`,
     };
   },
   asSimpleListEntry: (title: string, description: string): KulArticleNode => ({
@@ -95,7 +95,7 @@ export const PARAGRAPH_FACTORY = {
       {
         id: DOC_IDS.content,
         cssStyle: DOC_STYLES.monoPrimaryContent,
-        tagName: 'strong',
+        tagName: "strong",
         value: title.toString(),
       },
       {
@@ -104,7 +104,7 @@ export const PARAGRAPH_FACTORY = {
       },
     ],
     id: DOC_IDS.paragraph,
-    value: '',
+    value: "",
   }),
   methods: (tag: KulComponentTag<KulComponentName>) => {
     const nodes: KulArticleNode[] = [];
@@ -125,7 +125,7 @@ export const PARAGRAPH_FACTORY = {
           },
         ],
         id: DOC_IDS.contentWrapper,
-        value: '',
+        value: "",
       };
       node.children.push(propDescription);
       nodes.push(node);
@@ -148,16 +148,16 @@ export const PARAGRAPH_FACTORY = {
         children: [
           {
             id: DOC_IDS.content,
-            value: 'Type:',
+            value: "Type:",
           },
           {
             id: DOC_IDS.content,
-            tagName: 'strong',
+            tagName: "strong",
             value: prop.type,
           },
         ],
         id: DOC_IDS.contentWrapper,
-        value: '',
+        value: "",
       };
       const propDescription: KulArticleNode = {
         children: [
@@ -167,7 +167,7 @@ export const PARAGRAPH_FACTORY = {
           },
         ],
         id: DOC_IDS.contentWrapper,
-        value: '',
+        value: "",
       };
       node.children.push(propTitle);
       node.children.push(propDescription);
@@ -185,43 +185,43 @@ export const PARAGRAPH_FACTORY = {
         {
           id: DOC_IDS.contentWrapper,
           value:
-            'The component uses Shadow DOM for encapsulation, ensuring that its styles do not leak into the global scope. However, custom styles can be applied using the ',
+            "The component uses Shadow DOM for encapsulation, ensuring that its styles do not leak into the global scope. However, custom styles can be applied using the ",
         },
         {
           id: DOC_IDS.contentWrapper,
-          tagName: 'strong',
-          value: 'kulStyle',
+          tagName: "strong",
+          value: "kulStyle",
         },
         {
           id: DOC_IDS.contentWrapper,
-          value: ' property.',
+          value: " property.",
         },
         {
           cells: {
             kulCode: {
-              shape: 'code',
-              kulLanguage: 'markup',
+              shape: "code",
+              kulLanguage: "markup",
               value: `<${tag} kul-style="#kul-component { max-height: 20vh; }"></${tag}>`,
             },
           },
           id: DOC_IDS.contentWrapper,
-          value: '',
+          value: "",
         },
       ],
       id: DOC_IDS.paragraph,
-      tagName: 'strong',
-      value: 'kulStyle',
+      tagName: "strong",
+      value: "kulStyle",
     };
     const listNode: KulArticleNode = {
       children: [],
       id: DOC_IDS.contentWrapper,
       value:
-        'Additionally, the following CSS variables can be used to customize the appearance of the component:',
+        "Additionally, the following CSS variables can be used to customize the appearance of the component:",
     };
     const wrapperNode: KulArticleNode = {
       children: [],
       id: DOC_IDS.paragraph,
-      value: 'CSS Variables',
+      value: "CSS Variables",
     };
     docStyles?.forEach((style) => {
       const styleNode: KulArticleNode = {
@@ -229,7 +229,7 @@ export const PARAGRAPH_FACTORY = {
           {
             cssStyle: DOC_STYLES.monoPrimaryContent,
             id: DOC_IDS.contentListItem,
-            tagName: 'strong',
+            tagName: "strong",
             value: style.name,
           },
           {
@@ -238,8 +238,8 @@ export const PARAGRAPH_FACTORY = {
           },
         ],
         id: DOC_IDS.contentList,
-        tagName: 'li',
-        value: '',
+        tagName: "li",
+        value: "",
       };
       listNode.children.push(styleNode);
     });

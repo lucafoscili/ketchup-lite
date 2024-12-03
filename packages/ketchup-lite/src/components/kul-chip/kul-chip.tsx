@@ -11,7 +11,7 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulChipEvent,
@@ -19,20 +19,20 @@ import {
   KulChipEventPayload,
   KulChipProps,
   KulChipStyling,
-} from './kul-chip-declarations';
+} from "./kul-chip-declarations";
 import {
   KulDataDataset,
   KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-chip',
-  styleUrl: 'kul-chip.scss',
+  tag: "kul-chip",
+  styleUrl: "kul-chip.scss",
   shadow: true,
 })
 export class KulChip {
@@ -87,12 +87,12 @@ export class KulChip {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true }) kulStyle = '';
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Styling of the chip component, includes: "choice", "input", "filter" and "standard".
    * @default ""
    */
-  @Prop({ mutable: true }) kulStyling: KulChipStyling = 'standard';
+  @Prop({ mutable: true }) kulStyling: KulChipStyling = "standard";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -110,7 +110,7 @@ export class KulChip {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-chip-event',
+    eventName: "kul-chip-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -124,7 +124,7 @@ export class KulChip {
   ) {
     const { expansion, node } = args || {};
     switch (eventType) {
-      case 'click':
+      case "click":
         if (expansion && this.#hasChildren(node)) {
           if (this.expandedNodes.has(node)) {
             this.expandedNodes.delete(node);
@@ -141,14 +141,14 @@ export class KulChip {
           this.selectedNodes = new Set(this.selectedNodes);
         }
         break;
-      case 'delete':
+      case "delete":
         const nodeIndex = this.kulData?.nodes?.indexOf(node);
         if (nodeIndex > -1) {
           this.kulData.nodes.splice(nodeIndex, 1);
           this.refresh();
         }
         break;
-      case 'pointerdown':
+      case "pointerdown":
         if (this.kulRipple && this.#isClickable()) {
           this.#kulManager.theme.ripple.trigger(
             e as PointerEvent,
@@ -215,11 +215,11 @@ export class KulChip {
     const nodesToAdd: Set<KulDataNode> = new Set();
 
     const isStringArray =
-      Array.isArray(nodes) && nodes.every((item) => typeof item === 'string');
+      Array.isArray(nodes) && nodes.every((item) => typeof item === "string");
 
     this.kulData?.nodes?.forEach((n: KulDataNode) => {
       if (isStringArray) {
-        if (typeof n.id === 'string' && nodes.includes(n.id)) {
+        if (typeof n.id === "string" && nodes.includes(n.id)) {
           nodesToAdd.add(n);
         }
       } else {
@@ -237,7 +237,7 @@ export class KulChip {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -255,11 +255,11 @@ export class KulChip {
   }
 
   #isChoice() {
-    return this.kulStyling === 'choice';
+    return this.kulStyling === "choice";
   }
 
   #isClickable() {
-    return this.kulStyling === 'choice' || this.kulStyling === 'filter';
+    return this.kulStyling === "choice" || this.kulStyling === "filter";
   }
 
   #isExpanded(node: KulDataNode) {
@@ -267,11 +267,11 @@ export class KulChip {
   }
 
   #isFilter() {
-    return this.kulStyling === 'filter';
+    return this.kulStyling === "filter";
   }
 
   #isInput() {
-    return this.kulStyling === 'input';
+    return this.kulStyling === "input";
   }
 
   #isSelected(node: KulDataNode) {
@@ -281,18 +281,18 @@ export class KulChip {
   #prepChip(node: KulDataNode, i: number) {
     const className = {
       chip: true,
-      'chip--only-icon': this.#hasIconOnly(node),
-      'chip--selected': this.#isSelected(node),
+      "chip--only-icon": this.#hasIconOnly(node),
+      "chip--selected": this.#isSelected(node),
     };
     return (
       <div
         class={className}
         data-value={node.id}
         onClick={(e) => {
-          this.onKulEvent(e, 'click', { node });
+          this.onKulEvent(e, "click", { node });
         }}
         role="row"
-        title={node.description ?? ''}
+        title={node.description ?? ""}
       >
         {this.#prepRipple(node)}
         <span class="indent"></span>
@@ -303,10 +303,10 @@ export class KulChip {
           class="chip__primary-action"
           data-cy={KulDataCyAttributes.INPUT}
           onBlur={(e) => {
-            this.onKulEvent(e, 'blur', { node });
+            this.onKulEvent(e, "blur", { node });
           }}
           onFocus={(e) => {
-            this.onKulEvent(e, 'focus', { node });
+            this.onKulEvent(e, "focus", { node });
           }}
         >
           <span class="chip__text">{node.value}</span>
@@ -340,9 +340,9 @@ export class KulChip {
       <div
         class="chip__icon chip__icon--trailing"
         data-cy={KulDataCyAttributes.BUTTON}
-        key={node.id + '_delete'}
+        key={node.id + "_delete"}
         onClick={(e) => {
-          this.onKulEvent(e, 'delete', { node });
+          this.onKulEvent(e, "delete", { node });
         }}
         style={style}
       ></div>
@@ -354,9 +354,9 @@ export class KulChip {
 
     const className = {
       chip__icon: true,
-      'chip__icon--leading': true,
-      'chip__icon--leading-hidden':
-        this.kulStyling === 'filter' && this.#isSelected(node),
+      "chip__icon--leading": true,
+      "chip__icon--leading-hidden":
+        this.kulStyling === "filter" && this.#isSelected(node),
     };
 
     if (node.icon) {
@@ -388,12 +388,12 @@ export class KulChip {
 
   #prepNode(node: KulDataNode, indent: number) {
     const className = {
-      'chip-wrapper': true,
-      'chip-wrapper--hidden-children':
+      "chip-wrapper": true,
+      "chip-wrapper--hidden-children":
         this.#hasChildren(node) && !this.#showChildren(node),
     };
     const indentStyle = {
-      ['--kul_chip_indent_offset']: indent.toString(),
+      ["--kul_chip_indent_offset"]: indent.toString(),
     };
 
     this.#nodeItems.push(
@@ -401,9 +401,9 @@ export class KulChip {
         <div class="indent" style={indentStyle}></div>
         {this.#hasChildren(node) ? (
           <div
-            class={`node__expand ${this.#isExpanded(node) ? 'node__expand--expanded' : ''}`}
+            class={`node__expand ${this.#isExpanded(node) ? "node__expand--expanded" : ""}`}
             onClick={(e) => {
-              this.onKulEvent(e, 'click', {
+              this.onKulEvent(e, "click", {
                 expansion: true,
                 node,
               });
@@ -429,7 +429,7 @@ export class KulChip {
     if (this.kulRipple && this.#isClickable()) {
       return (
         <div
-          onPointerDown={(e) => this.onKulEvent(e, 'pointerdown', { node })}
+          onPointerDown={(e) => this.onKulEvent(e, "pointerdown", { node })}
           ref={(el) => {
             if (el && this.kulRipple) {
               this.#rippleSurface[node.id] = el;
@@ -458,12 +458,12 @@ export class KulChip {
         this.#kulManager.theme.ripple.setup(el);
       });
     }
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
@@ -476,16 +476,16 @@ export class KulChip {
       }
     }
 
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
     this.#nodeItems = [];
     const className = {
-      'chip-set': true,
-      'chip-set--choice': this.#isChoice(),
-      'chip-set--filter': this.#isFilter(),
-      'chip-set--input': this.#isInput(),
+      "chip-set": true,
+      "chip-set--choice": this.#isChoice(),
+      "chip-set--filter": this.#isFilter(),
+      "chip-set--input": this.#isInput(),
     };
 
     return (

@@ -1,11 +1,11 @@
-import { KulComparePropsInterface } from '../../../kul-compare/kul-compare-declarations';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { KulComparePropsInterface } from "../../../kul-compare/kul-compare-declarations";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
-export const COMPARE_EXAMPLES_KEYS = ['simple', 'style'] as const;
+export const COMPARE_EXAMPLES_KEYS = ["simple", "style"] as const;
 
 export interface CompareExample extends KulComparePropsInterface {
-  ['data-description']: string;
-  ['data-dynamic']?: KulShowcaseDynamicExampleType;
+  ["data-description"]: string;
+  ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 
 export type CompareData = {

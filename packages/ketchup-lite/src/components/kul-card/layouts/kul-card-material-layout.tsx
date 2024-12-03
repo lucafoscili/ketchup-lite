@@ -1,10 +1,10 @@
-import { h, VNode } from '@stencil/core';
+import { h, VNode } from "@stencil/core";
 
-import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
-import { KulDataCyAttributes } from '../../../types/GenericTypes';
-import { RIPPLE_SURFACE_CLASS } from '../../../variables/GenericVariables';
-import { DEFAULTS } from '../helpers/kul-card-defaults';
-import { KulCardAdapter, KulCardCSSClasses } from '../kul-card-declarations';
+import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
+import { KulDataCyAttributes } from "../../../types/GenericTypes";
+import { RIPPLE_SURFACE_CLASS } from "../../../variables/GenericVariables";
+import { DEFAULTS } from "../helpers/kul-card-defaults";
+import { KulCardAdapter, KulCardCSSClasses } from "../kul-card-declarations";
 
 //#region Material layout
 export function getMaterialLayout(adapter: KulCardAdapter): VNode {
@@ -13,14 +13,14 @@ export function getMaterialLayout(adapter: KulCardAdapter): VNode {
   const eventDispatcher = adapter.actions.dispatchEvent;
   const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
-  const buttons = decorator('button', shapes.button, eventDispatcher);
+  const buttons = decorator("button", shapes.button, eventDispatcher);
   const images = decorator(
-    'image',
+    "image",
     shapes.image,
     eventDispatcher,
     DEFAULTS.material.image(),
   );
-  const texts = decorator('text', shapes.text, eventDispatcher);
+  const texts = decorator("text", shapes.text, eventDispatcher);
 
   const coverIndex = 0;
   const cover: VNode = images.element?.length

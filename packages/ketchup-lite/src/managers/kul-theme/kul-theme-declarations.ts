@@ -1,4 +1,4 @@
-import { GenericObject } from '../../types/GenericTypes';
+import { GenericObject } from "../../types/GenericTypes";
 
 export interface KulThemeJSON {
   [index: string]: KulThemeElement;
@@ -23,10 +23,10 @@ export interface KulThemeCSSVariables extends KulThemeChartColorCSSVariables {
   [KulThemeColorValues.NAV_BAR]: string;
   [KulThemeColorValues.DRAWER]: string;
   [KulThemeColorValues.DRAWER_BACKGROUND]: string;
-  '--kul-header-height': string;
-  '--kul-drawer-width': string;
-  '--kul-font-family': string;
-  '--kul-font-size': string;
+  "--kul-header-height": string;
+  "--kul-drawer-width": string;
+  "--kul-font-family": string;
+  "--kul-font-size": string;
   [KulThemeColorValues.TEXT]: string;
   [KulThemeColorValues.TEXT_ON_PRIMARY]: string;
   [KulThemeColorValues.DISABLED_BACKGROUND]: string;
@@ -35,17 +35,17 @@ export interface KulThemeCSSVariables extends KulThemeChartColorCSSVariables {
   [KulThemeColorValues.TITLE]: string;
   [KulThemeColorValues.ICON]: string;
   [KulThemeColorValues.BORDER]: string;
-  '--kul-box-shadow': string;
+  "--kul-box-shadow": string;
   [KulThemeColorValues.INFO]: string;
   [KulThemeColorValues.SUCCESS]: string;
   [KulThemeColorValues.WARNING]: string;
   [KulThemeColorValues.DANGER]: string;
   [KulThemeColorValues.SPINNER]: string;
-  '--kul-font-family-monospace': string;
+  "--kul-font-family-monospace": string;
   [KulThemeColorValues.TEXT_ON_SECONDARY]: string;
-  '--kul-card-zindex': number;
-  '--kul-drawer-zindex': number;
-  '--kul-header-zindex': number;
+  "--kul-card-zindex": number;
+  "--kul-drawer-zindex": number;
+  "--kul-header-zindex": number;
 }
 export interface KulThemeIcons {
   [KulThemeIconValues.ASCENDING]: string;
@@ -80,62 +80,62 @@ export interface KulThemeHSLValues {
   l: number;
 }
 export enum KulThemeColorValues {
-  PRIMARY = '--kul-primary-color',
-  SECONDARY = '--kul-secondary-color',
-  BACKGROUND = '--kul-background-color',
-  NAV_BAR = '--kul-header-color',
-  NAV_BAR_BACKGROUND = '--kul-header-background-color',
-  DRAWER = '--kul-drawer-color',
-  DRAWER_BACKGROUND = '--kul-drawer-background-color',
-  TEXT = '--kul-text-color',
-  TEXT_ON_PRIMARY = '--kul-text-on-primary-color',
-  TEXT_ON_SECONDARY = '--kul-text-on-secondary-color',
-  DISABLED_BACKGROUND = '--kul-disabled-background-color',
-  DISABLED = '--kul-disabled-color',
-  HOVER_BACKGROUND = '--kul-hover-background-color',
-  HOVER = '--kul-hover-color',
-  TITLE_BACKGROUND = '--kul-title-background-color',
-  TITLE = '--kul-title-color',
-  ICON = '--kul-icon-color',
-  BORDER = '--kul-border-color',
-  INFO = '--kul-info-color',
-  SUCCESS = '--kul-success-color',
-  WARNING = '--kul-warning-color',
-  DANGER = '--kul-danger-color',
-  SPINNER = '--kul-spinner-color',
-  CHART_1 = '--kul-chart-color-1',
-  CHART_2 = '--kul-chart-color-2',
-  CHART_3 = '--kul-chart-color-3',
-  CHART_4 = '--kul-chart-color-4',
+  PRIMARY = "--kul-primary-color",
+  SECONDARY = "--kul-secondary-color",
+  BACKGROUND = "--kul-background-color",
+  NAV_BAR = "--kul-header-color",
+  NAV_BAR_BACKGROUND = "--kul-header-background-color",
+  DRAWER = "--kul-drawer-color",
+  DRAWER_BACKGROUND = "--kul-drawer-background-color",
+  TEXT = "--kul-text-color",
+  TEXT_ON_PRIMARY = "--kul-text-on-primary-color",
+  TEXT_ON_SECONDARY = "--kul-text-on-secondary-color",
+  DISABLED_BACKGROUND = "--kul-disabled-background-color",
+  DISABLED = "--kul-disabled-color",
+  HOVER_BACKGROUND = "--kul-hover-background-color",
+  HOVER = "--kul-hover-color",
+  TITLE_BACKGROUND = "--kul-title-background-color",
+  TITLE = "--kul-title-color",
+  ICON = "--kul-icon-color",
+  BORDER = "--kul-border-color",
+  INFO = "--kul-info-color",
+  SUCCESS = "--kul-success-color",
+  WARNING = "--kul-warning-color",
+  DANGER = "--kul-danger-color",
+  SPINNER = "--kul-spinner-color",
+  CHART_1 = "--kul-chart-color-1",
+  CHART_2 = "--kul-chart-color-2",
+  CHART_3 = "--kul-chart-color-3",
+  CHART_4 = "--kul-chart-color-4",
 }
 export enum KulThemeFonts {
-  ABEL = 'Abel',
-  BLINKER = 'Blinker',
-  CRIMSON_TEXT = 'CrimsonText',
-  FIRA_CODE = 'FiraCode',
-  IBM_PLEX = 'IBMPlexSans',
-  INTER = 'Inter',
-  LATO = 'Lato',
-  MALI = 'Mali',
-  OPEN_SANS = 'Open_Sans',
-  OSWALD = 'Oswald',
-  PUBLIC_SANS = 'PublicSans',
-  RAJDHANI = 'Rajdhani',
-  UBUNTU = 'Ubuntu',
+  ABEL = "Abel",
+  BLINKER = "Blinker",
+  CRIMSON_TEXT = "CrimsonText",
+  FIRA_CODE = "FiraCode",
+  IBM_PLEX = "IBMPlexSans",
+  INTER = "Inter",
+  LATO = "Lato",
+  MALI = "Mali",
+  OPEN_SANS = "Open_Sans",
+  OSWALD = "Oswald",
+  PUBLIC_SANS = "PublicSans",
+  RAJDHANI = "Rajdhani",
+  UBUNTU = "Ubuntu",
 }
 export enum KulThemeIconValues {
-  ASCENDING = '--kul-ascending-icon',
-  CLEAR = '--kul-clear-icon',
-  COLLAPSED = '--kul-collapsed-icon',
-  DESCENDING = '--kul-descending-icon',
-  DROPDOWN = '--kul-dropdown-icon',
-  EXPANDED = '--kul-expanded-icon',
-  FILTER_REMOVE = '--kul-filter-remove-icon',
-  KEY = '--kul-key-icon',
-  SEARCH = '--kul-search-icon',
-  WARNING = '--kul-warning-icon',
+  ASCENDING = "--kul-ascending-icon",
+  CLEAR = "--kul-clear-icon",
+  COLLAPSED = "--kul-collapsed-icon",
+  DESCENDING = "--kul-descending-icon",
+  DROPDOWN = "--kul-dropdown-icon",
+  EXPANDED = "--kul-expanded-icon",
+  FILTER_REMOVE = "--kul-filter-remove-icon",
+  KEY = "--kul-key-icon",
+  SEARCH = "--kul-search-icon",
+  WARNING = "--kul-warning-icon",
 }
 export enum KulThemeAttribute {
-  DARK = 'kul-dark-theme',
-  LIGHT = 'kul-light-theme',
+  DARK = "kul-dark-theme",
+  LIGHT = "kul-light-theme",
 }

@@ -2,8 +2,8 @@ import {
   KulDataDataset,
   KulDataGenericCell,
   KulDataNode,
-} from '../kul-data-declarations';
-import { cellStringify } from './kul-data-cell-utils';
+} from "../kul-data-declarations";
+import { cellStringify } from "./kul-data-cell-utils";
 
 export const findNodeByCell = (
   dataset: KulDataDataset,
@@ -101,7 +101,7 @@ export const nodeFilter = (
   };
 };
 export const nodeFixIds = (nodes: KulDataNode[]) => {
-  function updateNodeIds(node: KulDataNode, depth: string = '0'): void {
+  function updateNodeIds(node: KulDataNode, depth: string = "0"): void {
     node.id = depth;
 
     if (node.children) {
@@ -112,7 +112,7 @@ export const nodeFixIds = (nodes: KulDataNode[]) => {
     }
   }
   nodes.forEach((node: KulDataNode) => {
-    updateNodeIds(node, '0');
+    updateNodeIds(node, "0");
   });
   return nodes;
 };
@@ -215,7 +215,7 @@ export const nodePop = (nodes: KulDataNode[], node2remove: KulDataNode) => {
 export const nodeSort = (
   stringify: (value: unknown) => string,
   nodes: KulDataNode[],
-  direction: 'asc' | 'desc' = 'asc',
+  direction: "asc" | "desc" = "asc",
 ) => {
   nodes.sort((a, b) => {
     let result = 0;
@@ -227,7 +227,7 @@ export const nodeSort = (
       result = 1;
     }
 
-    return direction === 'desc' ? result * -1 : result;
+    return direction === "desc" ? result * -1 : result;
   });
   return nodes;
 };

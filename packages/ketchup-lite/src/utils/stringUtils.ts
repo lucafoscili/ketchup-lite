@@ -13,7 +13,7 @@ export function getRegExpFromString(s: string, flags?: string): RegExp {
  * @returns The escaped string with special regular expression characters prefixed with a backslash.
  */
 function escapeRegExp(s: string) {
-  return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
 }
 /**
  * Fills a string with another string to reach a specified final length, adding the fill string before or after the input string based on a flag.
@@ -30,7 +30,7 @@ export function fillString(
   addBefore: boolean,
 ): string {
   let initSize = stringIn.length;
-  let stringOut: string = '';
+  let stringOut: string = "";
   for (let i: number = initSize; i < finalLen; i += stringForFill.length) {
     stringOut += stringForFill;
   }

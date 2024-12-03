@@ -5,8 +5,8 @@ import {
   KulMessengerImageTypes,
   KulMessengerOptionTypes,
   KulMessengerUI,
-} from './kul-messenger-declarations';
-import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
+} from "./kul-messenger-declarations";
+import { KulDataDataset } from "../../managers/kul-data/kul-data-declarations";
 
 const CLEAN_UI: KulMessengerUI = {
   customization: false,
@@ -74,14 +74,14 @@ export const CLEAN_COMPONENTS: KulMessengerAdapterComponents = {
   saveButton: null,
 };
 
-export const LEFT_EXPANDER_ICON = 'chevron_left';
-export const RIGHT_EXPANDER_ICON = 'chevron_right';
+export const LEFT_EXPANDER_ICON = "chevron_left";
+export const RIGHT_EXPANDER_ICON = "chevron_right";
 
-export const AVATAR_COVER = 'portrait';
-export const LOCATION_COVER = 'landscape';
-export const OUTFIT_COVER = 'loyalty';
-export const STYLE_COVER = 'style';
-export const TIMEFRAME_COVER = 'clock';
+export const AVATAR_COVER = "portrait";
+export const LOCATION_COVER = "landscape";
+export const OUTFIT_COVER = "loyalty";
+export const STYLE_COVER = "style";
+export const TIMEFRAME_COVER = "clock";
 export const COVER_ICONS = [
   AVATAR_COVER,
   LOCATION_COVER,
@@ -93,29 +93,29 @@ export const COVER_ICONS = [
 export const FILTER_DATASET: KulDataDataset = {
   nodes: [
     {
-      description: 'View avatars',
-      id: 'avatars',
-      value: 'Avatars',
+      description: "View avatars",
+      id: "avatars",
+      value: "Avatars",
     },
     {
-      description: 'View outfits',
-      id: 'outfits',
-      value: 'Outfits',
+      description: "View outfits",
+      id: "outfits",
+      value: "Outfits",
     },
     {
-      description: 'View locations',
-      id: 'locations',
-      value: 'Locations',
+      description: "View locations",
+      id: "locations",
+      value: "Locations",
     },
     {
-      description: 'View styles',
-      id: 'styles',
-      value: 'Styles',
+      description: "View styles",
+      id: "styles",
+      value: "Styles",
     },
     {
-      description: 'View timeframes',
-      id: 'timeframes',
-      value: 'Timeframes',
+      description: "View timeframes",
+      id: "timeframes",
+      value: "Timeframes",
     },
   ],
 };
@@ -125,20 +125,20 @@ export const MENU_DATASET: KulDataDataset = {
     {
       children: [
         {
-          description: 'Download the Ketchup Lite JSON, used as a dataset.',
-          icon: 'download',
-          id: 'kulData',
-          value: 'Download dataset',
+          description: "Download the Ketchup Lite JSON, used as a dataset.",
+          icon: "download",
+          id: "kulData",
+          value: "Download dataset",
         },
         {
-          description: 'Download the current configuration settings.',
-          icon: 'settings',
-          id: 'settings',
-          value: 'Download configuration',
+          description: "Download the current configuration settings.",
+          icon: "settings",
+          id: "settings",
+          value: "Download configuration",
         },
       ],
-      id: 'root',
-      value: '',
+      id: "root",
+      value: "",
     },
   ],
 };
@@ -147,42 +147,42 @@ export const CHILD_ROOT_MAP: Record<
   KulMessengerChildTypes,
   KulMessengerImageTypes
 > = {
-  avatar: 'avatars',
-  location: 'locations',
-  outfit: 'outfits',
-  style: 'styles',
-  timeframe: 'timeframes',
+  avatar: "avatars",
+  location: "locations",
+  outfit: "outfits",
+  style: "styles",
+  timeframe: "timeframes",
 };
 
 export const OPTION_TYPE_IDS: KulMessengerOptionTypes[] = [
-  'locations',
-  'outfits',
-  'styles',
-  'timeframes',
+  "locations",
+  "outfits",
+  "styles",
+  "timeframes",
 ];
 
 export const IMAGE_TYPE_IDS: KulMessengerImageRootIds<KulMessengerImageTypes>[] =
-  ['avatars', ...OPTION_TYPE_IDS];
+  ["avatars", ...OPTION_TYPE_IDS];
 
 export const NAV_DATASET: KulDataDataset = {
   nodes: [
     {
-      description: 'Previous character',
+      description: "Previous character",
       icon: LEFT_EXPANDER_ICON,
-      id: 'previous',
-      value: '',
+      id: "previous",
+      value: "",
     },
     {
-      description: 'Character selection',
-      icon: 'account',
-      id: 'character_list',
-      value: 'Character list',
+      description: "Character selection",
+      icon: "account",
+      id: "character_list",
+      value: "Character list",
     },
     {
-      description: 'Next character',
+      description: "Next character",
       icon: RIGHT_EXPANDER_ICON,
-      id: 'next',
-      value: '',
+      id: "next",
+      value: "",
     },
   ],
 };

@@ -1,79 +1,79 @@
-import { CardData } from './kul-showcase-card-declarations';
+import { CardData } from "./kul-showcase-card-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { CARD_KULDATA_FACTORY } from '../../assets/fixtures/card';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { CARD_KULDATA_FACTORY } from "../../assets/fixtures/card";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulCard';
-const EVENT_NAME: KulComponentEventName<'KulCard'> = 'kul-card-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCard'> =
-  'KulCardEventPayload';
-const TAG_NAME: KulComponentTag<'KulCard'> = 'kul-card';
+const COMPONENT_NAME: KulComponentName = "KulCard";
+const EVENT_NAME: KulComponentEventName<"KulCard"> = "kul-card-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCard"> =
+  "KulCardEventPayload";
+const TAG_NAME: KulComponentTag<"KulCard"> = "kul-card";
 
 export const CARD_EXAMPLES: () => CardData = () => ({
   debug: {
     image: {
-      ['data-description']: 'Card with custom style',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.debug(),
     },
     style: {
-      ['data-description']: 'Card with custom style',
-      ['data-dynamic']: 'custom',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      ["data-dynamic"]: "custom",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.debug(),
     },
   },
   keywords: {
     image: {
-      ['data-description']: 'Card with custom style',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.keywords(),
     },
     style: {
-      ['data-description']: 'Card with custom style',
-      ['data-dynamic']: 'custom',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      ["data-dynamic"]: "custom",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.keywords(),
     },
   },
   material: {
     image: {
-      ['data-description']: 'Card with custom style',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.material(),
     },
     style: {
-      ['data-description']: 'Card with custom style',
-      ['data-dynamic']: 'custom',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      ["data-dynamic"]: "custom",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.material(),
     },
   },
   upload: {
     image: {
-      ['data-description']: 'Card with custom style',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.upload(),
     },
     style: {
-      ['data-description']: 'Card with custom style',
-      ['data-dynamic']: 'custom',
-      kulSizeX: '320px',
-      kulSizeY: '320px',
+      ["data-description"]: "Card with custom style",
+      ["data-dynamic"]: "custom",
+      kulSizeX: "320px",
+      kulSizeY: "320px",
       kulData: CARD_KULDATA_FACTORY.upload(),
     },
   },
@@ -87,19 +87,19 @@ export const CARD_DOC: KulArticleDataset = {
       children: [
         SECTION_FACTORY.overview(
           COMPONENT_NAME,
-          'component is designed to render cards based on a JSON structure',
+          "component is designed to render cards based on a JSON structure",
         ),
         SECTION_FACTORY.usage(COMPONENT_NAME, {
           data: JSON.stringify({
             nodes: [
               {
                 cells: {
-                  icon: { shape: 'image', value: 'widgets' },
-                  text1: { value: 'Title' },
-                  text2: { value: 'Subtitle' },
-                  text3: { value: 'Description.' },
+                  icon: { shape: "image", value: "widgets" },
+                  text1: { value: "Title" },
+                  text2: { value: "Subtitle" },
+                  text3: { value: "Description." },
                 },
-                id: 'card',
+                id: "card",
               },
             ],
           }),
@@ -111,31 +111,31 @@ export const CARD_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'click',
-              description: 'emitted when the component is clicked',
+              type: "click",
+              description: "emitted when the component is clicked",
             },
             {
-              type: 'contextmenu',
-              description: 'emitted when the component is right-clicked',
+              type: "contextmenu",
+              description: "emitted when the component is right-clicked",
             },
             {
-              type: 'kul-event',
-              description: 'wraps a subcomponent event',
+              type: "kul-event",
+              description: "wraps a subcomponent event",
             },
             {
-              type: 'pointerdown',
+              type: "pointerdown",
               description:
-                'emitted when as soon as the component is touched/clicked (before the click event)',
+                "emitted when as soon as the component is touched/clicked (before the click event)",
             },
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

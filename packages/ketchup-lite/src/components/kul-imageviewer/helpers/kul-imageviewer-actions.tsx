@@ -1,5 +1,5 @@
-import { KulDataCell } from '../../../managers/kul-data/kul-data-declarations';
-import { KulImageviewerAdapterActions } from '../kul-imageviewer-declarations';
+import { KulDataCell } from "../../../managers/kul-data/kul-data-declarations";
+import { KulImageviewerAdapterActions } from "../kul-imageviewer-declarations";
 
 export const ACTIONS: KulImageviewerAdapterActions = {
   async clearHistory(adapter, index = null) {
@@ -46,7 +46,7 @@ export const ACTIONS: KulImageviewerAdapterActions = {
     const currentSelectedShape = adapter.get.state.currentShape();
     const cells = manager.data.cell.shapes.getAll(imageviewer.kulData, false);
 
-    return cells['image'].find(
+    return cells["image"].find(
       (c) =>
         c.value === currentSelectedShape.value ||
         c.kulValue === currentSelectedShape.value,
@@ -64,7 +64,7 @@ export const ACTIONS: KulImageviewerAdapterActions = {
       );
       adapter.actions.clearHistory(adapter);
     } catch (error) {
-      console.error('Load operation failed:', error);
+      console.error("Load operation failed:", error);
     }
   },
   async redo(adapter) {
@@ -103,7 +103,7 @@ export const ACTIONS: KulImageviewerAdapterActions = {
     }
   },
   updateValue(shape, value) {
-    const s = shape as Partial<KulDataCell<'image'>>;
+    const s = shape as Partial<KulDataCell<"image">>;
     shape.value = value;
     if (s.kulValue) {
       s.kulValue = value;

@@ -1,22 +1,22 @@
 import {
   SPINNER_EXAMPLES_KEYS,
   SpinnerData,
-} from './kul-showcase-spinner-declarations';
+} from "./kul-showcase-spinner-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulSpinner';
-const EVENT_NAME: KulComponentEventName<'KulSpinner'> = 'kul-spinner-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulSpinner'> =
-  'KulSpinnerEventPayload';
-const TAG_NAME: KulComponentTag<'KulSpinner'> = 'kul-spinner';
+const COMPONENT_NAME: KulComponentName = "KulSpinner";
+const EVENT_NAME: KulComponentEventName<"KulSpinner"> = "kul-spinner-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulSpinner"> =
+  "KulSpinnerEventPayload";
+const TAG_NAME: KulComponentTag<"KulSpinner"> = "kul-spinner";
 
 function createSpinnerData(
   barLayouts: number,
@@ -33,27 +33,27 @@ function createSpinnerData(
         spinnerData.bar[i] = {};
       }
       switch (exampleType) {
-        case 'spinner':
+        case "spinner":
           spinnerData.bar[i][exampleType] = {
-            ['data-description']: 'Inactive',
+            ["data-description"]: "Inactive",
             kulActive: false,
             kulBarVariant: true,
             kulLayout: i,
           };
           break;
-        case 'spinnerActive':
+        case "spinnerActive":
           spinnerData.bar[i][exampleType] = {
-            ['data-description']: 'Active',
+            ["data-description"]: "Active",
             kulActive: true,
             kulBarVariant: true,
             kulLayout: i,
             kulTimeout: 30000,
           };
           break;
-        case 'style':
+        case "style":
           spinnerData.bar[i][exampleType] = {
-            'data-description': 'Custom style',
-            'data-dynamic': 'custom',
+            "data-description": "Custom style",
+            "data-dynamic": "custom",
             kulActive: true,
             kulBarVariant: true,
             kulLayout: i,
@@ -69,24 +69,24 @@ function createSpinnerData(
         spinnerData.widget[i] = {};
       }
       switch (exampleType) {
-        case 'spinner':
+        case "spinner":
           spinnerData.widget[i][exampleType] = {
-            ['data-description']: 'Inactive',
+            ["data-description"]: "Inactive",
             kulActive: false,
             kulLayout: i,
           };
           break;
-        case 'spinnerActive':
+        case "spinnerActive":
           spinnerData.widget[i][exampleType] = {
-            ['data-description']: 'Active',
+            ["data-description"]: "Active",
             kulActive: true,
             kulLayout: i,
           };
           break;
-        case 'style':
+        case "style":
           spinnerData.widget[i][exampleType] = {
-            'data-description': 'Custom style',
-            'data-dynamic': 'custom',
+            "data-description": "Custom style",
+            "data-dynamic": "custom",
             kulActive: true,
             kulLayout: i,
           };
@@ -108,7 +108,7 @@ export const SPINNER_DOC: KulArticleDataset = {
       children: [
         SECTION_FACTORY.overview(
           COMPONENT_NAME,
-          'is designed to render pure CSS spinners that can be used to give the user feedback that a process is currently running',
+          "is designed to render pure CSS spinners that can be used to give the user feedback that a process is currently running",
         ),
         SECTION_FACTORY.usage(COMPONENT_NAME, {
           tag: TAG_NAME,
@@ -119,14 +119,14 @@ export const SPINNER_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

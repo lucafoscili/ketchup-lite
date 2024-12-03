@@ -1,9 +1,9 @@
-import type { KulDom } from '../kul-manager/kul-manager-declarations';
+import type { KulDom } from "../kul-manager/kul-manager-declarations";
 import {
   KulScrollOnHoverElement,
   KulScrollOnHoverPercentages,
   ScrollOnHoverDirection,
-} from './kul-scroll-on-hover-declarations';
+} from "./kul-scroll-on-hover-declarations";
 
 export class KulScrollOnHover {
   container: HTMLElement;
@@ -32,23 +32,23 @@ export class KulScrollOnHover {
     this.#timeout = null;
   }
   #initArrows() {
-    this.#arrowsContainer = document.createElement('div');
+    this.#arrowsContainer = document.createElement("div");
     this.#leftArrows = [];
     this.#rightArrows = [];
-    this.#arrowsContainer.id = 'kul-scrolling-arrows';
+    this.#arrowsContainer.id = "kul-scrolling-arrows";
     for (let index = 1; index < 4; index++) {
-      const arrow: HTMLElement = document.createElement('div');
+      const arrow: HTMLElement = document.createElement("div");
       arrow.setAttribute(
-        'class',
-        'kul-left-scrolling-arrow kul-arrow-' + index,
+        "class",
+        "kul-left-scrolling-arrow kul-arrow-" + index,
       );
       this.#leftArrows.push(arrow);
     }
     for (let index = 1; index < 4; index++) {
-      const arrow: HTMLElement = document.createElement('div');
+      const arrow: HTMLElement = document.createElement("div");
       arrow.setAttribute(
-        'class',
-        'kul-right-scrolling-arrow kul-arrow-' + index,
+        "class",
+        "kul-right-scrolling-arrow kul-arrow-" + index,
       );
       this.#rightArrows.push(arrow);
     }
@@ -60,8 +60,8 @@ export class KulScrollOnHover {
       this.#rightArrows[1],
       this.#rightArrows[2],
     );
-    this.container = document.createElement('div');
-    this.container.setAttribute('kul-scroll-on-hover', '');
+    this.container = document.createElement("div");
+    this.container.setAttribute("kul-scroll-on-hover", "");
     this.container.appendChild(this.#arrowsContainer);
     document.body.appendChild(this.container);
   }
@@ -74,10 +74,10 @@ export class KulScrollOnHover {
     if (!this.#arrowsContainer) {
       this.#initArrows();
     }
-    el.style.overflowX = 'auto';
+    el.style.overflowX = "auto";
     el.scrollOnHover = {
       active: false,
-      children: el.querySelectorAll('.hover-scrolling-child'),
+      children: el.querySelectorAll(".hover-scrolling-child"),
       percentages: percentages ? percentages : { back: 0.1, forward: 0.9 },
       rect: null,
       step: step,
@@ -86,16 +86,16 @@ export class KulScrollOnHover {
       y: 0,
     };
     if (el.scrollOnHover.children) {
-      el.addEventListener('scroll', this.#scrollEvent);
+      el.addEventListener("scroll", this.#scrollEvent);
     }
-    el.addEventListener('mousemove', this.#mousemoveEvent);
-    el.addEventListener('mouseleave', this.#mouseleaveEvent);
+    el.addEventListener("mousemove", this.#mousemoveEvent);
+    el.addEventListener("mouseleave", this.#mouseleaveEvent);
     this.managedElements.add(el);
   }
   unregister(el: KulScrollOnHoverElement): void {
-    el.removeEventListener('scroll', this.#scrollEvent);
-    el.removeEventListener('mousemove', this.#mousemoveEvent);
-    el.removeEventListener('mouseleave', this.#mouseleaveEvent);
+    el.removeEventListener("scroll", this.#scrollEvent);
+    el.removeEventListener("mousemove", this.#mousemoveEvent);
+    el.removeEventListener("mouseleave", this.#mouseleaveEvent);
     if (this.managedElements) {
       this.managedElements.delete(el);
     }
@@ -109,8 +109,8 @@ export class KulScrollOnHover {
     el.scrollOnHover.rect = el.getBoundingClientRect();
     el.scrollOnHover.x = event.clientX;
     el.scrollOnHover.y = event.clientY;
-    this.#arrowsContainer.style.left = event.clientX + 'px';
-    this.#arrowsContainer.style.top = event.clientY + 'px';
+    this.#arrowsContainer.style.left = event.clientX + "px";
+    this.#arrowsContainer.style.top = event.clientY + "px";
     if (el.scrollOnHover.active || this.#timeout) {
       return;
     }
@@ -140,9 +140,9 @@ export class KulScrollOnHover {
         if (direction) {
           for (let i = 0; i < 3; i++) {
             if (direction === ScrollOnHoverDirection.LEFT) {
-              this.#leftArrows[i].classList.add('kul-activated');
+              this.#leftArrows[i].classList.add("kul-activated");
             } else {
-              this.#rightArrows[i].classList.add('kul-activated');
+              this.#rightArrows[i].classList.add("kul-activated");
             }
           }
           const dom = this.#DOM;
@@ -199,12 +199,12 @@ export class KulScrollOnHover {
     clearTimeout(this.#timeout);
     this.#timeout = null;
     for (let i = 0; i < this.#leftArrows.length; i++) {
-      this.#leftArrows[i].classList.remove('kul-activated');
-      this.#leftArrows[i].classList.remove('kul-animated');
+      this.#leftArrows[i].classList.remove("kul-activated");
+      this.#leftArrows[i].classList.remove("kul-animated");
     }
     for (let i = 0; i < this.#rightArrows.length; i++) {
-      this.#rightArrows[i].classList.remove('kul-activated');
-      this.#rightArrows[i].classList.remove('kul-animated');
+      this.#rightArrows[i].classList.remove("kul-activated");
+      this.#rightArrows[i].classList.remove("kul-animated");
     }
   }
   run(
@@ -307,7 +307,7 @@ export class KulScrollOnHover {
     }
 
     for (let i = 0; i < arrow.length; i++) {
-      arrow[i].classList.add('kul-animated');
+      arrow[i].classList.add("kul-animated");
     }
 
     const dom = this.#DOM;

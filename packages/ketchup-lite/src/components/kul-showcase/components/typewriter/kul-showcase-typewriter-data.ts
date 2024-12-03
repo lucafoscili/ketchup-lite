@@ -1,24 +1,24 @@
-import { TypewriterData } from './kul-showcase-typewriter-declarations';
+import { TypewriterData } from "./kul-showcase-typewriter-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulTypewriter';
-const EVENT_NAME: KulComponentEventName<'KulTypewriter'> =
-  'kul-typewriter-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulTypewriter'> =
-  'KulTypewriterEventPayload';
-const TAG_NAME: KulComponentTag<'KulTypewriter'> = 'kul-typewriter';
+const COMPONENT_NAME: KulComponentName = "KulTypewriter";
+const EVENT_NAME: KulComponentEventName<"KulTypewriter"> =
+  "kul-typewriter-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulTypewriter"> =
+  "KulTypewriterEventPayload";
+const TAG_NAME: KulComponentTag<"KulTypewriter"> = "kul-typewriter";
 
 export const TYPEWRITER_EXAMPLES: TypewriterData = {
   simple: {
-    ['data-description']: 'Simple typewriter with button',
+    ["data-description"]: "Simple typewriter with button",
     kulValue: [
       `Ketchup Lite is a lightweight and versatile Web Components library designed to enhance your web
 development experience.`,
@@ -27,8 +27,8 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
     ],
   },
   style: {
-    ['data-description']: 'Simple typewriter custom style',
-    'data-dynamic': 'custom',
+    ["data-description"]: "Simple typewriter custom style",
+    "data-dynamic": "custom",
     kulValue: [
       `Ketchup Lite is a lightweight and versatile Web Components library designed to enhance your web
 development experience.`,
@@ -46,7 +46,7 @@ export const TYPEWRITER_DOC: KulArticleDataset = {
       children: [
         SECTION_FACTORY.overview(
           COMPONENT_NAME,
-          'is designed to simulate the behavior of a typewriter, by writing text dynamically after a customizable amount of time has passed between each letter',
+          "is designed to simulate the behavior of a typewriter, by writing text dynamically after a customizable amount of time has passed between each letter",
         ),
         SECTION_FACTORY.usage(COMPONENT_NAME, {
           tag: TAG_NAME,
@@ -57,14 +57,14 @@ export const TYPEWRITER_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

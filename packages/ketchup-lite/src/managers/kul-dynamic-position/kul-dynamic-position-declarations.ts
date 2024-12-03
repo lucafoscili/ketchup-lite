@@ -1,5 +1,5 @@
-export const kulDynamicPositionAttribute = 'kul-dynamic-position';
-export const kulDynamicPositionAnchorAttribute = 'kul-dynamic-position-anchor';
+export const kulDynamicPositionAttribute = "kul-dynamic-position";
+export const kulDynamicPositionAnchorAttribute = "kul-dynamic-position-anchor";
 export type KulDynamicPositionAnchor =
   | HTMLElement
   | KulDynamicPositionCoordinates;
@@ -18,13 +18,13 @@ export interface KulDynamicPositionCoordinates {
   y: number;
 }
 export enum KulDynamicPositionPlacement {
-  AUTO = '',
-  BOTTOM = 'b',
-  BOTTOM_LEFT = 'bl',
-  BOTTOM_RIGHT = 'br',
-  LEFT = 'l',
-  RIGHT = 'r',
-  TOP = 't',
-  TOP_LEFT = 'tl',
-  TOP_RIGHT = 'tr',
+  AUTO = "",
+  BOTTOM = "b",
+  BOTTOM_LEFT = "bl",
+  BOTTOM_RIGHT = "br",
+  LEFT = "l",
+  RIGHT = "r",
+  TOP = "t",
+  TOP_LEFT = "tl",
+  TOP_RIGHT = "tr",
 }

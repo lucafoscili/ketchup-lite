@@ -11,7 +11,7 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulTextfieldEvent,
@@ -20,16 +20,16 @@ import {
   KulTextfieldProps,
   KulTextfieldStatus,
   KulTextfieldStyling,
-} from './kul-textfield-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-textfield-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-textfield',
-  styleUrl: 'kul-textfield.scss',
+  tag: "kul-textfield",
+  styleUrl: "kul-textfield.scss",
   shadow: true,
 })
 export class KulTextfield {
@@ -59,7 +59,7 @@ export class KulTextfield {
   /**
    * Value of the text field.
    */
-  @State() value = '';
+  @State() value = "";
 
   /*-------------------------------------------------*/
   /*                    P r o p s                    */
@@ -92,26 +92,26 @@ export class KulTextfield {
    * Icons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulIcon = '';
+  @Prop({ mutable: true, reflect: true }) kulIcon = "";
   /**
    * Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.
    * Labels are especially important for screen readers and users navigating with keyboard-only controls.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = '';
+  @Prop({ mutable: true, reflect: true }) kulLabel = "";
   /**
    * Accepts custom CSS styles to apply directly to the text field component.
    * This allows for fine-grained control over the appearance of the component beyond predefined styling options.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * Determines the overall styling theme of the text field, affecting its shape and border.
    * Options include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.
    * @default "raised"
    */
   @Prop({ mutable: true, reflect: true }) kulStyling: KulTextfieldStyling =
-    'raised';
+    "raised";
   /**
    * Controls whether the icon should appear after the text input, typically used for action buttons like clear or search.
    * @default false
@@ -122,7 +122,7 @@ export class KulTextfield {
    * This can be used to pre-fill forms or set a starting point for user input.
    * @default ""
    */
-  @Prop({ mutable: false }) kulValue = '';
+  @Prop({ mutable: false }) kulValue = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -141,7 +141,7 @@ export class KulTextfield {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-textfield-event',
+    eventName: "kul-textfield-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -152,12 +152,12 @@ export class KulTextfield {
     const target = e.target as HTMLInputElement;
     const inputValue = target?.value;
     switch (eventType) {
-      case 'blur':
-        this.status.delete('focused');
+      case "blur":
+        this.status.delete("focused");
         this.status = new Set(this.status);
         break;
-      case 'focus':
-        this.status.add('focused');
+      case "focus":
+        this.status.add("focused");
         this.status = new Set(this.status);
         break;
     }
@@ -237,7 +237,7 @@ export class KulTextfield {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -248,16 +248,16 @@ export class KulTextfield {
 
   #updateState(
     value: string,
-    e: CustomEvent<unknown> | Event = new CustomEvent('change'),
+    e: CustomEvent<unknown> | Event = new CustomEvent("change"),
   ) {
     if (!this.kulDisabled) {
       this.value = value;
-      this.onKulEvent(e, 'change');
+      this.onKulEvent(e, "change");
     }
   }
 
   #outlineCheck() {
-    return this.kulStyling === 'outlined' || this.kulStyling === 'textarea';
+    return this.kulStyling === "outlined" || this.kulStyling === "textarea";
   }
 
   #prepCounter() {
@@ -278,13 +278,13 @@ export class KulTextfield {
     }
 
     const classList: Record<string, boolean> = {
-      'textfield__helper-text': true,
-      'textfield__helper-text--persistent': !this.kulHelper.showWhenFocused,
+      "textfield__helper-text": true,
+      "textfield__helper-text--persistent": !this.kulHelper.showWhenFocused,
     };
     return (
       <div class="textfield__helper-line">
         <div class={classList}>{this.kulHelper.value}</div>
-        {this.kulStyling !== 'textarea' ? this.#prepCounter() : undefined}
+        {this.kulStyling !== "textarea" ? this.#prepCounter() : undefined}
       </div>
     );
   }
@@ -310,19 +310,19 @@ export class KulTextfield {
         data-cy={KulDataCyAttributes.INPUT}
         disabled={this.kulDisabled}
         onBlur={(e) => {
-          this.onKulEvent(e, 'blur');
+          this.onKulEvent(e, "blur");
         }}
         onChange={(e) => {
           this.#updateState((e.currentTarget as HTMLInputElement).value);
         }}
         onClick={(e) => {
-          this.onKulEvent(e, 'click');
+          this.onKulEvent(e, "click");
         }}
         onFocus={(e) => {
-          this.onKulEvent(e, 'focus');
+          this.onKulEvent(e, "focus");
         }}
         onInput={(e) => {
-          this.onKulEvent(e, 'input');
+          this.onKulEvent(e, "input");
         }}
         placeholder={this.kulFullWidth ? this.kulLabel : undefined}
         ref={(el) => {
@@ -372,19 +372,19 @@ export class KulTextfield {
           disabled={this.kulDisabled}
           id="input"
           onBlur={(e) => {
-            this.onKulEvent(e, 'blur');
+            this.onKulEvent(e, "blur");
           }}
           onChange={(e) => {
             this.#updateState((e.currentTarget as HTMLInputElement).value);
           }}
           onClick={(e) => {
-            this.onKulEvent(e, 'click');
+            this.onKulEvent(e, "click");
           }}
           onFocus={(e) => {
-            this.onKulEvent(e, 'focus');
+            this.onKulEvent(e, "focus");
           }}
           onInput={(e) => {
-            this.onKulEvent(e, 'input');
+            this.onKulEvent(e, "input");
           }}
           ref={(el) => {
             if (el) {
@@ -402,11 +402,11 @@ export class KulTextfield {
       prop: string;
       status: KulTextfieldStatus;
     }[] = [
-      { prop: 'value', status: 'filled' },
-      { prop: 'kulDisabled', status: 'disabled' },
-      { prop: 'kulFullWidth', status: 'full-width' },
-      { prop: 'kulIcon', status: 'has-icon' },
-      { prop: 'kulLabel', status: 'has-label' },
+      { prop: "value", status: "filled" },
+      { prop: "kulDisabled", status: "disabled" },
+      { prop: "kulFullWidth", status: "full-width" },
+      { prop: "kulIcon", status: "has-icon" },
+      { prop: "kulLabel", status: "has-label" },
     ];
 
     propertiesToUpdateStatus.forEach(({ prop, status }) => {
@@ -426,29 +426,29 @@ export class KulTextfield {
   componentWillLoad() {
     this.#kulManager.theme.register(this);
     if (this.kulValue) {
-      this.status.add('filled');
+      this.status.add("filled");
       this.value = this.kulValue;
     }
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
     this.#hasOutline = this.#outlineCheck();
     this.#maxLength = this.kulHtmlAttributes?.maxLength as number;
     this.#updateStatus();
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
-    const classList = ['textfield', 'textfield--' + this.kulStyling];
+    const classList = ["textfield", "textfield--" + this.kulStyling];
     this.status.forEach((status) => {
       classList.push(`textfield--${status}`);
     });
@@ -460,8 +460,8 @@ export class KulTextfield {
           </style>
         ) : undefined}
         <div id={KUL_WRAPPER_ID}>
-          <div class={classList.join(' ')}>
-            {this.kulStyling === 'textarea'
+          <div class={classList.join(" ")}>
+            {this.kulStyling === "textarea"
               ? [
                   this.#prepCounter(),
                   this.#prepIcon(),

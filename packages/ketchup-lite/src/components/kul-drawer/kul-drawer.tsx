@@ -9,22 +9,22 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulDrawerEvent,
   KulDrawerEventPayload,
   KulDrawerProps,
-} from './kul-drawer-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-drawer-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-drawer',
-  styleUrl: 'kul-drawer.scss',
+  tag: "kul-drawer",
+  styleUrl: "kul-drawer.scss",
   shadow: true,
 })
 export class KulDrawer {
@@ -61,7 +61,7 @@ export class KulDrawer {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -77,7 +77,7 @@ export class KulDrawer {
    * Describes event emitted by the component.
    */
   @Event({
-    eventName: 'kul-drawer-event',
+    eventName: "kul-drawer-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -103,7 +103,7 @@ export class KulDrawer {
   @Method()
   async close(): Promise<void> {
     this.opened = false;
-    this.onKulEvent(new CustomEvent('close'), 'close');
+    this.onKulEvent(new CustomEvent("close"), "close");
   }
   /**
    * Fetches debug information of the component's current state.
@@ -136,7 +136,7 @@ export class KulDrawer {
   @Method()
   async open(): Promise<void> {
     this.opened = true;
-    this.onKulEvent(new CustomEvent('open'), 'open');
+    this.onKulEvent(new CustomEvent("open"), "open");
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -163,7 +163,7 @@ export class KulDrawer {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -177,16 +177,16 @@ export class KulDrawer {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -214,7 +214,7 @@ export class KulDrawer {
           }}
         />
         <div id={KUL_WRAPPER_ID}>
-          <div class={'drawer'}>
+          <div class={"drawer"}>
             <div class={`drawer__content`}>
               <slot></slot>
             </div>

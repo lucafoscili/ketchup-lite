@@ -1,15 +1,15 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { CARD_DOC, CARD_EXAMPLES } from './kul-showcase-card-data';
-import { CardExample } from './kul-showcase-card-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { KulCardLayout } from '../../../kul-card/kul-card-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { CARD_DOC, CARD_EXAMPLES } from "./kul-showcase-card-data";
+import { CardExample } from "./kul-showcase-card-declarations";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { KulCardLayout } from "../../../kul-card/kul-card-declarations";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 @Component({
-  tag: 'kul-showcase-card',
-  styleUrl: 'kul-showcase-card.scss',
+  tag: "kul-showcase-card",
+  styleUrl: "kul-showcase-card.scss",
   shadow: true,
 })
 export class KulShowcaseCard {
@@ -45,14 +45,14 @@ export class KulShowcaseCard {
             layoutWrapper.push(
               <div class="example" part="example">
                 <div class="description" part="description">
-                  {props['data-description']}
+                  {props["data-description"]}
                 </div>
                 <div class="comp-wrapper" part="comp-wrapper">
                   <kul-card
                     key={k2}
-                    id={k1 + '-' + k2}
+                    id={k1 + "-" + k2}
                     ref={(el) => {
-                      if (el && props['data-dynamic']) {
+                      if (el && props["data-dynamic"]) {
                         this.#dynamicExamples.push(el);
                       }
                     }}
@@ -86,7 +86,7 @@ export class KulShowcaseCard {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }

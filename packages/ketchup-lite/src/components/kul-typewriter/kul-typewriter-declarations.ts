@@ -1,22 +1,22 @@
-import { KulEventPayload } from '../../types/GenericTypes';
+import { KulEventPayload } from "../../types/GenericTypes";
 
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulTypewriterEvent = 'ready' | 'unmount';
+export type KulTypewriterEvent = "ready" | "unmount";
 export interface KulTypewriterEventPayload
-  extends KulEventPayload<'KulTypewriter', KulTypewriterEvent> {}
+  extends KulEventPayload<"KulTypewriter", KulTypewriterEvent> {}
 /*-------------------------------------------------*/
 /*                    P r o p s                    */
 /*-------------------------------------------------*/
 export enum KulTypewriterProps {
-  kulCursor = 'Enables or disables the blinking cursor.',
-  kulDeleteSpeed = 'Sets the deleting speed in milliseconds.',
-  kulLoop = 'Enables or disables looping of the text.',
-  kulPause = 'Sets the duration of the pause after typing a complete text.',
-  kulSpeed = 'Sets the typing speed in milliseconds.',
-  kulStyle = 'Custom style of the component.',
-  kulValue = 'Sets the text or array of texts to display with the typewriter effect.',
+  kulCursor = "Enables or disables the blinking cursor.",
+  kulDeleteSpeed = "Sets the deleting speed in milliseconds.",
+  kulLoop = "Enables or disables looping of the text.",
+  kulPause = "Sets the duration of the pause after typing a complete text.",
+  kulSpeed = "Sets the typing speed in milliseconds.",
+  kulStyle = "Custom style of the component.",
+  kulValue = "Sets the text or array of texts to display with the typewriter effect.",
 }
 export interface KulTypewriterPropsInterface {
   kulCursor?: boolean;

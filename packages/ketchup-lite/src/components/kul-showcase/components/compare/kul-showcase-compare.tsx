@@ -1,13 +1,13 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { COMPARE_DOC, COMPARE_EXAMPLES } from './kul-showcase-compare-data';
-import { CompareExample } from './kul-showcase-compare-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { COMPARE_DOC, COMPARE_EXAMPLES } from "./kul-showcase-compare-data";
+import { CompareExample } from "./kul-showcase-compare-declarations";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 @Component({
-  tag: 'kul-showcase-compare',
-  styleUrl: 'kul-showcase-compare.scss',
+  tag: "kul-showcase-compare",
+  styleUrl: "kul-showcase-compare.scss",
   shadow: true,
 })
 export class KulShowcaseCompare {
@@ -38,14 +38,14 @@ export class KulShowcaseCompare {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-compare
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -66,7 +66,7 @@ export class KulShowcaseCompare {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }

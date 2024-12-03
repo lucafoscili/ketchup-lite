@@ -1,18 +1,18 @@
-import { Fragment, h } from '@stencil/core';
+import { Fragment, h } from "@stencil/core";
 
 import {
   KulButtonEventPayload,
   KulButtonPropsInterface,
-} from '../../kul-button/kul-button-declarations';
-import { KulListEventPayload } from '../../kul-list/kul-list-declarations';
-import { MENU_DATASET } from '../kul-messenger-constants';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
+} from "../../kul-button/kul-button-declarations";
+import { KulListEventPayload } from "../../kul-list/kul-list-declarations";
+import { MENU_DATASET } from "../kul-messenger-constants";
+import { KulMessengerAdapter } from "../kul-messenger-declarations";
 
 export const prepLeft = (adapter: KulMessengerAdapter) => {
   const isCollapsed = adapter.get.messenger.ui().panels.isLeftCollapsed;
   return (
     <div
-      class={`messenger__left ${isCollapsed ? 'messenger__left--collapsed' : ''}`}
+      class={`messenger__left ${isCollapsed ? "messenger__left--collapsed" : ""}`}
     >
       <div class="messenger__avatar">{prepAvatar(adapter)}</div>
       <div class="messenger__biography">{prepBiography(adapter)}</div>
@@ -21,36 +21,36 @@ export const prepLeft = (adapter: KulMessengerAdapter) => {
 };
 
 const prepAvatar = (adapter: KulMessengerAdapter) => {
-  const image = adapter.get.image.asCover('avatars');
+  const image = adapter.get.image.asCover("avatars");
   const status = adapter.get.messenger.status.connection();
   return (
     <Fragment>
       <img
-        alt={image.title || ''}
+        alt={image.title || ""}
         class="messenger__avatar__image"
         src={image.value}
-        title={image.title || ''}
+        title={image.title || ""}
       />
       <div class="messenger__avatar__name-wrapper">
         <div class="messenger__avatar__name">
           <kul-image
             class="messenger__avatar__status"
             kulColor={
-              status === 'ready'
-                ? 'var(--kul-success-color)'
-                : status === 'offline'
-                  ? 'var(--kul-danger-color)'
-                  : 'var(--kul-warning-color)'
+              status === "ready"
+                ? "var(--kul-success-color)"
+                : status === "offline"
+                  ? "var(--kul-danger-color)"
+                  : "var(--kul-warning-color)"
             }
             kulSizeX="16px"
             kulSizeY="16px"
             kulValue="brightness-1"
             title={
-              status === 'ready'
-                ? 'Ready to chat!'
-                : status === 'offline'
-                  ? 'This character seems to be offline...'
-                  : 'Contacting this character...'
+              status === "ready"
+                ? "Ready to chat!"
+                : status === "offline"
+                  ? "This character seems to be offline..."
+                  : "Contacting this character..."
             }
           ></kul-image>
           <div class="messenger__avatar__label">
@@ -66,13 +66,13 @@ const prepAvatar = (adapter: KulMessengerAdapter) => {
 const prepSaveButton = (adapter: KulMessengerAdapter) => {
   const saveInProgress = adapter.get.messenger.status.save.inProgress();
   const props: KulButtonPropsInterface = {
-    kulIcon: saveInProgress ? '' : 'save',
-    kulLabel: saveInProgress ? 'Saving...' : 'Save',
+    kulIcon: saveInProgress ? "" : "save",
+    kulLabel: saveInProgress ? "Saving..." : "Save",
     kulShowSpinner: saveInProgress ? true : false,
   };
   return (
     <kul-button
-      class={'kul-full-height'}
+      class={"kul-full-height"}
       {...props}
       kulData={MENU_DATASET}
       kulStyling="flat"
@@ -107,13 +107,13 @@ const buttonClickHandler = async (
 ) => {
   const { eventType, originalEvent } = e.detail;
   switch (eventType) {
-    case 'click':
+    case "click":
       const saveInProgress = adapter.get.messenger.status.save.inProgress();
       if (!saveInProgress) {
         adapter.set.messenger.data();
       }
       break;
-    case 'kul-event':
+    case "kul-event":
       listClickHandler(
         adapter,
         originalEvent as CustomEvent<KulListEventPayload>,
@@ -127,31 +127,31 @@ const listClickHandler = async (
   e: CustomEvent<KulListEventPayload>,
 ) => {
   const { eventType, node } = e.detail;
-  let strJson = '';
+  let strJson = "";
   switch (eventType) {
-    case 'click':
+    case "click":
       switch (node.id) {
-        case 'full_history':
+        case "full_history":
           strJson = JSON.stringify(adapter.get.messenger.history(), null, 2);
           break;
-        case 'history':
+        case "history":
           strJson = adapter.get.character.history();
           break;
-        case 'kulData':
+        case "kulData":
           strJson = JSON.stringify(adapter.get.messenger.data(), null, 2);
           break;
-        case 'settings':
+        case "settings":
           strJson = JSON.stringify(adapter.get.messenger.config(), null, 2);
           break;
       }
       const url = window.URL.createObjectURL(
         new Blob([strJson], {
-          type: 'application/json',
+          type: "application/json",
         }),
       );
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', node.id + '.json');
+      link.setAttribute("download", node.id + ".json");
       document.body.appendChild(link);
       link.click();
       link.parentNode.removeChild(link);

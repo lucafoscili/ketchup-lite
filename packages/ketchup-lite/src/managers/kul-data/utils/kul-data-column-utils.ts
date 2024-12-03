@@ -1,4 +1,4 @@
-import { KulDataColumn, KulDataDataset } from '../kul-data-declarations';
+import { KulDataColumn, KulDataDataset } from "../kul-data-declarations";
 
 export const columnFind = (
   dataset: KulDataDataset | KulDataColumn[],

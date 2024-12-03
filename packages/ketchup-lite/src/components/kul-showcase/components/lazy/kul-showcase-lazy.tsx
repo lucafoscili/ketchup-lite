@@ -1,14 +1,14 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { LAZY_DOC, LAZY_EXAMPLES } from './kul-showcase-lazy-data';
-import { LazyExample } from './kul-showcase-lazy-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { LAZY_DOC, LAZY_EXAMPLES } from "./kul-showcase-lazy-data";
+import { LazyExample } from "./kul-showcase-lazy-declarations";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 @Component({
-  tag: 'kul-showcase-lazy',
-  styleUrl: 'kul-showcase-lazy.scss',
+  tag: "kul-showcase-lazy",
+  styleUrl: "kul-showcase-lazy.scss",
   shadow: true,
 })
 export class KulShowcaseLazy {
@@ -39,14 +39,14 @@ export class KulShowcaseLazy {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-lazy
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -67,7 +67,7 @@ export class KulShowcaseLazy {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }

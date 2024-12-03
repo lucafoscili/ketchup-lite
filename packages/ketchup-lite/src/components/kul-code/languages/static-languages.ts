@@ -6,17 +6,17 @@ export const STATIC_LANGUAGES = {
       comment: /\/\*[\s\S]*?\*\//,
       atrule: {
         pattern: RegExp(
-          '@[\\w-](?:[^;{\\s"\']|\\s+(?!\\s)|' +
+          "@[\\w-](?:[^;{\\s\"']|\\s+(?!\\s)|" +
             e.source +
-            ')*?(?:;|(?=\\s*\\{))',
+            ")*?(?:;|(?=\\s*\\{))",
         ),
         inside: {
           rule: /^@[\w-]+/,
-          'selector-function-argument': {
+          "selector-function-argument": {
             pattern:
               /(\bselector\s*\(\s*(?![\s)]))(?:[^()\s]|\s+(?![\s)])|\((?:[^()]|\([^()]*\))*\))+(?=\s*\))/,
             lookbehind: !0,
-            alias: 'selector',
+            alias: "selector",
           },
           keyword: {
             pattern: /(^|[^\w-])(?:and|not|only|or)(?![\w-])/,
@@ -26,24 +26,24 @@ export const STATIC_LANGUAGES = {
       },
       url: {
         pattern: RegExp(
-          '\\burl\\((?:' + e.source + '|(?:[^\\\\\r\n()"\']|\\\\[^])*)\\)',
-          'i',
+          "\\burl\\((?:" + e.source + "|(?:[^\\\\\r\n()\"']|\\\\[^])*)\\)",
+          "i",
         ),
         greedy: !0,
         inside: {
           function: /^url/i,
           punctuation: /^\(|\)$/,
           string: {
-            pattern: RegExp('^' + e.source + '$'),
-            alias: 'url',
+            pattern: RegExp("^" + e.source + "$"),
+            alias: "url",
           },
         },
       },
       selector: {
         pattern: RegExp(
-          '(^|[{}\\s])[^{}\\s](?:[^{};"\'\\s]|\\s+(?![\\s{])|' +
+          "(^|[{}\\s])[^{}\\s](?:[^{};\"'\\s]|\\s+(?![\\s{])|" +
             e.source +
-            ')*(?=\\s*\\{)',
+            ")*(?=\\s*\\{)",
         ),
         lookbehind: !0,
       },
@@ -62,12 +62,12 @@ export const STATIC_LANGUAGES = {
     }),
       (Prism.languages.css.atrule.inside.rest = Prism.languages.css);
     var t = Prism.languages.markup;
-    t && (t.tag.addInlined('style', 'css'), t.tag.addAttribute('style', 'css'));
+    t && (t.tag.addInlined("style", "css"), t.tag.addAttribute("style", "css"));
   },
   javascript: (Prism: Prism.Environment) => {
-    (Prism.languages.javascript = Prism.languages.extend('clike', {
-      'class-name': [
-        Prism.languages.clike['class-name'],
+    (Prism.languages.javascript = Prism.languages.extend("clike", {
+      "class-name": [
+        Prism.languages.clike["class-name"],
         {
           pattern:
             /(^|[^$\w\xA0-\uFFFF])(?!\s)[_$A-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\.(?:constructor|prototype))/,
@@ -86,37 +86,37 @@ export const STATIC_LANGUAGES = {
         /#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*(?:\.\s*(?:apply|bind|call)\s*)?\()/,
       number: {
         pattern: RegExp(
-          '(^|[^\\w$])(?:NaN|Infinity|0[bB][01]+(?:_[01]+)*n?|0[oO][0-7]+(?:_[0-7]+)*n?|0[xX][\\dA-Fa-f]+(?:_[\\dA-Fa-f]+)*n?|\\d+(?:_\\d+)*n|(?:\\d+(?:_\\d+)*(?:\\.(?:\\d+(?:_\\d+)*)?)?|\\.\\d+(?:_\\d+)*)(?:[Ee][+-]?\\d+(?:_\\d+)*)?)(?![\\w$])',
+          "(^|[^\\w$])(?:NaN|Infinity|0[bB][01]+(?:_[01]+)*n?|0[oO][0-7]+(?:_[0-7]+)*n?|0[xX][\\dA-Fa-f]+(?:_[\\dA-Fa-f]+)*n?|\\d+(?:_\\d+)*n|(?:\\d+(?:_\\d+)*(?:\\.(?:\\d+(?:_\\d+)*)?)?|\\.\\d+(?:_\\d+)*)(?:[Ee][+-]?\\d+(?:_\\d+)*)?)(?![\\w$])",
         ),
         lookbehind: !0,
       },
       operator:
         /--|\+\+|\*\*=?|=>|&&=?|\|\|=?|[!=]==|<<=?|>>>?=?|[-+*/%&|^!=<>]=?|\.{3}|\?\?=?|\?\.?|[~:]/,
     })),
-      (Prism.languages.javascript['class-name'][0].pattern =
+      (Prism.languages.javascript["class-name"][0].pattern =
         /(\b(?:class|extends|implements|instanceof|interface|new)\s+)[\w.\\]+/),
-      Prism.languages.insertBefore('javascript', 'keyword', {
+      Prism.languages.insertBefore("javascript", "keyword", {
         regex: {
           pattern: RegExp(
-            '((?:^|[^$\\w\\xA0-\\uFFFF."\'\\])\\s]|\\b(?:return|yield))\\s*)/(?:(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}|(?:\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.)*\\])*\\])*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}v[dgimyus]{0,7})(?=(?:\\s|/\\*(?:[^*]|\\*(?!/))*\\*/)*(?:$|[\r\n,.;:})\\]]|//))',
+            "((?:^|[^$\\w\\xA0-\\uFFFF.\"'\\])\\s]|\\b(?:return|yield))\\s*)/(?:(?:\\[(?:[^\\]\\\\\r\n]|\\\\.)*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}|(?:\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.|\\[(?:[^[\\]\\\\\r\n]|\\\\.)*\\])*\\])*\\]|\\\\.|[^/\\\\\\[\r\n])+/[dgimyus]{0,7}v[dgimyus]{0,7})(?=(?:\\s|/\\*(?:[^*]|\\*(?!/))*\\*/)*(?:$|[\r\n,.;:})\\]]|//))",
           ),
           lookbehind: !0,
           greedy: !0,
           inside: {
-            'regex-source': {
+            "regex-source": {
               pattern: /^(\/)[\s\S]+(?=\/[a-z]*$)/,
               lookbehind: !0,
-              alias: 'language-regex',
+              alias: "language-regex",
               inside: Prism.languages.regex,
             },
-            'regex-delimiter': /^\/|\/$/,
-            'regex-flags': /^[a-z]+$/,
+            "regex-delimiter": /^\/|\/$/,
+            "regex-flags": /^[a-z]+$/,
           },
         },
-        'function-variable': {
+        "function-variable": {
           pattern:
             /#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*[=:]\s*(?:async\s*)?(?:\bfunction\b|(?:\((?:[^()]|\([^()]*\))*\)|(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*)\s*=>))/,
-          alias: 'function',
+          alias: "function",
         },
         parameter: [
           {
@@ -146,25 +146,25 @@ export const STATIC_LANGUAGES = {
         ],
         constant: /\b[A-Z](?:[A-Z_]|\dx?)*\b/,
       }),
-      Prism.languages.insertBefore('javascript', 'string', {
-        hashbang: { pattern: /^#!.*/, greedy: !0, alias: 'comment' },
-        'template-string': {
+      Prism.languages.insertBefore("javascript", "string", {
+        hashbang: { pattern: /^#!.*/, greedy: !0, alias: "comment" },
+        "template-string": {
           pattern:
             /`(?:\\[\s\S]|\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}|(?!\$\{)[^\\`])*`/,
           greedy: !0,
           inside: {
-            'template-punctuation': {
+            "template-punctuation": {
               pattern: /^`|`$/,
-              alias: 'string',
+              alias: "string",
             },
             interpolation: {
               pattern:
                 /((?:^|[^\\])(?:\\{2})*)\$\{(?:[^{}]|\{(?:[^{}]|\{[^}]*\})*\})+\}/,
               lookbehind: !0,
               inside: {
-                'interpolation-punctuation': {
+                "interpolation-punctuation": {
                   pattern: /^\$\{|\}$/,
-                  alias: 'punctuation',
+                  alias: "punctuation",
                 },
                 rest: Prism.languages.javascript,
               },
@@ -172,27 +172,27 @@ export const STATIC_LANGUAGES = {
             string: /[\s\S]+/,
           },
         },
-        'string-property': {
+        "string-property": {
           pattern:
             /((?:^|[,{])[ \t]*)(["'])(?:\\(?:\r\n|[\s\S])|(?!\2)[^\\\r\n])*\2(?=\s*:)/m,
           lookbehind: !0,
           greedy: !0,
-          alias: 'property',
+          alias: "property",
         },
       }),
-      Prism.languages.insertBefore('javascript', 'operator', {
-        'literal-property': {
+      Prism.languages.insertBefore("javascript", "operator", {
+        "literal-property": {
           pattern:
             /((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,
           lookbehind: !0,
-          alias: 'property',
+          alias: "property",
         },
       }),
       Prism.languages.markup &&
-        (Prism.languages.markup.tag.addInlined('script', 'javascript'),
+        (Prism.languages.markup.tag.addInlined("script", "javascript"),
         Prism.languages.markup.tag.addAttribute(
-          'on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)',
-          'javascript',
+          "on(?:abort|blur|change|click|composition(?:end|start|update)|dblclick|error|focus(?:in|out)?|key(?:down|up)|load|mouse(?:down|enter|leave|move|out|over|up)|reset|resize|scroll|select|slotchange|submit|unload|wheel)",
+          "javascript",
         )),
       (Prism.languages.js = Prism.languages.javascript);
   },
@@ -213,21 +213,21 @@ export const STATIC_LANGUAGES = {
       punctuation: /[{}[\],]/,
       operator: /:/,
       boolean: /\b(?:false|true)\b/,
-      null: { pattern: /\bnull\b/, alias: 'keyword' },
+      null: { pattern: /\bnull\b/, alias: "keyword" },
     }),
       (Prism.languages.webmanifest = Prism.languages.json);
   },
   jsx: (Prism: Prism.Environment) => {
     var n = Prism.util.clone(Prism.languages.javascript),
-      e = '(?:\\{<S>*\\.{3}(?:[^{}]|<BRACES>)*\\})';
+      e = "(?:\\{<S>*\\.{3}(?:[^{}]|<BRACES>)*\\})";
     function a(t: string, n?: string) {
       return (
         (t = t
           .replace(/<S>/g, function () {
-            return '(?:\\s|//.*(?!.)|/\\*(?:[^*]|\\*(?!/))\\*/)';
+            return "(?:\\s|//.*(?!.)|/\\*(?:[^*]|\\*(?!/))\\*/)";
           })
           .replace(/<BRACES>/g, function () {
-            return '(?:\\{(?:\\{(?:\\{[^{}]*\\}|[^{}])*\\}|[^{}])*\\})';
+            return "(?:\\{(?:\\{(?:\\{[^{}]*\\}|[^{}])*\\}|[^{}])*\\})";
           })
           .replace(/<SPREAD>/g, function () {
             return e;
@@ -236,38 +236,38 @@ export const STATIC_LANGUAGES = {
       );
     }
     (e = a(e).source),
-      (Prism.languages.jsx = Prism.languages.extend('markup', n)),
+      (Prism.languages.jsx = Prism.languages.extend("markup", n)),
       (Prism.languages.jsx.tag.pattern = a(
-        '</?(?:[\\w.:-]+(?:<S>+(?:[\\w.:$-]+(?:=(?:"(?:\\\\[^]|[^\\\\"])*"|\'(?:\\\\[^]|[^\\\\\'])*\'|[^\\s{\'"/>=]+|<BRACES>))?|<SPREAD>))*<S>*/?)?>',
+        "</?(?:[\\w.:-]+(?:<S>+(?:[\\w.:$-]+(?:=(?:\"(?:\\\\[^]|[^\\\\\"])*\"|'(?:\\\\[^]|[^\\\\'])*'|[^\\s{'\"/>=]+|<BRACES>))?|<SPREAD>))*<S>*/?)?>",
       )),
       (Prism.languages.jsx.tag.inside.tag.pattern = /^<\/?[^\s>\/]*/),
-      (Prism.languages.jsx.tag.inside['attr-value'].pattern =
+      (Prism.languages.jsx.tag.inside["attr-value"].pattern =
         /=(?!\{)(?:"(?:\\[\s\S]|[^\\"])*"|'(?:\\[\s\S]|[^\\'])*'|[^\s'">]+)/),
-      (Prism.languages.jsx.tag.inside.tag.inside['class-name'] =
+      (Prism.languages.jsx.tag.inside.tag.inside["class-name"] =
         /^[A-Z]\w*(?:\.[A-Z]\w*)*$/),
       (Prism.languages.jsx.tag.inside.comment = n.comment),
       Prism.languages.insertBefore(
-        'inside',
-        'attr-name',
+        "inside",
+        "attr-name",
         {
           spread: {
-            pattern: a('<SPREAD>'),
+            pattern: a("<SPREAD>"),
             inside: Prism.languages.jsx,
           },
         },
         Prism.languages.jsx.tag,
       ),
       Prism.languages.insertBefore(
-        'inside',
-        'special-attr',
+        "inside",
+        "special-attr",
         {
           script: {
-            pattern: a('=<BRACES>'),
-            alias: 'language-javascript',
+            pattern: a("=<BRACES>"),
+            alias: "language-javascript",
             inside: {
-              'script-punctuation': {
+              "script-punctuation": {
                 pattern: /^=(?=\{)/,
-                alias: 'punctuation',
+                alias: "punctuation",
               },
               rest: Prism.languages.jsx,
             },
@@ -277,120 +277,120 @@ export const STATIC_LANGUAGES = {
       );
     var s = function (t) {
         return t
-          ? 'string' == typeof t
+          ? "string" == typeof t
             ? t
-            : 'string' == typeof t.content
+            : "string" == typeof t.content
               ? t.content
-              : t.content.map(s).join('')
-          : '';
+              : t.content.map(s).join("")
+          : "";
       },
       g = function (n) {
         for (var e = [], a = 0; a < n.length; a++) {
           var o = n[a],
             i = !1;
           if (
-            ('string' != typeof o &&
-              ('tag' === o.type && o.content[0] && 'tag' === o.content[0].type
-                ? '</' === o.content[0].content[0].content
+            ("string" != typeof o &&
+              ("tag" === o.type && o.content[0] && "tag" === o.content[0].type
+                ? "</" === o.content[0].content[0].content
                   ? e.length > 0 &&
                     e[e.length - 1].tagName === s(o.content[0].content[1]) &&
                     e.pop()
-                  : '/>' === o.content[o.content.length - 1].content ||
+                  : "/>" === o.content[o.content.length - 1].content ||
                     e.push({
                       tagName: s(o.content[0].content[1]),
                       openedBraces: 0,
                     })
-                : e.length > 0 && 'punctuation' === o.type && '{' === o.content
+                : e.length > 0 && "punctuation" === o.type && "{" === o.content
                   ? e[e.length - 1].openedBraces++
                   : e.length > 0 &&
                       e[e.length - 1].openedBraces > 0 &&
-                      'punctuation' === o.type &&
-                      '}' === o.content
+                      "punctuation" === o.type &&
+                      "}" === o.content
                     ? e[e.length - 1].openedBraces--
                     : (i = !0)),
-            (i || 'string' == typeof o) &&
+            (i || "string" == typeof o) &&
               e.length > 0 &&
               0 === e[e.length - 1].openedBraces)
           ) {
             var r = s(o);
             a < n.length - 1 &&
-              ('string' == typeof n[a + 1] || 'plain-text' === n[a + 1].type) &&
+              ("string" == typeof n[a + 1] || "plain-text" === n[a + 1].type) &&
               ((r += s(n[a + 1])), n.splice(a + 1, 1)),
               a > 0 &&
-                ('string' == typeof n[a - 1] ||
-                  'plain-text' === n[a - 1].type) &&
+                ("string" == typeof n[a - 1] ||
+                  "plain-text" === n[a - 1].type) &&
                 ((r = s(n[a - 1]) + r), n.splice(a - 1, 1), a--),
-              (n[a] = new Prism.Token('plain-text', r, null, r));
+              (n[a] = new Prism.Token("plain-text", r, null, r));
           }
-          o.content && 'string' != typeof o.content && g(o.content);
+          o.content && "string" != typeof o.content && g(o.content);
         }
       };
-    Prism.hooks.add('after-tokenize', function (t) {
-      ('jsx' !== t.language && 'tsx' !== t.language) || g(t.tokens);
+    Prism.hooks.add("after-tokenize", function (t) {
+      ("jsx" !== t.language && "tsx" !== t.language) || g(t.tokens);
     });
   },
   markdown: (Prism: Prism.Environment) => {
     function e(reg: string) {
       return (
         (reg = reg.replace(/<inner>/g, function () {
-          return '(?:\\\\.|[^\\\\\n\r]|(?:\n|\r\n?)(?![\r\n]))';
+          return "(?:\\\\.|[^\\\\\n\r]|(?:\n|\r\n?)(?![\r\n]))";
         })),
-        RegExp('((?:^|[^\\\\])(?:\\\\{2})*)(?:' + reg + ')')
+        RegExp("((?:^|[^\\\\])(?:\\\\{2})*)(?:" + reg + ")")
       );
     }
-    const t = '(?:\\\\.|``(?:[^`\r\n]|`(?!`))+``|`[^`\r\n]+`|[^\\\\|\r\n`])+',
-      a = '\\|?__(?:\\|__)+\\|?(?:(?:\n|\r\n?)|(?![^]))'.replace(
+    const t = "(?:\\\\.|``(?:[^`\r\n]|`(?!`))+``|`[^`\r\n]+`|[^\\\\|\r\n`])+",
+      a = "\\|?__(?:\\|__)+\\|?(?:(?:\n|\r\n?)|(?![^]))".replace(
         /__/g,
         function () {
           return t;
         },
       ),
       i =
-        '\\|?[ \t]*:?-{3,}:?[ \t]*(?:\\|[ \t]*:?-{3,}:?[ \t]*)+\\|?(?:\n|\r\n?)';
-    (Prism.languages.markdown = Prism.languages.extend('markup', {})),
-      Prism.languages.insertBefore('markdown', 'prolog', {
-        'front-matter-block': {
+        "\\|?[ \t]*:?-{3,}:?[ \t]*(?:\\|[ \t]*:?-{3,}:?[ \t]*)+\\|?(?:\n|\r\n?)";
+    (Prism.languages.markdown = Prism.languages.extend("markup", {})),
+      Prism.languages.insertBefore("markdown", "prolog", {
+        "front-matter-block": {
           pattern: /(^(?:\s*[\r\n])?)---(?!.)[\s\S]*?[\r\n]---(?!.)/,
           lookbehind: !0,
           greedy: !0,
           inside: {
             punctuation: /^---|---$/,
-            'front-matter': {
+            "front-matter": {
               pattern: /\S+(?:\s+\S+)*/,
-              alias: ['yaml', 'language-yaml'],
+              alias: ["yaml", "language-yaml"],
               inside: Prism.languages.yaml,
             },
           },
         },
         blockquote: {
           pattern: /^>(?:[\t ]*>)*/m,
-          alias: 'punctuation',
+          alias: "punctuation",
         },
         table: {
-          pattern: RegExp('^' + a + i + '(?:' + a + ')*', 'm'),
+          pattern: RegExp("^" + a + i + "(?:" + a + ")*", "m"),
           inside: {
-            'table-data-rows': {
-              pattern: RegExp('^(' + a + i + ')(?:' + a + ')*$'),
+            "table-data-rows": {
+              pattern: RegExp("^(" + a + i + ")(?:" + a + ")*$"),
               lookbehind: !0,
               inside: {
-                'table-data': {
+                "table-data": {
                   pattern: RegExp(t),
                   inside: Prism.languages.markdown,
                 },
                 punctuation: /\|/,
               },
             },
-            'table-line': {
-              pattern: RegExp('^(' + a + ')' + i + '$'),
+            "table-line": {
+              pattern: RegExp("^(" + a + ")" + i + "$"),
               lookbehind: !0,
               inside: { punctuation: /\||:?-{3,}:?/ },
             },
-            'table-header-row': {
-              pattern: RegExp('^' + a + '$'),
+            "table-header-row": {
+              pattern: RegExp("^" + a + "$"),
               inside: {
-                'table-header': {
+                "table-header": {
                   pattern: RegExp(t),
-                  alias: 'important',
+                  alias: "important",
                   inside: Prism.languages.markdown,
                 },
                 punctuation: /\|/,
@@ -403,17 +403,17 @@ export const STATIC_LANGUAGES = {
             pattern:
               /((?:^|\n)[ \t]*\n|(?:^|\r\n?)[ \t]*\r\n?)(?: {4}|\t).+(?:(?:\n|\r\n?)(?: {4}|\t).+)*/,
             lookbehind: !0,
-            alias: 'keyword',
+            alias: "keyword",
           },
           {
             pattern: /^```[\s\S]*?^```$/m,
             greedy: !0,
             inside: {
-              'code-block': {
+              "code-block": {
                 pattern: /^(```.*(?:\n|\r\n?))[\s\S]+?(?=(?:\n|\r\n?)^```$)/m,
                 lookbehind: !0,
               },
-              'code-language': {
+              "code-language": {
                 pattern: /^(```).+/,
                 lookbehind: !0,
               },
@@ -424,27 +424,27 @@ export const STATIC_LANGUAGES = {
         title: [
           {
             pattern: /\S.*(?:\n|\r\n?)(?:==+|--+)(?=[ \t]*$)/m,
-            alias: 'important',
+            alias: "important",
             inside: { punctuation: /==+$|--+$/ },
           },
           {
             pattern: /(^\s*)#.+/m,
             lookbehind: !0,
-            alias: 'important',
+            alias: "important",
             inside: { punctuation: /^#+|#+$/ },
           },
         ],
         hr: {
           pattern: /(^\s*)([*-])(?:[\t ]*\2){2,}(?=\s*$)/m,
           lookbehind: !0,
-          alias: 'punctuation',
+          alias: "punctuation",
         },
         list: {
           pattern: /(^\s*)(?:[*+-]|\d+\.)(?=[\t ].)/m,
           lookbehind: !0,
-          alias: 'punctuation',
+          alias: "punctuation",
         },
-        'url-reference': {
+        "url-reference": {
           pattern:
             /!?\[[^\]]+\]:[\t ]+(?:\S+|<(?:\\.|[^>\\])+>)(?:[\t ]+(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\((?:\\.|[^)\\])*\)))?/,
           inside: {
@@ -453,11 +453,11 @@ export const STATIC_LANGUAGES = {
               /(?:"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|\((?:\\.|[^)\\])*\))$/,
             punctuation: /^[\[\]!:]|[<>]/,
           },
-          alias: 'url',
+          alias: "url",
         },
         bold: {
           pattern: e(
-            '\\b__(?:(?!_)<inner>|_(?:(?!_)<inner>)+_)+__\\b|\\*\\*(?:(?!\\*)<inner>|\\*(?:(?!\\*)<inner>)+\\*)+\\*\\*',
+            "\\b__(?:(?!_)<inner>|_(?:(?!_)<inner>)+_)+__\\b|\\*\\*(?:(?!\\*)<inner>|\\*(?:(?!\\*)<inner>)+\\*)+\\*\\*",
           ),
           lookbehind: !0,
           greedy: !0,
@@ -472,7 +472,7 @@ export const STATIC_LANGUAGES = {
         },
         italic: {
           pattern: e(
-            '\\b_(?:(?!_)<inner>|__(?:(?!_)<inner>)+__)+_\\b|\\*(?:(?!\\*)<inner>|\\*\\*(?:(?!\\*)<inner>)+\\*\\*)+\\*',
+            "\\b_(?:(?!_)<inner>|__(?:(?!_)<inner>)+__)+_\\b|\\*(?:(?!\\*)<inner>|\\*\\*(?:(?!\\*)<inner>)+\\*\\*)+\\*",
           ),
           lookbehind: !0,
           greedy: !0,
@@ -486,7 +486,7 @@ export const STATIC_LANGUAGES = {
           },
         },
         strike: {
-          pattern: e('(~~?)(?:(?!~)<inner>)+\\2'),
+          pattern: e("(~~?)(?:(?!~)<inner>)+\\2"),
           lookbehind: !0,
           greedy: !0,
           inside: {
@@ -498,12 +498,12 @@ export const STATIC_LANGUAGES = {
             punctuation: /~~?/,
           },
         },
-        'code-snippet': {
+        "code-snippet": {
           pattern:
             /(^|[^\\`])(?:``[^`\r\n]+(?:`[^`\r\n]+)*``(?!`)|`[^`\r\n]+`(?!`))/,
           lookbehind: !0,
           greedy: !0,
-          alias: ['code', 'keyword'],
+          alias: ["code", "keyword"],
         },
         url: {
           pattern: e(
@@ -530,8 +530,8 @@ export const STATIC_LANGUAGES = {
           },
         },
       }),
-      ['url', 'bold', 'italic', 'strike'].forEach(function (e) {
-        ['url', 'bold', 'italic', 'strike', 'code-snippet'].forEach(
+      ["url", "bold", "italic", "strike"].forEach(function (e) {
+        ["url", "bold", "italic", "strike", "code-snippet"].forEach(
           function (t) {
             e !== t &&
               (Prism.languages.markdown[e].inside.content.inside[t] =
@@ -539,30 +539,30 @@ export const STATIC_LANGUAGES = {
           },
         );
       }),
-      Prism.hooks.add('after-tokenize', function (Prism: Prism.Environment) {
-        ('markdown' !== Prism.language && 'md' !== Prism.language) ||
+      Prism.hooks.add("after-tokenize", function (Prism: Prism.Environment) {
+        ("markdown" !== Prism.language && "md" !== Prism.language) ||
           (function n(e) {
-            if (e && 'string' != typeof e)
+            if (e && "string" != typeof e)
               for (var t = 0, a = e.length; t < a; t++) {
                 var i = e[t];
-                if ('code' === i.type) {
+                if ("code" === i.type) {
                   var r = i.content[1],
                     o = i.content[3];
                   if (
                     r &&
                     o &&
-                    'code-language' === r.type &&
-                    'code-block' === o.type &&
-                    'string' == typeof r.content
+                    "code-language" === r.type &&
+                    "code-block" === o.type &&
+                    "string" == typeof r.content
                   ) {
                     var l = r.content
-                        .replace(/\b#/g, 'sharp')
-                        .replace(/\b\+\+/g, 'pp'),
+                        .replace(/\b#/g, "sharp")
+                        .replace(/\b\+\+/g, "pp"),
                       s =
-                        'language-' +
-                        (l = (/[a-z][\w-]*/i.exec(l) || [''])[0].toLowerCase());
+                        "language-" +
+                        (l = (/[a-z][\w-]*/i.exec(l) || [""])[0].toLowerCase());
                     o.alias
-                      ? 'string' == typeof o.alias
+                      ? "string" == typeof o.alias
                         ? (o.alias = [o.alias, s])
                         : o.alias.push(s)
                       : (o.alias = [s]);
@@ -571,9 +571,9 @@ export const STATIC_LANGUAGES = {
               }
           })(Prism.tokens);
       }),
-      Prism.hooks.add('wrap', function (e: Prism.Environment) {
-        if ('code-block' === e.type) {
-          for (var t = '', a = 0, i = e.classes.length; a < i; a++) {
+      Prism.hooks.add("wrap", function (e: Prism.Environment) {
+        if ("code-block" === e.type) {
+          for (var t = "", a = 0, i = e.classes.length; a < i; a++) {
             var s = e.classes[a],
               d = /language-(.+)/.exec(s);
             if (d) {
@@ -585,12 +585,12 @@ export const STATIC_LANGUAGES = {
           if (p)
             e.content = Prism.highlight(
               e.content
-                .replace(r, '')
+                .replace(r, "")
                 .replace(/&(\w{1,8}|#x?[\da-f]{1,8});/gi, function (Prism, e) {
                   var t;
-                  return '#' === (e = e.toLowerCase())[0]
+                  return "#" === (e = e.toLowerCase())[0]
                     ? ((t =
-                        'x' === e[1]
+                        "x" === e[1]
                           ? parseInt(e.slice(2), 16)
                           : Number(e.slice(1))),
                       l(t))
@@ -599,11 +599,11 @@ export const STATIC_LANGUAGES = {
               p,
               t,
             );
-          else if (t && 'none' !== t && Prism.plugins.autoloader) {
+          else if (t && "none" !== t && Prism.plugins.autoloader) {
             var u =
-              'md-' +
+              "md-" +
               new Date().valueOf() +
-              '-' +
+              "-" +
               Math.floor(1e16 * Math.random());
             (e.attributes.id = u),
               Prism.plugins.autoloader.loadLanguages(t, function () {
@@ -618,8 +618,8 @@ export const STATIC_LANGUAGES = {
           }
         }
       });
-    var r = RegExp(Prism.languages.markup.tag.pattern.source, 'gi'),
-      o = { amp: '&', lt: '<', gt: '>', quot: '"' },
+    var r = RegExp(Prism.languages.markup.tag.pattern.source, "gi"),
+      o = { amp: "&", lt: "<", gt: ">", quot: '"' },
       l = String.fromCodePoint || String.fromCharCode;
     Prism.languages.md = Prism.languages.markdown;
   },
@@ -632,7 +632,7 @@ export const STATIC_LANGUAGES = {
           /<!DOCTYPE(?:[^>"'[\]]|"[^"]*"|'[^']*')+(?:\[(?:[^<"'\]]|"[^"]*"|'[^']*'|<(?!!--)|<!--(?:[^-]|-(?!->))*-->)*\]\s*)?>/i,
         greedy: !0,
         inside: {
-          'internal-subset': {
+          "internal-subset": {
             pattern: /(^[^\[]*\[)[\s\S]+(?=\]>$)/,
             lookbehind: !0,
             greedy: !0,
@@ -640,7 +640,7 @@ export const STATIC_LANGUAGES = {
           },
           string: { pattern: /"[^"]*"|'[^']*'/, greedy: !0 },
           punctuation: /^<!|>$|[[\]]/,
-          'doctype-tag': /^DOCTYPE/i,
+          "doctype-tag": /^DOCTYPE/i,
           name: /[^\s<>'"]+/,
         },
       },
@@ -657,95 +657,95 @@ export const STATIC_LANGUAGES = {
               namespace: /^[^\s>\/:]+:/,
             },
           },
-          'special-attr': [],
-          'attr-value': {
+          "special-attr": [],
+          "attr-value": {
             pattern: /=\s*(?:"[^"]*"|'[^']*'|[^\s'">=]+)/,
             inside: {
               punctuation: [
-                { pattern: /^=/, alias: 'attr-equals' },
+                { pattern: /^=/, alias: "attr-equals" },
                 { pattern: /^(\s*)["']|["']$/, lookbehind: !0 },
               ],
             },
           },
           punctuation: /\/?>/,
-          'attr-name': {
+          "attr-name": {
             pattern: /[^\s>\/]+/,
             inside: { namespace: /^[^\s>\/:]+:/ },
           },
         },
       },
       entity: [
-        { pattern: /&[\da-z]{1,8};/i, alias: 'named-entity' },
+        { pattern: /&[\da-z]{1,8};/i, alias: "named-entity" },
         /&#x?[\da-f]{1,8};/i,
       ],
     }),
-      (Prism.languages.markup.tag.inside['attr-value'].inside.entity =
+      (Prism.languages.markup.tag.inside["attr-value"].inside.entity =
         Prism.languages.markup.entity),
-      (Prism.languages.markup.doctype.inside['internal-subset'].inside =
+      (Prism.languages.markup.doctype.inside["internal-subset"].inside =
         Prism.languages.markup),
-      Prism.hooks.add('wrap', function (a) {
-        'entity' === a.type &&
-          (a.attributes.title = a.content.replace(/&amp;/, '&'));
+      Prism.hooks.add("wrap", function (a) {
+        "entity" === a.type &&
+          (a.attributes.title = a.content.replace(/&amp;/, "&"));
       }),
-      Object.defineProperty(Prism.languages.markup.tag, 'addInlined', {
+      Object.defineProperty(Prism.languages.markup.tag, "addInlined", {
         value: function (a, e) {
           var s = {};
-          (s['language-' + e] = {
+          (s["language-" + e] = {
             pattern: /(^<!\[CDATA\[)[\s\S]+?(?=\]\]>$)/i,
             lookbehind: !0,
             inside: Prism.languages[e],
           }),
-            (s['cdata'] = /^<!\[CDATA\[|\]\]>$/i);
+            (s["cdata"] = /^<!\[CDATA\[|\]\]>$/i);
           var t = {
-            'included-cdata': {
+            "included-cdata": {
               pattern: /<!\[CDATA\[[\s\S]*?\]\]>/i,
               inside: s,
             },
           };
-          t['language-' + e] = {
+          t["language-" + e] = {
             pattern: /[\s\S]+/,
             inside: Prism.languages[e],
           };
           var n = {};
           (n[a] = {
             pattern: RegExp(
-              '(<__[^>]*>)(?:<!\\[CDATA\\[(?:[^\\]]|\\](?!\\]>))*\\]\\]>|(?!<!\\[CDATA\\[)[^])*?(?=</__>)'.replace(
+              "(<__[^>]*>)(?:<!\\[CDATA\\[(?:[^\\]]|\\](?!\\]>))*\\]\\]>|(?!<!\\[CDATA\\[)[^])*?(?=</__>)".replace(
                 /__/g,
                 function () {
                   return a;
                 },
               ),
-              'i',
+              "i",
             ),
             lookbehind: !0,
             greedy: !0,
             inside: t,
           }),
-            Prism.languages.insertBefore('markup', 'cdata', n);
+            Prism.languages.insertBefore("markup", "cdata", n);
         },
       }),
-      Object.defineProperty(Prism.languages.markup.tag, 'addAttribute', {
+      Object.defineProperty(Prism.languages.markup.tag, "addAttribute", {
         value: function (a, e) {
-          Prism.languages.markup.tag.inside['special-attr'].push({
+          Prism.languages.markup.tag.inside["special-attr"].push({
             pattern: RegExp(
-              '(^|["\'\\s])(?:' +
+              "(^|[\"'\\s])(?:" +
                 a +
-                ')\\s*=\\s*(?:"[^"]*"|\'[^\']*\'|[^\\s\'">=]+(?=[\\s>]))',
-              'i',
+                ")\\s*=\\s*(?:\"[^\"]*\"|'[^']*'|[^\\s'\">=]+(?=[\\s>]))",
+              "i",
             ),
             lookbehind: !0,
             inside: {
-              'attr-name': /^[^\s=]+/,
-              'attr-value': {
+              "attr-name": /^[^\s=]+/,
+              "attr-value": {
                 pattern: /=[\s\S]+/,
                 inside: {
                   value: {
                     pattern: /(^=\s*(["']|(?!["'])))\S[\s\S]*(?=\2$)/,
                     lookbehind: !0,
-                    alias: [e, 'language-' + e],
+                    alias: [e, "language-" + e],
                     inside: Prism.languages[e],
                   },
-                  punctuation: [{ pattern: /^=/, alias: 'attr-equals' }, /"|'/],
+                  punctuation: [{ pattern: /^=/, alias: "attr-equals" }, /"|'/],
                 },
               },
             },
@@ -755,7 +755,7 @@ export const STATIC_LANGUAGES = {
       (Prism.languages.html = Prism.languages.markup),
       (Prism.languages.mathml = Prism.languages.markup),
       (Prism.languages.svg = Prism.languages.markup),
-      (Prism.languages.xml = Prism.languages.extend('markup', {})),
+      (Prism.languages.xml = Prism.languages.extend("markup", {})),
       (Prism.languages.ssml = Prism.languages.xml),
       (Prism.languages.atom = Prism.languages.xml),
       (Prism.languages.rss = Prism.languages.xml);
@@ -763,7 +763,7 @@ export const STATIC_LANGUAGES = {
   python: (Prism: Prism.Environment) => {
     (Prism.languages.python = {
       comment: { pattern: /(^|[^\\])#.*/, lookbehind: !0, greedy: !0 },
-      'string-interpolation': {
+      "string-interpolation": {
         pattern:
           /(?:f|fr|rf)(?:("""|''')[\s\S]*?\1|("|')(?:\\.|(?!\2)[^\\\r\n])*\2)/i,
         greedy: !0,
@@ -773,13 +773,13 @@ export const STATIC_LANGUAGES = {
               /((?:^|[^{])(?:\{\{)*)\{(?!\{)(?:[^{}]|\{(?!\{)(?:[^{}]|\{(?!\{)(?:[^{}])+\})+\})+\}/,
             lookbehind: !0,
             inside: {
-              'format-spec': {
+              "format-spec": {
                 pattern: /(:)[^:(){}]+(?=\}$)/,
                 lookbehind: !0,
               },
-              'conversion-option': {
+              "conversion-option": {
                 pattern: /![sra](?=[:}]$)/,
-                alias: 'punctuation',
+                alias: "punctuation",
               },
               rest: null,
             },
@@ -787,10 +787,10 @@ export const STATIC_LANGUAGES = {
           string: /[\s\S]+/,
         },
       },
-      'triple-quoted-string': {
+      "triple-quoted-string": {
         pattern: /(?:[rub]|br|rb)?("""|''')[\s\S]*?\1/i,
         greedy: !0,
-        alias: 'string',
+        alias: "string",
       },
       string: {
         pattern: /(?:[rub]|br|rb)?("|')(?:\\.|(?!\1)[^\\\r\n])*\1/i,
@@ -800,11 +800,11 @@ export const STATIC_LANGUAGES = {
         pattern: /((?:^|\s)def[ \t]+)[a-zA-Z_]\w*(?=\s*\()/g,
         lookbehind: !0,
       },
-      'class-name': { pattern: /(\bclass\s+)\w+/i, lookbehind: !0 },
+      "class-name": { pattern: /(\bclass\s+)\w+/i, lookbehind: !0 },
       decorator: {
         pattern: /(^[\t ]*)@\w+(?:\.\w+)*/m,
         lookbehind: !0,
-        alias: ['annotation', 'punctuation'],
+        alias: ["annotation", "punctuation"],
         inside: { punctuation: /\./ },
       },
       keyword:
@@ -818,86 +818,86 @@ export const STATIC_LANGUAGES = {
       punctuation: /[{}[\];(),.:]/,
     }),
       (Prism.languages.python[
-        'string-interpolation'
+        "string-interpolation"
       ].inside.interpolation.inside.rest = Prism.languages.python),
       (Prism.languages.py = Prism.languages.python);
   },
   regex: (Prism: Prism.Environment) => {
-    var e = { pattern: /\\[\\(){}[\]^$+*?|.]/, alias: 'escape' },
+    var e = { pattern: /\\[\\(){}[\]^$+*?|.]/, alias: "escape" },
       n =
         /\\(?:x[\da-fA-F]{2}|u[\da-fA-F]{4}|u\{[\da-fA-F]+\}|0[0-7]{0,2}|[123][0-7]{2}|c[a-zA-Z]|.)/,
-      t = '(?:[^\\\\-]|' + n.source + ')',
-      s = RegExp(t + '-' + t),
+      t = "(?:[^\\\\-]|" + n.source + ")",
+      s = RegExp(t + "-" + t),
       i = {
         pattern: /(<|')[^<>']+(?=[>']$)/,
         lookbehind: !0,
-        alias: 'variable',
+        alias: "variable",
       };
     Prism.languages.regex = {
-      'char-class': {
+      "char-class": {
         pattern: /((?:^|[^\\])(?:\\\\)*)\[(?:[^\\\]]|\\[\s\S])*\]/,
         lookbehind: !0,
         inside: {
-          'char-class-negation': {
+          "char-class-negation": {
             pattern: /(^\[)\^/,
             lookbehind: !0,
-            alias: 'operator',
+            alias: "operator",
           },
-          'char-class-punctuation': {
+          "char-class-punctuation": {
             pattern: /^\[|\]$/,
-            alias: 'punctuation',
+            alias: "punctuation",
           },
           range: {
             pattern: s,
             inside: {
               escape: n,
-              'range-punctuation': {
+              "range-punctuation": {
                 pattern: /-/,
-                alias: 'operator',
+                alias: "operator",
               },
             },
           },
-          'special-escape': e,
-          'char-set': {
+          "special-escape": e,
+          "char-set": {
             pattern: /\\[wsd]|\\p\{[^{}]+\}/i,
-            alias: 'class-name',
+            alias: "class-name",
           },
           escape: n,
         },
       },
-      'special-escape': e,
-      'char-set': {
+      "special-escape": e,
+      "char-set": {
         pattern: /\.|\\[wsd]|\\p\{[^{}]+\}/i,
-        alias: 'class-name',
+        alias: "class-name",
       },
       backreference: [
-        { pattern: /\\(?![123][0-7]{2})[1-9]/, alias: 'keyword' },
+        { pattern: /\\(?![123][0-7]{2})[1-9]/, alias: "keyword" },
         {
           pattern: /\\k<[^<>']+>/,
-          alias: 'keyword',
-          inside: { 'group-name': i },
+          alias: "keyword",
+          inside: { "group-name": i },
         },
       ],
-      anchor: { pattern: /[$^]|\\[ABbGZz]/, alias: 'function' },
+      anchor: { pattern: /[$^]|\\[ABbGZz]/, alias: "function" },
       escape: n,
       group: [
         {
           pattern:
             /\((?:\?(?:<[^<>']+>|'[^<>']+'|[>:]|<?[=!]|[idmnsuxU]+(?:-[idmnsuxU]+)?:?))?/,
-          alias: 'punctuation',
-          inside: { 'group-name': i },
+          alias: "punctuation",
+          inside: { "group-name": i },
         },
-        { pattern: /\)/, alias: 'punctuation' },
+        { pattern: /\)/, alias: "punctuation" },
       ],
       quantifier: {
         pattern: /(?:[+*?]|\{\d+(?:,\d*)?\})[?+]?/,
-        alias: 'number',
+        alias: "number",
       },
-      alternation: { pattern: /\|/, alias: 'keyword' },
+      alternation: { pattern: /\|/, alias: "keyword" },
     };
   },
   scss: (Prism: Prism.Environment) => {
-    (Prism.languages.scss = Prism.languages.extend('css', {
+    (Prism.languages.scss = Prism.languages.extend("css", {
       comment: {
         pattern: /(^|[^\\])(?:\/\*[\s\S]*?\*\/|\/\/.*)/,
         lookbehind: !0,
@@ -911,7 +911,7 @@ export const STATIC_LANGUAGES = {
         pattern:
           /(?=\S)[^@;{}()]?(?:[^@;{}()\s]|\s+(?!\s)|#\{\$[-\w]+\})+(?=\s*\{(?:\}|\s|[^}][^:{}]*[:{][^}]))/,
         inside: {
-          parent: { pattern: /&/, alias: 'important' },
+          parent: { pattern: /&/, alias: "important" },
           placeholder: /%[-\w]+/,
           variable: /\$[-\w]+|#\{\$[-\w]+\}/,
         },
@@ -921,27 +921,27 @@ export const STATIC_LANGUAGES = {
         inside: { variable: /\$[-\w]+|#\{\$[-\w]+\}/ },
       },
     })),
-      Prism.languages.insertBefore('scss', 'atrule', {
+      Prism.languages.insertBefore("scss", "atrule", {
         keyword: [
           /@(?:content|debug|each|else(?: if)?|extend|for|forward|function|if|import|include|mixin|return|use|warn|while)\b/i,
           { pattern: /( )(?:from|through)(?= )/, lookbehind: !0 },
         ],
       }),
-      Prism.languages.insertBefore('scss', 'important', {
+      Prism.languages.insertBefore("scss", "important", {
         variable: /\$[-\w]+|#\{\$[-\w]+\}/,
       }),
-      Prism.languages.insertBefore('scss', 'function', {
-        'module-modifier': {
+      Prism.languages.insertBefore("scss", "function", {
+        "module-modifier": {
           pattern: /\b(?:as|hide|show|with)\b/i,
-          alias: 'keyword',
+          alias: "keyword",
         },
-        placeholder: { pattern: /%[-\w]+/, alias: 'selector' },
+        placeholder: { pattern: /%[-\w]+/, alias: "selector" },
         statement: {
           pattern: /\B!(?:default|optional)\b/i,
-          alias: 'keyword',
+          alias: "keyword",
         },
         boolean: /\b(?:false|true)\b/,
-        null: { pattern: /\bnull\b/, alias: 'keyword' },
+        null: { pattern: /\bnull\b/, alias: "keyword" },
         operator: {
           pattern: /(\s)(?:[-+*\/%]|[=!]=|<=?|>=?|and|not|or)(?=\s)/,
           lookbehind: !0,
@@ -951,19 +951,19 @@ export const STATIC_LANGUAGES = {
   },
   tsx: (Prism: Prism.Environment) => {
     const a = Prism.util.clone(Prism.languages.typescript);
-    (Prism.languages.tsx = Prism.languages.extend('jsx', a)),
+    (Prism.languages.tsx = Prism.languages.extend("jsx", a)),
       delete Prism?.languages?.tsx?.parameter,
-      delete Prism?.languages?.tsx?.['literal-property'];
+      delete Prism?.languages?.tsx?.["literal-property"];
     const t = Prism.languages?.tsx?.tag;
     (t.pattern = RegExp(
-      '(^|[^\\w$]|(?=</))(?:' + t.pattern.source + ')',
+      "(^|[^\\w$]|(?=</))(?:" + t.pattern.source + ")",
       t.pattern.flags,
     )),
       (t.lookbehind = !0);
   },
   typescript: (Prism: Prism.Environment) => {
-    (Prism.languages.typescript = Prism.languages.extend('javascript', {
-      'class-name': {
+    (Prism.languages.typescript = Prism.languages.extend("javascript", {
+      "class-name": {
         pattern:
           /(\b(?:class|extends|implements|instanceof|interface|new|type)\s+)(?!keyof\b)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?:\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>)?/,
         lookbehind: !0,
@@ -979,19 +979,19 @@ export const STATIC_LANGUAGES = {
         /\btype\b(?=\s*(?:[\{*]|$))/,
       ),
       delete Prism.languages.typescript.parameter,
-      delete Prism.languages.typescript['literal-property'];
-    var s = Prism.languages.extend('typescript', {});
-    delete s['class-name'],
-      (Prism.languages.typescript['class-name'].inside = s),
-      Prism.languages.insertBefore('typescript', 'function', {
+      delete Prism.languages.typescript["literal-property"];
+    var s = Prism.languages.extend("typescript", {});
+    delete s["class-name"],
+      (Prism.languages.typescript["class-name"].inside = s),
+      Prism.languages.insertBefore("typescript", "function", {
         decorator: {
           pattern: /@[$\w\xA0-\uFFFF]+/,
           inside: {
-            at: { pattern: /^@/, alias: 'operator' },
+            at: { pattern: /^@/, alias: "operator" },
             function: /^[\s\S]+/,
           },
         },
-        'generic-function': {
+        "generic-function": {
           pattern:
             /#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*\s*<(?:[^<>]|<(?:[^<>]|<[^<>]*>)*>)*>(?=\s*\()/,
           greedy: !0,
@@ -1000,7 +1000,7 @@ export const STATIC_LANGUAGES = {
               /^#?(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*/,
             generic: {
               pattern: /<[\s\S]+/,
-              alias: 'class-name',
+              alias: "class-name",
               inside: s,
             },
           },

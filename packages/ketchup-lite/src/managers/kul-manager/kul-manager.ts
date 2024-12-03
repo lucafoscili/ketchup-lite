@@ -1,21 +1,21 @@
-import { KulData } from '../kul-data/kul-data';
-import { KulDates } from '../kul-dates/kul-dates';
-import { KulDatesLocales } from '../kul-dates/kul-dates-declarations';
-import { KulDebug } from '../kul-debug/kul-debug';
-import { KulDynamicPosition } from '../kul-dynamic-position/kul-dynamic-position';
-import { KulDynamicPositionElement } from '../kul-dynamic-position/kul-dynamic-position-declarations';
-import { KulLanguage } from '../kul-language/kul-language';
-import { KulLanguageDefaults } from '../kul-language/kul-language-declarations';
-import { KulScrollOnHover } from '../kul-scroll-on-hover/kul-scroll-on-hover';
-import { KulTheme } from '../kul-theme/kul-theme';
-import { setAssetPath } from '@stencil/core';
+import { KulData } from "../kul-data/kul-data";
+import { KulDates } from "../kul-dates/kul-dates";
+import { KulDatesLocales } from "../kul-dates/kul-dates-declarations";
+import { KulDebug } from "../kul-debug/kul-debug";
+import { KulDynamicPosition } from "../kul-dynamic-position/kul-dynamic-position";
+import { KulDynamicPositionElement } from "../kul-dynamic-position/kul-dynamic-position-declarations";
+import { KulLanguage } from "../kul-language/kul-language";
+import { KulLanguageDefaults } from "../kul-language/kul-language-declarations";
+import { KulScrollOnHover } from "../kul-scroll-on-hover/kul-scroll-on-hover";
+import { KulTheme } from "../kul-theme/kul-theme";
+import { setAssetPath } from "@stencil/core";
 import type {
   KulDom,
   KulManagerClickCb,
   KulManagerInitialization,
   KulManagerUtilities,
-} from './kul-manager-declarations';
-import { KulLLM } from '../kul-llm/kul-llm';
+} from "./kul-manager-declarations";
+import { KulLLM } from "../kul-llm/kul-llm";
 
 export class KulManager {
   data: KulData;
@@ -64,7 +64,7 @@ export class KulManager {
     this.#setupListeners();
   }
   #setupListeners() {
-    document.addEventListener('click', (e) => {
+    document.addEventListener("click", (e) => {
       const paths = e.composedPath() as HTMLElement[];
       this.utilities.clickCallbacks.forEach((obj) => {
         if (obj && obj.el && obj.el.isConnected && !paths.includes(obj.el)) {
@@ -112,14 +112,14 @@ export class KulManager {
   }
   setLibraryLocalization(locale: KulDatesLocales) {
     if (!Object.values(KulDatesLocales).includes(locale)) {
-      this.debug.logs.new(this, 'Missing locale (' + locale + ')!', 'error');
+      this.debug.logs.new(this, "Missing locale (" + locale + ")!", "error");
       return;
     }
     if (!KulLanguageDefaults[locale]) {
       this.debug.logs.new(
         this,
-        'Missing language for locale (' + locale + ')!',
-        'error',
+        "Missing language for locale (" + locale + ")!",
+        "error",
       );
       return;
     }
@@ -141,7 +141,7 @@ export function kulManagerInstance(): KulManager {
         dom.ketchupLite.language.set(KulLanguageDefaults[locale]);
       }
     }
-    document.dispatchEvent(new CustomEvent('kul-manager-ready'));
+    document.dispatchEvent(new CustomEvent("kul-manager-ready"));
   }
   return dom.ketchupLite;
 }

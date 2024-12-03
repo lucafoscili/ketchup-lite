@@ -1,29 +1,29 @@
-import { CompareData } from './kul-showcase-compare-declarations';
+import { CompareData } from "./kul-showcase-compare-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { COMPARE_KULDATA_FACTORY } from '../../assets/fixtures/compare';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { COMPARE_KULDATA_FACTORY } from "../../assets/fixtures/compare";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulCompare';
-const EVENT_NAME: KulComponentEventName<'KulCompare'> = 'kul-compare-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulCompare'> =
-  'KulCompareEventPayload';
-const TAG_NAME: KulComponentTag<'KulCompare'> = 'kul-compare';
+const COMPONENT_NAME: KulComponentName = "KulCompare";
+const EVENT_NAME: KulComponentEventName<"KulCompare"> = "kul-compare-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCompare"> =
+  "KulCompareEventPayload";
+const TAG_NAME: KulComponentTag<"KulCompare"> = "kul-compare";
 
 export const COMPARE_EXAMPLES: () => CompareData = () => ({
   simple: {
-    ['data-description']: 'Simple compare',
+    ["data-description"]: "Simple compare",
     kulData: COMPARE_KULDATA_FACTORY.KulImage(),
   },
   style: {
-    ['data-description']: 'Compare with custom style',
-    ['data-dynamic']: 'custom',
+    ["data-description"]: "Compare with custom style",
+    ["data-dynamic"]: "custom",
     kulData: COMPARE_KULDATA_FACTORY.KulImage(),
   },
 });
@@ -36,23 +36,23 @@ export const COMPARE_DOC: KulArticleDataset = {
       children: [
         SECTION_FACTORY.overview(
           COMPONENT_NAME,
-          'is handy when two components must be compared in order to spot differences',
+          "is handy when two components must be compared in order to spot differences",
         ),
         SECTION_FACTORY.usage(COMPONENT_NAME, {
           data: JSON.stringify({
             nodes: [
               {
-                value: 'Node 1',
-                id: '0',
+                value: "Node 1",
+                id: "0",
                 cells: {
-                  kulImage: { kulValue: 'url_of_image1' },
+                  kulImage: { kulValue: "url_of_image1" },
                 },
               },
               {
-                value: 'Node 2',
-                id: '1',
+                value: "Node 2",
+                id: "1",
                 cells: {
-                  kulImage: { kulValue: 'url_of_image2' },
+                  kulImage: { kulValue: "url_of_image2" },
                 },
               },
             ],
@@ -65,14 +65,14 @@ export const COMPARE_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

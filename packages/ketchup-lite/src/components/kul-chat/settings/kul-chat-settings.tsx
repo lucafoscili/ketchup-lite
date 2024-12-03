@@ -1,16 +1,16 @@
-import { Fragment, h } from '@stencil/core';
+import { Fragment, h } from "@stencil/core";
 
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
-import { KulChatAdapter } from '../kul-chat-declarations';
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulTextfieldEventPayload } from "../../kul-textfield/kul-textfield-declarations";
+import { KulChatAdapter } from "../kul-chat-declarations";
 
 export const OPTIONS_IDS = {
-  contextWindow: 'context-option',
-  endpointUrl: 'endpoint-option',
-  maxTokens: 'maxtokens-option',
-  polling: 'polling-option',
-  system: 'system-option',
-  temperature: 'temperature-option',
+  contextWindow: "context-option",
+  endpointUrl: "endpoint-option",
+  maxTokens: "maxtokens-option",
+  polling: "polling-option",
+  system: "system-option",
+  temperature: "temperature-option",
 };
 
 export const prepSettings = (adapter: KulChatAdapter) => {
@@ -57,7 +57,7 @@ const prepFields = (adapter: KulChatAdapter) => {
         kulHtmlAttributes={{
           min: 10,
           step: 100,
-          type: 'number',
+          type: "number",
         }}
         kulIcon="data_usage"
         kulLabel="Context window length"
@@ -72,7 +72,7 @@ const prepFields = (adapter: KulChatAdapter) => {
         kulHtmlAttributes={{
           min: 0,
           step: 0.1,
-          type: 'number',
+          type: "number",
         }}
         kulIcon="thermometer"
         kulLabel="Temperature"
@@ -97,7 +97,7 @@ const prepFields = (adapter: KulChatAdapter) => {
         kulHtmlAttributes={{
           min: 10,
           step: 100,
-          type: 'number',
+          type: "number",
         }}
         kulIcon="plus_one"
         kulLabel="Max tokens count"
@@ -112,7 +112,7 @@ const prepFields = (adapter: KulChatAdapter) => {
         kulHtmlAttributes={{
           min: 10,
           step: 10,
-          type: 'number',
+          type: "number",
         }}
         kulIcon="timer"
         kulLabel="Polling interval"
@@ -133,9 +133,9 @@ const backEventHandler = (
   const { eventType } = e.detail;
 
   switch (eventType) {
-    case 'click':
-      adapter.emit.event('config');
-      adapter.set.status.view('chat');
+    case "click":
+      adapter.emit.event("config");
+      adapter.set.status.view("chat");
       break;
   }
 };
@@ -147,7 +147,7 @@ const textfieldEventHandler = (
   const { eventType, id, value } = e.detail;
 
   switch (eventType) {
-    case 'change':
+    case "change":
       switch (id) {
         case OPTIONS_IDS.contextWindow:
           adapter.set.props.contextWindow(parseInt(value));

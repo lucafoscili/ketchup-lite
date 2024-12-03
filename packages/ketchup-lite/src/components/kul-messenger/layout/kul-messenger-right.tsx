@@ -1,16 +1,16 @@
-import { Fragment, h } from '@stencil/core';
+import { Fragment, h } from "@stencil/core";
 
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
-import { prepOptions } from '../options/kul-messenger-active';
-import { prepFilters, prepList } from '../options/kul-messenger-customization';
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulMessengerAdapter } from "../kul-messenger-declarations";
+import { prepOptions } from "../options/kul-messenger-active";
+import { prepFilters, prepList } from "../options/kul-messenger-customization";
 
 export const prepRight = (adapter: KulMessengerAdapter) => {
   const ui = adapter.get.messenger.ui();
   const className = {
     messenger__right: true,
-    'messenger__right--collapsed': ui.panels.isRightCollapsed,
-    'messenger__right--customization': ui.customization,
+    "messenger__right--collapsed": ui.panels.isRightCollapsed,
+    "messenger__right--customization": ui.customization,
   };
   return (
     <div class={className}>
@@ -58,12 +58,12 @@ const buttonEventHandler = (
   const customizationSetter = adapter.set.messenger.ui.customization;
 
   switch (eventType) {
-    case 'click':
+    case "click":
       switch (id) {
-        case 'active-right-button':
+        case "active-right-button":
           customizationSetter(true);
           break;
-        case 'customization-right-button':
+        case "customization-right-button":
           customizationSetter(false);
           break;
       }
