@@ -118,6 +118,7 @@ Cypress.Commands.add(
     });
     cy.get('@kulComponentShowcase')
       .find(`kul-${component}`)
+      .should('exist')
       .first()
       .scrollIntoView()
       .as('eventElement');
