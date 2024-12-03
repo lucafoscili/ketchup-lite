@@ -566,7 +566,7 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: 'getProps',
         docs: "Used to retrieve component's props values.",
         returns: {
-          type: 'Promise<GenericObject<unknown>>',
+          type: 'Promise<GenericObject>',
           docs: 'List of props as object, each key will be a prop.',
         },
         signature: '(descriptions?: boolean) => Promise<GenericObject>',
