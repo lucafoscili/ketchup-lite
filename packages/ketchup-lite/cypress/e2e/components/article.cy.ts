@@ -74,7 +74,7 @@ describe('Data', () => {
             if (shapeType === 'image') {
               cy.wrap($section).find('img').should('exist');
             } else if (shapeType === 'code') {
-              cy.wrap($section).find('code').should('exist');
+              cy.wrap($section).find('kul-code').should('exist');
             } else {
               cy.log(`No shape to check for index ${index}`);
             }
