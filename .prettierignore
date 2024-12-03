@@ -7,3 +7,4 @@ node_modules
 
 # Ignore specific files
 *.min.js
+*.d.ts
