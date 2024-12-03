@@ -2,22 +2,27 @@ name: Daily Prettier Linting
 
 on:
   schedule:
-    - cron: '0 0 * * *' # Runs every day at 00:00 UTC
-  workflow_dispatch: # Allows manual triggering
+    - cron: '0 0 * * *'
+  workflow_dispatch:
 
 jobs:
   prettier:
     runs-on: ubuntu-latest
-    environment: Development
 
     steps:
-      - name: Setup and Build
-        uses: ./.github/actions/setup
+      - uses: actions/checkout@v4
+
+      - name: Clear Yarn cache
+        run: yarn cache clean
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18.x'
-          install-immutable: 'true'
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          node-version: '18.16.0'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install --immutable
 
       - name: Build Packages
         shell: bash
