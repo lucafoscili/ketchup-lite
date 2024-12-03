@@ -16,7 +16,13 @@
 
 <div align="center">
 
-![GitHub top language](https://img.shields.io/github/languages/top/lucafoscili/ketchup-lite?logo=javascript&logoColor=black&labelColor=white&color=black) ![GitHub last commit](https://img.shields.io/github/last-commit/lucafoscili/ketchup-lite?logo=github&logoColor=black&labelColor=white&color=black) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/lucafoscili/ketchup-lite/cypress-tests.yaml?logo=cypress&logoColor=black&labelColor=white&color=black)
+![Development Deployment](https://img.shields.io/github/actions/workflow/status/lucafoscili/ketchup-lite/publish-candidate.yaml?label=Development%20Deployment&logo=github&logoColor=black&labelColor=white&color=black&branch=candidate) ![Production Deployment](https://img.shields.io/github/actions/workflow/status/lucafoscili/ketchup-lite/publish-main.yaml?label=Production%20Deployment&logo=github&logoColor=black&labelColor=white&color=black&branch=main)
+
+</div>
+
+<div align="center">
+
+![GitHub last commit](https://img.shields.io/github/last-commit/lucafoscili/ketchup-lite?logo=github&logoColor=black&labelColor=white&color=black) ![GitHub Actions Workflow Status - Cypress Tests](https://img.shields.io/github/actions/workflow/status/lucafoscili/ketchup-lite/cypress-tests.yaml?logo=cypress&logoColor=black&labelColor=white&color=black)
 
 </div>
 
