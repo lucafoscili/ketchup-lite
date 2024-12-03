@@ -62,35 +62,52 @@ describe('Data', () => {
 
   it('Should check for the presence of shapes.', () => {
     cy.get('@kulComponentShowcase');
-    cy.get(`${articleTag}#simple`)
-      .invoke('prop', 'kulData')
-      .then((kulData: KulArticleDataset) => {
-        const firstNodeChildren = kulData.nodes[0].children;
-        cy.get(`${articleTag}#simple`)
-          .shadow()
-          .find('section')
-          .each(($section, sectionIndex) => {
-            const child = firstNodeChildren[sectionIndex];
-            if (child.cells && child.cells[1].shape === 'image') {
-              cy.wrap($section).find('img').should('exist');
-            } else if (child.cells && child.cells[1].shape === 'code') {
-              cy.wrap($section).find('code').should('exist');
-            }
-          });
-      });
+    cy.get(`${articleTag}#simple`).then(($article) => {
+      const articleElement = $article[0] as HTMLKulArticleElement;
+      const kulData: KulArticleDataset = articleElement.kulData;
+      const firstNodeChildren = kulData.nodes[0]?.children || [];
+
+      cy.wrap($article)
+        .shadow()
+        .find('section')
+        .each(($section, index) => {
+          const child = firstNodeChildren[index];
+          const shapeType = child.cells?.[1]?.shape;
+
+          if (shapeType === 'image') {
+            cy.wrap($section).find('img').should('exist');
+          } else if (shapeType === 'code') {
+            cy.wrap($section).find('code').should('exist');
+          }
+        });
+    });
   });
 
-  it('Should check for the presence of a <h1> tag inside <article> if the first node has a truthy value.', () => {
+  it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
     cy.get('@kulComponentShowcase');
-    cy.get(`${articleTag}#simple`).then(($article) => {
-      const kulArticleElement = $article[0] as HTMLKulArticleElement;
-      const kulData = kulArticleElement.kulData;
-      if (kulData?.nodes?.[0]) {
-        cy.wrap($article).shadow().find('article').find('h1').should('exist');
-      } else {
-        cy.log(
-          'First node value is falsy or undefined, skipping <h1> tag presence check',
-        );
+    cy.get(`${articleTag}#simple`).each(($article) => {
+      const articleElement = $article[0] as HTMLKulArticleElement;
+      const kulData: KulArticleDataset = articleElement.kulData;
+      const expectedSectionCount = kulData.nodes[0]?.children?.length || 0;
+
+      if (expectedSectionCount > 0) {
+        return cy
+          .wrap($article)
+          .shadow()
+          .find('section')
+          .should('have.length', expectedSectionCount)
+          .each(($section, index) => {
+            const expectedValue =
+              kulData.nodes[0]?.children?.[index].value || '';
+
+            return cy
+              .wrap($section)
+              .find('h2')
+              .invoke('text')
+              .then((h2Text) => {
+                expect(h2Text).to.equal(expectedValue);
+              });
+          });
       }
     });
   });
