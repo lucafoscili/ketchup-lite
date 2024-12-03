@@ -30,6 +30,58 @@ describe('Data', () => {
     cy.navigate(article);
   });
 
+  it(`Should check whether all <${articleTag}> elements have the correct number of <section> elements and matching content.`, () => {
+    cy.get('@kulComponentShowcase');
+
+    cy.get(`${articleTag}#simple`).each(($article) => {
+      const articleElement = $article[0] as HTMLKulArticleElement;
+      const kulData = articleElement.kulData;
+      const expectedSections = kulData.nodes[0]?.children || [];
+
+      if (expectedSections.length > 0) {
+        return cy
+          .wrap($article)
+          .shadow()
+          .find('section')
+          .should('have.length', expectedSections.length)
+          .each(($section, index) => {
+            const expectedValue = expectedSections[index]?.value || '';
+
+            cy.wrap($section).find('h2').should('have.text', expectedValue);
+          });
+      }
+    });
+  });
+
+  it('Should check for the presence of shapes.', () => {
+    cy.get('@kulComponentShowcase');
+
+    cy.get(`${articleTag}#simple`).then(($article) => {
+      const articleElement = $article[0] as HTMLKulArticleElement;
+      const kulData = articleElement.kulData;
+      const firstNodeChildren = kulData.nodes[0]?.children || [];
+
+      return cy
+        .wrap($article)
+        .shadow()
+        .find('section')
+        .should('have.length', firstNodeChildren.length)
+        .each(($section, index) => {
+          const child = firstNodeChildren[index];
+          const shapeType = child.cells?.[1]?.shape;
+
+          if (shapeType === 'image') {
+            cy.wrap($section).find('img').should('exist');
+          } else if (shapeType === 'code') {
+            cy.wrap($section).find('code').should('exist');
+          } else {
+            // Optionally handle other shape types or log a message
+            cy.log(`No shape to check for index ${index}`);
+          }
+        });
+    });
+  });
+
   it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
     cy.get('@kulComponentShowcase')
       .find(`${articleTag}#simple`)
@@ -58,58 +110,6 @@ describe('Data', () => {
             });
         }
       });
-  });
-
-  it('Should check for the presence of shapes.', () => {
-    cy.get('@kulComponentShowcase');
-    cy.get(`${articleTag}#simple`).then(($article) => {
-      const articleElement = $article[0] as HTMLKulArticleElement;
-      const kulData: KulArticleDataset = articleElement.kulData;
-      const firstNodeChildren = kulData.nodes[0]?.children || [];
-
-      cy.wrap($article)
-        .shadow()
-        .find('section')
-        .each(($section, index) => {
-          const child = firstNodeChildren[index];
-          const shapeType = child.cells?.[1]?.shape;
-
-          if (shapeType === 'image') {
-            cy.wrap($section).find('img').should('exist');
-          } else if (shapeType === 'code') {
-            cy.wrap($section).find('code').should('exist');
-          }
-        });
-    });
-  });
-
-  it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
-    cy.get('@kulComponentShowcase');
-    cy.get(`${articleTag}#simple`).each(($article) => {
-      const articleElement = $article[0] as HTMLKulArticleElement;
-      const kulData: KulArticleDataset = articleElement.kulData;
-      const expectedSectionCount = kulData.nodes[0]?.children?.length || 0;
-
-      if (expectedSectionCount > 0) {
-        return cy
-          .wrap($article)
-          .shadow()
-          .find('section')
-          .should('have.length', expectedSectionCount)
-          .each(($section, index) => {
-            const expectedValue =
-              kulData.nodes[0]?.children?.[index].value || '';
-
-            return cy
-              .wrap($section)
-              .find('h2')
-              .invoke('text')
-              .then((h2Text) => {
-                expect(h2Text).to.equal(expectedValue);
-              });
-          });
-      }
-    });
   });
 });
 
