@@ -12,7 +12,7 @@ packages/ketchup-lite/src/components.d.ts
 packages/ketchup-lite/cypress/downloads/*
 packages/ketchup-lite/cypress/screenshots
 packages/ketchup-lite-hydrate/index*
-packages/ketchup-lite-react/lib
-packages/ketchup-lite-react-ssr/lib
+packages/ketchup-lite-react/lib/components
+packages/ketchup-lite-react-ssr/lib/components
 **/dist/
 **/node_modules/
