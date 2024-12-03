@@ -29,10 +29,11 @@
     "build:kul": "lerna run build --scope ketchup-lite --stream",
     "build:kul-react": "lerna run build --scope ketchup-lite-react --stream",
     "build:kul-react-ssr": "lerna run build --scope ketchup-lite-react-ssr --stream",
-    "build": "yarn build:kul && yarn doc && yarn build:kul-react && yarn build:kul-react-ssr && node scripts/spread_readme.js",
+    "build": "yarn build:kul && yarn doc && yarn build:kul-react && yarn build:kul-react-ssr && yarn markdown",
     "dev": "lerna run dev --scope ketchup-lite --stream",
     "doc": "node ./packages/ketchup-lite/src/scripts/doc.js",
     "format": "prettier --write 'packages/ketchup-lite/src/**/*.{ts,tsx,json,scss}'",
+    "markdown": "node scripts/spread_readme.js",
     "test": "lerna run test --scope ketchup-lite --stream",
     "test:open": "lerna run test:open --scope ketchup-lite --stream"
   },
