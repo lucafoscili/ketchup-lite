@@ -70,7 +70,7 @@ export const config: Config = {
     },
     {
       type: 'docs-json',
-      file: 'src/docs/doc.json',
+      file: 'doc.json',
     },
     { type: 'docs-readme' },
     {
