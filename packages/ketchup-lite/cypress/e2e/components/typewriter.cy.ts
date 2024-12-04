@@ -2,16 +2,16 @@ import {
   KulTypewriterEvent,
   KulTypewriterProps,
   KulTypewriterPropsInterface,
-} from '../../../src/components/kul-typewriter/kul-typewriter-declarations';
-import { TYPEWRITER_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/typewriter/kul-showcase-typewriter-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-typewriter/kul-typewriter-declarations";
+import { TYPEWRITER_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/typewriter/kul-showcase-typewriter-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const typewriter = 'typewriter';
+const typewriter = "typewriter";
 const typewriterCapitalized =
   typewriter.charAt(0).toUpperCase() + typewriter.slice(1);
-const typewriterTag = 'kul-' + typewriter;
+const typewriterTag = "kul-" + typewriter;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(typewriter);
   });
@@ -25,33 +25,33 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(typewriter);
   });
 
   it(`unmount`, () => {
     cy.navigate(typewriter);
-    const eventType: KulTypewriterEvent = 'unmount';
+    const eventType: KulTypewriterEvent = "unmount";
     cy.checkEvent(typewriter, eventType);
-    cy.get('@eventElement').then(($article) => {
+    cy.get("@eventElement").then(($article) => {
       const kulArticleElement = $article[0] as HTMLKulArticleElement;
       kulArticleElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(typewriter);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(typewriterTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(typewriterTag);
   });
 
@@ -72,12 +72,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(typewriter);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

@@ -2,15 +2,15 @@ import {
   KulChartEvent,
   KulChartProps,
   KulChartPropsInterface,
-} from '../../../src/components/kul-chart/kul-chart-declarations';
-import { CHART_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/chart/kul-showcase-chart-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-chart/kul-chart-declarations";
+import { CHART_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/chart/kul-showcase-chart-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const chart = 'chart';
+const chart = "chart";
 const chartCapitalized = chart.charAt(0).toUpperCase() + chart.slice(1);
-const chartTag = 'kul-' + chart;
+const chartTag = "kul-" + chart;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(chart);
   });
@@ -24,33 +24,33 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(chart);
   });
 
   it(`unmount`, () => {
     cy.navigate(chart);
-    const eventType: KulChartEvent = 'unmount';
+    const eventType: KulChartEvent = "unmount";
     cy.checkEvent(chart, eventType);
-    cy.get('@eventElement').then(($chart) => {
+    cy.get("@eventElement").then(($chart) => {
       const kulChartElement = $chart[0] as HTMLKulChartElement;
       kulChartElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(chart);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(chartTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(chartTag);
   });
 
@@ -75,12 +75,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(chart);
   });
 
-  it('Should check for the presence of a <style> element with id kup-style.', () => {
+  it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

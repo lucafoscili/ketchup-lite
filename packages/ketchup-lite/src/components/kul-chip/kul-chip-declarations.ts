@@ -1,20 +1,20 @@
 import {
   KulDataDataset,
   KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulEventPayload } from '../../types/GenericTypes';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulEventPayload } from "../../types/GenericTypes";
 
 //#region Events
 export type KulChipEvent =
-  | 'blur'
-  | 'click'
-  | 'delete'
-  | 'focus'
-  | 'pointerdown'
-  | 'ready'
-  | 'unmount';
+  | "blur"
+  | "click"
+  | "delete"
+  | "focus"
+  | "pointerdown"
+  | "ready"
+  | "unmount";
 export interface KulChipEventPayload
-  extends KulEventPayload<'KulChip', KulChipEvent> {
+  extends KulEventPayload<"KulChip", KulChipEvent> {
   node: KulDataNode;
   selectedNodes: Set<KulDataNode>;
 }
@@ -29,9 +29,9 @@ export interface KulChipEventArguments {
 
 //#region Props
 export enum KulChipProps {
-  kulData = 'The data of the chip chip.',
-  kulRipple = 'When set to true, the pointerdown event will trigger a ripple effect.',
-  kulStyle = 'Custom style of the component.',
+  kulData = "The data of the chip chip.",
+  kulRipple = "When set to true, the pointerdown event will trigger a ripple effect.",
+  kulStyle = "Custom style of the component.",
   kulStyling = 'Styling of the chip component, includes: "choice", "input", "filter" and "standard".',
 }
 export interface KulChipPropsInterface {
@@ -40,5 +40,5 @@ export interface KulChipPropsInterface {
   kulStyle?: string;
   kulStyling?: KulChipStyling;
 }
-export type KulChipStyling = 'choice' | 'filter' | 'input' | 'standard';
+export type KulChipStyling = "choice" | "filter" | "input" | "standard";
 //#endregion

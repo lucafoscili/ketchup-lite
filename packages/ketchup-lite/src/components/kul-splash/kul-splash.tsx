@@ -9,23 +9,23 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulSplashEvent,
   KulSplashEventPayload,
   KulSplashProps,
   KulSplashStates,
-} from './kul-splash-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-splash-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-splash',
-  styleUrl: 'kul-splash.scss',
+  tag: "kul-splash",
+  styleUrl: "kul-splash.scss",
   shadow: true,
 })
 export class KulSplash {
@@ -54,7 +54,7 @@ export class KulSplash {
    *
    * @see KulButtonState - For a list of possible states.
    */
-  @State() state: KulSplashStates = 'initializing';
+  @State() state: KulSplashStates = "initializing";
 
   /*-------------------------------------------------*/
   /*                    P r o p s                    */
@@ -64,12 +64,12 @@ export class KulSplash {
    * Initial text displayed within the component, typically shown during loading.
    * @default "Loading..." - Indicates that loading or initialization is in progress.
    */
-  @Prop({ mutable: true, reflect: false }) kulLabel = 'Loading...';
+  @Prop({ mutable: true, reflect: false }) kulLabel = "Loading...";
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -85,7 +85,7 @@ export class KulSplash {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-splash-event',
+    eventName: "kul-splash-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -136,9 +136,9 @@ export class KulSplash {
   @Method()
   async unmount(ms: number = 575): Promise<void> {
     setTimeout(() => {
-      this.state = 'unmounting';
+      this.state = "unmounting";
       setTimeout(() => {
-        this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+        this.onKulEvent(new CustomEvent("unmount"), "unmount");
         this.rootElement.remove();
       }, 300);
     }, ms);
@@ -153,16 +153,16 @@ export class KulSplash {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -174,13 +174,13 @@ export class KulSplash {
           </style>
         ) : undefined}
         <div id={KUL_WRAPPER_ID}>
-          <div class={'modal' + (this.state === 'unmounting' ? ' active' : '')}>
+          <div class={"modal" + (this.state === "unmounting" ? " active" : "")}>
             <div class="wrapper">
               <div class="widget">
                 <slot></slot>
               </div>
               <div class="label">
-                {this.state === 'unmounting' ? 'Ready!' : this.kulLabel}
+                {this.state === "unmounting" ? "Ready!" : this.kulLabel}
               </div>
             </div>
           </div>

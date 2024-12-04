@@ -1,11 +1,11 @@
-import { Component, Element, Fragment, h } from '@stencil/core';
+import { Component, Element, Fragment, h } from "@stencil/core";
 
-import { LLM_DATA } from './kul-showcase-kulllm-data';
-import { KUL_WRAPPER_ID } from '../../../../variables/GenericVariables';
+import { LLM_DATA } from "./kul-showcase-kulllm-data";
+import { KUL_WRAPPER_ID } from "../../../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-showcase-kulllm',
-  styleUrl: 'kul-showcase-kulllm.scss',
+  tag: "kul-showcase-kulllm",
+  styleUrl: "kul-showcase-kulllm.scss",
   shadow: true,
 })
 export class KulShowcaseKulllm {

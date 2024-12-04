@@ -1,9 +1,13 @@
-# Ignore build directories
-/build
-/dist
+# Ignore build and dist directories
+build/
+dist/
 
-# Ignore node_modules
-node_modules
+# Ignore dependencies
+node_modules/
 
-# Ignore specific files
+# Ignore specific file patterns
 *.min.js
+*.d.ts
+
+# Ignore specific files (e.g., generated docs)
+packages/ketchup-lite/src/components/kul-showcase/assets/doc.ts

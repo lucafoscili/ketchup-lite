@@ -1,17 +1,17 @@
-import { KulDataDataset } from '../../../src/components';
+import { KulDataDataset } from "../../../src/components";
 import {
   KulListEvent,
   KulListProps,
   KulListPropsInterface,
-} from '../../../src/components/kul-list/kul-list-declarations';
-import { LIST_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/list/kul-showcase-list-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-list/kul-list-declarations";
+import { LIST_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/list/kul-showcase-list-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const list = 'list';
+const list = "list";
 const listCapitalized = list.charAt(0).toUpperCase() + list.slice(1);
-const listTag = 'kul-' + list;
+const listTag = "kul-" + list;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(list);
   });
@@ -25,58 +25,58 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`blur`, () => {
     cy.navigate(list);
-    const eventType: KulListEvent = 'blur';
+    const eventType: KulListEvent = "blur";
     cy.checkEvent(list, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.NODE)
       .first()
       .focus()
       .blur();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`click`, () => {
     cy.navigate(list);
-    const eventType: KulListEvent = 'click';
+    const eventType: KulListEvent = "click";
     cy.checkEvent(list, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.NODE)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
-  it('delete', () => {
+  it("delete", () => {
     cy.navigate(list);
-    const eventType: KulListEvent = 'delete';
+    const eventType: KulListEvent = "delete";
     cy.checkEvent(list, eventType);
 
     cy.get(`${listTag}#enableDeletion`)
       .shadow()
-      .find('.list-item')
+      .find(".list-item")
       .first()
-      .trigger('mouseover');
+      .trigger("mouseover");
 
     cy.get(`${listTag}#enableDeletion`)
       .findCyElement(KulDataCyAttributes.BUTTON)
       .first()
       .click({ force: true });
 
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`focus`, () => {
     cy.navigate(list);
-    const eventType: KulListEvent = 'focus';
+    const eventType: KulListEvent = "focus";
     cy.checkEvent(list, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.NODE)
       .first()
       .focus();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -85,26 +85,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(list);
-    const eventType: KulListEvent = 'unmount';
+    const eventType: KulListEvent = "unmount";
     cy.checkEvent(list, eventType);
-    cy.get('@eventElement').then(($list) => {
+    cy.get("@eventElement").then(($list) => {
       const kulListElement = $list[0] as HTMLKulListElement;
       kulListElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(list);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(listTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(listTag);
   });
 
@@ -125,39 +125,39 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(list);
   });
 
   it(`kulEnableDeletion: should check for the presence of deletion buttons and that their click actually removes the item from the dataset.`, () => {
-    cy.get('@kulComponentShowcase')
+    cy.get("@kulComponentShowcase")
       .find(`${listTag}#enableDeletion`)
-      .invoke('prop', 'kulData')
+      .invoke("prop", "kulData")
       .then((initialKulData: KulDataDataset) => {
         const initialCopy = JSON.parse(JSON.stringify(initialKulData));
 
-        console.log('Initial dataset length:', initialKulData.nodes.length);
+        console.log("Initial dataset length:", initialKulData.nodes.length);
 
-        cy.get('@kulComponentShowcase')
+        cy.get("@kulComponentShowcase")
           .find(`${listTag}#enableDeletion`)
           .shadow()
-          .find('.list-item')
+          .find(".list-item")
           .first()
-          .trigger('mouseover');
+          .trigger("mouseover");
 
-        cy.get('@kulComponentShowcase')
+        cy.get("@kulComponentShowcase")
           .find(`${listTag}#enableDeletion`)
           .findCyElement(KulDataCyAttributes.BUTTON)
           .first()
           .click({ force: true });
 
-        cy.get('@kulComponentShowcase')
+        cy.get("@kulComponentShowcase")
           .find(`${listTag}#enableDeletion`)
-          .invoke('prop', 'kulData')
+          .invoke("prop", "kulData")
           .then((finalKulData: KulDataDataset) => {
             const delta = initialCopy.nodes.length - finalKulData.nodes.length;
-            console.log('Delta:', delta);
+            console.log("Delta:", delta);
 
             assert(
               delta === 1,
@@ -167,7 +167,7 @@ describe('Props', () => {
       });
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

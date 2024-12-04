@@ -8,23 +8,23 @@ import {
   Host,
   Prop,
   State,
-} from '@stencil/core';
-import { Method } from '@stencil/core/internal';
+} from "@stencil/core";
+import { Method } from "@stencil/core/internal";
 
 import {
   KulPhotoframeEventPayload,
   KulPhotoframeEvent,
   KulPhotoframeProps,
-} from './kul-photoframe-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-photoframe-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-photoframe',
-  styleUrl: 'kul-photoframe.scss',
+  tag: "kul-photoframe",
+  styleUrl: "kul-photoframe.scss",
   shadow: true,
 })
 export class KulPhotoframe {
@@ -66,7 +66,7 @@ export class KulPhotoframe {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * Percentage of the component dimensions entering the viewport (0.1 => 1).
    * @default 0.25
@@ -97,7 +97,7 @@ export class KulPhotoframe {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-photoframe-event',
+    eventName: "kul-photoframe-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -153,7 +153,7 @@ export class KulPhotoframe {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -187,16 +187,16 @@ export class KulPhotoframe {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -225,13 +225,13 @@ export class KulPhotoframe {
                 this.#placeholderEl.naturalWidth >
                 this.#placeholderEl.naturalHeight
               ) {
-                this.#wrapperEl.classList.add('horizontal');
+                this.#wrapperEl.classList.add("horizontal");
               } else {
-                this.#wrapperEl.classList.add('vertical');
+                this.#wrapperEl.classList.add("vertical");
               }
               this.#intObserver.observe(this.rootElement);
-              this.#placeholderEl.classList.add('placeholder--loaded');
-              this.onKulEvent(e, 'load', true);
+              this.#placeholderEl.classList.add("placeholder--loaded");
+              this.onKulEvent(e, "load", true);
             }}
           ></img>
           {this.#renderValue ? (
@@ -240,9 +240,9 @@ export class KulPhotoframe {
               class="value"
               ref={(el) => (this.#valueEl = el)}
               onLoad={(e) => {
-                this.#placeholderEl.classList.add('placeholder--fade-out');
-                this.#valueEl.classList.add('value--fade-in');
-                this.onKulEvent(e, 'load');
+                this.#placeholderEl.classList.add("placeholder--fade-out");
+                this.#valueEl.classList.add("value--fade-in");
+                this.onKulEvent(e, "load");
               }}
             ></img>
           ) : null}

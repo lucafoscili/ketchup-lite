@@ -9,24 +9,24 @@ import {
   Prop,
   State,
   Watch,
-} from '@stencil/core';
-import { Fragment, Method } from '@stencil/core/internal';
+} from "@stencil/core";
+import { Fragment, Method } from "@stencil/core/internal";
 
 import {
   KulTypewriterEvent,
   KulTypewriterEventPayload,
   KulTypewriterProps,
   KulTypewriterValue,
-} from './kul-typewriter-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-typewriter-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-typewriter',
-  styleUrl: 'kul-typewriter.scss',
+  tag: "kul-typewriter",
+  styleUrl: "kul-typewriter.scss",
   shadow: true,
 })
 export class KulTypewriter {
@@ -52,7 +52,7 @@ export class KulTypewriter {
   /**
    * The current text being displayed as it types.
    */
-  @State() displayedText = '';
+  @State() displayedText = "";
   /**
    * Controls whether the component is in the process of deleting text.
    */
@@ -95,12 +95,12 @@ export class KulTypewriter {
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop({ mutable: true }) kulStyle = '';
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Sets the text or array of texts to display with the typewriter effect.
    * @default ""
    */
-  @Prop({ mutable: true }) kulValue: KulTypewriterValue = '';
+  @Prop({ mutable: true }) kulValue: KulTypewriterValue = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -118,7 +118,7 @@ export class KulTypewriter {
    * Describes the component's events.
    */
   @Event({
-    eventName: 'kul-typewriter-event',
+    eventName: "kul-typewriter-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -138,7 +138,7 @@ export class KulTypewriter {
   /*                 W a t c h e r s                 */
   /*-------------------------------------------------*/
 
-  @Watch('kulValue')
+  @Watch("kulValue")
   handleKulValueChange() {
     this.initializeTexts();
     this.resetTyping();
@@ -179,7 +179,7 @@ export class KulTypewriter {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -195,7 +195,7 @@ export class KulTypewriter {
   }
 
   private startTyping() {
-    const currentText = this.#texts[this.currentTextIndex] || '';
+    const currentText = this.#texts[this.currentTextIndex] || "";
 
     if (this.isDeleting) {
       this.displayedText = currentText.substring(
@@ -213,7 +213,7 @@ export class KulTypewriter {
       this.#timeout = setTimeout(() => {
         if (this.kulLoop) this.isDeleting = true;
       }, this.kulPause);
-    } else if (this.isDeleting && this.displayedText === '') {
+    } else if (this.isDeleting && this.displayedText === "") {
       this.isDeleting = false;
       this.currentTextIndex = (this.currentTextIndex + 1) % this.#texts.length;
     } else {
@@ -224,7 +224,7 @@ export class KulTypewriter {
 
   private resetTyping() {
     clearTimeout(this.#timeout);
-    this.displayedText = '';
+    this.displayedText = "";
     this.isDeleting = false;
     this.currentTextIndex = 0;
     this.startTyping();
@@ -249,17 +249,17 @@ export class KulTypewriter {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
     this.startTyping();
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {

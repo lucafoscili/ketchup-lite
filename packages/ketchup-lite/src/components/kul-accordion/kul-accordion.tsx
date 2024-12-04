@@ -11,29 +11,29 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulAccordionEvent,
   KulAccordionEventPayload,
   KulAccordionProps,
-} from './kul-accordion-declarations';
+} from "./kul-accordion-declarations";
 import {
   KulDataDataset,
   KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import {
   KulDataCyAttributes,
   type GenericObject,
-} from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-accordion',
-  styleUrl: 'kul-accordion.scss',
+  tag: "kul-accordion",
+  styleUrl: "kul-accordion.scss",
   shadow: true,
 })
 export class KulAccordion {
@@ -83,7 +83,7 @@ export class KulAccordion {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -101,7 +101,7 @@ export class KulAccordion {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-accordion-event',
+    eventName: "kul-accordion-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -114,7 +114,7 @@ export class KulAccordion {
     node?: KulDataNode,
   ) {
     switch (eventType) {
-      case 'pointerdown':
+      case "pointerdown":
         if (this.kulRipple) {
           this.#kulManager.theme.ripple.trigger(
             e as PointerEvent,
@@ -191,7 +191,7 @@ export class KulAccordion {
     }
 
     if (!this.#isExpandible(node)) {
-      this.onKulEvent(e || new CustomEvent('click'), 'click');
+      this.onKulEvent(e || new CustomEvent("click"), "click");
     }
     this.refresh();
   }
@@ -202,7 +202,7 @@ export class KulAccordion {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -229,7 +229,7 @@ export class KulAccordion {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
     };
-    return <div class={'node__icon'} style={style}></div>;
+    return <div class={"node__icon"} style={style}></div>;
   }
 
   #prepAccordion(): VNode[] {
@@ -251,12 +251,12 @@ export class KulAccordion {
       const isSelected = this.#isSelected(node);
       const headerClassName = {
         node__header: true,
-        'node__header--selected': !isExpandible && isSelected ? true : false,
-        'node__header--expanded': isExpandible && isExpanded ? true : false,
+        "node__header--selected": !isExpandible && isSelected ? true : false,
+        "node__header--expanded": isExpandible && isExpanded ? true : false,
       };
       const contentClassname: { [className: string]: boolean } = {
         node__content: true,
-        'node__content--selected': isSelected ? true : false,
+        "node__content--selected": isSelected ? true : false,
       };
       nodes.push(
         <div class="node">
@@ -267,7 +267,7 @@ export class KulAccordion {
             data-cy={isExpandible ? undefined : KulDataCyAttributes.BUTTON}
             onClick={(e) => this.toggleNode(node.id, e)}
             onPointerDown={(e) => {
-              this.onKulEvent(e, 'pointerdown', node);
+              this.onKulEvent(e, "pointerdown", node);
             }}
           >
             <div
@@ -282,7 +282,7 @@ export class KulAccordion {
             {isExpandible ? (
               <div
                 class={`node__expand ${
-                  isExpanded ? 'node__expand--expanded' : ''
+                  isExpanded ? "node__expand--expanded" : ""
                 } `}
               ></div>
             ) : null}
@@ -307,12 +307,12 @@ export class KulAccordion {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
@@ -324,7 +324,7 @@ export class KulAccordion {
         }
       }
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {

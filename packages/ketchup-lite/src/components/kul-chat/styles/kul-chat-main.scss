@@ -86,18 +86,18 @@
     align-content: center;
     grid-gap: var(--kul_chat_outer_grid_gap);
     grid-template-areas:
-      'messages'
-      'spinner'
-      'request';
+      "messages"
+      "spinner"
+      "request";
     grid-template-rows: 1fr auto auto;
   }
 
   &--top-textarea {
     grid-gap: var(--kul_chat_outer_grid_gap);
     grid-template-areas:
-      'request'
-      'messages'
-      'spinner';
+      "request"
+      "messages"
+      "spinner";
     grid-template-rows: auto 1fr auto;
   }
 
@@ -122,8 +122,8 @@
       & {
         display: grid;
         grid-template-areas:
-          'textarea button'
-          'progressbar button';
+          "textarea button"
+          "progressbar button";
         grid-template-columns: 1fr auto;
       }
 

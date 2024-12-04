@@ -7,27 +7,27 @@ import {
   TooltipComponentOption,
   XAXisComponentOption,
   YAXisComponentOption,
-} from 'echarts';
+} from "echarts";
 
-import { KulChart } from './kul-chart';
+import { KulChart } from "./kul-chart";
 import {
   KulDataCell,
   KulDataColumn,
   KulDataDataset,
   KulDataNode,
   KulDataShapes,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulManager } from '../../managers/kul-manager/kul-manager';
-import { KulEventPayload } from '../../types/GenericTypes';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulManager } from "../../managers/kul-manager/kul-manager";
+import { KulEventPayload } from "../../types/GenericTypes";
 
 /*-------------------------------------------------*/
 /*                  A d a p t e r                  */
 /*-------------------------------------------------*/
 export interface KulChartAdapter {
   actions: {
-    mapType: (type: KulChartType) => SeriesOption['type'];
+    mapType: (type: KulChartType) => SeriesOption["type"];
     onClick: (e: ECElementEvent) => boolean | void;
-    stringify: (str: KulDataCell<KulDataShapes>['value']) => string;
+    stringify: (str: KulDataCell<KulDataShapes>["value"]) => string;
   };
   emit: {
     event: (
@@ -42,7 +42,7 @@ export interface KulChartAdapterDesign {
   applyOpacity: (color: string, opacity: string) => string;
   axis: (
     adapter: KulChartAdapter,
-    axisType: 'x' | 'y',
+    axisType: "x" | "y",
   ) => XAXisComponentOption | YAXisComponentOption;
   colors: (adapter: KulChartAdapter, count: number) => string[];
   label: (adapter: KulChartAdapter) => EChartsOption;
@@ -84,9 +84,9 @@ export interface KulChartAdapterOptions {
 /*-------------------------------------------------*/
 /*                   E v e n t s                   */
 /*-------------------------------------------------*/
-export type KulChartEvent = 'click' | 'ready' | 'unmount';
+export type KulChartEvent = "click" | "ready" | "unmount";
 export interface KulChartEventPayload
-  extends KulEventPayload<'KulChart', KulChartEvent> {
+  extends KulEventPayload<"KulChart", KulChartEvent> {
   data?: KulChartEventData;
 }
 export interface KulChartEventData {
@@ -99,17 +99,17 @@ export interface KulChartEventData {
 /*                    P r o p s                    */
 /*-------------------------------------------------*/
 export enum KulChartProps {
-  kulAxis = 'Sets the axis of the chart.',
+  kulAxis = "Sets the axis of the chart.",
   kulColors = "Overrides theme's colors.",
-  kulData = 'The actual data of the chart.',
-  kulLegend = 'Sets the position of the legend. Supported values: bottom, left, right, top. Keep in mind that legend types are tied to chart types, some combinations might not work.',
-  kulSeries = 'The data series to be displayed. They must be of the same type.',
-  kulSizeX = 'The width of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).',
-  kulSizeY = 'The height of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).',
-  kulStyle = 'Custom style of the component.',
-  kulTypes = 'The type of the chart. Supported formats: Line, Pie, Map, Scatter.',
-  kulXAxis = 'Customization options for the x Axis.',
-  kulYAxis = 'Customization options for the y Axis.',
+  kulData = "The actual data of the chart.",
+  kulLegend = "Sets the position of the legend. Supported values: bottom, left, right, top. Keep in mind that legend types are tied to chart types, some combinations might not work.",
+  kulSeries = "The data series to be displayed. They must be of the same type.",
+  kulSizeX = "The width of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).",
+  kulSizeY = "The height of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).",
+  kulStyle = "Custom style of the component.",
+  kulTypes = "The type of the chart. Supported formats: Line, Pie, Map, Scatter.",
+  kulXAxis = "Customization options for the x Axis.",
+  kulYAxis = "Customization options for the y Axis.",
 }
 export interface KulChartPropsInterface {
   kulAxis?: KulChartAxis;
@@ -125,27 +125,27 @@ export interface KulChartPropsInterface {
   kulYAxis?: KulChartYAxis;
 }
 export type KulChartType =
-  | 'area'
-  | 'bar'
-  | 'bubble'
-  | 'calendar'
-  | 'candlestick'
-  | 'funnel'
-  | 'gaussian'
-  | 'hbar'
-  | 'heatmap'
-  | 'line'
-  | 'pie'
-  | 'radar'
-  | 'sankey'
-  | 'sbar'
-  | 'scatter';
+  | "area"
+  | "bar"
+  | "bubble"
+  | "calendar"
+  | "candlestick"
+  | "funnel"
+  | "gaussian"
+  | "hbar"
+  | "heatmap"
+  | "line"
+  | "pie"
+  | "radar"
+  | "sankey"
+  | "sbar"
+  | "scatter";
 export type KulChartLegendPlacement =
-  | 'bottom'
-  | 'left'
-  | 'hidden'
-  | 'right'
-  | 'top';
+  | "bottom"
+  | "left"
+  | "hidden"
+  | "right"
+  | "top";
 export type KulChartXAxis = XAXisComponentOption;
 export type KulChartYAxis = YAXisComponentOption;
 export type KulChartAxis = string | string[];

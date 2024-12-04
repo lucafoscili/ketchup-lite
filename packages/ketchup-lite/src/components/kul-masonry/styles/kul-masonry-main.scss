@@ -265,7 +265,7 @@
   }
 }
 
-[data-selected='true'] {
+[data-selected="true"] {
   border-radius: var(--kul_masonry_selected_border_radius);
   box-shadow: 0 var(--kul_masonry_selected_box_shadow_offset_y)
     var(--kul_masonry_selected_box_shadow_blur)
@@ -289,7 +289,7 @@
       var(--kul_masonry_selected_border);
     border-radius: var(--kul_masonry_selected_after_border_radius);
     bottom: var(--kul_masonry_selected_after_offset);
-    content: '';
+    content: "";
     left: var(--kul_masonry_selected_after_offset);
     pointer-events: none;
     position: absolute;

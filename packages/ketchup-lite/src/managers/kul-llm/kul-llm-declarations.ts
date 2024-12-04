@@ -65,7 +65,7 @@ export interface KulLLMRequest {
   }>;
 }
 
-export type KulLLMRole = 'system' | 'user' | 'assistant';
+export type KulLLMRole = "system" | "user" | "assistant";
 
 export interface KulLLMUsage {
   prompt_tokens: number;

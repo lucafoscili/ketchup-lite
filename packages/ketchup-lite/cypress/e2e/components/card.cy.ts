@@ -2,15 +2,15 @@ import {
   KulCardEvent,
   KulCardProps,
   KulCardPropsInterface,
-} from '../../../src/components/kul-card/kul-card-declarations';
-import { CARD_CATEGORIES_KEYS } from '../../../src/components/kul-showcase/components/card/kul-showcase-card-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-card/kul-card-declarations";
+import { CARD_CATEGORIES_KEYS } from "../../../src/components/kul-showcase/components/card/kul-showcase-card-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const card = 'card';
+const card = "card";
 const cardCapitalized = card.charAt(0).toUpperCase() + card.slice(1);
-const cardTag = 'kul-' + card;
+const cardTag = "kul-" + card;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(card);
   });
@@ -24,43 +24,43 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`click`, () => {
     cy.navigate(card);
-    const eventType: KulCardEvent = 'click';
+    const eventType: KulCardEvent = "click";
     cy.checkEvent(card, eventType);
-    cy.get('@eventElement').click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.get("@eventElement").click();
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`contextmenu`, () => {
     cy.navigate(card);
-    const eventType: KulCardEvent = 'contextmenu';
+    const eventType: KulCardEvent = "contextmenu";
     cy.checkEvent(card, eventType);
-    cy.get('@eventElement').rightclick();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.get("@eventElement").rightclick();
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`kul-event`, () => {
     cy.navigate(card);
-    const eventType: KulCardEvent = 'kul-event';
+    const eventType: KulCardEvent = "kul-event";
     cy.checkEvent(card, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.SHAPE)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`pointerdown`, () => {
     cy.navigate(card);
-    const eventType: KulCardEvent = 'pointerdown';
+    const eventType: KulCardEvent = "pointerdown";
     cy.checkEvent(card, eventType);
     cy.get(`${cardTag}#material-image`)
       .findCyElement(KulDataCyAttributes.RIPPLE)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -69,26 +69,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(card);
-    const eventType: KulCardEvent = 'unmount';
+    const eventType: KulCardEvent = "unmount";
     cy.checkEvent(card, eventType);
-    cy.get('@eventElement').then(($card) => {
+    cy.get("@eventElement").then(($card) => {
       const kulCardElement = $card[0] as HTMLKulCardElement;
       kulCardElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(card);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(cardTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(cardTag);
   });
 
@@ -107,12 +107,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(card);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

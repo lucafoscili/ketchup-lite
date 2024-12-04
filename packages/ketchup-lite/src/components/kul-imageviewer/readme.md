@@ -11,7 +11,7 @@
 | ----------------- | ----------- | ------------------------------------------------- | ------------------------------------------------------------- | ------- |
 | `kulData`         | --          | Actual data of the image viewer.                  | `KulDataDataset`                                              | `{}`    |
 | `kulLoadCallback` | --          | Callback invoked when the load button is clicked. | `(imageviewer: KulImageviewer, dir: string) => Promise<void>` | `null`  |
-| `kulStyle`        | `kul-style` | Custom style of the component.                    | `string`                                                      | `''`    |
+| `kulStyle`        | `kul-style` | Custom style of the component.                    | `string`                                                      | `""`    |
 | `kulValue`        | --          | Configuration parameters of the detail view.      | `KulDataDataset`                                              | `{}`    |
 
 

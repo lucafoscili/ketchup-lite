@@ -2,15 +2,15 @@ import {
   KulCompareEvent,
   KulCompareProps,
   KulComparePropsInterface,
-} from '../../../src/components/kul-compare/kul-compare-declarations';
-import { COMPARE_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/compare/kul-showcase-compare-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-compare/kul-compare-declarations";
+import { COMPARE_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/compare/kul-showcase-compare-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const compare = 'compare';
+const compare = "compare";
 const compareCapitalized = compare.charAt(0).toUpperCase() + compare.slice(1);
-const compareTag = 'kul-' + compare;
+const compareTag = "kul-" + compare;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(compare);
   });
@@ -24,17 +24,17 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`kul-event`, () => {
     cy.navigate(compare);
-    const eventType: KulCompareEvent = 'kul-event';
+    const eventType: KulCompareEvent = "kul-event";
     cy.checkEvent(compare, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.SHAPE)
       .first()
       .scrollIntoView()
-      .trigger('click', { force: true, x: 100, y: 100 });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+      .trigger("click", { force: true, x: 100, y: 100 });
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -43,26 +43,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(compare);
-    const eventType: KulCompareEvent = 'unmount';
+    const eventType: KulCompareEvent = "unmount";
     cy.checkEvent(compare, eventType);
-    cy.get('@eventElement').then(($compare) => {
+    cy.get("@eventElement").then(($compare) => {
       const kulCompareElement = $compare[0] as HTMLKulCompareElement;
       kulCompareElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(compare);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(compareTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(compareTag);
   });
 
@@ -80,12 +80,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(compare);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

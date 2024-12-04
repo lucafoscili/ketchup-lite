@@ -8,24 +8,24 @@ import {
   Host,
   Prop,
   State,
-} from '@stencil/core';
-import { Method } from '@stencil/core/internal';
+} from "@stencil/core";
+import { Method } from "@stencil/core/internal";
 
 import {
   KulLazyEvent,
   KulLazyEventPayload,
   KulLazyProps,
   KulLazyRenderMode,
-} from './kul-lazy-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-lazy-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-lazy',
-  styleUrl: 'kul-lazy.scss',
+  tag: "kul-lazy",
+  styleUrl: "kul-lazy.scss",
   shadow: true,
 })
 export class KulLazy {
@@ -61,7 +61,7 @@ export class KulLazy {
    * Sets the tag name of the component to be lazy loaded.
    * @default ""
    */
-  @Prop({ mutable: false }) kulComponentName = '';
+  @Prop({ mutable: false }) kulComponentName = "";
   /**
    * Sets the data of the component to be lazy loaded.
    * @default null
@@ -72,7 +72,7 @@ export class KulLazy {
    * By default when both the component props exist and the component is in the viewport.
    * @default "both"
    */
-  @Prop({ mutable: false }) kulRenderMode: KulLazyRenderMode = 'both';
+  @Prop({ mutable: false }) kulRenderMode: KulLazyRenderMode = "both";
   /**
    * Displays an animated SVG placeholder until the component is loaded.
    * @default true
@@ -82,7 +82,7 @@ export class KulLazy {
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop() kulStyle = '';
+  @Prop() kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -101,7 +101,7 @@ export class KulLazy {
    * Describes the component's events.
    */
   @Event({
-    eventName: 'kul-lazy-event',
+    eventName: "kul-lazy-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -160,7 +160,7 @@ export class KulLazy {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -177,9 +177,9 @@ export class KulLazy {
         if (entry.isIntersecting) {
           this.#kulManager.debug.logs.new(
             this,
-            'kul-lazy entering the viewport, rendering ' +
+            "kul-lazy entering the viewport, rendering " +
               this.kulComponentName +
-              '.',
+              ".",
           );
           this.isInViewport = true;
           this.#intObserver.unobserve(this.rootElement);
@@ -198,7 +198,7 @@ export class KulLazy {
 
   componentWillLoad() {
     this.rootElement.addEventListener(`${this.kulComponentName}-event`, (e) => {
-      this.onKulEvent(e, 'kul-event');
+      this.onKulEvent(e, "kul-event");
     });
     this.#kulManager.theme.register(this);
     this.#setObserver();
@@ -206,20 +206,20 @@ export class KulLazy {
 
   componentDidLoad() {
     this.#intObserver.observe(this.rootElement);
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
     if (this.#lazyComponent && !this.#lazyComponentLoaded) {
       this.#lazyComponentLoaded = true;
-      this.onKulEvent(new CustomEvent('load'), 'load');
+      this.onKulEvent(new CustomEvent("load"), "load");
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -227,7 +227,7 @@ export class KulLazy {
     let resource: HTMLElement;
     let className = this.kulComponentName;
     switch (this.kulComponentName) {
-      case 'kul-button':
+      case "kul-button":
         //call_to_action.svg
         resource = (
           <svg
@@ -240,7 +240,7 @@ export class KulLazy {
           </svg>
         );
         break;
-      case 'kul-card':
+      case "kul-card":
         //art_track.svg
         resource = (
           <svg
@@ -253,7 +253,7 @@ export class KulLazy {
           </svg>
         );
         break;
-      case 'kul-checkbox':
+      case "kul-checkbox":
         //check_box_outline_blank.svg
         resource = (
           <svg
@@ -266,7 +266,7 @@ export class KulLazy {
           </svg>
         );
         break;
-      case 'kul-chart':
+      case "kul-chart":
         //chart-bar.svg
         resource = (
           <svg
@@ -280,7 +280,7 @@ export class KulLazy {
           </svg>
         );
         break;
-      case 'kul-image':
+      case "kul-image":
         //photo.svg
         resource = (
           <svg
@@ -308,9 +308,9 @@ export class KulLazy {
         break;
     }
     if (
-      (this.kulRenderMode === 'viewport' && this.isInViewport) ||
-      (this.kulRenderMode === 'props' && this.kulComponentProps) ||
-      (this.kulRenderMode === 'both' &&
+      (this.kulRenderMode === "viewport" && this.isInViewport) ||
+      (this.kulRenderMode === "props" && this.kulComponentProps) ||
+      (this.kulRenderMode === "both" &&
         this.kulComponentProps &&
         this.isInViewport)
     ) {
@@ -321,10 +321,10 @@ export class KulLazy {
           ref={(el: HTMLElement) => (this.#lazyComponent = el)}
         ></Tag>
       );
-      className += ' kul-loaded';
+      className += " kul-loaded";
     } else if (this.kulShowPlaceholder) {
       content = resource;
-      className += ' kul-to-be-loaded';
+      className += " kul-to-be-loaded";
     }
 
     return (

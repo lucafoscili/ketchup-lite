@@ -9,14 +9,14 @@
 
 | Property             | Attribute              | Description                                                                                                                                        | Type                     | Default     |
 | -------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ----------- |
-| `kulBrush`           | `kul-brush`            | The shape of the brush.                                                                                                                            | `"round" \| "square"`    | `'round'`   |
-| `kulColor`           | `kul-color`            | The color of the brush.                                                                                                                            | `string`                 | `'#ff0000'` |
+| `kulBrush`           | `kul-brush`            | The shape of the brush.                                                                                                                            | `"round" \| "square"`    | `"round"`   |
+| `kulColor`           | `kul-color`            | The color of the brush.                                                                                                                            | `string`                 | `"#ff0000"` |
 | `kulImageProps`      | --                     | The props of the image displayed inside the badge.                                                                                                 | `KulImagePropsInterface` | `null`      |
 | `kulOpacity`         | `kul-opacity`          | The opacity of the brush.                                                                                                                          | `number`                 | `1.0`       |
 | `kulPreview`         | `kul-preview`          | Displays the brush track of the current stroke.                                                                                                    | `boolean`                | `true`      |
 | `kulSize`            | `kul-size`             | The size of the brush.                                                                                                                             | `number`                 | `10`        |
 | `kulStrokeTolerance` | `kul-stroke-tolerance` | Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm. This prop sets the tolerance of the algorithm (null to disable). | `number`                 | `null`      |
-| `kulStyle`           | `kul-style`            | Customizes the style of the component.                                                                                                             | `string`                 | `''`        |
+| `kulStyle`           | `kul-style`            | Customizes the style of the component.                                                                                                             | `string`                 | `""`        |
 
 
 ## Events
@@ -70,7 +70,7 @@ Used to retrieve component's props values.
 
 #### Returns
 
-Type: `Promise<GenericObject>`
+Type: `Promise<GenericObject<unknown>>`
 
 List of props as object, each key will be a prop.
 

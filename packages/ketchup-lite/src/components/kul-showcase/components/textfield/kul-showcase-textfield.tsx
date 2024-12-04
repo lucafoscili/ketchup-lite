@@ -1,18 +1,15 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import {
-  TEXTFIELD_DOC,
-  TEXTFIELD_EXAMPLES,
-} from './kul-showcase-textfield-data';
-import { TextfieldExample } from './kul-showcase-textfield-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { KulTextfieldStyling } from '../../../kul-textfield/kul-textfield-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { KulTextfieldStyling } from "../../../kul-textfield/kul-textfield-declarations";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { TextfieldExample } from "./kul-showcase-textfield-declarations";
+import { TEXTFIELD_FIXTURES } from "./kul-showcase-textfield-fixtures";
 
 @Component({
-  tag: 'kul-showcase-textfield',
-  styleUrl: 'kul-showcase-textfield.scss',
+  tag: "kul-showcase-textfield",
+  styleUrl: "kul-showcase-textfield.scss",
   shadow: true,
 })
 export class KulShowcaseTextfield {
@@ -23,9 +20,9 @@ export class KulShowcaseTextfield {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = TEXTFIELD_EXAMPLES;
+  @State() fixtures = TEXTFIELD_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -37,9 +34,9 @@ export class KulShowcaseTextfield {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const k1 in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
-        const category: TextfieldExample = this.examples[k1];
+    for (const k1 in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
+        const category: TextfieldExample = this.fixtures.examples[k1];
         const group: VNode[] = [];
 
         for (const k2 in category) {
@@ -48,14 +45,14 @@ export class KulShowcaseTextfield {
             group.push(
               <div class="example" part="example">
                 <div class="description" part="description">
-                  {props['data-description']}
+                  {props["data-description"]}
                 </div>
                 <div class="comp-wrapper" part="comp-wrapper">
                   <kul-textfield
-                    key={k1 + '-' + k2}
-                    id={k1 + '-' + k2}
+                    key={k1 + "-" + k2}
+                    id={k1 + "-" + k2}
                     ref={(el) => {
-                      if (el && props['data-dynamic']) {
+                      if (el && props["data-dynamic"]) {
                         this.#dynamicExamples.push(el);
                       }
                     }}
@@ -90,12 +87,12 @@ export class KulShowcaseTextfield {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
-            case 'state-colors':
+            case "state-colors":
               comp.className =
-                'hydrated ' +
+                "hydrated " +
                 this.#dynamicExampleManager.stateColors.get(comp.id);
               break;
           }
@@ -107,7 +104,7 @@ export class KulShowcaseTextfield {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={TEXTFIELD_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

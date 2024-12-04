@@ -1,14 +1,14 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { CODE_DOC, CODE_EXAMPLES } from './kul-showcase-code-data';
-import { CodeExample } from './kul-showcase-code-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { CODE_FIXTURES } from "./kul-showcase-code-fixtures";
+import { CodeExample } from "./kul-showcase-code-declarations";
 
 @Component({
-  tag: 'kul-showcase-code',
-  styleUrl: 'kul-showcase-code.scss',
+  tag: "kul-showcase-code",
+  styleUrl: "kul-showcase-code.scss",
   shadow: true,
 })
 export class KulShowcaseCode {
@@ -19,9 +19,9 @@ export class KulShowcaseCode {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = CODE_EXAMPLES;
+  @State() fixtures = CODE_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -33,20 +33,20 @@ export class KulShowcaseCode {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: CodeExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: CodeExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-code
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -67,7 +67,7 @@ export class KulShowcaseCode {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }
@@ -79,7 +79,7 @@ export class KulShowcaseCode {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={CODE_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

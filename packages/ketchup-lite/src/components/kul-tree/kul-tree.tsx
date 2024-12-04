@@ -10,34 +10,34 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulTreeEvent,
   KulTreeEventArguments,
   KulTreeEventPayload,
   KulTreeProps,
-} from './kul-tree-declarations';
-import { TreeNode } from './node/kul-tree-node';
-import { KulTreeNodeProps } from './node/kul-tree-node-declarations';
+} from "./kul-tree-declarations";
+import { TreeNode } from "./node/kul-tree-node";
+import { KulTreeNodeProps } from "./node/kul-tree-node-declarations";
 import {
   KulDataDataset,
   KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
 import {
   KulLanguageGeneric,
   KulLanguageSearch,
-} from '../../managers/kul-language/kul-language-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulTextfieldEventPayload } from '../kul-textfield/kul-textfield-declarations';
+} from "../../managers/kul-language/kul-language-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
 
 @Component({
-  tag: 'kul-tree',
-  styleUrl: 'kul-tree.scss',
+  tag: "kul-tree",
+  styleUrl: "kul-tree.scss",
   shadow: true,
 })
 export class KulTree {
@@ -112,14 +112,14 @@ export class KulTree {
    * Enables customization of the component's style.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
   /*-------------------------------------------------*/
 
   #filterTimeout: ReturnType<typeof setTimeout>;
-  #filterValue = '';
+  #filterValue = "";
   #kulManager = kulManagerInstance();
   #rippleSurface: { [id: string]: HTMLElement } = {};
 
@@ -131,7 +131,7 @@ export class KulTree {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-tree-event',
+    eventName: "kul-tree-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -145,7 +145,7 @@ export class KulTree {
   ) {
     const { expansion, node } = args || {};
     switch (eventType) {
-      case 'click':
+      case "click":
         if (expansion && node.children?.length) {
           if (this.expandedNodes.has(node)) {
             this.expandedNodes.delete(node);
@@ -157,7 +157,7 @@ export class KulTree {
           this.selectedNode = node;
         }
         break;
-      case 'pointerdown':
+      case "pointerdown":
         if (this.kulRipple) {
           this.#kulManager.theme.ripple.trigger(
             e as PointerEvent,
@@ -210,7 +210,7 @@ export class KulTree {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -296,13 +296,13 @@ export class KulTree {
       },
       events: {
         onClick: (e) => {
-          this.onKulEvent(e, 'click', { node });
+          this.onKulEvent(e, "click", { node });
         },
         onClickExpand: (e) => {
-          this.onKulEvent(e, 'click', { expansion: true, node });
+          this.onKulEvent(e, "click", { expansion: true, node });
         },
         onPointerDown: (e) => {
-          this.onKulEvent(e, 'pointerdown', { node });
+          this.onKulEvent(e, "pointerdown", { node });
         },
       },
       expanded: isExpanded,
@@ -343,12 +343,12 @@ export class KulTree {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
@@ -361,7 +361,7 @@ export class KulTree {
       }
     }
 
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -386,8 +386,8 @@ export class KulTree {
                 )}
                 kulStyling="flat"
                 onKul-textfield-event={(e) => {
-                  this.onKulEvent(e, 'kul-event');
-                  if (e.detail.eventType === 'input') {
+                  this.onKulEvent(e, "kul-event");
+                  if (e.detail.eventType === "input") {
                     this.#filter(e);
                   }
                 }}

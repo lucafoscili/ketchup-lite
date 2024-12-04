@@ -1,13 +1,13 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { CAROUSEL_DOC, CAROUSEL_EXAMPLES } from './kul-showcase-carousel-data';
-import { CarouselExample } from './kul-showcase-carousel-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { CarouselExample } from "./kul-showcase-carousel-declarations";
+import { CAROUSEL_FIXTURES } from "./kul-showcase-carousel-fixtures";
 
 @Component({
-  tag: 'kul-showcase-carousel',
-  styleUrl: 'kul-showcase-carousel.scss',
+  tag: "kul-showcase-carousel",
+  styleUrl: "kul-showcase-carousel.scss",
   shadow: true,
 })
 export class KulShowcaseCarousel {
@@ -18,9 +18,9 @@ export class KulShowcaseCarousel {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = CAROUSEL_EXAMPLES();
+  @State() fixtures = CAROUSEL_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -32,20 +32,20 @@ export class KulShowcaseCarousel {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: CarouselExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: CarouselExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-carousel
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -66,7 +66,7 @@ export class KulShowcaseCarousel {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }
@@ -78,7 +78,7 @@ export class KulShowcaseCarousel {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={CAROUSEL_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

@@ -1,8 +1,8 @@
-import { FunctionalComponent, h } from '@stencil/core';
+import { FunctionalComponent, h } from "@stencil/core";
 
-import { TreeNodeContent } from './kul-tree-node-content';
-import { KulTreeNodeProps } from './kul-tree-node-declarations';
-import { KulDataCyAttributes } from '../../../types/GenericTypes';
+import { TreeNodeContent } from "./kul-tree-node-content";
+import { KulTreeNodeProps } from "./kul-tree-node-declarations";
+import { KulDataCyAttributes } from "../../../types/GenericTypes";
 
 /*-------------------------------------------------*/
 /*                C o m p o n e n t                */
@@ -20,8 +20,8 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
   );
   const classList = {
     node: true,
-    ['node--expanded']: expanded ? true : false,
-    ['node--selected']: selected ? true : false,
+    ["node--expanded"]: expanded ? true : false,
+    ["node--selected"]: selected ? true : false,
   };
   if (accordionLayout) {
     return (
@@ -52,8 +52,8 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
   } else {
     return (
       <div
-        class={`node ${expanded ? 'node--expanded' : ''} ${
-          selected ? 'node--selected' : ''
+        class={`node ${expanded ? "node--expanded" : ""} ${
+          selected ? "node--selected" : ""
         }`}
         data-cy={KulDataCyAttributes.NODE}
         data-depth={depth.toString()}

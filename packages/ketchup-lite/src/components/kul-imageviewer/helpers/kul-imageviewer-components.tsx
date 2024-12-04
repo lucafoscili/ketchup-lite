@@ -1,19 +1,19 @@
-import { h } from '@stencil/core';
+import { h } from "@stencil/core";
 
 import {
   KulDataCyAttributes,
   KulGenericEvent,
-} from '../../../types/GenericTypes';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulCanvasEventPayload } from '../../kul-canvas/kul-canvas-declarations';
-import { KulImagePropsInterface } from '../../kul-image/kul-image-declarations';
-import { KulMasonryEventPayload } from '../../kul-masonry/kul-masonry-declarations';
-import { KulTextfieldEventPayload } from '../../kul-textfield/kul-textfield-declarations';
-import { KulTreeEventPayload } from '../../kul-tree/kul-tree-declarations';
+} from "../../../types/GenericTypes";
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulCanvasEventPayload } from "../../kul-canvas/kul-canvas-declarations";
+import { KulImagePropsInterface } from "../../kul-image/kul-image-declarations";
+import { KulMasonryEventPayload } from "../../kul-masonry/kul-masonry-declarations";
+import { KulTextfieldEventPayload } from "../../kul-textfield/kul-textfield-declarations";
+import { KulTreeEventPayload } from "../../kul-tree/kul-tree-declarations";
 import {
   KulImageviewerAdapter,
   KulImageviewerAdapterComponents,
-} from '../kul-imageviewer-declarations';
+} from "../kul-imageviewer-declarations";
 
 export const COMPONENTS: KulImageviewerAdapterComponents = {
   jsx: {
@@ -48,10 +48,10 @@ export const COMPONENTS: KulImageviewerAdapterComponents = {
 const prepCanvas = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'details-grid__canvas': true,
+    "details-grid__canvas": true,
   };
   const eventHandler = (e: CustomEvent<KulCanvasEventPayload>) => {
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
   };
 
   const currentSnapshot = adapter.get.state.history.currentSnapshot();
@@ -82,16 +82,16 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
 const prepClearHistory = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'details-grid__clear-history': true,
-    'kul-danger': true,
-    'kul-full-width': true,
+    "details-grid__clear-history": true,
+    "kul-danger": true,
+    "kul-full-width": true,
   };
   const eventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
     const { comp, eventType } = e.detail;
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
 
     switch (eventType) {
-      case 'click':
+      case "click":
         requestAnimationFrame(() => (comp.kulShowSpinner = true));
         const index = adapter.get.state.currentShape().shape.index;
         await adapter.actions.clearHistory(adapter, index);
@@ -132,16 +132,16 @@ const prepClearHistory = (adapter: KulImageviewerAdapter) => {
 const prepDelete = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'details-grid__delete': true,
-    'kul-danger': true,
-    'kul-full-width': true,
+    "details-grid__delete": true,
+    "kul-danger": true,
+    "kul-full-width": true,
   };
   const eventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
     const { comp, eventType } = e.detail;
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
 
     switch (eventType) {
-      case 'click':
+      case "click":
         requestAnimationFrame(() => (comp.kulShowSpinner = true));
         await adapter.actions.delete(adapter);
         requestAnimationFrame(() => (comp.kulShowSpinner = false));
@@ -176,15 +176,15 @@ const prepDelete = (adapter: KulImageviewerAdapter) => {
 const prepLoad = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'navigation-grid__button': true,
-    'kul-full-width': true,
+    "navigation-grid__button": true,
+    "kul-full-width": true,
   };
   const eventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
     const { comp, eventType } = e.detail;
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
 
     switch (eventType) {
-      case 'click':
+      case "click":
         requestAnimationFrame(() => (comp.kulShowSpinner = true));
         await adapter.actions.load(adapter);
         requestAnimationFrame(() => (comp.kulShowSpinner = false));
@@ -219,17 +219,17 @@ const prepLoad = (adapter: KulImageviewerAdapter) => {
 const prepMasonry = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'navigation-grid__masonry': true,
+    "navigation-grid__masonry": true,
   };
   const eventHandler = (e: CustomEvent<KulMasonryEventPayload>) => {
     const { eventType, originalEvent, selectedShape } = e.detail;
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
 
     switch (eventType) {
-      case 'kul-event':
+      case "kul-event":
         const orig = originalEvent as KulGenericEvent;
         switch (orig.detail.eventType) {
-          case 'click':
+          case "click":
             const currentShape = adapter.get.state.currentShape();
             if (currentShape?.shape?.index === selectedShape.index) {
               adapter.actions.clearSelection(adapter);
@@ -266,15 +266,15 @@ const prepMasonry = (adapter: KulImageviewerAdapter) => {
 const prepRedo = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'details-grid__redo': true,
-    'kul-full-width': true,
+    "details-grid__redo": true,
+    "kul-full-width": true,
   };
   const eventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
     const { comp, eventType } = e.detail;
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
 
     switch (eventType) {
-      case 'click':
+      case "click":
         requestAnimationFrame(() => (comp.kulShowSpinner = true));
         await adapter.actions.redo(adapter);
         requestAnimationFrame(() => (comp.kulShowSpinner = false));
@@ -309,16 +309,16 @@ const prepRedo = (adapter: KulImageviewerAdapter) => {
 const prepSave = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'details-grid__commit-changes': true,
-    'kul-success': true,
-    'kul-full-width': true,
+    "details-grid__commit-changes": true,
+    "kul-success": true,
+    "kul-full-width": true,
   };
   const eventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
     const { comp, eventType } = e.detail;
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
 
     switch (eventType) {
-      case 'click':
+      case "click":
         requestAnimationFrame(() => (comp.kulShowSpinner = true));
         await adapter.actions.save(adapter);
         requestAnimationFrame(() => (comp.kulShowSpinner = false));
@@ -356,7 +356,7 @@ const prepSave = (adapter: KulImageviewerAdapter) => {
 // #region Spinner
 const prepSpinner = (adapter: KulImageviewerAdapter) => {
   const className = {
-    'details-grid__spinner': true,
+    "details-grid__spinner": true,
   };
 
   return (
@@ -380,10 +380,10 @@ const prepSpinner = (adapter: KulImageviewerAdapter) => {
 const prepTextfield = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'navigation-grid__textfield': true,
+    "navigation-grid__textfield": true,
   };
   const eventHandler = (e: CustomEvent<KulTextfieldEventPayload>) => {
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
   };
 
   return (
@@ -406,10 +406,10 @@ const prepTextfield = (adapter: KulImageviewerAdapter) => {
 const prepTree = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'details-grid__tree': true,
+    "details-grid__tree": true,
   };
   const eventHandler = (e: CustomEvent<KulTreeEventPayload>) => {
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
   };
 
   return (
@@ -433,15 +433,15 @@ const prepTree = (adapter: KulImageviewerAdapter) => {
 const prepUndo = (adapter: KulImageviewerAdapter) => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
-    'details-grid__undo': true,
-    'kul-full-width': true,
+    "details-grid__undo": true,
+    "kul-full-width": true,
   };
   const eventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
     const { comp, eventType } = e.detail;
-    imageviewer.onKulEvent(e, 'kul-event');
+    imageviewer.onKulEvent(e, "kul-event");
 
     switch (eventType) {
-      case 'click':
+      case "click":
         requestAnimationFrame(() => (comp.kulShowSpinner = true));
         await adapter.actions.undo(adapter);
         requestAnimationFrame(() => (comp.kulShowSpinner = false));

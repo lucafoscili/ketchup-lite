@@ -10,29 +10,29 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulTabbarEventPayload,
   KulTabbarEvent,
   KulTabbarProps,
   KulTabbarState,
-} from './kul-tabbar-declarations';
+} from "./kul-tabbar-declarations";
 import {
   KulDataDataset,
   KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KulScrollOnHoverElement } from '../../managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations';
-import { KulThemeColorValues } from '../../managers/kul-theme/kul-theme-declarations';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { KulScrollOnHoverElement } from "../../managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations";
+import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarations";
+import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-tabbar',
-  styleUrl: 'kul-tabbar.scss',
+  tag: "kul-tabbar",
+  styleUrl: "kul-tabbar.scss",
   shadow: true,
 })
 export class KulTabbar {
@@ -78,7 +78,7 @@ export class KulTabbar {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * Sets the initial selected node's index.
    * @default null
@@ -101,7 +101,7 @@ export class KulTabbar {
    * Describes events emitted.
    */
   @Event({
-    eventName: 'kul-tabbar-event',
+    eventName: "kul-tabbar-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -114,7 +114,7 @@ export class KulTabbar {
     index = 0,
     node?: KulDataNode,
   ) {
-    if (eventType === 'pointerdown') {
+    if (eventType === "pointerdown") {
       if (this.kulRipple) {
         this.#kulManager.theme.ripple.trigger(
           e as PointerEvent,
@@ -122,7 +122,7 @@ export class KulTabbar {
         );
       }
     }
-    if (eventType === 'click') {
+    if (eventType === "click") {
       this.value = {
         index,
         node,
@@ -184,10 +184,10 @@ export class KulTabbar {
     let index: number;
     let node: KulDataNode;
 
-    if (typeof value === 'number') {
+    if (typeof value === "number") {
       index = value;
       node = this.kulData.nodes[index];
-    } else if (typeof value === 'string') {
+    } else if (typeof value === "string") {
       index = this.kulData.nodes.findIndex((node) => node.id === value);
       node = this.kulData.nodes[index];
     }
@@ -206,7 +206,7 @@ export class KulTabbar {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -218,13 +218,13 @@ export class KulTabbar {
   componentWillLoad() {
     try {
       if (this.kulValue !== null) {
-        if (typeof this.kulValue === 'number') {
+        if (typeof this.kulValue === "number") {
           this.value = {
             index: this.kulValue,
             node: this.kulData.nodes[this.kulValue],
           };
         }
-        if (typeof this.kulValue === 'string') {
+        if (typeof this.kulValue === "string") {
           const node = this.kulData.nodes.find(
             (node) => node.id === this.kulValue,
           );
@@ -237,8 +237,8 @@ export class KulTabbar {
     } catch (error) {
       this.#kulManager.debug.logs.new(
         this,
-        'Something went wrong while setting the initial selected value.',
-        'warning',
+        "Something went wrong while setting the initial selected value.",
+        "warning",
       );
     }
 
@@ -249,8 +249,8 @@ export class KulTabbar {
     if (this.#scrollArea) {
       this.#kulManager.scrollOnHover.register(this.#scrollArea);
     }
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
@@ -259,11 +259,11 @@ export class KulTabbar {
         this.#kulManager.theme.ripple.setup(el);
       });
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -280,7 +280,7 @@ export class KulTabbar {
       const isActive = node === this.value?.node;
       const tabClass: Record<string, boolean> = {
         tab: true,
-        'tab--active': isActive ? true : false,
+        "tab--active": isActive ? true : false,
       };
 
       elements.push(
@@ -289,10 +289,10 @@ export class KulTabbar {
           class={tabClass}
           data-cy={KulDataCyAttributes.BUTTON}
           onClick={(e) => {
-            this.onKulEvent(e, 'click', i, node);
+            this.onKulEvent(e, "click", i, node);
           }}
           onPointerDown={(e) => {
-            this.onKulEvent(e, 'pointerdown', i, node);
+            this.onKulEvent(e, "pointerdown", i, node);
           }}
           role="tab"
           tabIndex={i}
@@ -321,7 +321,7 @@ export class KulTabbar {
           </span>
           <span
             class={`tab__indicator ${
-              isActive ? ' tab__indicator--active' : ''
+              isActive ? " tab__indicator--active" : ""
             }`}
           >
             <span class="tab__indicator-content tab__indicator-content--underline"></span>

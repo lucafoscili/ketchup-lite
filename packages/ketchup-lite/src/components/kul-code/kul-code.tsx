@@ -4,30 +4,31 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
+  getAssetPath,
   h,
   Host,
   Method,
   Prop,
   State,
-} from '@stencil/core';
-import Prism from 'prismjs';
+} from "@stencil/core";
+import Prism from "prismjs";
 
 import {
   KulCodeEvent,
   KulCodeEventPayload,
   KulCodeProps,
-} from './kul-code-declarations';
-import { STATIC_LANGUAGES } from './languages/static-languages';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-code-declarations";
+import { STATIC_LANGUAGES } from "./languages/static-languages";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  assetsDirs: ['assets/prism'],
-  tag: 'kul-code',
-  styleUrl: 'kul-code.scss',
+  assetsDirs: ["assets/prism"],
+  tag: "kul-code",
+  styleUrl: "kul-code.scss",
   shadow: true,
 })
 export class KulCode {
@@ -53,7 +54,7 @@ export class KulCode {
   /**
    * Value.
    */
-  @State() value = '';
+  @State() value = "";
 
   /*-------------------------------------------------*/
   /*                    P r o p s                    */
@@ -68,7 +69,7 @@ export class KulCode {
    * Sets the language of the snippet.
    * @default "javascript"
    */
-  @Prop({ mutable: true, reflect: true }) kulLanguage = 'javascript';
+  @Prop({ mutable: true, reflect: true }) kulLanguage = "javascript";
   /**
    * Whether to preserve spaces or not. When missing it is set automatically.
    * @default undefined
@@ -78,12 +79,12 @@ export class KulCode {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * String containing the snippet of code to display.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: false }) kulValue = '';
+  @Prop({ mutable: true, reflect: false }) kulValue = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -100,7 +101,7 @@ export class KulCode {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-code-event',
+    eventName: "kul-code-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -151,7 +152,7 @@ export class KulCode {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -161,7 +162,7 @@ export class KulCode {
   /*-------------------------------------------------*/
 
   #format(value: string) {
-    if (typeof value === 'string' && /^[\{\}]\s*$/i.test(value)) {
+    if (typeof value === "string" && /^[\{\}]\s*$/i.test(value)) {
       return value.trim();
     } else if (this.#isJson(value)) {
       const parsed = JSON.parse(value);
@@ -170,26 +171,25 @@ export class KulCode {
       return this.#kulManager.data.cell.stringify(value);
     }
   }
-
   async #highlightCode(): Promise<void> {
     try {
-      Prism.highlightElement(this.#el);
+      if (!Prism.languages[this.kulLanguage]) {
+        await this.#loadLanguage();
+      }
     } catch (error) {
       this.#kulManager.debug.logs.new(
         this,
-        'Failed to highlight code:' + error,
-        'error',
+        "Failed to highlight code:" + error,
+        "error",
       );
       this.#el.innerHTML = this.value;
     }
   }
-
   #isObjectLike(
     obj: unknown,
   ): obj is Record<string | number | symbol, unknown> {
-    return typeof obj === 'object' && obj !== null;
+    return typeof obj === "object" && obj !== null;
   }
-
   #isDictionary(
     obj: unknown,
   ): obj is Record<string | number | symbol, unknown> {
@@ -198,11 +198,24 @@ export class KulCode {
       Object.values(obj).every((value) => value != null)
     );
   }
-
   #isJson(value: string | Record<string, unknown>) {
     return (
-      this.kulLanguage?.toLowerCase() === 'json' || this.#isDictionary(value)
+      this.kulLanguage?.toLowerCase() === "json" || this.#isDictionary(value)
     );
+  }
+  async #loadLanguage() {
+    try {
+      const module = getAssetPath(
+        `./assets/prism/prism-${this.kulLanguage}.min.js`,
+      );
+      await import(module);
+      Prism.highlightAll();
+    } catch (error) {
+      console.error(
+        `Failed to load Prism.js component for ${this.kulLanguage}:`,
+        error,
+      );
+    }
   }
   #updateValue() {
     this.value = this.kulFormat ? this.#format(this.kulValue) : this.kulValue;
@@ -229,8 +242,8 @@ export class KulCode {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillUpdate() {
@@ -238,14 +251,14 @@ export class KulCode {
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
     if (this.#el) {
       this.#highlightCode();
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -253,13 +266,14 @@ export class KulCode {
       this.kulPreserveSpaces !== true && this.kulPreserveSpaces !== false
     );
     const isLikelyTextual =
-      this.kulLanguage.toLowerCase() === 'text' ||
-      this.kulLanguage.toLowerCase() === 'doc' ||
-      this.kulLanguage.toLowerCase() === 'markdown' ||
-      this.kulLanguage.toLowerCase() === 'css' ||
-      this.kulLanguage.toLowerCase() === '';
+      this.kulLanguage.toLowerCase() === "text" ||
+      this.kulLanguage.toLowerCase() === "doc" ||
+      this.kulLanguage.toLowerCase() === "markdown" ||
+      this.kulLanguage.toLowerCase() === "css" ||
+      this.kulLanguage.toLowerCase() === "";
     const shouldPreserveSpace =
       this.kulPreserveSpaces || (isPreserveSpaceMissing && !isLikelyTextual);
+
     return (
       <Host>
         {this.kulStyle && (
@@ -272,14 +286,14 @@ export class KulCode {
             <div class="header">
               <span class="title">{this.kulLanguage}</span>
               <kul-button
-                class={'kul-slim kul-full-height'}
+                class={"kul-slim kul-full-height"}
                 kulIcon="content_copy"
                 kulLabel="Copy"
                 kulStyling="flat"
                 onKul-button-event={(e) => {
                   const { comp, eventType } = e.detail;
                   switch (eventType) {
-                    case 'click':
+                    case "click":
                       navigator.clipboard.writeText(this.kulValue);
                       comp.setMessage();
                       break;
@@ -289,7 +303,7 @@ export class KulCode {
             </div>
             {shouldPreserveSpace ? (
               <pre
-                class={'language-' + this.kulLanguage}
+                class={"language-" + this.kulLanguage}
                 key={this.value}
                 ref={(el) => {
                   if (el) {
@@ -301,7 +315,7 @@ export class KulCode {
               </pre>
             ) : (
               <div
-                class={'body language-' + this.kulLanguage}
+                class={"body language-" + this.kulLanguage}
                 key={this.value}
                 ref={(el) => {
                   if (el) {

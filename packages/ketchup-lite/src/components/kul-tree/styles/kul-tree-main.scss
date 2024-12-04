@@ -114,7 +114,7 @@
 }
 
 :host([kul-accordion-layout]) {
-  .node[data-depth='0'] {
+  .node[data-depth="0"] {
     background-color: var(--kul_tree_accordion_background_color);
     border-radius: var(--kul_tree_accordion_border_radius);
     color: var(--kul_tree_accordion_color);

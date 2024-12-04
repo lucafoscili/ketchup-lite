@@ -225,7 +225,7 @@
      */
   --kul_imageviewer_details_grid_template_areas: var(
     --kul-imageviewer-details-grid-template-areas,
-    'image image' 'actions actions' 'tree settings'
+    "image image" "actions actions" "tree settings"
   );
   /**
      * @prop --kul-imageviewer-details-grid-template-columns: Sets the grid-template-columns of .details-grid.

@@ -9,26 +9,26 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulToggleEvent,
   KulToggleEventPayload,
   KulToggleProps,
   KulToggleState,
-} from './kul-toggle-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+} from "./kul-toggle-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import {
   KulDataCyAttributes,
   type GenericObject,
-} from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-toggle',
-  styleUrl: 'kul-toggle.scss',
+  tag: "kul-toggle",
+  styleUrl: "kul-toggle.scss",
   shadow: true,
 })
 export class KulToggle {
@@ -57,7 +57,7 @@ export class KulToggle {
    *
    * @see KulToggleState - For a list of possible states.
    */
-  @State() value: KulToggleState = 'off';
+  @State() value: KulToggleState = "off";
 
   /*-------------------------------------------------*/
   /*                    P r o p s                    */
@@ -72,7 +72,7 @@ export class KulToggle {
    * Defines text to display along with the toggle.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = '';
+  @Prop({ mutable: true, reflect: true }) kulLabel = "";
   /**
    * Defaults at false. When set to true, the label will be displayed before the component.
    * @default false
@@ -87,7 +87,7 @@ export class KulToggle {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * Sets the initial boolean state of the toggle.
    * @default false
@@ -109,7 +109,7 @@ export class KulToggle {
    * Describes event emitted for various toggle interactions like click, focus, blur.
    */
   @Event({
-    eventName: 'kul-toggle-event',
+    eventName: "kul-toggle-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -118,7 +118,7 @@ export class KulToggle {
 
   onKulEvent(e: Event | CustomEvent, eventType: KulToggleEvent) {
     switch (eventType) {
-      case 'pointerdown':
+      case "pointerdown":
         if (this.kulRipple) {
           this.#kulManager.theme.ripple.trigger(
             e as PointerEvent,
@@ -134,7 +134,7 @@ export class KulToggle {
       id: this.rootElement.id,
       originalEvent: e,
       value: this.value,
-      valueAsBoolean: this.value === 'on' ? true : false,
+      valueAsBoolean: this.value === "on" ? true : false,
     });
   }
 
@@ -190,7 +190,7 @@ export class KulToggle {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -200,19 +200,19 @@ export class KulToggle {
   /*-------------------------------------------------*/
 
   #isOn() {
-    return this.value === 'on' ? true : false;
+    return this.value === "on" ? true : false;
   }
 
   #updateState(
     value: KulToggleState | boolean,
-    e: CustomEvent<unknown> | Event = new CustomEvent('change'),
+    e: CustomEvent<unknown> | Event = new CustomEvent("change"),
   ) {
-    if (typeof value === 'boolean') {
-      value = value ? 'on' : 'off';
+    if (typeof value === "boolean") {
+      value = value ? "on" : "off";
     }
-    if (!this.kulDisabled && (value === 'off' || value === 'on')) {
+    if (!this.kulDisabled && (value === "off" || value === "on")) {
       this.value = value;
-      this.onKulEvent(e, 'change');
+      this.onKulEvent(e, "change");
     }
   }
 
@@ -222,7 +222,7 @@ export class KulToggle {
 
   componentWillLoad() {
     if (this.kulValue) {
-      this.value = 'on';
+      this.value = "on";
     }
 
     this.#kulManager.theme.register(this);
@@ -232,27 +232,27 @@ export class KulToggle {
     if (this.#rippleSurface) {
       this.#kulManager.theme.ripple.setup(this.#rippleSurface);
     }
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
     const className: Record<string, boolean> = {
       toggle: true,
-      'toggle--checked': this.#isOn(),
-      'toggle--disabled': this.kulDisabled,
+      "toggle--checked": this.#isOn(),
+      "toggle--disabled": this.kulDisabled,
     };
     const formClassName: Record<string, boolean> = {
-      'form-field': true,
-      'form-field--align-end': this.kulLeadingLabel,
+      "form-field": true,
+      "form-field--align-end": this.kulLeadingLabel,
     };
     return (
       <Host>
@@ -280,20 +280,20 @@ export class KulToggle {
                     data-cy={KulDataCyAttributes.INPUT}
                     disabled={this.kulDisabled}
                     onBlur={(e) => {
-                      this.onKulEvent(e, 'blur');
+                      this.onKulEvent(e, "blur");
                     }}
                     onChange={(e) => {
-                      this.#updateState(this.#isOn() ? 'off' : 'on', e);
+                      this.#updateState(this.#isOn() ? "off" : "on", e);
                     }}
                     onFocus={(e) => {
-                      this.onKulEvent(e, 'focus');
+                      this.onKulEvent(e, "focus");
                     }}
                     onPointerDown={(e) => {
-                      this.onKulEvent(e, 'pointerdown');
+                      this.onKulEvent(e, "pointerdown");
                     }}
                     role="toggle"
                     type="checkbox"
-                    value={this.value ? 'on' : 'off'}
+                    value={this.value ? "on" : "off"}
                   ></input>
                 </div>
               </div>
@@ -301,7 +301,7 @@ export class KulToggle {
             <label
               class="toggle__label"
               onClick={(e) => {
-                this.onKulEvent(e, 'change');
+                this.onKulEvent(e, "change");
               }}
             >
               {this.kulLabel}

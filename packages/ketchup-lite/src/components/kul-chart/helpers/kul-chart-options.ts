@@ -13,14 +13,14 @@ import {
   SeriesOption,
   XAXisComponentOption,
   YAXisComponentOption,
-} from 'echarts';
+} from "echarts";
 
 import {
   KulChartAdapterOptions,
   KulChartTooltipArguments,
   KulChartTooltipDataArray,
   KulChartTooltipDataDictionary,
-} from '../kul-chart-declarations';
+} from "../kul-chart-declarations";
 
 export const CHART_OPTIONS: KulChartAdapterOptions = {
   bubble: (adapter) => {
@@ -34,13 +34,13 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const sizeKey = chart.kulSeries[0];
 
     const xData = chart.kulData.nodes.map((node) =>
-      parseFloat(stringify(node.cells[xAxisKey]?.value) || '0'),
+      parseFloat(stringify(node.cells[xAxisKey]?.value) || "0"),
     );
     const yData = chart.kulData.nodes.map((node) =>
-      parseFloat(stringify(node.cells[yAxisKey]?.value) || '0'),
+      parseFloat(stringify(node.cells[yAxisKey]?.value) || "0"),
     );
     const sizeData = chart.kulData.nodes.map((node) =>
-      parseFloat(stringify(node.cells[sizeKey]?.value) || '0'),
+      parseFloat(stringify(node.cells[sizeKey]?.value) || "0"),
     );
 
     const data = xData.map((x, index) => [x, yData[index], sizeData[index]]);
@@ -64,7 +64,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const options: EChartsOption = {
       xAxis: {
         name: getColumn(xAxisKey)?.title || xAxisKey,
-        nameLocation: 'middle',
+        nameLocation: "middle",
         nameGap: 25,
         axisLabel: {
           color: design.theme.textColor,
@@ -80,7 +80,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       },
       series: [
         {
-          type: 'scatter',
+          type: "scatter",
           data: data,
           symbolSize: (val) => val[2],
           itemStyle: {
@@ -103,10 +103,10 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const data = chart.kulData.nodes.map((node) => {
       return [
         String(
-          node.cells[dateKey]?.value || new Date().toISOString().split('T')[0],
+          node.cells[dateKey]?.value || new Date().toISOString().split("T")[0],
         ),
         parseFloat(
-          adapter.actions.stringify(node.cells[valueKey]?.value) || '0',
+          adapter.actions.stringify(node.cells[valueKey]?.value) || "0",
         ),
       ];
     });
@@ -131,7 +131,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       color: colors,
       calendar: {
         range: year,
-        cellSize: ['auto', 24],
+        cellSize: ["auto", 24],
         itemStyle: {
           borderWidth: 1,
           borderColor: design.theme.border,
@@ -152,8 +152,8 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       },
       series: [
         {
-          type: 'heatmap',
-          coordinateSystem: 'calendar',
+          type: "heatmap",
+          coordinateSystem: "calendar",
           data: data,
           label: {
             show: false,
@@ -165,16 +165,16 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       ],
       tooltip: design.tooltip(adapter, formatter),
       visualMap: {
-        align: 'auto',
-        bottom: 'bottom',
+        align: "auto",
+        bottom: "bottom",
         inRange: {
           color: [design.theme.backgroundColor, colors[0]],
         },
-        left: 'center',
+        left: "center",
         max: Math.max(...data.map(([_, value]) => Number(value))),
         min: Math.min(...data.map(([_, value]) => Number(value))),
-        orient: 'horizontal',
-        text: ['High', 'Low'],
+        orient: "horizontal",
+        text: ["High", "Low"],
         textStyle: {
           color: design.theme.textColor,
           fontFamily: design.theme.font,
@@ -192,22 +192,22 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const xAxisKey = chart.kulAxis[0];
 
     const data = chart.kulData.nodes.map((node) => {
-      const open = parseFloat(stringify(node.cells['Open']?.value) || '0');
-      const close = parseFloat(stringify(node.cells['Close']?.value) || '0');
-      const low = parseFloat(stringify(node.cells['Low']?.value) || '0');
-      const high = parseFloat(stringify(node.cells['High']?.value) || '0');
+      const open = parseFloat(stringify(node.cells["Open"]?.value) || "0");
+      const close = parseFloat(stringify(node.cells["Close"]?.value) || "0");
+      const low = parseFloat(stringify(node.cells["Low"]?.value) || "0");
+      const high = parseFloat(stringify(node.cells["High"]?.value) || "0");
       return [open, close, low, high];
     });
 
     const xAxisData = chart.kulData.nodes.map((node) =>
-      stringify(node.cells[xAxisKey]?.value || ''),
+      stringify(node.cells[xAxisKey]?.value || ""),
     );
 
     const colors = [design.theme.successColor, design.theme.dangerColor];
     const options: EChartsOption = {
       color: colors,
       xAxis: {
-        type: 'category',
+        type: "category",
         data: xAxisData,
         axisLabel: {
           color: design.theme.textColor,
@@ -220,7 +220,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         },
       },
       yAxis: {
-        type: 'value',
+        type: "value",
         axisLabel: {
           color: design.theme.textColor,
           fontFamily: design.theme.font,
@@ -238,7 +238,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       },
       series: [
         {
-          type: 'candlestick',
+          type: "candlestick",
           data: data,
           itemStyle: {
             color: colors[0],
@@ -260,8 +260,8 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const xAxes: XAXisComponentOption[] = [];
     const yAxes: YAXisComponentOption[] = [];
 
-    const xAxisPositions: Array<'bottom' | 'top'> = ['bottom', 'top'];
-    const yAxisPositions: Array<'left' | 'right'> = ['left', 'right'];
+    const xAxisPositions: Array<"bottom" | "top"> = ["bottom", "top"];
+    const yAxisPositions: Array<"left" | "right"> = ["left", "right"];
 
     for (let i = 0; i < adapter.get.xAxesData().length; i++) {
       const axisData = adapter.get.xAxesData()[i];
@@ -269,22 +269,22 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       const yAxisPosition = yAxisPositions[i % yAxisPositions.length];
 
       xAxes.push({
-        type: 'category',
+        type: "category",
         data: axisData.data,
         position: xAxisPosition,
         offset: i * 30,
         axisLabel: {
-          ...design.axis(adapter, 'x').axisLabel,
+          ...design.axis(adapter, "x").axisLabel,
           interval: 0,
         },
-        ...design.axis(adapter, 'x'),
+        ...design.axis(adapter, "x"),
       } as XAXisComponentOption);
 
       yAxes.push({
-        type: 'value',
+        type: "value",
         position: yAxisPosition,
         offset: i * 30,
-        ...design.axis(adapter, 'y'),
+        ...design.axis(adapter, "y"),
       } as YAXisComponentOption);
     }
 
@@ -296,17 +296,17 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
         let seriesOption: SeriesOption;
 
-        if (seriesType === 'line') {
+        if (seriesType === "line") {
           seriesOption = {
             name: seriesData.name,
-            type: 'line',
+            type: "line",
             data: seriesData.data,
             xAxisIndex: seriesData.axisIndex,
             yAxisIndex: seriesData.axisIndex,
             itemStyle: { color },
           } as LineSeriesOption;
 
-          if (seriesData.type === 'area') {
+          if (seriesData.type === "area") {
             (seriesOption as LineSeriesOption).areaStyle = {
               color: new graphic.LinearGradient(0, 0, 0, 0.25, [
                 {
@@ -319,39 +319,39 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             };
           }
 
-          if (seriesData.type === 'gaussian') {
+          if (seriesData.type === "gaussian") {
             (seriesOption as LineSeriesOption).smooth = true;
           }
-        } else if (seriesType === 'bar') {
-          const isStacked = seriesData.type === 'sbar';
+        } else if (seriesType === "bar") {
+          const isStacked = seriesData.type === "sbar";
 
           seriesOption = {
             name: seriesData.name,
-            type: 'bar',
+            type: "bar",
             data: seriesData.data,
             xAxisIndex: seriesData.axisIndex,
             yAxisIndex: seriesData.axisIndex,
             itemStyle: { color },
-            stack: isStacked ? 'total' : undefined,
+            stack: isStacked ? "total" : undefined,
           } as BarSeriesOption;
 
-          if (seriesData.type === 'hbar') {
-            xAxes[seriesData.axisIndex].type = 'value';
-            yAxes[seriesData.axisIndex].type = 'category';
+          if (seriesData.type === "hbar") {
+            xAxes[seriesData.axisIndex].type = "value";
+            yAxes[seriesData.axisIndex].type = "category";
           }
-        } else if (seriesType === 'scatter') {
+        } else if (seriesType === "scatter") {
           seriesOption = {
             name: seriesData.name,
-            type: 'scatter',
+            type: "scatter",
             data: seriesData.data,
             xAxisIndex: seriesData.axisIndex,
             yAxisIndex: seriesData.axisIndex,
             itemStyle: { color },
           } as ScatterSeriesOption;
-        } else if (seriesType === 'heatmap') {
+        } else if (seriesType === "heatmap") {
           seriesOption = {
             name: seriesData.name,
-            type: 'heatmap',
+            type: "heatmap",
             data: seriesData.data,
             xAxisIndex: 0,
             yAxisIndex: 0,
@@ -362,14 +362,14 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             emphasis: {
               itemStyle: {
                 shadowBlur: 10,
-                shadowColor: 'rgba(0, 0, 0, 0.5)',
+                shadowColor: "rgba(0, 0, 0, 0.5)",
               },
             },
           } as unknown as HeatmapSeriesOption;
         } else {
           seriesOption = {
             name: seriesData.name,
-            type: seriesType as SeriesOption['type'],
+            type: seriesType as SeriesOption["type"],
             data: seriesData.data,
             xAxisIndex: seriesData.axisIndex,
             yAxisIndex: seriesData.axisIndex,
@@ -380,14 +380,14 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         return seriesOption;
       });
 
-    const hasVisualMap = seriesOptions.some((s) => s.type === 'heatmap');
+    const hasVisualMap = seriesOptions.some((s) => s.type === "heatmap");
 
     const options: EChartsOption = {
       color: colors,
       legend: design.legend(adapter),
       tooltip: {
         ...design.tooltip(adapter),
-        trigger: 'axis',
+        trigger: "axis",
       },
       xAxis: xAxes,
       yAxis: yAxes,
@@ -396,22 +396,22 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         ? {
             min: Math.min(
               ...seriesOptions
-                .filter((s) => s.type === 'heatmap')
+                .filter((s) => s.type === "heatmap")
                 .flatMap((s) => s.data.map((d) => d[2])),
             ),
             max: Math.max(
               ...seriesOptions
-                .filter((s) => s.type === 'heatmap')
+                .filter((s) => s.type === "heatmap")
                 .flatMap((s) => s.data.map((d) => d[2])),
             ),
             calculable: true,
-            orient: 'vertical',
-            left: 'left',
-            bottom: '15%',
+            orient: "vertical",
+            left: "left",
+            bottom: "15%",
             inRange: {
-              color: ['#f6efa6', colors[0]],
+              color: ["#f6efa6", colors[0]],
             },
-            text: ['High', 'Low'],
+            text: ["High", "Low"],
             textStyle: {
               color: design.theme.textColor,
               fontFamily: design.theme.font,
@@ -431,7 +431,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         return (
           sum +
           parseFloat(
-            adapter.actions.stringify(node.cells[seriesName]?.value) || '0',
+            adapter.actions.stringify(node.cells[seriesName]?.value) || "0",
           )
         );
       }, 0);
@@ -462,12 +462,12 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       },
       series: [
         {
-          type: 'funnel',
+          type: "funnel",
           data: data,
-          sort: 'descending',
+          sort: "descending",
           label: {
             show: true,
-            position: 'inside',
+            position: "inside",
             color: design.theme.textColor,
             fontFamily: design.theme.font,
           },
@@ -495,9 +495,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const yCategories: Set<string> = new Set();
 
     const data = chart.kulData.nodes.map((node) => {
-      const xValue = stringify(node.cells[xAxisKey]?.value) || '';
-      const yValue = stringify(node.cells[yAxisKey]?.value) || '';
-      const value = parseFloat(stringify(node.cells[valueKey]?.value) || '0');
+      const xValue = stringify(node.cells[xAxisKey]?.value) || "";
+      const yValue = stringify(node.cells[yAxisKey]?.value) || "";
+      const value = parseFloat(stringify(node.cells[valueKey]?.value) || "0");
 
       xCategories.add(xValue);
       yCategories.add(yValue);
@@ -526,7 +526,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const options: EChartsOption = {
       color: colors,
       xAxis: {
-        type: 'category',
+        type: "category",
         data: xCategoriesArray,
         axisLabel: {
           color: design.theme.textColor,
@@ -534,7 +534,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         },
       },
       yAxis: {
-        type: 'category',
+        type: "category",
         data: yCategoriesArray,
         axisLabel: {
           color: design.theme.textColor,
@@ -543,7 +543,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       },
       series: [
         {
-          type: 'heatmap',
+          type: "heatmap",
           data: heatmapData,
           label: {
             show: false,
@@ -555,7 +555,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
           emphasis: {
             itemStyle: {
               shadowBlur: 10,
-              shadowColor: 'rgba(0, 0, 0, 0.5)',
+              shadowColor: "rgba(0, 0, 0, 0.5)",
             },
           },
         },
@@ -565,13 +565,13 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
         min: Math.min(...heatmapData.map((item) => Number(item[2]))),
         max: Math.max(...heatmapData.map((item) => Number(item[2]))),
         calculable: true,
-        orient: 'vertical',
-        left: 'left',
-        bottom: '15%',
+        orient: "vertical",
+        left: "left",
+        bottom: "15%",
         inRange: {
-          color: ['#f6efa6', colors[0]],
+          color: ["#f6efa6", colors[0]],
         },
-        text: ['High', 'Low'],
+        text: ["High", "Low"],
         textStyle: {
           color: design.theme.textColor,
           fontFamily: design.theme.font,
@@ -607,12 +607,12 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       legend: design.legend(adapter),
       tooltip: {
         ...design.tooltip(adapter, formatter),
-        trigger: 'item',
+        trigger: "item",
       },
       series: [
         {
-          name: chart.kulAxis[0] || 'Data',
-          type: 'pie',
+          name: chart.kulAxis[0] || "Data",
+          type: "pie",
           data,
         } as PieSeriesOption,
       ],
@@ -638,9 +638,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     });
 
     const data = chart.kulData.nodes.map((node) => {
-      const name = stringify(node.cells[chart.kulAxis[0]]?.value) || 'Entity';
+      const name = stringify(node.cells[chart.kulAxis[0]]?.value) || "Entity";
       const value = chart.kulSeries.map((seriesName) =>
-        parseFloat(stringify(node.cells[seriesName]?.value) || '0'),
+        parseFloat(stringify(node.cells[seriesName]?.value) || "0"),
       );
       return {
         name,
@@ -658,7 +658,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       },
       radar: {
         indicator,
-        shape: 'circle',
+        shape: "circle",
         axisName: {
           color: design.theme.textColor,
           fontFamily: design.theme.font,
@@ -667,20 +667,20 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
           show: true,
           areaStyle: {
             color: [
-              design.applyOpacity(colors[0], '1A'),
-              design.applyOpacity(colors[1], '0D'),
+              design.applyOpacity(colors[0], "1A"),
+              design.applyOpacity(colors[1], "0D"),
             ],
           },
         },
         splitLine: {
           lineStyle: {
-            color: colors[2] || 'rgba(128, 128, 128, 0.5)',
-            type: 'dashed',
+            color: colors[2] || "rgba(128, 128, 128, 0.5)",
+            type: "dashed",
           },
         },
         axisLine: {
           lineStyle: {
-            color: colors[2] || 'rgba(128, 128, 128, 0.5)',
+            color: colors[2] || "rgba(128, 128, 128, 0.5)",
           },
         },
         axisTick: { alignWithLabel: false, show: false },
@@ -693,9 +693,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
           lineStyle: {
             width: 2,
           },
-          symbol: 'circle',
+          symbol: "circle",
           symbolSize: 6,
-          type: 'radar',
+          type: "radar",
           data: data,
         } as RadarSeriesOption,
       ],
@@ -715,9 +715,9 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
 
     const links = chart.kulData.nodes.map((node) => {
       return {
-        source: stringify(node.cells[sourceKey]?.value || 'Source'),
-        target: stringify(node.cells[targetKey]?.value || 'Target'),
-        value: parseFloat(stringify(node.cells[valueKey]?.value) || '0'),
+        source: stringify(node.cells[sourceKey]?.value || "Source"),
+        target: stringify(node.cells[targetKey]?.value || "Target"),
+        value: parseFloat(stringify(node.cells[valueKey]?.value) || "0"),
       };
     });
 
@@ -726,7 +726,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
     const formatter = (
       params: KulChartTooltipArguments<KulChartTooltipDataDictionary>,
     ) => {
-      if (params.dataType === 'edge') {
+      if (params.dataType === "edge") {
         const { source, target, value } = params.data;
         return `
                     <strong>Flow:</strong><br/>
@@ -742,7 +742,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
       color: colors,
       series: [
         {
-          type: 'sankey',
+          type: "sankey",
           data: [
             ...new Set(links.flatMap((link) => [link.source, link.target])),
           ].map((name) => ({ name })),
@@ -753,7 +753,7 @@ export const CHART_OPTIONS: KulChartAdapterOptions = {
             fontFamily: design.theme.font,
           },
           lineStyle: {
-            color: 'gradient',
+            color: "gradient",
             curveness: 0.5,
           },
         } as SankeySeriesOption,

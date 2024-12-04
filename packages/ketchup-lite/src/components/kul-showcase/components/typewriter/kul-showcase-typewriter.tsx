@@ -1,17 +1,14 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import {
-  TYPEWRITER_DOC,
-  TYPEWRITER_EXAMPLES,
-} from './kul-showcase-typewriter-data';
-import { TypewriterExample } from './kul-showcase-typewriter-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { TypewriterExample } from "./kul-showcase-typewriter-declarations";
+import { TYPEWRITER_FIXTURES } from "./kul-showcase-typewriter-fixtures";
 
 @Component({
-  tag: 'kul-showcase-typewriter',
-  styleUrl: 'kul-showcase-typewriter.scss',
+  tag: "kul-showcase-typewriter",
+  styleUrl: "kul-showcase-typewriter.scss",
   shadow: true,
 })
 export class KulShowcaseTypewriter {
@@ -22,9 +19,9 @@ export class KulShowcaseTypewriter {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = TYPEWRITER_EXAMPLES;
+  @State() fixtures = TYPEWRITER_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -36,20 +33,20 @@ export class KulShowcaseTypewriter {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: TypewriterExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: TypewriterExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-typewriter
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -70,7 +67,7 @@ export class KulShowcaseTypewriter {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }
@@ -82,7 +79,7 @@ export class KulShowcaseTypewriter {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={TYPEWRITER_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

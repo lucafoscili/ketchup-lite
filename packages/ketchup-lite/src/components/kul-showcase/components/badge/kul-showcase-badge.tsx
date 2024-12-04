@@ -1,14 +1,14 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { BADGE_DOC, BADGE_EXAMPLES } from './kul-showcase-badge-data';
-import { BadgeExample } from './kul-showcase-badge-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { BadgeExample } from "./kul-showcase-badge-declarations";
+import { BADGE_FIXTURES } from "./kul-showcase-badge-fixtures";
 
 @Component({
-  tag: 'kul-showcase-badge',
-  styleUrl: 'kul-showcase-badge.scss',
+  tag: "kul-showcase-badge",
+  styleUrl: "kul-showcase-badge.scss",
   shadow: true,
 })
 export class KulShowcaseBadge {
@@ -19,9 +19,9 @@ export class KulShowcaseBadge {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = BADGE_EXAMPLES;
+  @State() fixtures = BADGE_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -33,13 +33,13 @@ export class KulShowcaseBadge {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: BadgeExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: BadgeExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <div class="badge-wrapper">
@@ -48,7 +48,7 @@ export class KulShowcaseBadge {
                   key={key}
                   id={key}
                   ref={(el) => {
-                    if (el && props['data-dynamic']) {
+                    if (el && props["data-dynamic"]) {
                       this.#dynamicExamples.push(el);
                     }
                   }}
@@ -70,16 +70,16 @@ export class KulShowcaseBadge {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
-            case 'positions':
+            case "positions":
               comp.className =
-                'hydrated ' + this.#dynamicExampleManager.position.get(comp.id);
+                "hydrated " + this.#dynamicExampleManager.position.get(comp.id);
               break;
-            case 'state-colors':
+            case "state-colors":
               comp.className =
-                'hydrated ' +
+                "hydrated " +
                 this.#dynamicExampleManager.stateColors.get(comp.id);
               break;
           }
@@ -91,7 +91,7 @@ export class KulShowcaseBadge {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={BADGE_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div
           class="grid"
           data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}

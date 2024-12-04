@@ -9,29 +9,29 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
-import { LAYOUT_HUB } from './helpers/kul-card-layout-hub';
+import { LAYOUT_HUB } from "./helpers/kul-card-layout-hub";
 import {
   KulCardProps,
   KulCardEvent,
   KulCardEventPayload,
   KulCardAdapter,
   KulCardLayout,
-} from './kul-card-declarations';
+} from "./kul-card-declarations";
 import {
   KulDataDataset,
   KulDataShapesMap,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import type { GenericMap, GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import type { GenericMap, GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-card',
-  styleUrl: 'kul-card.scss',
+  tag: "kul-card",
+  styleUrl: "kul-card.scss",
   shadow: true,
 })
 export class KulCard {
@@ -75,22 +75,22 @@ export class KulCard {
    * Sets the layout.
    * @default "material"
    */
-  @Prop({ mutable: true, reflect: true }) kulLayout: KulCardLayout = 'material';
+  @Prop({ mutable: true, reflect: true }) kulLayout: KulCardLayout = "material";
   /**
    * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
    * @default "100%"
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeX = '100%';
+  @Prop({ mutable: true, reflect: true }) kulSizeX = "100%";
   /**
    * The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).
    * @default "100%"
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeY = '100%';
+  @Prop({ mutable: true, reflect: true }) kulSizeY = "100%";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -106,7 +106,7 @@ export class KulCard {
    * Triggered when an event is fired.
    */
   @Event({
-    eventName: 'kul-card-event',
+    eventName: "kul-card-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -165,7 +165,7 @@ export class KulCard {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -177,7 +177,7 @@ export class KulCard {
   #adapter: KulCardAdapter = {
     actions: {
       dispatchEvent: async (e) => {
-        this.onKulEvent(e, 'kul-event');
+        this.onKulEvent(e, "kul-event");
       },
     },
     get: { card: () => this, shapes: () => this.shapes },
@@ -193,19 +193,19 @@ export class KulCard {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
     if (this.kulData) {
       this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -214,8 +214,8 @@ export class KulCard {
     }
 
     const style: GenericMap = {
-      '--kul_card_height': this.kulSizeY ? this.kulSizeY : '100%',
-      '--kul_card_width': this.kulSizeX ? this.kulSizeX : '100%',
+      "--kul_card_height": this.kulSizeY ? this.kulSizeY : "100%",
+      "--kul_card_width": this.kulSizeX ? this.kulSizeX : "100%",
     };
 
     return (
@@ -227,9 +227,9 @@ export class KulCard {
         ) : undefined}
         <div
           id={KUL_WRAPPER_ID}
-          onClick={(e) => this.onKulEvent(e, 'click')}
-          onContextMenu={(e) => this.onKulEvent(e, 'contextmenu')}
-          onPointerDown={(e) => this.onKulEvent(e, 'pointerdown')}
+          onClick={(e) => this.onKulEvent(e, "click")}
+          onContextMenu={(e) => this.onKulEvent(e, "contextmenu")}
+          onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
         >
           {LAYOUT_HUB[this.kulLayout.toLowerCase()](this.#adapter)}
         </div>

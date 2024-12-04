@@ -2,16 +2,16 @@ import {
   KulToggleEvent,
   KulToggleProps,
   KulTogglePropsInterface,
-} from '../../../src/components/kul-toggle/kul-toggle-declarations';
-import { TOGGLE_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/toggle/kul-showcase-toggle-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-toggle/kul-toggle-declarations";
+import { TOGGLE_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/toggle/kul-showcase-toggle-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const toggleComponent = 'toggle';
+const toggleComponent = "toggle";
 const toggleCapitalized =
   toggleComponent.charAt(0).toUpperCase() + toggleComponent.slice(1);
-const toggleTag = 'kul-' + toggleComponent;
+const toggleTag = "kul-" + toggleComponent;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(toggleComponent);
   });
@@ -25,50 +25,50 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`blur`, () => {
     cy.navigate(toggleComponent);
-    const eventType: KulToggleEvent = 'blur';
+    const eventType: KulToggleEvent = "blur";
     cy.checkEvent(toggleComponent, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus()
       .blur();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`change`, () => {
     cy.navigate(toggleComponent);
-    const eventType: KulToggleEvent = 'change';
+    const eventType: KulToggleEvent = "change";
     cy.checkEvent(toggleComponent, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`focus`, () => {
     cy.navigate(toggleComponent);
-    const eventType: KulToggleEvent = 'focus';
+    const eventType: KulToggleEvent = "focus";
     cy.checkEvent(toggleComponent, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`pointerdown`, () => {
     cy.navigate(toggleComponent);
-    const eventType: KulToggleEvent = 'pointerdown';
+    const eventType: KulToggleEvent = "pointerdown";
     cy.checkEvent(toggleComponent, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .click({ force: true });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -77,26 +77,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(toggleComponent);
-    const eventType: KulToggleEvent = 'unmount';
+    const eventType: KulToggleEvent = "unmount";
     cy.checkEvent(toggleComponent, eventType);
-    cy.get('@eventElement').then(($toggleComponent) => {
+    cy.get("@eventElement").then(($toggleComponent) => {
       const kulToggleElement = $toggleComponent[0] as HTMLKulToggleElement;
       kulToggleElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(toggleComponent);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(toggleTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(toggleTag);
   });
 
@@ -116,12 +116,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(toggleComponent);
   });
 
-  it('kulStyle: hould check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: hould check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

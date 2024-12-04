@@ -1,4 +1,4 @@
-import { h, VNode } from '@stencil/core';
+import { h, VNode } from "@stencil/core";
 import {
   GenericObject,
   KulComponent,
@@ -7,7 +7,7 @@ import {
   KulDataCyAttributes,
   KulEventPayload,
   KulEventType,
-} from '../../../types/GenericTypes';
+} from "../../../types/GenericTypes";
 import {
   KulDataCell,
   KulDataDataset,
@@ -16,8 +16,8 @@ import {
   KulDataShapeEventDispatcher,
   KulDataShapes,
   KulDataShapesMap,
-} from '../kul-data-declarations';
-import { nodeExists } from './kul-data-node-utils';
+} from "../kul-data-declarations";
+import { nodeExists } from "./kul-data-node-utils";
 
 const decorateSpreader = (
   toSpread: GenericObject,
@@ -26,24 +26,24 @@ const decorateSpreader = (
   },
 ) => {
   const clean = () => {
-    if (toSpread['value'] && !toSpread['kulValue']) {
-      toSpread['kulValue'] = toSpread['value'];
-    } else if (toSpread['kulValue'] && !toSpread['value']) {
-      toSpread['value'] = toSpread['kulValue'];
+    if (toSpread["value"] && !toSpread["kulValue"]) {
+      toSpread["kulValue"] = toSpread["value"];
+    } else if (toSpread["kulValue"] && !toSpread["value"]) {
+      toSpread["value"] = toSpread["kulValue"];
     }
-    delete toSpread['htmlProps'];
-    delete toSpread['shape'];
-    delete toSpread['value'];
+    delete toSpread["htmlProps"];
+    delete toSpread["shape"];
+    delete toSpread["value"];
   };
   if (props.htmlProps) {
     for (const key in props.htmlProps) {
       const prop = props.htmlProps[key];
-      if (key === 'className') {
-        toSpread['class'] = prop;
+      if (key === "className") {
+        toSpread["class"] = prop;
       } else {
         toSpread[key] = prop;
       }
-      if (key === 'dataset') {
+      if (key === "dataset") {
         for (const k in prop) {
           toSpread[`data-${k}`] = prop[k];
         }
@@ -60,14 +60,14 @@ const decorateSpreader = (
 
 export const cellDecorateShapes = <
   C extends KulComponentName,
-  S extends KulDataShapes | 'text',
+  S extends KulDataShapes | "text",
 >(
   component: C,
   shape: S,
   items: Partial<KulDataCell<S>>[],
   eventDispatcher: KulDataShapeEventDispatcher,
   defaultProps?: Partial<KulDataCell<S>>[],
-  defaultCb?: S extends 'text' ? never : KulDataShapeCallback<C, S>,
+  defaultCb?: S extends "text" ? never : KulDataShapeCallback<C, S>,
 ) => {
   const r: {
     element: VNode[];
@@ -75,8 +75,8 @@ export const cellDecorateShapes = <
   } = { element: [], ref: [] };
 
   switch (shape) {
-    case 'number':
-    case 'text':
+    case "number":
+    case "text":
       for (let index = 0; items && index < items.length; index++) {
         const props = items[index].value;
         r.element.push(
@@ -109,9 +109,9 @@ export const cellDecorateShapes = <
           props as Partial<KulDataCell<KulDataShapes>>,
         );
 
-        const TagName = 'kul-' + shape;
+        const TagName = "kul-" + shape;
         const eventHandler = {
-          ['onKul-' + shape + '-event']: (
+          ["onKul-" + shape + "-event"]: (
             e: CustomEvent<KulEventPayload<C, KulEventType<KulComponent<C>>>>,
           ) => {
             if (defaultCb) {
@@ -152,14 +152,14 @@ export const cellGetShape = <T extends KulDataShapes>(
   if (!deepCopy) {
     return cell;
   }
-  const prefix = 'kul';
+  const prefix = "kul";
   const shapeProps: Partial<KulDataCell<T>> = {};
   for (const prop in cell) {
     switch (prop) {
-      case 'htmlProps':
+      case "htmlProps":
         Object.assign(shapeProps, cell[prop]);
         break;
-      case 'shape':
+      case "shape":
         break;
       default:
         if (prop.indexOf(prefix) === 0) {
@@ -207,40 +207,40 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
         const cell = cells[key];
         const extracted = cellGetShape(cell, deepCopy);
         switch (cell.shape) {
-          case 'badge':
-            shapes.badge.push(extracted as KulDataCell<'badge'>);
+          case "badge":
+            shapes.badge.push(extracted as KulDataCell<"badge">);
             break;
-          case 'button':
-            shapes.button.push(extracted as KulDataCell<'button'>);
+          case "button":
+            shapes.button.push(extracted as KulDataCell<"button">);
             break;
-          case 'card':
-            shapes.card.push(extracted as KulDataCell<'card'>);
+          case "card":
+            shapes.card.push(extracted as KulDataCell<"card">);
             break;
-          case 'chart':
-            shapes.chart.push(extracted as KulDataCell<'chart'>);
+          case "chart":
+            shapes.chart.push(extracted as KulDataCell<"chart">);
             break;
-          case 'chat':
-            shapes.chat.push(extracted as KulDataCell<'chat'>);
+          case "chat":
+            shapes.chat.push(extracted as KulDataCell<"chat">);
             break;
-          case 'chip':
-            shapes.chip.push(extracted as KulDataCell<'chip'>);
+          case "chip":
+            shapes.chip.push(extracted as KulDataCell<"chip">);
             break;
-          case 'code':
-            shapes.code.push(extracted as KulDataCell<'code'>);
+          case "code":
+            shapes.code.push(extracted as KulDataCell<"code">);
             break;
-          case 'image':
-            shapes.image.push(extracted as KulDataCell<'image'>);
+          case "image":
+            shapes.image.push(extracted as KulDataCell<"image">);
             break;
-          case 'toggle':
-            shapes.toggle.push(extracted as KulDataCell<'toggle'>);
+          case "toggle":
+            shapes.toggle.push(extracted as KulDataCell<"toggle">);
             break;
-          case 'number':
-            shapes.number.push(cell as KulDataCell<'number'>);
+          case "number":
+            shapes.number.push(cell as KulDataCell<"number">);
             break;
-          case 'upload':
-            shapes.upload.push(extracted as KulDataCell<'upload'>);
+          case "upload":
+            shapes.upload.push(extracted as KulDataCell<"upload">);
             break;
-          case 'text':
+          case "text":
           default:
             shapes.text.push(cell);
             break;
@@ -264,17 +264,17 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
   }
   return shapes;
 };
-export const cellStringify = (value: KulDataCell<KulDataShapes>['value']) => {
+export const cellStringify = (value: KulDataCell<KulDataShapes>["value"]) => {
   if (value === null || value === undefined) {
     return String(value).valueOf();
   } else if (value instanceof Date) {
     return value.toISOString();
-  } else if (typeof value === 'object') {
+  } else if (typeof value === "object") {
     try {
       return JSON.stringify(value, null, 2);
     } catch (error) {
-      console.error('Failed to stringify object:', error);
-      return '[object Object]';
+      console.error("Failed to stringify object:", error);
+      return "[object Object]";
     }
   } else {
     return String(value).valueOf();

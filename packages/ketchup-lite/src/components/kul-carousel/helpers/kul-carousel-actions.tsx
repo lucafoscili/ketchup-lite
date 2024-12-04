@@ -1,4 +1,4 @@
-import { KulCarouselAdapterActions } from '../kul-carousel-declarations';
+import { KulCarouselAdapterActions } from "../kul-carousel-declarations";
 
 export const ACTIONS: KulCarouselAdapterActions = {
   autoplay: {
