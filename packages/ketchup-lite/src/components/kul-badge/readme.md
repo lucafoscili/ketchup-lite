@@ -10,8 +10,8 @@
 | Property        | Attribute   | Description                                        | Type                     | Default |
 | --------------- | ----------- | -------------------------------------------------- | ------------------------ | ------- |
 | `kulImageProps` | --          | The props of the image displayed inside the badge. | `KulImagePropsInterface` | `null`  |
-| `kulLabel`      | `kul-label` | The text displayed inside the badge.               | `string`                 | `''`    |
-| `kulStyle`      | `kul-style` | Custom style of the component.                     | `string`                 | `''`    |
+| `kulLabel`      | `kul-label` | The text displayed inside the badge.               | `string`                 | `""`    |
+| `kulStyle`      | `kul-style` | Custom style of the component.                     | `string`                 | `""`    |
 
 
 ## Events

@@ -11,7 +11,7 @@
 | ------------- | -------------- | ------------------------------------------------------------------------------------------------------------- | --------------------- | ------- |
 | `kulAutosave` | `kul-autosave` | Automatically saves the dataset when a chat updates.                                                          | `boolean`             | `true`  |
 | `kulData`     | --             | The data of the messenger.                                                                                    | `KulMessengerDataset` | `null`  |
-| `kulStyle`    | `kul-style`    | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`              | `''`    |
+| `kulStyle`    | `kul-style`    | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`              | `""`    |
 | `kulValue`    | --             | Sets the initial configuration, including active character and filters.                                       | `KulMessengerConfig`  | `null`  |
 
 

@@ -9,11 +9,11 @@
 
 | Property             | Attribute              | Description                                                                                                                             | Type                              | Default  |
 | -------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------- | -------- |
-| `kulComponentName`   | `kul-component-name`   | Sets the tag name of the component to be lazy loaded.                                                                                   | `string`                          | `''`     |
+| `kulComponentName`   | `kul-component-name`   | Sets the tag name of the component to be lazy loaded.                                                                                   | `string`                          | `""`     |
 | `kulComponentProps`  | --                     | Sets the data of the component to be lazy loaded.                                                                                       | `unknown`                         | `null`   |
-| `kulRenderMode`      | `kul-render-mode`      | Decides when the sub-component should be rendered. By default when both the component props exist and the component is in the viewport. | `"both" \| "props" \| "viewport"` | `'both'` |
+| `kulRenderMode`      | `kul-render-mode`      | Decides when the sub-component should be rendered. By default when both the component props exist and the component is in the viewport. | `"both" \| "props" \| "viewport"` | `"both"` |
 | `kulShowPlaceholder` | `kul-show-placeholder` | Displays an animated SVG placeholder until the component is loaded.                                                                     | `boolean`                         | `true`   |
-| `kulStyle`           | `kul-style`            | Customizes the style of the component. This property allows you to apply a custom CSS style to the component.                           | `string`                          | `''`     |
+| `kulStyle`           | `kul-style`            | Customizes the style of the component. This property allows you to apply a custom CSS style to the component.                           | `string`                          | `""`     |
 
 
 ## Events

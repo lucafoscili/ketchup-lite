@@ -7,7 +7,7 @@
 
 | Property   | Attribute   | Description                                                                                                   | Type     | Default |
 | ---------- | ----------- | ------------------------------------------------------------------------------------------------------------- | -------- | ------- |
-| `kulStyle` | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string` | `''`    |
+| `kulStyle` | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string` | `""`    |
 
 
 ## Events
