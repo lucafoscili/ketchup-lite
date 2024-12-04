@@ -13,15 +13,19 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          fetch-tags: true
           persist-credentials: false
 
       - name: Setup and Build
         uses: ./.github/actions/setup
         with:
-          node-version: '18.x'
-          install-immutable: 'true'
+          node-version: "18.x"
+          install-immutable: "true"
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: List Git Tags
+        run: git tag
 
       - name: Configure Git
         run: |
@@ -38,9 +42,9 @@ jobs:
       - name: Create or Update Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          commit-message: 'chore: bump versions for release'
-          branch: 'version-bump-main'
-          title: 'chore: bump versions for release'
-          body: 'This PR bumps package versions for the next release.'
-          base: 'main'
-          labels: 'automated PR'
+          commit-message: "chore: bump versions for release"
+          branch: "version-bump-main"
+          title: "chore: bump versions for release"
+          body: "This PR bumps package versions for the next release."
+          base: "main"
+          labels: "automated PR"
