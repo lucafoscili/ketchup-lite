@@ -3,7 +3,7 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ARTICLE_DOC, ARTICLE_EXAMPLES } from "./kul-showcase-article-data";
+import { ARTICLE_DOC, ARTICLE_EXAMPLES } from "./kul-showcase-article-fixtures";
 import { ArticleExample } from "./kul-showcase-article-declarations";
 
 @Component({

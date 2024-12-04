@@ -1,4 +1,3 @@
-import { AccordionData } from "./kul-showcase-accordion-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -6,7 +5,6 @@ import {
   KulComponentTag,
 } from "../../../../types/GenericTypes";
 import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
-import { ACCORDION_KULDATA } from "../../assets/fixtures/accordion";
 import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
 import { DOC_IDS } from "../../kul-showcase-data";
 
@@ -16,17 +14,44 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulAccordion"> =
   "KulAccordionEventPayload";
 const TAG_NAME: KulComponentTag<"KulAccordion"> = "kul-accordion";
 
-export const ACCORDION_EXAMPLES: () => AccordionData = () => ({
-  simple: {
-    ["data-description"]: "Simple accordion",
-    kulData: ACCORDION_KULDATA(),
-  },
-  style: {
-    ["data-description"]: "Accordion with custom style",
-    ["data-dynamic"]: "custom",
-    kulData: ACCORDION_KULDATA(),
-  },
-});
+export const ARTICLE_EXAMPLES = () => {
+  const kulData = {
+    nodes: [
+      {
+        id: "0",
+        value: "Item 1",
+        icon: "filter_1",
+      },
+      {
+        id: "1",
+        value: "Item 2",
+        icon: "filter_2",
+      },
+      {
+        id: "2",
+        value: "Item 3",
+        icon: "filter_3",
+      },
+      {
+        id: "3",
+        value: "Item 4",
+        icon: "filter_4",
+      },
+    ],
+  };
+
+  return {
+    simple: {
+      ["data-description"]: "Simple accordion",
+      kulData,
+    },
+    style: {
+      ["data-description"]: "Accordion with custom style",
+      ["data-dynamic"]: "custom",
+      kulData,
+    },
+  };
+};
 
 export const ACCORDION_DOC: KulArticleDataset = {
   nodes: [
