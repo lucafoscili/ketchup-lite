@@ -1,7 +1,7 @@
-import { Fragment, h } from '@stencil/core';
+import { Fragment, h } from "@stencil/core";
 
-import { OPTION_TYPE_IDS } from '../kul-messenger-constants';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
+import { OPTION_TYPE_IDS } from "../kul-messenger-constants";
+import { KulMessengerAdapter } from "../kul-messenger-declarations";
 
 export const prepOptions = (adapter: KulMessengerAdapter) => {
   return OPTION_TYPE_IDS.map((options) => {
@@ -18,16 +18,16 @@ export const prepOptions = (adapter: KulMessengerAdapter) => {
               src={image.value}
             ></img>
             <div
-              class={`messenger__options__blocker ${!isEnabled ? 'messenger__options__blocker--active' : ''}`}
+              class={`messenger__options__blocker ${!isEnabled ? "messenger__options__blocker--active" : ""}`}
               onClick={() =>
                 adapter.set.messenger.ui.options(!isEnabled, options)
               }
             >
               <kul-image
-                kulValue={`${isEnabled ? 'touch_app' : 'block'}`}
+                kulValue={`${isEnabled ? "touch_app" : "block"}`}
               ></kul-image>
               <div class={`messenger__options__blocker__label`}>
-                {isEnabled ? 'Click to disable' : 'Click to enable'}
+                {isEnabled ? "Click to disable" : "Click to enable"}
               </div>
             </div>
           </Fragment>

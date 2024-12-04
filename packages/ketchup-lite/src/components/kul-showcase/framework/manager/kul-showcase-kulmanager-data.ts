@@ -1,77 +1,77 @@
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
-import { PARAGRAPH_FACTORY } from '../../helpers/kul-showcase-paragraph';
-import { DOC_IDS, DOC_NODES } from '../../kul-showcase-data';
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
+import { PARAGRAPH_FACTORY } from "../../helpers/kul-showcase-paragraph";
+import { DOC_IDS, DOC_NODES } from "../../kul-showcase-data";
 
 export const MANAGER_DATA: KulArticleDataset = {
   nodes: [
     {
       id: DOC_IDS.root,
-      value: 'KulManager',
+      value: "KulManager",
       children: [
         {
           id: DOC_IDS.section,
-          value: 'Overview',
+          value: "Overview",
           children: [
             {
               children: [
                 {
                   id: DOC_IDS.content,
-                  tagName: 'strong',
-                  value: 'KulManager',
+                  tagName: "strong",
+                  value: "KulManager",
                 },
                 {
                   id: DOC_IDS.content,
                   value:
-                    ' is a Javascript class that incorporates various functionalities and includes other manager classes, such as the theme manager.',
+                    " is a Javascript class that incorporates various functionalities and includes other manager classes, such as the theme manager.",
                 },
               ],
               id: DOC_IDS.paragraph,
-              value: '',
+              value: "",
             },
             {
               children: [
                 {
                   id: DOC_IDS.content,
-                  tagName: 'strong',
-                  value: 'KulManager',
+                  tagName: "strong",
+                  value: "KulManager",
                 },
                 {
                   id: DOC_IDS.content,
                   value:
-                    ' is instantiated as a singleton by the first component loaded into the DOM.',
+                    " is instantiated as a singleton by the first component loaded into the DOM.",
                 },
               ],
               id: DOC_IDS.paragraph,
-              value: '',
+              value: "",
             },
             {
               children: [
                 {
                   id: DOC_IDS.content,
                   value:
-                    'Several default behaviors of the library can be modified. To achieve this, you can define a custom property on the ',
+                    "Several default behaviors of the library can be modified. To achieve this, you can define a custom property on the ",
                 },
                 {
                   id: DOC_IDS.content,
-                  tagName: 'strong',
-                  value: 'documentElement',
+                  tagName: "strong",
+                  value: "documentElement",
                 },
                 {
                   id: DOC_IDS.content,
-                  value: ' called ',
+                  value: " called ",
                 },
                 {
                   id: DOC_IDS.content,
-                  tagName: 'strong',
-                  value: 'ketchupLiteInit',
+                  tagName: "strong",
+                  value: "ketchupLiteInit",
                 },
                 {
                   id: DOC_IDS.content,
-                  value: ' before the document body.',
+                  value: " before the document body.",
                 },
               ],
               id: DOC_IDS.paragraph,
-              value: '',
+              value: "",
             },
             {
               children: [
@@ -82,15 +82,15 @@ export const MANAGER_DATA: KulArticleDataset = {
                 },
                 {
                   id: DOC_IDS.content,
-                  tagName: 'strong',
+                  tagName: "strong",
                   value:
-                    'This is all you need to do within a script tag in the head tag:',
+                    "This is all you need to do within a script tag in the head tag:",
                 },
                 DOC_NODES.hiddenSeparator,
                 {
                   cells: {
                     kulCode: {
-                      shape: 'code',
+                      shape: "code",
                       value:
                         "const dom = document.documentElement;\ndom.ketchupLiteInit = {\n   theme: { name: 'night' },\n};",
                     },
@@ -99,91 +99,91 @@ export const MANAGER_DATA: KulArticleDataset = {
                 },
               ],
               id: DOC_IDS.paragraph,
-              value: '',
+              value: "",
             },
           ],
         },
         {
           id: DOC_IDS.section,
-          value: 'Initialization Settings',
+          value: "Initialization Settings",
           children: [
             {
               children: [
                 {
                   id: DOC_IDS.content,
                   value:
-                    'This list includes all initialization parameters for the KulManager singleton.',
+                    "This list includes all initialization parameters for the KulManager singleton.",
                 },
               ],
               id: DOC_IDS.paragraph,
-              value: '',
+              value: "",
             },
             DOC_NODES.separator,
             PARAGRAPH_FACTORY.asSimpleListEntry(
-              'assetsPath (string)',
+              "assetsPath (string)",
               ": sets the URL where the library's static assets, such as SVGs, are stored.",
             ),
             PARAGRAPH_FACTORY.asSimpleListEntry(
-              'autoSetLocalization (boolean)',
-              ': when true, the library automatically configures KulLanguage and KulMath locales to align with KulDates.',
+              "autoSetLocalization (boolean)",
+              ": when true, the library automatically configures KulLanguage and KulMath locales to align with KulDates.",
             ),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry('dates', [
+            PARAGRAPH_FACTORY.asBulletListEntry("dates", [
               {
-                title: 'locale (string)',
+                title: "locale (string)",
                 description:
-                  ': sets the locale for time and date-related functionalities within the library.',
+                  ": sets the locale for time and date-related functionalities within the library.",
               },
             ]),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry('debug', [
+            PARAGRAPH_FACTORY.asBulletListEntry("debug", [
               {
-                title: 'active (boolean)',
-                description: ': determines whether the debug mode is enabled.',
+                title: "active (boolean)",
+                description: ": determines whether the debug mode is enabled.",
               },
               {
-                title: 'autoPrint (boolean)',
+                title: "autoPrint (boolean)",
                 description:
-                  ': specifies whether the debug widget automatically prints new logs.',
+                  ": specifies whether the debug widget automatically prints new logs.",
               },
               {
-                title: 'logLimit (number)',
+                title: "logLimit (number)",
                 description:
-                  ': sets the maximum number of debug logs to retain.',
+                  ": sets the maximum number of debug logs to retain.",
               },
             ]),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry('language', [
+            PARAGRAPH_FACTORY.asBulletListEntry("language", [
               {
-                title: 'list (JSON)',
-                description: ': provides a custom list of languages.',
+                title: "list (JSON)",
+                description: ": provides a custom list of languages.",
               },
               {
-                title: 'name (string)',
+                title: "name (string)",
                 description:
-                  ': specifies the current language used by the library.',
+                  ": specifies the current language used by the library.",
               },
             ]),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry('scrollOnHover', [
+            PARAGRAPH_FACTORY.asBulletListEntry("scrollOnHover", [
               {
-                title: 'delay (number)',
+                title: "delay (number)",
                 description:
-                  ': specifies the delay before initiating scrolling on hover.',
+                  ": specifies the delay before initiating scrolling on hover.",
               },
               {
-                title: 'step (number)',
-                description: ': sets the scrolling increment in pixels.',
+                title: "step (number)",
+                description: ": sets the scrolling increment in pixels.",
               },
             ]),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry('theme', [
+            PARAGRAPH_FACTORY.asBulletListEntry("theme", [
               {
-                title: 'name (string)',
-                description: ': provides a custom list of themes.',
+                title: "name (string)",
+                description: ": provides a custom list of themes.",
               },
               {
-                title: 'step (number)',
+                title: "step (number)",
                 description: ": sets the library's initial theme.",
               },
             ]),
@@ -191,59 +191,59 @@ export const MANAGER_DATA: KulArticleDataset = {
         },
         {
           id: DOC_IDS.section,
-          value: 'Utility functions',
+          value: "Utility functions",
           children: [
             {
               children: [
                 {
                   id: DOC_IDS.content,
                   value:
-                    'KulManager provides several utility functions available for application use.',
+                    "KulManager provides several utility functions available for application use.",
                 },
               ],
               id: DOC_IDS.paragraph,
-              value: '',
+              value: "",
             },
             DOC_NODES.separator,
             PARAGRAPH_FACTORY.asListEntry(
-              'addClickCallback',
+              "addClickCallback",
               'KulManager listens for click events on the document element. This utility function adds a new callback to the "click callbacks" set, which are executed when an element is located in the DOM tree of the event target.',
               [
                 {
-                  name: 'cb',
-                  type: 'KulManagerClickCb',
-                  description: 'The callback to be added.',
+                  name: "cb",
+                  type: "KulManagerClickCb",
+                  description: "The callback to be added.",
                 },
                 {
-                  name: 'async?',
-                  type: 'boolean',
+                  name: "async?",
+                  type: "boolean",
                   description:
-                    'If true, the callback is added asynchronously to prevent immediate execution if added during a click event.',
+                    "If true, the callback is added asynchronously to prevent immediate execution if added during a click event.",
                 },
               ],
             ),
             DOC_NODES.hiddenSeparator,
             PARAGRAPH_FACTORY.asListEntry(
-              'removeClickCallback',
+              "removeClickCallback",
               'Removes the given click callback from the set of "click callbacks".',
               [
                 {
-                  name: 'cb',
-                  type: 'KulManagerClickCb',
-                  description: 'The callback to remove from the set.',
+                  name: "cb",
+                  type: "KulManagerClickCb",
+                  description: "The callback to remove from the set.",
                 },
               ],
             ),
             DOC_NODES.hiddenSeparator,
             PARAGRAPH_FACTORY.asListEntry(
-              'setLibraryLocalization',
-              'Sets both locale and language library-wide.',
+              "setLibraryLocalization",
+              "Sets both locale and language library-wide.",
               [
                 {
-                  name: 'locale',
-                  type: 'KulDatesLocales',
+                  name: "locale",
+                  type: "KulDatesLocales",
                   description:
-                    'The locale to set (must be supported by the library).',
+                    "The locale to set (must be supported by the library).",
                 },
               ],
             ),

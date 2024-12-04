@@ -3,7 +3,7 @@ import {
   GenericObject,
   KulComponent,
   KulComponentName,
-} from '../types/GenericTypes';
+} from "../types/GenericTypes";
 
 /**
  * Retrieves component's prop values based on a list and option to include descriptions.

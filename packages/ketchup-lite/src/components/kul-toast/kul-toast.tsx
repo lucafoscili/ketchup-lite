@@ -9,23 +9,23 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulToastEvent,
   KulToastEventPayload,
   KulToastProps,
-} from './kul-toast-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulImagePropsInterface } from '../kul-image/kul-image-declarations';
+} from "./kul-toast-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 
 @Component({
-  tag: 'kul-toast',
-  styleUrl: 'kul-toast.scss',
+  tag: "kul-toast",
+  styleUrl: "kul-toast.scss",
   shadow: true,
 })
 export class KulToast {
@@ -59,9 +59,9 @@ export class KulToast {
    */
   @Prop({ mutable: true })
   kulCloseIcon: KulImagePropsInterface = {
-    kulSizeX: '18px',
-    kulSizeY: '18px',
-    kulValue: 'clear',
+    kulSizeX: "18px",
+    kulSizeY: "18px",
+    kulValue: "clear",
   };
   /**
    * Callback invoked when the toast is closed.
@@ -75,9 +75,9 @@ export class KulToast {
    * @default { kulSizeX: '18px', kulSizeY: '18px', kulValue: 'info' }
    */
   @Prop({ mutable: true, reflect: true }) kulIcon: KulImagePropsInterface = {
-    kulSizeX: '18px',
-    kulSizeY: '18px',
-    kulValue: 'info',
+    kulSizeX: "18px",
+    kulSizeY: "18px",
+    kulValue: "info",
   };
   /**
    * When kulTimer is set with a number, the toast will close itself after the specified amount of time (in ms).
@@ -88,12 +88,12 @@ export class KulToast {
    * Sets the message of the toast.
    * @default 'Wow, such empty.'
    */
-  @Prop({ mutable: true, reflect: true }) kulMessage = 'Wow, such empty.';
+  @Prop({ mutable: true, reflect: true }) kulMessage = "Wow, such empty.";
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -109,7 +109,7 @@ export class KulToast {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-toast-event',
+    eventName: "kul-toast-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -160,7 +160,7 @@ export class KulToast {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -174,19 +174,19 @@ export class KulToast {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
     if (this.kulTimer) {
       setTimeout(() => {}, this.kulTimer);
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -201,7 +201,7 @@ export class KulToast {
           <div class="toast">
             <div
               class={`toast__accent ${
-                this.kulTimer ? 'toast__accent--temporary' : ''
+                this.kulTimer ? "toast__accent--temporary" : ""
               }`}
             ></div>
             <div class="toast__message-wrapper">

@@ -1,36 +1,36 @@
-import { KulChartPropsInterface } from '../../../kul-chart/kul-chart-declarations';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { KulChartPropsInterface } from "../../../kul-chart/kul-chart-declarations";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 export const CHART_EXAMPLES_KEYS = [
-  'area',
-  'bar',
-  'bubble',
-  'calendar',
-  'candlestick',
-  'dualAxis',
-  'funnel',
-  'hbar',
-  'heatmap',
-  'heatmapWithLine',
-  'gaussian',
-  'hbar',
-  'heatmap',
-  'line',
-  'mixedLineBar',
-  'mixedTypesMultiAxis',
-  'multiAxis',
-  'multiAxisLine',
-  'pie',
-  'radar',
-  'sankey',
-  'scatter',
-  'stackedBar',
-  'style',
+  "area",
+  "bar",
+  "bubble",
+  "calendar",
+  "candlestick",
+  "dualAxis",
+  "funnel",
+  "hbar",
+  "heatmap",
+  "heatmapWithLine",
+  "gaussian",
+  "hbar",
+  "heatmap",
+  "line",
+  "mixedLineBar",
+  "mixedTypesMultiAxis",
+  "multiAxis",
+  "multiAxisLine",
+  "pie",
+  "radar",
+  "sankey",
+  "scatter",
+  "stackedBar",
+  "style",
 ] as const;
 
 export interface ChartExample extends KulChartPropsInterface {
-  ['data-description']: string;
-  ['data-dynamic']?: KulShowcaseDynamicExampleType;
+  ["data-description"]: string;
+  ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 
 export type ChartData = {

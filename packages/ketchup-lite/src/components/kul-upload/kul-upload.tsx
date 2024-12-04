@@ -9,22 +9,22 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulUploadEventPayload,
   KulUploadEvent,
   KulUploadProps,
-} from './kul-upload-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "./kul-upload-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-upload',
-  styleUrl: 'kul-upload.scss',
+  tag: "kul-upload",
+  styleUrl: "kul-upload.scss",
   shadow: true,
 })
 export class KulUpload {
@@ -61,7 +61,7 @@ export class KulUpload {
    * Sets the button's label.
    * @default "Upload files..."
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = 'Upload files...';
+  @Prop({ mutable: true, reflect: true }) kulLabel = "Upload files...";
   /**
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
@@ -71,7 +71,7 @@ export class KulUpload {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * Initializes the component with these files.
    * @default null
@@ -94,7 +94,7 @@ export class KulUpload {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-upload-event',
+    eventName: "kul-upload-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -103,11 +103,11 @@ export class KulUpload {
 
   onKulEvent(e: Event | CustomEvent, eventType: KulUploadEvent, file?: File) {
     switch (eventType) {
-      case 'delete':
+      case "delete":
         this.selectedFiles = this.selectedFiles.filter((f) => f !== file);
         break;
 
-      case 'pointerdown':
+      case "pointerdown":
         if (this.kulRipple) {
           this.#kulManager.theme.ripple.trigger(
             e as PointerEvent,
@@ -167,7 +167,7 @@ export class KulUpload {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -177,7 +177,7 @@ export class KulUpload {
   /*-------------------------------------------------*/
 
   #formatFileSize(size: number): string {
-    const units = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const units = ["Bytes", "KB", "MB", "GB", "TB"];
     let unitIndex = 0;
 
     if (size > 10000) {
@@ -200,7 +200,7 @@ export class KulUpload {
     } else {
       this.selectedFiles = [];
     }
-    this.onKulEvent(new CustomEvent('upload'), 'upload');
+    this.onKulEvent(new CustomEvent("upload"), "upload");
   }
 
   #prepFileInfo() {
@@ -209,13 +209,13 @@ export class KulUpload {
         <kul-image
           class="file-info__type"
           kulValue={
-            file.type.includes('image')
-              ? 'image'
-              : file.type.includes('audio')
-                ? 'audiotrack'
-                : file.type.includes('video')
-                  ? 'movie'
-                  : 'file'
+            file.type.includes("image")
+              ? "image"
+              : file.type.includes("audio")
+                ? "audiotrack"
+                : file.type.includes("video")
+                  ? "movie"
+                  : "file"
           }
           kulSizeX="24px"
           kulSizeY="24px"
@@ -229,10 +229,10 @@ export class KulUpload {
         </span>
         <kul-button
           class="file-info__clear"
-          kulIcon={'clear'}
+          kulIcon={"clear"}
           kulStyling="flat"
           onClick={(e) => {
-            this.onKulEvent(e, 'delete', file);
+            this.onKulEvent(e, "delete", file);
           }}
           title="Remove"
         ></kul-button>
@@ -252,19 +252,19 @@ export class KulUpload {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
     if (this.#rippleSurface) {
       this.#kulManager.theme.ripple.setup(this.#rippleSurface);
     }
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -280,13 +280,13 @@ export class KulUpload {
           <div
             class={`wrapper ${
               this.selectedFiles && this.selectedFiles.length
-                ? 'wrapper--with-info'
-                : ''
+                ? "wrapper--with-info"
+                : ""
             }`}
           >
             <div
               class="file-upload"
-              onPointerDown={(e) => this.onKulEvent(e, 'pointerdown')}
+              onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
             >
               <input
                 class="file-upload__input"

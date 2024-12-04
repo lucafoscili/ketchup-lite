@@ -1,8 +1,8 @@
-import { Fragment, h } from '@stencil/core';
+import { Fragment, h } from "@stencil/core";
 
-import { KulChatAdapter } from '../kul-chat-declarations';
-import { prepButtons, prepInputArea } from './kul-chat-input';
-import { prepMessages } from './kul-chat-messages';
+import { KulChatAdapter } from "../kul-chat-declarations";
+import { prepButtons, prepInputArea } from "./kul-chat-input";
+import { prepMessages } from "./kul-chat-messages";
 
 //#region prepChat
 export const prepChat = (adapter: KulChatAdapter) => {

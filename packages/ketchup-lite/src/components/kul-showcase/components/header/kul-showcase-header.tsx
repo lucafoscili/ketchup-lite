@@ -1,12 +1,12 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { HEADER_DOC, HEADER_EXAMPLES } from './kul-showcase-header-data';
-import { HeaderExample } from './kul-showcase-header-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { HEADER_DOC, HEADER_EXAMPLES } from "./kul-showcase-header-data";
+import { HeaderExample } from "./kul-showcase-header-declarations";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 
 @Component({
-  tag: 'kul-showcase-header',
-  styleUrl: 'kul-showcase-header.scss',
+  tag: "kul-showcase-header",
+  styleUrl: "kul-showcase-header.scss",
   shadow: true,
 })
 export class KulShowcaseHeader {
@@ -31,7 +31,7 @@ export class KulShowcaseHeader {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <iframe key={key} id={key} {...props.iframeProps}></iframe>

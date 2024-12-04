@@ -1,20 +1,20 @@
-import { KUL_DROPDOWN_CLASS_VISIBLE } from '../../variables/GenericVariables';
-import type { KulDom } from '../kul-manager/kul-manager-declarations';
+import { KUL_DROPDOWN_CLASS_VISIBLE } from "../../variables/GenericVariables";
+import type { KulDom } from "../kul-manager/kul-manager-declarations";
 import {
   KulDynamicPositionAnchor,
   kulDynamicPositionAnchorAttribute,
   kulDynamicPositionAttribute,
   KulDynamicPositionElement,
-} from './kul-dynamic-position-declarations';
-import { KulDynamicPositionPlacement } from './kul-dynamic-position-declarations';
+} from "./kul-dynamic-position-declarations";
+import { KulDynamicPositionPlacement } from "./kul-dynamic-position-declarations";
 
 export class KulDynamicPosition {
   #DOM = document.documentElement as KulDom;
   container: HTMLElement;
   managedElements: Set<KulDynamicPositionElement>;
   constructor() {
-    this.container = document.createElement('div');
-    this.container.setAttribute('kul-dynamic-position', '');
+    this.container = document.createElement("div");
+    this.container.setAttribute("kul-dynamic-position", "");
     document.body.appendChild(this.container);
     this.managedElements = new Set();
   }
@@ -33,9 +33,9 @@ export class KulDynamicPosition {
       return;
     }
     const runCb = () => this.#DOM.ketchupLite.dynamicPosition.run(el);
-    el.setAttribute(kulDynamicPositionAttribute, '');
+    el.setAttribute(kulDynamicPositionAttribute, "");
     if (this.anchorIsHTMLElement(anchorEl)) {
-      anchorEl.setAttribute(kulDynamicPositionAnchorAttribute, '');
+      anchorEl.setAttribute(kulDynamicPositionAnchorAttribute, "");
     }
     el.style.zIndex = `calc(var(--kul-header-zindex) + 1)`;
     const originalPath: HTMLElement[] = [];
@@ -47,10 +47,10 @@ export class KulDynamicPosition {
           : (currentEl as ShadowRoot).host;
         originalPath.push(currentEl as HTMLElement);
       }
-      el.style.position = 'absolute';
+      el.style.position = "absolute";
       this.container.appendChild(el);
     } else {
-      el.style.position = 'fixed';
+      el.style.position = "fixed";
     }
     el.kulDynamicPosition = {
       anchor: anchorEl,
@@ -72,7 +72,7 @@ export class KulDynamicPosition {
     });
     mutObserver.observe(el, {
       attributes: true,
-      attributeFilter: ['class'],
+      attributeFilter: ["class"],
     });
     this.managedElements.add(el);
   }
@@ -109,27 +109,27 @@ export class KulDynamicPosition {
       return;
     }
     // Reset placement
-    el.style.top = '';
-    el.style.right = '';
-    el.style.bottom = '';
-    el.style.left = '';
+    el.style.top = "";
+    el.style.right = "";
+    el.style.bottom = "";
+    el.style.left = "";
     // Fixed position (usually from mouse events).
     // When anchor doesn't have the tagName property, anchor is considered as a set of coordinates.
     if (!this.anchorIsHTMLElement(el.kulDynamicPosition.anchor)) {
       const x: number = el.kulDynamicPosition.anchor.x;
       const y: number = el.kulDynamicPosition.anchor.y;
       if (el.offsetWidth > window.innerWidth - el.kulDynamicPosition.anchor.x) {
-        el.style.left = x - el.offsetWidth + 'px';
+        el.style.left = x - el.offsetWidth + "px";
       } else {
-        el.style.left = x + 'px';
+        el.style.left = x + "px";
       }
       if (
         el.offsetHeight >
         window.innerHeight - el.kulDynamicPosition.anchor.y
       ) {
-        el.style.top = y - el.offsetHeight + 'px';
+        el.style.top = y - el.offsetHeight + "px";
       } else {
-        el.style.top = y + 'px';
+        el.style.top = y + "px";
       }
       return;
     }

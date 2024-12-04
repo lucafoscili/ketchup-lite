@@ -1,8 +1,8 @@
-import { h, VNode } from '@stencil/core';
+import { h, VNode } from "@stencil/core";
 
-import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
-import { DEFAULTS } from '../helpers/kul-card-defaults';
-import { KulCardAdapter } from '../kul-card-declarations';
+import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
+import { DEFAULTS } from "../helpers/kul-card-defaults";
+import { KulCardAdapter } from "../kul-card-declarations";
 
 export function getUploadLayout(adapter: KulCardAdapter): VNode {
   const card = adapter.get.card();
@@ -11,12 +11,12 @@ export function getUploadLayout(adapter: KulCardAdapter): VNode {
   const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
   const buttons = decorator(
-    'button',
+    "button",
     shapes.button,
     eventDispatcher,
     DEFAULTS.upload.button(),
   );
-  const uploads = decorator('upload', shapes.upload, eventDispatcher);
+  const uploads = decorator("upload", shapes.upload, eventDispatcher);
 
   const className = {
     [`${card.kulLayout}-layout`]: true,

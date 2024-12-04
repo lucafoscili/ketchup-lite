@@ -1,22 +1,22 @@
-import { Component, Element, h, Host, Prop, State, VNode } from '@stencil/core';
+import { Component, Element, h, Host, Prop, State, VNode } from "@stencil/core";
 
 import {
   KUL_DOC,
   KUL_SHOWCASE_COMPONENTS,
   KUL_SHOWCASE_FRAMEWORK,
   KUL_SHOWCASE_UTILITIES,
-} from './kul-showcase-data';
-import { KulShowcaseTitle } from './kul-showcase-declarations';
-import { KulDataDataset } from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulCardEventPayload } from '../kul-card/kul-card-declarations';
+} from "./kul-showcase-data";
+import { KulShowcaseTitle } from "./kul-showcase-declarations";
+import { KulDataDataset } from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
 
 @Component({
-  assetsDirs: ['assets/media'],
-  tag: 'kul-showcase',
-  styleUrl: 'kul-showcase.scss',
+  assetsDirs: ["assets/media"],
+  tag: "kul-showcase",
+  styleUrl: "kul-showcase.scss",
   shadow: true,
 })
 export class KulShowcase {
@@ -43,17 +43,17 @@ export class KulShowcase {
    * String keeping track of the current component being navigated by the user.
    * @default ""
    */
-  @State() currentComponent = '';
+  @State() currentComponent = "";
   /**
    * String keeping track of the current framework being navigated by the user.
    * @default ""
    */
-  @State() currentFramework = '';
+  @State() currentFramework = "";
   /**
    * String keeping track of the current utility being accessed by the user.
    * @default ""
    */
-  @State() currentUtility = '';
+  @State() currentUtility = "";
 
   /*-------------------------------------------------*/
   /*                    P r o p s                    */
@@ -63,7 +63,7 @@ export class KulShowcase {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -78,24 +78,24 @@ export class KulShowcase {
   #comps(type: KulShowcaseTitle): VNode {
     const switchType = () => {
       switch (type) {
-        case 'Components':
+        case "Components":
           return this.currentComponent.toLowerCase();
-        case 'Framework':
+        case "Framework":
           return this.currentFramework.toLowerCase();
-        case 'Utilities':
+        case "Utilities":
           return this.currentUtility.toLowerCase();
       }
     };
-    const Tag = 'kul-showcase-' + switchType();
+    const Tag = "kul-showcase-" + switchType();
     return Tag ? <Tag /> : null;
   }
 
   #cards(type: KulShowcaseTitle) {
     const cards: VNode[] = [];
     const dataset =
-      type === 'Components'
+      type === "Components"
         ? KUL_SHOWCASE_COMPONENTS
-        : type === 'Framework'
+        : type === "Framework"
           ? KUL_SHOWCASE_FRAMEWORK
           : KUL_SHOWCASE_UTILITIES;
 
@@ -105,13 +105,13 @@ export class KulShowcase {
           {
             cells: {
               icon: {
-                shape: 'image',
+                shape: "image",
                 value: node.icon,
               },
               text1: {
                 value: this.#kulManager.data.cell.stringify(node.value),
               },
-              text2: { value: '' },
+              text2: { value: "" },
               text3: { value: node.description },
             },
             id: node.id,
@@ -121,18 +121,18 @@ export class KulShowcase {
       const onEvent: (event: CustomEvent<KulCardEventPayload>) => void = (
         e,
       ) => {
-        if (e.detail.eventType === 'click') {
+        if (e.detail.eventType === "click") {
           switch (type) {
-            case 'Components':
+            case "Components":
               this.currentComponent = node.id;
               console.log(`Selected component: `, this.currentComponent);
               break;
 
-            case 'Framework':
+            case "Framework":
               this.currentFramework = node.id;
               console.log(`Selected framework: `, this.currentFramework);
               break;
-            case 'Utilities':
+            case "Utilities":
               this.currentUtility = node.id;
               console.log(`Selected utility: `, this.currentUtility);
               break;
@@ -154,28 +154,28 @@ export class KulShowcase {
 
   #prepHeader(title: KulShowcaseTitle): VNode {
     const current =
-      title === 'Components'
+      title === "Components"
         ? this.currentComponent
-        : title === 'Utilities'
+        : title === "Utilities"
           ? this.currentUtility
           : this.currentFramework;
     return (
       <div class="header">
         <h2>{current ? current : title}</h2>
-        <div class={`navigation ${current ? 'active' : ''}`}>
+        <div class={`navigation ${current ? "active" : ""}`}>
           <kul-button
-            class={'kul-full-height kul-full-width'}
+            class={"kul-full-height kul-full-width"}
             kulIcon="home"
             onClick={() => {
               switch (title) {
-                case 'Components':
-                  this.currentComponent = '';
+                case "Components":
+                  this.currentComponent = "";
                   break;
-                case 'Framework':
-                  this.currentFramework = '';
+                case "Framework":
+                  this.currentFramework = "";
                   break;
-                case 'Utilities':
-                  this.currentUtility = '';
+                case "Utilities":
+                  this.currentUtility = "";
                   break;
               }
             }}
@@ -198,55 +198,55 @@ export class KulShowcase {
             <div class="link-wrapper">
               <kul-button
                 aria-label="Open GitHub Repository"
-                class={'link'}
+                class={"link"}
                 kulIcon="github"
                 kulLabel="GitHub"
                 kulStyling="floating"
                 onClick={() =>
                   window.open(
-                    'https://github.com/lucafoscili/ketchup-lite',
-                    '_blank',
+                    "https://github.com/lucafoscili/ketchup-lite",
+                    "_blank",
                   )
                 }
                 title="Open GitHub Repository"
               ></kul-button>
               <kul-button
                 aria-label="Open npm Package"
-                class={'link'}
+                class={"link"}
                 kulIcon="npm"
                 kulLabel="npm"
                 kulStyling="floating"
                 onClick={() =>
                   window.open(
-                    'https://www.npmjs.com/package/ketchup-lite',
-                    '_blank',
+                    "https://www.npmjs.com/package/ketchup-lite",
+                    "_blank",
                   )
                 }
                 title="Open npm Package"
               ></kul-button>
             </div>
             <div class="section">
-              {this.#prepHeader('Components')}
+              {this.#prepHeader("Components")}
               <div class="flex-wrapper flex-wrapper--responsive">
                 {this.currentComponent
-                  ? this.#comps('Components')
-                  : this.#cards('Components')}
+                  ? this.#comps("Components")
+                  : this.#cards("Components")}
               </div>
             </div>
             <div class="section">
-              {this.#prepHeader('Framework')}
+              {this.#prepHeader("Framework")}
               <div class="flex-wrapper flex-wrapper--responsive">
                 {this.currentFramework
-                  ? this.#comps('Framework')
-                  : this.#cards('Framework')}
+                  ? this.#comps("Framework")
+                  : this.#cards("Framework")}
               </div>
             </div>
             <div class="section">
-              {this.#prepHeader('Utilities')}
+              {this.#prepHeader("Utilities")}
               <div class="flex-wrapper flex-wrapper--responsive">
                 {this.currentUtility
-                  ? this.#comps('Utilities')
-                  : this.#cards('Utilities')}
+                  ? this.#comps("Utilities")
+                  : this.#cards("Utilities")}
               </div>
             </div>
           </div>

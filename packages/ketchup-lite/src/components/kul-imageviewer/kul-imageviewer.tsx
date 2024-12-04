@@ -10,10 +10,10 @@ import {
   Prop,
   State,
   VNode,
-} from '@stencil/core';
+} from "@stencil/core";
 
-import { ACTIONS } from './helpers/kul-imageviewer-actions';
-import { COMPONENTS } from './helpers/kul-imageviewer-components';
+import { ACTIONS } from "./helpers/kul-imageviewer-actions";
+import { COMPONENTS } from "./helpers/kul-imageviewer-components";
 import {
   KulImageviewerAdapter,
   KulImageviewerAdapterRefs,
@@ -22,21 +22,21 @@ import {
   KulImageviewerHistory,
   KulImageviewerLoadCallback,
   KulImageviewerProps,
-} from './kul-imageviewer-declarations';
+} from "./kul-imageviewer-declarations";
 import {
   KulDataCell,
   KulDataDataset,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { type GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
-import { KulMasonrySelectedShape } from '../kul-masonry/kul-masonry-declarations';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { type GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulMasonrySelectedShape } from "../kul-masonry/kul-masonry-declarations";
 
 @Component({
-  tag: 'kul-imageviewer',
-  styleUrl: 'kul-imageviewer.scss',
+  tag: "kul-imageviewer",
+  styleUrl: "kul-imageviewer.scss",
   shadow: true,
 })
 export class KulImageviewer {
@@ -94,7 +94,7 @@ export class KulImageviewer {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true }) kulStyle = '';
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Configuration parameters of the detail view.
    * @default {}
@@ -116,7 +116,7 @@ export class KulImageviewer {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-imageviewer-event',
+    eventName: "kul-imageviewer-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -230,7 +230,7 @@ export class KulImageviewer {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -310,7 +310,7 @@ export class KulImageviewer {
     if (selectedShape.index !== undefined) {
       const value =
         selectedShape.shape.value ||
-        (selectedShape.shape as Partial<KulDataCell<'image'>>).kulValue;
+        (selectedShape.shape as Partial<KulDataCell<"image">>).kulValue;
       return {
         shape: selectedShape,
         value: this.#stringify(value),
@@ -343,8 +343,8 @@ export class KulImageviewer {
 
   #prepImageviewer(): VNode {
     const className = {
-      'main-grid': true,
-      'main-grid--has-selection': !!this.#adapter.get.state.currentShape(),
+      "main-grid": true,
+      "main-grid--has-selection": !!this.#adapter.get.state.currentShape(),
     };
 
     return (
@@ -374,16 +374,16 @@ export class KulImageviewer {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {

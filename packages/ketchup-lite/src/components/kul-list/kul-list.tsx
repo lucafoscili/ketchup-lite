@@ -11,27 +11,27 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulListEvent,
   KulListEventPayload,
   KulListProps,
-} from './kul-list-declarations';
+} from "./kul-list-declarations";
 import {
   KulDataDataset,
   KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { KulLanguageGeneric } from '../../managers/kul-language/kul-language-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject, KulDataCyAttributes } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { KulLanguageGeneric } from "../../managers/kul-language/kul-language-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-list',
-  styleUrl: 'kul-list.scss',
+  tag: "kul-list",
+  styleUrl: "kul-list.scss",
   shadow: true,
 })
 export class KulList {
@@ -78,7 +78,7 @@ export class KulList {
    * Text displayed when the list is empty.
    * @default ""
    */
-  @Prop() kulEmptyLabel = '';
+  @Prop() kulEmptyLabel = "";
   /**
    * Defines whether items can be removed from the list or not.
    * @default false
@@ -103,7 +103,7 @@ export class KulList {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true }) kulStyle = '';
+  @Prop({ mutable: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -121,7 +121,7 @@ export class KulList {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-list-event',
+    eventName: "kul-list-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -135,23 +135,23 @@ export class KulList {
     index = 0,
   ) {
     switch (eventType) {
-      case 'blur':
+      case "blur":
         this.focused = null;
         break;
-      case 'click':
+      case "click":
         this.focused = index;
         this.#handleSelection(index);
         break;
-      case 'delete':
+      case "delete":
         if (index > -1) {
           this.kulData.nodes.splice(index, 1);
           this.refresh();
         }
         break;
-      case 'focus':
+      case "focus":
         this.focused = index;
         break;
-      case 'pointerdown':
+      case "pointerdown":
         if (this.kulRipple) {
           this.#kulManager.theme.ripple.trigger(
             e as PointerEvent,
@@ -174,21 +174,21 @@ export class KulList {
   /*                L i s t e n e r s                */
   /*-------------------------------------------------*/
 
-  @Listen('keydown')
+  @Listen("keydown")
   listenKeydown(e: KeyboardEvent) {
     if (this.kulNavigation) {
       switch (e.key) {
-        case 'ArrowDown':
+        case "ArrowDown":
           e.preventDefault();
           e.stopPropagation();
           this.focusNext();
           break;
-        case 'ArrowUp':
+        case "ArrowUp":
           e.preventDefault();
           e.stopPropagation();
           this.focusPrevious();
           break;
-        case 'Enter':
+        case "Enter":
           e.preventDefault();
           e.stopPropagation();
           this.#handleSelection(this.focused);
@@ -289,7 +289,7 @@ export class KulList {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -321,10 +321,10 @@ export class KulList {
         data-cy={KulDataCyAttributes.BUTTON}
         onClick={(e) => {
           const index = this.kulData?.nodes?.indexOf(node);
-          this.onKulEvent(e, 'delete', node, index);
+          this.onKulEvent(e, "delete", node, index);
         }}
       >
-        <div class="delete__icon" key={node.id + '_delete'} style={style}></div>
+        <div class="delete__icon" key={node.id + "_delete"} style={style}></div>
       </div>
     );
   }
@@ -345,9 +345,9 @@ export class KulList {
       this.selected === this.kulData.nodes.findIndex((n) => n.id === node.id);
     const className = {
       node: true,
-      'node--focused': isFocused,
-      'node--has-description': !!node.description,
-      'node--selected': isSelected,
+      "node--focused": isFocused,
+      "node--has-description": !!node.description,
+      "node--selected": isSelected,
     };
     return (
       <li class="list-item">
@@ -358,17 +358,17 @@ export class KulList {
           class={className}
           data-cy={KulDataCyAttributes.NODE}
           data-index={index.toString()}
-          onBlur={(e) => this.onKulEvent(e, 'blur', node, index)}
-          onClick={(e) => this.onKulEvent(e, 'click', node, index)}
-          onFocus={(e) => this.onKulEvent(e, 'focus', node, index)}
-          onPointerDown={(e) => this.onKulEvent(e, 'pointerdown', node, index)}
+          onBlur={(e) => this.onKulEvent(e, "blur", node, index)}
+          onClick={(e) => this.onKulEvent(e, "click", node, index)}
+          onFocus={(e) => this.onKulEvent(e, "focus", node, index)}
+          onPointerDown={(e) => this.onKulEvent(e, "pointerdown", node, index)}
           ref={(el) => {
             if (el) {
               this.#listItems.push(el);
             }
           }}
-          role={'option'}
-          tabindex={isSelected ? '0' : '-1'}
+          role={"option"}
+          tabindex={isSelected ? "0" : "-1"}
         >
           <div
             ref={(el) => {
@@ -413,16 +413,16 @@ export class KulList {
         this.#kulManager.theme.ripple.setup(el);
       });
     }
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
@@ -430,8 +430,8 @@ export class KulList {
     this.#listItems = [];
     const className = {
       list: true,
-      'list--empty': isEmpty,
-      'list--selectable': this.kulSelectable,
+      "list--empty": isEmpty,
+      "list--selectable": this.kulSelectable,
     };
 
     return (
@@ -453,9 +453,9 @@ export class KulList {
             </div>
           ) : (
             <ul
-              aria-multiselectable={'false'}
+              aria-multiselectable={"false"}
               class={className}
-              role={'listbox'}
+              role={"listbox"}
             >
               {this.kulData.nodes.map((item, index) =>
                 this.#prepNode(item, index),

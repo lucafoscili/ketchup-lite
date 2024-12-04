@@ -1,14 +1,14 @@
-import { VNode } from '@stencil/core';
+import { VNode } from "@stencil/core";
 
 import {
   KulDataCell,
   KulDataDataset,
   KulDataGenericCell,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulManager } from '../../managers/kul-manager/kul-manager';
-import { KulEventPayload } from '../../types/GenericTypes';
-import { KulMasonrySelectedShape } from '../kul-masonry/kul-masonry-declarations';
-import { KulImageviewer } from './kul-imageviewer';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulManager } from "../../managers/kul-manager/kul-manager";
+import { KulEventPayload } from "../../types/GenericTypes";
+import { KulMasonrySelectedShape } from "../kul-masonry/kul-masonry-declarations";
+import { KulImageviewer } from "./kul-imageviewer";
 
 //#region Adapter
 export interface KulImageviewerAdapter {
@@ -24,7 +24,7 @@ export interface KulImageviewerAdapterActions {
   ) => Promise<void>;
   clearSelection: (adapter: KulImageviewerAdapter) => Promise<void>;
   delete: (adapter: KulImageviewerAdapter) => Promise<void>;
-  findImage: (adapter: KulImageviewerAdapter) => Partial<KulDataCell<'image'>>;
+  findImage: (adapter: KulImageviewerAdapter) => Partial<KulDataCell<"image">>;
   load: (adapter: KulImageviewerAdapter) => Promise<void>;
   redo: (adapter: KulImageviewerAdapter) => Promise<void>;
   save: (adapter: KulImageviewerAdapter) => Promise<void>;
@@ -92,9 +92,9 @@ export interface KulImageviewerAdapterSetters {
 //#endregion
 
 //#region Events
-export type KulImageviewerEvent = 'kul-event' | 'ready' | 'unmount';
+export type KulImageviewerEvent = "kul-event" | "ready" | "unmount";
 export interface KulImageviewerEventPayload
-  extends KulEventPayload<'KulImageviewer', KulImageviewerEvent> {}
+  extends KulEventPayload<"KulImageviewer", KulImageviewerEvent> {}
 //#endregion
 
 //#region State
@@ -105,10 +105,10 @@ export type KulImageviewerHistory = {
 
 //#region Props
 export enum KulImageviewerProps {
-  kulData = 'Actual data of the image viewer.',
-  kulLoadCallback = 'Callback invoked when the load button is clicked.',
-  kulStyle = 'Sets a custom CSS style for the component.',
-  kulValue = 'Configuration parameters of the detail view.',
+  kulData = "Actual data of the image viewer.",
+  kulLoadCallback = "Callback invoked when the load button is clicked.",
+  kulStyle = "Sets a custom CSS style for the component.",
+  kulValue = "Configuration parameters of the detail view.",
 }
 export interface KulImageviewerPropsInterface {
   kulData?: KulDataDataset;

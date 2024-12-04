@@ -1,6 +1,6 @@
-import { h, VNode } from '@stencil/core';
+import { h, VNode } from "@stencil/core";
 
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
+import { KulMessengerAdapter } from "../kul-messenger-declarations";
 
 //#region prepGrid
 export const prepGrid = (adapter: KulMessengerAdapter) => {
@@ -8,7 +8,7 @@ export const prepGrid = (adapter: KulMessengerAdapter) => {
 
   const characters = adapter.get.character.list();
   characters.forEach((c) => {
-    const image = adapter.get.image.asCover('avatars', c);
+    const image = adapter.get.image.asCover("avatars", c);
     avatars.push(
       <div
         class="selection-grid__portrait"
@@ -17,9 +17,9 @@ export const prepGrid = (adapter: KulMessengerAdapter) => {
         }}
       >
         <img
-          class={'selection-grid__image'}
+          class={"selection-grid__image"}
           src={image.value}
-          title={image.title || ''}
+          title={image.title || ""}
         />
         <div class="selection-grid__name">
           <div class="selection-grid__label">

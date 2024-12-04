@@ -1,12 +1,12 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { SPLASH_DOC, SPLASH_EXAMPLES } from './kul-showcase-splash-data';
-import { SplashExample } from './kul-showcase-splash-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { SPLASH_DOC, SPLASH_EXAMPLES } from "./kul-showcase-splash-data";
+import { SplashExample } from "./kul-showcase-splash-declarations";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 
 @Component({
-  tag: 'kul-showcase-splash',
-  styleUrl: 'kul-showcase-splash.scss',
+  tag: "kul-showcase-splash",
+  styleUrl: "kul-showcase-splash.scss",
   shadow: true,
 })
 export class KulShowcaseSplash {
@@ -31,24 +31,24 @@ export class KulShowcaseSplash {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-button
-                id={key + '-trigger'}
+                id={key + "-trigger"}
                 kulLabel="Splash!"
                 onClick={() => {
-                  const splash = document.createElement('kul-splash');
+                  const splash = document.createElement("kul-splash");
                   splash.id = key;
-                  splash.kulLabel = props.kulLabel || 'Click to close...';
+                  splash.kulLabel = props.kulLabel || "Click to close...";
                   splash.kulStyle = props.kulStyle;
-                  splash.addEventListener('click', () => {
+                  splash.addEventListener("click", () => {
                     splash.remove();
                   });
-                  const spinner = document.createElement('kul-spinner');
+                  const spinner = document.createElement("kul-spinner");
 
                   spinner.kulActive = true;
-                  spinner.kulDimensions = '7px';
+                  spinner.kulDimensions = "7px";
                   spinner.kulLayout = 7;
                   splash.appendChild(spinner);
                   document.body.appendChild(splash);

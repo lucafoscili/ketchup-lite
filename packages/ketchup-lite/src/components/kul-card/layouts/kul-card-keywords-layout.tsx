@@ -1,9 +1,9 @@
-import { h, VNode } from '@stencil/core';
+import { h, VNode } from "@stencil/core";
 
-import { kulManagerInstance } from '../../../managers/kul-manager/kul-manager';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { DEFAULTS } from '../helpers/kul-card-defaults';
-import { KulCardAdapter } from '../kul-card-declarations';
+import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { DEFAULTS } from "../helpers/kul-card-defaults";
+import { KulCardAdapter } from "../kul-card-declarations";
 
 export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
   const card = adapter.get.card();
@@ -15,33 +15,33 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     const { comp, eventType } = e.detail;
     const chipEl = chips?.ref?.[0] as HTMLKulChipElement;
 
-    if (chipEl && eventType === 'pointerdown') {
+    if (chipEl && eventType === "pointerdown") {
       comp.setMessage();
       if (chipEl) {
         const selectedChips: string[] = [];
         (await chipEl.getSelectedNodes()).forEach((n) => {
           selectedChips.push(n.id);
         });
-        navigator.clipboard.writeText(selectedChips.join(', '));
+        navigator.clipboard.writeText(selectedChips.join(", "));
       }
     }
   };
 
   const buttons = decorator(
-    'button',
+    "button",
     shapes.button,
     eventDispatcher,
     DEFAULTS.keywords.button(),
     buttonEventHandler,
   );
   const charts = decorator(
-    'chart',
+    "chart",
     shapes.chart,
     eventDispatcher,
     DEFAULTS.keywords.chart(),
   );
   const chips = decorator(
-    'chip',
+    "chip",
     shapes.chip,
     eventDispatcher,
     DEFAULTS.keywords.chip(),

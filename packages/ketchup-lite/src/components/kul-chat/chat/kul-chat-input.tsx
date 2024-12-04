@@ -1,8 +1,8 @@
-import { h } from '@stencil/core';
+import { h } from "@stencil/core";
 
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulProgressbarEventPayload } from '../../kul-progressbar/kul-progressbar-declarations';
-import { KulChatAdapter } from '../kul-chat-declarations';
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulProgressbarEventPayload } from "../../kul-progressbar/kul-progressbar-declarations";
+import { KulChatAdapter } from "../kul-chat-declarations";
 
 export const prepInputArea = (adapter: KulChatAdapter) => {
   return (
@@ -44,7 +44,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
       <kul-button
         id="clear-button"
         kulLabel="Clear"
-        kulStyling={'flat'}
+        kulStyling={"flat"}
         onKul-button-event={buttonEventHandler.bind(
           buttonEventHandler,
           adapter,
@@ -60,7 +60,7 @@ export const prepButtons = (adapter: KulChatAdapter) => {
         id="stt-button"
         class="chat__request__buttons__stt"
         kulIcon="keyboard_voice"
-        kulStyling={'icon'}
+        kulStyling={"icon"}
         onKul-button-event={buttonEventHandler.bind(
           buttonEventHandler,
           adapter,
@@ -107,8 +107,8 @@ export const prepButtons = (adapter: KulChatAdapter) => {
 const prepProgressBar = (adapter: KulChatAdapter) => {
   const cssClass = {
     chat__request__input__progressbar: true,
-    ['kul-animated']: true,
-    ['kul-striped']: true,
+    ["kul-animated"]: true,
+    ["kul-striped"]: true,
   };
   return (
     <kul-progressbar
@@ -137,19 +137,19 @@ const buttonEventHandler = async (
   const textarea = adapter.components.textareas.prompt;
 
   switch (eventType) {
-    case 'click':
+    case "click":
       switch (id) {
-        case 'clear-button':
-          await textarea.setValue('');
+        case "clear-button":
+          await textarea.setValue("");
           await textarea.setFocus();
           break;
-        case 'send-button':
+        case "send-button":
           adapter.actions.send();
           break;
-        case 'settings-button':
-          adapter.set.status.view('settings');
+        case "settings-button":
+          adapter.set.status.view("settings");
           break;
-        case 'stt-button':
+        case "stt-button":
           adapter.actions.stt();
           break;
       }
@@ -163,7 +163,7 @@ const progressbarEventHandler = async (
   const { eventType } = e.detail;
 
   switch (eventType) {
-    case 'ready':
+    case "ready":
       adapter.actions.updateTokenCount();
       break;
   }

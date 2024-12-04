@@ -1,15 +1,15 @@
-import { KulCode } from '../../components/kul-code/kul-code';
-import { KulToggle } from '../../components/kul-toggle/kul-toggle';
-import { KulGenericComponent } from '../../types/GenericTypes';
-import { KulData } from '../kul-data/kul-data';
-import { KulDates } from '../kul-dates/kul-dates';
-import { KulDynamicPosition } from '../kul-dynamic-position/kul-dynamic-position';
-import { KulLanguage } from '../kul-language/kul-language';
-import { KulLLM } from '../kul-llm/kul-llm';
-import { KulManager } from '../kul-manager/kul-manager';
-import { KulScrollOnHover } from '../kul-scroll-on-hover/kul-scroll-on-hover';
-import { KulTheme } from '../kul-theme/kul-theme';
-import { KulDebug } from './kul-debug';
+import { KulCode } from "../../components/kul-code/kul-code";
+import { KulToggle } from "../../components/kul-toggle/kul-toggle";
+import { KulGenericComponent } from "../../types/GenericTypes";
+import { KulData } from "../kul-data/kul-data";
+import { KulDates } from "../kul-dates/kul-dates";
+import { KulDynamicPosition } from "../kul-dynamic-position/kul-dynamic-position";
+import { KulLanguage } from "../kul-language/kul-language";
+import { KulLLM } from "../kul-llm/kul-llm";
+import { KulManager } from "../kul-manager/kul-manager";
+import { KulScrollOnHover } from "../kul-scroll-on-hover/kul-scroll-on-hover";
+import { KulTheme } from "../kul-theme/kul-theme";
+import { KulDebug } from "./kul-debug";
 
 export interface KulDebugLifecycleInfo {
   endTime: number;
@@ -57,13 +57,13 @@ export type KulDebugLogsToPrint = {
   [index in KulDebugLogType]: KulDebugLogToPrintEntry[];
 };
 export type KulDebugCategory =
-  | 'informational'
-  | 'warning'
-  | 'error'
-  | 'success';
+  | "informational"
+  | "warning"
+  | "error"
+  | "success";
 export type KulDebugLifecycles =
-  | 'custom'
-  | 'did-load'
-  | 'did-render'
-  | 'will-render';
-export type KulDebugLogType = 'load' | 'misc' | 'render' | 'resize';
+  | "custom"
+  | "did-load"
+  | "did-render"
+  | "will-render";
+export type KulDebugLogType = "load" | "misc" | "render" | "resize";

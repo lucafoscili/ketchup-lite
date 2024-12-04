@@ -1,130 +1,130 @@
-import { HTMLStencilElement } from '@stencil/core/internal';
-import { KulBadgePropsInterface } from '../../components/kul-badge/kul-badge-declarations';
-import { KulButtonPropsInterface } from '../../components/kul-button/kul-button-declarations';
+import { HTMLStencilElement } from "@stencil/core/internal";
+import { KulBadgePropsInterface } from "../../components/kul-badge/kul-badge-declarations";
+import { KulButtonPropsInterface } from "../../components/kul-button/kul-button-declarations";
 import {
   KulChatHistory,
   KulChatPropsInterface,
-} from '../../components/kul-chat/kul-chat-declarations';
-import { KulCodePropsInterface } from '../../components/kul-code/kul-code-declarations';
-import { KulImagePropsInterface } from '../../components/kul-image/kul-image-declarations';
-import { KulTogglePropsInterface } from '../../components/kul-toggle/kul-toggle-declarations';
+} from "../../components/kul-chat/kul-chat-declarations";
+import { KulCodePropsInterface } from "../../components/kul-code/kul-code-declarations";
+import { KulImagePropsInterface } from "../../components/kul-image/kul-image-declarations";
+import { KulTogglePropsInterface } from "../../components/kul-toggle/kul-toggle-declarations";
 import {
   GenericMap,
   KulComponent,
   KulComponentName,
   KulEventPayload,
   KulEventType,
-} from '../../types/GenericTypes';
-import { KulChartPropsInterface } from '../../components/kul-chart/kul-chart-declarations';
-import { KulChipPropsInterface } from '../../components/kul-chip/kul-chip-declarations';
-import { KulUploadPropsInterface } from '../../components/kul-upload/kul-upload-declarations';
-import { KulCardPropsInterface } from '../../components/kul-card/kul-card-declarations';
+} from "../../types/GenericTypes";
+import { KulChartPropsInterface } from "../../components/kul-chart/kul-chart-declarations";
+import { KulChipPropsInterface } from "../../components/kul-chip/kul-chip-declarations";
+import { KulUploadPropsInterface } from "../../components/kul-upload/kul-upload-declarations";
+import { KulCardPropsInterface } from "../../components/kul-card/kul-card-declarations";
 
 export interface KulDataBaseCell {
   value: string;
   shape?: KulDataShapes;
   htmlProps?: Partial<HTMLStencilElement>;
 }
-export type KulDataCell<T extends KulDataShapes> = T extends 'badge'
+export type KulDataCell<T extends KulDataShapes> = T extends "badge"
   ? Partial<KulBadgePropsInterface> & {
-      shape: 'badge';
+      shape: "badge";
       value: string;
       htmlProps?: Partial<HTMLKulBadgeElement>;
     }
-  : T extends 'button'
+  : T extends "button"
     ? Partial<KulButtonPropsInterface> & {
-        shape: 'button';
+        shape: "button";
         value: string;
         htmlProps?: Partial<HTMLKulButtonElement>;
       }
-    : T extends 'card'
+    : T extends "card"
       ? Partial<KulCardPropsInterface> & {
-          shape: 'card';
+          shape: "card";
           value: string;
           htmlProps?: Partial<HTMLKulCardElement>;
         }
-      : T extends 'chart'
+      : T extends "chart"
         ? Partial<KulChartPropsInterface> & {
-            shape: 'chart';
+            shape: "chart";
             value: string;
             htmlProps?: Partial<HTMLKulChartElement>;
           }
-        : T extends 'chat'
+        : T extends "chat"
           ? Partial<KulChatPropsInterface> & {
-              shape: 'chat';
+              shape: "chat";
               value: KulChatHistory;
               htmlProps?: Partial<HTMLKulChatElement>;
             }
-          : T extends 'chip'
+          : T extends "chip"
             ? Partial<KulChipPropsInterface> & {
-                shape: 'chip';
+                shape: "chip";
                 value: string;
                 htmlProps?: Partial<HTMLKulChipElement>;
               }
-            : T extends 'code'
+            : T extends "code"
               ? Partial<KulCodePropsInterface> & {
-                  shape: 'code';
+                  shape: "code";
                   value: string;
                   htmlProps?: Partial<HTMLKulCodeElement>;
                 }
-              : T extends 'image'
+              : T extends "image"
                 ? Partial<KulImagePropsInterface> & {
-                    shape: 'image';
+                    shape: "image";
                     value: string;
                     htmlProps?: Partial<HTMLKulImageElement>;
                   }
-                : T extends 'number'
+                : T extends "number"
                   ? {
-                      shape: 'number';
+                      shape: "number";
                       value: number;
                     }
-                  : T extends 'toggle'
+                  : T extends "toggle"
                     ? Partial<KulTogglePropsInterface> & {
-                        shape: 'toggle';
+                        shape: "toggle";
                         value: boolean;
                         htmlProps?: Partial<HTMLKulToggleElement>;
                       }
-                    : T extends 'upload'
+                    : T extends "upload"
                       ? Partial<KulUploadPropsInterface> & {
-                          shape: 'upload';
+                          shape: "upload";
                           value: string;
                           htmlProps?: Partial<HTMLKulUploadElement>;
                         }
-                      : T extends 'text'
+                      : T extends "text"
                         ? {
-                            shape?: 'text';
+                            shape?: "text";
                             value: string;
                           }
                         : KulDataBaseCell;
 export type KulCellNameToShape = {
-  kulBadge: 'badge';
-  kulButton: 'button';
-  kulCard: 'card';
-  kulChart: 'chart';
-  kulChat: 'chat';
-  kulChip: 'chip';
-  kulCode: 'code';
-  kulImage: 'image';
-  kulNumber: 'number';
-  kulToggle: 'toggle';
-  kulText: 'text';
-  kulUpload: 'upload';
+  kulBadge: "badge";
+  kulButton: "button";
+  kulCard: "card";
+  kulChart: "chart";
+  kulChat: "chat";
+  kulChip: "chip";
+  kulCode: "code";
+  kulImage: "image";
+  kulNumber: "number";
+  kulToggle: "toggle";
+  kulText: "text";
+  kulUpload: "upload";
 };
 export type KulDataCellFromName<T extends keyof KulCellNameToShape> =
   KulDataCell<KulCellNameToShape[T]>;
 export interface KulDataCellContainer {
-  kulBadge?: KulDataCellFromName<'kulBadge'>;
-  kulButton?: KulDataCellFromName<'kulButton'>;
-  kulCard?: KulDataCellFromName<'kulCard'>;
-  kulChart?: KulDataCellFromName<'kulChart'>;
-  kulChat?: KulDataCellFromName<'kulChat'>;
-  kulChip?: KulDataCellFromName<'kulChip'>;
-  kulCode?: KulDataCellFromName<'kulCode'>;
-  kulImage?: KulDataCellFromName<'kulImage'>;
-  kulToggle?: KulDataCellFromName<'kulToggle'>;
-  kulNumber?: KulDataCellFromName<'kulNumber'>;
-  kulText?: KulDataCellFromName<'kulText'>;
-  kulUpload?: KulDataCellFromName<'kulUpload'>;
+  kulBadge?: KulDataCellFromName<"kulBadge">;
+  kulButton?: KulDataCellFromName<"kulButton">;
+  kulCard?: KulDataCellFromName<"kulCard">;
+  kulChart?: KulDataCellFromName<"kulChart">;
+  kulChat?: KulDataCellFromName<"kulChat">;
+  kulChip?: KulDataCellFromName<"kulChip">;
+  kulCode?: KulDataCellFromName<"kulCode">;
+  kulImage?: KulDataCellFromName<"kulImage">;
+  kulToggle?: KulDataCellFromName<"kulToggle">;
+  kulNumber?: KulDataCellFromName<"kulNumber">;
+  kulText?: KulDataCellFromName<"kulText">;
+  kulUpload?: KulDataCellFromName<"kulUpload">;
 }
 export interface KulDataCellContainer {
   [index: string]: KulDataCell<KulDataShapes>;
@@ -153,18 +153,18 @@ export interface KulDataNode {
   value?: string | number;
 }
 export type KulDataShapes =
-  | 'badge'
-  | 'button'
-  | 'card'
-  | 'chart'
-  | 'chat'
-  | 'chip'
-  | 'code'
-  | 'image'
-  | 'number'
-  | 'toggle'
-  | 'text'
-  | 'upload';
+  | "badge"
+  | "button"
+  | "card"
+  | "chart"
+  | "chat"
+  | "chip"
+  | "code"
+  | "image"
+  | "number"
+  | "toggle"
+  | "text"
+  | "upload";
 export type KulDataShapesMap = {
   [K in KulDataShapes]?: Partial<KulDataCell<K>>[];
 };
@@ -217,8 +217,8 @@ export interface KulDataFilterRange {
 }
 export type KulDataShapeCallback<
   C extends KulComponentName,
-  S extends KulDataShapes | 'text',
-> = S extends 'text'
+  S extends KulDataShapes | "text",
+> = S extends "text"
   ? never
   : (e: CustomEvent<KulEventPayload<C, KulEventType<KulComponent<C>>>>) => void;
 export type KulDataShapeDefaults = Partial<{

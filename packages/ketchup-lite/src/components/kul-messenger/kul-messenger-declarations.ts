@@ -1,13 +1,13 @@
-import { KulMessenger } from './kul-messenger';
+import { KulMessenger } from "./kul-messenger";
 import {
   KulDataDataset,
   KulDataNode,
-} from '../../managers/kul-data/kul-data-declarations';
-import type { KulEventPayload } from '../../types/GenericTypes';
+} from "../../managers/kul-data/kul-data-declarations";
+import type { KulEventPayload } from "../../types/GenericTypes";
 import {
   KulChatPropsInterface,
   KulChatStatus,
-} from '../kul-chat/kul-chat-declarations';
+} from "../kul-chat/kul-chat-declarations";
 
 //#region Adapter
 export interface KulMessengerAdapter {
@@ -177,82 +177,82 @@ export interface KulMessengerBaseImageRootNode<
   children?: T[];
   value: number;
 }
-export type KulMessengerTypes = 'biography' | 'chat' | KulMessengerImageTypes;
-export type KulMessengerImageTypes = 'avatars' | KulMessengerOptionTypes;
+export type KulMessengerTypes = "biography" | "chat" | KulMessengerImageTypes;
+export type KulMessengerImageTypes = "avatars" | KulMessengerOptionTypes;
 export type KulMessengerOptionTypes =
-  | 'locations'
-  | 'outfits'
-  | 'styles'
-  | 'timeframes';
+  | "locations"
+  | "outfits"
+  | "styles"
+  | "timeframes";
 export type KulMessengerRootIds<T extends KulMessengerTypes> = T;
 export type KulMessengerImageRootIds<T extends KulMessengerImageTypes> = T;
 export interface KulMessengerBiographyRootNode
-  extends KulMessengerBaseRootNode<KulMessengerRootIds<'biography'>> {
-  id: KulMessengerRootIds<'biography'>;
+  extends KulMessengerBaseRootNode<KulMessengerRootIds<"biography">> {
+  id: KulMessengerRootIds<"biography">;
   value: string;
 }
 export interface KulMessengerChatRootNode
-  extends KulMessengerBaseRootNode<KulMessengerRootIds<'chat'>> {
-  id: KulMessengerRootIds<'chat'>;
+  extends KulMessengerBaseRootNode<KulMessengerRootIds<"chat">> {
+  id: KulMessengerRootIds<"chat">;
   value: string;
 }
 export interface KulMessengerAvatarRootNode
   extends KulMessengerBaseImageRootNode<
     KulMessengerAvatarNode,
-    KulMessengerImageRootIds<'avatars'>
+    KulMessengerImageRootIds<"avatars">
   > {
-  id: KulMessengerImageRootIds<'avatars'>;
+  id: KulMessengerImageRootIds<"avatars">;
 }
 export interface KulMessengerLocationRootNode
   extends KulMessengerBaseImageRootNode<
     KulMessengerLocationNode,
-    KulMessengerImageRootIds<'locations'>
+    KulMessengerImageRootIds<"locations">
   > {
-  id: KulMessengerImageRootIds<'locations'>;
+  id: KulMessengerImageRootIds<"locations">;
 }
 export interface KulMessengerOutfitRootNode
   extends KulMessengerBaseImageRootNode<
     KulMessengerOutfitNode,
-    KulMessengerImageRootIds<'outfits'>
+    KulMessengerImageRootIds<"outfits">
   > {
-  id: KulMessengerImageRootIds<'outfits'>;
+  id: KulMessengerImageRootIds<"outfits">;
 }
 export interface KulMessengerStyleRootNode
   extends KulMessengerBaseImageRootNode<
     KulMessengerStyleNode,
-    KulMessengerImageRootIds<'styles'>
+    KulMessengerImageRootIds<"styles">
   > {
-  id: KulMessengerImageRootIds<'styles'>;
+  id: KulMessengerImageRootIds<"styles">;
 }
 export interface KulMessengerTimeframeRootNode
   extends KulMessengerBaseImageRootNode<
     KulMessengerTimeframeNode,
-    KulMessengerImageRootIds<'timeframes'>
+    KulMessengerImageRootIds<"timeframes">
   > {
-  id: KulMessengerImageRootIds<'timeframes'>;
+  id: KulMessengerImageRootIds<"timeframes">;
 }
 //#endregion
 //#region Children nodes
 export interface KulMessengerBaseChildNode<T extends KulMessengerUnionChildIds>
   extends KulDataNode {
-  cells: { kulImage: { shape: 'image'; value: string } };
+  cells: { kulImage: { shape: "image"; value: string } };
   id: T;
   value: string;
 }
-export type KulMessengerChildTypes = 'avatar' | KulMessengerChildOptionTypes;
+export type KulMessengerChildTypes = "avatar" | KulMessengerChildOptionTypes;
 export type KulMessengerChildOptionTypes =
-  | 'location'
-  | 'outfit'
-  | 'style'
-  | 'timeframe';
+  | "location"
+  | "outfit"
+  | "style"
+  | "timeframe";
 export type KulMessengerPrefix<T extends KulMessengerChildTypes> = `${T}_`;
-export type KulMessengerAvatarId = `${KulMessengerPrefix<'avatar'>}${string}`;
+export type KulMessengerAvatarId = `${KulMessengerPrefix<"avatar">}${string}`;
 export type KulMessengerLocationId =
-  `${KulMessengerPrefix<'location'>}${string}`;
-export type KulMessengerOutfitId = `${KulMessengerPrefix<'outfit'>}${string}`;
-export type KulMessengerStyleId = `${KulMessengerPrefix<'style'>}${string}`;
+  `${KulMessengerPrefix<"location">}${string}`;
+export type KulMessengerOutfitId = `${KulMessengerPrefix<"outfit">}${string}`;
+export type KulMessengerStyleId = `${KulMessengerPrefix<"style">}${string}`;
 export type KulMessengerTimeframeId =
-  `${KulMessengerPrefix<'timeframe'>}${string}`;
+  `${KulMessengerPrefix<"timeframe">}${string}`;
 export type KulMessengerUnionChildIds =
   | KulMessengerAvatarId
   | KulMessengerLocationId
@@ -323,21 +323,21 @@ export interface KulMessengerUI {
   options: KulMessengerOptions;
   panels: KulMessengerPanels;
 }
-export type KulMessengerPanelsValue = 'left' | 'right';
+export type KulMessengerPanelsValue = "left" | "right";
 //#endregion
 //#region Events
-export type KulMessengerEvent = 'ready' | 'save' | 'unmount';
+export type KulMessengerEvent = "ready" | "save" | "unmount";
 export interface KulMessengerEventPayload
-  extends KulEventPayload<'KulMessenger', KulMessengerEvent> {
+  extends KulEventPayload<"KulMessenger", KulMessengerEvent> {
   config: KulMessengerConfig;
 }
 //#endregion
 //#region Props
 export enum KulMessengerProps {
-  kulAutosave = 'Automatically saves the dataset when a chat updates.',
-  kulData = 'The actual data of the component.',
-  kulStyle = 'Custom style of the component.',
-  kulValue = 'Sets the initial configuration, including active character and filters.',
+  kulAutosave = "Automatically saves the dataset when a chat updates.",
+  kulData = "The actual data of the component.",
+  kulStyle = "Custom style of the component.",
+  kulValue = "Sets the initial configuration, including active character and filters.",
 }
 export interface KulMessengerPropsInterface {
   kulAutosave?: boolean;

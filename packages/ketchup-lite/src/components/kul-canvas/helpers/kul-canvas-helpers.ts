@@ -1,4 +1,4 @@
-import { KulCanvasPoints } from '../kul-canvas-declarations';
+import { KulCanvasPoints } from "../kul-canvas-declarations";
 
 //#region simplifyStroke
 export const simplifyStroke = (points: KulCanvasPoints, tolerance: number) => {

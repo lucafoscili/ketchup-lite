@@ -1,7 +1,7 @@
-import type { KulDatesLocales } from '../kul-dates/kul-dates-declarations';
-import type { KulLanguageJSON } from '../kul-language/kul-language-declarations';
-import type { KulThemeJSON } from '../kul-theme/kul-theme-declarations';
-import type { KulManager } from './kul-manager';
+import type { KulDatesLocales } from "../kul-dates/kul-dates-declarations";
+import type { KulLanguageJSON } from "../kul-language/kul-language-declarations";
+import type { KulThemeJSON } from "../kul-theme/kul-theme-declarations";
+import type { KulManager } from "./kul-manager";
 
 export interface KulDom extends HTMLHtmlElement {
   ketchupLite: KulManager;

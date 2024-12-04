@@ -1,13 +1,13 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { CAROUSEL_DOC, CAROUSEL_EXAMPLES } from './kul-showcase-carousel-data';
-import { CarouselExample } from './kul-showcase-carousel-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+import { CAROUSEL_DOC, CAROUSEL_EXAMPLES } from "./kul-showcase-carousel-data";
+import { CarouselExample } from "./kul-showcase-carousel-declarations";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 @Component({
-  tag: 'kul-showcase-carousel',
-  styleUrl: 'kul-showcase-carousel.scss',
+  tag: "kul-showcase-carousel",
+  styleUrl: "kul-showcase-carousel.scss",
   shadow: true,
 })
 export class KulShowcaseCarousel {
@@ -38,14 +38,14 @@ export class KulShowcaseCarousel {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-carousel
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -66,7 +66,7 @@ export class KulShowcaseCarousel {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }

@@ -1,16 +1,16 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import {
   IMAGEVIEWER_DOC,
   IMAGEVIEWER_EXAMPLES,
-} from './kul-showcase-imageviewer-data';
-import { ImageviewerExample } from './kul-showcase-imageviewer-declarations';
-import { SHOWCASE_DYN_EXAMPLES } from '../../helpers/kul-showcase-dyn-sample';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+} from "./kul-showcase-imageviewer-data";
+import { ImageviewerExample } from "./kul-showcase-imageviewer-declarations";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 @Component({
-  tag: 'kul-showcase-imageviewer',
-  styleUrl: 'kul-showcase-imageviewer.scss',
+  tag: "kul-showcase-imageviewer",
+  styleUrl: "kul-showcase-imageviewer.scss",
   shadow: true,
 })
 export class KulShowcaseImageviewer {
@@ -41,14 +41,14 @@ export class KulShowcaseImageviewer {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <kul-imageviewer
                 key={key}
                 id={key}
                 ref={(el) => {
-                  if (el && props['data-dynamic']) {
+                  if (el && props["data-dynamic"]) {
                     this.#dynamicExamples.push(el);
                   }
                 }}
@@ -69,7 +69,7 @@ export class KulShowcaseImageviewer {
       this.#interval = setInterval(() => {
         this.#dynamicExamples.forEach((comp) => {
           switch (comp.dataset.dynamic as KulShowcaseDynamicExampleType) {
-            case 'custom':
+            case "custom":
               comp.kulStyle = this.#dynamicExampleManager.custom.get(comp.id);
               break;
           }

@@ -40,7 +40,7 @@
 
 :host(.#{$kul-class-pulsating}) {
   .icon-button--on:after {
-    content: '';
+    content: "";
     animation: pulsating 1250ms infinite;
     position: absolute;
     height: 2px;

@@ -1,15 +1,15 @@
-import { h } from '@stencil/core';
+import { h } from "@stencil/core";
 
-import { KulButton } from '../../kul-button/kul-button';
-import { KulButtonEventPayload } from '../../kul-button/kul-button-declarations';
-import { KulChatEventPayload } from '../../kul-chat/kul-chat-declarations';
-import { KulTabbarEventPayload } from '../../kul-tabbar/kul-tabbar-declarations';
+import { KulButton } from "../../kul-button/kul-button";
+import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulChatEventPayload } from "../../kul-chat/kul-chat-declarations";
+import { KulTabbarEventPayload } from "../../kul-tabbar/kul-tabbar-declarations";
 import {
   LEFT_EXPANDER_ICON,
   NAV_DATASET,
   RIGHT_EXPANDER_ICON,
-} from '../kul-messenger-constants';
-import { KulMessengerAdapter } from '../kul-messenger-declarations';
+} from "../kul-messenger-constants";
+import { KulMessengerAdapter } from "../kul-messenger-declarations";
 
 export const prepCenter = (adapter: KulMessengerAdapter) => {
   const buttons = prepExpanderButtons(adapter);
@@ -114,10 +114,10 @@ const tabbarEventHandler = (
 ) => {
   const { eventType, node } = e.detail;
   switch (eventType) {
-    case 'click':
-      if (node.id === 'previous') {
+    case "click":
+      if (node.id === "previous") {
         adapter.set.character.previous();
-      } else if (node.id === 'next') {
+      } else if (node.id === "next") {
         adapter.set.character.next();
       } else {
         adapter.set.character.current(null);
@@ -132,7 +132,7 @@ const chatEventHandler = (
   const { comp, eventType, history, status } = e.detail;
   const chat = comp;
   switch (eventType) {
-    case 'config':
+    case "config":
       adapter.set.character.chat({
         kulEndpointUrl: chat.kulEndpointUrl,
         kulMaxTokens: chat.kulMaxTokens,
@@ -141,10 +141,10 @@ const chatEventHandler = (
         kulTemperature: chat.kulTemperature,
       });
       break;
-    case 'polling':
+    case "polling":
       adapter.set.messenger.status.connection(status);
       break;
-    case 'update':
+    case "update":
       adapter.set.character.history(history);
       break;
   }
@@ -158,14 +158,14 @@ const expanderEventHandler = (
   const button = comp as KulButton;
 
   switch (eventType) {
-    case 'click':
+    case "click":
       switch (button.rootElement.id) {
-        case 'left':
-          const newLeft = adapter.set.messenger.ui.panel('left');
+        case "left":
+          const newLeft = adapter.set.messenger.ui.panel("left");
           button.kulIcon = newLeft ? RIGHT_EXPANDER_ICON : LEFT_EXPANDER_ICON;
           break;
-        case 'right':
-          const newRight = adapter.set.messenger.ui.panel('right');
+        case "right":
+          const newRight = adapter.set.messenger.ui.panel("right");
           button.kulIcon = newRight ? LEFT_EXPANDER_ICON : RIGHT_EXPANDER_ICON;
           break;
       }
@@ -174,28 +174,28 @@ const expanderEventHandler = (
 
 const getDynamicPrompts = (adapter: KulMessengerAdapter) => {
   const { biography } = adapter.get.character;
-  const location = adapter.get.image.asCover('locations').node;
-  const outfit = adapter.get.image.asCover('outfits').node;
-  const timeframe = adapter.get.image.asCover('timeframes').node;
+  const location = adapter.get.image.asCover("locations").node;
+  const outfit = adapter.get.image.asCover("outfits").node;
+  const timeframe = adapter.get.image.asCover("timeframes").node;
   const { options: isEnabled } = adapter.get.messenger.ui();
 
   const createLLMEntry = (title: string, description?: string) =>
-    title ? `${title} - ${description || ''}` : '';
+    title ? `${title} - ${description || ""}` : "";
 
   const prompts = {
-    biography: biography() ? `Character Biography:\n${biography()}` : '',
+    biography: biography() ? `Character Biography:\n${biography()}` : "",
     location:
       location && isEnabled.locations
         ? `Location:\n${createLLMEntry(location.value, location.description)}`
-        : '',
+        : "",
     outfit:
       outfit && isEnabled.outfits
         ? `Outfit:\n${createLLMEntry(outfit.value, outfit.description)}`
-        : '',
+        : "",
     timeframe:
       timeframe && isEnabled.timeframes
         ? `Timeframe:\n${createLLMEntry(timeframe.value, timeframe.description)}`
-        : '',
+        : "",
   };
 
   return prompts;

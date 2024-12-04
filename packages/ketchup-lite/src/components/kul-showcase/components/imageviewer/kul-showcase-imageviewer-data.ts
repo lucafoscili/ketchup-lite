@@ -1,36 +1,36 @@
-import { ImageviewerData } from './kul-showcase-imageviewer-declarations';
+import { ImageviewerData } from "./kul-showcase-imageviewer-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
   KulComponentName,
   KulComponentTag,
-} from '../../../../types/GenericTypes';
-import { KulArticleDataset } from '../../../kul-article/kul-article-declarations';
+} from "../../../../types/GenericTypes";
+import { KulArticleDataset } from "../../../kul-article/kul-article-declarations";
 import {
   IMAGEVIEWER_DATA,
   IMAGEVIEWER_VALUE,
-} from '../../assets/fixtures/imageviewer';
-import { SECTION_FACTORY } from '../../helpers/kul-showcase-section';
-import { DOC_IDS } from '../../kul-showcase-data';
+} from "../../assets/fixtures/imageviewer";
+import { SECTION_FACTORY } from "../../helpers/kul-showcase-section";
+import { DOC_IDS } from "../../kul-showcase-data";
 
-const COMPONENT_NAME: KulComponentName = 'KulImageviewer';
-const EVENT_NAME: KulComponentEventName<'KulImageviewer'> =
-  'kul-imageviewer-event';
-const PAYLOAD_NAME: KulComponentEventPayloadName<'KulImageviewer'> =
-  'KulImageviewerEventPayload';
-const TAG_NAME: KulComponentTag<'KulImageviewer'> = 'kul-imageviewer';
+const COMPONENT_NAME: KulComponentName = "KulImageviewer";
+const EVENT_NAME: KulComponentEventName<"KulImageviewer"> =
+  "kul-imageviewer-event";
+const PAYLOAD_NAME: KulComponentEventPayloadName<"KulImageviewer"> =
+  "KulImageviewerEventPayload";
+const TAG_NAME: KulComponentTag<"KulImageviewer"> = "kul-imageviewer";
 
 export const IMAGEVIEWER_EXAMPLES: () => ImageviewerData = () => ({
   simple: {
-    ['data-description']: 'Simple imageviewer',
+    ["data-description"]: "Simple imageviewer",
     kulLoadCallback: async (imageviewer, _val) => {
       imageviewer.kulData = IMAGEVIEWER_DATA();
     },
     kulValue: IMAGEVIEWER_VALUE,
   },
   style: {
-    ['data-description']: 'Imageviewer with custom style',
-    ['data-dynamic']: 'custom',
+    ["data-description"]: "Imageviewer with custom style",
+    ["data-dynamic"]: "custom",
     kulLoadCallback: async (imageviewer, _val) => {
       imageviewer.kulData = IMAGEVIEWER_DATA();
     },
@@ -46,23 +46,23 @@ export const IMAGEVIEWER_DOC: KulArticleDataset = {
       children: [
         SECTION_FACTORY.overview(
           COMPONENT_NAME,
-          'is handy when two components must be imageviewerd in order to spot differences',
+          "is handy when two components must be imageviewerd in order to spot differences",
         ),
         SECTION_FACTORY.usage(COMPONENT_NAME, {
           data: JSON.stringify({
             nodes: [
               {
-                value: 'Node 1',
-                id: '0',
+                value: "Node 1",
+                id: "0",
                 cells: {
-                  kulImage: { kulValue: 'url_of_image1' },
+                  kulImage: { kulValue: "url_of_image1" },
                 },
               },
               {
-                value: 'Node 2',
-                id: '1',
+                value: "Node 2",
+                id: "1",
                 cells: {
-                  kulImage: { kulValue: 'url_of_image2' },
+                  kulImage: { kulValue: "url_of_image2" },
                 },
               },
             ],
@@ -75,14 +75,14 @@ export const IMAGEVIEWER_DOC: KulArticleDataset = {
           PAYLOAD_NAME,
           [
             {
-              type: 'ready',
+              type: "ready",
               description:
-                'emitted when the component completes its first complete lifecycle',
+                "emitted when the component completes its first complete lifecycle",
             },
             {
-              type: 'unmount',
+              type: "unmount",
               description:
-                'emitted when the component is disconnected from the DOM',
+                "emitted when the component is disconnected from the DOM",
             },
           ],
           EVENT_NAME,

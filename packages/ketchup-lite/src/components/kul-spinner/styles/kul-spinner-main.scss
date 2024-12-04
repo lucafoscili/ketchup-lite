@@ -134,7 +134,7 @@
 
 .spinner-v2:before,
 .spinner-v2:after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
 }
@@ -359,7 +359,7 @@
   position: absolute;
   top: 0;
   left: 0;
-  content: '';
+  content: "";
 }
 
 .spinner-v5:after {
@@ -367,7 +367,7 @@
   width: 75%;
   height: 75%;
   border-radius: 50%;
-  content: '';
+  content: "";
   margin: auto;
   position: absolute;
   top: 0;
@@ -405,7 +405,7 @@
 .spinner-v6:after {
   position: absolute;
   top: 0;
-  content: '';
+  content: "";
 }
 
 .spinner-v6:before {
@@ -448,7 +448,7 @@
 }
 
 .sk-spinner-v7-dot:before {
-  content: '';
+  content: "";
   display: block;
   width: 25%;
   height: 25%;
@@ -757,7 +757,7 @@
 }
 
 .spinner-v14 .sk-spinner-v14-circle:before {
-  content: '';
+  content: "";
   display: block;
   margin: 0 auto;
   width: 15%;
@@ -890,7 +890,7 @@
 .spinner-bar-v1:before {
   display: block;
   position: absolute;
-  content: '';
+  content: "";
   width: 25%;
   height: 1em;
   animation: sk-spinner-bar-v1 5s linear infinite;

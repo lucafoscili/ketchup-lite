@@ -1,12 +1,12 @@
-import { Component, Element, Fragment, State, VNode, h } from '@stencil/core';
+import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { DRAWER_DOC, DRAWER_EXAMPLES } from './kul-showcase-drawer-data';
-import { DrawerExample } from './kul-showcase-drawer-declarations';
-import { KulDataCyAttributes } from '../../../../types/GenericTypes';
+import { DRAWER_DOC, DRAWER_EXAMPLES } from "./kul-showcase-drawer-data";
+import { DrawerExample } from "./kul-showcase-drawer-declarations";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 
 @Component({
-  tag: 'kul-showcase-drawer',
-  styleUrl: 'kul-showcase-drawer.scss',
+  tag: "kul-showcase-drawer",
+  styleUrl: "kul-showcase-drawer.scss",
   shadow: true,
 })
 export class KulShowcaseDrawer {
@@ -31,7 +31,7 @@ export class KulShowcaseDrawer {
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
-              {props['data-description']}
+              {props["data-description"]}
             </div>
             <div class="comp-wrapper" part="comp-wrapper">
               <iframe key={key} id={key} {...props.iframeProps}></iframe>

@@ -9,26 +9,26 @@ import {
   Method,
   Prop,
   State,
-} from '@stencil/core';
+} from "@stencil/core";
 
 import {
   KulSliderEvent,
   KulSliderEventPayload,
   KulSliderProps,
   KulSliderValue,
-} from './kul-slider-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
+} from "./kul-slider-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import {
   KulDataCyAttributes,
   type GenericObject,
-} from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-slider',
-  styleUrl: 'kul-slider.scss',
+  tag: "kul-slider",
+  styleUrl: "kul-slider.scss",
   shadow: true,
 })
 export class KulSlider {
@@ -61,7 +61,7 @@ export class KulSlider {
    * Defines text to display as a label for the slider.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = '';
+  @Prop({ mutable: true, reflect: true }) kulLabel = "";
   /**
    * When true, displays the label before the slider component. Defaults to `false`.
    * @default false
@@ -91,7 +91,7 @@ export class KulSlider {
    * Custom CSS style to apply to the slider component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
   /**
    * The initial numeric value for the slider within the defined range.
    * @default 50
@@ -108,7 +108,7 @@ export class KulSlider {
    * Describes event emitted for various slider interactions like click, focus, blur.
    */
   @Event({
-    eventName: 'kul-slider-event',
+    eventName: "kul-slider-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -116,15 +116,15 @@ export class KulSlider {
   kulEvent: EventEmitter<KulSliderEventPayload>;
   onKulEvent(e: Event | CustomEvent, eventType: KulSliderEvent) {
     switch (eventType) {
-      case 'change':
+      case "change":
         this.setValue(+this.#input.value);
         this.refresh();
         break;
-      case 'input':
+      case "input":
         this.value.display = +this.#input.value;
         this.refresh();
         break;
-      case 'pointerdown':
+      case "pointerdown":
         if (this.kulRipple) {
           this.#kulManager.theme.ripple.trigger(
             e as PointerEvent,
@@ -190,7 +190,7 @@ export class KulSlider {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -207,23 +207,23 @@ export class KulSlider {
     if (this.#rippleSurface) {
       this.#kulManager.theme.ripple.setup(this.#rippleSurface);
     }
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
   render() {
     const className: Record<string, boolean> = {
       slider: true,
-      'slider--disabled': this.kulDisabled,
+      "slider--disabled": this.kulDisabled,
     };
     const formClassName: Record<string, boolean> = {
-      'form-field': true,
-      'form-field--align-end': this.kulLeadingLabel,
+      "form-field": true,
+      "form-field--align-end": this.kulLeadingLabel,
     };
 
     return (
@@ -238,7 +238,7 @@ export class KulSlider {
             <div
               class={className}
               style={{
-                '--kul_slider_value': `${((this.value.display - this.kulMin) / (this.kulMax - this.kulMin)) * 100}%`,
+                "--kul_slider_value": `${((this.value.display - this.kulMin) / (this.kulMax - this.kulMin)) * 100}%`,
               }}
             >
               <input
@@ -251,19 +251,19 @@ export class KulSlider {
                 value={this.value.real}
                 disabled={this.kulDisabled}
                 onBlur={(e) => {
-                  this.onKulEvent(e, 'blur');
+                  this.onKulEvent(e, "blur");
                 }}
                 onChange={(e) => {
-                  this.onKulEvent(e, 'change');
+                  this.onKulEvent(e, "change");
                 }}
                 onFocus={(e) => {
-                  this.onKulEvent(e, 'focus');
+                  this.onKulEvent(e, "focus");
                 }}
                 onInput={(e) => {
-                  this.onKulEvent(e, 'input');
+                  this.onKulEvent(e, "input");
                 }}
                 onPointerDown={(e) => {
-                  this.onKulEvent(e, 'pointerdown');
+                  this.onKulEvent(e, "pointerdown");
                 }}
                 ref={(el) => {
                   if (el) {

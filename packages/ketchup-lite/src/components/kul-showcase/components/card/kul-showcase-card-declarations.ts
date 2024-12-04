@@ -1,22 +1,22 @@
 import {
   KulCardLayout,
   KulCardPropsInterface,
-} from '../../../kul-card/kul-card-declarations';
-import { KulShowcaseDynamicExampleType } from '../../kul-showcase-declarations';
+} from "../../../kul-card/kul-card-declarations";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
 export const CARD_CATEGORIES_KEYS: KulCardLayout[] = [
-  'debug',
-  'keywords',
-  'material',
-  'upload',
+  "debug",
+  "keywords",
+  "material",
+  "upload",
 ] as const;
 
-export const CARD_EXAMPLES_KEYS = ['image', 'style'] as const;
+export const CARD_EXAMPLES_KEYS = ["image", "style"] as const;
 
 export interface CardExample extends KulCardPropsInterface {
   className: string;
-  ['data-description']: string;
-  ['data-dynamic']?: KulShowcaseDynamicExampleType;
+  ["data-description"]: string;
+  ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 
 export type CardData = {

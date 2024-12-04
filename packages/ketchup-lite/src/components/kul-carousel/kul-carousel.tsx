@@ -12,31 +12,31 @@ import {
   State,
   VNode,
   Watch,
-} from '@stencil/core';
+} from "@stencil/core";
 
-import { ACTIONS } from './helpers/kul-carousel-actions';
-import { COMPONENTS } from './helpers/kul-carousel-components';
+import { ACTIONS } from "./helpers/kul-carousel-actions";
+import { COMPONENTS } from "./helpers/kul-carousel-components";
 import {
   KulCarouselAdapter,
   KulCarouselEvent,
   KulCarouselEventPayload,
   KulCarouselProps,
-} from './kul-carousel-declarations';
+} from "./kul-carousel-declarations";
 import {
   KulDataCell,
   KulDataDataset,
   KulDataShapes,
   KulDataShapesMap,
-} from '../../managers/kul-data/kul-data-declarations';
-import { KulDebugLifecycleInfo } from '../../managers/kul-debug/kul-debug-declarations';
-import { kulManagerInstance } from '../../managers/kul-manager/kul-manager';
-import { GenericObject } from '../../types/GenericTypes';
-import { getProps } from '../../utils/componentUtils';
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from '../../variables/GenericVariables';
+} from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
-  tag: 'kul-carousel',
-  styleUrl: 'kul-carousel.scss',
+  tag: "kul-carousel",
+  styleUrl: "kul-carousel.scss",
   shadow: true,
 })
 export class KulCarousel {
@@ -93,12 +93,12 @@ export class KulCarousel {
    * Sets the type of shapes to compare.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulShape: KulDataShapes = 'image';
+  @Prop({ mutable: true, reflect: true }) kulShape: KulDataShapes = "image";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = '';
+  @Prop({ mutable: true, reflect: true }) kulStyle = "";
 
   /*-------------------------------------------------*/
   /*       I n t e r n a l   V a r i a b l e s       */
@@ -119,7 +119,7 @@ export class KulCarousel {
    * Describes event emitted.
    */
   @Event({
-    eventName: 'kul-carousel-event',
+    eventName: "kul-carousel-event",
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -139,16 +139,16 @@ export class KulCarousel {
   /*                 W a t c h e r s                 */
   /*-------------------------------------------------*/
 
-  @Watch('kulData')
-  @Watch('kulShape')
+  @Watch("kulData")
+  @Watch("kulShape")
   async updateShapes() {
     try {
       this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
     } catch (error) {
       this.#kulManager.debug.logs.new(
         this,
-        'Error updating shapes: ' + error,
-        'error',
+        "Error updating shapes: " + error,
+        "error",
       );
     }
   }
@@ -210,7 +210,7 @@ export class KulCarousel {
   @Method()
   async unmount(ms: number = 0): Promise<void> {
     setTimeout(() => {
-      this.onKulEvent(new CustomEvent('unmount'), 'unmount');
+      this.onKulEvent(new CustomEvent("unmount"), "unmount");
       this.rootElement.remove();
     }, ms);
   }
@@ -282,7 +282,7 @@ export class KulCarousel {
     if (start > 0) {
       const className = {
         carousel__chevron: true,
-        'carousel__chevron--left': true,
+        "carousel__chevron--left": true,
       };
       indicators.push(
         <span
@@ -305,8 +305,8 @@ export class KulCarousel {
 
         const className = {
           carousel__indicator: true,
-          'carousel__indicator--active': isCurrent,
-          'carousel__indicator--small': (isFirst || isLast) && !isCurrent,
+          "carousel__indicator--active": isCurrent,
+          "carousel__indicator--small": (isFirst || isLast) && !isCurrent,
         };
         indicators.push(
           <span
@@ -322,7 +322,7 @@ export class KulCarousel {
     if (end < totalSlides) {
       const className = {
         carousel__chevron: true,
-        'carousel__chevron--right': true,
+        "carousel__chevron--right": true,
       };
       indicators.push(
         <span
@@ -345,14 +345,14 @@ export class KulCarousel {
       this.kulShape
     ].map(() => ({
       htmlProps: {
-        className: 'kul-fit',
+        className: "kul-fit",
       },
     }));
 
     const decoratedShapes = this.#kulManager.data.cell.shapes.decorate(
       this.kulShape,
       this.shapes[this.kulShape],
-      async (e) => this.onKulEvent(e, 'kul-event'),
+      async (e) => this.onKulEvent(e, "kul-event"),
       props,
     ).element;
 
@@ -376,16 +376,16 @@ export class KulCarousel {
   }
 
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent('ready'), 'ready');
-    this.#kulManager.debug.updateDebugInfo(this, 'did-load');
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'will-render');
+    this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, 'did-render');
+    this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
