@@ -3,16 +3,16 @@ import {
   KulButtonProps,
   KulButtonPropsInterface,
   KulButtonState,
-} from '../../../src/components/kul-button/kul-button-declarations';
-import { BUTTON_CATEGORIES_KEYS } from '../../../src/components/kul-showcase/components/button/kul-showcase-button-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
-import { KUL_DROPDOWN_CLASS_VISIBLE } from '../../../src/variables/GenericVariables';
+} from "../../../src/components/kul-button/kul-button-declarations";
+import { BUTTON_CATEGORIES_KEYS } from "../../../src/components/kul-showcase/components/button/kul-showcase-button-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
+import { KUL_DROPDOWN_CLASS_VISIBLE } from "../../../src/variables/GenericVariables";
 
-const button = 'button';
+const button = "button";
 const buttonCapitalized = button.charAt(0).toUpperCase() + button.slice(1);
-const buttonTag = 'kul-' + button;
+const buttonTag = "kul-" + button;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(button);
   });
@@ -26,43 +26,43 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`blur`, () => {
     cy.navigate(button);
-    const eventType: KulButtonEvent = 'blur';
+    const eventType: KulButtonEvent = "blur";
     cy.checkEvent(button, eventType);
-    cy.get('@eventElement').find('button').focus().blur();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.get("@eventElement").find("button").focus().blur();
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`click`, () => {
     cy.navigate(button);
-    const eventType: KulButtonEvent = 'click';
+    const eventType: KulButtonEvent = "click";
     cy.checkEvent(button, eventType);
-    cy.get('@eventElement').find('button').click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.get("@eventElement").find("button").click();
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`kul-event`, () => {
     cy.navigate(button);
-    const eventType: KulButtonEvent = 'kul-event';
+    const eventType: KulButtonEvent = "kul-event";
     cy.checkEvent(button, eventType);
-    cy.get('#flat-dropdown')
+    cy.get("#flat-dropdown")
       .findCyElement(KulDataCyAttributes.DROPDOWN_BUTTON)
       .click();
     cy.getCyElement(KulDataCyAttributes.DROPDOWN_MENU)
-      .should('be.visible')
-      .should('have.class', KUL_DROPDOWN_CLASS_VISIBLE);
+      .should("be.visible")
+      .should("have.class", KUL_DROPDOWN_CLASS_VISIBLE);
     cy.getCyElement(KulDataCyAttributes.NODE).first().click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`pointerdown`, () => {
     cy.navigate(button);
-    const eventType: KulButtonEvent = 'pointerdown';
+    const eventType: KulButtonEvent = "pointerdown";
     cy.checkEvent(button, eventType);
-    cy.get('@eventElement').findCyElement(KulDataCyAttributes.RIPPLE).click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.get("@eventElement").findCyElement(KulDataCyAttributes.RIPPLE).click();
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -71,26 +71,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(button);
-    const eventType: KulButtonEvent = 'unmount';
+    const eventType: KulButtonEvent = "unmount";
     cy.checkEvent(button, eventType);
-    cy.get('@eventElement').then(($button) => {
+    cy.get("@eventElement").then(($button) => {
       const kulButtonElement = $button[0] as HTMLKulButtonElement;
       kulButtonElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(button);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(buttonTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(buttonTag);
   });
 
@@ -117,19 +117,19 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(button);
   });
 
-  it('kulStyle: Should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 
-  it('kulToggable: should toggle the value setting it to true.', () => {
+  it("kulToggable: should toggle the value setting it to true.", () => {
     let initialValue: string;
 
-    cy.get('@kulComponentShowcase')
+    cy.get("@kulComponentShowcase")
       .find('kul-button[id*="pulsating"]')
       .first()
       .then(($button) => {
@@ -138,11 +138,11 @@ describe('Props', () => {
       })
       .then((value) => {
         initialValue = value;
-        const newValue: KulButtonState = value === 'on' ? 'off' : 'on';
+        const newValue: KulButtonState = value === "on" ? "off" : "on";
         return cy.wrap({ initialValue, newValue });
       })
       .then(({ newValue }) => {
-        cy.get('@kulComponentShowcase')
+        cy.get("@kulComponentShowcase")
           .find('kul-button[id*="pulsating"]')
           .first()
           .then(($button) => {
@@ -153,7 +153,7 @@ describe('Props', () => {
             return cy.wrap(newValue);
           })
           .then((newValue) => {
-            cy.get('@kulComponentShowcase')
+            cy.get("@kulComponentShowcase")
               .find('kul-button[id*="pulsating"]')
               .first()
               .then(($button) => {

@@ -2,15 +2,15 @@ import {
   KulChatEvent,
   KulChatProps,
   KulChatPropsInterface,
-} from '../../../src/components/kul-chat/kul-chat-declarations';
-import { CHAT_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/chat/kul-showcase-chat-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-chat/kul-chat-declarations";
+import { CHAT_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/chat/kul-showcase-chat-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const chat = 'chat';
+const chat = "chat";
 const chatCapitalized = chat.charAt(0).toUpperCase() + chat.slice(1);
-const chatTag = 'kul-' + chat;
+const chatTag = "kul-" + chat;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(chat);
   });
@@ -24,33 +24,33 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(chat);
   });
 
   it(`unmount`, () => {
     cy.navigate(chat);
-    const eventType: KulChatEvent = 'unmount';
+    const eventType: KulChatEvent = "unmount";
     cy.checkEvent(chat, eventType);
-    cy.get('@eventElement').then(($chat) => {
+    cy.get("@eventElement").then(($chat) => {
       const kulChatElement = $chat[0] as HTMLKulChatElement;
       kulChatElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(chat);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(chatTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(chatTag);
   });
 
@@ -74,12 +74,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(chat);
   });
 
-  it('Should check for the presence of a <style> element with id kup-style.', () => {
+  it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

@@ -1,13 +1,10 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import {
-  MESSENGER_DOC,
-  MESSENGER_EXAMPLES,
-} from "./kul-showcase-messenger-data";
-import { MessengerExample } from "./kul-showcase-messenger-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { MessengerExample } from "./kul-showcase-messenger-declarations";
+import { MESSENGER_FIXTURES } from "./kul-showcase-messenger-fixtures";
 
 @Component({
   tag: "kul-showcase-messenger",
@@ -22,9 +19,9 @@ export class KulShowcaseMessenger {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = MESSENGER_EXAMPLES();
+  @State() fixtures = MESSENGER_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -36,9 +33,9 @@ export class KulShowcaseMessenger {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: MessengerExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: MessengerExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -82,7 +79,7 @@ export class KulShowcaseMessenger {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={MESSENGER_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

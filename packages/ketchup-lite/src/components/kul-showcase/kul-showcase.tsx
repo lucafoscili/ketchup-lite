@@ -1,5 +1,8 @@
 import { Component, Element, h, Host, Prop, State, VNode } from "@stencil/core";
 
+import { KulDataDataset } from "src/components";
+import { kulManagerInstance } from "src/managers/kul-manager/kul-manager";
+import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
 import {
   KUL_DOC,
   KUL_SHOWCASE_COMPONENTS,
@@ -7,11 +10,6 @@ import {
   KUL_SHOWCASE_UTILITIES,
 } from "./kul-showcase-data";
 import { KulShowcaseTitle } from "./kul-showcase-declarations";
-import { KulDataDataset } from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
 
 @Component({
   assetsDirs: ["assets/media"],
@@ -20,78 +18,64 @@ import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
   shadow: true,
 })
 export class KulShowcase {
-  /**
-   * References the root HTML element of the component (<kul-showcase>).
-   */
   @Element() rootElement: HTMLKulShowcaseElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Debug information.
-   */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
+  //#region States
+  @State() currentState: { [K in KulShowcaseTitle]: string } = {
+    Components: "",
+    Framework: "",
+    Utilities: "",
   };
-  /**
-   * String keeping track of the current component being navigated by the user.
-   * @default ""
-   */
-  @State() currentComponent = "";
-  /**
-   * String keeping track of the current framework being navigated by the user.
-   * @default ""
-   */
-  @State() currentFramework = "";
-  /**
-   * String keeping track of the current utility being accessed by the user.
-   * @default ""
-   */
-  @State() currentUtility = "";
+  @State() showScrollTop = false;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
-  /**
-   * Custom style of the component.
-   * @default ""
-   */
+  //#region Props
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
+  //#region Private methods
+  #renderSection(type: KulShowcaseTitle): VNode {
+    const currentValue = this.currentState[type];
 
-  #comps(type: KulShowcaseTitle): VNode {
-    const switchType = () => {
-      switch (type) {
-        case "Components":
-          return this.currentComponent.toLowerCase();
-        case "Framework":
-          return this.currentFramework.toLowerCase();
-        case "Utilities":
-          return this.currentUtility.toLowerCase();
-      }
-    };
-    const Tag = "kul-showcase-" + switchType();
-    return Tag ? <Tag /> : null;
+    return (
+      <div class="section">
+        {this.#prepHeader(type, currentValue)}
+        <div class="flex-wrapper flex-wrapper--responsive">
+          {currentValue ? this.#comps(type) : this.#cards(type)}
+        </div>
+      </div>
+    );
   }
-
-  #cards(type: KulShowcaseTitle) {
-    const cards: VNode[] = [];
+  #prepHeader(type: KulShowcaseTitle, current: string): VNode {
+    return (
+      <div class="header">
+        <h2>{current || type}</h2>
+        <div class={`navigation ${current ? "active" : ""}`}>
+          <kul-button
+            class="kul-full-height kul-full-width"
+            kulIcon="home"
+            onClick={() => {
+              this.currentState = {
+                ...this.currentState,
+                [type]: "",
+              };
+            }}
+          ></kul-button>
+        </div>
+      </div>
+    );
+  }
+  #comps(type: KulShowcaseTitle): VNode {
+    if (this.currentState[type]) {
+      const TagName = `kul-showcase-${this.currentState[type].toLowerCase()}`;
+      return <TagName />;
+    }
+  }
+  #cards(type: KulShowcaseTitle): VNode[] {
     const dataset =
       type === "Components"
         ? KUL_SHOWCASE_COMPONENTS
@@ -99,8 +83,8 @@ export class KulShowcase {
           ? KUL_SHOWCASE_FRAMEWORK
           : KUL_SHOWCASE_UTILITIES;
 
-    dataset.nodes.forEach((node) => {
-      const kulData: KulDataDataset = {
+    return dataset.nodes.map((node) => {
+      const cardDataset: KulDataDataset = {
         nodes: [
           {
             cells: {
@@ -118,87 +102,49 @@ export class KulShowcase {
           },
         ],
       };
-      const onEvent: (event: CustomEvent<KulCardEventPayload>) => void = (
-        e,
-      ) => {
-        if (e.detail.eventType === "click") {
-          switch (type) {
-            case "Components":
-              this.currentComponent = node.id;
-              console.log(`Selected component: `, this.currentComponent);
-              break;
 
-            case "Framework":
-              this.currentFramework = node.id;
-              console.log(`Selected framework: `, this.currentFramework);
-              break;
-            case "Utilities":
-              this.currentUtility = node.id;
-              console.log(`Selected utility: `, this.currentUtility);
-              break;
-          }
-        }
-      };
-      cards.push(
+      return (
         <kul-card
           id={node.id}
-          kulData={kulData}
+          kulData={cardDataset}
           kulSizeX="300px"
           kulSizeY="300px"
-          onKul-card-event={onEvent}
-        ></kul-card>,
+          onKul-card-event={(e) => this.#handleCardClick(e, type)}
+        ></kul-card>
       );
     });
-    return cards;
   }
-
-  #prepHeader(title: KulShowcaseTitle): VNode {
-    const current =
-      title === "Components"
-        ? this.currentComponent
-        : title === "Utilities"
-          ? this.currentUtility
-          : this.currentFramework;
-    return (
-      <div class="header">
-        <h2>{current ? current : title}</h2>
-        <div class={`navigation ${current ? "active" : ""}`}>
-          <kul-button
-            class={"kul-full-height kul-full-width"}
-            kulIcon="home"
-            onClick={() => {
-              switch (title) {
-                case "Components":
-                  this.currentComponent = "";
-                  break;
-                case "Framework":
-                  this.currentFramework = "";
-                  break;
-                case "Utilities":
-                  this.currentUtility = "";
-                  break;
-              }
-            }}
-          ></kul-button>
-        </div>
-      </div>
-    );
+  #handleCardClick(
+    e: CustomEvent<KulCardEventPayload>,
+    type: KulShowcaseTitle,
+  ): void {
+    if (e.detail.eventType === "click") {
+      this.currentState = {
+        ...this.currentState,
+        [type]: e.detail.id,
+      };
+      console.log(`Selected: ${e.detail.id} (${type})`);
+    }
   }
+  #handleScroll = () => {
+    this.showScrollTop = window.scrollY > 300;
+  };
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
+  connectedCallback() {
+    window.addEventListener("scroll", this.#handleScroll);
+  }
   render() {
     return (
       <Host>
-        <div id={KUL_WRAPPER_ID}>
+        <div id="kul-wrapper">
           <div class="showcase">
             <kul-article kulData={KUL_DOC}></kul-article>
             <div class="link-wrapper">
               <kul-button
                 aria-label="Open GitHub Repository"
-                class={"link"}
+                class="link"
                 kulIcon="github"
                 kulLabel="GitHub"
                 kulStyling="floating"
@@ -212,7 +158,7 @@ export class KulShowcase {
               ></kul-button>
               <kul-button
                 aria-label="Open npm Package"
-                class={"link"}
+                class="link"
                 kulIcon="npm"
                 kulLabel="npm"
                 kulStyling="floating"
@@ -225,33 +171,25 @@ export class KulShowcase {
                 title="Open npm Package"
               ></kul-button>
             </div>
-            <div class="section">
-              {this.#prepHeader("Components")}
-              <div class="flex-wrapper flex-wrapper--responsive">
-                {this.currentComponent
-                  ? this.#comps("Components")
-                  : this.#cards("Components")}
-              </div>
-            </div>
-            <div class="section">
-              {this.#prepHeader("Framework")}
-              <div class="flex-wrapper flex-wrapper--responsive">
-                {this.currentFramework
-                  ? this.#comps("Framework")
-                  : this.#cards("Framework")}
-              </div>
-            </div>
-            <div class="section">
-              {this.#prepHeader("Utilities")}
-              <div class="flex-wrapper flex-wrapper--responsive">
-                {this.currentUtility
-                  ? this.#comps("Utilities")
-                  : this.#cards("Utilities")}
-              </div>
-            </div>
+            {this.#renderSection("Components")}
+            {this.#renderSection("Framework")}
+            {this.#renderSection("Utilities")}
           </div>
+          <kul-button
+            aria-label="Scroll to top"
+            class={this.showScrollTop ? "visible" : "hidden"}
+            id="scroll-to-top"
+            kulIcon="chevron_up"
+            kulStyling="floating"
+            title="Scroll to top"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          ></kul-button>
         </div>
       </Host>
     );
   }
+  disconnectedCallback() {
+    window.removeEventListener("scroll", this.#handleScroll);
+  }
+  //#endregion
 }

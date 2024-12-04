@@ -2,15 +2,15 @@ import {
   KulChipEvent,
   KulChipProps,
   KulChipPropsInterface,
-} from '../../../src/components/kul-chip/kul-chip-declarations';
-import { CHIP_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/chip/kul-showcase-chip-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-chip/kul-chip-declarations";
+import { CHIP_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/chip/kul-showcase-chip-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const chip = 'chip';
+const chip = "chip";
 const chipCapitalized = chip.charAt(0).toUpperCase() + chip.slice(1);
-const chipTag = 'kul-' + chip;
+const chipTag = "kul-" + chip;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(chip);
   });
@@ -24,50 +24,50 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`blur`, () => {
     cy.navigate(chip);
-    const eventType: KulChipEvent = 'blur';
+    const eventType: KulChipEvent = "blur";
     cy.checkEvent(chip, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus()
       .blur();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`click`, () => {
     cy.navigate(chip);
-    const eventType: KulChipEvent = 'click';
+    const eventType: KulChipEvent = "click";
     cy.checkEvent(chip, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`delete`, () => {
     cy.navigate(chip);
-    const eventType: KulChipEvent = 'delete';
+    const eventType: KulChipEvent = "delete";
     cy.checkEvent(chip, eventType);
     cy.get(`${chipTag}#input`)
       .findCyElement(KulDataCyAttributes.BUTTON)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`focus`, () => {
     cy.navigate(chip);
-    const eventType: KulChipEvent = 'focus';
+    const eventType: KulChipEvent = "focus";
     cy.checkEvent(chip, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -76,26 +76,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(chip);
-    const eventType: KulChipEvent = 'unmount';
+    const eventType: KulChipEvent = "unmount";
     cy.checkEvent(chip, eventType);
-    cy.get('@eventElement').then(($chip) => {
+    cy.get("@eventElement").then(($chip) => {
       const kulChipElement = $chip[0] as HTMLKulChipElement;
       kulChipElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(chip);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(chipTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(chipTag);
   });
 
@@ -113,12 +113,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(chip);
   });
 
-  it('Should check for the presence of a <style> element with id kup-style.', () => {
+  it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

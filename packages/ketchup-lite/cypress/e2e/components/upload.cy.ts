@@ -2,15 +2,15 @@ import {
   KulUploadEvent,
   KulUploadProps,
   KulUploadPropsInterface,
-} from '../../../src/components/kul-upload/kul-upload-declarations';
-import { UPLOAD_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/upload/kul-showcase-upload-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-upload/kul-upload-declarations";
+import { UPLOAD_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/upload/kul-showcase-upload-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const upload = 'upload';
+const upload = "upload";
 const uploadCapitalized = upload.charAt(0).toUpperCase() + upload.slice(1);
-const uploadTag = 'kul-' + upload;
+const uploadTag = "kul-" + upload;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(upload);
   });
@@ -24,13 +24,13 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`pointerdown`, () => {
     cy.navigate(upload);
-    const eventType: KulUploadEvent = 'pointerdown';
+    const eventType: KulUploadEvent = "pointerdown";
     cy.checkEvent(upload, eventType);
-    cy.get('@eventElement').click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.get("@eventElement").click();
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -39,26 +39,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(upload);
-    const eventType: KulUploadEvent = 'unmount';
+    const eventType: KulUploadEvent = "unmount";
     cy.checkEvent(upload, eventType);
-    cy.get('@eventElement').then(($upload) => {
+    cy.get("@eventElement").then(($upload) => {
       const kulUploadElement = $upload[0] as HTMLKulUploadElement;
       kulUploadElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(upload);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(uploadTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(uploadTag);
   });
 
@@ -76,12 +76,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(upload);
   });
 
-  it('Should check for the presence of a <style> element with id kup-style.', () => {
+  it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

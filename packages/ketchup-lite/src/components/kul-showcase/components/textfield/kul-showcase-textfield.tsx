@@ -1,14 +1,11 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import {
-  TEXTFIELD_DOC,
-  TEXTFIELD_EXAMPLES,
-} from "./kul-showcase-textfield-data";
-import { TextfieldExample } from "./kul-showcase-textfield-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { KulTextfieldStyling } from "../../../kul-textfield/kul-textfield-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { TextfieldExample } from "./kul-showcase-textfield-declarations";
+import { TEXTFIELD_FIXTURES } from "./kul-showcase-textfield-fixtures";
 
 @Component({
   tag: "kul-showcase-textfield",
@@ -23,9 +20,9 @@ export class KulShowcaseTextfield {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = TEXTFIELD_EXAMPLES;
+  @State() fixtures = TEXTFIELD_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -37,9 +34,9 @@ export class KulShowcaseTextfield {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const k1 in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
-        const category: TextfieldExample = this.examples[k1];
+    for (const k1 in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
+        const category: TextfieldExample = this.fixtures.examples[k1];
         const group: VNode[] = [];
 
         for (const k2 in category) {
@@ -107,7 +104,7 @@ export class KulShowcaseTextfield {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={TEXTFIELD_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

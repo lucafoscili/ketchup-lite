@@ -1,13 +1,13 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { SPINNER_DOC, SPINNER_EXAMPLES } from "./kul-showcase-spinner-data";
+import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
+import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import {
   SpinnerBranch,
   SpinnerLeaf,
 } from "./kul-showcase-spinner-declarations";
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
-import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
-import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { SPINNER_FIXTURES } from "./kul-showcase-spinner-fixtures";
 
 @Component({
   tag: "kul-showcase-spinner",
@@ -22,9 +22,9 @@ export class KulShowcaseSpinner {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = SPINNER_EXAMPLES;
+  @State() fixtures = SPINNER_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -36,9 +36,9 @@ export class KulShowcaseSpinner {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const k1 in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
-        const type: SpinnerBranch = this.examples[k1];
+    for (const k1 in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
+        const type: SpinnerBranch = this.fixtures.examples[k1];
 
         for (const k2 in type) {
           if (Object.prototype.hasOwnProperty.call(type, k2)) {
@@ -105,7 +105,7 @@ export class KulShowcaseSpinner {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={SPINNER_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

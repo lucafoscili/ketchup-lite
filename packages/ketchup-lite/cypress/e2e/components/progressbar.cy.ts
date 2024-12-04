@@ -2,16 +2,16 @@ import {
   KulProgressbarEvent,
   KulProgressbarProps,
   KulProgressbarPropsInterface,
-} from '../../../src/components/kul-progressbar/kul-progressbar-declarations';
-import { PROGRESSBAR_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/progressbar/kul-showcase-progressbar-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-progressbar/kul-progressbar-declarations";
+import { PROGRESSBAR_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/progressbar/kul-showcase-progressbar-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const progressbar = 'progressbar';
+const progressbar = "progressbar";
 const progressbarCapitalized =
   progressbar.charAt(0).toUpperCase() + progressbar.slice(1);
-const progressbarTag = 'kul-' + progressbar;
+const progressbarTag = "kul-" + progressbar;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(progressbar);
   });
@@ -28,34 +28,34 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(progressbar);
   });
 
   it(`unmount`, () => {
     cy.navigate(progressbar);
-    const eventType: KulProgressbarEvent = 'unmount';
+    const eventType: KulProgressbarEvent = "unmount";
     cy.checkEvent(progressbar, eventType);
-    cy.get('@eventElement').then(($progressbar) => {
+    cy.get("@eventElement").then(($progressbar) => {
       const kulProgressbarElement =
         $progressbar[0] as HTMLKulProgressbarElement;
       kulProgressbarElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(progressbar);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(progressbarTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(progressbarTag);
   });
 
@@ -76,12 +76,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(progressbar);
   });
 
-  it('Should check for the presence of a <style> element with id kup-style.', () => {
+  it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

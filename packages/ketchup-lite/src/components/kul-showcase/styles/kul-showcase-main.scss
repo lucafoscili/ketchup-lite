@@ -29,6 +29,7 @@ kul-card {
 .link-wrapper {
   display: flex;
   justify-content: center;
+  margin-bottom: 12px;
 }
 
 .showcase {
@@ -97,6 +98,23 @@ p {
 
   &.active {
     height: 40px;
+  }
+}
+
+#scroll-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  opacity: 0;
+  visibility: hidden;
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
   }
 }
 

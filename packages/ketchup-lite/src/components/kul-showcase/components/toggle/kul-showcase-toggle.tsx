@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { TOGGLE_DOC, TOGGLE_EXAMPLES } from "./kul-showcase-toggle-data";
-import { ToggleExample } from "./kul-showcase-toggle-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { ToggleExample } from "./kul-showcase-toggle-declarations";
+import { TOGGLE_FIXTURES } from "./kul-showcase-toggle-fixtures";
 
 @Component({
   tag: "kul-showcase-toggle",
@@ -19,9 +19,9 @@ export class KulShowcaseToggle {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = TOGGLE_EXAMPLES;
+  @State() fixtures = TOGGLE_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -33,9 +33,9 @@ export class KulShowcaseToggle {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: ToggleExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: ToggleExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -84,7 +84,7 @@ export class KulShowcaseToggle {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={TOGGLE_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

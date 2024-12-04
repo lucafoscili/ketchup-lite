@@ -2,15 +2,15 @@ import {
   KulCanvasEvent,
   KulCanvasProps,
   KulCanvasPropsInterface,
-} from '../../../src/components/kul-canvas/kul-canvas-declarations';
-import { CANVAS_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/canvas/kul-showcase-canvas-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-canvas/kul-canvas-declarations";
+import { CANVAS_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/canvas/kul-showcase-canvas-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const canvas = 'canvas';
+const canvas = "canvas";
 const canvasCapitalized = canvas.charAt(0).toUpperCase() + canvas.slice(1);
-const canvasTag = 'kul-' + canvas;
+const canvasTag = "kul-" + canvas;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(canvas);
   });
@@ -24,13 +24,13 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`stroke`, () => {
     cy.navigate(canvas);
-    const eventType: KulCanvasEvent = 'stroke';
+    const eventType: KulCanvasEvent = "stroke";
     cy.checkEvent(canvas, eventType);
-    cy.get('@eventElement').click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.get("@eventElement").click();
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -39,26 +39,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(canvas);
-    const eventType: KulCanvasEvent = 'unmount';
+    const eventType: KulCanvasEvent = "unmount";
     cy.checkEvent(canvas, eventType);
-    cy.get('@eventElement').then(($canvas) => {
+    cy.get("@eventElement").then(($canvas) => {
       const kulCanvasElement = $canvas[0] as HTMLKulCanvasElement;
       kulCanvasElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(canvas);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(canvasTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(canvasTag);
   });
 
@@ -80,12 +80,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(canvas);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

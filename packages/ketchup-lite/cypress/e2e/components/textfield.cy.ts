@@ -2,16 +2,16 @@ import {
   KulTextfieldEvent,
   KulTextfieldProps,
   KulTextfieldPropsInterface,
-} from '../../../src/components/kul-textfield/kul-textfield-declarations';
-import { TEXTFIELD_CATEGORIES_KEYS } from '../../../src/components/kul-showcase/components/textfield/kul-showcase-textfield-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-textfield/kul-textfield-declarations";
+import { TEXTFIELD_CATEGORIES_KEYS } from "../../../src/components/kul-showcase/components/textfield/kul-showcase-textfield-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const textfield = 'textfield';
+const textfield = "textfield";
 const textfieldCapitalized =
   textfield.charAt(0).toUpperCase() + textfield.slice(1);
-const textfieldTag = 'kul-' + textfield;
+const textfieldTag = "kul-" + textfield;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(textfield);
   });
@@ -25,63 +25,63 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`blur`, () => {
     cy.navigate(textfield);
-    const eventType: KulTextfieldEvent = 'blur';
+    const eventType: KulTextfieldEvent = "blur";
     cy.checkEvent(textfield, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus()
       .blur();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`change`, () => {
     cy.navigate(textfield);
-    const eventType: KulTextfieldEvent = 'change';
+    const eventType: KulTextfieldEvent = "change";
     cy.checkEvent(textfield, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus()
-      .type('Test{enter}')
+      .type("Test{enter}")
       .blur();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`click`, () => {
     cy.navigate(textfield);
-    const eventType: KulTextfieldEvent = 'click';
+    const eventType: KulTextfieldEvent = "click";
     cy.checkEvent(textfield, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`focus`, () => {
     cy.navigate(textfield);
-    const eventType: KulTextfieldEvent = 'focus';
+    const eventType: KulTextfieldEvent = "focus";
     cy.checkEvent(textfield, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`input`, () => {
     cy.navigate(textfield);
-    const eventType: KulTextfieldEvent = 'input';
+    const eventType: KulTextfieldEvent = "input";
     cy.checkEvent(textfield, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
-      .type('Test');
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+      .type("Test");
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -90,26 +90,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(textfield);
-    const eventType: KulTextfieldEvent = 'unmount';
+    const eventType: KulTextfieldEvent = "unmount";
     cy.checkEvent(textfield, eventType);
-    cy.get('@eventElement').then(($textfield) => {
+    cy.get("@eventElement").then(($textfield) => {
       const kulTextfieldElement = $textfield[0] as HTMLKulTextfieldElement;
       kulTextfieldElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(textfield);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(textfieldTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(textfieldTag);
   });
 
@@ -133,12 +133,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(textfield);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

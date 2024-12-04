@@ -2,9 +2,8 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ARTICLE_EXAMPLES } from "../article/kul-showcase-article-fixtures";
 import { AccordionExample } from "./kul-showcase-accordion-declarations";
-import { ACCORDION_DOC } from "./kul-showcase-accordion-fixtures";
+import { ACCORDION_FIXTURES } from "./kul-showcase-accordion-fixtures";
 
 @Component({
   tag: "kul-showcase-accordion",
@@ -19,9 +18,9 @@ export class KulShowcaseAccordion {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = ARTICLE_EXAMPLES();
+  @State() fixtures = ACCORDION_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -33,9 +32,9 @@ export class KulShowcaseAccordion {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: AccordionExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: AccordionExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -89,7 +88,7 @@ export class KulShowcaseAccordion {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={ACCORDION_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>
