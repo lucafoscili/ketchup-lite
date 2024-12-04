@@ -118,6 +118,7 @@ Cypress.Commands.add(
     });
     cy.get('@kulComponentShowcase')
       .find(`kul-${component}`)
+      .should('exist')
       .first()
       .scrollIntoView()
       .as('eventElement');
@@ -257,9 +258,21 @@ Cypress.Commands.add('getKulManager', () => {
 });
 
 Cypress.Commands.add('navigate', (component) => {
+  if (!component || typeof component !== 'string') {
+    throw new Error(`Invalid component name: ${component}`);
+  }
+
   visitManager().visit();
+
+  cy.log('Waiting for splash to unmount');
   visitManager().splashUnmount();
+
+  cy.log('Navigating to component: ' + component);
   visitManager().cardClick(component);
+
+  cy.get('@kulComponentShowcase')
+    .should('exist')
+    .then(() => cy.log('Navigation complete, alias ready'));
 });
 
 function transformEnumValue(
@@ -280,9 +293,9 @@ function visitManager() {
       cy.get('@kulShowcase')
         .find('kul-showcase-' + component)
         .should('exist');
-      cy.getCyElement(KulDataCyAttributes.SHOWCASE_GRID_WRAPPER).as(
-        'kulComponentShowcase',
-      );
+      cy.getCyElement(KulDataCyAttributes.SHOWCASE_GRID_WRAPPER)
+        .as('kulComponentShowcase')
+        .then(() => cy.log('Alias @kulComponentShowcase created'));
     },
     splashUnmount: () => {
       cy.window().then((win) => {

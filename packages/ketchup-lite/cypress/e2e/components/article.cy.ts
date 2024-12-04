@@ -54,32 +54,32 @@ describe('Data', () => {
   });
 
   it('Should check for the presence of shapes.', () => {
-    cy.get('@kulComponentShowcase');
+    cy.get('@kulComponentShowcase')
+      .find(`${articleTag}#simple`)
+      .should('exist')
+      .then(($article) => {
+        const articleElement = $article[0] as HTMLKulArticleElement;
+        const kulData = articleElement.kulData;
+        const firstNodeChildren = kulData.nodes[0]?.children || [];
 
-    cy.get(`${articleTag}#simple`).then(($article) => {
-      const articleElement = $article[0] as HTMLKulArticleElement;
-      const kulData = articleElement.kulData;
-      const firstNodeChildren = kulData.nodes[0]?.children || [];
+        return cy
+          .wrap($article)
+          .shadow()
+          .find('section')
+          .should('have.length', firstNodeChildren.length)
+          .each(($section, index) => {
+            const child = firstNodeChildren[index];
+            const shapeType = child.cells?.[1]?.shape;
 
-      return cy
-        .wrap($article)
-        .shadow()
-        .find('section')
-        .should('have.length', firstNodeChildren.length)
-        .each(($section, index) => {
-          const child = firstNodeChildren[index];
-          const shapeType = child.cells?.[1]?.shape;
-
-          if (shapeType === 'image') {
-            cy.wrap($section).find('img').should('exist');
-          } else if (shapeType === 'code') {
-            cy.wrap($section).find('code').should('exist');
-          } else {
-            // Optionally handle other shape types or log a message
-            cy.log(`No shape to check for index ${index}`);
-          }
-        });
-    });
+            if (shapeType === 'image') {
+              cy.wrap($section).find('img').should('exist');
+            } else if (shapeType === 'code') {
+              cy.wrap($section).find('kul-code').should('exist');
+            } else {
+              cy.log(`No shape to check for index ${index}`);
+            }
+          });
+      });
   });
 
   it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
