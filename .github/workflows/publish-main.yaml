@@ -27,9 +27,6 @@ jobs:
             echo "should_publish=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: List Git Tags
-        run: git tag
-
       - name: Stop if Not Merge from version-bump-main
         if: steps.check_merge.outputs.should_publish != 'true'
         run: |
