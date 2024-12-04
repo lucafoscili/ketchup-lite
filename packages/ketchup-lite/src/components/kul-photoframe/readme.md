@@ -10,7 +10,7 @@
 | Property         | Attribute       | Description                                                              | Type                     | Default |
 | ---------------- | --------------- | ------------------------------------------------------------------------ | ------------------------ | ------- |
 | `kulPlaceholder` | --              | Html attributes of the picture before the component enters the viewport. | `GenericObject<unknown>` | `null`  |
-| `kulStyle`       | `kul-style`     | Custom style of the component.                                           | `string`                 | `''`    |
+| `kulStyle`       | `kul-style`     | Custom style of the component.                                           | `string`                 | `""`    |
 | `kulThreshold`   | `kul-threshold` | Percentage of the component dimensions entering the viewport (0.1 => 1). | `number`                 | `0.25`  |
 | `kulValue`       | --              | Html attributes of the picture after the component enters the viewport.  | `GenericObject<unknown>` | `null`  |
 

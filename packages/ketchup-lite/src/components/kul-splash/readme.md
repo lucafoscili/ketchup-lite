@@ -9,8 +9,8 @@
 
 | Property   | Attribute   | Description                                                                  | Type     | Default        |
 | ---------- | ----------- | ---------------------------------------------------------------------------- | -------- | -------------- |
-| `kulLabel` | `kul-label` | Initial text displayed within the component, typically shown during loading. | `string` | `'Loading...'` |
-| `kulStyle` | `kul-style` | Enables customization of the component's style.                              | `string` | `''`           |
+| `kulLabel` | `kul-label` | Initial text displayed within the component, typically shown during loading. | `string` | `"Loading..."` |
+| `kulStyle` | `kul-style` | Enables customization of the component's style.                              | `string` | `""`           |
 
 
 ## Events

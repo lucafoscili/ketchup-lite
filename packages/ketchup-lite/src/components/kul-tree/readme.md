@@ -15,7 +15,7 @@
 | `kulInitialExpansionDepth` | `kul-initial-expansion-depth` | Sets the initial expanded nodes based on the specified depth. If the property is not provided, all nodes in the tree will be expanded. | `number`         | `undefined` |
 | `kulRipple`                | `kul-ripple`                  | When set to true, the pointerdown event will trigger a ripple effect.                                                                  | `boolean`        | `true`      |
 | `kulSelectable`            | `kul-selectable`              | When true, nodes can be selected.                                                                                                      | `boolean`        | `true`      |
-| `kulStyle`                 | `kul-style`                   | Enables customization of the component's style.                                                                                        | `string`         | `''`        |
+| `kulStyle`                 | `kul-style`                   | Enables customization of the component's style.                                                                                        | `string`         | `""`        |
 
 
 ## Events

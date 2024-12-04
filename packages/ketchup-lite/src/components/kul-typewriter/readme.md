@@ -14,8 +14,8 @@
 | `kulLoop`        | `kul-loop`         | Enables or disables looping of the text.                                                                      | `boolean`            | `false` |
 | `kulPause`       | `kul-pause`        | Sets the duration of the pause after typing a complete text.                                                  | `number`             | `500`   |
 | `kulSpeed`       | `kul-speed`        | Sets the typing speed in milliseconds.                                                                        | `number`             | `50`    |
-| `kulStyle`       | `kul-style`        | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`             | `''`    |
-| `kulValue`       | `kul-value`        | Sets the text or array of texts to display with the typewriter effect.                                        | `string \| string[]` | `''`    |
+| `kulStyle`       | `kul-style`        | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`             | `""`    |
+| `kulValue`       | `kul-value`        | Sets the text or array of texts to display with the typewriter effect.                                        | `string \| string[]` | `""`    |
 
 
 ## Events

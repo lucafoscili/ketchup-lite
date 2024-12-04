@@ -9,7 +9,7 @@
 
 | Property   | Attribute   | Description                    | Type     | Default |
 | ---------- | ----------- | ------------------------------ | -------- | ------- |
-| `kulStyle` | `kul-style` | Custom style of the component. | `string` | `''`    |
+| `kulStyle` | `kul-style` | Custom style of the component. | `string` | `""`    |
 
 
 ## Dependencies
