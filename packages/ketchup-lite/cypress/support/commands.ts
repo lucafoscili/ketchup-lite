@@ -297,26 +297,39 @@ function visitManager() {
         .then(() => cy.log("Alias @kulComponentShowcase created"));
     },
     splashUnmount: () => {
-      cy.window()
-        .get("kul-splash")
+      cy.get("kul-splash")
+        .should("exist")
         .then(($component) => {
-          return new Cypress.Promise((resolve) => {
+          return new Cypress.Promise((resolve, reject) => {
             const splash: HTMLKulSplashElement = $component[0];
+
             const checkEvent = (event: KulGenericEvent) => {
               if (
                 event.type === "kul-splash-event" &&
                 event.detail.eventType === "unmount"
               ) {
+                splash.removeEventListener("kul-splash-event", checkEvent);
                 resolve();
               }
             };
+
             splash.addEventListener("kul-splash-event", checkEvent);
+
+            setTimeout(() => {
+              splash.removeEventListener("kul-splash-event", checkEvent);
+              reject(
+                new Error(
+                  "Timeout: kul-splash did not unmount within expected time.",
+                ),
+              );
+            }, 10000);
+
             splash.style.pointerEvents = "none";
           });
         });
     },
     visit: () => {
-      cy.visit("http://localhost:3333");
+      cy.visit("http://localhost:3333").reload();
     },
   };
 }
