@@ -2,15 +2,15 @@ import {
   KulMasonryEvent,
   KulMasonryProps,
   KulMasonryPropsInterface,
-} from '../../../src/components/kul-masonry/kul-masonry-declarations';
-import { MASONRY_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/masonry/kul-showcase-masonry-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-masonry/kul-masonry-declarations";
+import { MASONRY_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/masonry/kul-showcase-masonry-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const masonry = 'masonry';
+const masonry = "masonry";
 const masonryCapitalized = masonry.charAt(0).toUpperCase() + masonry.slice(1);
-const masonryTag = 'kul-' + masonry;
+const masonryTag = "kul-" + masonry;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(masonry);
   });
@@ -24,17 +24,17 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`kul-event`, () => {
     cy.navigate(masonry);
-    const eventType: KulMasonryEvent = 'kul-event';
+    const eventType: KulMasonryEvent = "kul-event";
     cy.checkEvent(masonry, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.SHAPE)
       .first()
       .scrollIntoView()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -43,26 +43,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(masonry);
-    const eventType: KulMasonryEvent = 'unmount';
+    const eventType: KulMasonryEvent = "unmount";
     cy.checkEvent(masonry, eventType);
-    cy.get('@eventElement').then(($masonry) => {
+    cy.get("@eventElement").then(($masonry) => {
       const kulMasonryElement = $masonry[0] as HTMLKulMasonryElement;
       kulMasonryElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(masonry);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(masonryTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(masonryTag);
   });
 
@@ -82,12 +82,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(masonry);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

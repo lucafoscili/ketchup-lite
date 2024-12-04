@@ -2,15 +2,15 @@ import {
   KulCodeEvent,
   KulCodeProps,
   KulCodePropsInterface,
-} from '../../../src/components/kul-code/kul-code-declarations';
-import { CODE_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/code/kul-showcase-code-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-code/kul-code-declarations";
+import { CODE_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/code/kul-showcase-code-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const code = 'code';
+const code = "code";
 const codeCapitalized = code.charAt(0).toUpperCase() + code.slice(1);
-const codeTag = 'kul-' + code;
+const codeTag = "kul-" + code;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(code);
   });
@@ -24,33 +24,33 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(code);
   });
 
   it(`unmount`, () => {
     cy.navigate(code);
-    const eventType: KulCodeEvent = 'unmount';
+    const eventType: KulCodeEvent = "unmount";
     cy.checkEvent(code, eventType);
-    cy.get('@eventElement').then(($code) => {
+    cy.get("@eventElement").then(($code) => {
       const kulCodeElement = $code[0] as HTMLKulCodeElement;
       kulCodeElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(code);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(codeTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(codeTag);
   });
 
@@ -69,12 +69,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(code);
   });
 
-  it('Should check for the presence of a <style> element with id kup-style.', () => {
+  it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

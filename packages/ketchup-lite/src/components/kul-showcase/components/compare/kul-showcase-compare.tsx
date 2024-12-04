@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { COMPARE_DOC, COMPARE_EXAMPLES } from "./kul-showcase-compare-data";
-import { CompareExample } from "./kul-showcase-compare-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { CompareExample } from "./kul-showcase-compare-declarations";
+import { COMPARE_FIXTURES } from "./kul-showcase-compare-fixtures";
 
 @Component({
   tag: "kul-showcase-compare",
@@ -18,9 +18,9 @@ export class KulShowcaseCompare {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = COMPARE_EXAMPLES();
+  @State() fixtures = COMPARE_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -32,9 +32,9 @@ export class KulShowcaseCompare {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: CompareExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: CompareExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -78,7 +78,7 @@ export class KulShowcaseCompare {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={COMPARE_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

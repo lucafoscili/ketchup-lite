@@ -2,16 +2,16 @@ import {
   KulCarouselEvent,
   KulCarouselProps,
   KulCarouselPropsInterface,
-} from '../../../src/components/kul-carousel/kul-carousel-declarations';
-import { CAROUSEL_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/carousel/kul-showcase-carousel-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-carousel/kul-carousel-declarations";
+import { CAROUSEL_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/carousel/kul-showcase-carousel-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const carousel = 'carousel';
+const carousel = "carousel";
 const carouselCapitalized =
   carousel.charAt(0).toUpperCase() + carousel.slice(1);
-const carouselTag = 'kul-' + carousel;
+const carouselTag = "kul-" + carousel;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(carousel);
   });
@@ -25,17 +25,17 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`kul-event`, () => {
     cy.navigate(carousel);
-    const eventType: KulCarouselEvent = 'kul-event';
+    const eventType: KulCarouselEvent = "kul-event";
     cy.checkEvent(carousel, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.SHAPE)
       .first()
       .scrollIntoView()
-      .trigger('click', { force: true, x: 100, y: 100 });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+      .trigger("click", { force: true, x: 100, y: 100 });
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -44,26 +44,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(carousel);
-    const eventType: KulCarouselEvent = 'unmount';
+    const eventType: KulCarouselEvent = "unmount";
     cy.checkEvent(carousel, eventType);
-    cy.get('@eventElement').then(($carousel) => {
+    cy.get("@eventElement").then(($carousel) => {
       const kulCarouselElement = $carousel[0] as HTMLKulCarouselElement;
       kulCarouselElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(carousel);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(carouselTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(carouselTag);
   });
 
@@ -82,12 +82,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(carousel);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

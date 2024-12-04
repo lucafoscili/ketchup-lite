@@ -2,16 +2,16 @@ import {
   KulAccordionEvent,
   KulAccordionProps,
   KulAccordionPropsInterface,
-} from '../../../src/components/kul-accordion/kul-accordion-declarations';
-import { ACCORDION_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/accordion/kul-showcase-accordion-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-accordion/kul-accordion-declarations";
+import { ACCORDION_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/accordion/kul-showcase-accordion-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const accordion = 'accordion';
+const accordion = "accordion";
 const accordionCapitalized =
   accordion.charAt(0).toUpperCase() + accordion.slice(1);
-const accordionTag = 'kul-' + accordion;
+const accordionTag = "kul-" + accordion;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(accordion);
   });
@@ -25,27 +25,27 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`click`, () => {
     cy.navigate(accordion);
-    const eventType: KulAccordionEvent = 'click';
+    const eventType: KulAccordionEvent = "click";
     cy.checkEvent(accordion, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.BUTTON)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`pointerdown`, () => {
     cy.navigate(accordion);
-    const eventType: KulAccordionEvent = 'pointerdown';
+    const eventType: KulAccordionEvent = "pointerdown";
     cy.checkEvent(accordion, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.BUTTON)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -54,26 +54,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(accordion);
-    const eventType: KulAccordionEvent = 'unmount';
+    const eventType: KulAccordionEvent = "unmount";
     cy.checkEvent(accordion, eventType);
-    cy.get('@eventElement').then(($article) => {
+    cy.get("@eventElement").then(($article) => {
       const kulArticleElement = $article[0] as HTMLKulArticleElement;
       kulArticleElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(accordion);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(accordionTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(accordionTag);
   });
 
@@ -90,12 +90,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(accordion);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

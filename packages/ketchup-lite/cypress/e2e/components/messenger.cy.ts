@@ -2,16 +2,16 @@ import {
   KulMessengerEvent,
   KulMessengerProps,
   KulMessengerPropsInterface,
-} from '../../../src/components/kul-messenger/kul-messenger-declarations';
-import { MESSENGER_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/messenger/kul-showcase-messenger-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-messenger/kul-messenger-declarations";
+import { MESSENGER_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/messenger/kul-showcase-messenger-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const messenger = 'messenger';
+const messenger = "messenger";
 const messengerCapitalized =
   messenger.charAt(0).toUpperCase() + messenger.slice(1);
-const messengerTag = 'kul-' + messenger;
+const messengerTag = "kul-" + messenger;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(messenger);
   });
@@ -25,33 +25,33 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(messenger);
   });
 
   it(`unmount`, () => {
     cy.navigate(messenger);
-    const eventType: KulMessengerEvent = 'unmount';
+    const eventType: KulMessengerEvent = "unmount";
     cy.checkEvent(messenger, eventType);
-    cy.get('@eventElement').then(($messenger) => {
+    cy.get("@eventElement").then(($messenger) => {
       const kulMessengerElement = $messenger[0] as HTMLKulMessengerElement;
       kulMessengerElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(messenger);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(messengerTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(messengerTag);
   });
 
@@ -69,12 +69,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(messenger);
   });
 
-  it('Should check for the presence of a <style> element with id kup-style.', () => {
+  it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

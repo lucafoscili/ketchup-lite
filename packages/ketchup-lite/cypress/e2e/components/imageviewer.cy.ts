@@ -2,16 +2,16 @@ import {
   KulImageviewerEvent,
   KulImageviewerProps,
   KulImageviewerPropsInterface,
-} from '../../../src/components/kul-imageviewer/kul-imageviewer-declarations';
-import { IMAGEVIEWER_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/imageviewer/kul-showcase-imageviewer-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-imageviewer/kul-imageviewer-declarations";
+import { IMAGEVIEWER_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/imageviewer/kul-showcase-imageviewer-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const imageviewer = 'imageviewer';
+const imageviewer = "imageviewer";
 const imageviewerCapitalized =
   imageviewer.charAt(0).toUpperCase() + imageviewer.slice(1);
-const imageviewerTag = 'kul-' + imageviewer;
+const imageviewerTag = "kul-" + imageviewer;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(imageviewer);
   });
@@ -28,21 +28,21 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`kul-event`, () => {
     cy.navigate(imageviewer);
-    const eventType: KulImageviewerEvent = 'kul-event';
+    const eventType: KulImageviewerEvent = "kul-event";
     cy.checkEvent(imageviewer, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.BUTTON)
       .first()
       .click();
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.SHAPE)
       .first()
       .scrollIntoView()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -51,27 +51,27 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(imageviewer);
-    const eventType: KulImageviewerEvent = 'unmount';
+    const eventType: KulImageviewerEvent = "unmount";
     cy.checkEvent(imageviewer, eventType);
-    cy.get('@eventElement').then(($imageviewer) => {
+    cy.get("@eventElement").then(($imageviewer) => {
       const kulImageviewerElement =
         $imageviewer[0] as HTMLKulImageviewerElement;
       kulImageviewerElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(imageviewer);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(imageviewerTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(imageviewerTag);
   });
 
@@ -89,12 +89,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(imageviewer);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

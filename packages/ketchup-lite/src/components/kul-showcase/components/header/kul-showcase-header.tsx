@@ -1,8 +1,8 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { HEADER_DOC, HEADER_EXAMPLES } from "./kul-showcase-header-data";
-import { HeaderExample } from "./kul-showcase-header-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { HeaderExample } from "./kul-showcase-header-declarations";
+import { HEADER_FIXTURES } from "./kul-showcase-header-fixtures";
 
 @Component({
   tag: "kul-showcase-header",
@@ -17,17 +17,17 @@ export class KulShowcaseHeader {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = HEADER_EXAMPLES;
+  @State() fixtures = HEADER_FIXTURES();
   //#endregion
 
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: HeaderExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: HeaderExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -48,7 +48,7 @@ export class KulShowcaseHeader {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={HEADER_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

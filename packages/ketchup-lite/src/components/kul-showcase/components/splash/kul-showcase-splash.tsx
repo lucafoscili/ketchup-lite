@@ -1,8 +1,8 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { SPLASH_DOC, SPLASH_EXAMPLES } from "./kul-showcase-splash-data";
-import { SplashExample } from "./kul-showcase-splash-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { SplashExample } from "./kul-showcase-splash-declarations";
+import { SPLASH_FIXTURES } from "./kul-showcase-splash-fixtures";
 
 @Component({
   tag: "kul-showcase-splash",
@@ -17,17 +17,17 @@ export class KulShowcaseSplash {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = SPLASH_EXAMPLES;
+  @State() fixtures = SPLASH_FIXTURES();
   //#endregion
 
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: SplashExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: SplashExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -67,7 +67,7 @@ export class KulShowcaseSplash {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={SPLASH_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { BADGE_DOC, BADGE_EXAMPLES } from "./kul-showcase-badge-data";
-import { BadgeExample } from "./kul-showcase-badge-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { BadgeExample } from "./kul-showcase-badge-declarations";
+import { BADGE_FIXTURES } from "./kul-showcase-badge-fixtures";
 
 @Component({
   tag: "kul-showcase-badge",
@@ -19,9 +19,9 @@ export class KulShowcaseBadge {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = BADGE_EXAMPLES;
+  @State() fixtures = BADGE_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -33,9 +33,9 @@ export class KulShowcaseBadge {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: BadgeExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: BadgeExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -91,7 +91,7 @@ export class KulShowcaseBadge {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={BADGE_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div
           class="grid"
           data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}

@@ -2,16 +2,16 @@ import {
   KulPhotoframeEvent,
   KulPhotoframeProps,
   KulPhotoframePropsInterface,
-} from '../../../src/components/kul-photoframe/kul-photoframe-declarations';
-import { PHOTOFRAME_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/photoframe/kul-showcase-photoframe-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-photoframe/kul-photoframe-declarations";
+import { PHOTOFRAME_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/photoframe/kul-showcase-photoframe-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const photoframe = 'photoframe';
+const photoframe = "photoframe";
 const photoframeCapitalized =
   photoframe.charAt(0).toUpperCase() + photoframe.slice(1);
-const photoframeTag = 'kul-' + photoframe;
+const photoframeTag = "kul-" + photoframe;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(photoframe);
   });
@@ -25,9 +25,9 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`load`, () => {
-    const eventType: KulPhotoframeEvent = 'load';
+    const eventType: KulPhotoframeEvent = "load";
     cy.checkReadyEvent(photoframe, eventType);
   });
 
@@ -37,26 +37,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(photoframe);
-    const eventType: KulPhotoframeEvent = 'unmount';
+    const eventType: KulPhotoframeEvent = "unmount";
     cy.checkEvent(photoframe, eventType);
-    cy.get('@eventElement').then(($photoframe) => {
+    cy.get("@eventElement").then(($photoframe) => {
       const kulPhotoframeElement = $photoframe[0] as HTMLKulPhotoframeElement;
       kulPhotoframeElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(photoframe);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(photoframeTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(photoframeTag);
   });
 
@@ -74,12 +74,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(photoframe);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

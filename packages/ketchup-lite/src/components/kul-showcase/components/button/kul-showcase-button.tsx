@@ -1,11 +1,11 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { BUTTON_DOC, BUTTON_EXAMPLES } from "./kul-showcase-button-data";
-import { ButtonExample } from "./kul-showcase-button-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { KulButtonStyling } from "../../../kul-button/kul-button-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { BUTTON_FIXTURES } from "./kul-showcase-button-fixtures";
+import { ButtonExample } from "./kul-showcase-button-declarations";
 
 @Component({
   tag: "kul-showcase-button",
@@ -20,9 +20,9 @@ export class KulShowcaseButton {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = BUTTON_EXAMPLES;
+  @State() fixtures = BUTTON_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -34,9 +34,9 @@ export class KulShowcaseButton {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const k1 in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
-        const category: ButtonExample = this.examples[k1];
+    for (const k1 in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
+        const category: ButtonExample = this.fixtures.examples[k1];
         const group: VNode[] = [];
 
         for (const k2 in category) {
@@ -112,7 +112,7 @@ export class KulShowcaseButton {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={BUTTON_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

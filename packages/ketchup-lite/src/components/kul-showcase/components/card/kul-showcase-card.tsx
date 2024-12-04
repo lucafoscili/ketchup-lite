@@ -1,11 +1,11 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { CARD_DOC, CARD_EXAMPLES } from "./kul-showcase-card-data";
-import { CardExample } from "./kul-showcase-card-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { KulCardLayout } from "../../../kul-card/kul-card-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { CardExample } from "./kul-showcase-card-declarations";
+import { CARD_FIXTURES } from "./kul-showcase-card-fixtures";
 
 @Component({
   tag: "kul-showcase-card",
@@ -20,9 +20,9 @@ export class KulShowcaseCard {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = CARD_EXAMPLES();
+  @State() fixtures = CARD_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -34,9 +34,9 @@ export class KulShowcaseCard {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const k1 in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, k1)) {
-        const layout: CardExample = this.examples[k1];
+    for (const k1 in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
+        const layout: CardExample = this.fixtures.examples[k1];
         const layoutWrapper: VNode[] = [];
 
         for (const k2 in layout) {
@@ -98,7 +98,7 @@ export class KulShowcaseCard {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={CARD_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

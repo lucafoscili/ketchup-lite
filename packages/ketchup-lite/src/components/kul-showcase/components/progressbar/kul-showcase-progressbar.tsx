@@ -1,13 +1,10 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import {
-  PROGRESSBAR_DOC,
-  PROGRESSBAR_EXAMPLES,
-} from "./kul-showcase-progressbar-data";
-import { ProgressbarExample } from "./kul-showcase-progressbar-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { ProgressbarExample } from "./kul-showcase-progressbar-declarations";
+import { PROGRESSBAR_FIXTURES } from "./kul-showcase-progressbar-fixtures";
 
 @Component({
   tag: "kul-showcase-progressbar",
@@ -22,9 +19,9 @@ export class KulShowcaseProgressbar {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = PROGRESSBAR_EXAMPLES;
+  @State() fixtures = PROGRESSBAR_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -36,9 +33,9 @@ export class KulShowcaseProgressbar {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: ProgressbarExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: ProgressbarExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -87,7 +84,7 @@ export class KulShowcaseProgressbar {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={PROGRESSBAR_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

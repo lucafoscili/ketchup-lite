@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { LAZY_DOC, LAZY_EXAMPLES } from "./kul-showcase-lazy-data";
-import { LazyExample } from "./kul-showcase-lazy-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { LazyExample } from "./kul-showcase-lazy-declarations";
+import { LAZY_FIXTURES } from "./kul-showcase-lazy-fixtures";
 
 @Component({
   tag: "kul-showcase-lazy",
@@ -19,9 +19,9 @@ export class KulShowcaseLazy {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = LAZY_EXAMPLES;
+  @State() fixtures = LAZY_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -33,9 +33,9 @@ export class KulShowcaseLazy {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: LazyExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: LazyExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -79,7 +79,7 @@ export class KulShowcaseLazy {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={LAZY_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

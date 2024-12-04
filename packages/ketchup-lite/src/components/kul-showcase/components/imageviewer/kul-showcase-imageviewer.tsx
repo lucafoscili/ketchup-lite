@@ -1,12 +1,9 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import {
-  IMAGEVIEWER_DOC,
-  IMAGEVIEWER_EXAMPLES,
-} from "./kul-showcase-imageviewer-data";
-import { ImageviewerExample } from "./kul-showcase-imageviewer-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { ImageviewerExample } from "./kul-showcase-imageviewer-declarations";
+import { IMAGEVIEWER_FIXTURES } from "./kul-showcase-imageviewer-fixtures";
 
 @Component({
   tag: "kul-showcase-imageviewer",
@@ -21,9 +18,9 @@ export class KulShowcaseImageviewer {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = IMAGEVIEWER_EXAMPLES();
+  @State() fixtures = IMAGEVIEWER_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -35,9 +32,9 @@ export class KulShowcaseImageviewer {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: ImageviewerExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: ImageviewerExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -81,7 +78,7 @@ export class KulShowcaseImageviewer {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={IMAGEVIEWER_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

@@ -1,8 +1,8 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { DRAWER_DOC, DRAWER_EXAMPLES } from "./kul-showcase-drawer-data";
-import { DrawerExample } from "./kul-showcase-drawer-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { DrawerExample } from "./kul-showcase-drawer-declarations";
+import { DRAWER_FIXTURES } from "./kul-showcase-drawer-fixtures";
 
 @Component({
   tag: "kul-showcase-drawer",
@@ -17,17 +17,17 @@ export class KulShowcaseDrawer {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = DRAWER_EXAMPLES;
+  @State() fixtures = DRAWER_FIXTURES();
   //#endregion
 
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: DrawerExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: DrawerExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -48,7 +48,7 @@ export class KulShowcaseDrawer {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={DRAWER_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

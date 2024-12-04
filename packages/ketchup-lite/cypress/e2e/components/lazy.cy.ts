@@ -2,15 +2,15 @@ import {
   KulLazyEvent,
   KulLazyProps,
   KulLazyPropsInterface,
-} from '../../../src/components/kul-lazy/kul-lazy-declarations';
-import { LAZY_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/lazy/kul-showcase-lazy-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-lazy/kul-lazy-declarations";
+import { LAZY_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/lazy/kul-showcase-lazy-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const lazy = 'lazy';
+const lazy = "lazy";
 const lazyCapitalized = lazy.charAt(0).toUpperCase() + lazy.slice(1);
-const lazyTag = 'kul-' + lazy;
+const lazyTag = "kul-" + lazy;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(lazy);
   });
@@ -24,16 +24,16 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`kul-event`, () => {
     cy.navigate(lazy);
-    const eventType: KulLazyEvent = 'kul-event';
+    const eventType: KulLazyEvent = "kul-event";
     cy.checkEvent(lazy, eventType);
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`load`, () => {
-    const eventType: KulLazyEvent = 'load';
+    const eventType: KulLazyEvent = "load";
     cy.checkReadyEvent(lazy, eventType);
   });
 
@@ -43,26 +43,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(lazy);
-    const eventType: KulLazyEvent = 'unmount';
+    const eventType: KulLazyEvent = "unmount";
     cy.checkEvent(lazy, eventType);
-    cy.get('@eventElement').then(($lazy) => {
+    cy.get("@eventElement").then(($lazy) => {
       const kulLazyElement = $lazy[0] as HTMLKulLazyElement;
       kulLazyElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(lazy);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(lazyTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(lazyTag);
   });
 
@@ -81,12 +81,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(lazy);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

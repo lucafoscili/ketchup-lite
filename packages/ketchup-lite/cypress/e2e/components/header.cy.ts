@@ -1,14 +1,14 @@
-import { KulDebugLifecycleInfo } from '../../../src/managers/kul-debug/kul-debug-declarations';
+import { KulDebugLifecycleInfo } from "../../../src/managers/kul-debug/kul-debug-declarations";
 
-const header = 'header';
+const header = "header";
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(header);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
-    cy.get('iframe').then(($iframe) => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
+    cy.get("iframe").then(($iframe) => {
       const iframeDocument = $iframe.contents();
       iframeDocument.find(header).each(($el) => {
         cy.wrap($el).then(($el) => {
@@ -16,19 +16,19 @@ describe('Methods', () => {
           kulHeaderElement
             .getDebugInfo()
             .then((debugInfo: KulDebugLifecycleInfo) => {
-              expect(debugInfo).to.have.property('endTime').that.is.a('number');
+              expect(debugInfo).to.have.property("endTime").that.is.a("number");
               expect(debugInfo)
-                .to.have.property('renderCount')
-                .that.is.a('number');
+                .to.have.property("renderCount")
+                .that.is.a("number");
               expect(debugInfo)
-                .to.have.property('renderEnd')
-                .that.is.a('number');
+                .to.have.property("renderEnd")
+                .that.is.a("number");
               expect(debugInfo)
-                .to.have.property('renderStart')
-                .that.is.a('number');
+                .to.have.property("renderStart")
+                .that.is.a("number");
               expect(debugInfo)
-                .to.have.property('startTime')
-                .that.is.a('number');
+                .to.have.property("startTime")
+                .that.is.a("number");
             });
         });
       });

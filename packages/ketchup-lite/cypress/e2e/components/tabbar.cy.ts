@@ -2,15 +2,15 @@ import {
   KulTabbarEvent,
   KulTabbarProps,
   KulTabbarPropsInterface,
-} from '../../../src/components/kul-tabbar/kul-tabbar-declarations';
-import { TABBAR_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/tabbar/kul-showcase-tabbar-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-tabbar/kul-tabbar-declarations";
+import { TABBAR_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/tabbar/kul-showcase-tabbar-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const tabbar = 'tabbar';
+const tabbar = "tabbar";
 const tabbarCapitalized = tabbar.charAt(0).toUpperCase() + tabbar.slice(1);
-const tabbarTag = 'kul-' + tabbar;
+const tabbarTag = "kul-" + tabbar;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(tabbar);
   });
@@ -24,27 +24,27 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`click`, () => {
     cy.navigate(tabbar);
-    const eventType: KulTabbarEvent = 'click';
+    const eventType: KulTabbarEvent = "click";
     cy.checkEvent(tabbar, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.BUTTON)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`pointerdown`, () => {
     cy.navigate(tabbar);
-    const eventType: KulTabbarEvent = 'pointerdown';
+    const eventType: KulTabbarEvent = "pointerdown";
     cy.checkEvent(tabbar, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.BUTTON)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -53,26 +53,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(tabbar);
-    const eventType: KulTabbarEvent = 'unmount';
+    const eventType: KulTabbarEvent = "unmount";
     cy.checkEvent(tabbar, eventType);
-    cy.get('@eventElement').then(($tabbar) => {
+    cy.get("@eventElement").then(($tabbar) => {
       const kulTabbarElement = $tabbar[0] as HTMLKulTabbarElement;
       kulTabbarElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(tabbar);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(tabbarTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(tabbarTag);
   });
 
@@ -90,12 +90,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(tabbar);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

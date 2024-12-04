@@ -2,15 +2,15 @@ import {
   KulTreeEvent,
   KulTreeProps,
   KulTreePropsInterface,
-} from '../../../src/components/kul-tree/kul-tree-declarations';
-import { TREE_EXAMPLES_KEYS } from '../../../src/components/kul-showcase/components/tree/kul-showcase-tree-declarations';
-import { KulDataCyAttributes } from '../../../src/types/GenericTypes';
+} from "../../../src/components/kul-tree/kul-tree-declarations";
+import { TREE_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/tree/kul-showcase-tree-declarations";
+import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
-const tree = 'tree';
+const tree = "tree";
 const treeCapitalized = tree.charAt(0).toUpperCase() + tree.slice(1);
-const treeTag = 'kul-' + tree;
+const treeTag = "kul-" + tree;
 
-describe('Basic', () => {
+describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(tree);
   });
@@ -24,38 +24,38 @@ describe('Basic', () => {
   });
 });
 
-describe('Events', () => {
+describe("Events", () => {
   it(`click`, () => {
     cy.navigate(tree);
-    const eventType: KulTreeEvent = 'click';
+    const eventType: KulTreeEvent = "click";
     cy.checkEvent(tree, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.NODE)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`kul-event`, () => {
     cy.navigate(tree);
-    const eventType: KulTreeEvent = 'kul-event';
+    const eventType: KulTreeEvent = "kul-event";
     cy.checkEvent(tree, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.INPUT)
       .first()
       .focus();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`pointerdown`, () => {
     cy.navigate(tree);
-    const eventType: KulTreeEvent = 'pointerdown';
+    const eventType: KulTreeEvent = "pointerdown";
     cy.checkEvent(tree, eventType);
-    cy.get('@eventElement')
+    cy.get("@eventElement")
       .findCyElement(KulDataCyAttributes.NODE)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 
   it(`ready`, () => {
@@ -64,26 +64,26 @@ describe('Events', () => {
 
   it(`unmount`, () => {
     cy.navigate(tree);
-    const eventType: KulTreeEvent = 'unmount';
+    const eventType: KulTreeEvent = "unmount";
     cy.checkEvent(tree, eventType);
-    cy.get('@eventElement').then(($tree) => {
+    cy.get("@eventElement").then(($tree) => {
       const kulTreeElement = $tree[0] as HTMLKulTreeElement;
       kulTreeElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should('exist');
+    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
 
-describe('Methods', () => {
+describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(tree);
   });
 
-  it('getDebugInfo: check the structure of the returned object.', () => {
+  it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(treeTag);
   });
 
-  it('getDebugInfo, refresh: check that renderCount has increased after refreshing.', () => {
+  it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(treeTag);
   });
 
@@ -104,12 +104,12 @@ describe('Methods', () => {
   });
 });
 
-describe('Props', () => {
+describe("Props", () => {
   beforeEach(() => {
     cy.navigate(tree);
   });
 
-  it('kulStyle: should check for the presence of a <style> element with id kup-style.', () => {
+  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });

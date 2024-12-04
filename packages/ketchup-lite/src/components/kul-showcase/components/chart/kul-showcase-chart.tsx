@@ -1,10 +1,10 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { CHART_DOC, CHART_EXAMPLES } from "./kul-showcase-chart-data";
-import { ChartExample } from "./kul-showcase-chart-declarations";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { ChartExample } from "./kul-showcase-chart-declarations";
+import { CHART_FIXTURES } from "./kul-showcase-chart-fixtures";
 
 @Component({
   tag: "kul-showcase-chart",
@@ -19,9 +19,9 @@ export class KulShowcaseChart {
 
   //#region States
   /**
-   * Data of the examples.
+   * Data of the fixtures.
    */
-  @State() examples = CHART_EXAMPLES;
+  @State() fixtures = CHART_FIXTURES();
   //#endregion
 
   //#region Internal variables
@@ -33,9 +33,9 @@ export class KulShowcaseChart {
   //#region Private methods
   #prepExamples() {
     const elements: VNode[] = [];
-    for (const key in this.examples) {
-      if (Object.prototype.hasOwnProperty.call(this.examples, key)) {
-        const props: ChartExample = this.examples[key];
+    for (const key in this.fixtures.examples) {
+      if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
+        const props: ChartExample = this.fixtures.examples[key];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -79,7 +79,7 @@ export class KulShowcaseChart {
   render() {
     return (
       <Fragment>
-        <kul-article kulData={CHART_DOC}></kul-article>
+        <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div class="examples-title" part="examples-title">
           Examples
         </div>

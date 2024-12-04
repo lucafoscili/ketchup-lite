@@ -285,9 +285,8 @@ function visitManager() {
   return {
     cardClick: (component: string) => {
       cy.get("kul-showcase").should("exist").as("kulShowcase");
-      cy.get("@kulShowcase")
-        .shadow()
-        .find("#" + component.charAt(0).toUpperCase() + component.slice(1))
+      cy.get("@kulShowcase").should("exist");
+      cy.get("#" + component.charAt(0).toUpperCase() + component.slice(1))
         .should("exist")
         .click();
       cy.get("@kulShowcase")
@@ -309,10 +308,10 @@ function visitManager() {
                 event.detail.eventType === "unmount"
               ) {
                 resolve();
-                splash.removeEventListener("kul-splash-event", checkEvent);
               }
             };
             splash.addEventListener("kul-splash-event", checkEvent);
+            splash.style.pointerEvents = "none";
           });
         });
     },
