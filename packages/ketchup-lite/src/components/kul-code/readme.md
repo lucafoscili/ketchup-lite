@@ -10,10 +10,10 @@
 | Property            | Attribute             | Description                                                              | Type      | Default        |
 | ------------------- | --------------------- | ------------------------------------------------------------------------ | --------- | -------------- |
 | `kulFormat`         | `kul-format`          | Automatically formats the value.                                         | `boolean` | `true`         |
-| `kulLanguage`       | `kul-language`        | Sets the language of the snippet.                                        | `string`  | `'javascript'` |
+| `kulLanguage`       | `kul-language`        | Sets the language of the snippet.                                        | `string`  | `"javascript"` |
 | `kulPreserveSpaces` | `kul-preserve-spaces` | Whether to preserve spaces or not. When missing it is set automatically. | `boolean` | `undefined`    |
-| `kulStyle`          | `kul-style`           | Enables customization of the component's style.                          | `string`  | `''`           |
-| `kulValue`          | `kul-value`           | String containing the snippet of code to display.                        | `string`  | `''`           |
+| `kulStyle`          | `kul-style`           | Enables customization of the component's style.                          | `string`  | `""`           |
+| `kulValue`          | `kul-value`           | String containing the snippet of code to display.                        | `string`  | `""`           |
 
 
 ## Events

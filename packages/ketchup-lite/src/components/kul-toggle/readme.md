@@ -10,10 +10,10 @@
 | Property          | Attribute           | Description                                                                            | Type      | Default |
 | ----------------- | ------------------- | -------------------------------------------------------------------------------------- | --------- | ------- |
 | `kulDisabled`     | `kul-disabled`      | Defaults at false. When set to true, the component is disabled.                        | `boolean` | `false` |
-| `kulLabel`        | `kul-label`         | Defines text to display along with the toggle.                                         | `string`  | `''`    |
+| `kulLabel`        | `kul-label`         | Defines text to display along with the toggle.                                         | `string`  | `""`    |
 | `kulLeadingLabel` | `kul-leading-label` | Defaults at false. When set to true, the label will be displayed before the component. | `boolean` | `false` |
 | `kulRipple`       | `kul-ripple`        | When set to true, the pointerdown event will trigger a ripple effect.                  | `boolean` | `true`  |
-| `kulStyle`        | `kul-style`         | Custom style of the component.                                                         | `string`  | `''`    |
+| `kulStyle`        | `kul-style`         | Custom style of the component.                                                         | `string`  | `""`    |
 | `kulValue`        | `kul-value`         | Sets the initial boolean state of the toggle.                                          | `boolean` | `false` |
 
 

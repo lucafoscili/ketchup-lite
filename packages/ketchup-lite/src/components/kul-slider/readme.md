@@ -10,13 +10,13 @@
 | Property          | Attribute           | Description                                                                     | Type      | Default |
 | ----------------- | ------------------- | ------------------------------------------------------------------------------- | --------- | ------- |
 | `kulDisabled`     | `kul-disabled`      | When true, the component is disabled, preventing user interaction.              | `boolean` | `false` |
-| `kulLabel`        | `kul-label`         | Defines text to display as a label for the slider.                              | `string`  | `''`    |
+| `kulLabel`        | `kul-label`         | Defines text to display as a label for the slider.                              | `string`  | `""`    |
 | `kulLeadingLabel` | `kul-leading-label` | When true, displays the label before the slider component. Defaults to `false`. | `boolean` | `false` |
 | `kulMax`          | `kul-max`           | The maximum value allowed by the slider.                                        | `number`  | `100`   |
 | `kulMin`          | `kul-min`           | The minimum value allowed by the slider.                                        | `number`  | `0`     |
 | `kulRipple`       | `kul-ripple`        | Adds a ripple effect when interacting with the slider.                          | `boolean` | `true`  |
 | `kulStep`         | `kul-step`          | Sets the increment or decrement steps when moving the slider.                   | `number`  | `1`     |
-| `kulStyle`        | `kul-style`         | Custom CSS style to apply to the slider component.                              | `string`  | `''`    |
+| `kulStyle`        | `kul-style`         | Custom CSS style to apply to the slider component.                              | `string`  | `""`    |
 | `kulValue`        | `kul-value`         | The initial numeric value for the slider within the defined range.              | `number`  | `50`    |
 
 

@@ -11,8 +11,8 @@
 | ------------ | ------------- | ------------------------------------------------------------------------------------ | ----------------------------------------------- | ------------ |
 | `kulData`    | --            | The data of the chip list.                                                           | `KulDataDataset`                                | `null`       |
 | `kulRipple`  | `kul-ripple`  | When set to true, the pointerdown event will trigger a ripple effect.                | `boolean`                                       | `true`       |
-| `kulStyle`   | `kul-style`   | Custom style of the component.                                                       | `string`                                        | `''`         |
-| `kulStyling` | `kul-styling` | Styling of the chip component, includes: "choice", "input", "filter" and "standard". | `"choice" \| "filter" \| "input" \| "standard"` | `'standard'` |
+| `kulStyle`   | `kul-style`   | Custom style of the component.                                                       | `string`                                        | `""`         |
+| `kulStyling` | `kul-styling` | Styling of the chip component, includes: "choice", "input", "filter" and "standard". | `"choice" \| "filter" \| "input" \| "standard"` | `"standard"` |
 
 
 ## Events

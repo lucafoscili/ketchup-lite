@@ -11,7 +11,7 @@
 | ----------- | ------------ | --------------------------------------------------------------------- | ---------------- | ------- |
 | `kulData`   | --           | Actual data of the accordion.                                         | `KulDataDataset` | `null`  |
 | `kulRipple` | `kul-ripple` | When set to true, the pointerdown event will trigger a ripple effect. | `boolean`        | `true`  |
-| `kulStyle`  | `kul-style`  | Custom style of the component.                                        | `string`         | `''`    |
+| `kulStyle`  | `kul-style`  | Custom style of the component.                                        | `string`         | `""`    |
 
 
 ## Events

@@ -10,10 +10,10 @@
 | Property           | Attribute            | Description                                                                                                         | Type      | Default |
 | ------------------ | -------------------- | ------------------------------------------------------------------------------------------------------------------- | --------- | ------- |
 | `kulCenteredLabel` | `kul-centered-label` | Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed. | `boolean` | `false` |
-| `kulIcon`          | `kul-icon`           | Specifies an icon to replace the label.                                                                             | `string`  | `''`    |
+| `kulIcon`          | `kul-icon`           | Specifies an icon to replace the label.                                                                             | `string`  | `""`    |
 | `kulIsRadial`      | `kul-is-radial`      | Radial version.                                                                                                     | `boolean` | `false` |
-| `kulLabel`         | `kul-label`          | Specifies a text for the bar's label.                                                                               | `string`  | `''`    |
-| `kulStyle`         | `kul-style`          | Custom style of the component.                                                                                      | `string`  | `''`    |
+| `kulLabel`         | `kul-label`          | Specifies a text for the bar's label.                                                                               | `string`  | `""`    |
+| `kulStyle`         | `kul-style`          | Custom style of the component.                                                                                      | `string`  | `""`    |
 | `kulValue`         | `kul-value`          | The current value the progress bar must display.                                                                    | `number`  | `0`     |
 
 

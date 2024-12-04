@@ -10,7 +10,7 @@
 | Property   | Attribute   | Description                                     | Type                | Default |
 | ---------- | ----------- | ----------------------------------------------- | ------------------- | ------- |
 | `kulData`  | --          | The actual data of the article.                 | `KulArticleDataset` | `null`  |
-| `kulStyle` | `kul-style` | Enables customization of the component's style. | `string`            | `''`    |
+| `kulStyle` | `kul-style` | Enables customization of the component's style. | `string`            | `""`    |
 
 
 ## Events
