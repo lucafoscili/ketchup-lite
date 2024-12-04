@@ -4,6 +4,7 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
+  getAssetPath,
   h,
   Host,
   Method,
@@ -170,10 +171,11 @@ export class KulCode {
       return this.#kulManager.data.cell.stringify(value);
     }
   }
-
   async #highlightCode(): Promise<void> {
     try {
-      Prism.highlightElement(this.#el);
+      if (!Prism.languages[this.kulLanguage]) {
+        await this.#loadLanguage();
+      }
     } catch (error) {
       this.#kulManager.debug.logs.new(
         this,
@@ -183,13 +185,11 @@ export class KulCode {
       this.#el.innerHTML = this.value;
     }
   }
-
   #isObjectLike(
     obj: unknown,
   ): obj is Record<string | number | symbol, unknown> {
     return typeof obj === "object" && obj !== null;
   }
-
   #isDictionary(
     obj: unknown,
   ): obj is Record<string | number | symbol, unknown> {
@@ -198,11 +198,24 @@ export class KulCode {
       Object.values(obj).every((value) => value != null)
     );
   }
-
   #isJson(value: string | Record<string, unknown>) {
     return (
       this.kulLanguage?.toLowerCase() === "json" || this.#isDictionary(value)
     );
+  }
+  async #loadLanguage() {
+    try {
+      const module = getAssetPath(
+        `./assets/prism/prism-${this.kulLanguage}.min.js`,
+      );
+      await import(module);
+      Prism.highlightAll();
+    } catch (error) {
+      console.error(
+        `Failed to load Prism.js component for ${this.kulLanguage}:`,
+        error,
+      );
+    }
   }
   #updateValue() {
     this.value = this.kulFormat ? this.#format(this.kulValue) : this.kulValue;
@@ -260,6 +273,7 @@ export class KulCode {
       this.kulLanguage.toLowerCase() === "";
     const shouldPreserveSpace =
       this.kulPreserveSpaces || (isPreserveSpaceMissing && !isLikelyTextual);
+
     return (
       <Host>
         {this.kulStyle && (

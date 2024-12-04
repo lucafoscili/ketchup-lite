@@ -1,7 +1,6 @@
 import { Config } from "@stencil/core";
 import { reactOutputTarget } from "@stencil/react-output-target";
 import { sass } from "@stencil/sass";
-import { resolve } from "path";
 
 export const config: Config = {
   bundles: [
@@ -79,16 +78,10 @@ export const config: Config = {
       serviceWorker: null,
     },
     reactOutputTarget({
-      outDir: resolve(
-        __dirname,
-        "../ketchup-lite-react/lib/components/stencil-generated/",
-      ).replace(/\\/g, "/"),
+      outDir: "../ketchup-lite-react/lib/components/stencil-generated/",
     }),
     reactOutputTarget({
-      outDir: resolve(
-        __dirname,
-        "../ketchup-lite-react-ssr/lib/components/stencil-generated/",
-      ).replace(/\\/g, "/"),
+      outDir: "../ketchup-lite-react-ssr/lib/components/stencil-generated/",
       hydrateModule: "ketchup-lite-hydrate",
     }),
   ],
