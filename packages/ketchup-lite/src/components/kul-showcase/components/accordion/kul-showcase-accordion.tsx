@@ -1,12 +1,10 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import {
-  ACCORDION_DOC,
-  ACCORDION_EXAMPLES,
-} from "./kul-showcase-accordion-data";
-import { AccordionExample } from "./kul-showcase-accordion-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
+import { ARTICLE_EXAMPLES } from "../article/kul-showcase-article-fixtures";
+import { AccordionExample } from "./kul-showcase-accordion-declarations";
+import { ACCORDION_DOC } from "./kul-showcase-accordion-fixtures";
 
 @Component({
   tag: "kul-showcase-accordion",
@@ -23,7 +21,7 @@ export class KulShowcaseAccordion {
   /**
    * Data of the examples.
    */
-  @State() examples = ACCORDION_EXAMPLES();
+  @State() examples = ARTICLE_EXAMPLES();
   //#endregion
 
   //#region Internal variables
