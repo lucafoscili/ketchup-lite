@@ -71,9 +71,109 @@ export class KulShowcase {
   }
   #comps(type: KulShowcaseTitle): VNode {
     if (this.currentState[type]) {
-      const TagName = `kul-showcase-${this.currentState[type].toLowerCase()}`;
-      return <TagName />;
+      switch (this.currentState[type].toLowerCase()) {
+        //#region Components
+        case "accordion":
+          return <kul-showcase-accordion></kul-showcase-accordion>;
+        case "article":
+          return <kul-showcase-article></kul-showcase-article>;
+        case "badge":
+          return <kul-showcase-badge></kul-showcase-badge>;
+        case "button":
+          return <kul-showcase-button></kul-showcase-button>;
+        case "canvas":
+          return <kul-showcase-canvas></kul-showcase-canvas>;
+        case "card":
+          return <kul-showcase-card></kul-showcase-card>;
+        case "carousel":
+          return <kul-showcase-carousel></kul-showcase-carousel>;
+        case "chart":
+          return <kul-showcase-chart></kul-showcase-chart>;
+        case "chat":
+          return <kul-showcase-chat></kul-showcase-chat>;
+        case "chip":
+          return <kul-showcase-chip></kul-showcase-chip>;
+        case "code":
+          return <kul-showcase-code></kul-showcase-code>;
+        case "compare":
+          return <kul-showcase-compare></kul-showcase-compare>;
+        case "drawer":
+          return <kul-showcase-drawer></kul-showcase-drawer>;
+        case "header":
+          return <kul-showcase-header></kul-showcase-header>;
+        case "image":
+          return <kul-showcase-image></kul-showcase-image>;
+        case "imageviewer":
+          return <kul-showcase-imageviewer></kul-showcase-imageviewer>;
+        case "lazy":
+          return <kul-showcase-lazy></kul-showcase-lazy>;
+        case "list":
+          return <kul-showcase-list></kul-showcase-list>;
+        case "masonry":
+          return <kul-showcase-masonry></kul-showcase-masonry>;
+        case "messenger":
+          return <kul-showcase-messenger></kul-showcase-messenger>;
+        case "photoframe":
+          return <kul-showcase-photoframe></kul-showcase-photoframe>;
+        case "progressbar":
+          return <kul-showcase-progressbar></kul-showcase-progressbar>;
+        case "slider":
+          return <kul-showcase-slider></kul-showcase-slider>;
+        case "splash":
+          return <kul-showcase-splash></kul-showcase-splash>;
+        case "spinner":
+          return <kul-showcase-spinner></kul-showcase-spinner>;
+        case "tabbar":
+          return <kul-showcase-tabbar></kul-showcase-tabbar>;
+        case "textfield":
+          return <kul-showcase-textfield></kul-showcase-textfield>;
+        case "toast":
+          return <kul-showcase-toast></kul-showcase-toast>;
+        case "toggle":
+          return <kul-showcase-toggle></kul-showcase-toggle>;
+        case "tree":
+          return <kul-showcase-tree></kul-showcase-tree>;
+        case "typewriter":
+          return <kul-showcase-typewriter></kul-showcase-typewriter>;
+        case "upload":
+          return <kul-showcase-upload></kul-showcase-upload>;
+        //#endregion
+
+        //#region Framework
+        case "kuldata":
+          return <kul-showcase-kuldata></kul-showcase-kuldata>;
+        case "kuldates":
+          return <kul-showcase-kuldates></kul-showcase-kuldates>;
+        case "kuldebug":
+          return <kul-showcase-kuldebug></kul-showcase-kuldebug>;
+        case "kuldynamicposition":
+          return (
+            <kul-showcase-kuldynamicposition></kul-showcase-kuldynamicposition>
+          );
+        case "kullanguage":
+          return <kul-showcase-kullanguage></kul-showcase-kullanguage>;
+        case "kulllm":
+          return <kul-showcase-kulllm></kul-showcase-kulllm>;
+        case "kulmanager":
+          return <kul-showcase-kulmanager></kul-showcase-kulmanager>;
+        case "kulscrollonhover":
+          return (
+            <kul-showcase-kulscrollonhover></kul-showcase-kulscrollonhover>
+          );
+        case "kultheme":
+          return <kul-showcase-kultheme></kul-showcase-kultheme>;
+        //#endregion
+
+        //#region Utilities
+        case "debug":
+          return <kul-showcase-debug></kul-showcase-debug>;
+        //#endregion
+
+        default:
+          return <div>Component not defined :V</div>;
+      }
     }
+    return <div>No state available for type: {type}</div>;
   }
   #cards(type: KulShowcaseTitle): VNode[] {
     const dataset =
