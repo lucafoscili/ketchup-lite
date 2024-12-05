@@ -12,7 +12,7 @@ const canvasTag = "kul-" + canvas;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(canvas);
+    cy.navigate(canvas).waitForWebComponents([canvasTag]);
   });
 
   it(`Should check that all <${canvasTag}> exist.`, () => {

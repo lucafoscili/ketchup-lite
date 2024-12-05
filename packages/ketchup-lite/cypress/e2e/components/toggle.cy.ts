@@ -13,7 +13,7 @@ const toggleTag = "kul-" + toggleComponent;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(toggleComponent);
+    cy.navigate(toggleComponent).waitForWebComponents([toggleTag]);
   });
 
   it(`Should check that all <${toggleTag}> exist.`, () => {

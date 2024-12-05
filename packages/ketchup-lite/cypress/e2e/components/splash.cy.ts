@@ -10,7 +10,7 @@ const splashTag = "kul-" + splash;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(splash);
+    cy.navigate(splash).waitForWebComponents([splashTag]);
   });
 
   it(`Should check that all <${splashTag}> exist.`, () => {

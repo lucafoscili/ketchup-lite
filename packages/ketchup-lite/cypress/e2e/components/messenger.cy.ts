@@ -13,7 +13,7 @@ const messengerTag = "kul-" + messenger;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(messenger);
+    cy.navigate(messenger).waitForWebComponents([messengerTag]);
   });
 
   it(`Should check that all <${messengerTag}> exist.`, () => {

@@ -14,7 +14,7 @@ const buttonTag = "kul-" + button;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(button);
+    cy.navigate(button).waitForWebComponents([buttonTag]);
   });
 
   it(`Should select all <${buttonTag}> elements matching the composed ID`, () => {

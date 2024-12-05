@@ -13,7 +13,7 @@ const sliderTag = "kul-" + sliderComponent;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(sliderComponent);
+    cy.navigate(sliderComponent).waitForWebComponents([sliderTag]);
   });
 
   it(`Should check that all <${sliderTag}> exist.`, () => {

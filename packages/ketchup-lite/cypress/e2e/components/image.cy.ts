@@ -12,7 +12,7 @@ const imageTag = "kul-" + image;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(image);
+    cy.navigate(image).waitForWebComponents([imageTag]);
   });
 
   it(`Should check that all <${imageTag}> exist.`, () => {

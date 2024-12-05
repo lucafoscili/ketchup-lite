@@ -13,7 +13,10 @@ const imageviewerTag = "kul-" + imageviewer;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(imageviewer);
+    cy.navigate(imageviewer).waitForWebComponents([
+      imageviewerTag,
+      "kul-image",
+    ]);
   });
 
   it(`Should check that all <${imageviewerTag}> exist.`, () => {

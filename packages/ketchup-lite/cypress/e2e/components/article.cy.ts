@@ -13,7 +13,7 @@ const articleTag = "kul-" + article;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(article);
+    cy.navigate(article).waitForWebComponents([articleTag, "kul-code"]);
   });
 
   it(`Should check that all <${articleTag}> exist.`, () => {

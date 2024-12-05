@@ -13,7 +13,7 @@ const carouselTag = "kul-" + carousel;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(carousel);
+    cy.navigate(carousel).waitForWebComponents([carouselTag]);
   });
 
   it(`Should check that all <${carouselTag}> exist.`, () => {

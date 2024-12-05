@@ -12,7 +12,7 @@ const uploadTag = "kul-" + upload;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(upload);
+    cy.navigate(upload).waitForWebComponents([uploadTag]);
   });
 
   it(`Should check that all <${uploadTag}> exist.`, () => {
