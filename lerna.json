@@ -1,11 +1,15 @@
 {
-  "version": "2.3.0",
   "npmClient": "yarn",
+  "version": "2.3.1-rc.1",
   "command": {
     "publish": {
       "conventionalCommits": true,
       "createRelease": "github",
-      "message": "chore(release): publish"
+      "message": "chore(release): publish",
+      "tagVersionPrefix": ""
+    },
+    "version": {
+      "tagVersionPrefix": ""
     }
   }
 }

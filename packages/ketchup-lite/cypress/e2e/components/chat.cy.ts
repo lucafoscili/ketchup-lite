@@ -12,7 +12,7 @@ const chatTag = "kul-" + chat;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(chat);
+    cy.navigate(chat).waitForWebComponents([chatTag]);
   });
 
   it(`Should check that all <${chatTag}> exist.`, () => {

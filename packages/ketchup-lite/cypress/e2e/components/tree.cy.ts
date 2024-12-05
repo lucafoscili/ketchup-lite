@@ -12,7 +12,7 @@ const treeTag = "kul-" + tree;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(tree);
+    cy.navigate(tree).waitForWebComponents([treeTag]);
   });
 
   it(`Should check that all <${treeTag}> exist.`, () => {

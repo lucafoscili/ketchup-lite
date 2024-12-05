@@ -13,7 +13,7 @@ const typewriterTag = "kul-" + typewriter;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(typewriter);
+    cy.navigate(typewriter).waitForWebComponents([typewriterTag]);
   });
 
   it(`Should check that all <${typewriterTag}> exist.`, () => {

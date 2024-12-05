@@ -12,7 +12,7 @@ const compareTag = "kul-" + compare;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(compare);
+    cy.navigate(compare).waitForWebComponents([compareTag]);
   });
 
   it(`Should check that all <${compareTag}> exist.`, () => {

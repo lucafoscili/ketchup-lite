@@ -13,7 +13,7 @@ const progressbarTag = "kul-" + progressbar;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(progressbar);
+    cy.navigate(progressbar).waitForWebComponents([progressbarTag]);
   });
 
   it(`Should check that all <${progressbarTag}> exist.`, () => {

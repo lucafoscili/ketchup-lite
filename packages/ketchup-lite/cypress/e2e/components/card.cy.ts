@@ -12,7 +12,7 @@ const cardTag = "kul-" + card;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(card);
+    cy.navigate(card).waitForWebComponents([cardTag]);
   });
 
   it(`Should select all <${cardTag}> elements matching the composed ID`, () => {

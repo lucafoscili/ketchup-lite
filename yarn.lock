@@ -950,12 +950,12 @@ __metadata:
   linkType: hard
 
 "@types/react@npm:*, @types/react@npm:^18":
-  version: 18.3.12
-  resolution: "@types/react@npm:18.3.12"
+  version: 18.3.13
+  resolution: "@types/react@npm:18.3.13"
   dependencies:
     "@types/prop-types": "*"
     csstype: ^3.0.2
-  checksum: 4ab1577a8c2105a5e316536f724117c90eee5f4bd5c137fc82a2253d8c1fd299dedaa07e8dfc95d6e2f04a4be3cb8b0e1b06098c6233ebd55c508d88099395b7
+  checksum: 5ccf75e8e52e30fd619046ce985d17152fdf92da3b27777cdcbe972c4557bb0f0d7cfda6b379c29e409f4c3293ad1277394eea6c865211c07bd92cab8dcb277f
   languageName: node
   linkType: hard
 
@@ -1241,13 +1241,13 @@ __metadata:
   linkType: hard
 
 "axios@npm:^1.7.4":
-  version: 1.7.8
-  resolution: "axios@npm:1.7.8"
+  version: 1.7.9
+  resolution: "axios@npm:1.7.9"
   dependencies:
     follow-redirects: ^1.15.6
     form-data: ^4.0.0
     proxy-from-env: ^1.1.0
-  checksum: 3d21652faf8e29fb36c47517d2872bb5e2285127a24f5c53ce23082c4eac7f5a88de84dd49d4a1a83068e5301dcfd9067b41e5fbd00b0d20ab7b0a843559273d
+  checksum: cb8ce291818effda09240cb60f114d5625909b345e10f389a945320e06acf0bc949d0f8422d25720f5dd421362abee302c99f5e97edec4c156c8939814b23d19
   languageName: node
   linkType: hard
 
@@ -1948,8 +1948,8 @@ __metadata:
   linkType: hard
 
 "cypress@npm:^13":
-  version: 13.16.0
-  resolution: "cypress@npm:13.16.0"
+  version: 13.16.1
+  resolution: "cypress@npm:13.16.1"
   dependencies:
     "@cypress/request": ^3.0.6
     "@cypress/xvfb": ^1.2.4
@@ -1996,7 +1996,7 @@ __metadata:
     yauzl: ^2.10.0
   bin:
     cypress: bin/cypress
-  checksum: 1c9beb259998336aaf27fb8548d9880d603db0d4b935be068acbc5545a2537554ae01f928ee28559323cc42213cd2e4c0730c796a682bbcadb82e4a95b370954
+  checksum: 9307ec98858979d01920b3da884223c1132501716fe055017f6aa19b0af58ae50998b502940678ce935804b383d8784a21da48fed3e53b740789aac1768c2a3f
   languageName: node
   linkType: hard
 
@@ -2819,14 +2819,13 @@ __metadata:
   linkType: hard
 
 "get-uri@npm:^6.0.1":
-  version: 6.0.3
-  resolution: "get-uri@npm:6.0.3"
+  version: 6.0.4
+  resolution: "get-uri@npm:6.0.4"
   dependencies:
     basic-ftp: ^5.0.2
     data-uri-to-buffer: ^6.0.2
     debug: ^4.3.4
-    fs-extra: ^11.2.0
-  checksum: 3eda448a59fa1ba82ad4f252e58490fec586b644f2dc9c98ba3ab20e801ecc8a1bc1784829c474c9d188edb633d4dfd81c33894ca6117a33a16e8e013b41b40f
+  checksum: 7eae81655e0c8cee250d29c189e09030f37a2d37987298325709affb9408de448bf2dc43ee9a59acd21c1f100c3ca711d0446b4e689e9590c25774ecc59f0442
   languageName: node
   linkType: hard
 
@@ -2981,11 +2980,9 @@ __metadata:
   linkType: hard
 
 "gopd@npm:^1.0.1":
-  version: 1.1.0
-  resolution: "gopd@npm:1.1.0"
-  dependencies:
-    get-intrinsic: ^1.2.4
-  checksum: ed09ffe54ef841e9de35a56f9d249495c1149dc611f05a242c476cc538f13b2228ac1ee3970f9bfca2cadd6f9785efe854419eeef6050e7de3f02fbee9292ad4
+  version: 1.2.0
+  resolution: "gopd@npm:1.2.0"
+  checksum: cc6d8e655e360955bdccaca51a12a474268f95bb793fc3e1f2bdadb075f28bfd1fd988dab872daf77a61d78cbaf13744bc8727a17cfb1d150d76047d805375f3
   languageName: node
   linkType: hard
 
@@ -3094,22 +3091,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"html-dom-parser@npm:5.0.10":
-  version: 5.0.10
-  resolution: "html-dom-parser@npm:5.0.10"
+"html-dom-parser@npm:5.0.11":
+  version: 5.0.11
+  resolution: "html-dom-parser@npm:5.0.11"
   dependencies:
     domhandler: 5.0.3
     htmlparser2: 9.1.0
-  checksum: ec0470f9f6046af7d4d591aea15b49ca0a178ce430d09cadbb098212749a0b2c9b078cf9ede5df50238bc2842c17c7895126788c51927ff726088aad36c98ab5
+  checksum: d0cf3a181eac8920005324fdf0d19ff34d2b5012164a4f2c638a094b06e950989a48e9b7722387ff45b72cdbd8ec0a8aea6aaf9c558f9d11b586c4bc0b07aec0
   languageName: node
   linkType: hard
 
 "html-react-parser@npm:^5.1.10":
-  version: 5.1.18
-  resolution: "html-react-parser@npm:5.1.18"
+  version: 5.1.19
+  resolution: "html-react-parser@npm:5.1.19"
   dependencies:
     domhandler: 5.0.3
-    html-dom-parser: 5.0.10
+    html-dom-parser: 5.0.11
     react-property: 2.0.2
     style-to-js: 1.1.16
   peerDependencies:
@@ -3118,7 +3115,7 @@ __metadata:
   peerDependenciesMeta:
     "@types/react":
       optional: true
-  checksum: 23f9df714b9458e4b45009da7dc60e6a6d018223b0bd077c9f68c62239bdde98a8b0aac6ee1b2504474d7bd0833d018941ed325777e3efaa6780b3373cd38eb1
+  checksum: e1d9c20166b74645b7ccd18dc328e4a7ebf6dcc4fcec30e2070b0faece5474a36e9ce1a0d52504120b4c363e41976541a3a4b79af0aa343ea3a42c08aa34b8ff
   languageName: node
   linkType: hard
 
@@ -3770,7 +3767,7 @@ __metadata:
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
-    ketchup-lite: ^2.3.0
+    ketchup-lite: ^2.3.1-rc.1
     react: ^18
     react-dom: ^18
   languageName: unknown
@@ -3784,7 +3781,7 @@ __metadata:
     "@stencil/react-output-target": ^0
     "@types/react": ^18
     "@types/react-dom": ^18
-    ketchup-lite: ^2.3.0
+    ketchup-lite: ^2.3.1-rc.1
     react: ^18
     react-dom: ^18
   languageName: unknown
@@ -3807,7 +3804,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"ketchup-lite@^2.3.0, ketchup-lite@workspace:packages/ketchup-lite":
+"ketchup-lite@^2.3.1-rc.1, ketchup-lite@workspace:packages/ketchup-lite":
   version: 0.0.0-use.local
   resolution: "ketchup-lite@workspace:packages/ketchup-lite"
   dependencies:
@@ -5213,11 +5210,11 @@ __metadata:
   linkType: hard
 
 "prettier@npm:^3":
-  version: 3.4.1
-  resolution: "prettier@npm:3.4.1"
+  version: 3.4.2
+  resolution: "prettier@npm:3.4.2"
   bin:
     prettier: bin/prettier.cjs
-  checksum: f83ae83e38ae38f42c0b174833f58f820ed6eb063abfc5aa6725e8f9c1d626b54b1cb9d595cace525f8d59de89e186285f6bbcb460dc644ea9d8a7823cc54aca
+  checksum: 061c84513db62d3944c8dc8df36584dad82883ce4e49efcdbedd8703dce5b173c33fd9d2a4e1725d642a3b713c932b55418342eaa347479bc4a9cca114a04cd0
   languageName: node
   linkType: hard
 

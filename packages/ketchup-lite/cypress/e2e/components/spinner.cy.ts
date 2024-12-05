@@ -12,7 +12,7 @@ const spinnerTag = "kul-" + spinner;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(spinner);
+    cy.navigate(spinner).waitForWebComponents([spinnerTag]);
   });
 
   it(`Should select all <${spinnerTag}> elements matching the composed ID`, () => {

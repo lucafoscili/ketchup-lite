@@ -45,6 +45,7 @@ declare global {
       getCyElement(dataCy: KulDataCyAttributes): Chainable;
       getKulManager(): Chainable<KulManager>;
       navigate(component: string): Chainable;
+      waitForWebComponents(tags: string[]): Chainable;
     }
   }
 }
@@ -275,6 +276,18 @@ Cypress.Commands.add("navigate", (component) => {
     .then(() => cy.log("Navigation complete, alias ready"));
 });
 
+Cypress.Commands.add("waitForWebComponents", (components: string[]) => {
+  cy.window().then((win) => {
+    const promises = components.map((component) => {
+      cy.log(`Waiting for component: ${component}`);
+      return win.customElements.whenDefined(component);
+    });
+    return Cypress.Promise.all(promises).then(() => {
+      cy.log("All specified web components are defined.");
+    });
+  });
+});
+
 function transformEnumValue(
   key: KulDataCyAttributes,
 ): DataCyAttributeTransformed {
@@ -297,26 +310,30 @@ function visitManager() {
         .then(() => cy.log("Alias @kulComponentShowcase created"));
     },
     splashUnmount: () => {
-      cy.window()
-        .get("kul-splash")
+      cy.waitForWebComponents(["kul-card", "kul-splash"]);
+      cy.get("kul-splash")
+        .should("exist")
         .then(($component) => {
-          return new Cypress.Promise((resolve) => {
+          return new Cypress.Promise<void>((resolve) => {
             const splash: HTMLKulSplashElement = $component[0];
+
             const checkEvent = (event: KulGenericEvent) => {
               if (
                 event.type === "kul-splash-event" &&
                 event.detail.eventType === "unmount"
               ) {
+                splash.removeEventListener("kul-splash-event", checkEvent);
                 resolve();
               }
             };
+
             splash.addEventListener("kul-splash-event", checkEvent);
             splash.style.pointerEvents = "none";
           });
         });
     },
     visit: () => {
-      cy.visit("http://localhost:3333");
+      cy.visit("http://localhost:3333").reload();
     },
   };
 }

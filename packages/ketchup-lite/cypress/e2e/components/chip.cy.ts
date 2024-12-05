@@ -12,7 +12,7 @@ const chipTag = "kul-" + chip;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(chip);
+    cy.navigate(chip).waitForWebComponents([chipTag]);
   });
 
   it(`Should check that all <${chipTag}> exist.`, () => {
