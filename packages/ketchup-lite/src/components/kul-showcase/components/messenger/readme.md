@@ -15,6 +15,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [kul-showcase](../..)
+
 ### Depends on
 
 - [kul-article](../../../kul-article)
@@ -46,6 +50,7 @@ graph TD;
   kul-chat --> kul-progressbar
   kul-chat --> kul-code
   kul-code --> kul-button
+  kul-showcase --> kul-showcase-messenger
   style kul-showcase-messenger fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

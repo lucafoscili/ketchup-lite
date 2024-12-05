@@ -15,6 +15,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [kul-showcase](../..)
+
 ### Depends on
 
 - [kul-article](../../../kul-article)
@@ -39,6 +43,7 @@ graph TD;
   kul-button --> kul-list
   kul-masonry --> kul-button
   kul-tree --> kul-textfield
+  kul-showcase --> kul-showcase-imageviewer
   style kul-showcase-imageviewer fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

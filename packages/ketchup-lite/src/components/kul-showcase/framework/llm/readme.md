@@ -7,6 +7,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [kul-showcase](../..)
+
 ### Depends on
 
 - [kul-article](../../../kul-article)
@@ -15,6 +19,7 @@
 ```mermaid
 graph TD;
   kul-showcase-kulllm --> kul-article
+  kul-showcase --> kul-showcase-kulllm
   style kul-showcase-kulllm fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
