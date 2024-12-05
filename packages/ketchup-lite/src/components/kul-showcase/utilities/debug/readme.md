@@ -14,6 +14,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [kul-showcase](../..)
+
 ### Depends on
 
 - [kul-article](../../../kul-article)
@@ -24,6 +28,7 @@
 graph TD;
   kul-showcase-debug --> kul-article
   kul-showcase-debug --> kul-textfield
+  kul-showcase --> kul-showcase-debug
   style kul-showcase-debug fill:#f9f,stroke:#333,stroke-width:4px
 ```
 

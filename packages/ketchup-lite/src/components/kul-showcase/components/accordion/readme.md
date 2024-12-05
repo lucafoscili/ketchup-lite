@@ -15,6 +15,10 @@
 
 ## Dependencies
 
+### Used by
+
+ - [kul-showcase](../..)
+
 ### Depends on
 
 - [kul-article](../../../kul-article)
@@ -25,6 +29,7 @@
 graph TD;
   kul-showcase-accordion --> kul-article
   kul-showcase-accordion --> kul-accordion
+  kul-showcase --> kul-showcase-accordion
   style kul-showcase-accordion fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
