@@ -13,7 +13,7 @@ const photoframeTag = "kul-" + photoframe;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(photoframe);
+    cy.navigate(photoframe).waitForWebComponents([photoframeTag]);
   });
 
   it(`Should check that all <${photoframeTag}> exist.`, () => {

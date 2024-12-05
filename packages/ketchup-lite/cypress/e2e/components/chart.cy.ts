@@ -12,7 +12,7 @@ const chartTag = "kul-" + chart;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(chart);
+    cy.navigate(chart).waitForWebComponents([chartTag]);
   });
 
   it(`Should check that all <${chartTag}> exist.`, () => {

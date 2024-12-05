@@ -15,7 +15,7 @@ const badgeTag = "kul-" + badge;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(badge);
+    cy.navigate(badge).waitForWebComponents([badgeTag]);
   });
 
   it(`Should check that all <${badgeTag}> exist.`, () => {

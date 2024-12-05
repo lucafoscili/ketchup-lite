@@ -13,7 +13,7 @@ const accordionTag = "kul-" + accordion;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(accordion);
+    cy.navigate(accordion).waitForWebComponents([accordionTag]);
   });
 
   it(`Should check that all <${accordionTag}> exist.`, () => {

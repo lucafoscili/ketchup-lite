@@ -12,7 +12,7 @@ const lazyTag = "kul-" + lazy;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(lazy);
+    cy.navigate(lazy).waitForWebComponents([lazyTag]);
   });
 
   it(`Should check that all <${lazyTag}> exist.`, () => {

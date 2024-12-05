@@ -12,7 +12,7 @@ const tabbarTag = "kul-" + tabbar;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(tabbar);
+    cy.navigate(tabbar).waitForWebComponents([tabbarTag]);
   });
 
   it(`Should check that all <${tabbarTag}> exist.`, () => {

@@ -13,7 +13,7 @@ const listTag = "kul-" + list;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(list);
+    cy.navigate(list).waitForWebComponents([listTag]);
   });
 
   it(`Should check that all <${listTag}> exist.`, () => {

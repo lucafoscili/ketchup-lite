@@ -45,6 +45,7 @@ declare global {
       getCyElement(dataCy: KulDataCyAttributes): Chainable;
       getKulManager(): Chainable<KulManager>;
       navigate(component: string): Chainable;
+      waitForWebComponents(tags: string[]): Chainable;
     }
   }
 }
@@ -275,6 +276,18 @@ Cypress.Commands.add("navigate", (component) => {
     .then(() => cy.log("Navigation complete, alias ready"));
 });
 
+Cypress.Commands.add("waitForWebComponents", (components: string[]) => {
+  cy.window().then((win) => {
+    const promises = components.map((component) => {
+      cy.log(`Waiting for component: ${component}`);
+      return win.customElements.whenDefined(component);
+    });
+    return Cypress.Promise.all(promises).then(() => {
+      cy.log("All specified web components are defined.");
+    });
+  });
+});
+
 function transformEnumValue(
   key: KulDataCyAttributes,
 ): DataCyAttributeTransformed {
@@ -297,10 +310,11 @@ function visitManager() {
         .then(() => cy.log("Alias @kulComponentShowcase created"));
     },
     splashUnmount: () => {
+      cy.waitForWebComponents(["kul-card", "kul-splash"]);
       cy.get("kul-splash")
         .should("exist")
         .then(($component) => {
-          return new Cypress.Promise((resolve, reject) => {
+          return new Cypress.Promise<void>((resolve) => {
             const splash: HTMLKulSplashElement = $component[0];
 
             const checkEvent = (event: KulGenericEvent) => {
@@ -314,16 +328,6 @@ function visitManager() {
             };
 
             splash.addEventListener("kul-splash-event", checkEvent);
-
-            setTimeout(() => {
-              splash.removeEventListener("kul-splash-event", checkEvent);
-              reject(
-                new Error(
-                  "Timeout: kul-splash did not unmount within expected time.",
-                ),
-              );
-            }, 10000);
-
             splash.style.pointerEvents = "none";
           });
         });

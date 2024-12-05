@@ -12,7 +12,7 @@ const codeTag = "kul-" + code;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(code);
+    cy.navigate(code).waitForWebComponents([codeTag]);
   });
 
   it(`Should check that all <${codeTag}> exist.`, () => {

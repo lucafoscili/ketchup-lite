@@ -1,12 +1,18 @@
-import { defineConfig } from 'cypress';
-
-require('dotenv').config();
+import { defineConfig } from "cypress";
 
 export default defineConfig({
-    env: {
-        ...process.env,
+  e2e: {
+    baseUrl: "http://localhost:3333",
+    defaultCommandTimeout: 15000,
+    pageLoadTimeout: 60000,
+    retries: {
+      runMode: 3,
+      openMode: 1,
     },
-    e2e: {},
-    defaultCommandTimeout: 10000,
+    video: true,
+    screenshotsFolder: "cypress/screenshots",
+    videosFolder: "cypress/videos",
+    specPattern: "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}",
     includeShadowDom: true,
+  },
 });

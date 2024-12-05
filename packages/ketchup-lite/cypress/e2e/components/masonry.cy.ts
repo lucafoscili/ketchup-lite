@@ -12,7 +12,7 @@ const masonryTag = "kul-" + masonry;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(masonry);
+    cy.navigate(masonry).waitForWebComponents([masonryTag, "kul-image"]);
   });
 
   it(`Should check that all <${masonryTag}> exist.`, () => {

@@ -13,7 +13,7 @@ const textfieldTag = "kul-" + textfield;
 
 describe("Basic", () => {
   beforeEach(() => {
-    cy.navigate(textfield);
+    cy.navigate(textfield).waitForWebComponents([textfieldTag]);
   });
 
   it(`Should select all <${textfieldTag}> elements matching the composed ID.`, () => {
