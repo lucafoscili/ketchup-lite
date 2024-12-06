@@ -629,6 +629,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         type: "string",
       },
       {
+        name: "kulCursor",
+        docs: "Sets the style of the cursor.",
+        type: '"default" | "preview"',
+      },
+      {
         name: "kulImageProps",
         docs: "The props of the image displayed inside the badge.",
         type: "KulImagePropsInterface",
@@ -4173,8 +4178,8 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [
       {
         name: "kulCursor",
-        docs: "Enables or disables the blinking cursor.",
-        type: "boolean",
+        docs: "Sets the behavior of the bliking cursor.",
+        type: '"auto" | "disabled" | "enabled"',
       },
       {
         name: "kulDeleteSpeed",
