@@ -62,6 +62,7 @@ export const config: Config = {
       type: "dist-custom-elements",
       externalRuntime: false,
       generateTypeDeclarations: true,
+      includeGlobalScripts: false,
     },
     {
       type: "dist-hydrate-script",
