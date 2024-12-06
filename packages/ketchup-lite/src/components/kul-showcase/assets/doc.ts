@@ -575,7 +575,7 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's props values.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<GenericObject>",
           docs: "List of props as object, each key will be a prop.",
         },
         signature: "(descriptions?: boolean) => Promise<GenericObject>",
@@ -655,7 +655,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulStrokeTolerance",
-        docs: "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\r\nThis prop sets the tolerance of the algorithm (null to disable).",
+        docs: "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.\nThis prop sets the tolerance of the algorithm (null to disable).",
         type: "number",
       },
       {
@@ -1739,7 +1739,7 @@ export const KUL_DOC: KulShowcaseDoc = {
     methods: [
       {
         name: "addSnapshot",
-        docs: "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\r\nIt has no effect when the current shape is not set.",
+        docs: "Appends a new snapshot to the current shape's history by duplicating it with an updated value.\nIt has no effect when the current shape is not set.",
         returns: {
           type: "Promise<void>",
           docs: "",
@@ -1748,7 +1748,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "clearHistory",
-        docs: "Clears the history related to the shape identified by the index.\r\nWhen index is not provided, it clear the full history.",
+        docs: "Clears the history related to the shape identified by the index.\nWhen index is not provided, it clear the full history.",
         returns: {
           type: "Promise<void>",
           docs: "",
@@ -2124,7 +2124,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulRenderMode",
-        docs: "Decides when the sub-component should be rendered.\r\nBy default when both the component props exist and the component is in the viewport.",
+        docs: "Decides when the sub-component should be rendered.\nBy default when both the component props exist and the component is in the viewport.",
         type: '"both" | "props" | "viewport"',
       },
       {
@@ -3685,32 +3685,32 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulHelper",
-        docs: "Specifies helper text to display alongside the text field.\r\nHelper text can provide additional context or instructions to the user.",
+        docs: "Specifies helper text to display alongside the text field.\nHelper text can provide additional context or instructions to the user.",
         type: "KulTextfieldHelper",
       },
       {
         name: "kulHtmlAttributes",
-        docs: "Allows customization of the input or textarea element through additional HTML attributes.\r\nThis can include attributes like 'readonly', 'placeholder', etc., to further customize the behavior or appearance of the input.",
+        docs: "Allows customization of the input or textarea element through additional HTML attributes.\nThis can include attributes like 'readonly', 'placeholder', etc., to further customize the behavior or appearance of the input.",
         type: "GenericObject<unknown>",
       },
       {
         name: "kulIcon",
-        docs: "Defines the icon to be displayed within the text field.\r\nIcons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.",
+        docs: "Defines the icon to be displayed within the text field.\nIcons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.",
         type: "string",
       },
       {
         name: "kulLabel",
-        docs: "Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.\r\nLabels are especially important for screen readers and users navigating with keyboard-only controls.",
+        docs: "Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.\nLabels are especially important for screen readers and users navigating with keyboard-only controls.",
         type: "string",
       },
       {
         name: "kulStyle",
-        docs: "Accepts custom CSS styles to apply directly to the text field component.\r\nThis allows for fine-grained control over the appearance of the component beyond predefined styling options.",
+        docs: "Accepts custom CSS styles to apply directly to the text field component.\nThis allows for fine-grained control over the appearance of the component beyond predefined styling options.",
         type: "string",
       },
       {
         name: "kulStyling",
-        docs: "Determines the overall styling theme of the text field, affecting its shape and border.\r\nOptions include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.",
+        docs: "Determines the overall styling theme of the text field, affecting its shape and border.\nOptions include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.",
         type: '"flat" | "outlined" | "raised" | "textarea"',
       },
       {
@@ -3720,7 +3720,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulValue",
-        docs: "Initializes the text field with a default value when the component is first rendered.\r\nThis can be used to pre-fill forms or set a starting point for user input.",
+        docs: "Initializes the text field with a default value when the component is first rendered.\nThis can be used to pre-fill forms or set a starting point for user input.",
         type: "string",
       },
     ],
@@ -4058,7 +4058,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "kulInitialExpansionDepth",
-        docs: "Sets the initial expanded nodes based on the specified depth.\r\nIf the property is not provided, all nodes in the tree will be expanded.",
+        docs: "Sets the initial expanded nodes based on the specified depth.\nIf the property is not provided, all nodes in the tree will be expanded.",
         type: "number",
       },
       {
