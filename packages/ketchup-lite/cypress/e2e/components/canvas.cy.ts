@@ -70,6 +70,7 @@ describe("Methods", () => {
     cy.checkPropsInterface(canvasTag, {
       kulBrush: null,
       kulColor: null,
+      kulCursor: null,
       kulImageProps: null,
       kulOpacity: null,
       kulPreview: null,

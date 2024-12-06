@@ -11,12 +11,15 @@
 }
 
 .canvas {
-  cursor: none;
   height: 100%;
   margin: auto;
   max-width: 100%;
   position: relative;
   width: max-content;
+
+  &--hidden-cursor {
+    cursor: none;
+  }
 
   &__image {
     pointer-events: none;
