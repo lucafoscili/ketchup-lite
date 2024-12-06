@@ -11,6 +11,7 @@
 | -------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ | ----------- |
 | `kulBrush`           | `kul-brush`            | The shape of the brush.                                                                                                                            | `"round" \| "square"`    | `"round"`   |
 | `kulColor`           | `kul-color`            | The color of the brush.                                                                                                                            | `string`                 | `"#ff0000"` |
+| `kulCursor`          | `kul-cursor`           | Sets the style of the cursor.                                                                                                                      | `"default" \| "preview"` | `"preview"` |
 | `kulImageProps`      | --                     | The props of the image displayed inside the badge.                                                                                                 | `KulImagePropsInterface` | `null`      |
 | `kulOpacity`         | `kul-opacity`          | The opacity of the brush.                                                                                                                          | `number`                 | `1.0`       |
 | `kulPreview`         | `kul-preview`          | Displays the brush track of the current stroke.                                                                                                    | `boolean`                | `true`      |
@@ -27,6 +28,16 @@
 
 
 ## Methods
+
+### `clearCanvas() => Promise<void>`
+
+Clears the painting canvas .
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 ### `getCanvas() => Promise<HTMLCanvasElement>`
 
@@ -70,7 +81,7 @@ Used to retrieve component's props values.
 
 #### Returns
 
-Type: `Promise<GenericObject>`
+Type: `Promise<GenericObject<unknown>>`
 
 List of props as object, each key will be a prop.
 

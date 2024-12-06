@@ -17,6 +17,7 @@ export type KulCanvasPoints = Array<{ x: number; y: number }>;
 export enum KulCanvasProps {
   kulBrush = "The shape of the brush.",
   kulColor = "The color of the brush.",
+  kulCursor = " Sets the style of the cursor.",
   kulImageProps = "The props of the image displayed inside the badge.",
   kulOpacity = "The opacity of the brush.",
   kulPreview = "Displays the brush track of the current stroke.",
@@ -27,6 +28,7 @@ export enum KulCanvasProps {
 export interface KulCanvasPropsInterface {
   kulBrush?: KulCanvasBrush;
   kulColor?: string;
+  kulCursor?: KulCanvasCursor;
   kulImageProps?: KulImagePropsInterface;
   kulOpacity?: number;
   kulPreview?: boolean;
@@ -35,4 +37,5 @@ export interface KulCanvasPropsInterface {
   kulStyle?: string;
 }
 export type KulCanvasBrush = "round" | "square";
+export type KulCanvasCursor = "preview" | "default";
 //#endregion
