@@ -12,17 +12,18 @@ import {
 } from "@stencil/core";
 import { Fragment, Method } from "@stencil/core/internal";
 
-import {
-  KulTypewriterEvent,
-  KulTypewriterEventPayload,
-  KulTypewriterProps,
-  KulTypewriterValue,
-} from "./kul-typewriter-declarations";
 import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
 import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import {
+  KulTypewriterCursor,
+  KulTypewriterEvent,
+  KulTypewriterEventPayload,
+  KulTypewriterProps,
+  KulTypewriterValue,
+} from "./kul-typewriter-declarations";
 
 @Component({
   tag: "kul-typewriter",
@@ -35,10 +36,7 @@ export class KulTypewriter {
    */
   @Element() rootElement: HTMLKulTypewriterElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -61,16 +59,14 @@ export class KulTypewriter {
    * Tracks the current index of the text array.
    */
   @State() currentTextIndex = 0;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
-   * Enables or disables the blinking cursor.
+   * Sets the behavior of the bliking cursor.
    * @default true
    */
-  @Prop({ mutable: true }) kulCursor = true;
+  @Prop({ mutable: true }) kulCursor: KulTypewriterCursor = "auto";
   /**
    * Sets the deleting speed in milliseconds.
    * @default 50
@@ -101,22 +97,15 @@ export class KulTypewriter {
    * @default ""
    */
   @Prop({ mutable: true }) kulValue: KulTypewriterValue = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
   #timeout: NodeJS.Timeout;
   #texts: string[] = [];
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes the component's events.
-   */
+  //#region Events
   @Event({
     eventName: "kul-typewriter-event",
     composed: true,
@@ -133,21 +122,17 @@ export class KulTypewriter {
       eventType,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                 W a t c h e r s                 */
-  /*-------------------------------------------------*/
-
+  //#region Watchers
   @Watch("kulValue")
   handleKulValueChange() {
-    this.initializeTexts();
-    this.resetTyping();
+    this.#initializeTexts();
+    this.#resetTyping();
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -183,18 +168,15 @@ export class KulTypewriter {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
-  private initializeTexts() {
+  //#region Private methods
+  #initializeTexts() {
     this.#texts = Array.isArray(this.kulValue)
       ? this.kulValue
       : [this.kulValue];
   }
-
-  private startTyping() {
+  #startTyping() {
     const currentText = this.#texts[this.currentTextIndex] || "";
 
     if (this.isDeleting) {
@@ -218,50 +200,47 @@ export class KulTypewriter {
       this.currentTextIndex = (this.currentTextIndex + 1) % this.#texts.length;
     } else {
       const delay = this.isDeleting ? this.kulDeleteSpeed : this.kulSpeed;
-      this.#timeout = setTimeout(() => this.startTyping(), delay);
+      this.#timeout = setTimeout(() => this.#startTyping(), delay);
     }
   }
-
-  private resetTyping() {
+  #resetTyping() {
     clearTimeout(this.#timeout);
     this.displayedText = "";
     this.isDeleting = false;
     this.currentTextIndex = 0;
-    this.startTyping();
+    this.#startTyping();
   }
-
   #prepText() {
+    const shouldShowCursor =
+      this.kulCursor === "enabled" ||
+      (this.kulCursor === "auto" &&
+        !this.isDeleting &&
+        this.displayedText !== this.#texts[this.currentTextIndex]);
     return (
       <Fragment>
         <span>{this.displayedText}</span>
-        {this.kulCursor ? <span class="cursor">|</span> : null}
+        {shouldShowCursor ? <span class="cursor">|</span> : null}
       </Fragment>
     );
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region
   componentWillLoad() {
     this.#kulManager.theme.register(this);
-    this.initializeTexts();
+    this.#initializeTexts();
   }
-
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.startTyping();
+    this.#startTyping();
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     return (
       <Host>
@@ -274,9 +253,9 @@ export class KulTypewriter {
       </Host>
     );
   }
-
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
     clearTimeout(this.#timeout);
   }
+  //#endregion
 }
