@@ -59,6 +59,7 @@ export class KulCanvas {
    */
   @State() points: KulCanvasPoints = [];
   //#endregion
+
   //#region Props
   /**
    * The shape of the brush.
@@ -102,6 +103,7 @@ export class KulCanvas {
    */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
   //#endregion
+
   //#region Internal variables
   #board: HTMLCanvasElement;
   #boardCtx: CanvasRenderingContext2D;
@@ -113,6 +115,7 @@ export class KulCanvas {
   #resizeObserver: ResizeObserver;
   #resizeTimeout: NodeJS.Timeout;
   //#endregion
+
   //#region Events
   @Event({
     eventName: "kul-canvas-event",
@@ -135,7 +138,15 @@ export class KulCanvas {
     });
   }
   //#endregion
+
   //#region Public methods
+  /**
+   * Clears the painting canvas .
+   */
+  @Method()
+  async clearCanvas(): Promise<void> {
+    this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
+  }
   /**
    * Returns the painting canvas .
    * @returns {Promise<HTMLCanvasElement>} The painting canvas.
@@ -215,6 +226,7 @@ export class KulCanvas {
     }, ms);
   }
   //#endregion
+
   //#region Private methods
   #normalizeCoordinate(event: PointerEvent, rect: DOMRect) {
     let x = (event.clientX - rect.left) / rect.width;
@@ -291,8 +303,6 @@ export class KulCanvas {
     e.preventDefault();
     this.isPainting = false;
 
-    this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
-
     this.#board.releasePointerCapture(e.pointerId);
 
     this.#board.removeEventListener("pointermove", this.#handlePointerMove);
@@ -358,6 +368,7 @@ export class KulCanvas {
     }
   }
   //#endregion
+
   //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);

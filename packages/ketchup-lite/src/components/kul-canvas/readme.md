@@ -28,6 +28,16 @@
 
 ## Methods
 
+### `clearCanvas() => Promise<void>`
+
+Clears the painting canvas .
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `getCanvas() => Promise<HTMLCanvasElement>`
 
 Returns the painting canvas .
@@ -70,7 +80,7 @@ Used to retrieve component's props values.
 
 #### Returns
 
-Type: `Promise<GenericObject>`
+Type: `Promise<GenericObject<unknown>>`
 
 List of props as object, each key will be a prop.
 
