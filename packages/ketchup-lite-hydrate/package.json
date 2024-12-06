@@ -1,6 +1,6 @@
 {
   "name": "ketchup-lite-hydrate",
-  "version": "2.3.3",
+  "version": "2.4.0-rc.0",
   "description": "Ketchup Lite - React Components library (SSR Hydration)",
   "main": "index.js",
   "types": "index.d.ts",
