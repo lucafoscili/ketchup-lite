@@ -86,7 +86,7 @@ export class KulShowcase {
           }
         }}
       >
-        <h2>{current || type}</h2>
+        <kul-typewriter kulTag="h2" kulValue={current || type}></kul-typewriter>
         <div class={`navigation ${current ? "active" : ""}`}>
           <kul-button
             class="kul-full-height kul-full-width"
