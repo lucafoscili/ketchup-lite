@@ -590,6 +590,15 @@ export const KUL_DOC: KulShowcaseDoc = {
         signature: "() => Promise<void>",
       },
       {
+        name: "resizeCanvas",
+        docs: "Automatically resizes the canvas to the match the size of the container.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
         name: "setCanvasHeight",
         docs: "Sets the height of the canvas.",
         returns: {

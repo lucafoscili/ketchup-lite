@@ -95,6 +95,16 @@ Type: `Promise<void>`
 
 
 
+### `resizeCanvas() => Promise<void>`
+
+Automatically resizes the canvas to the match the size of the container.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 ### `setCanvasHeight(value?: number) => Promise<void>`
 
 Sets the height of the canvas.
