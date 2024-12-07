@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.3](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.2...2.4.0-rc.3) (2024-12-07)
+
+### Features
+
+- **typewriter:** added kulTag prop ([320b311](https://github.com/lucafoscili/ketchup-lite/commit/320b31132daf526aa35fd61ffbbf038e1f5cae37))
+
 # [2.4.0-rc.2](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.1...2.4.0-rc.2) (2024-12-07)
 
 ### Bug Fixes
