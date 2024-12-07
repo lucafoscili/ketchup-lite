@@ -2836,8 +2836,13 @@ export const KUL_DOC: KulShowcaseDoc = {
     methods: [],
     props: [
       {
+        name: "kulScrollElement",
+        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+        type: "HTMLElement",
+      },
+      {
         name: "kulStyle",
-        docs: "",
+        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
         type: "string",
       },
     ],

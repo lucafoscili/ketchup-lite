@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type     | Default |
-| ---------- | ----------- | ----------- | -------- | ------- |
-| `kulStyle` | `kul-style` |             | `string` | `""`    |
+| Property           | Attribute   | Description                                                                                                   | Type          | Default     |
+| ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------- | ------------- | ----------- |
+| `kulScrollElement` | --          | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `HTMLElement` | `undefined` |
+| `kulStyle`         | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`      | `""`        |
 
 
 ## Dependencies
