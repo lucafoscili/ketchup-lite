@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.4.1-rc.1](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0...2.4.1-rc.1) (2024-12-07)
+
+### Bug Fixes
+
+- **canvas:** canvas resize methods get the size with boundingclient ([22b3fa2](https://github.com/lucafoscili/ketchup-lite/commit/22b3fa2d4eab82d15b7ae45e9c5b2cc4cdf4c14a))
+
 ## [2.4.1-rc.0](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0...2.4.1-rc.0) (2024-12-07)
 
 ### Bug Fixes
