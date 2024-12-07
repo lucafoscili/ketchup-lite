@@ -78,11 +78,13 @@ p {
   width: 100%;
 }
 
-h2 {
+h2,
+kul-typewriter {
   background-color: var(--kul-primary-color);
   color: var(--kul-text-on-primary-color);
   margin: 0;
-  padding: 12px 0;
+  text-align: center;
+  width: 100%;
 }
 
 p {

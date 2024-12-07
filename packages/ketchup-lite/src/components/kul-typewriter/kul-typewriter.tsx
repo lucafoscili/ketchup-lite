@@ -246,14 +246,14 @@ export class KulTypewriter {
     const TagName = this.kulTag || "div";
     return (
       <TagName>
-        <span>{this.displayedText}</span>
+        <span>{this.displayedText || "\u00A0"}</span>
         {shouldShowCursor ? <span class="cursor">|</span> : null}
       </TagName>
     );
   }
   //#endregion
 
-  //#region
+  //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
     this.#initializeTexts();
