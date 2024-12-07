@@ -7,15 +7,16 @@
 
 ## Properties
 
-| Property         | Attribute          | Description                                                                                                   | Type                                | Default  |
-| ---------------- | ------------------ | ------------------------------------------------------------------------------------------------------------- | ----------------------------------- | -------- |
-| `kulCursor`      | `kul-cursor`       | Sets the behavior of the bliking cursor.                                                                      | `"auto" \| "disabled" \| "enabled"` | `"auto"` |
-| `kulDeleteSpeed` | `kul-delete-speed` | Sets the deleting speed in milliseconds.                                                                      | `number`                            | `50`     |
-| `kulLoop`        | `kul-loop`         | Enables or disables looping of the text.                                                                      | `boolean`                           | `false`  |
-| `kulPause`       | `kul-pause`        | Sets the duration of the pause after typing a complete text.                                                  | `number`                            | `500`    |
-| `kulSpeed`       | `kul-speed`        | Sets the typing speed in milliseconds.                                                                        | `number`                            | `50`     |
-| `kulStyle`       | `kul-style`        | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`                            | `""`     |
-| `kulValue`       | `kul-value`        | Sets the text or array of texts to display with the typewriter effect.                                        | `string \| string[]`                | `""`     |
+| Property         | Attribute          | Description                                                                                                   | Type                                                                                        | Default  |
+| ---------------- | ------------------ | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | -------- |
+| `kulCursor`      | `kul-cursor`       | Sets the behavior of the bliking cursor.                                                                      | `"auto" \| "disabled" \| "enabled"`                                                         | `"auto"` |
+| `kulDeleteSpeed` | `kul-delete-speed` | Sets the deleting speed in milliseconds.                                                                      | `number`                                                                                    | `50`     |
+| `kulLoop`        | `kul-loop`         | Enables or disables looping of the text.                                                                      | `boolean`                                                                                   | `false`  |
+| `kulPause`       | `kul-pause`        | Sets the duration of the pause after typing a complete text.                                                  | `number`                                                                                    | `500`    |
+| `kulSpeed`       | `kul-speed`        | Sets the typing speed in milliseconds.                                                                        | `number`                                                                                    | `50`     |
+| `kulStyle`       | `kul-style`        | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`                                                                                    | `""`     |
+| `kulTag`         | `kul-tag`          | The name of the HTML tag that will wrap the text.                                                             | `"code" \| "div" \| "h1" \| "h2" \| "h3" \| "h4" \| "h5" \| "h6" \| "p" \| "pre" \| "span"` | `"p"`    |
+| `kulValue`       | `kul-value`        | Sets the text or array of texts to display with the typewriter effect.                                        | `string \| string[]`                                                                        | `""`     |
 
 
 ## Events
