@@ -536,6 +536,15 @@ export const KUL_DOC: KulShowcaseDoc = {
   "kul-canvas": {
     methods: [
       {
+        name: "clearCanvas",
+        docs: "Clears the painting canvas .",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
         name: "getCanvas",
         docs: "Returns the painting canvas .",
         returns: {
@@ -618,6 +627,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "kulColor",
         docs: "The color of the brush.",
         type: "string",
+      },
+      {
+        name: "kulCursor",
+        docs: "Sets the style of the cursor.",
+        type: '"default" | "preview"',
       },
       {
         name: "kulImageProps",
@@ -2822,8 +2836,13 @@ export const KUL_DOC: KulShowcaseDoc = {
     methods: [],
     props: [
       {
+        name: "kulScrollElement",
+        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+        type: "HTMLElement",
+      },
+      {
         name: "kulStyle",
-        docs: "",
+        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
         type: "string",
       },
     ],
@@ -4164,8 +4183,8 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [
       {
         name: "kulCursor",
-        docs: "Enables or disables the blinking cursor.",
-        type: "boolean",
+        docs: "Sets the behavior of the bliking cursor.",
+        type: '"auto" | "disabled" | "enabled"',
       },
       {
         name: "kulDeleteSpeed",
@@ -4191,6 +4210,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "kulStyle",
         docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
         type: "string",
+      },
+      {
+        name: "kulTag",
+        docs: "The name of the HTML tag that will wrap the text.",
+        type: '"code" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "pre" | "span"',
       },
       {
         name: "kulValue",

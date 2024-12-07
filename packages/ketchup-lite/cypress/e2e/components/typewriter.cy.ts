@@ -67,6 +67,7 @@ describe("Methods", () => {
       kulPause: null,
       kulSpeed: null,
       kulStyle: null,
+      kulTag: null,
       kulValue: null,
     } as Required<KulTypewriterPropsInterface>);
   });

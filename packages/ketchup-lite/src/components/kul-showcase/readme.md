@@ -7,9 +7,10 @@
 
 ## Properties
 
-| Property   | Attribute   | Description | Type     | Default |
-| ---------- | ----------- | ----------- | -------- | ------- |
-| `kulStyle` | `kul-style` |             | `string` | `""`    |
+| Property           | Attribute   | Description                                                                                                   | Type          | Default     |
+| ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------- | ------------- | ----------- |
+| `kulScrollElement` | --          | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `HTMLElement` | `undefined` |
+| `kulStyle`         | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`      | `""`        |
 
 
 ## Dependencies
@@ -18,6 +19,7 @@
 
 - [kul-article](../kul-article)
 - [kul-button](../kul-button)
+- [kul-typewriter](../kul-typewriter)
 - [kul-showcase-accordion](./components/accordion)
 - [kul-showcase-article](./components/article)
 - [kul-showcase-badge](./components/badge)
@@ -67,6 +69,7 @@
 graph TD;
   kul-showcase --> kul-article
   kul-showcase --> kul-button
+  kul-showcase --> kul-typewriter
   kul-showcase --> kul-showcase-accordion
   kul-showcase --> kul-showcase-article
   kul-showcase --> kul-showcase-badge

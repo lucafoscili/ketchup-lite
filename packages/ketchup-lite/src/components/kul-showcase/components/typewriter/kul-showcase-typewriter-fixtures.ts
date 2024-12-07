@@ -67,8 +67,60 @@ Built with modern standards and best practices in mind, Ketchup Lite offers a co
   return {
     documentation,
     examples: {
-      simple: {
-        ["data-description"]: "Simple typewriter with button",
+      code: {
+        ["data-description"]: "Typewriter wrapped by code",
+        kulTag: "code",
+        kulValue,
+      },
+      div: {
+        ["data-description"]: "Typewriter wrapped by div",
+        kulTag: "div",
+        kulValue,
+      },
+      h1: {
+        ["data-description"]: "Typewriter wrapped by h1",
+        kulTag: "h1",
+        kulValue,
+      },
+      h2: {
+        ["data-description"]: "Typewriter wrapped by h2",
+        kulTag: "h2",
+        kulValue,
+      },
+      h3: {
+        ["data-description"]: "Typewriter wrapped by h3",
+        kulTag: "h3",
+        kulValue,
+      },
+      h4: {
+        ["data-description"]: "Typewriter wrapped by h4",
+        kulTag: "h4",
+        kulValue,
+      },
+      h5: {
+        ["data-description"]: "Typewriter wrapped by h5",
+        kulTag: "h5",
+        kulValue,
+      },
+      h6: {
+        ["data-description"]: "Typewriter wrapped by h6",
+        kulTag: "h6",
+        kulValue,
+      },
+      p: {
+        ["data-description"]: "Typewriter wrapped by p",
+        kulTag: "p",
+        kulValue,
+      },
+      pre: {
+        ["data-description"]: "Typewriter wrapped by pre",
+        kulStyle: ":host { overflow: auto }",
+        kulTag: "pre",
+        kulValue,
+      },
+      span: {
+        ["data-description"]: "Typewriter wrapped by span",
+        kulTag: "span",
         kulValue,
       },
       style: {

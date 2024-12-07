@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.4](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.3...2.4.0-rc.4) (2024-12-07)
+
+### Features
+
+- **showcase:** replaced h2 with typewriter ([e0753f6](https://github.com/lucafoscili/ketchup-lite/commit/e0753f6599330e9c9a7e1b5543dbf1f5f9c81b4e))
+
+# [2.4.0-rc.3](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.2...2.4.0-rc.3) (2024-12-07)
+
+### Features
+
+- **typewriter:** added kulTag prop ([320b311](https://github.com/lucafoscili/ketchup-lite/commit/320b31132daf526aa35fd61ffbbf038e1f5cae37))
+
+# [2.4.0-rc.2](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.1...2.4.0-rc.2) (2024-12-07)
+
+### Bug Fixes
+
+- **showcase:** handled kulScrollElement scroll listener ([8b72dcb](https://github.com/lucafoscili/ketchup-lite/commit/8b72dcb8a0142453b27a43a7dba95b5c3d9742dc))
+
+# [2.4.0-rc.1](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.0...2.4.0-rc.1) (2024-12-07)
+
+### Features
+
+- **showcase:** added kulScrollElement prop and improved scroll-related UX ([f68e813](https://github.com/lucafoscili/ketchup-lite/commit/f68e813854119c44509d8b4b178eda156862ef44))
+
+# [2.4.0-rc.0](https://github.com/lucafoscili/ketchup-lite/compare/2.3.3...2.4.0-rc.0) (2024-12-06)
+
+### Features
+
+- **canvas:** added kulCursor prop ([999ed2d](https://github.com/lucafoscili/ketchup-lite/commit/999ed2d225935966050968d9570ecc2eb011d56a))
+- **canvas:** added method to clear the canvas ([84c8191](https://github.com/lucafoscili/ketchup-lite/commit/84c8191421c20f5932532435cf442e6d5407a2e3))
+- **typewriter:** enhanced kulCursor prop ([91686f0](https://github.com/lucafoscili/ketchup-lite/commit/91686f0ddc51a7c94344ca9d02a5bffad795a776))
+
 ## [2.3.3](https://github.com/lucafoscili/ketchup-lite/compare/2.3.3-rc.0...2.3.3) (2024-12-06)
 
 **Note:** Version bump only for package ketchup-lite

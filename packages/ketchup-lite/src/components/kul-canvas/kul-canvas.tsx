@@ -13,6 +13,7 @@ import {
 
 import {
   KulCanvasBrush,
+  KulCanvasCursor,
   KulCanvasEvent,
   KulCanvasEventPayload,
   KulCanvasPoints,
@@ -59,6 +60,7 @@ export class KulCanvas {
    */
   @State() points: KulCanvasPoints = [];
   //#endregion
+
   //#region Props
   /**
    * The shape of the brush.
@@ -70,6 +72,12 @@ export class KulCanvas {
    * @default '#ff0000'
    */
   @Prop({ mutable: true, reflect: true }) kulColor = "#ff0000";
+  /**
+   * Sets the style of the cursor.
+   * @default 'preview'
+   */
+  @Prop({ mutable: true, reflect: true }) kulCursor: KulCanvasCursor =
+    "preview";
   /**
    * The props of the image displayed inside the badge.
    * @default null
@@ -102,6 +110,7 @@ export class KulCanvas {
    */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
   //#endregion
+
   //#region Internal variables
   #board: HTMLCanvasElement;
   #boardCtx: CanvasRenderingContext2D;
@@ -113,6 +122,7 @@ export class KulCanvas {
   #resizeObserver: ResizeObserver;
   #resizeTimeout: NodeJS.Timeout;
   //#endregion
+
   //#region Events
   @Event({
     eventName: "kul-canvas-event",
@@ -135,7 +145,15 @@ export class KulCanvas {
     });
   }
   //#endregion
+
   //#region Public methods
+  /**
+   * Clears the painting canvas .
+   */
+  @Method()
+  async clearCanvas(): Promise<void> {
+    this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
+  }
   /**
    * Returns the painting canvas .
    * @returns {Promise<HTMLCanvasElement>} The painting canvas.
@@ -182,11 +200,15 @@ export class KulCanvas {
   async setCanvasHeight(value?: number): Promise<void> {
     if (value !== undefined) {
       this.#board.height = value;
-      this.#cursor.height = value;
+      if (this.#isCursorPreview()) {
+        this.#cursor.height = value;
+      }
     } else {
       const h = this.#container.clientHeight;
       this.#board.height = h;
-      this.#cursor.height = h;
+      if (this.#isCursorPreview()) {
+        this.#cursor.height = h;
+      }
     }
   }
   /**
@@ -196,11 +218,15 @@ export class KulCanvas {
   async setCanvasWidth(value?: number): Promise<void> {
     if (value !== undefined) {
       this.#board.width = value;
-      this.#cursor.width = value;
+      if (this.#isCursorPreview()) {
+        this.#cursor.width = value;
+      }
     } else {
       const w = this.#container.clientWidth;
       this.#board.width = w;
-      this.#cursor.width = w;
+      if (this.#isCursorPreview()) {
+        this.#cursor.width = w;
+      }
     }
   }
   /**
@@ -215,7 +241,11 @@ export class KulCanvas {
     }, ms);
   }
   //#endregion
+
   //#region Private methods
+  #isCursorPreview() {
+    return this.kulCursor === "preview";
+  }
   #normalizeCoordinate(event: PointerEvent, rect: DOMRect) {
     let x = (event.clientX - rect.left) / rect.width;
     let y = (event.clientY - rect.top) / rect.height;
@@ -225,7 +255,6 @@ export class KulCanvas {
 
     return { x, y };
   }
-
   #getCanvasCoordinate(event: PointerEvent, rect: DOMRect) {
     let x = event.clientX - rect.left;
     let y = event.clientY - rect.top;
@@ -235,7 +264,6 @@ export class KulCanvas {
 
     return { x, y };
   }
-
   #setupContext(ctx: CanvasRenderingContext2D, isFill = false) {
     ctx.lineCap = "round";
     ctx.lineJoin = "round";
@@ -247,7 +275,6 @@ export class KulCanvas {
       ctx.lineWidth = this.kulSize;
     }
   }
-
   #handlePointerDown(e: PointerEvent) {
     e.preventDefault();
     this.isPainting = true;
@@ -259,11 +286,12 @@ export class KulCanvas {
     this.#board.addEventListener("pointermove", this.#handlePointerMove);
     this.#board.addEventListener("pointerup", this.#handlePointerUp);
   }
-
   #handlePointerMove = (e: PointerEvent) => {
     e.preventDefault();
 
-    this.#drawBrushCursor(e);
+    if (this.#isCursorPreview()) {
+      this.#drawBrushCursor(e);
+    }
 
     if (!this.isPainting) {
       return;
@@ -272,11 +300,9 @@ export class KulCanvas {
     this.#addPoint(e);
     this.#drawLastSegment();
   };
-
   #handlePointerOut = (e: PointerEvent) => {
     this.#endCapture(e);
   };
-
   #handlePointerUp = (e: PointerEvent) => {
     this.#endCapture(e);
   };
@@ -286,19 +312,15 @@ export class KulCanvas {
     const { x, y } = this.#normalizeCoordinate(e, rect);
     this.points.push({ x, y });
   }
-
   #endCapture(e: PointerEvent) {
     e.preventDefault();
     this.isPainting = false;
-
-    this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
 
     this.#board.releasePointerCapture(e.pointerId);
 
     this.#board.removeEventListener("pointermove", this.#handlePointerMove);
     this.#board.removeEventListener("pointerup", this.#handlePointerUp);
   }
-
   #drawBrushCursor(event: PointerEvent) {
     this.#cursorCtx.clearRect(0, 0, this.#cursor.width, this.#cursor.height);
 
@@ -308,7 +330,6 @@ export class KulCanvas {
     this.#setupContext(this.#cursorCtx, true);
     this.#drawBrushShape(this.#cursorCtx, x, y, true);
   }
-
   #drawBrushShape(
     ctx: CanvasRenderingContext2D,
     x: number,
@@ -331,7 +352,6 @@ export class KulCanvas {
       ctx.stroke();
     }
   }
-
   #drawLastSegment() {
     const len = this.points.length;
     if (len < 2) {
@@ -358,6 +378,7 @@ export class KulCanvas {
     }
   }
   //#endregion
+
   //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
@@ -392,6 +413,11 @@ export class KulCanvas {
   }
 
   render() {
+    const className = {
+      canvas: true,
+      "canvas--hidden-cursor": this.#isCursorPreview(),
+    };
+
     return (
       <Host>
         {this.kulStyle ? (
@@ -401,7 +427,7 @@ export class KulCanvas {
         ) : undefined}
         <div id={KUL_WRAPPER_ID}>
           <div
-            class="canvas"
+            class={className}
             ref={(el) => {
               if (el) {
                 this.#container = el;
@@ -429,14 +455,16 @@ export class KulCanvas {
                 }
               }}
             ></canvas>
-            <canvas
-              class="canvas__cursor"
-              ref={(el) => {
-                if (el) {
-                  this.#cursor = el;
-                }
-              }}
-            ></canvas>
+            {this.#isCursorPreview() && (
+              <canvas
+                class="canvas__cursor"
+                ref={(el) => {
+                  if (el) {
+                    this.#cursor = el;
+                  }
+                }}
+              ></canvas>
+            )}
           </div>
         </div>
       </Host>
