@@ -81,13 +81,23 @@ Used to retrieve component's props values.
 
 #### Returns
 
-Type: `Promise<GenericObject>`
+Type: `Promise<GenericObject<unknown>>`
 
 List of props as object, each key will be a prop.
 
 ### `refresh() => Promise<void>`
 
 This method is used to trigger a new render of the component.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `resizeCanvas() => Promise<void>`
+
+Automatically resizes the canvas to the match the size of the container.
 
 #### Returns
 
