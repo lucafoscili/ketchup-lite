@@ -34,7 +34,7 @@ export class KulShowcase {
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop({ mutable: true }) kulScrollElement: HTMLElement = undefined;
+  @Prop({ mutable: false }) kulScrollElement: HTMLElement = undefined;
   /**
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
@@ -290,8 +290,12 @@ export class KulShowcase {
   //#endregion
 
   //#region Lifecycle hooks
-  connectedCallback() {
-    window.addEventListener("scroll", this.#handleScroll);
+  componentWillLoad() {
+    if (this.kulScrollElement) {
+      this.kulScrollElement.addEventListener("scroll", this.#handleScroll);
+    } else {
+      window.addEventListener("scroll", this.#handleScroll);
+    }
   }
   render() {
     return (
@@ -347,7 +351,11 @@ export class KulShowcase {
     );
   }
   disconnectedCallback() {
-    window.removeEventListener("scroll", this.#handleScroll);
+    if (this.kulScrollElement) {
+      this.kulScrollElement.removeEventListener("scroll", this.#handleScroll);
+    } else {
+      window.removeEventListener("scroll", this.#handleScroll);
+    }
   }
   //#endregion
 }
