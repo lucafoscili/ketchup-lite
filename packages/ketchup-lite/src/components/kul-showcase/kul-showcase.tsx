@@ -30,10 +30,29 @@ export class KulShowcase {
   //#endregion
 
   //#region Props
+  /**
+   * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+   * @default ""
+   */
+  @Prop({ mutable: true }) kulScrollElement: HTMLElement = undefined;
+  /**
+   * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+   * @default ""
+   */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
   //#endregion
 
   //#region Internal variables
+  #headers: { [K in KulShowcaseTitle]: HTMLDivElement | null } = {
+    Components: null,
+    Framework: null,
+    Utilities: null,
+  };
+  #sections: { [K in KulShowcaseTitle]: HTMLDivElement | null } = {
+    Components: null,
+    Framework: null,
+    Utilities: null,
+  };
   #kulManager = kulManagerInstance();
   //#endregion
 
@@ -42,7 +61,14 @@ export class KulShowcase {
     const currentValue = this.currentState[type];
 
     return (
-      <div class="section">
+      <div
+        class="section"
+        ref={(el) => {
+          if (el) {
+            this.#sections[type] = el;
+          }
+        }}
+      >
         {this.#prepHeader(type, currentValue)}
         <div class="flex-wrapper flex-wrapper--responsive">
           {currentValue ? this.#comps(type) : this.#cards(type)}
@@ -52,7 +78,14 @@ export class KulShowcase {
   }
   #prepHeader(type: KulShowcaseTitle, current: string): VNode {
     return (
-      <div class="header">
+      <div
+        class="header"
+        ref={(el) => {
+          if (el) {
+            this.#headers[type] = el;
+          }
+        }}
+      >
         <h2>{current || type}</h2>
         <div class={`navigation ${current ? "active" : ""}`}>
           <kul-button
@@ -209,15 +242,22 @@ export class KulShowcase {
           kulData={cardDataset}
           kulSizeX="300px"
           kulSizeY="300px"
-          onKul-card-event={(e) => this.#handleCardClick(e, type)}
+          onKul-card-event={async (e) => {
+            const { eventType } = e.detail;
+
+            if (eventType === "click") {
+              await this.#handleCardClick(e, type);
+              this.#scrollToElement(type);
+            }
+          }}
         ></kul-card>
       );
     });
   }
-  #handleCardClick(
+  async #handleCardClick(
     e: CustomEvent<KulCardEventPayload>,
     type: KulShowcaseTitle,
-  ): void {
+  ) {
     if (e.detail.eventType === "click") {
       this.currentState = {
         ...this.currentState,
@@ -227,8 +267,26 @@ export class KulShowcase {
     }
   }
   #handleScroll = () => {
-    this.showScrollTop = window.scrollY > 300;
+    const scrollElement = this.kulScrollElement
+      ? this.kulScrollElement.scrollTop
+      : window.scrollY;
+    this.showScrollTop = scrollElement > 300;
   };
+  #handleScrollTop = async () => {
+    if (this.kulScrollElement) {
+      this.kulScrollElement.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  };
+  async #scrollToElement(type: KulShowcaseTitle) {
+    if (this.#sections[type]) {
+      this.#sections[type].scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }
   //#endregion
 
   //#region Lifecycle hooks
@@ -282,7 +340,7 @@ export class KulShowcase {
             kulIcon="chevron_up"
             kulStyling="floating"
             title="Scroll to top"
-            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+            onClick={this.#handleScrollTop}
           ></kul-button>
         </div>
       </Host>
