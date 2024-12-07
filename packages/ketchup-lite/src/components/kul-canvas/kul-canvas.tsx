@@ -194,6 +194,19 @@ export class KulCanvas {
     forceUpdate(this);
   }
   /**
+   * Automatically resizes the canvas to the match the size of the container.
+   */
+  @Method()
+  async resizeCanvas(): Promise<void> {
+    const { height, width } = this.#container.getBoundingClientRect();
+    this.#board.height = height;
+    this.#board.width = width;
+    if (this.#isCursorPreview()) {
+      this.#cursor.height = height;
+      this.#cursor.width = width;
+    }
+  }
+  /**
    * Sets the height of the canvas.
    */
   @Method()
@@ -204,10 +217,10 @@ export class KulCanvas {
         this.#cursor.height = value;
       }
     } else {
-      const h = this.#container.clientHeight;
-      this.#board.height = h;
+      const { height } = this.#container.getBoundingClientRect();
+      this.#board.height = height;
       if (this.#isCursorPreview()) {
-        this.#cursor.height = h;
+        this.#cursor.height = height;
       }
     }
   }
@@ -222,10 +235,10 @@ export class KulCanvas {
         this.#cursor.width = value;
       }
     } else {
-      const w = this.#container.clientWidth;
-      this.#board.width = w;
+      const { width } = this.#container.getBoundingClientRect();
+      this.#board.width = width;
       if (this.#isCursorPreview()) {
-        this.#cursor.width = w;
+        this.#cursor.width = width;
       }
     }
   }
