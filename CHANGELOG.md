@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.4.0-rc.2](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.1...2.4.0-rc.2) (2024-12-07)
+
+### Bug Fixes
+
+- **showcase:** handled kulScrollElement scroll listener ([8b72dcb](https://github.com/lucafoscili/ketchup-lite/commit/8b72dcb8a0142453b27a43a7dba95b5c3d9742dc))
+
 # [2.4.0-rc.1](https://github.com/lucafoscili/ketchup-lite/compare/2.4.0-rc.0...2.4.0-rc.1) (2024-12-07)
 
 ### Features
