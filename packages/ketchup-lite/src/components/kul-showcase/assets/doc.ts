@@ -4212,6 +4212,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         type: "string",
       },
       {
+        name: "kulTag",
+        docs: "The name of the HTML tag that will wrap the text.",
+        type: '"code" | "div" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "p" | "pre" | "span"',
+      },
+      {
         name: "kulValue",
         docs: "Sets the text or array of texts to display with the typewriter effect.",
         type: "string | string[]",
