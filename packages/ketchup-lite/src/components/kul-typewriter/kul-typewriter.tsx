@@ -6,11 +6,11 @@ import {
   forceUpdate,
   h,
   Host,
+  Method,
   Prop,
   State,
   Watch,
 } from "@stencil/core";
-import { Fragment, Method } from "@stencil/core/internal";
 
 import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
 import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
@@ -22,6 +22,7 @@ import {
   KulTypewriterEvent,
   KulTypewriterEventPayload,
   KulTypewriterProps,
+  KulTypewriterTag,
   KulTypewriterValue,
 } from "./kul-typewriter-declarations";
 
@@ -93,6 +94,11 @@ export class KulTypewriter {
    */
   @Prop({ mutable: true }) kulStyle = "";
   /**
+   * The name of the HTML tag that will wrap the text.
+   * @default ""
+   */
+  @Prop({ mutable: true }) kulTag: KulTypewriterTag = "p";
+  /**
    * Sets the text or array of texts to display with the typewriter effect.
    * @default ""
    */
@@ -128,7 +134,7 @@ export class KulTypewriter {
   @Watch("kulValue")
   handleKulValueChange() {
     this.#initializeTexts();
-    this.#resetTyping();
+    this.#resetTyping(); // This now animates the deletion before switching values
   }
   //#endregion
 
@@ -205,7 +211,28 @@ export class KulTypewriter {
   }
   #resetTyping() {
     clearTimeout(this.#timeout);
-    this.displayedText = "";
+
+    if (this.displayedText) {
+      this.isDeleting = true;
+      this.#deleteText(() => {
+        this.#completeReset();
+      });
+    } else {
+      this.#completeReset();
+    }
+  }
+  #deleteText(callback: () => void) {
+    if (this.displayedText.length > 0) {
+      this.displayedText = this.displayedText.slice(0, -1);
+
+      this.#timeout = setTimeout(() => {
+        this.#deleteText(callback);
+      }, this.kulDeleteSpeed);
+    } else {
+      callback();
+    }
+  }
+  #completeReset() {
     this.isDeleting = false;
     this.currentTextIndex = 0;
     this.#startTyping();
@@ -216,11 +243,12 @@ export class KulTypewriter {
       (this.kulCursor === "auto" &&
         !this.isDeleting &&
         this.displayedText !== this.#texts[this.currentTextIndex]);
+    const TagName = this.kulTag || "div";
     return (
-      <Fragment>
+      <TagName>
         <span>{this.displayedText}</span>
         {shouldShowCursor ? <span class="cursor">|</span> : null}
-      </Fragment>
+      </TagName>
     );
   }
   //#endregion
@@ -232,7 +260,7 @@ export class KulTypewriter {
   }
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#startTyping();
+    requestAnimationFrame(async () => this.#startTyping());
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
   componentWillRender() {

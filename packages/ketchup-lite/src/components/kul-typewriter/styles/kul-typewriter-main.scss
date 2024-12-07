@@ -44,6 +44,11 @@
   font-family: var(--kul-typewriter-font-family);
 }
 
+#kul-component {
+  height: 100%;
+  width: 100%;
+}
+
 .cursor {
   display: inline-block;
   width: var(--kul-typewriter-cursor-width);
