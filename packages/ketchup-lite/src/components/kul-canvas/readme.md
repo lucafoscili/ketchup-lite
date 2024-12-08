@@ -81,7 +81,7 @@ Used to retrieve component's props values.
 
 #### Returns
 
-Type: `Promise<GenericObject>`
+Type: `Promise<GenericObject<unknown>>`
 
 List of props as object, each key will be a prop.
 

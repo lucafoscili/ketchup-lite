@@ -19,7 +19,7 @@ export const prepMessages = (adapter: KulChatAdapter) => {
           <div
             class={`chat__messages__content chat__messages__content--${m.role}`}
           >
-            {prepContent(m)}
+            {prepContent(adapter, m)}
           </div>
           {m === toolbarMessage ? prepToolbar(adapter, m) : null}
         </div>
@@ -66,7 +66,17 @@ export const prepToolbar = (
   );
 };
 
-export const prepContent = (message: KulLLMChoiceMessage): VNode[] => {
+export const prepContent = (
+  adapter: KulChatAdapter,
+  message: KulLLMChoiceMessage,
+): VNode[] => {
+  const typewriterProps = adapter.get.props.typewriterProps();
+  const useTypewriter = !!(
+    message.role === "assistant" &&
+    typeof typewriterProps === "object" &&
+    typewriterProps !== null
+  );
+
   const elements: VNode[] = [];
   const messageContent = message.content;
 
@@ -77,7 +87,17 @@ export const prepContent = (message: KulLLMChoiceMessage): VNode[] => {
   while ((match = codeBlockRegex.exec(messageContent)) !== null) {
     if (match.index > lastIndex) {
       const textPart = messageContent.slice(lastIndex, match.index);
-      elements.push(<div class="paragraph">{textPart}</div>);
+      elements.push(
+        useTypewriter ? (
+          <kul-typewriter
+            class="chat__messages__paragraph"
+            {...typewriterProps}
+            kulValue={textPart}
+          ></kul-typewriter>
+        ) : (
+          <div class="paragraph">{textPart}</div>
+        ),
+      );
     }
 
     const language = match[1] ? match[1].trim() : "text";
@@ -85,7 +105,7 @@ export const prepContent = (message: KulLLMChoiceMessage): VNode[] => {
 
     elements.push(
       <kul-code
-        class={"code"}
+        class={"chat__messages__code"}
         kulLanguage={language}
         kulValue={codePart}
       ></kul-code>,
@@ -96,7 +116,17 @@ export const prepContent = (message: KulLLMChoiceMessage): VNode[] => {
 
   if (lastIndex < messageContent.length) {
     const remainingText = messageContent.slice(lastIndex);
-    elements.push(<div class="paragraph">{remainingText}</div>);
+    elements.push(
+      useTypewriter ? (
+        <kul-typewriter
+          class="chat__messages__paragraph"
+          {...typewriterProps}
+          kulValue={remainingText}
+        ></kul-typewriter>
+      ) : (
+        <div class="paragraph">{remainingText}</div>
+      ),
+    );
   }
 
   return elements;
