@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.5.0-rc.0](https://github.com/lucafoscili/ketchup-lite/compare/2.4.1...2.5.0-rc.0) (2024-12-08)
+
+### Bug Fixes
+
+- **code:** fixed Prism hightlighting ([204ea9c](https://github.com/lucafoscili/ketchup-lite/commit/204ea9cd3608e07bb19f044de071c23825787557))
+
+### Features
+
+- **chat:** added typewriter effect to assistant messages ([7cbc866](https://github.com/lucafoscili/ketchup-lite/commit/7cbc86646adbe0ae701585d44ac1de1bb6adfecc))
+
 ## [2.4.1](https://github.com/lucafoscili/ketchup-lite/compare/2.4.1-rc.0...2.4.1) (2024-12-07)
 
 **Note:** Version bump only for package ketchup-lite-root
