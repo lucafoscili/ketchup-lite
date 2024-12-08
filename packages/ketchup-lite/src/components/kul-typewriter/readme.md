@@ -96,12 +96,14 @@ Type: `Promise<void>`
 
 ### Used by
 
+ - [kul-chat](../kul-chat)
  - [kul-showcase](../kul-showcase)
  - [kul-showcase-typewriter](../kul-showcase/components/typewriter)
 
 ### Graph
 ```mermaid
 graph TD;
+  kul-chat --> kul-typewriter
   kul-showcase --> kul-typewriter
   kul-showcase-typewriter --> kul-typewriter
   style kul-typewriter fill:#f9f,stroke:#333,stroke-width:4px

@@ -1063,6 +1063,11 @@ export const KUL_DOC: KulShowcaseDoc = {
         type: "number",
       },
       {
+        name: "kulTypewriterProps",
+        docs: "Sets the props of the assistant typewriter component. Set this prop to false to replace the typewriter with a simple text element.",
+        type: "KulTypewriterPropsInterface",
+      },
+      {
         name: "kulValue",
         docs: "Sets the initial history of the chat.",
         type: "KulLLMChoiceMessage[]",

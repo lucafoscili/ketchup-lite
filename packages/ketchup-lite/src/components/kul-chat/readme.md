@@ -7,18 +7,19 @@
 
 ## Properties
 
-| Property             | Attribute              | Description                                                                          | Type                                  | Default                                                                                 |
-| -------------------- | ---------------------- | ------------------------------------------------------------------------------------ | ------------------------------------- | --------------------------------------------------------------------------------------- |
-| `kulContextWindow`   | `kul-context-window`   | How many tokens the context window can handle, used to calculate the occupied space. | `number`                              | `8192`                                                                                  |
-| `kulEndpointUrl`     | `kul-endpoint-url`     | Enables customization of the component's style.                                      | `string`                              | `"http://localhost:5001"`                                                               |
-| `kulLayout`          | `kul-layout`           | Sets the layout of the chat.                                                         | `"bottom-textarea" \| "top-textarea"` | `"top-textarea"`                                                                        |
-| `kulMaxTokens`       | `kul-max-tokens`       | The maximum amount of tokens allowed in the LLM's answer.                            | `number`                              | `250`                                                                                   |
-| `kulPollingInterval` | `kul-polling-interval` | How often the component checks whether the LLM endpoint is online or not.            | `number`                              | `10000`                                                                                 |
-| `kulSeed`            | `kul-seed`             | The seed of the LLM's answer.                                                        | `number`                              | `-1`                                                                                    |
-| `kulStyle`           | `kul-style`            | Enables customization of the component's style.                                      | `string`                              | `""`                                                                                    |
-| `kulSystem`          | `kul-system`           | System message for the LLM.                                                          | `string`                              | `"You are a helpful and cheerful assistant eager to help the user out with his tasks."` |
-| `kulTemperature`     | `kul-temperature`      | Sets the creative boundaries of the LLM.                                             | `number`                              | `0.7`                                                                                   |
-| `kulValue`           | --                     | Sets the initial history of the chat.                                                | `KulLLMChoiceMessage[]`               | `[]`                                                                                    |
+| Property             | Attribute              | Description                                                                                                                        | Type                                  | Default                                                                                 |
+| -------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------- |
+| `kulContextWindow`   | `kul-context-window`   | How many tokens the context window can handle, used to calculate the occupied space.                                               | `number`                              | `8192`                                                                                  |
+| `kulEndpointUrl`     | `kul-endpoint-url`     | Enables customization of the component's style.                                                                                    | `string`                              | `"http://localhost:5001"`                                                               |
+| `kulLayout`          | `kul-layout`           | Sets the layout of the chat.                                                                                                       | `"bottom-textarea" \| "top-textarea"` | `"top-textarea"`                                                                        |
+| `kulMaxTokens`       | `kul-max-tokens`       | The maximum amount of tokens allowed in the LLM's answer.                                                                          | `number`                              | `250`                                                                                   |
+| `kulPollingInterval` | `kul-polling-interval` | How often the component checks whether the LLM endpoint is online or not.                                                          | `number`                              | `10000`                                                                                 |
+| `kulSeed`            | `kul-seed`             | The seed of the LLM's answer.                                                                                                      | `number`                              | `-1`                                                                                    |
+| `kulStyle`           | `kul-style`            | Enables customization of the component's style.                                                                                    | `string`                              | `""`                                                                                    |
+| `kulSystem`          | `kul-system`           | System message for the LLM.                                                                                                        | `string`                              | `"You are a helpful and cheerful assistant eager to help the user out with his tasks."` |
+| `kulTemperature`     | `kul-temperature`      | Sets the creative boundaries of the LLM.                                                                                           | `number`                              | `0.7`                                                                                   |
+| `kulTypewriterProps` | --                     | Sets the props of the assistant typewriter component. Set this prop to false to replace the typewriter with a simple text element. | `KulTypewriterPropsInterface`         | `{     kulDeleteSpeed: 10,     kulTag: "p",     kulSpeed: 20,   }`                      |
+| `kulValue`           | --                     | Sets the initial history of the chat.                                                                                              | `KulLLMChoiceMessage[]`               | `[]`                                                                                    |
 
 
 ## Events
@@ -151,6 +152,7 @@ Type: `Promise<void>`
 - [kul-button](../kul-button)
 - [kul-textfield](../kul-textfield)
 - [kul-progressbar](../kul-progressbar)
+- [kul-typewriter](../kul-typewriter)
 - [kul-code](../kul-code)
 
 ### Graph
@@ -161,6 +163,7 @@ graph TD;
   kul-chat --> kul-button
   kul-chat --> kul-textfield
   kul-chat --> kul-progressbar
+  kul-chat --> kul-typewriter
   kul-chat --> kul-code
   kul-image --> kul-spinner
   kul-image --> kul-badge

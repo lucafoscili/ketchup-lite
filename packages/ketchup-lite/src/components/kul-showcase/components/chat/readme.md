@@ -34,6 +34,7 @@ graph TD;
   kul-chat --> kul-button
   kul-chat --> kul-textfield
   kul-chat --> kul-progressbar
+  kul-chat --> kul-typewriter
   kul-chat --> kul-code
   kul-image --> kul-spinner
   kul-image --> kul-badge

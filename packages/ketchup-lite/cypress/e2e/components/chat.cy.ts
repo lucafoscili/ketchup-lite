@@ -69,6 +69,7 @@ describe("Methods", () => {
       kulStyle: null,
       kulSystem: null,
       kulTemperature: null,
+      kulTypewriterProps: null,
       kulValue: null,
     } as Required<KulChatPropsInterface>);
   });

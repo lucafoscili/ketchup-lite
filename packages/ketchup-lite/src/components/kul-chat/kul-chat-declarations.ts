@@ -1,6 +1,7 @@
 import { KulLLMChoiceMessage } from "../../managers/kul-llm/kul-llm-declarations";
 import { KulManager } from "../../managers/kul-manager/kul-manager";
 import { KulEventPayload } from "../../types/GenericTypes";
+import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
 
 //#region Adapter
 export interface KulChatAdapter {
@@ -37,6 +38,7 @@ export interface KulChatAdapter {
       pollingInterval: () => number;
       system: () => string;
       temperature: () => number;
+      typewriterProps: () => KulTypewriterPropsInterface;
     };
     status: {
       connection: (status: KulChatStatus) => void;
@@ -93,6 +95,7 @@ export enum KulChatProps {
   kulStyle = "Custom style of the component.",
   kulSystem = "System message for the LLM.",
   kulTemperature = "Sets the creative boundaries of the LLM.",
+  kulTypewriterProps = "Sets the props of the assistant typewriter component. Set this prop to false to replace the typewriter with a simple text element.",
   kulValue = "Initial history of the chat.",
 }
 export interface KulChatPropsInterface {
@@ -105,6 +108,7 @@ export interface KulChatPropsInterface {
   kulStyle?: string;
   kulSystem?: string;
   kulTemperature?: number;
+  kulTypewriterProps?: KulTypewriterPropsInterface;
   kulValue?: KulChatHistory;
 }
 export type KulChatLayout = "bottom-textarea" | "top-textarea";
