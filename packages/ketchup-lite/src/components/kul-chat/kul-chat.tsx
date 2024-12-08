@@ -36,6 +36,7 @@ import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
 
 @Component({
   tag: "kul-chat",
@@ -130,6 +131,15 @@ export class KulChat {
    * @default ""
    */
   @Prop({ mutable: true }) kulTemperature = 0.7;
+  /**
+   * Sets the props of the assistant typewriter component. Set this prop to false to replace the typewriter with a simple text element.
+   * @default ""
+   */
+  @Prop({ mutable: true }) kulTypewriterProps: KulTypewriterPropsInterface = {
+    kulDeleteSpeed: 10,
+    kulTag: "p",
+    kulSpeed: 20,
+  };
   /**
    * Sets the initial history of the chat.
    * @default ""
@@ -368,6 +378,7 @@ export class KulChat {
         pollingInterval: () => this.kulPollingInterval,
         system: () => this.kulSystem,
         temperature: () => this.kulTemperature,
+        typewriterProps: () => this.kulTypewriterProps,
       },
     },
     set: {
