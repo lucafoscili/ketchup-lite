@@ -183,6 +183,8 @@ export class KulCode {
         "error",
       );
       this.#el.innerHTML = this.value;
+    } finally {
+      Prism.highlightElement(this.#el);
     }
   }
   #isObjectLike(
@@ -209,7 +211,6 @@ export class KulCode {
         `./assets/prism/prism-${this.kulLanguage}.min.js`,
       );
       await import(module);
-      Prism.highlightAll();
     } catch (error) {
       console.error(
         `Failed to load Prism.js component for ${this.kulLanguage}:`,
