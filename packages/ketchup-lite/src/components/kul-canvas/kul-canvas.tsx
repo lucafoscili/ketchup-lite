@@ -11,7 +11,17 @@ import {
   State,
 } from "@stencil/core";
 
+import { GenericObject } from "../../components";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
+import { createActions } from "./helpers/kul-canvas-actions";
+import { createComponents } from "./helpers/kul-canvas-components";
+import { simplifyStroke } from "./helpers/kul-canvas-helpers";
 import {
+  KulCanvasAdapter,
   KulCanvasBrush,
   KulCanvasCursor,
   KulCanvasEvent,
@@ -19,13 +29,6 @@ import {
   KulCanvasPoints,
   KulCanvasProps,
 } from "./kul-canvas-declarations";
-import { GenericObject } from "../../components";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
-import { simplifyStroke } from "./helpers/kul-canvas-helpers";
 
 @Component({
   tag: "kul-canvas",
@@ -112,12 +115,7 @@ export class KulCanvas {
   //#endregion
 
   //#region Internal variables
-  #board: HTMLCanvasElement;
-  #boardCtx: CanvasRenderingContext2D;
   #container: HTMLDivElement;
-  #cursor: HTMLCanvasElement;
-  #cursorCtx: CanvasRenderingContext2D;
-  #image: HTMLKulImageElement;
   #kulManager = kulManagerInstance();
   #resizeObserver: ResizeObserver;
   #resizeTimeout: NodeJS.Timeout;
@@ -152,7 +150,7 @@ export class KulCanvas {
    */
   @Method()
   async clearCanvas(): Promise<void> {
-    this.#boardCtx.clearRect(0, 0, this.#board.width, this.#board.height);
+    this.#adapter.actions.board.clear();
   }
   /**
    * Returns the painting canvas .
@@ -160,7 +158,7 @@ export class KulCanvas {
    */
   @Method()
   async getCanvas(): Promise<HTMLCanvasElement> {
-    return this.#board;
+    return this.#adapter.components.refs.board;
   }
   /**
    * Fetches debug information of the component's current state.
@@ -175,7 +173,7 @@ export class KulCanvas {
    */
   @Method()
   async getImage(): Promise<HTMLKulImageElement> {
-    return this.#image;
+    return this.#adapter.components.refs.image;
   }
   /**
    * Used to retrieve component's props values.
@@ -198,12 +196,14 @@ export class KulCanvas {
    */
   @Method()
   async resizeCanvas(): Promise<void> {
+    const { board, preview } = this.#adapter.components.refs;
+
     const { height, width } = this.#container.getBoundingClientRect();
-    this.#board.height = height;
-    this.#board.width = width;
+    board.height = height;
+    board.width = width;
     if (this.#isCursorPreview()) {
-      this.#cursor.height = height;
-      this.#cursor.width = width;
+      preview.height = height;
+      preview.width = width;
     }
   }
   /**
@@ -211,16 +211,18 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasHeight(value?: number): Promise<void> {
+    const { board, preview } = this.#adapter.components.refs;
+
     if (value !== undefined) {
-      this.#board.height = value;
+      board.height = value;
       if (this.#isCursorPreview()) {
-        this.#cursor.height = value;
+        preview.height = value;
       }
     } else {
       const { height } = this.#container.getBoundingClientRect();
-      this.#board.height = height;
+      board.height = height;
       if (this.#isCursorPreview()) {
-        this.#cursor.height = height;
+        preview.height = height;
       }
     }
   }
@@ -229,16 +231,18 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasWidth(value?: number): Promise<void> {
+    const { board, preview } = this.#adapter.components.refs;
+
     if (value !== undefined) {
-      this.#board.width = value;
+      board.width = value;
       if (this.#isCursorPreview()) {
-        this.#cursor.width = value;
+        preview.width = value;
       }
     } else {
       const { width } = this.#container.getBoundingClientRect();
-      this.#board.width = width;
+      board.width = width;
       if (this.#isCursorPreview()) {
-        this.#cursor.width = width;
+        preview.width = width;
       }
     }
   }
@@ -256,159 +260,43 @@ export class KulCanvas {
   //#endregion
 
   //#region Private methods
+  #adapter: KulCanvasAdapter = {
+    actions: null,
+    components: null,
+    get: {
+      canvas: this,
+      isCursorPreview: this.#isCursorPreview,
+      manager: this.#kulManager,
+      state: {
+        isPainting: () => this.isPainting,
+        points: () => this.points,
+      },
+    },
+    set: {
+      state: {
+        isPainting: (value) => (this.isPainting = value),
+        points: (value) => (this.points = value),
+      },
+    },
+  };
   #isCursorPreview() {
     return this.kulCursor === "preview";
-  }
-  #normalizeCoordinate(event: PointerEvent, rect: DOMRect) {
-    let x = (event.clientX - rect.left) / rect.width;
-    let y = (event.clientY - rect.top) / rect.height;
-
-    x = Math.max(0, Math.min(1, x));
-    y = Math.max(0, Math.min(1, y));
-
-    return { x, y };
-  }
-  #getCanvasCoordinate(event: PointerEvent, rect: DOMRect) {
-    let x = event.clientX - rect.left;
-    let y = event.clientY - rect.top;
-
-    x = Math.max(0, Math.min(rect.width, x));
-    y = Math.max(0, Math.min(rect.height, y));
-
-    return { x, y };
-  }
-  #setupContext(ctx: CanvasRenderingContext2D, isFill = false) {
-    ctx.lineCap = "round";
-    ctx.lineJoin = "round";
-    ctx.globalAlpha = this.kulOpacity;
-    if (isFill) {
-      ctx.fillStyle = this.kulColor;
-    } else {
-      ctx.strokeStyle = this.kulColor;
-      ctx.lineWidth = this.kulSize;
-    }
-  }
-  #handlePointerDown(e: PointerEvent) {
-    e.preventDefault();
-    this.isPainting = true;
-    this.points = [];
-    this.#addPoint(e);
-
-    this.#board.setPointerCapture(e.pointerId);
-
-    this.#board.addEventListener("pointermove", this.#handlePointerMove);
-    this.#board.addEventListener("pointerup", this.#handlePointerUp);
-  }
-  #handlePointerMove = (e: PointerEvent) => {
-    e.preventDefault();
-
-    if (this.#isCursorPreview()) {
-      this.#drawBrushCursor(e);
-    }
-
-    if (!this.isPainting) {
-      return;
-    }
-
-    this.#addPoint(e);
-    this.#drawLastSegment();
-  };
-  #handlePointerOut = (e: PointerEvent) => {
-    this.#endCapture(e);
-  };
-  #handlePointerUp = (e: PointerEvent) => {
-    this.#endCapture(e);
-  };
-
-  #addPoint(e: PointerEvent) {
-    const rect = this.#board.getBoundingClientRect();
-    const { x, y } = this.#normalizeCoordinate(e, rect);
-    this.points.push({ x, y });
-  }
-  #endCapture(e: PointerEvent) {
-    e.preventDefault();
-    this.isPainting = false;
-
-    this.#board.releasePointerCapture(e.pointerId);
-
-    this.#board.removeEventListener("pointermove", this.#handlePointerMove);
-    this.#board.removeEventListener("pointerup", this.#handlePointerUp);
-  }
-  #drawBrushCursor(event: PointerEvent) {
-    this.#cursorCtx.clearRect(0, 0, this.#cursor.width, this.#cursor.height);
-
-    const rect = this.#board.getBoundingClientRect();
-    const { x, y } = this.#getCanvasCoordinate(event, rect);
-
-    this.#setupContext(this.#cursorCtx, true);
-    this.#drawBrushShape(this.#cursorCtx, x, y, true);
-  }
-  #drawBrushShape(
-    ctx: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    isFill = true,
-  ) {
-    ctx.beginPath();
-    switch (this.kulBrush) {
-      case "round":
-        ctx.arc(x, y, this.kulSize / 2, 0, Math.PI * 2);
-        break;
-      case "square":
-        const halfSize = this.kulSize / 2;
-        ctx.rect(x - halfSize, y - halfSize, this.kulSize, this.kulSize);
-        break;
-    }
-    if (isFill) {
-      ctx.fill();
-    } else {
-      ctx.stroke();
-    }
-  }
-  #drawLastSegment() {
-    const len = this.points.length;
-    if (len < 2) {
-      return;
-    }
-
-    const lastPoint = this.points[len - 1];
-    const secondLastPoint = this.points[len - 2];
-
-    const x1 = secondLastPoint.x * this.#board.width;
-    const y1 = secondLastPoint.y * this.#board.height;
-    const x2 = lastPoint.x * this.#board.width;
-    const y2 = lastPoint.y * this.#board.height;
-
-    this.#setupContext(this.#boardCtx, false);
-
-    if (this.kulBrush === "round") {
-      this.#boardCtx.beginPath();
-      this.#boardCtx.moveTo(x1, y1);
-      this.#boardCtx.lineTo(x2, y2);
-      this.#boardCtx.stroke();
-    } else if (this.kulBrush === "square") {
-      this.#drawBrushShape(this.#boardCtx, x2, y2, false);
-    }
   }
   //#endregion
 
   //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
+    this.#adapter.actions = createActions(this.#adapter);
+    this.#adapter.components = createComponents(this.#adapter);
   }
-
   componentDidLoad() {
-    this.#boardCtx = this.#board.getContext("2d");
-    this.#cursorCtx = this.#cursor.getContext("2d");
-
-    this.setCanvasHeight();
-    this.setCanvasWidth();
+    this.resizeCanvas();
 
     this.#resizeObserver = new ResizeObserver(() => {
       clearTimeout(this.#resizeTimeout);
       this.#resizeTimeout = setTimeout(() => {
-        this.setCanvasHeight();
-        this.setCanvasWidth();
+        this.resizeCanvas();
       }, 100);
     });
     this.#resizeObserver.observe(this.#container);
@@ -416,16 +304,14 @@ export class KulCanvas {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
+    const { board, image, preview } = this.#adapter.components.jsx;
     const className = {
       canvas: true,
       "canvas--hidden-cursor": this.#isCursorPreview(),
@@ -447,43 +333,14 @@ export class KulCanvas {
               }
             }}
           >
-            <kul-image
-              class="canvas__image kul-fit"
-              {...this.kulImageProps}
-              ref={(el) => {
-                if (el) {
-                  this.#image = el;
-                }
-              }}
-            ></kul-image>
-            <canvas
-              class="canvas__board"
-              onPointerDown={(e) => this.#handlePointerDown(e)}
-              onPointerMove={(e) => this.#handlePointerMove(e)}
-              onPointerUp={(e) => this.onKulEvent(e, "stroke")}
-              onPointerOut={(e) => this.#handlePointerOut(e)}
-              ref={(el) => {
-                if (el) {
-                  this.#board = el;
-                }
-              }}
-            ></canvas>
-            {this.#isCursorPreview() && (
-              <canvas
-                class="canvas__cursor"
-                ref={(el) => {
-                  if (el) {
-                    this.#cursor = el;
-                  }
-                }}
-              ></canvas>
-            )}
+            {image}
+            {board}
+            {this.#isCursorPreview() && preview}
           </div>
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
 
@@ -491,5 +348,5 @@ export class KulCanvas {
       this.#resizeObserver.disconnect();
     }
   }
+  //#endregion
 }
-//#endregion

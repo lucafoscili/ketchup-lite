@@ -1,4 +1,4 @@
-import { h } from "@stencil/core";
+import { h, VNode } from "@stencil/core";
 
 import {
   KulDataCyAttributes,
@@ -45,7 +45,7 @@ export const COMPONENTS: KulImageviewerAdapterComponents = {
 };
 
 // #region Canvas
-const prepCanvas = (adapter: KulImageviewerAdapter) => {
+const prepCanvas = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "details-grid__canvas": true,
@@ -79,7 +79,7 @@ const prepCanvas = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Clear history
-const prepClearHistory = (adapter: KulImageviewerAdapter) => {
+const prepClearHistory = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "details-grid__clear-history": true,
@@ -129,7 +129,7 @@ const prepClearHistory = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Delete
-const prepDelete = (adapter: KulImageviewerAdapter) => {
+const prepDelete = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "details-grid__delete": true,
@@ -173,7 +173,7 @@ const prepDelete = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Load
-const prepLoad = (adapter: KulImageviewerAdapter) => {
+const prepLoad = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "navigation-grid__button": true,
@@ -216,7 +216,7 @@ const prepLoad = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Masonry
-const prepMasonry = (adapter: KulImageviewerAdapter) => {
+const prepMasonry = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "navigation-grid__masonry": true,
@@ -263,7 +263,7 @@ const prepMasonry = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Redo
-const prepRedo = (adapter: KulImageviewerAdapter) => {
+const prepRedo = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "details-grid__redo": true,
@@ -306,7 +306,7 @@ const prepRedo = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Save
-const prepSave = (adapter: KulImageviewerAdapter) => {
+const prepSave = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "details-grid__commit-changes": true,
@@ -354,7 +354,7 @@ const prepSave = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Spinner
-const prepSpinner = (adapter: KulImageviewerAdapter) => {
+const prepSpinner = (adapter: KulImageviewerAdapter): VNode => {
   const className = {
     "details-grid__spinner": true,
   };
@@ -377,7 +377,7 @@ const prepSpinner = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Textfield
-const prepTextfield = (adapter: KulImageviewerAdapter) => {
+const prepTextfield = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "navigation-grid__textfield": true,
@@ -403,7 +403,7 @@ const prepTextfield = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Tree
-const prepTree = (adapter: KulImageviewerAdapter) => {
+const prepTree = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "details-grid__tree": true,
@@ -430,7 +430,7 @@ const prepTree = (adapter: KulImageviewerAdapter) => {
 };
 // #endregion
 // #region Undo
-const prepUndo = (adapter: KulImageviewerAdapter) => {
+const prepUndo = (adapter: KulImageviewerAdapter): VNode => {
   const imageviewer = adapter.get.imageviewer();
   const className = {
     "details-grid__undo": true,
