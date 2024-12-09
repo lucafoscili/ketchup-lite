@@ -1,43 +1,61 @@
-import { KulCarouselAdapterActions } from "../kul-carousel-declarations";
+import {
+  KulCarouselAdapter,
+  KulCarouselAdapterActions,
+} from "../kul-carousel-declarations";
 
-export const ACTIONS: KulCarouselAdapterActions = {
-  autoplay: {
-    start(adapter) {
-      const carousel = adapter.get.carousel();
+export const createActions: (
+  adapter: KulCarouselAdapter,
+) => KulCarouselAdapterActions = (adapter) => {
+  return {
+    //#region Autoplay
+    autoplay: {
+      start() {
+        const carousel = adapter.get.carousel();
 
-      if (carousel.kulAutoPlay && carousel.kulInterval > 0) {
-        adapter.set.interval(
-          setInterval(() => {
-            adapter.actions.next(adapter);
-          }, carousel.kulInterval),
-        );
-      }
+        if (carousel.kulAutoPlay && carousel.kulInterval > 0) {
+          adapter.set.interval(
+            setInterval(() => {
+              adapter.actions.next();
+            }, carousel.kulInterval),
+          );
+        }
+      },
+
+      stop() {
+        const interval = adapter.get.interval();
+
+        if (interval) {
+          clearInterval(interval);
+          adapter.set.interval(null);
+        }
+      },
+      //#endregion
     },
 
-    stop(adapter) {
-      const interval = adapter.get.interval();
+    //#region Next
+    next: () => {
+      const currentIndex = adapter.get.state.currentIndex();
+      const totalSlides = adapter.get.totalSlides();
 
-      if (interval) {
-        clearInterval(interval);
-        adapter.set.interval(null);
-      }
+      adapter.set.state.currentIndex((currentIndex + 1) % totalSlides);
     },
-  },
-  next: (adapter) => {
-    const currentIndex = adapter.get.state.currentIndex();
-    const totalSlides = adapter.get.totalSlides();
+    //#endregion
 
-    adapter.set.state.currentIndex((currentIndex + 1) % totalSlides);
-  },
-  previous: (adapter) => {
-    const currentIndex = adapter.get.state.currentIndex();
-    const totalSlides = adapter.get.totalSlides();
+    //#region Previous
+    previous: () => {
+      const currentIndex = adapter.get.state.currentIndex();
+      const totalSlides = adapter.get.totalSlides();
 
-    adapter.set.state.currentIndex(
-      (currentIndex - 1 + totalSlides) % totalSlides,
-    );
-  },
-  toSlide: (adapter, value) => {
-    adapter.set.state.currentIndex(value);
-  },
+      adapter.set.state.currentIndex(
+        (currentIndex - 1 + totalSlides) % totalSlides,
+      );
+    },
+    //#endregion
+
+    //#region ToSlide
+    toSlide: (value) => {
+      adapter.set.state.currentIndex(value);
+    },
+    //#endregion}
+  };
 };

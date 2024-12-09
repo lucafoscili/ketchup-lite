@@ -25,8 +25,8 @@ import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { ACTIONS } from "./helpers/kul-carousel-actions";
-import { COMPONENTS } from "./helpers/kul-carousel-components";
+import { createActions } from "./helpers/kul-carousel-actions";
+import { createComponents } from "./helpers/kul-carousel-components";
 import {
   KulCarouselAdapter,
   KulCarouselEvent,
@@ -113,7 +113,6 @@ export class KulCarousel {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulCarouselEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulCarouselEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -164,21 +163,21 @@ export class KulCarousel {
    */
   @Method()
   async goToSlide(index: number) {
-    this.#adapter.actions.toSlide(this.#adapter, index);
+    this.#adapter.actions.toSlide(index);
   }
   /**
    * Advances to the next slide, looping back to the start if at the end.
    */
   @Method()
   async nextSlide() {
-    this.#adapter.actions.next(this.#adapter);
+    this.#adapter.actions.next();
   }
   /**
    * Moves to the previous slide, looping to the last slide if at the beginning.
    */
   @Method()
   async prevSlide() {
-    this.#adapter.actions.previous(this.#adapter);
+    this.#adapter.actions.previous();
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -202,8 +201,8 @@ export class KulCarousel {
 
   //#region Private methods
   #adapter: KulCarouselAdapter = {
-    actions: ACTIONS,
-    components: COMPONENTS,
+    actions: null,
+    components: null,
     get: {
       carousel: () => this,
       interval: () => this.#interval,
@@ -223,6 +222,8 @@ export class KulCarousel {
     return !!this.shapes?.[this.kulShape];
   }
   #prepCarousel(): VNode {
+    const { back, forward } = this.#adapter.components;
+
     if (this.#hasShapes()) {
       const shapes = this.shapes[this.kulShape];
       if (shapes?.length) {
@@ -232,8 +233,8 @@ export class KulCarousel {
               {this.#prepSlide()}
             </div>
             <div class="carousel__controls">
-              {this.#adapter.components.back(this.#adapter)}
-              {this.#adapter.components.forward(this.#adapter)}
+              {back}
+              {forward}
             </div>
             <div class="carousel__indicators-wrapper">
               <div class="carousel__indicators">{this.#prepIndicators()}</div>
@@ -265,7 +266,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={className}
-          onClick={() => this.#adapter.actions.toSlide(this.#adapter, 0)}
+          onClick={() => this.#adapter.actions.toSlide(0)}
           title={`Jump to the first slide (#${0})`}
         >
           «
@@ -288,9 +289,7 @@ export class KulCarousel {
         indicators.push(
           <span
             class={className}
-            onClick={() =>
-              this.#adapter.actions.toSlide(this.#adapter, actualIndex)
-            }
+            onClick={() => this.#adapter.actions.toSlide(actualIndex)}
             title={`#${index}`}
           />,
         );
@@ -304,9 +303,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={className}
-          onClick={() =>
-            this.#adapter.actions.toSlide(this.#adapter, totalSlides - 1)
-          }
+          onClick={() => this.#adapter.actions.toSlide(totalSlides - 1)}
           title={`Jump to the last slide (#${totalSlides - 1})`}
         >
           »
@@ -343,9 +340,14 @@ export class KulCarousel {
   //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
+
     this.updateShapes();
+
+    this.#adapter.actions = createActions(this.#adapter);
+    this.#adapter.components = createComponents(this.#adapter);
+
     if (this.kulAutoPlay) {
-      this.#adapter.actions.autoplay.start(this.#adapter);
+      this.#adapter.actions.autoplay.start();
     }
   }
   componentDidLoad() {
@@ -382,9 +384,9 @@ export class KulCarousel {
               ) {
                 this.#lastSwipeTime = currentTime;
                 if (swipeDistance > 0) {
-                  this.#adapter.actions.previous(this.#adapter);
+                  this.#adapter.actions.previous();
                 } else {
-                  this.#adapter.actions.next(this.#adapter);
+                  this.#adapter.actions.next();
                 }
               }
             }}
@@ -399,7 +401,7 @@ export class KulCarousel {
 
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
-    this.#adapter.actions.autoplay.stop(this.#adapter);
+    this.#adapter.actions.autoplay.stop();
   }
   //#endregion
 }
