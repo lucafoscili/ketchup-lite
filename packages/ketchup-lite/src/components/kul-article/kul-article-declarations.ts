@@ -10,7 +10,18 @@ export interface KulArticleDataset extends KulDataDataset {
 }
 export interface KulArticleNode extends KulDataNode {
   children?: KulArticleNode[];
-  tagName?: "br" | "code" | "h1" | "h2" | "h3" | "li" | "pre" | "strong";
+  tagName?:
+    | "br"
+    | "code"
+    | "h1"
+    | "h2"
+    | "h3"
+    | "h4"
+    | "h5"
+    | "h6"
+    | "li"
+    | "pre"
+    | "strong";
 }
 //#endregion
 

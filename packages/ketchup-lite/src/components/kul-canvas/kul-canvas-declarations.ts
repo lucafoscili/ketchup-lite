@@ -1,8 +1,8 @@
+import { VNode } from "@stencil/core";
 import { KulManager } from "src/managers/kul-manager/kul-manager";
 import { KulEventPayload } from "../../types/GenericTypes";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulCanvas } from "./kul-canvas";
-import { VNode } from "@stencil/core";
 
 //#region Adapter
 export interface KulCanvasAdapter {

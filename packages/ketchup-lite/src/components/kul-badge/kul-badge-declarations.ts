@@ -1,15 +1,13 @@
 import { KulEventPayload } from "../../types/GenericTypes";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulBadgeEvent = "click" | "ready" | "unmount";
 export interface KulBadgeEventPayload
   extends KulEventPayload<"KulBadge", KulBadgeEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulBadgeProps {
   kulImageProps = "The props of the image displayed inside the badge.",
   kulLabel = "The text displayed inside the badge.",
@@ -20,3 +18,4 @@ export interface KulBadgePropsInterface {
   kulLabel?: string;
   kulStyle?: string;
 }
+//#endregion

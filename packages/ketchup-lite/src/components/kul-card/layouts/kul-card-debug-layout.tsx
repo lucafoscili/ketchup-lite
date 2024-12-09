@@ -5,34 +5,37 @@ import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations"
 import { KulCodeEventPayload } from "../../kul-code/kul-code-declarations";
 import { KulListEventPayload } from "../../kul-list/kul-list-declarations";
 import { KulToggleEventPayload } from "../../kul-toggle/kul-toggle-declarations";
-import { DEFAULTS } from "../helpers/kul-card-defaults";
 import { KulCardAdapter, KulCardShapesIds } from "../kul-card-declarations";
 
+//#region Debug layout
 export function getDebugLayout(adapter: KulCardAdapter): VNode {
-  const card = adapter.get.card();
-  const shapes = adapter.get.shapes();
-  const eventDispatcher = adapter.actions.dispatchEvent;
+  const { actions, get } = adapter;
+  const { dispatchEvent } = actions;
+  const { defaults } = get;
+
+  const card = get.card();
+  const shapes = get.shapes();
   const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
   const buttons = decorator(
     "button",
     shapes.button,
-    eventDispatcher,
-    DEFAULTS.debug.button(),
+    dispatchEvent,
+    defaults.debug.button(),
     buttonEventHandler,
   );
   const codes = decorator(
     "code",
     shapes.code,
-    eventDispatcher,
-    DEFAULTS.debug.code(),
+    dispatchEvent,
+    defaults.debug.code(),
     codeEventHandler,
   );
-  const togglees = decorator(
+  const toggles = decorator(
     "toggle",
     shapes.toggle,
-    eventDispatcher,
-    DEFAULTS.debug.toggle(),
+    dispatchEvent,
+    defaults.debug.toggle(),
     toggleEventHandler,
   );
 
@@ -42,8 +45,8 @@ export function getDebugLayout(adapter: KulCardAdapter): VNode {
 
   return (
     <div class={className}>
-      {togglees?.element?.length && (
-        <div class="section-1 toggle">{togglees.element[0]}</div>
+      {toggles?.element?.length && (
+        <div class="section-1 toggle">{toggles.element[0]}</div>
       )}
       {codes?.element?.length && (
         <div class="section-2 code">{codes.element[0]}</div>
@@ -129,3 +132,4 @@ const toggleEventHandler = (e: CustomEvent<KulToggleEventPayload>) => {
       break;
   }
 };
+//#endregion

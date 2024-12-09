@@ -13,6 +13,12 @@ import {
   VNode,
 } from "@stencil/core";
 
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { KulLanguageGeneric } from "../../managers/kul-language/kul-language-declarations";
+import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+import { GenericObject } from "../../types/GenericTypes";
+import { getProps } from "../../utils/componentUtils";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import {
   KulArticleDataset,
   KulArticleEvent,
@@ -20,12 +26,6 @@ import {
   KulArticleNode,
   KulArticleProps,
 } from "./kul-article-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { KulLanguageGeneric } from "../../managers/kul-language/kul-language-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   assetsDirs: ["assets/fonts"],
@@ -39,10 +39,7 @@ export class KulArticle {
    */
   @Element() rootElement: HTMLKulArticleElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -53,11 +50,9 @@ export class KulArticle {
     renderStart: 0,
     startTime: performance.now(),
   };
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The actual data of the article.
    * @default null
@@ -68,20 +63,13 @@ export class KulArticle {
    * @default "" - No custom style applied by default.
    */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-article-event",
     composed: true,
@@ -89,7 +77,6 @@ export class KulArticle {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulArticleEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulArticleEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -98,11 +85,9 @@ export class KulArticle {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -138,11 +123,9 @@ export class KulArticle {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #recursive(node: KulArticleNode, depth: number) {
     switch (depth) {
       case 0:
@@ -157,7 +140,6 @@ export class KulArticle {
           : this.#contentTemplate(node, depth);
     }
   }
-
   #articleTemplate(node: KulArticleNode, depth: number): VNode {
     return (
       <Fragment>
@@ -174,7 +156,6 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #sectionTemplate(node: KulArticleNode, depth: number): VNode {
     return (
       <Fragment>
@@ -191,7 +172,6 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #wrapperTemplate(node: KulArticleNode, depth: number): VNode {
     const ComponentTag = node.children?.some((child) => child.tagName === "li")
       ? "ul"
@@ -213,7 +193,6 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #paragraphTemplate(node: KulArticleNode, depth: number): VNode {
     return (
       <Fragment>
@@ -230,7 +209,6 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #contentTemplate(node: KulArticleNode, depth: number): VNode {
     const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
@@ -255,7 +233,6 @@ export class KulArticle {
       );
     }
   }
-
   #prepArticle(): VNode[] {
     const elements: VNode[] = [];
     const nodes = this.kulData.nodes;
@@ -265,28 +242,22 @@ export class KulArticle {
     }
     return <Fragment>{elements}</Fragment>;
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
   }
-
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     return (
       <Host>
@@ -311,8 +282,8 @@ export class KulArticle {
       </Host>
     );
   }
-
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
   }
+  //#endregion
 }

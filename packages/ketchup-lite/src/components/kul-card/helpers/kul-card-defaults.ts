@@ -20,89 +20,91 @@ const getThemes = () => {
   return nodes;
 };
 
-export const DEFAULTS: {
+export const createDefaults: () => {
   [L in KulCardLayout]: KulDataShapeDefaults;
-} = {
-  debug: {
-    button: () => [
-      {
-        htmlProps: {
-          className: "kul-full-width kul-danger",
-          id: KulCardShapesIds.CLEAR,
+} = () => {
+  return {
+    debug: {
+      button: () => [
+        {
+          htmlProps: {
+            className: "kul-full-width kul-danger",
+            id: KulCardShapesIds.CLEAR,
+          },
+          kulIcon: "refresh",
+          kulLabel: "Clear logs",
         },
-        kulIcon: "refresh",
-        kulLabel: "Clear logs",
-      },
-      {
-        htmlProps: {
-          className: "kul-full-width",
-          id: KulCardShapesIds.THEME,
+        {
+          htmlProps: {
+            className: "kul-full-width",
+            id: KulCardShapesIds.THEME,
+          },
+          kulData: {
+            nodes: [
+              {
+                icon: "style",
+                id: "root",
+                value: "Random theme",
+                children: getThemes(),
+              },
+            ],
+          },
         },
-        kulData: {
-          nodes: [
-            {
-              icon: "style",
-              id: "root",
-              value: "Random theme",
-              children: getThemes(),
-            },
-          ],
+      ],
+      code: () => [{ kulLanguage: "markdown" }],
+      toggle: () => [
+        {
+          kulLeadingLabel: true,
+          kulLabel: "Toggle debug",
+          kulValue: kulManagerInstance().debug.isEnabled(),
         },
-      },
-    ],
-    code: () => [{ kulLanguage: "markdown" }],
-    toggle: () => [
-      {
-        kulLeadingLabel: true,
-        kulLabel: "Toggle debug",
-        kulValue: kulManagerInstance().debug.isEnabled(),
-      },
-    ],
-  },
-  keywords: {
-    button: () => [
-      {
-        htmlProps: {
-          className: "kul-full-width",
+      ],
+    },
+    keywords: {
+      button: () => [
+        {
+          htmlProps: {
+            className: "kul-full-width",
+          },
+          kulIcon: "content_copy",
+          kulLabel: "Copy selected",
+          kulStyling: "flat",
         },
-        kulIcon: "content_copy",
-        kulLabel: "Copy selected",
-        kulStyling: "flat",
-      },
-    ],
-    chart: () => [
-      {
-        kulLegend: "hidden",
-        kulTypes: ["bar"],
-      },
-    ],
-    chip: () => [
-      {
-        kulStyle: "#kul-component .chip-set { height: auto; }",
-        kulStyling: "filter",
-      },
-    ],
-  },
-  material: {
-    image: () => [
-      {
-        htmlProps: {
-          className: "kul-cover",
+      ],
+      chart: () => [
+        {
+          kulLegend: "hidden",
+          kulTypes: ["bar"],
         },
-        kulSizeX: "100%",
-        kulSizeY: "100%",
-      },
-    ],
-  },
-  upload: {
-    button: () => [
-      {
-        htmlProps: {
-          className: "kul-full-width",
+      ],
+      chip: () => [
+        {
+          kulStyle: "#kul-component .chip-set { height: auto; }",
+          kulStyling: "filter",
         },
-        kulIcon: "upload",
-        kulLabel: "Upload",
-      },
-    ],
-  },
+      ],
+    },
+    material: {
+      image: () => [
+        {
+          htmlProps: {
+            className: "kul-cover",
+          },
+          kulSizeX: "100%",
+          kulSizeY: "100%",
+        },
+      ],
+    },
+    upload: {
+      button: () => [
+        {
+          htmlProps: {
+            className: "kul-full-width",
+          },
+          kulIcon: "upload",
+          kulLabel: "Upload",
+        },
+      ],
+    },
+  };
 };

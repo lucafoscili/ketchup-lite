@@ -2,13 +2,17 @@ import { h, VNode } from "@stencil/core";
 
 import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
 import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
-import { DEFAULTS } from "../helpers/kul-card-defaults";
 import { KulCardAdapter } from "../kul-card-declarations";
 
+//#region Keywords layout
 export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
-  const card = adapter.get.card();
-  const shapes = adapter.get.shapes();
-  const eventDispatcher = adapter.actions.dispatchEvent;
+  const { actions, get } = adapter;
+  const { dispatchEvent } = actions;
+  const { defaults } = get;
+
+  const card = get.card();
+  const shapes = get.shapes();
+
   const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
   const buttonEventHandler = async (e: CustomEvent<KulButtonEventPayload>) => {
@@ -30,21 +34,21 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
   const buttons = decorator(
     "button",
     shapes.button,
-    eventDispatcher,
-    DEFAULTS.keywords.button(),
+    dispatchEvent,
+    defaults.keywords.button(),
     buttonEventHandler,
   );
   const charts = decorator(
     "chart",
     shapes.chart,
-    eventDispatcher,
-    DEFAULTS.keywords.chart(),
+    dispatchEvent,
+    defaults.keywords.chart(),
   );
   const chips = decorator(
     "chip",
     shapes.chip,
-    eventDispatcher,
-    DEFAULTS.keywords.chip(),
+    dispatchEvent,
+    defaults.keywords.chip(),
   );
 
   const className = {
@@ -65,3 +69,4 @@ export function getKeywordsLayout(adapter: KulCardAdapter): VNode {
     </div>
   );
 }
+//#endregion

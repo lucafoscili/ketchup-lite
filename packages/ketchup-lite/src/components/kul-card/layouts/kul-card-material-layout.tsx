@@ -3,24 +3,27 @@ import { h, VNode } from "@stencil/core";
 import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
 import { KulDataCyAttributes } from "../../../types/GenericTypes";
 import { RIPPLE_SURFACE_CLASS } from "../../../variables/GenericVariables";
-import { DEFAULTS } from "../helpers/kul-card-defaults";
 import { KulCardAdapter, KulCardCSSClasses } from "../kul-card-declarations";
 
 //#region Material layout
 export function getMaterialLayout(adapter: KulCardAdapter): VNode {
-  const card = adapter.get.card();
-  const shapes = adapter.get.shapes();
-  const eventDispatcher = adapter.actions.dispatchEvent;
+  const { actions, get } = adapter;
+  const { dispatchEvent } = actions;
+  const { defaults } = get;
+
+  const card = get.card();
+  const shapes = get.shapes();
+
   const decorator = kulManagerInstance().data.cell.shapes.decorate;
 
-  const buttons = decorator("button", shapes.button, eventDispatcher);
+  const buttons = decorator("button", shapes.button, dispatchEvent);
   const images = decorator(
     "image",
     shapes.image,
-    eventDispatcher,
-    DEFAULTS.material.image(),
+    dispatchEvent,
+    defaults.material.image(),
   );
-  const texts = decorator("text", shapes.text, eventDispatcher);
+  const texts = decorator("text", shapes.text, dispatchEvent);
 
   const coverIndex = 0;
   const cover: VNode = images.element?.length

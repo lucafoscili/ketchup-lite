@@ -1,16 +1,19 @@
-import { VNode } from "@stencil/core";
-
-import { KulCardAdapter, KulCardLayout } from "../kul-card-declarations";
+import {
+  KulCardAdapter,
+  KulCardAdapterLayoutHub,
+} from "../kul-card-declarations";
 import { getDebugLayout } from "../layouts/kul-card-debug-layout";
 import { getKeywordsLayout } from "../layouts/kul-card-keywords-layout";
 import { getMaterialLayout } from "../layouts/kul-card-material-layout";
 import { getUploadLayout } from "../layouts/kul-card-upload-layout";
 
-export const LAYOUT_HUB: {
-  [K in KulCardLayout]: (adapter: KulCardAdapter) => VNode;
-} = {
-  debug: (adapter) => getDebugLayout(adapter),
-  keywords: (adapter) => getKeywordsLayout(adapter),
-  material: (adapter) => getMaterialLayout(adapter),
-  upload: (adapter) => getUploadLayout(adapter),
+export const createLayouts: (
+  adapter: KulCardAdapter,
+) => KulCardAdapterLayoutHub = (adapter) => {
+  return {
+    debug: getDebugLayout(adapter),
+    keywords: getKeywordsLayout(adapter),
+    material: getMaterialLayout(adapter),
+    upload: getUploadLayout(adapter),
+  };
 };

@@ -14,11 +14,6 @@ import {
 } from "@stencil/core";
 
 import {
-  KulAccordionEvent,
-  KulAccordionEventPayload,
-  KulAccordionProps,
-} from "./kul-accordion-declarations";
-import {
   KulDataDataset,
   KulDataNode,
 } from "../../managers/kul-data/kul-data-declarations";
@@ -30,6 +25,11 @@ import {
 } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import {
+  KulAccordionEvent,
+  KulAccordionEventPayload,
+  KulAccordionProps,
+} from "./kul-accordion-declarations";
 
 @Component({
   tag: "kul-accordion",
@@ -42,10 +42,7 @@ export class KulAccordion {
    */
   @Element() rootElement: HTMLKulAccordionElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -64,11 +61,9 @@ export class KulAccordion {
    * Selected nodes.
    */
   @State() selectedNodes: Set<KulDataNode> = new Set();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Actual data of the accordion.
    * @default null
@@ -84,22 +79,15 @@ export class KulAccordion {
    * @default ""
    */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
   #rippleSurface: { [id: string]: HTMLElement } = {};
   #slotsNames: string[] = [];
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-accordion-event",
     composed: true,
@@ -131,11 +119,9 @@ export class KulAccordion {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -206,11 +192,9 @@ export class KulAccordion {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #isExpanded(node: KulDataNode): boolean {
     return this.expandedNodes.has(node);
   }
@@ -297,11 +281,9 @@ export class KulAccordion {
     }
     return nodes;
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
   }
@@ -347,4 +329,5 @@ export class KulAccordion {
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
   }
+  //#endregion
 }

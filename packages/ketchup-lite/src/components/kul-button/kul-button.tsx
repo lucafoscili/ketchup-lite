@@ -14,13 +14,6 @@ import {
 } from "@stencil/core";
 
 import {
-  KulButtonEventPayload,
-  KulButtonEvent,
-  KulButtonProps,
-  KulButtonState,
-  KulButtonStyling,
-} from "./kul-button-declarations";
-import {
   KulDataDataset,
   KulDataNode,
 } from "../../managers/kul-data/kul-data-declarations";
@@ -41,6 +34,13 @@ import {
 } from "../../variables/GenericVariables";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulListEventPayload } from "../kul-list/kul-list-declarations";
+import {
+  KulButtonEvent,
+  KulButtonEventPayload,
+  KulButtonProps,
+  KulButtonState,
+  KulButtonStyling,
+} from "./kul-button-declarations";
 
 @Component({
   tag: "kul-button",
@@ -53,10 +53,7 @@ export class KulButton {
    */
   @Element() rootElement: HTMLKulButtonElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -74,11 +71,9 @@ export class KulButton {
    * @see KulButtonState - For a list of possible states.
    */
   @State() value: KulButtonState = "off";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Actual data of the button, used to render dropdown buttons.
    * @default null
@@ -151,11 +146,9 @@ export class KulButton {
    * @default false
    */
   @Prop({ mutable: false }) kulValue = false;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #clickCb: KulManagerClickCb;
   #dropdown: HTMLButtonElement;
   #dropdownRippleSurface: HTMLDivElement;
@@ -163,14 +156,9 @@ export class KulButton {
   #kulManager = kulManagerInstance();
   #rippleSurface: HTMLDivElement;
   #timeout: NodeJS.Timeout;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted for various button interactions like click, focus, blur.
-   */
+  //#region Events
   @Event({
     eventName: "kul-button-event",
     composed: true,
@@ -178,7 +166,6 @@ export class KulButton {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulButtonEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulButtonEvent,
@@ -206,11 +193,9 @@ export class KulButton {
       value: this.value,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -293,11 +278,9 @@ export class KulButton {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #listManager() {
     return {
       close: () => {
@@ -342,15 +325,12 @@ export class KulButton {
       },
     };
   }
-
   #isDropdown() {
     return this.kulData?.nodes?.[0]?.children?.length;
   }
-
   #isOn() {
     return this.value === "on" ? true : false;
   }
-
   #updateState(value: KulButtonState) {
     if (
       this.kulToggable &&
@@ -360,7 +340,6 @@ export class KulButton {
       this.value = value;
     }
   }
-
   #prepIcon(image: KulImagePropsInterface) {
     return this.kulIcon ? (
       <kul-image
@@ -369,11 +348,9 @@ export class KulButton {
       />
     ) : undefined;
   }
-
   #prepLabel(className: { [className: string]: boolean }) {
     return <span class={className}>{this.kulLabel}</span>;
   }
-
   #prepNode(node: KulDataNode): VNode {
     const currentNode = <div>{node.value}</div>;
 
@@ -391,7 +368,6 @@ export class KulButton {
       return currentNode;
     }
   }
-
   #prepRipple(isDropdown = false) {
     return this.kulRipple ? (
       <div
@@ -407,7 +383,6 @@ export class KulButton {
       ></div>
     ) : undefined;
   }
-
   #prepSpinner() {
     return this.kulShowSpinner ? (
       <div class="button__spinner-container">
@@ -415,13 +390,11 @@ export class KulButton {
       </div>
     ) : undefined;
   }
-
   #normalizedStyling() {
     return this.kulStyling
       ? (this.kulStyling.toLowerCase() as KulButtonStyling)
       : "raised";
   }
-
   #renderButton(): VNode[] {
     const buttonStyling = this.#normalizedStyling();
 
@@ -474,7 +447,6 @@ export class KulButton {
       this.#renderDropdown(image, buttonStyling),
     ];
   }
-
   #renderIconButton(): VNode[] {
     const isLarge = this.rootElement.classList.contains("large");
     const isOn = this.#isOn();
@@ -528,7 +500,6 @@ export class KulButton {
       this.#renderDropdown(image, "icon"),
     ];
   }
-
   #renderDropdown(image: KulImagePropsInterface, styling: string) {
     if (!this.#isDropdown()) {
       return;
@@ -575,10 +546,9 @@ export class KulButton {
       </button>
     );
   }
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
+  //#endregion
 
+  //#region Lifecycle hooks
   componentWillLoad() {
     if (this.kulValue) {
       this.value = "on";
@@ -595,7 +565,6 @@ export class KulButton {
 
     this.#kulManager.theme.register(this);
   }
-
   componentDidLoad() {
     if (this.#rippleSurface) {
       this.#kulManager.theme.ripple.setup(this.#rippleSurface);
@@ -606,15 +575,12 @@ export class KulButton {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     const buttonStyling = this.#normalizedStyling();
 
@@ -643,11 +609,11 @@ export class KulButton {
       </Host>
     );
   }
-
   disconnectedCallback() {
     if (this.#list) {
       this.#kulManager.dynamicPosition.unregister([this.#list]);
     }
     this.#kulManager.theme.unregister(this);
   }
+  //#endregion
 }

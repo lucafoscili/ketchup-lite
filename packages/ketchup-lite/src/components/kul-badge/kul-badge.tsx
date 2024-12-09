@@ -11,11 +11,6 @@ import {
   State,
 } from "@stencil/core";
 
-import {
-  KulBadgeEvent,
-  KulBadgeEventPayload,
-  KulBadgeProps,
-} from "./kul-badge-declarations";
 import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
 import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarations";
@@ -23,6 +18,11 @@ import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
+import {
+  KulBadgeEvent,
+  KulBadgeEventPayload,
+  KulBadgeProps,
+} from "./kul-badge-declarations";
 
 @Component({
   tag: "kul-badge",
@@ -35,10 +35,7 @@ export class KulBadge {
    */
   @Element() rootElement: HTMLKulBadgeElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -49,11 +46,9 @@ export class KulBadge {
     renderStart: 0,
     startTime: performance.now(),
   };
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The props of the image displayed inside the badge.
    * @default null
@@ -69,20 +64,13 @@ export class KulBadge {
    * @default ""
    */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-badge-event",
     composed: true,
@@ -90,7 +78,6 @@ export class KulBadge {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulBadgeEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulBadgeEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -99,11 +86,9 @@ export class KulBadge {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -139,28 +124,22 @@ export class KulBadge {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
   }
-
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     let imageEl: HTMLElement = null;
     if (!this.kulLabel && this.kulImageProps) {
@@ -184,8 +163,8 @@ export class KulBadge {
       </Host>
     );
   }
-
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
   }
+  //#endregion
 }

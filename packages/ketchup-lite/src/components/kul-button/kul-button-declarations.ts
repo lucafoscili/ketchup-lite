@@ -1,9 +1,7 @@
 import { KulDataDataset } from "../../managers/kul-data/kul-data-declarations";
 import { KulEventPayload } from "../../types/GenericTypes";
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulButtonEvent =
   | "blur"
   | "click"
@@ -16,9 +14,13 @@ export interface KulButtonEventPayload
   extends KulEventPayload<"KulButton", KulButtonEvent> {
   value: string;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region States
+export type KulButtonState = "off" | "on";
+//#endregion
+
+//#region Props
 export enum KulButtonProps {
   kulData = "Actual data of the button, used to render dropdown buttons.",
   kulDisabled = "When true, the component is disabled.",
@@ -55,7 +57,4 @@ export type KulButtonStyling =
   | "icon"
   | "outlined"
   | "raised";
-/*-------------------------------------------------*/
-/*                    S t a t e                    */
-/*-------------------------------------------------*/
-export type KulButtonState = "off" | "on";
+//#endregion

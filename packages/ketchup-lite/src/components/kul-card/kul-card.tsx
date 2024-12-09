@@ -9,16 +9,9 @@ import {
   Method,
   Prop,
   State,
+  Watch,
 } from "@stencil/core";
 
-import { LAYOUT_HUB } from "./helpers/kul-card-layout-hub";
-import {
-  KulCardProps,
-  KulCardEvent,
-  KulCardEventPayload,
-  KulCardAdapter,
-  KulCardLayout,
-} from "./kul-card-declarations";
 import {
   KulDataDataset,
   KulDataShapesMap,
@@ -28,6 +21,15 @@ import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import type { GenericMap, GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { createDefaults } from "./helpers/kul-card-defaults";
+import { createLayouts } from "./helpers/kul-card-layout-hub";
+import {
+  KulCardAdapter,
+  KulCardEvent,
+  KulCardEventPayload,
+  KulCardLayout,
+  KulCardProps,
+} from "./kul-card-declarations";
 
 @Component({
   tag: "kul-card",
@@ -40,10 +42,7 @@ export class KulCard {
    */
   @Element() rootElement: HTMLKulCardElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -61,11 +60,9 @@ export class KulCard {
    * @see KulDataShapesMap - For a list of possible shapes.
    */
   @State() shapes: KulDataShapesMap;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The actual data of the card.
    * @default null
@@ -91,20 +88,13 @@ export class KulCard {
    * @default ""
    */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Triggered when an event is fired.
-   */
+  //#region Events
   @Event({
     eventName: "kul-card-event",
     composed: true,
@@ -112,7 +102,6 @@ export class KulCard {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulCardEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulCardEvent): void {
     this.kulEvent.emit({
       comp: this,
@@ -121,11 +110,24 @@ export class KulCard {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
+  //#region Watchers
+  @Watch("kulData")
+  async updateShapes() {
+    try {
+      this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
+    } catch (error) {
+      this.#kulManager.debug.logs.new(
+        this,
+        "Error updating shapes: " + error,
+        "error",
+      );
+    }
+  }
+  //#endregion
 
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -169,45 +171,44 @@ export class KulCard {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #adapter: KulCardAdapter = {
     actions: {
       dispatchEvent: async (e) => {
         this.onKulEvent(e, "kul-event");
       },
     },
-    get: { card: () => this, shapes: () => this.shapes },
+    get: {
+      card: () => this,
+      defaults: null,
+      layout: null,
+      shapes: () => this.shapes,
+    },
   };
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.language.register(this);
     this.#kulManager.theme.register(this);
-  }
 
+    this.updateShapes();
+
+    this.#adapter.get.defaults = createDefaults();
+    this.#adapter.get.layout = createLayouts(this.#adapter);
+  }
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
-  componentWillRender() {
-    if (this.kulData) {
-      this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
-    }
+  componentWillUpdate() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     if (!this.kulData && this.rootElement.children.length < 1) {
       return;
@@ -217,6 +218,7 @@ export class KulCard {
       "--kul_card_height": this.kulSizeY ? this.kulSizeY : "100%",
       "--kul_card_width": this.kulSizeX ? this.kulSizeX : "100%",
     };
+    const layout = this.#adapter.get.layout[this.kulLayout.toLowerCase()];
 
     return (
       <Host style={style}>
@@ -231,14 +233,14 @@ export class KulCard {
           onContextMenu={(e) => this.onKulEvent(e, "contextmenu")}
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
         >
-          {LAYOUT_HUB[this.kulLayout.toLowerCase()](this.#adapter)}
+          {layout}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
     this.#kulManager.language.unregister(this);
     this.#kulManager.theme.unregister(this);
   }
+  //#endregion
 }
