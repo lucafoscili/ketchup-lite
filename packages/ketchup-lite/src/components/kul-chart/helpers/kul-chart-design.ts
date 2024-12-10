@@ -6,135 +6,144 @@ import {
   YAXisComponentOption,
 } from "echarts";
 
-import { KulChartAdapterDesign } from "../kul-chart-declarations";
+import {
+  KulChartAdapter,
+  KulChartAdapterDesign,
+} from "../kul-chart-declarations";
 
-export const CHART_DESIGN: KulChartAdapterDesign = {
-  applyOpacity: (color, opacity) => `${color}${opacity}`,
-  axis: (adapter, axisType) => {
-    const theme = adapter.get.design.theme;
+function baseAxis(
+  adapter: KulChartAdapter,
+): XAXisComponentOption | YAXisComponentOption {
+  const { get } = adapter;
+  const { design } = get;
+  const { theme } = design;
+  const { border, font, textColor } = theme;
 
-    if (axisType === "x") {
-      return {
-        axisLabel: {
-          hideOverlap: true,
-          color: theme.textColor,
-          fontFamily: theme.font,
-        },
-        axisLine: { lineStyle: { color: theme.textColor } },
-        axisTick: { lineStyle: { color: theme.border } },
-        splitLine: { lineStyle: { color: theme.border } },
-        boundaryGap: "10%",
-        grid: {
-          left: "10%",
-          right: "10%",
-          bottom: "10%",
-          top: "10%",
-          containLabel: true,
-        },
-      } as XAXisComponentOption;
-    } else {
-      return {
-        axisLabel: {
-          hideOverlap: true,
-          color: theme.textColor,
-          fontFamily: theme.font,
-        },
-        axisLine: { lineStyle: { color: theme.textColor } },
-        axisTick: { lineStyle: { color: theme.border } },
-        splitLine: { lineStyle: { color: theme.border } },
-        boundaryGap: "10%",
-        grid: {
-          left: "10%",
-          right: "10%",
-          bottom: "10%",
-          top: "10%",
-          containLabel: true,
-        },
-      } as YAXisComponentOption;
-    }
-  },
-  colors: (adapter, count) => {
-    const hex = (color: string) => {
-      return adapter.get.manager().theme.colorCheck(color).hexColor;
-    };
+  return {
+    axisLabel: {
+      color: textColor,
+      fontFamily: font,
+      hideOverlap: true,
+      margin: 12,
+      overflow: "truncate",
+    },
+    axisLine: { lineStyle: { color: textColor } },
+    axisTick: { lineStyle: { color: border } },
+    boundaryGap: ["0%", "0%"],
+    splitLine: { lineStyle: { color: border } },
+  };
+}
 
-    const chart = adapter.get.chart();
-    const manager = adapter.get.manager();
-    const colorArray: string[] = [];
+export const createDesign: (
+  adapter: KulChartAdapter,
+) => KulChartAdapterDesign = (adapter) => {
+  return {
+    applyOpacity: (color, opacity) => `${color}${opacity}`,
+    axis: (axisType) => {
+      const commonAxis = baseAxis(adapter);
 
-    if (chart.kulColors && chart.kulColors.length > 0) {
-      colorArray.push(...chart.kulColors.map((c) => hex(c)));
-    } else {
-      let index = 1;
-      let colorVar = `--kul-chart-color-${index}`;
-      while (manager.theme.cssVars[colorVar]) {
-        colorArray.push(hex(manager.theme.cssVars[colorVar]));
-        index++;
-        colorVar = `--kul-chart-color-${index}`;
+      return axisType === "x"
+        ? (commonAxis as XAXisComponentOption)
+        : (commonAxis as YAXisComponentOption);
+    },
+    colors: (count) => {
+      const { get } = adapter;
+      const { chart, manager } = get;
+      const { kulColors } = chart();
+
+      const kupTheme = manager().theme;
+
+      const hex = (color: string) => {
+        return manager().theme.colorCheck(color).hexColor;
+      };
+      const colorArray: string[] = [];
+
+      if (kulColors?.length > 0) {
+        colorArray.push(...kulColors.map((c) => hex(c)));
+      } else {
+        let index = 1;
+        let colorVar = `--kul-chart-color-${index}`;
+        while (kupTheme.cssVars[colorVar]) {
+          colorArray.push(hex(kupTheme.cssVars[colorVar]));
+          index++;
+          colorVar = `--kul-chart-color-${index}`;
+        }
       }
-    }
 
-    while (colorArray.length < count) {
-      colorArray.push(manager.theme.randomColor(128));
-    }
+      while (colorArray.length < count) {
+        colorArray.push(kupTheme.randomColor(128));
+      }
 
-    return colorArray.slice(0, count);
-  },
-  label: (adapter) => {
-    const theme = adapter.get.design.theme;
-    const label: EChartsOption = {
-      show: true,
-      formatter: "{b|{b}}",
-      rich: {
-        b: {
-          color: theme.textColor,
-          fontFamily: theme.font,
-          textShadow: "none",
+      return colorArray.slice(0, count);
+    },
+    label: () => {
+      const { get } = adapter;
+      const { design } = get;
+      const { theme } = design;
+      const { font, textColor } = theme;
+
+      const label: EChartsOption = {
+        show: true,
+        formatter: "{b|{b}}",
+        rich: {
+          b: {
+            color: textColor,
+            fontFamily: font,
+            textShadow: "none",
+          },
         },
-      },
-      textShadowColor: "transparent",
-      textShadowOffsetX: 0,
-      textShadowOffsetY: 0,
-      textShadowBlur: 0,
-    };
-    return label;
-  },
-  legend: (adapter) => {
-    const chart = adapter.get.chart();
-    if (chart.kulLegend === "hidden") {
-      return null;
-    }
+        textShadowColor: "transparent",
+        textShadowOffsetX: 0,
+        textShadowOffsetY: 0,
+        textShadowBlur: 0,
+      };
+      return label;
+    },
+    legend: () => {
+      const { get } = adapter;
+      const { chart, design } = get;
+      const { kulLegend } = chart();
+      const { theme } = design;
+      const { font, textColor } = theme;
 
-    const theme = adapter.get.design.theme;
-    const data = adapter.get.seriesData().map((s) => s.name);
-    const legend: LegendComponentOption = {
-      data,
-      [chart.kulLegend]: 0,
-      textStyle: {
-        color: theme.textColor,
-        fontFamily: theme.font,
-      },
-    };
-    return legend;
-  },
-  theme: {
-    backgroundColor: "",
-    border: "",
-    dangerColor: "",
-    font: "",
-    successColor: "",
-    textColor: "",
-  },
-  tooltip: (adapter, formatter?) => {
-    const theme = adapter.get.design.theme;
-    const tooltip: TooltipComponentOption = {
-      backgroundColor: theme.backgroundColor,
-      formatter,
-      textStyle: {
-        color: theme.textColor,
-        fontFamily: theme.font,
-      },
-    };
-    return tooltip;
-  },
+      if (kulLegend === "hidden") {
+        return null;
+      }
+
+      const data = adapter.get.seriesData().map((s) => s.name);
+      const legend: LegendComponentOption = {
+        data,
+        [kulLegend]: 0,
+        textStyle: {
+          color: textColor,
+          fontFamily: font,
+        },
+      };
+      return legend;
+    },
+    theme: {
+      backgroundColor: "",
+      border: "",
+      dangerColor: "",
+      font: "",
+      successColor: "",
+      textColor: "",
+    },
+    tooltip: (formatter?) => {
+      const { get } = adapter;
+      const { design } = get;
+      const { theme } = design;
+      const { backgroundColor, font, textColor } = theme;
+
+      const tooltip: TooltipComponentOption = {
+        backgroundColor,
+        formatter,
+        textStyle: {
+          color: textColor,
+          fontFamily: font,
+        },
+      };
+      return tooltip;
+    },
+  };
 };

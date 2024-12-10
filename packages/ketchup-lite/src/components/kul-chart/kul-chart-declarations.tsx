@@ -9,7 +9,6 @@ import {
   YAXisComponentOption,
 } from "echarts";
 
-import { KulChart } from "./kul-chart";
 import {
   KulDataCell,
   KulDataColumn,
@@ -19,34 +18,23 @@ import {
 } from "../../managers/kul-data/kul-data-declarations";
 import { KulManager } from "../../managers/kul-manager/kul-manager";
 import { KulEventPayload } from "../../types/GenericTypes";
+import { KulChart } from "./kul-chart";
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
+//#region Adapter
 export interface KulChartAdapter {
-  actions: {
-    mapType: (type: KulChartType) => SeriesOption["type"];
-    onClick: (e: ECElementEvent) => boolean | void;
-    stringify: (str: KulDataCell<KulDataShapes>["value"]) => string;
-  };
-  emit: {
-    event: (
-      eventType: KulChartEvent,
-      data?: KulChartEventData,
-      e?: Event,
-    ) => void;
-  };
+  actions: KulChartAdapterActions;
   get: KulChartAdapterGetters;
+  stringify: (str: KulDataCell<KulDataShapes>["value"]) => string;
+}
+export interface KulChartAdapterActions {
+  onClick: (e: ECElementEvent) => boolean | void;
 }
 export interface KulChartAdapterDesign {
   applyOpacity: (color: string, opacity: string) => string;
-  axis: (
-    adapter: KulChartAdapter,
-    axisType: "x" | "y",
-  ) => XAXisComponentOption | YAXisComponentOption;
-  colors: (adapter: KulChartAdapter, count: number) => string[];
-  label: (adapter: KulChartAdapter) => EChartsOption;
-  legend: (adapter: KulChartAdapter) => LegendComponentOption;
+  axis: (axisType: "x" | "y") => XAXisComponentOption | YAXisComponentOption;
+  colors: (count: number) => string[];
+  label: () => EChartsOption;
+  legend: () => LegendComponentOption;
   theme: {
     backgroundColor: string;
     border: string;
@@ -56,7 +44,6 @@ export interface KulChartAdapterDesign {
     textColor: string;
   };
   tooltip: (
-    adapter: KulChartAdapter,
     formatter?: TooltipComponentFormatterCallback<unknown>,
   ) => TooltipComponentOption;
 }
@@ -65,10 +52,11 @@ export interface KulChartAdapterGetters {
   columnById: (id: string) => KulDataColumn;
   design: KulChartAdapterDesign;
   manager: () => KulManager;
+  mappedType: (type: KulChartType) => SeriesOption["type"];
   options: KulChartAdapterOptions;
   seriesColumn: (seriesName: string) => KulDataColumn[];
-  xAxesData: () => { id: string; data: string[] }[];
   seriesData: () => KulChartSeriesData[];
+  xAxesData: () => { id: string; data: string[] }[];
 }
 export interface KulChartAdapterOptions {
   bubble: (adapter: KulChartAdapter) => EChartsOption;
@@ -81,9 +69,9 @@ export interface KulChartAdapterOptions {
   radar: (adapter: KulChartAdapter) => EChartsOption;
   sankey: (adapter: KulChartAdapter) => EChartsOption;
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Events
 export type KulChartEvent = "click" | "ready" | "unmount";
 export interface KulChartEventPayload
   extends KulEventPayload<"KulChart", KulChartEvent> {
@@ -95,9 +83,9 @@ export interface KulChartEventData {
   x: number | string;
   y: number | string;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Props
 export enum KulChartProps {
   kulAxis = "Sets the axis of the chart.",
   kulColors = "Overrides theme's colors.",
@@ -196,3 +184,4 @@ export interface KulChartTooltipArguments<D extends KulChartTooltipData> {
     ? number
     : undefined;
 }
+//#endregion
