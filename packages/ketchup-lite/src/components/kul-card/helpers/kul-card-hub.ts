@@ -1,23 +1,25 @@
 import {
-  KulDataNode,
-  KulDataShapeDefaults,
-} from "../../../managers/kul-data/kul-data-declarations";
+  KulCardAdapter,
+  KulCardAdapterLayoutHub,
+} from "../kul-card-declarations";
+
+import { KulDataShapeDefaults } from "../../../managers/kul-data/kul-data-declarations";
 import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
+import { prepDebug } from "../components/kul-card-debug-layout";
+import { prepKeywords } from "../components/kul-card-keywords-layout";
+import { prepMaterial } from "../components/kul-card-material-layout";
+import { prepUpload } from "../components/kul-card-upload-layout";
 import { KulCardLayout, KulCardShapesIds } from "../kul-card-declarations";
 
-const getThemes = () => {
-  const nodes: KulDataNode[] = [];
-  kulManagerInstance()
-    .theme.getThemes()
-    .forEach((t) => {
-      const char0 = t.charAt(0).toUpperCase();
-      nodes.push({
-        id: t,
-        value: `${char0}${t.substring(1)}`,
-      });
-    });
-
-  return nodes;
+export const createComponents: (
+  adapter: KulCardAdapter,
+) => KulCardAdapterLayoutHub = (adapter) => {
+  return {
+    debug: prepDebug(adapter),
+    keywords: prepKeywords(adapter),
+    material: prepMaterial(adapter),
+    upload: prepUpload(adapter),
+  };
 };
 
 export const createDefaults: () => {
@@ -39,16 +41,7 @@ export const createDefaults: () => {
             className: "kul-full-width",
             id: KulCardShapesIds.THEME,
           },
-          kulData: {
-            nodes: [
-              {
-                icon: "style",
-                id: "root",
-                value: "Random theme",
-                children: getThemes(),
-              },
-            ],
-          },
+          kulData: kulManagerInstance().theme.getThemesDataset(),
         },
       ],
       code: () => [{ kulLanguage: "markdown" }],

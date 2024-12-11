@@ -24,9 +24,9 @@
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-chat-event` | Describes event emitted. | `CustomEvent<KulChatEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-chat-event` |             | `CustomEvent<KulChatEventPayload>` |
 
 
 ## Methods
@@ -148,29 +148,29 @@ Type: `Promise<void>`
 ### Depends on
 
 - [kul-spinner](../kul-spinner)
-- [kul-image](../kul-image)
-- [kul-button](../kul-button)
-- [kul-textfield](../kul-textfield)
-- [kul-progressbar](../kul-progressbar)
 - [kul-typewriter](../kul-typewriter)
 - [kul-code](../kul-code)
+- [kul-image](../kul-image)
+- [kul-button](../kul-button)
+- [kul-progressbar](../kul-progressbar)
+- [kul-textfield](../kul-textfield)
 
 ### Graph
 ```mermaid
 graph TD;
   kul-chat --> kul-spinner
-  kul-chat --> kul-image
-  kul-chat --> kul-button
-  kul-chat --> kul-textfield
-  kul-chat --> kul-progressbar
   kul-chat --> kul-typewriter
   kul-chat --> kul-code
+  kul-chat --> kul-image
+  kul-chat --> kul-button
+  kul-chat --> kul-progressbar
+  kul-chat --> kul-textfield
+  kul-code --> kul-button
+  kul-button --> kul-image
+  kul-button --> kul-list
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-button --> kul-image
-  kul-button --> kul-list
-  kul-code --> kul-button
   kul-messenger --> kul-chat
   kul-showcase-chat --> kul-chat
   style kul-chat fill:#f9f,stroke:#333,stroke-width:4px

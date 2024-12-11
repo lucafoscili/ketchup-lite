@@ -1,65 +1,90 @@
+import { VNode } from "@stencil/core";
 import { KulLLMChoiceMessage } from "../../managers/kul-llm/kul-llm-declarations";
 import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
 import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
+import { KulChat } from "./kul-chat";
 
 //#region Adapter
-export interface KulChatAdapter {
-  actions: {
-    delete: (message: KulLLMChoiceMessage) => void;
-    disableInteractivity: (shouldDisable: boolean) => void;
-    regenerate: (message: KulLLMChoiceMessage) => void;
-    send: () => void;
-    stt: () => void;
-    updateTokenCount: () => Promise<void>;
+export interface KulChatAdapter extends KulComponentAdapter<KulChat> {
+  components: KulChatAdapterComponents;
+  handlers: KulChatAdapterHandlers;
+  hooks: KulChatAdapterHooks;
+}
+export interface KulChatAdapterComponents {
+  jsx: {
+    chat: {
+      clear: () => VNode;
+      progressbar: () => VNode;
+      prompt: () => VNode;
+      send: () => VNode;
+      settings: () => VNode;
+      spinner: () => VNode;
+      stt: () => VNode;
+    };
+    settings: {
+      back: () => VNode;
+      endpoint: () => VNode;
+      maxTokens: () => VNode;
+      polling: () => VNode;
+      system: () => VNode;
+      temperature: () => VNode;
+    };
+    toolbar: {
+      deleteMessage: (m: KulLLMChoiceMessage) => VNode;
+      copyContent: (m: KulLLMChoiceMessage) => VNode;
+      regenerate: (m: KulLLMChoiceMessage) => VNode;
+    };
   };
-  components: {
-    buttons: {
+  refs: {
+    chat: {
       clear: HTMLKulButtonElement;
+      progressbar: HTMLKulProgressbarElement;
+      prompt: HTMLKulTextfieldElement;
       send: HTMLKulButtonElement;
       settings: HTMLKulButtonElement;
+      spinner: HTMLKulSpinnerElement;
       stt: HTMLKulButtonElement;
     };
-    progressbar: HTMLKulProgressbarElement;
-    spinner: HTMLKulSpinnerElement;
-    textareas: {
-      prompt: HTMLKulTextfieldElement;
+    settings: {
+      back: HTMLKulButtonElement;
+      endpoint: HTMLKulTextfieldElement;
+      maxTokens: HTMLKulTextfieldElement;
+      polling: HTMLKulTextfieldElement;
       system: HTMLKulTextfieldElement;
+      temperature: HTMLKulTextfieldElement;
+    };
+    toolbar: {
+      deleteMessage: HTMLKulButtonElement;
+      copyContent: HTMLKulButtonElement;
+      regenerate: HTMLKulButtonElement;
     };
   };
-  emit: { event: (eventType: KulChatEvent, e?: Event) => void };
+}
+export interface KulChatAdapterHandlers {
+  deleteMessage: (message: KulLLMChoiceMessage) => void;
+  disableInteractivity: (shouldDisable: boolean) => void;
+  regenerate: (message: KulLLMChoiceMessage) => void;
+  send: () => void;
+  sendPrompt: () => Promise<void>;
+  stt: () => void;
+  updateHistory: (cb: () => unknown) => Promise<void>;
+  updateTokensCount: () => Promise<void>;
+}
+export interface KulChatAdapterHooks {
   get: {
+    comp: KulChat;
     history: () => KulChatHistory;
-    manager: () => KulManager;
-    props: {
-      contextWindow: () => number;
-      endpointUrl: () => string;
-      maxTokens: () => number;
-      pollingInterval: () => number;
-      system: () => string;
-      temperature: () => number;
-      typewriterProps: () => KulTypewriterPropsInterface;
-    };
-    status: {
-      connection: (status: KulChatStatus) => void;
-      toolbarMessage: () => KulLLMChoiceMessage;
-      view: () => KulChatView;
-    };
+    manager: KulManager;
+    status: () => KulChatStatus;
+    toolbarMessage: () => KulLLMChoiceMessage;
+    view: () => KulChatView;
   };
   set: {
-    props: {
-      contextWindow: (value: number) => void;
-      endpointUrl: (value: string) => void;
-      maxTokens: (value: number) => void;
-      pollingInterval: (value: number) => void;
-      system: (value: string) => void;
-      temperature: (value: number) => void;
-    };
-    status: {
-      connection: (status: KulChatStatus) => void;
-      toolbarMessage: (message: KulLLMChoiceMessage) => void;
-      view: (view: KulChatView) => void;
-    };
+    history: (history: KulChatHistory) => void;
+    status: (status: KulChatStatus) => void;
+    toolbarMessage: (message: KulLLMChoiceMessage) => void;
+    view: (view: KulChatView) => void;
   };
 }
 //#endregion

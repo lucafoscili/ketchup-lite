@@ -21,8 +21,7 @@ import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import type { GenericMap, GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { createDefaults } from "./helpers/kul-card-defaults";
-import { createLayouts } from "./helpers/kul-card-layout-hub";
+import { createComponents, createDefaults } from "./helpers/kul-card-hub";
 import {
   KulCardAdapter,
   KulCardEvent,
@@ -175,16 +174,14 @@ export class KulCard {
 
   //#region Private methods
   #adapter: KulCardAdapter = {
-    actions: {
-      dispatchEvent: async (e) => {
-        this.onKulEvent(e, "kul-event");
+    hooks: {
+      get: {
+        comp: this,
+        defaults: createDefaults(),
+        layout: null,
+        manager: this.#kulManager,
+        shapes: () => this.shapes,
       },
-    },
-    get: {
-      card: () => this,
-      defaults: null,
-      layout: null,
-      shapes: () => this.shapes,
     },
   };
   //#endregion
@@ -196,8 +193,7 @@ export class KulCard {
 
     this.updateShapes();
 
-    this.#adapter.get.defaults = createDefaults();
-    this.#adapter.get.layout = createLayouts(this.#adapter);
+    this.#adapter.hooks.get.layout = createComponents(this.#adapter);
   }
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
@@ -214,11 +210,14 @@ export class KulCard {
       return;
     }
 
+    const { hooks } = this.#adapter;
+    const { get } = hooks;
+    const { layout } = get;
+
     const style: GenericMap = {
       "--kul_card_height": this.kulSizeY ? this.kulSizeY : "100%",
       "--kul_card_width": this.kulSizeX ? this.kulSizeX : "100%",
     };
-    const layout = this.#adapter.get.layout[this.kulLayout.toLowerCase()];
 
     return (
       <Host style={style}>
@@ -233,7 +232,7 @@ export class KulCard {
           onContextMenu={(e) => this.onKulEvent(e, "contextmenu")}
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
         >
-          {layout}
+          {layout[this.kulLayout.toLowerCase()]}
         </div>
       </Host>
     );

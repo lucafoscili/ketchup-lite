@@ -1,23 +1,23 @@
 import { VNode } from "@stencil/core";
+import { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulDataDataset,
   KulDataShapeDefaults,
-  KulDataShapeEventDispatcher,
   KulDataShapesMap,
 } from "../../managers/kul-data/kul-data-declarations";
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
 import { KulCard } from "./kul-card";
 
 //#region Adapter
-export interface KulCardAdapter {
-  actions: {
-    dispatchEvent: KulDataShapeEventDispatcher;
-  };
-  get: {
-    card: () => KulCard;
-    defaults: KulCardAdapterDefaults;
-    layout: KulCardAdapterLayoutHub;
-    shapes: () => KulDataShapesMap;
+export interface KulCardAdapter extends KulComponentAdapter<KulCard> {
+  hooks: {
+    get: {
+      comp: KulCard;
+      defaults: KulCardAdapterDefaults;
+      layout: KulCardAdapterLayoutHub;
+      manager: KulManager;
+      shapes: () => KulDataShapesMap;
+    };
   };
 }
 export type KulCardAdapterDefaults = {

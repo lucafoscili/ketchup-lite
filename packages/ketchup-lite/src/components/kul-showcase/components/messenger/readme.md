@@ -44,12 +44,12 @@ graph TD;
   kul-badge --> kul-image
   kul-tabbar --> kul-image
   kul-chat --> kul-spinner
-  kul-chat --> kul-image
-  kul-chat --> kul-button
-  kul-chat --> kul-textfield
-  kul-chat --> kul-progressbar
   kul-chat --> kul-typewriter
   kul-chat --> kul-code
+  kul-chat --> kul-image
+  kul-chat --> kul-button
+  kul-chat --> kul-progressbar
+  kul-chat --> kul-textfield
   kul-code --> kul-button
   kul-showcase --> kul-showcase-messenger
   style kul-showcase-messenger fill:#f9f,stroke:#333,stroke-width:4px

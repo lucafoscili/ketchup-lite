@@ -1,11 +1,13 @@
-import type { KulDom } from "../kul-manager/kul-manager-declarations";
+import { getAssetPath } from "@stencil/core";
+import { KulDataNode } from "src/components";
 import type {
   GenericMap,
   GenericObject,
   KulComponent,
   KulComponentName,
 } from "../../types/GenericTypes";
-import { getAssetPath } from "@stencil/core";
+import { RIPPLE_SURFACE_CLASS } from "../../variables/GenericVariables";
+import type { KulDom } from "../kul-manager/kul-manager-declarations";
 import {
   KulThemeAttribute,
   KulThemeCSSVariables,
@@ -14,7 +16,6 @@ import {
   KulThemeRGBValues,
 } from "./kul-theme-declarations";
 import { themesJson } from "./kul-theme-values";
-import { RIPPLE_SURFACE_CLASS } from "../../variables/GenericVariables";
 
 export class KulTheme {
   #DOM = document.documentElement as KulDom;
@@ -36,6 +37,7 @@ export class KulTheme {
       .appendChild(document.createElement("style"));
   }
 
+  //#region cssVariables
   #cssVariables = () => {
     const theme = this.list[this.name];
 
@@ -67,7 +69,9 @@ export class KulTheme {
 
     return css;
   };
+  //#endregion
 
+  //#region customStyle
   #customStyle = () => {
     this.managedComponents.forEach(function (comp) {
       if (comp?.rootElement?.isConnected) {
@@ -75,7 +79,9 @@ export class KulTheme {
       }
     });
   };
+  //#endregion
 
+  //#region font
   #font = () => {
     let fonts = "";
     const theme = this.list[this.name];
@@ -90,7 +96,9 @@ export class KulTheme {
 
     return fonts;
   };
+  //#endregion
 
+  //#region icons
   #icons = () => {
     const theme = this.list[this.name];
 
@@ -107,7 +115,9 @@ export class KulTheme {
     }
     return css;
   };
+  //#endregion
 
+  //#region set
   set = (name?: string, list?: KulThemeJSON) => {
     if (name) {
       this.name = name;
@@ -151,7 +161,9 @@ export class KulTheme {
     }
     document.dispatchEvent(new CustomEvent("kul-theme-change"));
   };
+  //#endregion
 
+  //#region getThemes
   getThemes = () => {
     const themes: Array<string> = [];
     for (var key in this.list) {
@@ -161,7 +173,33 @@ export class KulTheme {
     }
     return themes;
   };
+  //#endregion
 
+  //#region getThemesDataset
+  getThemesDataset = () => {
+    const nodes: KulDataNode[] = [];
+    this.getThemes().forEach((t) => {
+      const char0 = t.charAt(0).toUpperCase();
+      nodes.push({
+        id: t,
+        value: `${char0}${t.substring(1)}`,
+      });
+    });
+
+    return {
+      nodes: [
+        {
+          icon: "style",
+          id: "root",
+          value: "Random theme",
+          children: nodes,
+        },
+      ],
+    };
+  };
+  //#endregion
+
+  //#region refresh
   refresh = () => {
     try {
       this.styleTag.innerText =
@@ -185,7 +223,9 @@ export class KulTheme {
       );
     }
   };
+  //#endregion
 
+  //#region ripple
   ripple = {
     setup: (el: HTMLElement) => {
       el.classList.add(RIPPLE_SURFACE_CLASS);
@@ -217,15 +257,21 @@ export class KulTheme {
       }, 500);
     },
   };
+  //#endregion
 
+  //#region register
   register = (comp: KulComponent<KulComponentName>) => {
     this.managedComponents.add(comp);
   };
+  //#endregion
 
+  //#region unregister
   unregister = (comp: KulComponent<KulComponentName>) => {
     this.managedComponents?.delete(comp);
   };
+  //#endregion
 
+  //#region setKulStyle
   setKulStyle = (comp: KulComponent<KulComponentName>) => {
     const styles: GenericObject = this.list[this.name].customStyles;
     let completeStyle = "";
@@ -240,7 +286,9 @@ export class KulTheme {
     }
     return completeStyle ? completeStyle : null;
   };
+  //#endregion
 
+  //#region colorContrast
   colorContrast = (color: string) => {
     color = this.colorCheck(color).rgbColor;
     const colorValues: string[] = color.replace(/[^\d,.]/g, "").split(",");
@@ -252,7 +300,9 @@ export class KulTheme {
     );
     return brightness > 125 ? "black" : "white";
   };
+  //#endregion
 
+  //#region randomColor
   randomColor = (brightness: number) => {
     function randomChannel(brightness: number) {
       var r = 255 - brightness;
@@ -267,7 +317,9 @@ export class KulTheme {
       randomChannel(brightness)
     );
   };
+  //#endregion
 
+  //#region randomTheme
   randomTheme = () => {
     let themes: string[] = [];
     for (var key in this.list) {
@@ -291,7 +343,9 @@ export class KulTheme {
       );
     }
   };
+  //#endregion
 
+  //#region colorCheck
   colorCheck = (color: string) => {
     if (color === "transparent") {
       color = this.cssVars["--kul-background-color"];
@@ -452,7 +506,9 @@ export class KulTheme {
       rgbValues: rgbValues,
     };
   };
+  //#endregion
 
+  //#region hexToRgb
   hexToRgb = (hex: string) => {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
     return result
@@ -463,7 +519,9 @@ export class KulTheme {
         }
       : null;
   };
+  //#endregion
 
+  //#region hslToRgb
   hslToRgb = (h: number, s: number, l: number) => {
     if (h == undefined) {
       return { r: 0, g: 0, b: 0 };
@@ -512,7 +570,9 @@ export class KulTheme {
       b: Math.round(blue * 255),
     };
   };
+  //#endregion
 
+  //#region rgbToHex
   rgbToHex = (r: number, g: number, b: number) => {
     return "#" + this.valueToHex(r) + this.valueToHex(g) + this.valueToHex(b);
   };
@@ -547,12 +607,16 @@ export class KulTheme {
 
     return { h: h, s: s, l: l };
   };
+  //#endregion
 
+  //#region valueToHex
   valueToHex = (c: number) => {
     const hex = c.toString(16);
     return hex.length == 1 ? "0" + hex : hex;
   };
+  //#endregion
 
+  //#region codeToHex
   codeToHex(color: string): string {
     const colorCodes: GenericMap = {
       aliceblue: "#f0f8ff",
@@ -714,4 +778,5 @@ export class KulTheme {
       return color;
     }
   }
+  //#endregion
 }

@@ -17,9 +17,8 @@ import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
-import { createActions } from "./helpers/kul-canvas-actions";
-import { createComponents } from "./helpers/kul-canvas-components";
-import { simplifyStroke } from "./helpers/kul-canvas-helpers";
+import { createComponents, createHandlers } from "./helpers/kul-canvas-hub";
+import { coordinates } from "./helpers/kul-canvas-tools";
 import {
   KulCanvasAdapter,
   KulCanvasBrush,
@@ -138,7 +137,7 @@ export class KulCanvas {
       eventType,
       points:
         this.kulStrokeTolerance !== null && this.points?.length
-          ? simplifyStroke(this.points, this.kulStrokeTolerance)
+          ? coordinates.simplify(this.points, this.kulStrokeTolerance)
           : this.points,
     });
   }
@@ -150,7 +149,11 @@ export class KulCanvas {
    */
   @Method()
   async clearCanvas(): Promise<void> {
-    this.#adapter.actions.board.clear();
+    const { handlers } = this.#adapter;
+    const { board } = handlers;
+    const { clear } = board;
+
+    clear();
   }
   /**
    * Returns the painting canvas .
@@ -158,7 +161,11 @@ export class KulCanvas {
    */
   @Method()
   async getCanvas(): Promise<HTMLCanvasElement> {
-    return this.#adapter.components.refs.board;
+    const { components } = this.#adapter;
+    const { refs } = components;
+    const { board } = refs;
+
+    return board;
   }
   /**
    * Fetches debug information of the component's current state.
@@ -173,7 +180,11 @@ export class KulCanvas {
    */
   @Method()
   async getImage(): Promise<HTMLKulImageElement> {
-    return this.#adapter.components.refs.image;
+    const { components } = this.#adapter;
+    const { refs } = components;
+    const { image } = refs;
+
+    return image;
   }
   /**
    * Used to retrieve component's props values.
@@ -196,11 +207,14 @@ export class KulCanvas {
    */
   @Method()
   async resizeCanvas(): Promise<void> {
-    const { board, preview } = this.#adapter.components.refs;
+    const { components } = this.#adapter;
+    const { refs } = components;
+    const { board, preview } = refs;
 
     const { height, width } = this.#container.getBoundingClientRect();
     board.height = height;
     board.width = width;
+
     if (this.#isCursorPreview()) {
       preview.height = height;
       preview.width = width;
@@ -211,16 +225,20 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasHeight(value?: number): Promise<void> {
-    const { board, preview } = this.#adapter.components.refs;
+    const { components } = this.#adapter;
+    const { refs } = components;
+    const { board, preview } = refs;
 
     if (value !== undefined) {
       board.height = value;
+
       if (this.#isCursorPreview()) {
         preview.height = value;
       }
     } else {
       const { height } = this.#container.getBoundingClientRect();
       board.height = height;
+
       if (this.#isCursorPreview()) {
         preview.height = height;
       }
@@ -231,16 +249,20 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasWidth(value?: number): Promise<void> {
-    const { board, preview } = this.#adapter.components.refs;
+    const { components } = this.#adapter;
+    const { refs } = components;
+    const { board, preview } = refs;
 
     if (value !== undefined) {
       board.width = value;
+
       if (this.#isCursorPreview()) {
         preview.width = value;
       }
     } else {
       const { width } = this.#container.getBoundingClientRect();
       board.width = width;
+
       if (this.#isCursorPreview()) {
         preview.width = width;
       }
@@ -261,19 +283,25 @@ export class KulCanvas {
 
   //#region Private methods
   #adapter: KulCanvasAdapter = {
-    actions: null,
-    components: null,
-    get: {
-      canvas: this,
-      isCursorPreview: this.#isCursorPreview,
-      manager: this.#kulManager,
-      state: {
+    components: {
+      jsx: null,
+      refs: {
+        board: null,
+        image: null,
+        preview: null,
+      },
+    },
+    handlers: null,
+    hooks: {
+      get: {
+        comp: this,
+        isCursorPreview: this.#isCursorPreview,
+        manager: this.#kulManager,
         isPainting: () => this.isPainting,
         points: () => this.points,
       },
-    },
-    set: {
-      state: {
+
+      set: {
         isPainting: (value) => (this.isPainting = value),
         points: (value) => (this.points = value),
       },
@@ -287,8 +315,9 @@ export class KulCanvas {
   //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
-    this.#adapter.actions = createActions(this.#adapter);
-    this.#adapter.components = createComponents(this.#adapter);
+
+    this.#adapter.handlers = createHandlers(this.#adapter);
+    this.#adapter.components.jsx = createComponents(this.#adapter);
   }
   componentDidLoad() {
     this.resizeCanvas();
@@ -311,7 +340,10 @@ export class KulCanvas {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
   render() {
-    const { board, image, preview } = this.#adapter.components.jsx;
+    const { components } = this.#adapter;
+    const { jsx } = components;
+    const { board, image, preview } = jsx;
+
     const className = {
       canvas: true,
       "canvas--hidden-cursor": this.#isCursorPreview(),

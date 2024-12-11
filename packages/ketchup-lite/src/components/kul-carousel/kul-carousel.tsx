@@ -25,8 +25,7 @@ import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { createActions } from "./helpers/kul-carousel-actions";
-import { createComponents } from "./helpers/kul-carousel-components";
+import { createComponents, createHandlers } from "./helpers/kul-carousel-hub";
 import {
   KulCarouselAdapter,
   KulCarouselEvent,
@@ -163,21 +162,30 @@ export class KulCarousel {
    */
   @Method()
   async goToSlide(index: number) {
-    this.#adapter.actions.toSlide(index);
+    const { handlers } = this.#adapter;
+    const { toSlide } = handlers;
+
+    toSlide(index);
   }
   /**
    * Advances to the next slide, looping back to the start if at the end.
    */
   @Method()
   async nextSlide() {
-    this.#adapter.actions.next();
+    const { handlers } = this.#adapter;
+    const { next } = handlers;
+
+    next();
   }
   /**
    * Moves to the previous slide, looping to the last slide if at the beginning.
    */
   @Method()
   async prevSlide() {
-    this.#adapter.actions.previous();
+    const { handlers } = this.#adapter;
+    const { previous } = handlers;
+
+    previous();
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -201,18 +209,23 @@ export class KulCarousel {
 
   //#region Private methods
   #adapter: KulCarouselAdapter = {
-    actions: null,
-    components: null,
-    get: {
-      carousel: () => this,
-      interval: () => this.#interval,
-      manager: () => this.#kulManager,
-      state: { currentIndex: () => this.currentIndex },
-      totalSlides: () => this.#getTotalSlides(),
+    components: {
+      jsx: null,
+      refs: { back: null, forward: null },
     },
-    set: {
-      interval: (value) => (this.#interval = value),
-      state: { currentIndex: (value) => (this.currentIndex = value) },
+    handlers: null,
+    hooks: {
+      get: {
+        comp: this,
+        currentIndex: () => this.currentIndex,
+        interval: () => this.#interval,
+        manager: this.#kulManager,
+        totalSlides: () => this.#getTotalSlides(),
+      },
+      set: {
+        interval: (value) => (this.#interval = value),
+        currentIndex: (value) => (this.currentIndex = value),
+      },
     },
   };
   #getTotalSlides() {
@@ -222,7 +235,9 @@ export class KulCarousel {
     return !!this.shapes?.[this.kulShape];
   }
   #prepCarousel(): VNode {
-    const { back, forward } = this.#adapter.components;
+    const { components } = this.#adapter;
+    const { jsx } = components;
+    const { back, forward } = jsx;
 
     if (this.#hasShapes()) {
       const shapes = this.shapes[this.kulShape];
@@ -245,6 +260,9 @@ export class KulCarousel {
     }
   }
   #prepIndicators(): VNode[] {
+    const { handlers } = this.#adapter;
+    const { toSlide } = handlers;
+
     const totalSlides = this.#getTotalSlides();
     const maxIndicators = 9;
     const halfMax = Math.floor(maxIndicators / 2);
@@ -266,7 +284,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={className}
-          onClick={() => this.#adapter.actions.toSlide(0)}
+          onClick={() => toSlide(0)}
           title={`Jump to the first slide (#${0})`}
         >
           «
@@ -289,7 +307,7 @@ export class KulCarousel {
         indicators.push(
           <span
             class={className}
-            onClick={() => this.#adapter.actions.toSlide(actualIndex)}
+            onClick={() => toSlide(actualIndex)}
             title={`#${index}`}
           />,
         );
@@ -303,7 +321,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={className}
-          onClick={() => this.#adapter.actions.toSlide(totalSlides - 1)}
+          onClick={() => toSlide(totalSlides - 1)}
           title={`Jump to the last slide (#${totalSlides - 1})`}
         >
           »
@@ -343,11 +361,11 @@ export class KulCarousel {
 
     this.updateShapes();
 
-    this.#adapter.actions = createActions(this.#adapter);
-    this.#adapter.components = createComponents(this.#adapter);
+    this.#adapter.handlers = createHandlers(this.#adapter);
+    this.#adapter.components.jsx = createComponents(this.#adapter);
 
     if (this.kulAutoPlay) {
-      this.#adapter.actions.autoplay.start();
+      this.#adapter.handlers.autoplay.start();
     }
   }
   componentDidLoad() {
@@ -361,6 +379,9 @@ export class KulCarousel {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
   render() {
+    const { handlers } = this.#adapter;
+    const { next, previous } = handlers;
+
     return (
       <Host>
         {this.kulStyle ? (
@@ -371,7 +392,7 @@ export class KulCarousel {
         <div id={KUL_WRAPPER_ID}>
           <div
             class="carousel"
-            onTouchStart={(e) => (this.#touchStartX = e.touches[0].clientX)}
+            onTouchEnd={(e) => (this.#touchEndX = e.touches[0].clientX)}
             onTouchMove={() => {
               const swipeDistance = this.#touchEndX - this.#touchStartX;
               const swipeThreshold = 50;
@@ -384,13 +405,13 @@ export class KulCarousel {
               ) {
                 this.#lastSwipeTime = currentTime;
                 if (swipeDistance > 0) {
-                  this.#adapter.actions.previous();
+                  previous();
                 } else {
-                  this.#adapter.actions.next();
+                  next();
                 }
               }
             }}
-            onTouchEnd={(e) => (this.#touchEndX = e.touches[0].clientX)}
+            onTouchStart={(e) => (this.#touchStartX = e.touches[0].clientX)}
           >
             {this.#prepCarousel()}
           </div>
@@ -400,8 +421,12 @@ export class KulCarousel {
   }
 
   disconnectedCallback() {
+    const { handlers } = this.#adapter;
+    const { autoplay } = handlers;
+    const { stop } = autoplay;
+
     this.#kulManager.theme.unregister(this);
-    this.#adapter.actions.autoplay.stop();
+    stop();
   }
   //#endregion
 }

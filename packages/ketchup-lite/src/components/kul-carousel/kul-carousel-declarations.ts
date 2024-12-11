@@ -5,17 +5,26 @@ import {
   KulDataShapes,
 } from "../../managers/kul-data/kul-data-declarations";
 import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
 import { KulCarousel } from "./kul-carousel";
 
 //#region Adapter
-export interface KulCarouselAdapter {
-  actions: KulCarouselAdapterActions;
+export interface KulCarouselAdapter extends KulComponentAdapter<KulCarousel> {
   components: KulCarouselAdapterComponents;
-  get: KulCarouselAdapterGetters;
-  set: KulCarouselAdapterSetters;
+  handlers: KulCarouselAdapterHandlers;
+  hooks: KulCarouselAdapterHooks;
 }
-export interface KulCarouselAdapterActions {
+export interface KulCarouselAdapterComponents {
+  jsx: {
+    back: VNode;
+    forward: VNode;
+  };
+  refs: {
+    back: HTMLKulButtonElement;
+    forward: HTMLKulButtonElement;
+  };
+}
+export interface KulCarouselAdapterHandlers {
   autoplay: {
     start: () => void;
     stop: () => void;
@@ -24,22 +33,18 @@ export interface KulCarouselAdapterActions {
   previous: () => void;
   toSlide: (value: number) => void;
 }
-export interface KulCarouselAdapterComponents {
-  back: () => VNode;
-  forward: () => VNode;
-}
-export interface KulCarouselAdapterGetters {
-  carousel: () => KulCarousel;
-  interval: () => NodeJS.Timeout;
-  manager: () => KulManager;
-  state: {
+export interface KulCarouselAdapterHooks {
+  get: {
+    comp: KulCarousel;
     currentIndex: () => number;
+    interval: () => NodeJS.Timeout;
+    manager: KulManager;
+    totalSlides: () => number;
   };
-  totalSlides: () => number;
-}
-export interface KulCarouselAdapterSetters {
-  interval: (value: NodeJS.Timeout) => void;
-  state: { currentIndex: (value: number) => void };
+  set: {
+    currentIndex: (value: number) => void;
+    interval: (value: NodeJS.Timeout) => void;
+  };
 }
 //#endregion
 

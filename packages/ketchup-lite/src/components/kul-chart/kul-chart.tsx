@@ -19,9 +19,7 @@ import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarat
 import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { createActions } from "./helpers/kul-chart-actions";
-import { createDesign } from "./helpers/kul-chart-design";
-import { createOptions } from "./helpers/kul-chart-options";
+import { createHandlers, createOptions } from "./helpers/kul-chart-hub";
 import {
   KulChartAdapter,
   KulChartAxis,
@@ -191,34 +189,42 @@ export class KulChart {
 
   //#region Private methods
   #adapter: KulChartAdapter = {
-    actions: null,
-    get: {
-      chart: () => this,
-      columnById: (id: string) => this.#findColumn(this.kulData, { id })[0],
-      design: null,
-      manager: () => this.#kulManager,
-      mappedType: (type) => {
-        switch (type) {
-          case "area":
-          case "gaussian":
-            return "line";
-          case "calendar":
-          case "hbar":
-          case "sbar":
-            return "bar";
-          case "bubble":
-            return "scatter";
-          default:
-            return type;
-        }
+    handlers: null,
+    hooks: {
+      get: {
+        comp: this,
+        columnById: (id: string) => this.#findColumn(this.kulData, { id })[0],
+        manager: this.#kulManager,
+        mappedType: (type) => {
+          switch (type) {
+            case "area":
+            case "gaussian":
+              return "line";
+            case "calendar":
+            case "hbar":
+            case "sbar":
+              return "bar";
+            case "bubble":
+              return "scatter";
+            default:
+              return type;
+          }
+        },
+        options: null,
+        seriesColumn: (series) =>
+          this.#findColumn(this.kulData, { title: series }),
+        seriesData: () => this.#seriesData,
+        theme: {
+          backgroundColor: null,
+          border: null,
+          dangerColor: null,
+          font: null,
+          successColor: null,
+          textColor: null,
+        },
+        xAxesData: () => this.#axesData,
       },
-      options: null,
-      seriesColumn: (series) =>
-        this.#findColumn(this.kulData, { title: series }),
-      seriesData: () => this.#seriesData,
-      xAxesData: () => this.#axesData,
     },
-    stringify: (str) => this.#stringify(str),
   };
   #init() {
     if (this.#chartEl) {
@@ -236,7 +242,10 @@ export class KulChart {
     }
   }
   #updateThemeColors() {
-    const theme = this.#adapter.get.design.theme;
+    const { hooks } = this.#adapter;
+    const { get } = hooks;
+    const { theme } = get;
+
     const themeVars = this.#kulManager.theme.cssVars;
     theme.backgroundColor = themeVars[KulThemeColorValues.BACKGROUND];
     theme.border = themeVars[KulThemeColorValues.BORDER];
@@ -293,7 +302,6 @@ export class KulChart {
             seriesValues.push([xMap.get(xValue), yMap.get(yValue), value]);
           }
         } else {
-          // For line series
           const lineDataMap = new Map<string, number>();
           for (const node of dataset.nodes) {
             const xValue = this.#stringify(node.cells[this.kulAxis[0]]?.value);
@@ -302,7 +310,6 @@ export class KulChart {
             );
             lineDataMap.set(xValue, value);
           }
-          // Ensure data aligns with x-axis categories
           for (const xValue of xCategories) {
             seriesValues.push(lineDataMap.get(xValue) ?? 0);
           }
@@ -310,7 +317,7 @@ export class KulChart {
 
         const seriesName =
           this.#findColumn(dataset, { id: seriesId })?.[0]?.title || seriesId;
-        const axisIndex = 0; // Assign to the primary axis or adjust as needed
+        const axisIndex = 0;
 
         this.#seriesData.push({
           name: seriesName,
@@ -327,32 +334,46 @@ export class KulChart {
     const options = this.#createChartOptions();
     this.#chartEl.setOption(options, true);
 
-    this.#chartEl.on("click", this.#adapter.actions.onClick);
+    this.#chartEl.on("click", this.#adapter.handlers.onClick);
   }
   #createChartOptions() {
-    const options = this.#adapter.get.options;
+    const { hooks } = this.#adapter;
+    const { get } = hooks;
+    const { options } = get;
+    const {
+      basic,
+      bubble,
+      calendar,
+      candlestick,
+      funnel,
+      heatmap,
+      pie,
+      radar,
+      sankey,
+    } = options;
+
     const firstType = this.kulTypes?.[0] || "line";
 
     switch (firstType) {
       case "bubble":
-        return options.bubble(this.#adapter);
+        return bubble();
       case "calendar":
-        return options.calendar(this.#adapter);
+        return calendar();
       case "candlestick":
-        return options.candlestick(this.#adapter);
+        return candlestick();
       case "funnel":
-        return options.funnel(this.#adapter);
+        return funnel();
       case "heatmap":
-        return options.heatmap(this.#adapter);
+        return heatmap();
       case "pie":
-        return options.pie(this.#adapter);
+        return pie();
       case "radar":
-        return options.radar(this.#adapter);
+        return radar();
       case "sankey":
-        return options.sankey(this.#adapter);
+        return sankey();
       default:
         this.#createAxisData();
-        return options.default(this.#adapter);
+        return basic();
     }
   }
   //#endregion
@@ -361,9 +382,10 @@ export class KulChart {
   componentWillLoad() {
     this.#kulManager.theme.register(this);
 
-    this.#adapter.actions = createActions(this.#adapter);
-    this.#adapter.get.design = createDesign(this.#adapter);
-    this.#adapter.get.options = createOptions(this.#adapter);
+    this.#updateThemeColors();
+
+    this.#adapter.handlers = createHandlers(this.#adapter);
+    this.#adapter.hooks.get.options = createOptions(this.#adapter);
 
     if (typeof this.kulAxis === "string") {
       this.kulAxis = [this.kulAxis];
@@ -373,8 +395,10 @@ export class KulChart {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-  componentWillRender() {
+  componentWillUpdate() {
     this.#updateThemeColors();
+  }
+  componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {

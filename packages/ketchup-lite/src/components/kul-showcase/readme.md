@@ -139,12 +139,12 @@ graph TD;
   kul-showcase-chat --> kul-article
   kul-showcase-chat --> kul-chat
   kul-chat --> kul-spinner
-  kul-chat --> kul-image
-  kul-chat --> kul-button
-  kul-chat --> kul-textfield
-  kul-chat --> kul-progressbar
   kul-chat --> kul-typewriter
   kul-chat --> kul-code
+  kul-chat --> kul-image
+  kul-chat --> kul-button
+  kul-chat --> kul-progressbar
+  kul-chat --> kul-textfield
   kul-code --> kul-button
   kul-showcase-chip --> kul-article
   kul-showcase-chip --> kul-chip

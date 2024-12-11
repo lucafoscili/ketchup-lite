@@ -1,55 +1,52 @@
 import { VNode } from "@stencil/core";
 import { KulManager } from "src/managers/kul-manager/kul-manager";
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulCanvas } from "./kul-canvas";
 
 //#region Adapter
-export interface KulCanvasAdapter {
-  actions: KulCanvasAdapterActions;
+export interface KulCanvasAdapter extends KulComponentAdapter<KulCanvas> {
   components: KulCanvasAdapterComponents;
-  get: KulCanvasAdapterGetters;
-  set: KulCanvasAdapterSetters;
-}
-export interface KulCanvasAdapterActions {
-  board: KulCanvasAdapterActionsBoard;
-  preview: KulCanvasAdapterActionsPreview;
-  endCapture: (e: PointerEvent) => void;
-}
-export interface KulCanvasAdapterActionsBoard {
-  clear: () => void;
-  setup: (isFill?: boolean) => void;
-}
-export interface KulCanvasAdapterActionsPreview {
-  clear: () => void;
-  redraw: () => void;
-  setup: (isFill?: boolean) => void;
+  handlers: KulCanvasAdapterHandlers;
+  hooks: KulCanvasAdapterHooks;
 }
 export interface KulCanvasAdapterComponents {
-  jsx: KulCanvasAdapterComponentsJsx;
-  refs: KulCanvasAdapterComponentsRefs;
-}
-export interface KulCanvasAdapterComponentsJsx {
-  board: VNode;
-  image: VNode;
-  preview: VNode;
-}
-export interface KulCanvasAdapterComponentsRefs {
-  board: HTMLCanvasElement;
-  image: HTMLKulImageElement;
-  preview: HTMLCanvasElement;
-}
-export interface KulCanvasAdapterGetters {
-  canvas: KulCanvas;
-  isCursorPreview: () => boolean;
-  manager: KulManager;
-  state: {
-    isPainting: () => boolean;
-    points: () => KulCanvasPoints;
+  jsx: {
+    board: VNode;
+    image: VNode;
+    preview: VNode;
+  };
+  refs: {
+    board: HTMLCanvasElement;
+    image: HTMLKulImageElement;
+    preview: HTMLCanvasElement;
   };
 }
-export interface KulCanvasAdapterSetters {
-  state: {
+export interface KulCanvasAdapterHandlers {
+  board: {
+    clear: () => void;
+    onPointerDown: (e: PointerEvent) => void;
+    onPointerMove: (e: PointerEvent) => void;
+    onPointerOut: (e: PointerEvent) => void;
+    onPointerUp: (e: PointerEvent) => void;
+    setup: (isFill?: boolean) => void;
+  };
+  endCapture: (e: PointerEvent) => void;
+  preview: {
+    clear: () => void;
+    redraw: () => void;
+    setup: (isFill?: boolean) => void;
+  };
+}
+export interface KulCanvasAdapterHooks {
+  get: {
+    comp: KulCanvas;
+    isCursorPreview: () => boolean;
+    isPainting: () => boolean;
+    manager: KulManager;
+    points: () => KulCanvasPoints;
+  };
+  set: {
     isPainting: (value: boolean) => void;
     points: (value: KulCanvasPoints) => void;
   };
