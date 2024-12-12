@@ -1,4 +1,4 @@
-import { context, draw } from "../helpers/kul-canvas-tools";
+import { context, draw } from "../helpers/kul-canvas-utils";
 import { KulCanvasAdapter } from "../kul-canvas-declarations";
 
 //#region Board

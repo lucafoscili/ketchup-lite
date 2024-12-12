@@ -20,8 +20,8 @@ export const createComponents: (
   adapter: KulCanvasAdapter,
 ) => KulCanvasAdapterComponents["jsx"] = (adapter) => {
   return {
-    board: MAIN_COMPONENTS.prepBoard(adapter),
-    image: MAIN_COMPONENTS.prepImage(adapter),
-    preview: MAIN_COMPONENTS.prepPreview(adapter),
+    board: () => MAIN_COMPONENTS.prepBoard(adapter),
+    image: () => MAIN_COMPONENTS.prepImage(adapter),
+    preview: () => MAIN_COMPONENTS.prepPreview(adapter),
   };
 };

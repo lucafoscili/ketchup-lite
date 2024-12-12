@@ -1782,10 +1782,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getComponents",
         docs: "This method is used to retrieve the references to the subcomponents.",
         returns: {
-          type: "Promise<KulImageviewerAdapterRefs>",
+          type: "Promise<{ explorer: { load: HTMLKulButtonElement; masonry: HTMLKulMasonryElement; textfield: HTMLKulTextfieldElement; }; imageviewer: { canvas: HTMLKulCanvasElement; clearHistory: HTMLKulButtonElement; deleteShape: HTMLKulButtonElement; redo: HTMLKulButtonElement; save: HTMLKulButtonElement; spinner: HTMLKulSpinnerElement; tree: HTMLKulTreeElement; undo: HTMLKulButtonElement; }; }>",
           docs: "",
         },
-        signature: "() => Promise<KulImageviewerAdapterRefs>",
+        signature: '() => Promise<KulImageviewerAdapterComponents["refs"]>',
       },
       {
         name: "getCurrentSnapshot",

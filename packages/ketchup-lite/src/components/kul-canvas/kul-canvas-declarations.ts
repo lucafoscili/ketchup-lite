@@ -12,9 +12,9 @@ export interface KulCanvasAdapter extends KulComponentAdapter<KulCanvas> {
 }
 export interface KulCanvasAdapterComponents {
   jsx: {
-    board: VNode;
-    image: VNode;
-    preview: VNode;
+    board: () => VNode;
+    image: () => VNode;
+    preview: () => VNode;
   };
   refs: {
     board: HTMLCanvasElement;

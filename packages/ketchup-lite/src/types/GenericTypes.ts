@@ -412,19 +412,14 @@ export type ComponentPropsMap = {
   KulUpload: KulUploadProps;
 };
 type ExtractComponentName<C> = C extends KulComponent<infer N> ? N : never;
-type JsxDefinition = VNode | ((...args: any[]) => VNode);
-type JsxNestedDefinition = Record<
-  string,
-  JsxDefinition | Record<string, JsxDefinition>
->;
 export type KulEventType<C extends KulComponent<KulComponentName>> =
   ComponentEventMap[ExtractComponentName<C>];
+export type KulComponentAdapterJsx = Record<string, (...args: any[]) => VNode>;
+export type KulComponentAdapterRef = Record<string, HTMLElement>;
 export interface KulComponentAdapter<C extends KulGenericComponent> {
   components?: {
-    jsx: JsxNestedDefinition;
-    refs:
-      | Record<string, HTMLElement>
-      | Record<string, Record<string, HTMLElement>>;
+    jsx: KulComponentAdapterJsx | Record<string, KulComponentAdapterJsx>;
+    refs: KulComponentAdapterRef | Record<string, KulComponentAdapterRef>;
   };
   handlers?: {
     [index: string]: any;

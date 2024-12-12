@@ -14,13 +14,6 @@ import {
   Watch,
 } from "@stencil/core";
 
-import { DEFAULTS } from "./helpers/kul-compare-defaults";
-import {
-  KulCompareEvent,
-  KulCompareEventPayload,
-  KulCompareProps,
-  KulCompareView,
-} from "./kul-compare-declarations";
 import {
   KulDataCell,
   KulDataDataset,
@@ -34,6 +27,13 @@ import { type GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { createDefaults } from "./helpers/kul-compare-hub";
+import {
+  KulCompareEvent,
+  KulCompareEventPayload,
+  KulCompareProps,
+  KulCompareView,
+} from "./kul-compare-declarations";
 
 @Component({
   tag: "kul-compare",
@@ -46,10 +46,7 @@ export class KulCompare {
    */
   @Element() rootElement: HTMLKulCompareElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -87,11 +84,9 @@ export class KulCompare {
    * @default false
    */
   @State() rightShape: Partial<KulDataCell<KulDataShapes>>;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Actual data of the compare.
    * @default null
@@ -112,20 +107,13 @@ export class KulCompare {
    * @default null
    */
   @Prop({ mutable: true }) kulView: KulCompareView = "overlay";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-compare-event",
     composed: true,
@@ -133,7 +121,6 @@ export class KulCompare {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulCompareEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulCompareEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -142,11 +129,9 @@ export class KulCompare {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                 W a t c h e r s                 */
-  /*-------------------------------------------------*/
-
+  //#region Watchers
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
@@ -163,11 +148,9 @@ export class KulCompare {
       );
     }
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -203,23 +186,18 @@ export class KulCompare {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #getShapes() {
     return this.shapes?.[this.kulShape] || [];
   }
-
   #hasShapes() {
     return !!this.shapes?.[this.kulShape];
   }
-
   #isOverlay() {
     return !!(this.kulView === "overlay");
   }
-
   #prepChangeView(): VNode {
     const ids = {
       left: "toggle-left-panel",
@@ -294,7 +272,6 @@ export class KulCompare {
       </div>
     );
   }
-
   #prepPanel(side: "left" | "right"): VNode {
     const dataset: KulDataDataset = { nodes: [] };
     const shapes = this.#getShapes();
@@ -312,7 +289,6 @@ export class KulCompare {
       }
       dataset.nodes.push(node);
     }
-
     return (
       <kul-tree
         class={`view__panel view__panel--${side}`}
@@ -337,9 +313,8 @@ export class KulCompare {
       ></kul-tree>
     );
   }
-
   #prepView(): VNode {
-    const { left, right } = DEFAULTS(this.#isOverlay());
+    const { left, right } = createDefaults(this.#isOverlay());
     const shapes = this.#kulManager.data.cell.shapes.decorate(
       this.kulShape,
       [this.leftShape, this.rightShape],
@@ -373,7 +348,6 @@ export class KulCompare {
       </Fragment>
     );
   }
-
   #prepCompare(): VNode {
     if (this.#hasShapes()) {
       const shapes = this.shapes[this.kulShape];
@@ -387,7 +361,6 @@ export class KulCompare {
       }
     }
   }
-
   #updateOverlayWidth(event: InputEvent) {
     const sliderValue =
       100 - parseInt((event.target as HTMLInputElement).value);
@@ -396,29 +369,23 @@ export class KulCompare {
       `${sliderValue}%`,
     );
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
     this.updateShapes();
   }
-
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     return (
       <Host>
@@ -433,8 +400,8 @@ export class KulCompare {
       </Host>
     );
   }
-
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
   }
+  //#endregion
 }

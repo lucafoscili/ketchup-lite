@@ -4,7 +4,7 @@ import {
   buttonEventHandler,
   textfieldEventHandler,
 } from "../handlers/kul-chat-settings";
-import { OPTIONS_IDS } from "../helpers/kul-chat-tools";
+import { OPTIONS_IDS } from "../helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatAdapterComponents,

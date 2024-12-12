@@ -7,7 +7,7 @@ import {
   YAXisComponentOption,
 } from "echarts";
 
-import { getHexColor } from "../helpers/kul-chart-tools";
+import { getHexColor } from "../helpers/kul-chart-utils";
 import {
   KulChartAdapter,
   KulChartAdapterSetups,

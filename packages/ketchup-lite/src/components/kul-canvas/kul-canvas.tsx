@@ -18,7 +18,7 @@ import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { createComponents, createHandlers } from "./helpers/kul-canvas-hub";
-import { coordinates } from "./helpers/kul-canvas-tools";
+import { coordinates } from "./helpers/kul-canvas-utils";
 import {
   KulCanvasAdapter,
   KulCanvasBrush,
@@ -365,9 +365,9 @@ export class KulCanvas {
               }
             }}
           >
-            {image}
-            {board}
-            {this.#isCursorPreview() && preview}
+            {image()}
+            {board()}
+            {this.#isCursorPreview() && preview()}
           </div>
         </div>
       </Host>

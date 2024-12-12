@@ -248,8 +248,8 @@ export class KulCarousel {
               {this.#prepSlide()}
             </div>
             <div class="carousel__controls">
-              {back}
-              {forward}
+              {back()}
+              {forward()}
             </div>
             <div class="carousel__indicators-wrapper">
               <div class="carousel__indicators">{this.#prepIndicators()}</div>

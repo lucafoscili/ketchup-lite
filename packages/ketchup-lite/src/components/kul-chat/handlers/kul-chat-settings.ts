@@ -1,6 +1,6 @@
 import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
 import { KulTextfieldEventPayload } from "../../kul-textfield/kul-textfield-declarations";
-import { OPTIONS_IDS } from "../helpers/kul-chat-tools";
+import { OPTIONS_IDS } from "../helpers/kul-chat-utils";
 import { KulChatAdapter } from "../kul-chat-declarations";
 
 //#region Button handler

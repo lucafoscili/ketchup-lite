@@ -11,16 +11,16 @@ import {
   State,
 } from "@stencil/core";
 
-import {
-  KulDrawerEvent,
-  KulDrawerEventPayload,
-  KulDrawerProps,
-} from "./kul-drawer-declarations";
 import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
 import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import {
+  KulDrawerEvent,
+  KulDrawerEventPayload,
+  KulDrawerProps,
+} from "./kul-drawer-declarations";
 
 @Component({
   tag: "kul-drawer",
@@ -33,10 +33,7 @@ export class KulDrawer {
    */
   @Element() rootElement: HTMLKulDrawerElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -52,30 +49,21 @@ export class KulDrawer {
    * @default false
    */
   @State() opened = false;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Custom style of the component.
    * @default ""
    */
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #kulManager = kulManagerInstance();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted by the component.
-   */
+  //#region Events
   @Event({
     eventName: "kul-drawer-event",
     composed: true,
@@ -83,7 +71,6 @@ export class KulDrawer {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulDrawerEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulDrawerEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -92,11 +79,9 @@ export class KulDrawer {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Closes the drawer.
    */
@@ -167,28 +152,22 @@ export class KulDrawer {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
     this.#kulManager.theme.register(this);
   }
-
   componentDidLoad() {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#kulManager.debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     this.#kulManager.debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     this.#kulManager.debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     return (
       <Host kul-opened={this.opened}>
@@ -223,8 +202,8 @@ export class KulDrawer {
       </Host>
     );
   }
-
   disconnectedCallback() {
     this.#kulManager.theme.unregister(this);
   }
+  //#endregion
 }

@@ -4,7 +4,7 @@ import {
 } from "src/managers/kul-llm/kul-llm-declarations";
 import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
 import { KulProgressbarEventPayload } from "../../kul-progressbar/kul-progressbar-declarations";
-import { CHAT_IDS } from "../helpers/kul-chat-tools";
+import { CHAT_IDS } from "../helpers/kul-chat-utils";
 import { KulChatAdapter } from "../kul-chat-declarations";
 
 //#region Button handler

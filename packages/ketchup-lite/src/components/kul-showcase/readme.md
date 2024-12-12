@@ -161,11 +161,11 @@ graph TD;
   kul-showcase-image --> kul-image
   kul-showcase-imageviewer --> kul-article
   kul-showcase-imageviewer --> kul-imageviewer
-  kul-imageviewer --> kul-canvas
   kul-imageviewer --> kul-button
   kul-imageviewer --> kul-spinner
   kul-imageviewer --> kul-masonry
   kul-imageviewer --> kul-textfield
+  kul-imageviewer --> kul-canvas
   kul-imageviewer --> kul-tree
   kul-masonry --> kul-button
   kul-showcase-lazy --> kul-article

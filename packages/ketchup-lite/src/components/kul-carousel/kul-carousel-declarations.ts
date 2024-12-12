@@ -16,8 +16,8 @@ export interface KulCarouselAdapter extends KulComponentAdapter<KulCarousel> {
 }
 export interface KulCarouselAdapterComponents {
   jsx: {
-    back: VNode;
-    forward: VNode;
+    back: () => VNode;
+    forward: () => VNode;
   };
   refs: {
     back: HTMLKulButtonElement;

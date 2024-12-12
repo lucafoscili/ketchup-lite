@@ -21,7 +21,7 @@ import {
   KulChartTooltipDataArray,
   KulChartTooltipDataDictionary,
 } from "../kul-chart-declarations";
-import { applyOpacity } from "./kul-chart-tools";
+import { applyOpacity } from "./kul-chart-utils";
 
 //#region Basic
 export const basic = (adapter: KulChartAdapter) => {

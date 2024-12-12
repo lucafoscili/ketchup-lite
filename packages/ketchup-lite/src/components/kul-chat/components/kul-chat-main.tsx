@@ -4,7 +4,7 @@ import {
   buttonEventHandler,
   progressbarEventHandler,
 } from "../handlers/kul-chat-main";
-import { CHAT_IDS } from "../helpers/kul-chat-tools";
+import { CHAT_IDS } from "../helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatAdapterComponents,

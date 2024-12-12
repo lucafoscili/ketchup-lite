@@ -1,6 +1,6 @@
 import { KulDataShapeDefaults } from "../../../managers/kul-data/kul-data-declarations";
 
-export const DEFAULTS: (isOverlay: boolean) => {
+export const createDefaults: (isOverlay: boolean) => {
   left: KulDataShapeDefaults;
   right: KulDataShapeDefaults;
 } = (_isOverlay) => {
