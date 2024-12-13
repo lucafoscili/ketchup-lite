@@ -6,25 +6,35 @@ import {
   KulDataShapeDefaults,
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
-import { KulComponentAdapter, KulEventPayload } from "src/types/GenericTypes";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterJsx,
+  KulComponentAdapterStateGetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulCardAdapter extends KulComponentAdapter<KulCard> {
-  hooks: {
-    get: {
-      comp: KulCard;
-      defaults: KulCardAdapterDefaults;
-      layout: KulCardAdapterLayoutHub;
-      shapes: () => KulDataShapesMap;
-    };
+  elements: {
+    jsx: KulCardAdapterElementsJsx;
+    refs: null;
+  };
+  state: {
+    get: KulCardAdapterStateGetters;
   };
 }
+export interface KulCardAdapterElementsJsx extends KulComponentAdapterJsx {
+  layouts: { [K in KulCardLayout]: () => VNode };
+}
 export type KulCardAdapterDefaults = {
-  [L in KulCardLayout]: KulDataShapeDefaults;
+  [K in KulCardLayout]: KulDataShapeDefaults;
 };
-export type KulCardAdapterLayoutHub = {
-  [K in KulCardLayout]: VNode;
-};
+export interface KulCardAdapterStateGetters
+  extends KulComponentAdapterStateGetters<KulCard> {
+  compInstance: KulCard;
+  defaults: KulCardAdapterDefaults;
+  shapes: () => KulDataShapesMap;
+}
 //#endregion
 
 //#region Events

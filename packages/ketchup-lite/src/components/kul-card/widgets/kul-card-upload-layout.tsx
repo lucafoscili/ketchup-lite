@@ -5,8 +5,8 @@ import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 
 //#region Upload layout
 export const prepUpload = (adapter: KulCardAdapter): VNode => {
-  const { hooks } = adapter;
-  const { get } = hooks;
+  const { state } = adapter;
+  const { get } = state;
   const { comp, defaults } = get;
   const { kulLayout } = comp;
   const { upload } = defaults;

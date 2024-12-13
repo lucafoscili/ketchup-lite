@@ -15,7 +15,7 @@ import {
 import { kulManagerSingleton } from "src";
 import {
   createDefaults,
-  createWidgets,
+  createElements,
 } from "src/components/kul-card/helpers/kul-card-hub";
 import {
   KulCardAdapter,
@@ -92,9 +92,10 @@ export class KulCard {
 
   //#region Internal variables
   #adapter: KulCardAdapter = {
-    hooks: {
+    elements: { jsx: null, refs: null },
+    state: {
       get: {
-        comp: this,
+        compInstance: this,
         defaults: createDefaults(),
         layout: null,
         shapes: () => this.shapes,
@@ -192,7 +193,7 @@ export class KulCard {
 
     this.updateShapes();
 
-    this.#adapter.hooks.get.layout = createWidgets(this.#adapter);
+    this.#adapter.elements.jsx = createElements(this.#adapter);
   }
   componentDidLoad() {
     const { debug } = kulManagerSingleton;
@@ -219,9 +220,9 @@ export class KulCard {
       return;
     }
 
-    const { hooks } = this.#adapter;
-    const { get } = hooks;
-    const { layout } = get;
+    const { elements } = this.#adapter;
+    const { jsx } = elements;
+    const { layout } = jsx;
 
     const style: GenericMap = {
       "--kul_card_height": kulSizeY ? kulSizeY : "100%",

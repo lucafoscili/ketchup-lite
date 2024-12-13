@@ -6,8 +6,8 @@ import * as HANDLERS from "src/components/kul-card/handlers/kul-card-keywords-la
 import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 
 export const prepKeywords = (adapter: KulCardAdapter): VNode => {
-  const { hooks } = adapter;
-  const { get } = hooks;
+  const { state } = adapter;
+  const { get } = state;
   const { comp, defaults } = get;
   const { kulLayout } = comp;
   const { keywords } = defaults;

@@ -1,7 +1,7 @@
 import { kulManagerSingleton } from "src";
 import {
   KulCardAdapter,
-  KulCardAdapterLayoutHub,
+  KulCardAdapterElementsJsx,
   KulCardLayout,
   KulCardShapesIds,
 } from "src/components/kul-card/kul-card-declarations";
@@ -11,14 +11,16 @@ import { prepMaterial } from "src/components/kul-card/widgets/kul-card-material-
 import { prepUpload } from "src/components/kul-card/widgets/kul-card-upload-layout";
 import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declarations";
 
-export const createWidgets: (
+export const createElements: (
   adapter: KulCardAdapter,
-) => KulCardAdapterLayoutHub = (adapter) => {
+) => KulCardAdapterElementsJsx = (adapter) => {
   return {
-    debug: prepDebug(adapter),
-    keywords: prepKeywords(adapter),
-    material: prepMaterial(adapter),
-    upload: prepUpload(adapter),
+    layouts: {
+      debug: () => prepDebug(adapter),
+      keywords: () => prepKeywords(adapter),
+      material: () => prepMaterial(adapter),
+      upload: () => prepUpload(adapter),
+    },
   };
 };
 

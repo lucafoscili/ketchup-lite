@@ -10,8 +10,8 @@ import { RIPPLE_SURFACE_CLASS } from "src/variables/GenericVariables";
 
 //#region Material layout
 export const prepMaterial = (adapter: KulCardAdapter): VNode => {
-  const { hooks } = adapter;
-  const { get } = hooks;
+  const { state } = adapter;
+  const { get } = state;
   const { comp, defaults } = get;
   const { kulLayout } = comp;
   const { material } = defaults;
