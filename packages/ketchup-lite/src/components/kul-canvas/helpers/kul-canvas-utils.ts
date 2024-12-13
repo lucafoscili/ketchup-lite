@@ -1,13 +1,89 @@
-import { KulCanvas } from "src/components/kul-canvas/kul-canvas";
 import {
   KulCanvasAdapter,
   KulCanvasPoints,
   KulCanvasType,
 } from "src/components/kul-canvas/kul-canvas-declarations";
 
-//#region coordinatesTools
-export const coordinatesTools = () => {
-  return {
+//#region getContext
+export const getContext = (adapter: KulCanvasAdapter, type: KulCanvasType) => {
+  const { elements } = adapter;
+  const { refs } = elements;
+  const { board, preview } = refs;
+
+  const canvas = type === "board" ? board : preview;
+  const ctx = canvas.getContext("2d");
+  const { height, width } = ctx.canvas;
+
+  return { ctx, height, width };
+};
+//#endregion
+
+export const toolkit = {
+  context: {
+    //#region Clear context
+    clear: (adapter: KulCanvasAdapter, type: KulCanvasType) => {
+      const { ctx, height, width } = getContext(adapter, type);
+
+      ctx.clearRect(0, 0, width, height);
+    },
+    //#endregion
+
+    //#region Redraw context
+    redraw: (adapter: KulCanvasAdapter, type: KulCanvasType) => {
+      const { state } = adapter;
+      const { get } = state;
+      const { points } = get;
+
+      const { ctx, height, width } = getContext(adapter, type);
+      toolkit.context.clear(adapter, type);
+      toolkit.context.setup(adapter, type);
+
+      const pts = points();
+      if (pts.length === 1) {
+        const singlePoint = pts[0];
+        const x = singlePoint.x * width;
+        const y = singlePoint.y * height;
+        toolkit.draw.shape(adapter, type, x, y, true);
+      } else if (pts.length > 1) {
+        ctx.beginPath();
+        const firstPoint = pts[0];
+        ctx.moveTo(firstPoint.x * width, firstPoint.y * height);
+
+        for (let i = 1; i < pts.length; i++) {
+          const p = pts[i];
+          ctx.lineTo(p.x * width, p.y * height);
+        }
+
+        ctx.stroke();
+      }
+    },
+    //#endregion
+
+    //#region Setup context
+    setup: (adapter: KulCanvasAdapter, type: KulCanvasType, isFill = false) => {
+      const { state } = adapter;
+      const { get } = state;
+      const { compInstance } = get;
+      const { kulColor, kulOpacity, kulSize } = compInstance;
+
+      const { ctx } = getContext(adapter, type);
+
+      ctx.lineCap = "round";
+      ctx.lineJoin = "round";
+      ctx.globalAlpha = kulOpacity;
+      ctx.globalCompositeOperation = "source-over";
+
+      if (isFill) {
+        ctx.fillStyle = kulColor;
+      } else {
+        ctx.strokeStyle = kulColor;
+        ctx.lineWidth = kulSize;
+      }
+    },
+    //#endregion
+  },
+  coordinates: {
+    //#region Get coords
     get: (e: PointerEvent, rect: DOMRect) => {
       const { height, left, top, width } = rect;
 
@@ -19,6 +95,9 @@ export const coordinatesTools = () => {
 
       return { x, y };
     },
+    //#endregion
+
+    //#region Normalize coords
     normalize: (e: PointerEvent, rect: DOMRect) => {
       const { height, left, top, width } = rect;
 
@@ -30,6 +109,9 @@ export const coordinatesTools = () => {
 
       return { x, y };
     },
+    //#endregion
+
+    //#region Simplify coords
     simplify: (points: KulCanvasPoints, tolerance: number) => {
       if (points.length <= 2) {
         return points;
@@ -91,112 +173,45 @@ export const coordinatesTools = () => {
       simplified.push(points[points.length - 1]);
       return simplified;
     },
-  };
-};
-//#endregion
-
-//#region contextTools
-export const contextTools = (adapter: KulCanvasAdapter) => {
-  const { elements, handlers, state } = adapter;
-  const { refs } = elements;
-  const { get } = state;
-
-  return {
-    clear: (type: KulCanvasType) => {
-      const { board, preview } = refs;
-
-      const ctx = getContext(type, board, preview);
-      const { height, width } = ctx.canvas;
-
-      ctx.clearRect(0, 0, width, height);
-    },
-    redraw: (type: KulCanvasType) => {
-      const { handlers } = adapter;
-      const { points } = get;
-      const { preview } = refs;
-
-      const ctx = getContext(type, board, preview);
-      const { height, width } = ctx.canvas;
-
-      ctx.clearRect(0, 0, width, height);
-      handlers.preview.setup(false);
-
-      const pts = points();
-      if (pts.length === 1) {
-        const singlePoint = pts[0];
-        const x = singlePoint.x * width;
-        const y = singlePoint.y * height;
-        draw.shape(adapter, ctx, x, y, true);
-      } else if (pts.length > 1) {
-        ctx.beginPath();
-        const firstPoint = pts[0];
-        ctx.moveTo(firstPoint.x * width, firstPoint.y * height);
-
-        for (let i = 1; i < pts.length; i++) {
-          const p = pts[i];
-          ctx.lineTo(p.x * width, p.y * height);
-        }
-
-        ctx.stroke();
-      }
-    },
-    setup: (canvasEl: HTMLCanvasElement, canvas: KulCanvas, isFill = false) => {
-      const ctx = canvasEl.getContext("2d");
-
-      ctx.lineCap = "round";
-      ctx.lineJoin = "round";
-      ctx.globalAlpha = canvas.kulOpacity;
-      ctx.globalCompositeOperation = "source-over";
-
-      if (isFill) {
-        ctx.fillStyle = canvas.kulColor;
-      } else {
-        ctx.strokeStyle = canvas.kulColor;
-        ctx.lineWidth = canvas.kulSize;
-      }
-    },
-  };
-};
-//#endregion
-
-//#region drawingTools
-export const drawingTools = (adapter: KulCanvasAdapter) => {
-  const { elements, handlers, state } = adapter;
-  const { refs } = elements;
-  const { get } = state;
-  const { board, preview } = refs;
-  const { comp, isPainting } = get;
-
-  const coordinates = coordinatesTools();
-  const { clear } = contextTools(adapter);
-
-  return {
+    //#endregion
+  },
+  draw: {
+    //#region Cursor draw
     cursor: (adapter: KulCanvasAdapter, e: PointerEvent) => {
-      const ctx = preview.getContext("2d");
+      const { elements, state } = adapter;
+      const { refs } = elements;
+      const { get } = state;
+      const { board } = refs;
+      const { compInstance, isPainting } = get;
 
-      if (!comp || isPainting()) {
+      if (!compInstance || isPainting()) {
         return;
       }
 
-      handlers.preview.clear();
+      toolkit.context.clear(adapter, "preview");
 
       const rect = board.getBoundingClientRect();
-      const { x, y } = coordinates.get(e, rect);
+      const { x, y } = toolkit.coordinates.get(e, rect);
 
-      handlers.preview.setup(true);
-      draw.shape(adapter, ctx, x, y, true);
+      toolkit.context.setup(adapter, "preview", true);
+      toolkit.draw.shape(adapter, "preview", x, y, true);
     },
+    //#endregion
+
+    //#region Shape draw
     shape: (
       adapter: KulCanvasAdapter,
-      ctx: CanvasRenderingContext2D,
+      type: KulCanvasType,
       x: number,
       y: number,
       isFill = true,
     ) => {
-      const { hooks } = adapter;
-      const { get } = hooks;
-      const { comp } = get;
-      const { kulBrush, kulSize } = comp;
+      const { state } = adapter;
+      const { get } = state;
+      const { compInstance } = get;
+      const { kulBrush, kulSize } = compInstance;
+
+      const { ctx } = getContext(adapter, type);
 
       ctx.beginPath();
       switch (kulBrush) {
@@ -215,26 +230,21 @@ export const drawingTools = (adapter: KulCanvasAdapter) => {
         ctx.stroke();
       }
     },
+    //#endregion
+
+    //#region Point draw
     point: (adapter: KulCanvasAdapter, e: PointerEvent) => {
-      const { hooks, widgets } = adapter;
-      const { refs } = widgets;
-      const { get } = hooks;
+      const { elements, state } = adapter;
+      const { refs } = elements;
+      const { get } = state;
       const { board } = refs;
       const { points } = get;
 
       const rect = board.getBoundingClientRect();
 
-      const { x, y } = coordinates.normalize(e, rect);
+      const { x, y } = toolkit.coordinates.normalize(e, rect);
       points().push({ x, y });
     },
-  };
+    //#endregion
+  },
 };
-//#endregion
-
-//#region getContext
-const getContext = (
-  type: KulCanvasType,
-  board: HTMLCanvasElement,
-  preview: HTMLCanvasElement,
-) => (type === "board" ? board.getContext("2d") : preview.getContext("2d"));
-//#endregion

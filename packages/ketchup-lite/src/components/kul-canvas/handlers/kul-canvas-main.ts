@@ -1,6 +1,6 @@
 import {
-  draw,
-  setupContext,
+  getContext,
+  toolkit,
 } from "src/components/kul-canvas/helpers/kul-canvas-utils";
 import { KulCanvasAdapter } from "src/components/kul-canvas/kul-canvas-declarations";
 
@@ -10,26 +10,28 @@ export const board = (adapter: KulCanvasAdapter) => {
     endCapture: (e: PointerEvent) => {
       e.preventDefault();
 
-      const { elements, handlers, state } = adapter;
+      const { elements, state } = adapter;
       const { refs } = elements;
       const { get, set } = state;
       const { compInstance, points } = get;
       const { board } = refs;
 
       board.releasePointerCapture(e.pointerId);
-      const ctx = board.getContext("2d");
-      const { height, width } = board;
+      const { ctx, height, width } = getContext(adapter, "board");
 
       const pts = points();
       if (pts.length > 0) {
         if (pts.length === 1) {
-          setupContext(board, compInstance, true);
+          toolkit.context.setup(adapter, "board", true);
+
           const singlePoint = pts[0];
           const x = singlePoint.x * width;
           const y = singlePoint.y * height;
-          draw.shape(adapter, ctx, x, y, true);
+
+          toolkit.draw.shape(adapter, "board", x, y, true);
         } else {
-          setupContext(board, compInstance, false);
+          toolkit.context.setup(adapter, "board");
+
           ctx.beginPath();
           const firstPoint = pts[0];
           ctx.moveTo(firstPoint.x * width, firstPoint.y * height);
@@ -42,9 +44,9 @@ export const board = (adapter: KulCanvasAdapter) => {
         }
       }
 
-      handlers.preview.clear();
+      toolkit.context.clear(adapter, "preview");
 
-      comp.onKulEvent(e, "stroke");
+      compInstance.onKulEvent(e, "stroke");
 
       set.isPainting(false);
     },
@@ -52,9 +54,9 @@ export const board = (adapter: KulCanvasAdapter) => {
 
     //#region onPointerDown
     onPointerDown: (e: PointerEvent) => {
-      const { hooks, widgets } = adapter;
-      const { refs } = widgets;
-      const { set } = hooks;
+      const { elements, state } = adapter;
+      const { refs } = elements;
+      const { set } = state;
       const { board } = refs;
 
       e.preventDefault();
@@ -63,7 +65,8 @@ export const board = (adapter: KulCanvasAdapter) => {
       requestAnimationFrame(() => {
         set.isPainting(true);
         set.points([]);
-        draw.point(adapter, e);
+
+        toolkit.draw.point(adapter, e);
       });
     },
     //#endregion
@@ -72,27 +75,25 @@ export const board = (adapter: KulCanvasAdapter) => {
     onPointerMove: (e: PointerEvent) => {
       e.preventDefault();
 
-      const { handlers, hooks } = adapter;
-      const { preview } = handlers;
-      const { get } = hooks;
+      const { state } = adapter;
+      const { get } = state;
       const { isPainting } = get;
-      const { redraw } = preview;
 
       if (!isPainting()) {
-        draw.cursor(adapter, e);
+        toolkit.draw.cursor(adapter, e);
         return;
       }
 
-      draw.point(adapter, e);
-      redraw();
+      toolkit.draw.point(adapter, e);
+      toolkit.context.redraw(adapter, "preview");
     },
     //#endregion
 
     //#region onPointerOut
     onPointerOut: (e: PointerEvent) => {
-      const { handlers, hooks } = adapter;
+      const { handlers, state } = adapter;
       const { endCapture } = handlers;
-      const { get } = hooks;
+      const { get } = state;
       const { isPainting } = get;
 
       if (isPainting()) {
