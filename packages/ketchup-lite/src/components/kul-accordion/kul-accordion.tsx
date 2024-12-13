@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Method,
@@ -13,23 +12,18 @@ import {
   VNode,
 } from "@stencil/core";
 
-import {
-  KulDataDataset,
-  KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import {
-  KulDataCyAttributes,
-  type GenericObject,
-} from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
 import {
   KulAccordionEvent,
   KulAccordionEventPayload,
-  KulAccordionProps,
-} from "./kul-accordion-declarations";
+} from "src/components/kul-accordion//kul-accordion-declarations";
+import {
+  KulDataDataset,
+  KulDataNode,
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-accordion",
@@ -82,7 +76,6 @@ export class KulAccordion {
   //#endregion
 
   //#region Internal variables
-  #kulManager = kulManagerInstance();
   #rippleSurface: { [id: string]: HTMLElement } = {};
   #slotsNames: string[] = [];
   //#endregion
@@ -95,7 +88,6 @@ export class KulAccordion {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulAccordionEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulAccordionEvent,
@@ -104,7 +96,7 @@ export class KulAccordion {
     switch (eventType) {
       case "pointerdown":
         if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
+          kulManagerSingleton.theme.ripple.trigger(
             e as PointerEvent,
             this.#rippleSurface[node.id],
           );
@@ -132,12 +124,13 @@ export class KulAccordion {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @param {boolean} descriptions - When true, includes descriptions for each property.
    * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulAccordionProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Returns the selected nodes.
@@ -198,24 +191,22 @@ export class KulAccordion {
   #isExpanded(node: KulDataNode): boolean {
     return this.expandedNodes.has(node);
   }
-
   #isExpandible(node: KulDataNode): boolean {
     return this.#slotsNames.includes(node.id);
   }
-
   #isSelected(node: KulDataNode): boolean {
     return this.selectedNodes.has(node);
   }
-
   #prepIcon(icon: string) {
-    const path = getAssetPath(`./assets/svg/${icon}.svg`);
+    const { assets } = kulManagerSingleton;
+
+    const path = assets.get(`./assets/svg/${icon}.svg`);
     const style = {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
     };
     return <div class={"node__icon"} style={style}></div>;
   }
-
   #prepAccordion(): VNode[] {
     const nodes: VNode[] = [];
     const slots: Array<HTMLElement> = Array.prototype.slice.call(
@@ -285,49 +276,53 @@ export class KulAccordion {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { debug } = kulManagerSingleton;
 
+    debug.updateDebugInfo(this, "will-render");
+  }
   componentDidRender() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
         if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
           const surface = this.#rippleSurface[key];
-          this.#kulManager.theme.ripple.setup(surface);
+          theme.ripple.setup(surface);
         }
       }
     }
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
+    const { theme } = kulManagerSingleton;
+    const { kulStyle } = this;
+
     this.#rippleSurface = {};
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class="accordion">{this.#prepAccordion()}</div>
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
   //#endregion
 }

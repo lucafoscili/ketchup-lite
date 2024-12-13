@@ -1,20 +1,19 @@
 import { VNode } from "@stencil/core";
 
+import { KulCarousel } from "src/components/kul-carousel/kul-carousel";
 import {
   KulDataDataset,
   KulDataShapes,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
-import { KulCarousel } from "./kul-carousel";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulComponentAdapter, KulEventPayload } from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulCarouselAdapter extends KulComponentAdapter<KulCarousel> {
-  components: KulCarouselAdapterComponents;
   handlers: KulCarouselAdapterHandlers;
   hooks: KulCarouselAdapterHooks;
+  widgets: KulCarouselAdapterWidgets;
 }
-export interface KulCarouselAdapterComponents {
+export interface KulCarouselAdapterWidgets {
   jsx: {
     back: () => VNode;
     forward: () => VNode;
@@ -38,7 +37,6 @@ export interface KulCarouselAdapterHooks {
     comp: KulCarousel;
     currentIndex: () => number;
     interval: () => NodeJS.Timeout;
-    manager: KulManager;
     totalSlides: () => number;
   };
   set: {
@@ -55,13 +53,6 @@ export interface KulCarouselEventPayload
 //#endregion
 
 //#region Props
-export enum KulCarouselProps {
-  kulAutoPlay = "Enable or disable autoplay for the carousel.",
-  kulData = "Actual data to carousel.",
-  kulInterval = "Interval in milliseconds for autoplay.",
-  kulShape = "Sets the type of shapes to compare.",
-  kulStyle = "Sets a custom CSS style for the component.",
-}
 export interface KulCarouselPropsInterface {
   kulAutoPlay?: boolean;
   kulData?: KulDataDataset;

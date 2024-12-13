@@ -11,16 +11,14 @@ import {
   State,
 } from "@stencil/core";
 
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import type { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
 import {
   KulHeaderEvent,
   KulHeaderEventPayload,
-  KulHeaderProps,
-} from "./kul-header-declarations";
+} from "src/components/kul-header/kul-header-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-header",
@@ -54,10 +52,6 @@ export class KulHeader {
   @Prop() kulStyle: string = "";
   //#endregion
 
-  //#region Internal variables
-  #kulManager = kulManagerInstance();
-  //#endregion
-
   //#region
   @Event({
     eventName: "kul-header-event",
@@ -86,13 +80,14 @@ export class KulHeader {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulHeaderProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -116,29 +111,37 @@ export class KulHeader {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
   }
 
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
+    const { theme } = kulManagerSingleton;
+
     return (
       <Host class="header">
         {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
+          <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>
         ) : undefined}
         <div id={KUL_WRAPPER_ID}>
           <header class="header">
@@ -152,7 +155,9 @@ export class KulHeader {
   }
 
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
   //#endregion
 }

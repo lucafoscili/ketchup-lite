@@ -1,22 +1,21 @@
 import { VNode } from "@stencil/core";
 
+import { KulImageviewer } from "src/components/kul-imageviewer/kul-imageviewer";
+import { KulMasonrySelectedShape } from "src/components/kul-masonry/kul-masonry-declarations";
 import {
   KulDataCell,
   KulDataDataset,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
-import { KulMasonrySelectedShape } from "../kul-masonry/kul-masonry-declarations";
-import { KulImageviewer } from "./kul-imageviewer";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulComponentAdapter } from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulImageviewerAdapter
   extends KulComponentAdapter<KulImageviewer> {
-  components: KulImageviewerAdapterComponents;
   handlers: KulImageviewerAdapterHandlers;
   hooks: KulImageviewerAdapterHooks;
+  widgets: KulImageviewerAdapterWidgets;
 }
-export interface KulImageviewerAdapterComponents {
+export interface KulImageviewerAdapterWidgets {
   jsx: {
     explorer: {
       load: () => VNode;
@@ -75,7 +74,6 @@ export interface KulImageviewerAdapterHooks {
       full: () => KulImageviewerHistory;
       index: () => number;
     };
-    manager: KulManager;
     spinnerStatus: () => boolean;
   };
   set: {
@@ -103,12 +101,6 @@ export type KulImageviewerHistory = {
 //#endregion
 
 //#region Props
-export enum KulImageviewerProps {
-  kulData = "Actual data of the image viewer.",
-  kulLoadCallback = "Callback invoked when the load button is clicked.",
-  kulStyle = "Sets a custom CSS style for the component.",
-  kulValue = "Configuration parameters of the detail view.",
-}
 export interface KulImageviewerPropsInterface {
   kulData?: KulDataDataset;
   kulLoadCallback?: KulImageviewerLoadCallback;

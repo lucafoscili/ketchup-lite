@@ -1,16 +1,16 @@
 import { h, VNode } from "@stencil/core";
 
-import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 import {
   KulChatAdapter,
-  KulChatAdapterComponents,
-} from "../kul-chat-declarations";
+  KulChatAdapterWidgets,
+} from "src/components/kul-chat/kul-chat-declarations";
+import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 
 export const prepToolbar = (
   adapter: KulChatAdapter,
-): KulChatAdapterComponents["jsx"]["toolbar"] => {
-  const { components, handlers } = adapter;
-  const { refs } = components;
+): KulChatAdapterWidgets["jsx"]["toolbar"] => {
+  const { handlers, widgets } = adapter;
+  const { refs } = widgets;
   const { deleteMessage, regenerate } = handlers;
   const { toolbar } = refs;
 

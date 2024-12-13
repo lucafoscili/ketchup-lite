@@ -15,13 +15,13 @@ import {
   YAXisComponentOption,
 } from "echarts";
 
+import { applyOpacity } from "src/components/kul-chart/helpers/kul-chart-utils";
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
   KulChartTooltipDataArray,
   KulChartTooltipDataDictionary,
-} from "../kul-chart-declarations";
-import { applyOpacity } from "./kul-chart-utils";
+} from "src/components/kul-chart/kul-chart-declarations";
 
 //#region Basic
 export const basic = (adapter: KulChartAdapter) => {

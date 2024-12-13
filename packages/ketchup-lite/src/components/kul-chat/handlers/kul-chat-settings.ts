@@ -1,7 +1,7 @@
-import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
-import { KulTextfieldEventPayload } from "../../kul-textfield/kul-textfield-declarations";
-import { OPTIONS_IDS } from "../helpers/kul-chat-utils";
-import { KulChatAdapter } from "../kul-chat-declarations";
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import { OPTIONS_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
+import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
 
 //#region Button handler
 export const buttonEventHandler = async (

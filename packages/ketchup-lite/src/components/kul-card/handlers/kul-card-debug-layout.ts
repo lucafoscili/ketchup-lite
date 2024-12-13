@@ -1,15 +1,15 @@
-import { kulManagerInstance } from "src/managers/kul-manager/kul-manager";
-import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
-import { KulCodeEventPayload } from "../../kul-code/kul-code-declarations";
-import { KulListEventPayload } from "../../kul-list/kul-list-declarations";
-import { KulToggleEventPayload } from "../../kul-toggle/kul-toggle-declarations";
-import { KulCardShapesIds } from "../kul-card-declarations";
+import { kulManagerSingleton } from "src";
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import { KulCardShapesIds } from "src/components/kul-card/kul-card-declarations";
+import { KulCodeEventPayload } from "src/components/kul-code/kul-code-declarations";
+import { KulListEventPayload } from "src/components/kul-list/kul-list-declarations";
+import { KulToggleEventPayload } from "src/components/kul-toggle/kul-toggle-declarations";
 
 //#region Button
 export const button = (e: CustomEvent<KulButtonEventPayload>) => {
   const { eventType, id, originalEvent } = e.detail;
 
-  const { debug, theme } = kulManagerInstance();
+  const { debug, theme } = kulManagerSingleton;
 
   switch (eventType) {
     case "click":
@@ -37,7 +37,7 @@ export const button = (e: CustomEvent<KulButtonEventPayload>) => {
 export const code = (e: CustomEvent<KulCodeEventPayload>) => {
   const { comp, eventType } = e.detail;
 
-  const { debug } = kulManagerInstance();
+  const { debug } = kulManagerSingleton;
 
   switch (eventType) {
     case "ready":
@@ -54,7 +54,7 @@ export const code = (e: CustomEvent<KulCodeEventPayload>) => {
 const list = (e: CustomEvent<KulListEventPayload>) => {
   const { eventType, node } = e.detail;
 
-  const { theme } = kulManagerInstance();
+  const { theme } = kulManagerSingleton;
 
   switch (eventType) {
     case "click":
@@ -68,7 +68,7 @@ const list = (e: CustomEvent<KulListEventPayload>) => {
 export const toggle = (e: CustomEvent<KulToggleEventPayload>) => {
   const { comp, eventType, value } = e.detail;
 
-  const { debug } = kulManagerInstance();
+  const { debug } = kulManagerSingleton;
   const boolValue = value === "on" ? true : false;
 
   switch (eventType) {

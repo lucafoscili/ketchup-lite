@@ -1,56 +1,59 @@
 import { VNode } from "@stencil/core";
-import { KulManager } from "src/managers/kul-manager/kul-manager";
-import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
-import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
-import { KulCanvas } from "./kul-canvas";
+
+import { KulCanvas } from "src/components/kul-canvas/kul-canvas";
+import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterJsx,
+  KulComponentAdapterRef,
+  KulComponentAdapterStateGetters,
+  KulComponentAdapterStateSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulCanvasAdapter extends KulComponentAdapter<KulCanvas> {
-  components: KulCanvasAdapterComponents;
+  elements: {
+    jsx: KulCanvasAdapterElementsJsx;
+    refs: KulCanvasAdapterElementsRefs;
+  };
   handlers: KulCanvasAdapterHandlers;
-  hooks: KulCanvasAdapterHooks;
-}
-export interface KulCanvasAdapterComponents {
-  jsx: {
-    board: () => VNode;
-    image: () => VNode;
-    preview: () => VNode;
-  };
-  refs: {
-    board: HTMLCanvasElement;
-    image: HTMLKulImageElement;
-    preview: HTMLCanvasElement;
+  state: {
+    get: KulCanvasAdapterStateGetters;
+    set: KulCanvasAdapterStateSetters;
   };
 }
-export interface KulCanvasAdapterHandlers {
-  board: {
-    clear: () => void;
-    onPointerDown: (e: PointerEvent) => void;
-    onPointerMove: (e: PointerEvent) => void;
-    onPointerOut: (e: PointerEvent) => void;
-    onPointerUp: (e: PointerEvent) => void;
-    setup: (isFill?: boolean) => void;
-  };
+export interface KulCanvasAdapterElementsJsx extends KulComponentAdapterJsx {
+  board: () => VNode;
+  image: () => VNode;
+  preview: () => VNode;
+}
+export interface KulCanvasAdapterElementsRefs extends KulComponentAdapterRef {
+  board: HTMLCanvasElement;
+  image: HTMLKulImageElement;
+  preview: HTMLCanvasElement;
+}
+export interface KulCanvasAdapterHandlers extends KulComponentAdapterHandlers {
   endCapture: (e: PointerEvent) => void;
-  preview: {
-    clear: () => void;
-    redraw: () => void;
-    setup: (isFill?: boolean) => void;
-  };
+  onPointerDown: (e: PointerEvent) => void;
+  onPointerMove: (e: PointerEvent) => void;
+  onPointerOut: (e: PointerEvent) => void;
+  onPointerUp: (e: PointerEvent) => void;
 }
-export interface KulCanvasAdapterHooks {
-  get: {
-    comp: KulCanvas;
-    isCursorPreview: () => boolean;
-    isPainting: () => boolean;
-    manager: KulManager;
-    points: () => KulCanvasPoints;
-  };
-  set: {
-    isPainting: (value: boolean) => void;
-    points: (value: KulCanvasPoints) => void;
-  };
+export interface KulCanvasAdapterStateGetters
+  extends KulComponentAdapterStateGetters<KulCanvas> {
+  compInstance: KulCanvas;
+  isCursorPreview: () => boolean;
+  isPainting: () => boolean;
+  points: () => KulCanvasPoints;
 }
+export interface KulCanvasAdapterStateSetters
+  extends KulComponentAdapterStateSetters {
+  isPainting: (value: boolean) => void;
+  points: (value: KulCanvasPoints) => void;
+}
+
 //#endregion
 
 //#region Events
@@ -66,17 +69,6 @@ export type KulCanvasPoints = Array<{ x: number; y: number }>;
 //#endregion
 
 //#region Props
-export enum KulCanvasProps {
-  kulBrush = "The shape of the brush.",
-  kulColor = "The color of the brush.",
-  kulCursor = " Sets the style of the cursor.",
-  kulImageProps = "The props of the image displayed inside the badge.",
-  kulOpacity = "The opacity of the brush.",
-  kulPreview = "Displays the brush track of the current stroke.",
-  kulSize = "The size of the brush.",
-  kulStrokeTolerance = "Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm. This prop sets the tolerance of the algorithm (null to disable)",
-  kulStyle = "Custom style of the component.",
-}
 export interface KulCanvasPropsInterface {
   kulBrush?: KulCanvasBrush;
   kulColor?: string;
@@ -90,4 +82,5 @@ export interface KulCanvasPropsInterface {
 }
 export type KulCanvasBrush = "round" | "square";
 export type KulCanvasCursor = "preview" | "default";
+export type KulCanvasType = "board" | "preview";
 //#endregion

@@ -1,3 +1,4 @@
+import { kulManagerSingleton } from "src";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { KulCanvasEventPayload } from "src/components/kul-canvas/kul-canvas-declarations";
 import {
@@ -8,7 +9,7 @@ import {
 import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
 import { KulTreeEventPayload } from "src/components/kul-tree/kul-tree-declarations";
 
-//#region Button event handler
+//#region Button handler
 export const buttonEventHandler = async (
   adapter: KulImageviewerAdapter,
   e: CustomEvent<KulButtonEventPayload>,
@@ -48,7 +49,7 @@ export const buttonEventHandler = async (
 };
 //#endregion
 
-//#region Canvas event handler
+//#region Canvas handler
 export const canvasEventHandler = (
   adapter: KulImageviewerAdapter,
   e: CustomEvent<KulCanvasEventPayload>,
@@ -61,7 +62,7 @@ export const canvasEventHandler = (
 };
 //#endregion
 
-//#region Tree event handler
+//#region Tree handler
 export const treeEventHandler = (
   adapter: KulImageviewerAdapter,
   e: CustomEvent<KulTreeEventPayload>,
@@ -95,8 +96,8 @@ export const clearHistory = async (
 
 //#region Clear selection
 export const clearSelection = async (adapter: KulImageviewerAdapter) => {
-  const { components, hooks } = adapter;
-  const { refs } = components;
+  const { hooks, widgets } = adapter;
+  const { refs } = widgets;
   const { set } = hooks;
   const { explorer } = refs;
   const { masonry } = explorer;
@@ -109,17 +110,18 @@ export const clearSelection = async (adapter: KulImageviewerAdapter) => {
 
 //#region Delete shape
 export const deleteShape = async (adapter: KulImageviewerAdapter) => {
+  const { data } = kulManagerSingleton;
   const { handlers, hooks } = adapter;
   const { clearHistory, clearSelection, findImage } = handlers;
   const { get } = hooks;
-  const { comp, currentShape, manager } = get;
+  const { comp, currentShape } = get;
   const { kulData } = comp;
 
   await clearHistory(currentShape().shape.index);
 
   const cell = findImage();
-  const node = manager.data.node.findNodeByCell(kulData, cell);
-  manager.data.node.pop(kulData.nodes, node);
+  const node = data.node.findNodeByCell(kulData, cell);
+  data.node.pop(kulData.nodes, node);
   comp.kulData = { ...kulData };
 
   await clearSelection();
@@ -128,13 +130,14 @@ export const deleteShape = async (adapter: KulImageviewerAdapter) => {
 
 //#region Find image
 export const findImage = (adapter: KulImageviewerAdapter) => {
+  const { data } = kulManagerSingleton;
   const { hooks } = adapter;
   const { get } = hooks;
-  const { comp, currentShape, manager } = get;
+  const { comp, currentShape } = get;
   const { kulData } = comp;
 
   const s = currentShape();
-  const cells = manager.data.cell.shapes.getAll(kulData, false);
+  const cells = data.cell.shapes.getAll(kulData, false);
 
   return cells["image"].find(
     (c) => c.value === s.value || c.kulValue === s.value,
@@ -144,8 +147,8 @@ export const findImage = (adapter: KulImageviewerAdapter) => {
 
 //#region Load
 export const load = async (adapter: KulImageviewerAdapter) => {
-  const { components, handlers, hooks } = adapter;
-  const { refs } = components;
+  const { handlers, hooks, widgets } = adapter;
+  const { refs } = widgets;
   const { clearHistory } = handlers;
   const { get } = hooks;
   const { explorer } = refs;
@@ -194,7 +197,7 @@ export const save = async (adapter: KulImageviewerAdapter) => {
   const currentSnapshot = history.currentSnapshot();
   const value = currentSnapshot.value;
 
-  const cell = await findImage(adapter);
+  const cell = findImage(adapter);
   cell.value = value;
   cell.kulValue = value;
 

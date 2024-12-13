@@ -12,30 +12,31 @@ import {
   VNode,
 } from "@stencil/core";
 
+import { kulManagerSingleton } from "src";
 import {
-  KulDataCell,
-  KulDataDataset,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { type GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulMasonrySelectedShape } from "../kul-masonry/kul-masonry-declarations";
-import {
-  createComponents,
   createHandlers,
-} from "./helpers/kul-imageviewer-hub";
-import { newShape, updateValue } from "./helpers/kul-imageviewer-utils";
+  createWidgets,
+} from "src/components/kul-imageviewer/helpers/kul-imageviewer-hub";
+import {
+  newShape,
+  updateValue,
+} from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
 import {
   KulImageviewerAdapter,
-  KulImageviewerAdapterComponents,
+  KulImageviewerAdapterWidgets,
   KulImageviewerEvent,
   KulImageviewerEventPayload,
   KulImageviewerHistory,
   KulImageviewerLoadCallback,
-  KulImageviewerProps,
-} from "./kul-imageviewer-declarations";
+} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
+import { KulMasonrySelectedShape } from "src/components/kul-masonry/kul-masonry-declarations";
+import {
+  KulDataCell,
+  KulDataDataset,
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-imageviewer",
@@ -100,6 +101,91 @@ export class KulImageviewer {
   @Prop({ mutable: true }) kulValue: KulDataDataset = {};
   //#endregion
 
+  //#region Internal variables
+  #adapter: KulImageviewerAdapter = {
+    handlers: null,
+    hooks: {
+      get: {
+        comp: this,
+        currentShape: () => this.#getSelectedShapeValue(this.currentShape),
+        history: {
+          current: () => this.history[this.currentShape.index],
+          currentSnapshot: () => {
+            if (this.historyIndex === null) {
+              return;
+            }
+
+            const snapshot =
+              this.history[this.currentShape.index][this.historyIndex];
+
+            return this.#getSelectedShapeValue(snapshot);
+          },
+          full: () => this.history,
+          index: () => this.historyIndex,
+        },
+        spinnerStatus: () => this.isSpinnerActive,
+      },
+      set: {
+        currentShape: (node) => (this.currentShape = node),
+        history: {
+          index: (index) => (this.historyIndex = index),
+          new: (selectedShape, isSnapshot = false) => {
+            const historyByIndex = this.history?.[selectedShape.index] || [];
+
+            if (this.historyIndex < historyByIndex.length - 1) {
+              historyByIndex.splice(this.historyIndex + 1);
+            }
+
+            if (historyByIndex?.length && !isSnapshot) {
+              historyByIndex[0] = selectedShape;
+              return;
+            }
+
+            historyByIndex.push(selectedShape);
+            this.history[selectedShape.index] = historyByIndex;
+            this.historyIndex = historyByIndex.length - 1;
+          },
+          pop: (index = null) => {
+            if (index !== null) {
+              this.history[index] = [this.history[index][0]];
+              if (this.historyIndex === 0) {
+                this.refresh();
+              } else {
+                this.historyIndex = 0;
+              }
+            } else {
+              this.history = {};
+              this.historyIndex = null;
+            }
+          },
+        },
+        spinnerStatus: (active) =>
+          (this.#adapter.widgets.refs.imageviewer.spinner.kulActive = active),
+      },
+    },
+    widgets: {
+      jsx: null,
+      refs: {
+        explorer: {
+          load: null,
+          masonry: null,
+          textfield: null,
+        },
+        imageviewer: {
+          canvas: null,
+          clearHistory: null,
+          deleteShape: null,
+          redo: null,
+          save: null,
+          spinner: null,
+          undo: null,
+          tree: null,
+        },
+      },
+    },
+  };
+  //#endregion
+
   //#region Events
   @Event({
     eventName: "kul-imageviewer-event",
@@ -162,9 +248,9 @@ export class KulImageviewer {
    * This method is used to retrieve the references to the subcomponents.
    */
   @Method()
-  async getComponents(): Promise<KulImageviewerAdapterComponents["refs"]> {
-    const { components } = this.#adapter;
-    const { refs } = components;
+  async getComponents(): Promise<KulImageviewerAdapterWidgets["refs"]> {
+    const { widgets } = this.#adapter;
+    const { refs } = widgets;
 
     return refs;
   }
@@ -194,12 +280,13 @@ export class KulImageviewer {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @param {boolean} descriptions - When true, includes descriptions for each property.
    * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulImageviewerProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -239,97 +326,9 @@ export class KulImageviewer {
   }
   //#endregion
 
-  //#region Internal variables
-  #kulManager = kulManagerInstance();
-  #adapter: KulImageviewerAdapter = {
-    components: {
-      jsx: null,
-      refs: {
-        explorer: {
-          load: null,
-          masonry: null,
-          textfield: null,
-        },
-        imageviewer: {
-          canvas: null,
-          clearHistory: null,
-          deleteShape: null,
-          redo: null,
-          save: null,
-          spinner: null,
-          undo: null,
-          tree: null,
-        },
-      },
-    },
-    handlers: null,
-    hooks: {
-      get: {
-        comp: this,
-        manager: this.#kulManager,
-        currentShape: () => this.#getSelectedShapeValue(this.currentShape),
-        history: {
-          current: () => this.history[this.currentShape.index],
-          currentSnapshot: () => {
-            if (this.historyIndex === null) {
-              return;
-            }
-
-            const snapshot =
-              this.history[this.currentShape.index][this.historyIndex];
-
-            return this.#getSelectedShapeValue(snapshot);
-          },
-          full: () => this.history,
-          index: () => this.historyIndex,
-        },
-        spinnerStatus: () => this.isSpinnerActive,
-      },
-      set: {
-        currentShape: (node) => (this.currentShape = node),
-        history: {
-          index: (index) => (this.historyIndex = index),
-          new: (selectedShape, isSnapshot = false) => {
-            const historyByIndex = this.history?.[selectedShape.index] || [];
-
-            if (this.historyIndex < historyByIndex.length - 1) {
-              historyByIndex.splice(this.historyIndex + 1);
-            }
-
-            if (historyByIndex?.length && !isSnapshot) {
-              historyByIndex[0] = selectedShape;
-              return;
-            }
-
-            historyByIndex.push(selectedShape);
-            this.history[selectedShape.index] = historyByIndex;
-            this.historyIndex = historyByIndex.length - 1;
-          },
-          pop: (index = null) => {
-            if (index !== null) {
-              this.history[index] = [this.history[index][0]];
-              if (this.historyIndex === 0) {
-                this.refresh();
-              } else {
-                this.historyIndex = 0;
-              }
-            } else {
-              this.history = {};
-              this.historyIndex = null;
-            }
-          },
-        },
-        spinnerStatus: (active) =>
-          (this.#adapter.components.refs.imageviewer.spinner.kulActive =
-            active),
-      },
-    },
-  };
-  //#endregion
-
   //#region Private methods
   #getSelectedShapeValue(selectedShape: KulMasonrySelectedShape) {
-    const { data } = this.#kulManager;
+    const { data } = kulManagerSingleton;
     const { cell } = data;
     const { stringify } = cell;
 
@@ -344,8 +343,8 @@ export class KulImageviewer {
     }
   }
   #prepViewer(): VNode {
-    const { components } = this.#adapter;
-    const { jsx } = components;
+    const { widgets } = this.#adapter;
+    const { jsx } = widgets;
     const { imageviewer } = jsx;
     const {
       canvas,
@@ -396,8 +395,8 @@ export class KulImageviewer {
     );
   }
   #prepExplorer(): VNode {
-    const { components } = this.#adapter;
-    const { jsx } = components;
+    const { widgets } = this.#adapter;
+    const { jsx } = widgets;
     const { explorer } = jsx;
     const { load, masonry, textfield } = explorer;
 
@@ -413,37 +412,36 @@ export class KulImageviewer {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    const { theme } = this.#kulManager;
+    const { theme } = kulManagerSingleton;
 
     this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.components.jsx = createComponents(this.#adapter);
+    this.#adapter.widgets.jsx = createWidgets(this.#adapter);
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug } = this.#kulManager;
+    const { debug } = kulManagerSingleton;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.updateDebugInfo(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = this.#kulManager;
+    const { debug } = kulManagerSingleton;
 
     debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = this.#kulManager;
+    const { debug } = kulManagerSingleton;
 
     debug.updateDebugInfo(this, "did-render");
   }
   render() {
+    const { theme } = kulManagerSingleton;
+    const { kulStyle } = this;
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class="imageviewer">{this.#prepImageviewer()}</div>
         </div>
@@ -451,7 +449,7 @@ export class KulImageviewer {
     );
   }
   disconnectedCallback() {
-    const { theme } = this.#kulManager;
+    const { theme } = kulManagerSingleton;
 
     theme.unregister(this);
   }

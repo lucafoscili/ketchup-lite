@@ -14,7 +14,7 @@ import {
   Watch,
 } from "@stencil/core";
 
-import { ACTIONS } from "./helpers/kul-masonry-actions";
+import { ACTIONS } from "./handlers/kul-masonry-main";
 import {
   KulMasonryAdapter,
   KulMasonryEvent,
@@ -202,12 +202,13 @@ export class KulMasonry {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @param {boolean} descriptions - When true, includes descriptions for each property.
    * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulMasonryProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Returns the selected shape.

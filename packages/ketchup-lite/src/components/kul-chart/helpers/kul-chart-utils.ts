@@ -1,4 +1,4 @@
-import { kulManagerInstance } from "src/managers/kul-manager/kul-manager";
+import { kulManagerSingleton } from "src";
 
 //#region applyOpacity
 export const applyOpacity = (color: string, opacity: string) =>
@@ -7,7 +7,7 @@ export const applyOpacity = (color: string, opacity: string) =>
 
 //#region getHexColor
 export const getHexColor = (color: string) => {
-  const { theme } = kulManagerInstance();
+  const { theme } = kulManagerSingleton;
   return theme.colorCheck(color).hexColor;
 };
 //#endregion

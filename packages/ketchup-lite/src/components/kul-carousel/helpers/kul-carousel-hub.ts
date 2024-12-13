@@ -1,19 +1,10 @@
-import * as MAIN_COMPONENTS from "../components/kul-carousel-main";
-import * as MAIN_HANDLERS from "../handlers/kul-carousel-main";
+import * as MAIN_HANDLERS from "src/components/kul-carousel/handlers/kul-carousel-main";
 import {
   KulCarouselAdapter,
-  KulCarouselAdapterComponents,
   KulCarouselAdapterHandlers,
-} from "../kul-carousel-declarations";
-
-export const createComponents: (
-  adapter: KulCarouselAdapter,
-) => KulCarouselAdapterComponents["jsx"] = (adapter) => {
-  return {
-    back: MAIN_COMPONENTS.prepBack(adapter),
-    forward: MAIN_COMPONENTS.prepForward(adapter),
-  };
-};
+  KulCarouselAdapterWidgets,
+} from "src/components/kul-carousel/kul-carousel-declarations";
+import * as MAIN_WIDGETS from "src/components/kul-carousel/widgets/kul-carousel-main";
 
 export const createHandlers: (
   adapter: KulCarouselAdapter,
@@ -23,5 +14,14 @@ export const createHandlers: (
     next: () => MAIN_HANDLERS.prepNext(adapter),
     previous: () => MAIN_HANDLERS.prepPrevious(adapter),
     toSlide: (value: number) => MAIN_HANDLERS.prepToSlide(adapter, value),
+  };
+};
+
+export const createWidgets: (
+  adapter: KulCarouselAdapter,
+) => KulCarouselAdapterWidgets["jsx"] = (adapter) => {
+  return {
+    back: MAIN_WIDGETS.prepBack(adapter),
+    forward: MAIN_WIDGETS.prepForward(adapter),
   };
 };

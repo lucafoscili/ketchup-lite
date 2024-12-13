@@ -1,11 +1,12 @@
+import { kulManagerSingleton } from "src";
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import { CHAT_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
+import { KulProgressbarEventPayload } from "src/components/kul-progressbar/kul-progressbar-declarations";
 import {
   KulLLMChoiceMessage,
   KulLLMRequest,
 } from "src/managers/kul-llm/kul-llm-declarations";
-import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
-import { KulProgressbarEventPayload } from "../../kul-progressbar/kul-progressbar-declarations";
-import { CHAT_IDS } from "../helpers/kul-chat-utils";
-import { KulChatAdapter } from "../kul-chat-declarations";
 
 //#region Button handler
 export const buttonEventHandler = async (
@@ -14,9 +15,9 @@ export const buttonEventHandler = async (
 ) => {
   const { eventType, id } = e.detail;
 
-  const { components, handlers, hooks } = adapter;
+  const { handlers, hooks, widgets } = adapter;
   const { send, stt } = handlers;
-  const { refs } = components;
+  const { refs } = widgets;
   const { set } = hooks;
   const { chat } = refs;
   const { prompt } = chat;
@@ -65,8 +66,8 @@ export const disableInteractivity = (
   adapter: KulChatAdapter,
   shouldDisable: boolean,
 ) => {
-  const { components } = adapter;
-  const { refs } = components;
+  const { widgets } = adapter;
+  const { refs } = widgets;
   const { chat } = refs;
   const { prompt, send, stt } = chat;
 
@@ -78,8 +79,8 @@ export const disableInteractivity = (
 
 //#region Send
 export const send = async (adapter: KulChatAdapter) => {
-  const { components, handlers, hooks } = adapter;
-  const { refs } = components;
+  const { handlers, hooks, widgets } = adapter;
+  const { refs } = widgets;
   const { sendPrompt, updateHistory } = handlers;
   const { get, set } = hooks;
   const { chat } = refs;
@@ -105,16 +106,16 @@ export const send = async (adapter: KulChatAdapter) => {
 
 //#region Send prompt
 export const sendPrompt = async (adapter: KulChatAdapter) => {
-  const { components, handlers, hooks } = adapter;
-  const { refs } = components;
+  const { debug, llm } = kulManagerSingleton;
+  const { handlers, hooks, widgets } = adapter;
+  const { refs } = widgets;
   const { disableInteractivity, updateHistory } = handlers;
   const { get } = hooks;
   const { chat } = refs;
-  const { comp, history, manager } = get;
+  const { comp, history } = get;
   const { prompt, spinner } = chat;
   const { kulEndpointUrl, kulMaxTokens, kulSeed, kulSystem, kulTemperature } =
     comp;
-  const { debug, llm } = manager;
 
   requestAnimationFrame(() => {
     spinner.kulActive = true;
@@ -182,21 +183,20 @@ export const updateHistory = async (
 
 //#region STT
 export const stt = (adapter: KulChatAdapter) => {
-  const { components, hooks } = adapter;
-  const { refs } = components;
-  const { get } = hooks;
-  const { manager } = get;
+  const { llm } = kulManagerSingleton;
+  const { widgets } = adapter;
+  const { refs } = widgets;
   const { chat } = refs;
   const { prompt, stt } = chat;
 
-  manager.llm.speechToText(prompt, stt);
+  llm.speechToText(prompt, stt);
 };
 //#endregion
 
 //#region Update tokens count
 export const updateTokensCount = async (adapter: KulChatAdapter) => {
-  const { components, hooks } = adapter;
-  const { refs } = components;
+  const { hooks, widgets } = adapter;
+  const { refs } = widgets;
   const { get } = hooks;
   const { comp, history } = get;
   const { chat, settings } = refs;

@@ -11,16 +11,14 @@ import {
   State,
 } from "@stencil/core";
 
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
 import {
   KulDrawerEvent,
   KulDrawerEventPayload,
-  KulDrawerProps,
-} from "./kul-drawer-declarations";
+} from "src/components/kul-drawer/kul-drawer-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-drawer",
@@ -59,10 +57,6 @@ export class KulDrawer {
   @Prop({ mutable: true, reflect: true }) kulStyle = "";
   //#endregion
 
-  //#region Internal variables
-  #kulManager = kulManagerInstance();
-  //#endregion
-
   //#region Events
   @Event({
     eventName: "kul-drawer-event",
@@ -99,13 +93,14 @@ export class KulDrawer {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulDrawerProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Returns the state of the drawer.
@@ -156,26 +151,33 @@ export class KulDrawer {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
   }
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
   render() {
+    const { theme } = kulManagerSingleton;
+    const { kulStyle, opened } = this;
+
     return (
-      <Host kul-opened={this.opened}>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+      <Host kul-opened={opened}>
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div
           class="backdrop"
           onClick={(e) => {
@@ -203,7 +205,9 @@ export class KulDrawer {
     );
   }
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
   //#endregion
 }

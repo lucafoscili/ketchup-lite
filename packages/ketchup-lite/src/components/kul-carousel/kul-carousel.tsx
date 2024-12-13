@@ -14,24 +14,25 @@ import {
   Watch,
 } from "@stencil/core";
 
+import { kulManagerSingleton } from "src";
+import {
+  createHandlers,
+  createWidgets,
+} from "src/components/kul-carousel/helpers/kul-carousel-hub";
+import {
+  KulCarouselAdapter,
+  KulCarouselEvent,
+  KulCarouselEventPayload,
+} from "src/components/kul-carousel/kul-carousel-declarations";
 import {
   KulDataCell,
   KulDataDataset,
   KulDataShapes,
   KulDataShapesMap,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { createComponents, createHandlers } from "./helpers/kul-carousel-hub";
-import {
-  KulCarouselAdapter,
-  KulCarouselEvent,
-  KulCarouselEventPayload,
-  KulCarouselProps,
-} from "./kul-carousel-declarations";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-carousel",
@@ -97,11 +98,29 @@ export class KulCarousel {
 
   //#region Internal variables
   #interval: NodeJS.Timeout;
-  #kulManager = kulManagerInstance();
   #lastSwipeTime = 0;
   #swipeThrottleDelay = 300;
   #touchStartX = 0;
   #touchEndX = 0;
+  #adapter: KulCarouselAdapter = {
+    components: {
+      jsx: null,
+      refs: { back: null, forward: null },
+    },
+    handlers: null,
+    hooks: {
+      get: {
+        comp: this,
+        currentIndex: () => this.currentIndex,
+        interval: () => this.#interval,
+        totalSlides: () => this.#getTotalSlides(),
+      },
+      set: {
+        interval: (value) => (this.#interval = value),
+        currentIndex: (value) => (this.currentIndex = value),
+      },
+    },
+  };
   //#endregion
 
   //#region Events
@@ -126,14 +145,12 @@ export class KulCarousel {
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
+    const { data, debug } = kulManagerSingleton;
+
     try {
-      this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
+      this.shapes = data.cell.shapes.getAll(this.kulData);
     } catch (error) {
-      this.#kulManager.debug.logs.new(
-        this,
-        "Error updating shapes: " + error,
-        "error",
-      );
+      debug.logs.new(this, "Error updating shapes: " + error, "error");
     }
   }
   //#endregion
@@ -148,13 +165,14 @@ export class KulCarousel {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulCarouselProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Changes the slide to the specified index if it's within bounds.
@@ -208,26 +226,6 @@ export class KulCarousel {
   //#endregion
 
   //#region Private methods
-  #adapter: KulCarouselAdapter = {
-    components: {
-      jsx: null,
-      refs: { back: null, forward: null },
-    },
-    handlers: null,
-    hooks: {
-      get: {
-        comp: this,
-        currentIndex: () => this.currentIndex,
-        interval: () => this.#interval,
-        manager: this.#kulManager,
-        totalSlides: () => this.#getTotalSlides(),
-      },
-      set: {
-        interval: (value) => (this.#interval = value),
-        currentIndex: (value) => (this.currentIndex = value),
-      },
-    },
-  };
   #getTotalSlides() {
     return this.shapes?.[this.kulShape]?.length || 0;
   }
@@ -235,8 +233,8 @@ export class KulCarousel {
     return !!this.shapes?.[this.kulShape];
   }
   #prepCarousel(): VNode {
-    const { components } = this.#adapter;
-    const { jsx } = components;
+    const { widgets } = this.#adapter;
+    const { jsx } = widgets;
     const { back, forward } = jsx;
 
     if (this.#hasShapes()) {
@@ -332,24 +330,27 @@ export class KulCarousel {
     return indicators;
   }
   #prepSlide(): VNode {
+    const { data } = kulManagerSingleton;
+    const { currentIndex, kulShape } = this;
+
     const props: Partial<KulDataCell<KulDataShapes>>[] = this.shapes[
-      this.kulShape
+      kulShape
     ].map(() => ({
       htmlProps: {
         className: "kul-fit",
       },
     }));
 
-    const decoratedShapes = this.#kulManager.data.cell.shapes.decorate(
-      this.kulShape,
-      this.shapes[this.kulShape],
+    const decoratedShapes = data.cell.shapes.decorate(
+      kulShape,
+      this.shapes[kulShape],
       async (e) => this.onKulEvent(e, "kul-event"),
       props,
     ).element;
 
     return (
-      <div class="carousel__slide" data-index={this.currentIndex}>
-        <Fragment>{decoratedShapes[this.currentIndex]}</Fragment>
+      <div class="carousel__slide" data-index={currentIndex}>
+        <Fragment>{decoratedShapes[currentIndex]}</Fragment>
       </div>
     );
   }
@@ -357,38 +358,44 @@ export class KulCarousel {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
 
     this.updateShapes();
 
     this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.components.jsx = createComponents(this.#adapter);
+    this.#adapter.widgets.jsx = createWidgets(this.#adapter);
 
     if (this.kulAutoPlay) {
       this.#adapter.handlers.autoplay.start();
     }
   }
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
   render() {
+    const { theme } = kulManagerSingleton;
     const { handlers } = this.#adapter;
     const { next, previous } = handlers;
+    const { kulStyle } = this;
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div
             class="carousel"
@@ -421,11 +428,12 @@ export class KulCarousel {
   }
 
   disconnectedCallback() {
+    const { theme } = kulManagerSingleton;
     const { handlers } = this.#adapter;
     const { autoplay } = handlers;
     const { stop } = autoplay;
 
-    this.#kulManager.theme.unregister(this);
+    theme.unregister(this);
     stop();
   }
   //#endregion

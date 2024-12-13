@@ -1,18 +1,19 @@
 import { h } from "@stencil/core";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
+
 import {
   buttonEventHandler,
   canvasEventHandler,
   treeEventHandler,
-} from "../handlers/kul-imageviewer-main";
-import { IMAGEVIEWER_IDS } from "../helpers/kul-imageviewer-utils";
-import { KulImageviewerAdapter } from "../kul-imageviewer-declarations";
+} from "src/components/kul-imageviewer/handlers/kul-imageviewer-main";
+import { IMAGEVIEWER_IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
+import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
 
 export const prepImageviewer = (
   adapter: KulImageviewerAdapter,
-): KulImageviewerAdapter["components"]["jsx"]["imageviewer"] => {
-  const { components, hooks } = adapter;
-  const { refs } = components;
+): KulImageviewerAdapter["widgets"]["jsx"]["imageviewer"] => {
+  const { hooks, widgets } = adapter;
+  const { refs } = widgets;
   const { get } = hooks;
   const { imageviewer } = refs;
   const { comp, history, spinnerStatus } = get;

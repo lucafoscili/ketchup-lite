@@ -1,8 +1,8 @@
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulEventPayload } from "../../types/GenericTypes";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Dataset
 export interface KulArticleDataset extends KulDataDataset {
@@ -32,10 +32,6 @@ export interface KulArticleEventPayload
 //#endregion
 
 //#region Props
-export enum KulArticleProps {
-  kulData = "Actual data of the article",
-  kulStyle = "Custom style of the component.",
-}
 export interface KulArticlePropsInterface {
   kulData?: KulArticleDataset;
   kulStyle?: string;

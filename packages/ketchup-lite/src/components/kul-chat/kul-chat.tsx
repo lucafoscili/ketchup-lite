@@ -15,24 +15,25 @@ import {
   Watch,
 } from "@stencil/core";
 
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { KulLLMChoiceMessage } from "../../managers/kul-llm/kul-llm-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
-import { createComponents, createHandlers } from "./helpers/kul-chat-hub";
+import { kulManagerSingleton } from "src";
+import {
+  createHandlers,
+  createWidgets,
+} from "src/components/kul-chat/helpers/kul-chat-hub";
 import {
   KulChatAdapter,
   KulChatEvent,
   KulChatEventPayload,
   KulChatHistory,
   KulChatLayout,
-  KulChatProps,
   KulChatStatus,
   KulChatView,
-} from "./kul-chat-declarations";
+} from "src/components/kul-chat/kul-chat-declarations";
+import { KulTypewriterPropsInterface } from "src/components/kul-typewriter/kul-typewriter-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-chat",
@@ -139,8 +140,52 @@ export class KulChat {
   //#endregion
 
   //#region Internal variables
-  #kulManager = kulManagerInstance();
   #statusinterval: NodeJS.Timeout;
+  #adapter: KulChatAdapter = {
+    handlers: null,
+    hooks: {
+      get: {
+        comp: this,
+        history: () => this.history,
+        status: () => this.status,
+        toolbarMessage: () => this.toolbarMessage,
+        view: () => this.view,
+      },
+      set: {
+        history: (history) => (this.history = history),
+        status: (status) => (this.status = status),
+        toolbarMessage: (element) => (this.toolbarMessage = element),
+        view: (view) => (this.view = view),
+      },
+    },
+    widgets: {
+      jsx: null,
+      refs: {
+        chat: {
+          clear: null,
+          progressbar: null,
+          prompt: null,
+          send: null,
+          settings: null,
+          spinner: null,
+          stt: null,
+        },
+        settings: {
+          back: null,
+          endpoint: null,
+          maxTokens: null,
+          polling: null,
+          system: null,
+          temperature: null,
+        },
+        toolbar: {
+          deleteMessage: null,
+          copyContent: null,
+          regenerate: null,
+        },
+      },
+    },
+  };
   //#endregion
 
   //#region Events
@@ -223,13 +268,14 @@ export class KulChat {
     return this.history?.slice(-1)?.[0]?.content ?? "";
   }
   /**
-   * Retrieves the properties of the component, with optional descriptions.
-   * @param {boolean} descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
-   * @returns {Promise<GenericObject>} A promise that resolves to an object where each key is a property name, optionally with its description.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulChatProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -265,58 +311,14 @@ export class KulChat {
   //#endregion
 
   //#region Private methods
-  #adapter: KulChatAdapter = {
-    components: {
-      jsx: null,
-      refs: {
-        chat: {
-          clear: null,
-          progressbar: null,
-          prompt: null,
-          send: null,
-          settings: null,
-          spinner: null,
-          stt: null,
-        },
-        settings: {
-          back: null,
-          endpoint: null,
-          maxTokens: null,
-          polling: null,
-          system: null,
-          temperature: null,
-        },
-        toolbar: {
-          deleteMessage: null,
-          copyContent: null,
-          regenerate: null,
-        },
-      },
-    },
-    handlers: null,
-    hooks: {
-      get: {
-        comp: this,
-        manager: this.#kulManager,
-        history: () => this.history,
-        status: () => this.status,
-        toolbarMessage: () => this.toolbarMessage,
-        view: () => this.view,
-      },
-      set: {
-        history: (history) => (this.history = history),
-        status: (status) => (this.status = status),
-        toolbarMessage: (element) => (this.toolbarMessage = element),
-        view: (view) => (this.view = view),
-      },
-    },
-  };
   async #checkLLMStatus() {
+    const { llm } = kulManagerSingleton;
+
     if (this.status === "offline") {
       this.status = "connecting";
     }
     try {
-      const response = await this.#kulManager.llm.poll(this.kulEndpointUrl);
+      const response = await llm.poll(this.kulEndpointUrl);
 
       if (!response.ok) {
         this.status = "offline";
@@ -329,8 +331,8 @@ export class KulChat {
     this.onKulEvent(new CustomEvent("polling"), "polling");
   }
   #prepChat = (): VNode => {
-    const { components } = this.#adapter;
-    const { jsx } = components;
+    const { widgets } = this.#adapter;
+    const { jsx } = widgets;
     const { chat } = jsx;
     const { clear, progressbar, prompt, send, settings, spinner, stt } = chat;
 
@@ -384,10 +386,12 @@ export class KulChat {
     );
   };
   #prepContent = (message: KulLLMChoiceMessage): VNode[] => {
+    const { kulTypewriterProps } = this;
+
     const useTypewriter = !!(
       message.role === "assistant" &&
-      typeof this.kulTypewriterProps === "object" &&
-      this.kulTypewriterProps !== null
+      typeof kulTypewriterProps === "object" &&
+      kulTypewriterProps !== null
     );
 
     const elements: VNode[] = [];
@@ -404,7 +408,7 @@ export class KulChat {
           useTypewriter ? (
             <kul-typewriter
               class="chat__messages__paragraph"
-              {...this.kulTypewriterProps}
+              {...kulTypewriterProps}
               kulValue={textPart}
             ></kul-typewriter>
           ) : (
@@ -463,8 +467,8 @@ export class KulChat {
     );
   };
   #prepSettings = () => {
-    const { components } = this.#adapter;
-    const { jsx } = components;
+    const { widgets } = this.#adapter;
+    const { jsx } = widgets;
     const { settings } = jsx;
     const { back, endpoint, maxTokens, polling, system, temperature } =
       settings;
@@ -483,8 +487,8 @@ export class KulChat {
     );
   };
   #prepToolbar = (m: KulLLMChoiceMessage): VNode => {
-    const { components } = this.#adapter;
-    const { jsx } = components;
+    const { widgets } = this.#adapter;
+    const { jsx } = widgets;
     const { toolbar } = jsx;
     const { copyContent, deleteMessage, regenerate } = toolbar;
 
@@ -500,10 +504,12 @@ export class KulChat {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { debug, theme } = kulManagerSingleton;
+
+    theme.register(this);
 
     this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.components.jsx = createComponents(this.#adapter);
+    this.#adapter.widgets.jsx = createWidgets(this.#adapter);
 
     const { handlers } = this.#adapter;
     const { updateHistory } = handlers;
@@ -517,35 +523,37 @@ export class KulChat {
         const cb = () => (this.history = parsedValue);
         updateHistory(cb);
       } catch (error) {
-        this.#kulManager.debug.logs.new(
-          this,
-          "Couldn't set value for chat history",
-          "warning",
-        );
+        debug.logs.new(this, "Couldn't set value for chat history", "warning");
       }
     }
   }
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.#statusinterval = setInterval(() => {
       this.#checkLLMStatus();
     }, this.kulPollingInterval);
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#checkLLMStatus();
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
   render() {
+    const { theme } = kulManagerSingleton;
+
     return (
       <Host>
         {this.kulStyle && (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
+          <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>
         )}
         <div id={KUL_WRAPPER_ID}>
           <div
@@ -564,8 +572,10 @@ export class KulChat {
     );
   }
   disconnectedCallback() {
+    const { theme } = kulManagerSingleton;
+
     clearInterval(this.#statusinterval);
-    this.#kulManager.theme.unregister(this);
+    theme.unregister(this);
   }
   //#endregion
 }

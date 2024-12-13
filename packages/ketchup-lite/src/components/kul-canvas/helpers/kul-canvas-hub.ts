@@ -1,10 +1,10 @@
-import * as MAIN_COMPONENTS from "../components/kul-canvas-main";
-import * as MAIN_HANDLERS from "../handlers/kul-canvas-main";
+import * as MAIN_HANDLERS from "src/components/kul-canvas/handlers/kul-canvas-main";
 import {
   KulCanvasAdapter,
-  KulCanvasAdapterComponents,
   KulCanvasAdapterHandlers,
-} from "../kul-canvas-declarations";
+  KulCanvasAdapterWidgets,
+} from "src/components/kul-canvas/kul-canvas-declarations";
+import * as MAIN_WIDGETS from "src/components/kul-canvas/elements/kul-canvas-main";
 
 export const createHandlers: (
   adapter: KulCanvasAdapter,
@@ -16,12 +16,12 @@ export const createHandlers: (
   };
 };
 
-export const createComponents: (
+export const createWidgets: (
   adapter: KulCanvasAdapter,
-) => KulCanvasAdapterComponents["jsx"] = (adapter) => {
+) => KulCanvasAdapterWidgets["jsx"] = (adapter) => {
   return {
-    board: () => MAIN_COMPONENTS.prepBoard(adapter),
-    image: () => MAIN_COMPONENTS.prepImage(adapter),
-    preview: () => MAIN_COMPONENTS.prepPreview(adapter),
+    board: () => MAIN_WIDGETS.prepBoard(adapter),
+    image: () => MAIN_WIDGETS.prepImage(adapter),
+    preview: () => MAIN_WIDGETS.prepPreview(adapter),
   };
 };

@@ -1,20 +1,3 @@
-import {
-  clearHistory,
-  clearSelection,
-  deleteShape,
-  findImage,
-  load,
-  redo,
-  save,
-} from "src/components/kul-imageviewer/handlers/kul-imageviewer-main";
-import {
-  KulImageviewerAdapter,
-  KulImageviewerAdapterHandlers,
-  KulImageviewerAdapterWidgets,
-} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
-import { prepExplorer } from "src/components/kul-imageviewer/widgets/kul-imageviewer-explorer";
-import { prepImageviewer } from "src/components/kul-imageviewer/widgets/kul-imageviewer-main";
-
 export const createHandlers: (
   adapter: KulImageviewerAdapter,
 ) => KulImageviewerAdapterHandlers = (adapter) => {

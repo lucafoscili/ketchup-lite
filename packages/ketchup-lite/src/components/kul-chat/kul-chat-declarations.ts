@@ -1,17 +1,17 @@
 import { VNode } from "@stencil/core";
-import { KulLLMChoiceMessage } from "../../managers/kul-llm/kul-llm-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
-import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
-import { KulChat } from "./kul-chat";
+
+import { KulChat } from "src/components/kul-chat/kul-chat";
+import { KulTypewriterPropsInterface } from "src/components/kul-typewriter/kul-typewriter-declarations";
+import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
+import { KulComponentAdapter, KulEventPayload } from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulChatAdapter extends KulComponentAdapter<KulChat> {
-  components: KulChatAdapterComponents;
   handlers: KulChatAdapterHandlers;
   hooks: KulChatAdapterHooks;
+  widgets: KulChatAdapterWidgets;
 }
-export interface KulChatAdapterComponents {
+export interface KulChatAdapterWidgets {
   jsx: {
     chat: {
       clear: () => VNode;
@@ -75,7 +75,6 @@ export interface KulChatAdapterHooks {
   get: {
     comp: KulChat;
     history: () => KulChatHistory;
-    manager: KulManager;
     status: () => KulChatStatus;
     toolbarMessage: () => KulLLMChoiceMessage;
     view: () => KulChatView;
@@ -110,19 +109,6 @@ export type KulChatView = "chat" | "settings";
 //#endregion
 
 //#region Props
-export enum KulChatProps {
-  kulContextWindow = "How many tokens the context window can handle, used to calculate the occupied space.",
-  kulEndpointUrl = "URL of the endpoint where the LLM is hosted.",
-  kulLayout = "Sets the layout of the chat.",
-  kulMaxTokens = "Maximum number of tokens allowed in the LLM's answer.",
-  kulPollingInterval = "How often the component checks whether the LLM endpoint is online or not.",
-  kulSeed = "Seed value for the LLM's answer generation.",
-  kulStyle = "Custom style of the component.",
-  kulSystem = "System message for the LLM.",
-  kulTemperature = "Sets the creative boundaries of the LLM.",
-  kulTypewriterProps = "Sets the props of the assistant typewriter component. Set this prop to false to replace the typewriter with a simple text element.",
-  kulValue = "Initial history of the chat.",
-}
 export interface KulChatPropsInterface {
   kulContextWindow?: number;
   kulEndpointUrl?: string;

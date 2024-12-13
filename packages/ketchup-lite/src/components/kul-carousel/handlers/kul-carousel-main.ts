@@ -1,7 +1,7 @@
 import {
   KulCarouselAdapter,
   KulCarouselAdapterHandlers,
-} from "../kul-carousel-declarations";
+} from "src/components/kul-carousel/kul-carousel-declarations";
 
 export const prepAutoplay: (
   adapter: KulCarouselAdapter,

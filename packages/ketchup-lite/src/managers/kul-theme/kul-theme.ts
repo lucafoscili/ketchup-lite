@@ -1,4 +1,3 @@
-import { getAssetPath } from "@stencil/core";
 import { KulDataNode } from "src/components";
 import type {
   GenericMap,
@@ -273,6 +272,13 @@ export class KulTheme {
 
   //#region setKulStyle
   setKulStyle = (comp: KulComponent<KulComponentName>) => {
+    const isMaliciousCSS = (css: string) => {
+      if (!css) return true;
+      if (/javascript:/i.test(css)) return true;
+      if (/<script>/i.test(css)) return true;
+      if (/url\(.*(javascript|data):/i.test(css)) return true;
+      return false;
+    };
     const styles: GenericObject = this.list[this.name].customStyles;
     let completeStyle = "";
     if (styles && styles[this.#MASTER_CUSTOM_STYLE]) {
@@ -284,7 +290,7 @@ export class KulTheme {
     if (comp.kulStyle) {
       completeStyle += " " + comp.kulStyle;
     }
-    return completeStyle ? completeStyle : null;
+    return !isMaliciousCSS(completeStyle) && completeStyle;
   };
   //#endregion
 

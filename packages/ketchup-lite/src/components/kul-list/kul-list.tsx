@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Listen,
@@ -13,21 +12,19 @@ import {
   State,
 } from "@stencil/core";
 
+import { kulManagerSingleton } from "src";
 import {
   KulListEvent,
   KulListEventPayload,
-  KulListProps,
-} from "./kul-list-declarations";
+} from "src/components/kul-list/kul-list-declarations";
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { KulLanguageGeneric } from "../../managers/kul-language/kul-language-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
+import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-list",
@@ -40,10 +37,7 @@ export class KulList {
    */
   @Element() rootElement: HTMLKulListElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -64,11 +58,9 @@ export class KulList {
    * @default undefined
    */
   @State() selected: number;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The data of the list.
    * @default []
@@ -104,22 +96,14 @@ export class KulList {
    * @default ""
    */
   @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
+  //#region Internal variables
   #listItems: HTMLDivElement[] = [];
   #rippleSurface: HTMLElement[] = [];
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-list-event",
     composed: true,
@@ -127,13 +111,14 @@ export class KulList {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulListEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulListEvent,
     node?: KulDataNode,
     index = 0,
   ) {
+    const { theme } = kulManagerSingleton;
+
     switch (eventType) {
       case "blur":
         this.focused = null;
@@ -153,10 +138,7 @@ export class KulList {
         break;
       case "pointerdown":
         if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface[index],
-          );
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface[index]);
         }
         break;
     }
@@ -169,14 +151,14 @@ export class KulList {
       node,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                L i s t e n e r s                */
-  /*-------------------------------------------------*/
-
+  //#region Listeners
   @Listen("keydown")
   listenKeydown(e: KeyboardEvent) {
-    if (this.kulNavigation) {
+    const { focused, kulNavigation } = this;
+
+    if (kulNavigation) {
       switch (e.key) {
         case "ArrowDown":
           e.preventDefault();
@@ -191,27 +173,20 @@ export class KulList {
         case "Enter":
           e.preventDefault();
           e.stopPropagation();
-          this.#handleSelection(this.focused);
+          this.#handleSelection(focused);
           break;
       }
     }
   }
-
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
   /**
    * Focuses the next element of the list.
    */
   @Method()
   async focusNext(): Promise<void> {
-    if (
-      isNaN(this.focused) ||
-      this.focused === null ||
-      this.focused === undefined
-    ) {
-      this.focused = this.selected;
+    const { focused, selected } = this;
+
+    if (isNaN(focused) || focused === null || focused === undefined) {
+      this.focused = selected;
     } else {
       this.focused++;
     }
@@ -225,12 +200,10 @@ export class KulList {
    */
   @Method()
   async focusPrevious(): Promise<void> {
-    if (
-      isNaN(this.focused) ||
-      this.focused === null ||
-      this.focused === undefined
-    ) {
-      this.focused = this.selected;
+    const { focused, selected } = this;
+
+    if (isNaN(focused) || focused === null || focused === undefined) {
+      this.focused = selected;
     } else {
       this.focused--;
     }
@@ -248,13 +221,14 @@ export class KulList {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulListProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Returns the selected node.
@@ -293,11 +267,9 @@ export class KulList {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #handleSelection(index: number): void {
     if (
       this.kulSelectable &&
@@ -308,9 +280,10 @@ export class KulList {
       this.selected = index;
     }
   }
-
   #prepDeleteIcon(node: KulDataNode) {
-    const path = getAssetPath(`./assets/svg/clear.svg`);
+    const { assets } = kulManagerSingleton;
+
+    const path = assets.get(`./assets/svg/clear.svg`);
     const style = {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
@@ -328,16 +301,16 @@ export class KulList {
       </div>
     );
   }
-
   #prepIcon(node: KulDataNode) {
-    const path = getAssetPath(`./assets/svg/${node.icon}.svg`);
+    const { assets } = kulManagerSingleton;
+
+    const path = assets.get(`./assets/svg/${node.icon}.svg`);
     const style = {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
     };
     return <div class="node__icon" style={style}></div>;
   }
-
   #prepNode(node: KulDataNode, index: number) {
     const isFocused =
       this.focused === this.kulData.nodes.findIndex((n) => n.id === node.id);
@@ -386,69 +359,69 @@ export class KulList {
       </li>
     );
   }
-
   #prepSubtitle(node: KulDataNode) {
     return node.description ? (
       <div class="node__subtitle">{node.description}</div>
     ) : undefined;
   }
-
   #prepTitle(node: KulDataNode) {
     return String(node.value).valueOf() ? (
       <div class="node__title">{String(node.value).valueOf()}</div>
     ) : undefined;
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (this.#rippleSurface?.length) {
       this.#rippleSurface.forEach((el) => {
-        this.#kulManager.theme.ripple.setup(el);
+        theme.ripple.setup(el);
       });
     }
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
-    const isEmpty = !!!this.kulData?.nodes?.length;
+    const { language, theme } = kulManagerSingleton;
+    const { kulData, kulEmptyLabel, kulSelectable, kulStyle } = this;
+
+    const isEmpty = !!!kulData?.nodes?.length;
     this.#listItems = [];
     const className = {
       list: true,
       "list--empty": isEmpty,
-      "list--selectable": this.kulSelectable,
+      "list--selectable": kulSelectable,
     };
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           {isEmpty ? (
             <div class="empty-data">
               <div class="empty-data__text">
-                {this.kulEmptyLabel ||
-                  this.#kulManager.language.translate(
-                    KulLanguageGeneric.EMPTY_DATA,
-                  )}
+                {kulEmptyLabel ||
+                  language.translate(KulLanguageGeneric.EMPTY_DATA)}
               </div>
             </div>
           ) : (
@@ -457,9 +430,7 @@ export class KulList {
               class={className}
               role={"listbox"}
             >
-              {this.kulData.nodes.map((item, index) =>
-                this.#prepNode(item, index),
-              )}
+              {kulData.nodes.map((item, index) => this.#prepNode(item, index))}
             </ul>
           )}
         </div>
@@ -468,6 +439,8 @@ export class KulList {
   }
 
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
 }

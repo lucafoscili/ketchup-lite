@@ -13,17 +13,15 @@ import {
 } from "@stencil/core";
 import Prism from "prismjs";
 
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
+import { STATIC_LANGUAGES } from "src/components/kul-code/helpers/kul-code-utils";
 import {
   KulCodeEvent,
   KulCodeEventPayload,
-  KulCodeProps,
-} from "./kul-code-declarations";
-import { STATIC_LANGUAGES } from "./helpers/kul-code-utils";
+} from "src/components/kul-code/kul-code-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   assetsDirs: ["assets/prism"],
@@ -84,7 +82,6 @@ export class KulCode {
 
   //#region Internal variables
   #el: HTMLPreElement | HTMLDivElement;
-  #kulManager = kulManagerInstance();
   //#endregion
 
   //#region Events
@@ -115,13 +112,14 @@ export class KulCode {
     return this.debugInfo;
   }
   /**
-   * Retrieves the properties of the component, with optional descriptions.
-   * @param {boolean} descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
-   * @returns {Promise<GenericObject>} A promise that resolves to an object where each key is a property name, optionally with its description.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulCodeProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -145,26 +143,26 @@ export class KulCode {
 
   //#region Private methods
   #format(value: string) {
+    const { data } = kulManagerSingleton;
+
     if (typeof value === "string" && /^[\{\}]\s*$/i.test(value)) {
       return value.trim();
     } else if (this.#isJson(value)) {
       const parsed = JSON.parse(value);
       return JSON.stringify(parsed, null, 2);
     } else {
-      return this.#kulManager.data.cell.stringify(value);
+      return data.cell.stringify(value);
     }
   }
   async #highlightCode(): Promise<void> {
+    const { debug } = kulManagerSingleton;
+
     try {
       if (!Prism.languages[this.kulLanguage]) {
         await this.#loadLanguage();
       }
     } catch (error) {
-      this.#kulManager.debug.logs.new(
-        this,
-        "Failed to highlight code:" + error,
-        "error",
-      );
+      debug.logs.new(this, "Failed to highlight code:" + error, "error");
       this.#el.innerHTML = this.value;
     } finally {
       Prism.highlightElement(this.#el);
@@ -202,66 +200,91 @@ export class KulCode {
     }
   }
   #updateValue() {
-    this.value = this.kulFormat ? this.#format(this.kulValue) : this.kulValue;
+    const { kulFormat, kulValue } = this;
+
+    this.value = kulFormat ? this.#format(kulValue) : kulValue;
   }
   //#endregion
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-    STATIC_LANGUAGES.css(Prism);
-    STATIC_LANGUAGES.javascript(Prism);
-    STATIC_LANGUAGES.json(Prism);
-    STATIC_LANGUAGES.jsx(Prism);
-    STATIC_LANGUAGES.markdown(Prism);
-    STATIC_LANGUAGES.markup(Prism);
-    STATIC_LANGUAGES.python(Prism);
-    STATIC_LANGUAGES.regex(Prism);
-    STATIC_LANGUAGES.scss(Prism);
-    STATIC_LANGUAGES.tsx(Prism);
-    STATIC_LANGUAGES.typescript(Prism);
+    const { theme } = kulManagerSingleton;
+    const {
+      css,
+      javascript,
+      json,
+      jsx,
+      markdown,
+      markup,
+      python,
+      regex,
+      scss,
+      tsx,
+      typescript,
+    } = STATIC_LANGUAGES;
+
+    theme.register(this);
+
+    css(Prism);
+    javascript(Prism);
+    json(Prism);
+    jsx(Prism);
+    markdown(Prism);
+    markup(Prism);
+    python(Prism);
+    regex(Prism);
+    scss(Prism);
+    tsx(Prism);
+    typescript(Prism);
+
     this.#updateValue();
   }
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
   componentWillUpdate() {
     this.value = this.#format(this.kulValue);
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
+    const { debug } = kulManagerSingleton;
+
     if (this.#el) {
       this.#highlightCode();
     }
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+
+    debug.updateDebugInfo(this, "did-render");
   }
   render() {
+    const { theme } = kulManagerSingleton;
+    const { kulLanguage, kulPreserveSpaces, kulStyle, kulValue } = this;
+
     const isPreserveSpaceMissing = !!(
-      this.kulPreserveSpaces !== true && this.kulPreserveSpaces !== false
+      kulPreserveSpaces !== true && kulPreserveSpaces !== false
     );
     const isLikelyTextual =
-      this.kulLanguage.toLowerCase() === "text" ||
-      this.kulLanguage.toLowerCase() === "doc" ||
-      this.kulLanguage.toLowerCase() === "markdown" ||
-      this.kulLanguage.toLowerCase() === "css" ||
-      this.kulLanguage.toLowerCase() === "";
+      kulLanguage.toLowerCase() === "text" ||
+      kulLanguage.toLowerCase() === "doc" ||
+      kulLanguage.toLowerCase() === "markdown" ||
+      kulLanguage.toLowerCase() === "css" ||
+      kulLanguage.toLowerCase() === "";
     const shouldPreserveSpace =
-      this.kulPreserveSpaces || (isPreserveSpaceMissing && !isLikelyTextual);
+      kulPreserveSpaces || (isPreserveSpaceMissing && !isLikelyTextual);
 
     return (
       <Host>
-        {this.kulStyle && (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        )}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class="container">
             <div class="header">
-              <span class="title">{this.kulLanguage}</span>
+              <span class="title">{kulLanguage}</span>
               <kul-button
                 class={"kul-slim kul-full-height"}
                 kulIcon="content_copy"
@@ -271,7 +294,7 @@ export class KulCode {
                   const { comp, eventType } = e.detail;
                   switch (eventType) {
                     case "click":
-                      navigator.clipboard.writeText(this.kulValue);
+                      navigator.clipboard.writeText(kulValue);
                       comp.setMessage();
                       break;
                   }
@@ -280,7 +303,7 @@ export class KulCode {
             </div>
             {shouldPreserveSpace ? (
               <pre
-                class={"language-" + this.kulLanguage}
+                class={"language-" + kulLanguage}
                 key={this.value}
                 ref={(el) => {
                   if (el) {
@@ -292,7 +315,7 @@ export class KulCode {
               </pre>
             ) : (
               <div
-                class={"body language-" + this.kulLanguage}
+                class={"body language-" + kulLanguage}
                 key={this.value}
                 ref={(el) => {
                   if (el) {
@@ -309,7 +332,9 @@ export class KulCode {
     );
   }
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
   //#endregion
 }

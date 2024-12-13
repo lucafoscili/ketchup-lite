@@ -1,9 +1,8 @@
-import { getColors, onClick, prepSetups } from "../handlers/kul-chart-main";
 import {
-  KulChartAdapter,
-  KulChartAdapterHandlers,
-  KulChartAdapterOptions,
-} from "../kul-chart-declarations";
+  getColors,
+  onClick,
+  prepSetups,
+} from "src/components/kul-chart/handlers/kul-chart-main";
 import {
   basic,
   bubble,
@@ -14,7 +13,12 @@ import {
   pie,
   radar,
   sankey,
-} from "./kul-chart-options";
+} from "src/components/kul-chart/helpers/kul-chart-options";
+import {
+  KulChartAdapter,
+  KulChartAdapterHandlers,
+  KulChartAdapterOptions,
+} from "src/components/kul-chart/kul-chart-declarations";
 
 export const createHandlers: (
   adapter: KulChartAdapter,

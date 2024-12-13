@@ -1,24 +1,25 @@
 import { h } from "@stencil/core";
 
+import { kulManagerSingleton } from "src";
 import {
   buttonEventHandler,
   textfieldEventHandler,
-} from "../handlers/kul-chat-settings";
-import { OPTIONS_IDS } from "../helpers/kul-chat-utils";
+} from "src/components/kul-chat/handlers/kul-chat-settings";
+import { OPTIONS_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
-  KulChatAdapterComponents,
-} from "../kul-chat-declarations";
+  KulChatAdapterWidgets,
+} from "src/components/kul-chat/kul-chat-declarations";
 
 export const prepSettings = (
   adapter: KulChatAdapter,
-): KulChatAdapterComponents["jsx"]["settings"] => {
-  const { components, hooks } = adapter;
-  const { refs } = components;
+): KulChatAdapterWidgets["jsx"]["settings"] => {
+  const { hooks, widgets } = adapter;
+  const { refs } = widgets;
   const { get } = hooks;
   const { settings } = refs;
-  const { comp, manager } = get;
-  const { data } = manager;
+  const { comp } = get;
+  const { data } = kulManagerSingleton;
   const { cell } = data;
   const { stringify } = cell;
 

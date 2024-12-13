@@ -1,12 +1,12 @@
 import { h, VNode } from "@stencil/core";
-import { KulCanvasAdapter } from "../kul-canvas-declarations";
+
+import { KulCanvasAdapter } from "src/components/kul-canvas/kul-canvas-declarations";
 
 //#region Board
 export const prepBoard = (adapter: KulCanvasAdapter): VNode => {
-  const { components, handlers } = adapter;
-  const { refs } = components;
-  const { board } = handlers;
-  const { onPointerDown, onPointerMove, onPointerOut, onPointerUp } = board;
+  const { elements, handlers } = adapter;
+  const { refs } = elements;
+  const { onPointerDown, onPointerMove, onPointerOut, onPointerUp } = handlers;
 
   return (
     <canvas
@@ -27,9 +27,9 @@ export const prepBoard = (adapter: KulCanvasAdapter): VNode => {
 
 //#region Image
 export const prepImage = (adapter: KulCanvasAdapter): VNode => {
-  const { components, hooks } = adapter;
-  const { refs } = components;
-  const { get } = hooks;
+  const { elements, state } = adapter;
+  const { refs } = elements;
+  const { get } = state;
   const { comp } = get;
 
   return (
@@ -48,8 +48,8 @@ export const prepImage = (adapter: KulCanvasAdapter): VNode => {
 
 //#region Preview
 export const prepPreview = (adapter: KulCanvasAdapter): VNode => {
-  const { components } = adapter;
-  const { refs } = components;
+  const { elements } = adapter;
+  const { refs } = elements;
 
   return (
     <canvas

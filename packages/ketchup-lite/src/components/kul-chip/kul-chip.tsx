@@ -13,22 +13,20 @@ import {
   VNode,
 } from "@stencil/core";
 
-import {
-  KulDataDataset,
-  KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
 import {
   KulChipEvent,
   KulChipEventArguments,
   KulChipEventPayload,
-  KulChipProps,
   KulChipStyling,
-} from "./kul-chip-declarations";
+} from "src/components/kul-chip/kul-chip-declarations";
+import {
+  KulDataDataset,
+  KulDataNode,
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-chip",
@@ -92,7 +90,6 @@ export class KulChip {
 
   //#region Internal variables
   #nodeItems: VNode[] = [];
-  #kulManager = kulManagerInstance();
   #rippleSurface: HTMLElement[] = [];
   //#endregion
 
@@ -109,38 +106,39 @@ export class KulChip {
     eventType: KulChipEvent,
     args?: KulChipEventArguments,
   ) {
+    const { theme } = kulManagerSingleton;
+    const { expandedNodes, kulData, kulRipple, refresh, selectedNodes } = this;
+
     const { expansion, node } = args || {};
+
     switch (eventType) {
       case "click":
         if (expansion && this.#hasChildren(node)) {
-          if (this.expandedNodes.has(node)) {
-            this.expandedNodes.delete(node);
+          if (expandedNodes.has(node)) {
+            expandedNodes.delete(node);
           } else {
-            this.expandedNodes.add(node);
+            expandedNodes.add(node);
           }
-          this.expandedNodes = new Set(this.expandedNodes);
+          this.expandedNodes = new Set(expandedNodes);
         } else if (node) {
-          if (this.selectedNodes.has(node)) {
-            this.selectedNodes.delete(node);
+          if (selectedNodes.has(node)) {
+            selectedNodes.delete(node);
           } else {
-            this.selectedNodes.add(node);
+            selectedNodes.add(node);
           }
-          this.selectedNodes = new Set(this.selectedNodes);
+          this.selectedNodes = new Set(selectedNodes);
         }
         break;
       case "delete":
-        const nodeIndex = this.kulData?.nodes?.indexOf(node);
+        const nodeIndex = kulData?.nodes?.indexOf(node);
         if (nodeIndex > -1) {
-          this.kulData.nodes.splice(nodeIndex, 1);
-          this.refresh();
+          kulData.nodes.splice(nodeIndex, 1);
+          refresh();
         }
         break;
       case "pointerdown":
-        if (this.kulRipple && this.#isClickable()) {
-          this.#kulManager.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface[node.id],
-          );
+        if (kulRipple && this.#isClickable()) {
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface[node.id]);
         }
         break;
     }
@@ -165,13 +163,14 @@ export class KulChip {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the chip of props with their description.
-   * @returns {Promise<GenericObject>} Chip of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulChipProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Returns the selected nodes.
@@ -416,37 +415,44 @@ export class KulChip {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (this.#rippleSurface?.length) {
       this.#rippleSurface.forEach((el) => {
-        this.#kulManager.theme.ripple.setup(el);
+        theme.ripple.setup(el);
       });
     }
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { debug } = kulManagerSingleton;
 
+    debug.updateDebugInfo(this, "will-render");
+  }
   componentDidRender() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
         if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
           const surface = this.#rippleSurface[key];
-          this.#kulManager.theme.ripple.setup(surface);
+          theme.ripple.setup(surface);
         }
       }
     }
 
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
+    const { theme } = kulManagerSingleton;
+    const { kulStyle } = this;
+
     this.#nodeItems = [];
     const className = {
       "chip-set": true,
@@ -457,11 +463,7 @@ export class KulChip {
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class={className} role="grid">
             {this.#prepChipSet()}
@@ -470,9 +472,10 @@ export class KulChip {
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
   //#endregion
 }

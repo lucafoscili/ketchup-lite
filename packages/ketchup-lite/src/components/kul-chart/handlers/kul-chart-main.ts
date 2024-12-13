@@ -7,11 +7,11 @@ import {
   YAXisComponentOption,
 } from "echarts";
 
-import { getHexColor } from "../helpers/kul-chart-utils";
+import { getHexColor } from "src/components/kul-chart/helpers/kul-chart-utils";
 import {
   KulChartAdapter,
   KulChartAdapterSetups,
-} from "../kul-chart-declarations";
+} from "src/components/kul-chart/kul-chart-declarations";
 
 //#region baseAxis
 const baseAxis = (

@@ -11,14 +11,12 @@ import {
   State,
 } from "@stencil/core";
 
-import { GenericObject } from "../../components";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
-import { createComponents, createHandlers } from "./helpers/kul-canvas-hub";
-import { coordinates } from "./helpers/kul-canvas-utils";
+import { kulManagerSingleton } from "src";
+import {
+  createHandlers,
+  createWidgets,
+} from "src/components/kul-canvas/helpers/kul-canvas-hub";
+import { coordinates } from "src/components/kul-canvas/helpers/kul-canvas-utils";
 import {
   KulCanvasAdapter,
   KulCanvasBrush,
@@ -26,8 +24,11 @@ import {
   KulCanvasEvent,
   KulCanvasEventPayload,
   KulCanvasPoints,
-  KulCanvasProps,
-} from "./kul-canvas-declarations";
+} from "src/components/kul-canvas/kul-canvas-declarations";
+import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-canvas",
@@ -115,9 +116,32 @@ export class KulCanvas {
 
   //#region Internal variables
   #container: HTMLDivElement;
-  #kulManager = kulManagerInstance();
   #resizeObserver: ResizeObserver;
   #resizeTimeout: NodeJS.Timeout;
+  #adapter: KulCanvasAdapter = {
+    handlers: null,
+    hooks: {
+      get: {
+        comp: this,
+        isCursorPreview: this.#isCursorPreview,
+        isPainting: () => this.isPainting,
+        points: () => this.points,
+      },
+
+      set: {
+        isPainting: (value) => (this.isPainting = value),
+        points: (value) => (this.points = value),
+      },
+    },
+    widgets: {
+      jsx: null,
+      refs: {
+        board: null,
+        image: null,
+        preview: null,
+      },
+    },
+  };
   //#endregion
 
   //#region Events
@@ -161,8 +185,8 @@ export class KulCanvas {
    */
   @Method()
   async getCanvas(): Promise<HTMLCanvasElement> {
-    const { components } = this.#adapter;
-    const { refs } = components;
+    const { widgets } = this.#adapter;
+    const { refs } = widgets;
     const { board } = refs;
 
     return board;
@@ -180,20 +204,21 @@ export class KulCanvas {
    */
   @Method()
   async getImage(): Promise<HTMLKulImageElement> {
-    const { components } = this.#adapter;
-    const { refs } = components;
+    const { widgets } = this.#adapter;
+    const { refs } = widgets;
     const { image } = refs;
 
     return image;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<KulCanvasPropsInterface>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulCanvasProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -207,8 +232,8 @@ export class KulCanvas {
    */
   @Method()
   async resizeCanvas(): Promise<void> {
-    const { components } = this.#adapter;
-    const { refs } = components;
+    const { widgets } = this.#adapter;
+    const { refs } = widgets;
     const { board, preview } = refs;
 
     const { height, width } = this.#container.getBoundingClientRect();
@@ -225,8 +250,8 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasHeight(value?: number): Promise<void> {
-    const { components } = this.#adapter;
-    const { refs } = components;
+    const { widgets } = this.#adapter;
+    const { refs } = widgets;
     const { board, preview } = refs;
 
     if (value !== undefined) {
@@ -249,8 +274,8 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasWidth(value?: number): Promise<void> {
-    const { components } = this.#adapter;
-    const { refs } = components;
+    const { widgets } = this.#adapter;
+    const { refs } = widgets;
     const { board, preview } = refs;
 
     if (value !== undefined) {
@@ -282,31 +307,6 @@ export class KulCanvas {
   //#endregion
 
   //#region Private methods
-  #adapter: KulCanvasAdapter = {
-    components: {
-      jsx: null,
-      refs: {
-        board: null,
-        image: null,
-        preview: null,
-      },
-    },
-    handlers: null,
-    hooks: {
-      get: {
-        comp: this,
-        isCursorPreview: this.#isCursorPreview,
-        manager: this.#kulManager,
-        isPainting: () => this.isPainting,
-        points: () => this.points,
-      },
-
-      set: {
-        isPainting: (value) => (this.isPainting = value),
-        points: (value) => (this.points = value),
-      },
-    },
-  };
   #isCursorPreview() {
     return this.kulCursor === "preview";
   }
@@ -314,12 +314,16 @@ export class KulCanvas {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
 
     this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.components.jsx = createComponents(this.#adapter);
+    this.#adapter.widgets.jsx = createWidgets(this.#adapter);
   }
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.resizeCanvas();
 
     this.#resizeObserver = new ResizeObserver(() => {
@@ -331,18 +335,24 @@ export class KulCanvas {
     this.#resizeObserver.observe(this.#container);
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
   render() {
-    const { components } = this.#adapter;
-    const { jsx } = components;
+    const { theme } = kulManagerSingleton;
+    const { widgets } = this.#adapter;
+    const { jsx } = widgets;
     const { board, image, preview } = jsx;
+    const { kulStyle } = this;
 
     const className = {
       canvas: true,
@@ -351,11 +361,7 @@ export class KulCanvas {
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div
             class={className}
@@ -374,7 +380,9 @@ export class KulCanvas {
     );
   }
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
 
     if (this.#resizeObserver) {
       this.#resizeObserver.disconnect();

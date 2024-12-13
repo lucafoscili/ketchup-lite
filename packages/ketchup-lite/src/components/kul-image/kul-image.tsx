@@ -14,22 +14,20 @@ import {
   Watch,
 } from "@stencil/core";
 
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarations";
-import type { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
+import { kulManagerSingleton } from "src";
+import { KulBadgePropsInterface } from "src/components/kul-badge/kul-badge-declarations";
+import {
+  KulImageEvent,
+  KulImageEventPayload,
+} from "src/components/kul-image/kul-image-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
+import { GenericObject } from "src/types/GenericTypes";
 import {
   CSS_VAR_PREFIX,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
-} from "../../variables/GenericVariables";
-import { KulBadgePropsInterface } from "../kul-badge/kul-badge-declarations";
-import {
-  KulImageEvent,
-  KulImageEventPayload,
-  KulImageProps,
-} from "./kul-image-declarations";
+} from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-image",
@@ -102,10 +100,6 @@ export class KulImage {
   @Prop({ mutable: true, reflect: true }) kulValue = "";
   //#endregion
 
-  //#region Internal variables
-  #kulManager = kulManagerInstance();
-  //#endregion
-
   //#region Events
   @Event({
     eventName: "kul-image-event",
@@ -141,13 +135,14 @@ export class KulImage {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulImageProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -170,35 +165,36 @@ export class KulImage {
   //#endregion
 
   //#region Private methods
-  createIcon(): VNode {
+  #createIcon(): VNode {
+    const { theme } = kulManagerSingleton;
+    const { error, kulColor, kulValue } = this;
+
     const className = {
       image__icon: true,
     };
     const style = {
-      ["--kul_image_background"]: this.kulColor
-        ? this.kulColor
+      ["--kul_image_background"]: kulColor
+        ? kulColor
         : `var(${KulThemeColorValues.ICON})`,
       ["--kul_image_mask"]: "",
     };
-    const isThemeIcon = this.kulValue.indexOf(CSS_VAR_PREFIX) > -1;
+    const isThemeIcon = kulValue.indexOf(CSS_VAR_PREFIX) > -1;
     if (isThemeIcon) {
-      const themeIcon = this.kulValue.replace("--", "");
+      const themeIcon = kulValue.replace("--", "");
       className["kul-icon"] = true;
       className[themeIcon] = true;
     }
-    const icon = this.error
+    const icon = error
       ? "broken_image"
       : isThemeIcon
-        ? this.#kulManager.theme.list[this.#kulManager.theme.name].icons[
-            this.kulValue
-          ]
-        : this.kulValue;
+        ? theme.list[theme.name].icons[kulValue]
+        : kulValue;
     style["--kul_image_mask"] =
       `url('${getAssetPath(`./assets/svg/${icon}.svg`)}') no-repeat center`;
 
     return <div class={className} style={style}></div>;
   }
-  createImage(): VNode {
+  #createImage(): VNode {
     return (
       <img
         onError={(e) => {
@@ -213,53 +209,74 @@ export class KulImage {
       ></img>
     );
   }
-  isResourceUrl(): boolean {
+  #isResourceUrl(): boolean {
+    const { kulValue } = this;
+
     return !!(
-      this.kulValue &&
-      (this.kulValue.indexOf(".") > -1 ||
-        this.kulValue.indexOf("/") > -1 ||
-        this.kulValue.indexOf("\\") > -1)
+      kulValue &&
+      (kulValue.indexOf(".") > -1 ||
+        kulValue.indexOf("/") > -1 ||
+        kulValue.indexOf("\\") > -1)
     );
   }
   //#endregion
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
   }
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
   render() {
-    if (!this.kulValue) {
-      this.#kulManager.debug.logs.new(this, "Empty image.");
+    const { debug, theme } = kulManagerSingleton;
+    const {
+      error,
+      kulBadgeProps,
+      kulShowSpinner,
+      kulSizeX,
+      kulSizeY,
+      kulStyle,
+      kulValue,
+    } = this;
+
+    if (!kulValue) {
+      debug.logs.new(this, "Empty image.");
       return;
     }
 
     let el: VNode;
     let feedback: HTMLElement;
-    const isUrl = this.isResourceUrl();
+    const isUrl = this.#isResourceUrl();
     let spinnerLayout: number;
     let style = {
-      "--kul_image_height": this.kulSizeY ? this.kulSizeY : "auto",
-      "--kul_image_width": this.kulSizeX ? this.kulSizeX : "100%",
+      "--kul_image_height": kulSizeY ? kulSizeY : "auto",
+      "--kul_image_width": kulSizeX ? kulSizeX : "100%",
     };
 
-    if (isUrl && !this.error) {
-      el = this.createImage();
+    if (isUrl && !error) {
+      el = this.#createImage();
     } else {
-      el = this.createIcon();
+      el = this.#createIcon();
     }
 
-    if (this.kulShowSpinner && isUrl) {
+    if (kulShowSpinner && isUrl) {
       spinnerLayout = 14;
       feedback = (
         <div class="spinner" title="Image not loaded yet...">
@@ -274,11 +291,7 @@ export class KulImage {
 
     return (
       <Host style={style}>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         {feedback}
         <div id={KUL_WRAPPER_ID}>
           <div
@@ -288,16 +301,16 @@ export class KulImage {
             }}
           >
             {el}
-            {this.kulBadgeProps ? (
-              <kul-badge {...this.kulBadgeProps}></kul-badge>
-            ) : undefined}
+            {kulBadgeProps && <kul-badge {...kulBadgeProps}></kul-badge>}
           </div>
         </div>
       </Host>
     );
   }
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
   //#endregion
 }

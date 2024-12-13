@@ -1,9 +1,9 @@
 import { h, VNode } from "@stencil/core";
 
-import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
-import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
-import * as HANDLERS from "../handlers/kul-card-keywords-layout";
-import { KulCardAdapter } from "../kul-card-declarations";
+import { kulManagerSingleton } from "src";
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import * as HANDLERS from "src/components/kul-card/handlers/kul-card-keywords-layout";
+import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 
 export const prepKeywords = (adapter: KulCardAdapter): VNode => {
   const { hooks } = adapter;
@@ -13,7 +13,7 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
   const { keywords } = defaults;
 
   const shapes = get.shapes();
-  const decorator = kulManagerInstance().data.cell.shapes.decorate;
+  const decorator = kulManagerSingleton.data.cell.shapes.decorate;
 
   //#region Button
   const buttonCb = (e: CustomEvent<KulButtonEventPayload>) => {

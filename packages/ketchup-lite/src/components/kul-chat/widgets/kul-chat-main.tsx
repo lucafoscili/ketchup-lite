@@ -3,18 +3,18 @@ import { h } from "@stencil/core";
 import {
   buttonEventHandler,
   progressbarEventHandler,
-} from "../handlers/kul-chat-main";
-import { CHAT_IDS } from "../helpers/kul-chat-utils";
+} from "src/components/kul-chat/handlers/kul-chat-main";
+import { CHAT_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
-  KulChatAdapterComponents,
-} from "../kul-chat-declarations";
+  KulChatAdapterWidgets,
+} from "src/components/kul-chat/kul-chat-declarations";
 
 export const prepChat = (
   adapter: KulChatAdapter,
-): KulChatAdapterComponents["jsx"]["chat"] => {
-  const { components } = adapter;
-  const { refs } = components;
+): KulChatAdapterWidgets["jsx"]["chat"] => {
+  const { widgets } = adapter;
+  const { refs } = widgets;
   const { chat } = refs;
 
   const progressbarClass = {

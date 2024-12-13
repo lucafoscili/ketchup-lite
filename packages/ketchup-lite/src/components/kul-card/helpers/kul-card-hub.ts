@@ -1,17 +1,17 @@
+import { kulManagerSingleton } from "src";
 import {
   KulCardAdapter,
   KulCardAdapterLayoutHub,
-} from "../kul-card-declarations";
+  KulCardLayout,
+  KulCardShapesIds,
+} from "src/components/kul-card/kul-card-declarations";
+import { prepDebug } from "src/components/kul-card/widgets/kul-card-debug-layout";
+import { prepKeywords } from "src/components/kul-card/widgets/kul-card-keywords-layout";
+import { prepMaterial } from "src/components/kul-card/widgets/kul-card-material-layout";
+import { prepUpload } from "src/components/kul-card/widgets/kul-card-upload-layout";
+import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declarations";
 
-import { KulDataShapeDefaults } from "../../../managers/kul-data/kul-data-declarations";
-import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
-import { prepDebug } from "../components/kul-card-debug-layout";
-import { prepKeywords } from "../components/kul-card-keywords-layout";
-import { prepMaterial } from "../components/kul-card-material-layout";
-import { prepUpload } from "../components/kul-card-upload-layout";
-import { KulCardLayout, KulCardShapesIds } from "../kul-card-declarations";
-
-export const createComponents: (
+export const createWidgets: (
   adapter: KulCardAdapter,
 ) => KulCardAdapterLayoutHub = (adapter) => {
   return {
@@ -25,6 +25,8 @@ export const createComponents: (
 export const createDefaults: () => {
   [L in KulCardLayout]: KulDataShapeDefaults;
 } = () => {
+  const { debug, theme } = kulManagerSingleton;
+
   return {
     debug: {
       button: () => [
@@ -41,7 +43,7 @@ export const createDefaults: () => {
             className: "kul-full-width",
             id: KulCardShapesIds.THEME,
           },
-          kulData: kulManagerInstance().theme.getThemesDataset(),
+          kulData: theme.getThemesDataset(),
         },
       ],
       code: () => [{ kulLanguage: "markdown" }],
@@ -49,7 +51,7 @@ export const createDefaults: () => {
         {
           kulLeadingLabel: true,
           kulLabel: "Toggle debug",
-          kulValue: kulManagerInstance().debug.isEnabled(),
+          kulValue: debug.isEnabled(),
         },
       ],
     },

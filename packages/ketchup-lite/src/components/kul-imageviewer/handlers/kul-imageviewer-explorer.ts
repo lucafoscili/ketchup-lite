@@ -1,10 +1,11 @@
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import { toggleButtonSpinner } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
+import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
+import { KulMasonryEventPayload } from "src/components/kul-masonry/kul-masonry-declarations";
+import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
 import { KulGenericEvent } from "src/types/GenericTypes";
-import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
-import { KulMasonryEventPayload } from "../../kul-masonry/kul-masonry-declarations";
-import { KulTextfieldEventPayload } from "../../kul-textfield/kul-textfield-declarations";
-import { toggleButtonSpinner } from "../helpers/kul-imageviewer-utils";
-import { KulImageviewerAdapter } from "../kul-imageviewer-declarations";
 
+//#region Button handler
 export const buttonEventHandler = async (
   adapter: KulImageviewerAdapter,
   e: CustomEvent<KulButtonEventPayload>,
@@ -23,7 +24,9 @@ export const buttonEventHandler = async (
       break;
   }
 };
+//#endregion
 
+//#region Masonry handler
 export const masonryEventHandler = (
   adapter: KulImageviewerAdapter,
   e: CustomEvent<KulMasonryEventPayload>,
@@ -57,7 +60,9 @@ export const masonryEventHandler = (
       }
   }
 };
+//#endregion
 
+//#region Textfield handler
 export const textfieldEventHandler = (
   adapter: KulImageviewerAdapter,
   e: CustomEvent<KulTextfieldEventPayload>,
@@ -68,3 +73,4 @@ export const textfieldEventHandler = (
 
   comp.onKulEvent(e, "kul-event");
 };
+//#endregion

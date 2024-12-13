@@ -1,9 +1,12 @@
 import { h, VNode } from "@stencil/core";
 
-import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
-import { KulDataCyAttributes } from "../../../types/GenericTypes";
-import { RIPPLE_SURFACE_CLASS } from "../../../variables/GenericVariables";
-import { KulCardAdapter, KulCardCSSClasses } from "../kul-card-declarations";
+import { kulManagerSingleton } from "src";
+import {
+  KulCardAdapter,
+  KulCardCSSClasses,
+} from "src/components/kul-card/kul-card-declarations";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
+import { RIPPLE_SURFACE_CLASS } from "src/variables/GenericVariables";
 
 //#region Material layout
 export const prepMaterial = (adapter: KulCardAdapter): VNode => {
@@ -14,7 +17,7 @@ export const prepMaterial = (adapter: KulCardAdapter): VNode => {
   const { material } = defaults;
 
   const shapes = get.shapes();
-  const decorator = kulManagerInstance().data.cell.shapes.decorate;
+  const decorator = kulManagerSingleton.data.cell.shapes.decorate;
 
   //#region Button
   const buttons = decorator("button", shapes.button, async (e) =>
@@ -54,7 +57,7 @@ export const prepMaterial = (adapter: KulCardAdapter): VNode => {
         class={RIPPLE_SURFACE_CLASS}
         data-cy={KulDataCyAttributes.RIPPLE}
         onPointerDown={(e) => {
-          kulManagerInstance().theme.ripple.trigger(
+          kulManagerSingleton.theme.ripple.trigger(
             e as PointerEvent,
             e.currentTarget as HTMLElement,
           );

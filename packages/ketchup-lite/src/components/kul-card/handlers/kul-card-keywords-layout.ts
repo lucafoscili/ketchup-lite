@@ -1,4 +1,4 @@
-import { KulButtonEventPayload } from "../../kul-button/kul-button-declarations";
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 
 //#region Button
 export const button = async (

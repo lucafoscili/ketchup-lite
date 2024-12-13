@@ -6,22 +6,20 @@ import {
   forceUpdate,
   h,
   Host,
+  Method,
   Prop,
   State,
 } from "@stencil/core";
-import { Method } from "@stencil/core/internal";
 
+import { kulManagerSingleton } from "src";
 import {
   KulLazyEvent,
   KulLazyEventPayload,
-  KulLazyProps,
   KulLazyRenderMode,
-} from "./kul-lazy-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+} from "src/components/kul-lazy/kul-lazy-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-lazy",
@@ -34,10 +32,7 @@ export class KulLazy {
    */
   @Element() rootElement: HTMLKulLazyElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -52,11 +47,9 @@ export class KulLazy {
    * Sets whether the lazy entered the viewport or not.
    */
   @State() isInViewport = false;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Sets the tag name of the component to be lazy loaded.
    * @default ""
@@ -83,23 +76,15 @@ export class KulLazy {
    * @default ""
    */
   @Prop() kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
+  //#region Internal variables
   #intObserver: IntersectionObserver = null;
   #lazyComponent: HTMLElement = null;
   #lazyComponentLoaded = false;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes the component's events.
-   */
+  //#region Events
   @Event({
     eventName: "kul-lazy-event",
     composed: true,
@@ -107,7 +92,6 @@ export class KulLazy {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulLazyEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulLazyEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -116,11 +100,9 @@ export class KulLazy {
       eventType,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Returns the HTMLElement of the component to lazy load.
    * @returns {HTMLElement} Lazy loaded component.
@@ -138,13 +120,14 @@ export class KulLazy {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulLazyProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -164,18 +147,16 @@ export class KulLazy {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #setObserver(): void {
-    const callback: IntersectionObserverCallback = (
-      entries: IntersectionObserverEntry[],
-    ) => {
+    const { debug } = kulManagerSingleton;
+
+    const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          this.#kulManager.debug.logs.new(
+          debug.logs.new(
             this,
             "kul-lazy entering the viewport, rendering " +
               this.kulComponentName +
@@ -186,47 +167,58 @@ export class KulLazy {
         }
       });
     };
-    const options: IntersectionObserverInit = {
+    this.#intObserver = new IntersectionObserver(callback, {
       threshold: 0.25,
-    };
-    this.#intObserver = new IntersectionObserver(callback, options);
+    });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
+    const { theme } = kulManagerSingleton;
+
     this.rootElement.addEventListener(`${this.kulComponentName}-event`, (e) => {
       this.onKulEvent(e, "kul-event");
     });
-    this.#kulManager.theme.register(this);
+    theme.register(this);
     this.#setObserver();
   }
-
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.#intObserver.observe(this.rootElement);
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { debug } = kulManagerSingleton;
 
+    debug.updateDebugInfo(this, "will-render");
+  }
   componentDidRender() {
+    const { debug } = kulManagerSingleton;
+
     if (this.#lazyComponent && !this.#lazyComponentLoaded) {
       this.#lazyComponentLoaded = true;
       this.onKulEvent(new CustomEvent("load"), "load");
     }
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
+    const { theme } = kulManagerSingleton;
+    const {
+      isInViewport,
+      kulComponentName,
+      kulComponentProps,
+      kulRenderMode,
+      kulShowPlaceholder,
+      kulStyle,
+    } = this;
+
     let content: HTMLElement;
     let resource: HTMLElement;
-    let className = this.kulComponentName;
-    switch (this.kulComponentName) {
+    let className = kulComponentName;
+    switch (kulComponentName) {
       case "kul-button":
         //call_to_action.svg
         resource = (
@@ -308,39 +300,35 @@ export class KulLazy {
         break;
     }
     if (
-      (this.kulRenderMode === "viewport" && this.isInViewport) ||
-      (this.kulRenderMode === "props" && this.kulComponentProps) ||
-      (this.kulRenderMode === "both" &&
-        this.kulComponentProps &&
-        this.isInViewport)
+      (kulRenderMode === "viewport" && isInViewport) ||
+      (kulRenderMode === "props" && kulComponentProps) ||
+      (kulRenderMode === "both" && kulComponentProps && isInViewport)
     ) {
-      const Tag = this.kulComponentName;
+      const Tag = kulComponentName;
       content = (
         <Tag
-          {...(this.kulComponentProps as GenericObject)}
+          {...(kulComponentProps as GenericObject)}
           ref={(el: HTMLElement) => (this.#lazyComponent = el)}
         ></Tag>
       );
       className += " kul-loaded";
-    } else if (this.kulShowPlaceholder) {
+    } else if (kulShowPlaceholder) {
       content = resource;
       className += " kul-to-be-loaded";
     }
 
     return (
       <Host class={className}>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>{content}</div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
     this.#intObserver?.unobserve(this.rootElement);
   }
+  //#endregion
 }

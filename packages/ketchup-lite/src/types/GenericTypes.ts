@@ -1,5 +1,4 @@
 import { VNode } from "@stencil/core";
-import { KulManager } from "src/managers/kul-manager/kul-manager";
 import { KulAccordion } from "../components/kul-accordion/kul-accordion";
 import {
   KulAccordionEvent,
@@ -411,30 +410,47 @@ export type ComponentPropsMap = {
   KulTypewriter: KulTypewriterProps;
   KulUpload: KulUploadProps;
 };
+export type KulComponentAdapterHandler = (
+  e?: Event | PointerEvent | KulGenericEvent,
+  ...args: any[]
+) => void;
+export type KulComponentAdapterHandlers = {
+  [key: string]: KulComponentAdapterHandler | KulComponentAdapterHandlers;
+};
+export type KulComponentAdapterJsx = {
+  [key: string]: (() => VNode) | KulComponentAdapterJsx;
+};
+export type KulComponentAdapterRef = {
+  [key: string]: HTMLElement | KulComponentAdapterRef;
+};
+export type KulComponentAdapterStateGetters<C extends KulGenericComponent> = {
+  [key: string]: any;
+  compInstance: C;
+};
+export type KulComponentAdapterStateSetters = {
+  [key: string]: ((value: any) => void) | KulComponentAdapterStateSetters;
+};
+export interface KulComponentAdapter<
+  C extends KulGenericComponent,
+  H = KulComponentAdapterHandlers,
+  J = KulComponentAdapterJsx,
+  R = KulComponentAdapterRef,
+  SGet = KulComponentAdapterStateGetters<C>,
+  SSet = KulComponentAdapterStateSetters,
+> {
+  elements?: {
+    jsx: J;
+    refs: R;
+  };
+  handlers?: H;
+  state?: {
+    get: SGet;
+    set?: SSet;
+  };
+}
 type ExtractComponentName<C> = C extends KulComponent<infer N> ? N : never;
 export type KulEventType<C extends KulComponent<KulComponentName>> =
   ComponentEventMap[ExtractComponentName<C>];
-export type KulComponentAdapterJsx = Record<string, (...args: any[]) => VNode>;
-export type KulComponentAdapterRef = Record<string, HTMLElement>;
-export interface KulComponentAdapter<C extends KulGenericComponent> {
-  components?: {
-    jsx: KulComponentAdapterJsx | Record<string, KulComponentAdapterJsx>;
-    refs: KulComponentAdapterRef | Record<string, KulComponentAdapterRef>;
-  };
-  handlers?: {
-    [index: string]: any;
-  };
-  hooks?: {
-    get: {
-      comp: C;
-      manager: KulManager;
-      [index: string]: any;
-    };
-    set?: {
-      [index: string]: any;
-    };
-  };
-}
 export interface KulEventPayload<
   C extends KulComponentName,
   T extends KulEventType<KulComponent<C>>,

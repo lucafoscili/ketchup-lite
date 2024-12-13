@@ -1,12 +1,12 @@
 import { VNode } from "@stencil/core";
-import { KulManager } from "src/managers/kul-manager/kul-manager";
+
+import { KulCard } from "src/components/kul-card/kul-card";
 import {
   KulDataDataset,
   KulDataShapeDefaults,
   KulDataShapesMap,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
-import { KulCard } from "./kul-card";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulComponentAdapter, KulEventPayload } from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulCardAdapter extends KulComponentAdapter<KulCard> {
@@ -15,7 +15,6 @@ export interface KulCardAdapter extends KulComponentAdapter<KulCard> {
       comp: KulCard;
       defaults: KulCardAdapterDefaults;
       layout: KulCardAdapterLayoutHub;
-      manager: KulManager;
       shapes: () => KulDataShapesMap;
     };
   };
@@ -52,13 +51,6 @@ export enum KulCardShapesIds {
 //#endregion
 
 //#region Props
-export enum KulCardProps {
-  kulData = "The actual data of the card.",
-  kulLayout = "Sets the layout.",
-  kulSizeX = "The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).",
-  kulSizeY = "The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).",
-  kulStyle = "Custom style of the component.",
-}
 export interface KulCardPropsInterface {
   kulData?: KulDataDataset;
   kulLayout?: KulCardLayout;

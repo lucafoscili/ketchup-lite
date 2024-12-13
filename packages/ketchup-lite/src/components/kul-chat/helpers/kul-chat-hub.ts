@@ -1,6 +1,15 @@
-import { prepChat } from "../components/kul-chat-main";
-import { prepSettings } from "../components/kul-chat-settings";
-import { prepToolbar } from "../components/kul-chat-toolbar";
+import {
+  deleteMessage,
+  regenerate,
+} from "src/components/kul-chat/handlers/kul-chat-toolbar";
+import {
+  KulChatAdapter,
+  KulChatAdapterHandlers,
+  KulChatAdapterWidgets,
+} from "src/components/kul-chat/kul-chat-declarations";
+import { prepChat } from "src/components/kul-chat/widgets/kul-chat-main";
+import { prepSettings } from "src/components/kul-chat/widgets/kul-chat-settings";
+import { prepToolbar } from "src/components/kul-chat/widgets/kul-chat-toolbar";
 import {
   disableInteractivity,
   send,
@@ -9,26 +18,6 @@ import {
   updateHistory,
   updateTokensCount,
 } from "../handlers/kul-chat-main";
-import { deleteMessage, regenerate } from "../handlers/kul-chat-toolbar";
-import {
-  KulChatAdapter,
-  KulChatAdapterComponents,
-  KulChatAdapterHandlers,
-} from "../kul-chat-declarations";
-
-export const createComponents: (
-  adapter: KulChatAdapter,
-) => KulChatAdapterComponents["jsx"] = (adapter) => {
-  const chat = prepChat(adapter);
-  const settings = prepSettings(adapter);
-  const toolbar = prepToolbar(adapter);
-
-  return {
-    chat,
-    settings,
-    toolbar,
-  };
-};
 
 export const createHandlers: (
   adapter: KulChatAdapter,
@@ -43,5 +32,19 @@ export const createHandlers: (
     stt: () => stt(adapter),
     updateHistory: (cb) => updateHistory(adapter, cb),
     updateTokensCount: () => updateTokensCount(adapter),
+  };
+};
+
+export const createWidgets: (
+  adapter: KulChatAdapter,
+) => KulChatAdapterWidgets["jsx"] = (adapter) => {
+  const chat = prepChat(adapter);
+  const settings = prepSettings(adapter);
+  const toolbar = prepToolbar(adapter);
+
+  return {
+    chat,
+    settings,
+    toolbar,
   };
 };

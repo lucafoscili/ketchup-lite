@@ -1,8 +1,8 @@
 import { h, VNode } from "@stencil/core";
 
-import { kulManagerInstance } from "../../../managers/kul-manager/kul-manager";
-import * as HANDLERS from "../handlers/kul-card-debug-layout";
-import { KulCardAdapter } from "../kul-card-declarations";
+import { kulManagerSingleton } from "src";
+import * as HANDLERS from "src/components/kul-card/handlers/kul-card-debug-layout";
+import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 
 export const prepDebug = (adapter: KulCardAdapter): VNode => {
   const { hooks } = adapter;
@@ -12,7 +12,7 @@ export const prepDebug = (adapter: KulCardAdapter): VNode => {
   const { debug } = defaults;
 
   const shapes = get.shapes();
-  const decorator = kulManagerInstance().data.cell.shapes.decorate;
+  const decorator = kulManagerSingleton.data.cell.shapes.decorate;
 
   //#region Button
   const buttons = decorator(

@@ -9,14 +9,13 @@ import {
   YAXisComponentOption,
 } from "echarts";
 
+import { KulChart } from "src/components/kul-chart/kul-chart";
 import {
   KulDataColumn,
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulComponentAdapter, KulEventPayload } from "../../types/GenericTypes";
-import { KulChart } from "./kul-chart";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulComponentAdapter, KulEventPayload } from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulChartAdapter extends KulComponentAdapter<KulChart> {
@@ -32,7 +31,6 @@ export interface KulChartAdapterHooks {
   get: {
     comp: KulChart;
     columnById: (id: string) => KulDataColumn;
-    manager: KulManager;
     mappedType: (type: KulChartType) => SeriesOption["type"];
     options: KulChartAdapterOptions;
     seriesColumn: (seriesName: string) => KulDataColumn[];
@@ -132,19 +130,6 @@ export interface KulChartTooltipArguments<D extends KulChartTooltipData> {
 //#endregion
 
 //#region Props
-export enum KulChartProps {
-  kulAxis = "Sets the axis of the chart.",
-  kulColors = "Overrides theme's colors.",
-  kulData = "The actual data of the chart.",
-  kulLegend = "Sets the position of the legend. Supported values: bottom, left, right, top. Keep in mind that legend types are tied to chart types, some combinations might not work.",
-  kulSeries = "The data series to be displayed. They must be of the same type.",
-  kulSizeX = "The width of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).",
-  kulSizeY = "The height of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).",
-  kulStyle = "Custom style of the component.",
-  kulTypes = "The type of the chart. Supported formats: Line, Pie, Map, Scatter.",
-  kulXAxis = "Customization options for the x Axis.",
-  kulYAxis = "Customization options for the y Axis.",
-}
 export interface KulChartPropsInterface {
   kulAxis?: KulChartAxis;
   kulColors?: string[];

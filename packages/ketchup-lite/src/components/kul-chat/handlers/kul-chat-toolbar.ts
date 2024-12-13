@@ -1,5 +1,5 @@
+import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
-import { KulChatAdapter } from "../kul-chat-declarations";
 
 //#region Delete message
 export const deleteMessage = (
