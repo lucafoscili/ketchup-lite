@@ -15,8 +15,8 @@ import { kulManagerSingleton } from "src";
 import {
   createElements,
   createHandlers,
+  toolkit,
 } from "src/components/kul-canvas/helpers/kul-canvas-hub";
-import { toolkit } from "src/components/kul-canvas/helpers/kul-canvas-utils";
 import {
   KulCanvasAdapter,
   KulCanvasBrush,

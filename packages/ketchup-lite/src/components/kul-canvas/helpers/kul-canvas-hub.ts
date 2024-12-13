@@ -1,5 +1,8 @@
 import * as MAIN_ELEMENTS from "src/components/kul-canvas/elements/kul-canvas-main";
 import * as MAIN_HANDLERS from "src/components/kul-canvas/handlers/kul-canvas-main";
+import { context } from "src/components/kul-canvas/helpers/kul-canvas-context";
+import { coordinates } from "src/components/kul-canvas/helpers/kul-canvas-coordinates";
+import { draw } from "src/components/kul-canvas/helpers/kul-canvas-draw";
 import {
   KulCanvasAdapter,
   KulCanvasAdapterElementsJsx,
@@ -20,4 +23,10 @@ export const createElements: (
     image: () => MAIN_ELEMENTS.prepImage(adapter),
     preview: () => MAIN_ELEMENTS.prepPreview(adapter),
   };
+};
+
+export const toolkit = {
+  context,
+  coordinates,
+  draw,
 };

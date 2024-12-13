@@ -1,7 +1,4 @@
-import {
-  getContext,
-  toolkit,
-} from "src/components/kul-canvas/helpers/kul-canvas-utils";
+import { toolkit } from "src/components/kul-canvas/helpers/kul-canvas-hub";
 import { KulCanvasAdapter } from "src/components/kul-canvas/kul-canvas-declarations";
 
 export const board = (adapter: KulCanvasAdapter) => {
@@ -17,7 +14,7 @@ export const board = (adapter: KulCanvasAdapter) => {
       const { board } = refs;
 
       board.releasePointerCapture(e.pointerId);
-      const { ctx, height, width } = getContext(adapter, "board");
+      const { ctx, height, width } = toolkit.context.get(adapter, "board");
 
       const pts = points();
       if (pts.length > 0) {
