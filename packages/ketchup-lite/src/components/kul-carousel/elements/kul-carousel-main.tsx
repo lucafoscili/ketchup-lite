@@ -1,21 +1,21 @@
 import { h } from "@stencil/core";
 
-import { KulCarouselAdapter } from "../kul-carousel-declarations";
-
-const BACK_ICON = "chevron_left";
-const FORWARD_ICON = "chevron_right";
+import {
+  ICONS,
+  navigation,
+} from "src/components/kul-carousel//helpers/kul-carousel-utils";
+import { KulCarouselAdapter } from "src/components/kul-carousel/kul-carousel-declarations";
 
 //#region Back
 export const prepBack = (adapter: KulCarouselAdapter) => {
-  const { handlers } = adapter;
-  const { previous } = handlers;
+  const { previous } = navigation;
 
   return (
     <kul-button
       class="kul-full-height"
-      id={BACK_ICON}
-      kulIcon={BACK_ICON}
-      onClick={previous}
+      id={ICONS.back}
+      kulIcon={ICONS.back}
+      onClick={() => previous(adapter)}
       title="View previous slide."
     ></kul-button>
   );
@@ -24,15 +24,14 @@ export const prepBack = (adapter: KulCarouselAdapter) => {
 
 //#region Forward
 export const prepForward = (adapter: KulCarouselAdapter) => {
-  const { handlers } = adapter;
-  const { next } = handlers;
+  const { next } = navigation;
 
   return (
     <kul-button
       class="kul-full-height"
-      id={FORWARD_ICON}
-      kulIcon={FORWARD_ICON}
-      onClick={next}
+      id={ICONS.forward}
+      kulIcon={ICONS.forward}
+      onClick={() => next(adapter)}
       title="View next slide."
     ></kul-button>
   );

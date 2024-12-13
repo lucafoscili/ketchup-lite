@@ -1,27 +1,42 @@
-import * as MAIN_HANDLERS from "src/components/kul-carousel/handlers/kul-carousel-main";
+import * as MAIN_WIDGETS from "src/components/kul-carousel/elements/kul-carousel-main";
+import {
+  autoplay,
+  navigation,
+} from "src/components/kul-carousel/helpers/kul-carousel-utils";
 import {
   KulCarouselAdapter,
-  KulCarouselAdapterHandlers,
-  KulCarouselAdapterWidgets,
+  KulCarouselAdapterElementsJsx,
+  KulCarouselAdapterStateSetters,
 } from "src/components/kul-carousel/kul-carousel-declarations";
-import * as MAIN_WIDGETS from "src/components/kul-carousel/widgets/kul-carousel-main";
 
-export const createHandlers: (
+export const createElements: (
   adapter: KulCarouselAdapter,
-) => KulCarouselAdapterHandlers = (adapter) => {
+) => KulCarouselAdapterElementsJsx = (adapter) => {
   return {
-    autoplay: MAIN_HANDLERS.prepAutoplay(adapter),
-    next: () => MAIN_HANDLERS.prepNext(adapter),
-    previous: () => MAIN_HANDLERS.prepPrevious(adapter),
-    toSlide: (value: number) => MAIN_HANDLERS.prepToSlide(adapter, value),
+    back: () => MAIN_WIDGETS.prepBack(adapter),
+    forward: () => MAIN_WIDGETS.prepForward(adapter),
   };
 };
 
-export const createWidgets: (
+export const createAutoplayStateSetters: (
   adapter: KulCarouselAdapter,
-) => KulCarouselAdapterWidgets["jsx"] = (adapter) => {
+) => KulCarouselAdapterStateSetters["autoplay"] = (adapter) => {
+  const { start, stop } = autoplay;
+
   return {
-    back: MAIN_WIDGETS.prepBack(adapter),
-    forward: MAIN_WIDGETS.prepForward(adapter),
+    start: () => start(adapter),
+    stop: () => stop(adapter),
+  };
+};
+
+export const createIndexStateSetters: (
+  adapter: KulCarouselAdapter,
+) => KulCarouselAdapterStateSetters["index"] = (adapter) => {
+  const { next, previous, toSlide } = navigation;
+
+  return {
+    current: (value) => toSlide(adapter, value),
+    next: () => next(adapter),
+    previous: () => previous(adapter),
   };
 };

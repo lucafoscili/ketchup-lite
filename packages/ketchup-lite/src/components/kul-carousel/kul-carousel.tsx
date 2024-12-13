@@ -16,9 +16,14 @@ import {
 
 import { kulManagerSingleton } from "src";
 import {
-  createHandlers,
-  createWidgets,
+  createAutoplayStateSetters,
+  createElements,
+  createIndexStateSetters,
 } from "src/components/kul-carousel/helpers/kul-carousel-hub";
+import {
+  autoplay,
+  navigation,
+} from "src/components/kul-carousel/helpers/kul-carousel-utils";
 import {
   KulCarouselAdapter,
   KulCarouselEvent,
@@ -103,21 +108,24 @@ export class KulCarousel {
   #touchStartX = 0;
   #touchEndX = 0;
   #adapter: KulCarouselAdapter = {
-    components: {
+    elements: {
       jsx: null,
       refs: { back: null, forward: null },
     },
     handlers: null,
-    hooks: {
+    state: {
       get: {
-        comp: this,
-        currentIndex: () => this.currentIndex,
+        compInstance: this,
+        index: {
+          current: () => this.currentIndex,
+        },
         interval: () => this.#interval,
         totalSlides: () => this.#getTotalSlides(),
       },
       set: {
+        autoplay: null,
+        index: null,
         interval: (value) => (this.#interval = value),
-        currentIndex: (value) => (this.currentIndex = value),
       },
     },
   };
@@ -180,30 +188,27 @@ export class KulCarousel {
    */
   @Method()
   async goToSlide(index: number) {
-    const { handlers } = this.#adapter;
-    const { toSlide } = handlers;
+    const { toSlide } = navigation;
 
-    toSlide(index);
+    toSlide(this.#adapter, index);
   }
   /**
    * Advances to the next slide, looping back to the start if at the end.
    */
   @Method()
   async nextSlide() {
-    const { handlers } = this.#adapter;
-    const { next } = handlers;
+    const { next } = navigation;
 
-    next();
+    next(this.#adapter);
   }
   /**
    * Moves to the previous slide, looping to the last slide if at the beginning.
    */
   @Method()
   async prevSlide() {
-    const { handlers } = this.#adapter;
-    const { previous } = handlers;
+    const { previous } = navigation;
 
-    previous();
+    previous(this.#adapter);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -233,8 +238,8 @@ export class KulCarousel {
     return !!this.shapes?.[this.kulShape];
   }
   #prepCarousel(): VNode {
-    const { widgets } = this.#adapter;
-    const { jsx } = widgets;
+    const { elements } = this.#adapter;
+    const { jsx } = elements;
     const { back, forward } = jsx;
 
     if (this.#hasShapes()) {
@@ -258,14 +263,14 @@ export class KulCarousel {
     }
   }
   #prepIndicators(): VNode[] {
-    const { handlers } = this.#adapter;
-    const { toSlide } = handlers;
+    const { toSlide } = navigation;
+    const { currentIndex, kulShape } = this;
 
     const totalSlides = this.#getTotalSlides();
     const maxIndicators = 9;
     const halfMax = Math.floor(maxIndicators / 2);
 
-    let start = Math.max(0, this.currentIndex - halfMax);
+    let start = Math.max(0, currentIndex - halfMax);
     let end = Math.min(totalSlides, start + maxIndicators);
 
     if (end === totalSlides) {
@@ -282,18 +287,18 @@ export class KulCarousel {
       indicators.push(
         <span
           class={className}
-          onClick={() => toSlide(0)}
+          onClick={() => toSlide(this.#adapter, 0)}
           title={`Jump to the first slide (#${0})`}
         >
           «
         </span>,
       );
     }
-    this.shapes[this.kulShape]
+    this.shapes[kulShape]
       ?.slice(start, end)
       .forEach((_: Partial<KulDataCell<KulDataShapes>>, index: number) => {
         const actualIndex = start + index;
-        const isCurrent = actualIndex === this.currentIndex;
+        const isCurrent = actualIndex === currentIndex;
         const isFirst = actualIndex === start;
         const isLast = actualIndex === end - 1;
 
@@ -305,7 +310,7 @@ export class KulCarousel {
         indicators.push(
           <span
             class={className}
-            onClick={() => toSlide(actualIndex)}
+            onClick={() => toSlide(this.#adapter, actualIndex)}
             title={`#${index}`}
           />,
         );
@@ -319,7 +324,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={className}
-          onClick={() => toSlide(totalSlides - 1)}
+          onClick={() => toSlide(this.#adapter, totalSlides - 1)}
           title={`Jump to the last slide (#${totalSlides - 1})`}
         >
           »
@@ -359,16 +364,20 @@ export class KulCarousel {
   //#region Lifecycle hooks
   componentWillLoad() {
     const { theme } = kulManagerSingleton;
+    const { start } = autoplay;
 
     theme.register(this);
 
     this.updateShapes();
 
-    this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.widgets.jsx = createWidgets(this.#adapter);
+    this.#adapter.elements.jsx = createElements(this.#adapter);
+    this.#adapter.state.set.autoplay = createAutoplayStateSetters(
+      this.#adapter,
+    );
+    this.#adapter.state.set.index = createIndexStateSetters(this.#adapter);
 
     if (this.kulAutoPlay) {
-      this.#adapter.handlers.autoplay.start();
+      start(this.#adapter);
     }
   }
   componentDidLoad() {
@@ -389,9 +398,9 @@ export class KulCarousel {
   }
   render() {
     const { theme } = kulManagerSingleton;
-    const { handlers } = this.#adapter;
-    const { next, previous } = handlers;
     const { kulStyle } = this;
+
+    const { next, previous } = navigation;
 
     return (
       <Host>
@@ -412,9 +421,9 @@ export class KulCarousel {
               ) {
                 this.#lastSwipeTime = currentTime;
                 if (swipeDistance > 0) {
-                  previous();
+                  previous(this.#adapter);
                 } else {
-                  next();
+                  next(this.#adapter);
                 }
               }
             }}
@@ -429,12 +438,10 @@ export class KulCarousel {
 
   disconnectedCallback() {
     const { theme } = kulManagerSingleton;
-    const { handlers } = this.#adapter;
-    const { autoplay } = handlers;
     const { stop } = autoplay;
 
     theme.unregister(this);
-    stop();
+    stop(this.#adapter);
   }
   //#endregion
 }

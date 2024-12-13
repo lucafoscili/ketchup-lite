@@ -5,44 +5,59 @@ import {
   KulDataDataset,
   KulDataShapes,
 } from "src/managers/kul-data/kul-data-declarations";
-import { KulComponentAdapter, KulEventPayload } from "src/types/GenericTypes";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterJsx,
+  KulComponentAdapterRef,
+  KulComponentAdapterStateGetters,
+  KulComponentAdapterStateSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulCarouselAdapter extends KulComponentAdapter<KulCarousel> {
+  elements: {
+    jsx: KulCarouselAdapterElementsJsx;
+    refs: KulCarouselAdapterElementsRefs;
+  };
   handlers: KulCarouselAdapterHandlers;
-  hooks: KulCarouselAdapterHooks;
-  widgets: KulCarouselAdapterWidgets;
-}
-export interface KulCarouselAdapterWidgets {
-  jsx: {
-    back: () => VNode;
-    forward: () => VNode;
-  };
-  refs: {
-    back: HTMLKulButtonElement;
-    forward: HTMLKulButtonElement;
+  state: {
+    get: KulCarouselAdapterStateGetters;
+    set: KulCarouselAdapterStateSetters;
   };
 }
-export interface KulCarouselAdapterHandlers {
+export interface KulCarouselAdapterElementsJsx extends KulComponentAdapterJsx {
+  back: () => VNode;
+  forward: () => VNode;
+}
+export interface KulCarouselAdapterElementsRefs extends KulComponentAdapterRef {
+  back: HTMLKulButtonElement;
+  forward: HTMLKulButtonElement;
+}
+export interface KulCarouselAdapterHandlers
+  extends KulComponentAdapterHandlers {}
+export interface KulCarouselAdapterStateGetters
+  extends KulComponentAdapterStateGetters<KulCarousel> {
+  compInstance: KulCarousel;
+  index: {
+    current: () => number;
+  };
+  interval: () => NodeJS.Timeout;
+  totalSlides: () => number;
+}
+export interface KulCarouselAdapterStateSetters
+  extends KulComponentAdapterStateSetters {
   autoplay: {
     start: () => void;
     stop: () => void;
   };
-  next: () => void;
-  previous: () => void;
-  toSlide: (value: number) => void;
-}
-export interface KulCarouselAdapterHooks {
-  get: {
-    comp: KulCarousel;
-    currentIndex: () => number;
-    interval: () => NodeJS.Timeout;
-    totalSlides: () => number;
+  index: {
+    current: (value: number) => void;
+    next: () => void;
+    previous: () => void;
   };
-  set: {
-    currentIndex: (value: number) => void;
-    interval: (value: NodeJS.Timeout) => void;
-  };
+  interval: (value: NodeJS.Timeout) => void;
 }
 //#endregion
 
