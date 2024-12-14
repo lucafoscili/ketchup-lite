@@ -1,36 +1,40 @@
+import { onClick } from "src/components/kul-chart/handlers/kul-chart-main";
+import { basic } from "src/components/kul-chart/helpers/kul-chart-basic";
+import { bubble } from "src/components/kul-chart/helpers/kul-chart-bubble";
+import { calendar } from "src/components/kul-chart/helpers/kul-chart-calendar";
+import { candlestick } from "src/components/kul-chart/helpers/kul-chart-candlestick";
+import { funnel } from "src/components/kul-chart/helpers/kul-chart-funnel";
+import { heatmap } from "src/components/kul-chart/helpers/kul-chart-heatmap";
+import { pie } from "src/components/kul-chart/helpers/kul-chart-pie";
+import { radar } from "src/components/kul-chart/helpers/kul-chart-radar";
+import { sankey } from "src/components/kul-chart/helpers/kul-chart-sankey";
 import {
-  getColors,
-  onClick,
-  prepSetups,
-} from "src/components/kul-chart/handlers/kul-chart-main";
-import {
-  basic,
-  bubble,
-  calendar,
-  candlestick,
-  funnel,
-  heatmap,
-  pie,
-  radar,
-  sankey,
-} from "src/components/kul-chart/helpers/kul-chart-options";
+  prepAxis,
+  prepLabel,
+  prepLegend,
+  prepSeries,
+  prepTooltip,
+} from "src/components/kul-chart/helpers/kul-chart-utils";
 import {
   KulChartAdapter,
   KulChartAdapterHandlers,
+  KulChartAdapterLayoutStyle,
   KulChartAdapterOptions,
+  KulChartAdapterStyle,
 } from "src/components/kul-chart/kul-chart-declarations";
 
+//#region Handlers
 export const createHandlers: (
   adapter: KulChartAdapter,
 ) => KulChartAdapterHandlers = (adapter) => {
   return {
-    getColors: (amount: number) => getColors(adapter, amount),
     onClick: (e) => onClick(adapter, e),
-    setup: prepSetups(adapter),
   };
 };
+//#endregion
 
-export const createOptions: (
+//#region State getters
+export const createOptionsStateGetters: (
   adapter: KulChartAdapter,
 ) => KulChartAdapterOptions = (adapter) => {
   return {
@@ -45,3 +49,17 @@ export const createOptions: (
     sankey: () => sankey(adapter),
   };
 };
+export const createStyleStateGetters: (
+  adapter: KulChartAdapter,
+  layout: KulChartAdapterLayoutStyle,
+) => KulChartAdapterStyle = (adapter, layout) => {
+  return {
+    axis: (axisType) => prepAxis(adapter, axisType),
+    label: () => prepLabel(adapter),
+    layout: layout,
+    legend: () => prepLegend(adapter),
+    series: (amount: number) => prepSeries(adapter, amount),
+    tooltip: (formatter) => prepTooltip(adapter, formatter),
+  };
+};
+//#endregion

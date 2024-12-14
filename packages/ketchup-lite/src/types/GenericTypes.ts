@@ -1,4 +1,6 @@
 import { VNode } from "@stencil/core";
+import { ECElementEvent } from "echarts";
+
 import { KulAccordion } from "../components/kul-accordion/kul-accordion";
 import {
   KulAccordionEvent,
@@ -411,7 +413,7 @@ export type ComponentPropsMap = {
   KulUpload: KulUploadProps;
 };
 export type KulComponentAdapterHandler = (
-  e?: Event | PointerEvent | KulGenericEvent,
+  e?: ECElementEvent | Event | PointerEvent | KulGenericEvent,
   ...args: any[]
 ) => void;
 export type KulComponentAdapterHandlers = {

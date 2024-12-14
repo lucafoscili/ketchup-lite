@@ -15,29 +15,61 @@ import {
   KulDataDataset,
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
-import { KulComponentAdapter, KulEventPayload } from "src/types/GenericTypes";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterStateGetters,
+  KulComponentAdapterStateSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
 
 //#region Adapter
 export interface KulChartAdapter extends KulComponentAdapter<KulChart> {
   handlers: KulChartAdapterHandlers;
-  hooks: KulChartAdapterHooks;
-}
-export interface KulChartAdapterHandlers {
-  getColors: (amount: number) => string[];
-  onClick: (e: ECElementEvent) => boolean | void;
-  setup: KulChartAdapterSetups;
-}
-export interface KulChartAdapterHooks {
-  get: {
-    comp: KulChart;
-    columnById: (id: string) => KulDataColumn;
-    mappedType: (type: KulChartType) => SeriesOption["type"];
-    options: KulChartAdapterOptions;
-    seriesColumn: (seriesName: string) => KulDataColumn[];
-    seriesData: () => KulChartSeriesData[];
-    theme: KulChartAdapterTheme;
-    xAxesData: () => { id: string; data: string[] }[];
+  state: {
+    get: KulChartAdapterStateGetters;
+    set: KulChartAdapterStateSetters;
   };
+}
+export interface KulChartAdapterHandlers extends KulComponentAdapterHandlers {
+  onClick: (e: ECElementEvent) => boolean | void;
+}
+export interface KulChartAdapterStateGetters
+  extends KulComponentAdapterStateGetters<KulChart> {
+  compInstance: KulChart;
+  columnById: (id: string) => KulDataColumn;
+  mappedType: (type: KulChartType) => SeriesOption["type"];
+  options: KulChartAdapterOptions;
+  seriesColumn: (seriesName: string) => KulDataColumn[];
+  seriesData: () => KulChartSeriesData[];
+  style: KulChartAdapterStyle;
+  xAxesData: () => { id: string; data: string[] }[];
+}
+export interface KulChartAdapterStateSetters
+  extends KulComponentAdapterStateSetters {
+  style: {
+    layout: () => KulChartAdapterLayoutStyle;
+  };
+}
+export interface KulChartAdapterLayoutStyle {
+  background: string;
+  border: string;
+  danger: string;
+  font: string;
+  success: string;
+  text: string;
+}
+export interface KulChartAdapterStyle {
+  axis: (
+    axisType: KulChartAxesTypes,
+  ) => XAXisComponentOption | YAXisComponentOption;
+  label: () => EChartsOption;
+  layout: KulChartAdapterLayoutStyle;
+  legend: () => LegendComponentOption;
+  tooltip: (
+    formatter?: TooltipComponentFormatterCallback<unknown>,
+  ) => TooltipComponentOption;
+  series: (amount: number) => string[];
 }
 export interface KulChartAdapterOptions {
   basic: () => EChartsOption;
@@ -49,24 +81,6 @@ export interface KulChartAdapterOptions {
   pie: () => EChartsOption;
   radar: () => EChartsOption;
   sankey: () => EChartsOption;
-}
-export interface KulChartAdapterSetups {
-  axis: (
-    axisType: KulChartAxesTypes,
-  ) => XAXisComponentOption | YAXisComponentOption;
-  label: () => EChartsOption;
-  legend: () => LegendComponentOption;
-  tooltip: (
-    formatter?: TooltipComponentFormatterCallback<unknown>,
-  ) => TooltipComponentOption;
-}
-export interface KulChartAdapterTheme {
-  backgroundColor: string;
-  border: string;
-  dangerColor: string;
-  font: string;
-  successColor: string;
-  textColor: string;
 }
 //#endregion
 
