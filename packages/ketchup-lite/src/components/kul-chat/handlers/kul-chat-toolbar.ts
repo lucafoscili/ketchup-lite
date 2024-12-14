@@ -1,40 +1,36 @@
 import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 
-//#region Delete message
-export const deleteMessage = (
-  adapter: KulChatAdapter,
-  m: KulLLMChoiceMessage,
-) => {
-  const { handlers, hooks } = adapter;
-  const { updateHistory } = handlers;
-  const { get } = hooks;
-  const { comp, history } = get;
+export const prepToolbarHandlers = (adapter: KulChatAdapter) => {
+  const { handlers, state } = adapter;
+  const { get, set } = state;
 
-  const index = history().indexOf(m);
-  if (index !== -1) {
-    const cb = () => history().splice(index, 1);
-    updateHistory(cb);
-    comp.refresh();
-  }
+  return {
+    //#region Delete message
+    deleteMessage: (m: KulLLMChoiceMessage) => {
+      const { history } = get;
+
+      const h = history();
+      const index = h.indexOf(m);
+      if (index !== -1) {
+        set.history(() => h.splice(index, 1));
+      }
+    },
+    //#endregion
+
+    //#region Regenerate
+    regenerate: (m: KulLLMChoiceMessage) => {
+      const { prompt } = handlers;
+      const { history } = get;
+      const { submit } = prompt;
+
+      const h = history();
+      const index = h.indexOf(m);
+      if (index !== -1) {
+        set.history(() => h.slice(0, index + 1));
+      }
+      submit();
+    },
+    //#endregion
+  };
 };
-//#endregion
-
-//#region Regenerate
-export const regenerate = (adapter: KulChatAdapter, m: KulLLMChoiceMessage) => {
-  const { handlers, hooks } = adapter;
-  const { sendPrompt, updateHistory } = handlers;
-  const { get, set } = hooks;
-  const { history } = get;
-
-  const index = history().indexOf(m);
-  if (index !== -1) {
-    const cb = () => {
-      const sliced = history().slice(0, index + 1);
-      set.history(sliced);
-    };
-    updateHistory(cb);
-    sendPrompt();
-  }
-};
-//#endregion

@@ -420,10 +420,10 @@ export type KulComponentAdapterHandlers = {
   [key: string]: KulComponentAdapterHandler | KulComponentAdapterHandlers;
 };
 export type KulComponentAdapterJsx = {
-  [key: string]: (() => VNode) | KulComponentAdapterJsx;
+  [key: string]: ((...args: any[]) => VNode) | KulComponentAdapterJsx;
 };
-export type KulComponentAdapterRef = {
-  [key: string]: HTMLElement | KulComponentAdapterRef;
+export type KulComponentAdapterRefs = {
+  [key: string]: HTMLElement | KulComponentAdapterRefs;
 };
 export type KulComponentAdapterStateGetters<C extends KulGenericComponent> = {
   [key: string]: any;
@@ -436,7 +436,7 @@ export interface KulComponentAdapter<
   C extends KulGenericComponent,
   H = KulComponentAdapterHandlers,
   J = KulComponentAdapterJsx,
-  R = KulComponentAdapterRef,
+  R = KulComponentAdapterRefs,
   SGet = KulComponentAdapterStateGetters<C>,
   SSet = KulComponentAdapterStateSetters,
 > {

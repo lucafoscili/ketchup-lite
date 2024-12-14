@@ -2,11 +2,12 @@ import { h, VNode } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import * as HANDLERS from "src/components/kul-card/handlers/kul-card-keywords-layout";
 import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 
 export const prepKeywords = (adapter: KulCardAdapter): VNode => {
-  const { state } = adapter;
+  const { elements, handlers, state } = adapter;
+  const { refs } = elements;
+  const { layouts } = handlers;
   const { get } = state;
   const { comp, defaults } = get;
   const { kulLayout } = comp;
@@ -17,10 +18,7 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
 
   //#region Button
   const buttonCb = (e: CustomEvent<KulButtonEventPayload>) => {
-    const firstChip = chips?.ref?.[0] as HTMLKulChipElement;
-    if (firstChip) {
-      HANDLERS.button(firstChip, e);
-    }
+    layouts.keywords.button(e);
   };
   const buttons = decorator(
     "button",
@@ -55,6 +53,9 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
   const className = {
     [`${kulLayout}-layout`]: true,
   };
+
+  refs.layouts.keywords.button = buttons.ref;
+  refs.layouts.keywords.chip = chips.ref;
 
   return (
     <div class={className}>

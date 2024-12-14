@@ -16,10 +16,8 @@ import {
 } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
-import {
-  createHandlers,
-  createWidgets,
-} from "src/components/kul-chat/helpers/kul-chat-hub";
+import { createHandlers } from "src/components/kul-chat/helpers/kul-chat-hub";
+import { calcTokens } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatEvent,
@@ -61,6 +59,14 @@ export class KulChat {
    * History of the messages.
    */
   @State() history: KulChatHistory = [];
+  /**
+   * The textual request currently elaborated.
+   */
+  @State() currentPrompt: KulLLMChoiceMessage;
+  /**
+   * The amount of tokens currently used.
+   */
+  @State() currentTokens = 0;
   /**
    * State of the connection.
    */
@@ -143,32 +149,40 @@ export class KulChat {
   #statusinterval: NodeJS.Timeout;
   #adapter: KulChatAdapter = {
     handlers: null,
-    hooks: {
+    state: {
       get: {
-        comp: this,
+        compInstance: this,
+        currentPrompt: () => this.currentPrompt,
+        currentTokens: () => this.currentTokens,
         history: () => this.history,
         status: () => this.status,
         toolbarMessage: () => this.toolbarMessage,
         view: () => this.view,
       },
       set: {
-        history: (history) => (this.history = history),
+        currentPrompt: (value) => (this.currentPrompt = value),
+        currentTokens: (value) => (this.currentTokens = value),
+        history: async (cb) => {
+          cb();
+          this.currentTokens = await calcTokens(this, this.history);
+          this.onKulEvent(new CustomEvent("update"), "update");
+        },
         status: (status) => (this.status = status),
         toolbarMessage: (element) => (this.toolbarMessage = element),
         view: (view) => (this.view = view),
       },
     },
-    widgets: {
+    elements: {
       jsx: null,
       refs: {
         chat: {
           clear: null,
           progressbar: null,
-          prompt: null,
           send: null,
           settings: null,
           spinner: null,
           stt: null,
+          textarea: null,
         },
         settings: {
           back: null,
@@ -212,14 +226,15 @@ export class KulChat {
   @Listen("keydown")
   listenKeydown(e: KeyboardEvent) {
     const { handlers } = this.#adapter;
-    const { send } = handlers;
+    const { chat } = handlers;
+    const { submit } = chat;
 
     switch (e.key) {
       case "Enter":
         if (e.ctrlKey) {
           e.preventDefault();
           e.stopPropagation();
-          send();
+          submit();
         }
         break;
       default:

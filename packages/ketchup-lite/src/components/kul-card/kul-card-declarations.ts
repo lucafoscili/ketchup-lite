@@ -8,17 +8,24 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulComponentAdapter,
+  KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
+  KulComponentAdapterRefs,
   KulComponentAdapterStateGetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
+import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { KulCodeEventPayload } from "../kul-code/kul-code-declarations";
+import { KulListEventPayload } from "../kul-list/kul-list-declarations";
+import { KulToggleEventPayload } from "../kul-toggle/kul-toggle-declarations";
 
 //#region Adapter
 export interface KulCardAdapter extends KulComponentAdapter<KulCard> {
   elements: {
     jsx: KulCardAdapterElementsJsx;
-    refs: null;
+    refs: KulCardAdapterElementsRefs;
   };
+  handlers: KulCardAdapterHandlers;
   state: {
     get: KulCardAdapterStateGetters;
   };
@@ -26,15 +33,41 @@ export interface KulCardAdapter extends KulComponentAdapter<KulCard> {
 export interface KulCardAdapterElementsJsx extends KulComponentAdapterJsx {
   layouts: { [K in KulCardLayout]: () => VNode };
 }
-export type KulCardAdapterDefaults = {
-  [K in KulCardLayout]: KulDataShapeDefaults;
-};
+export interface KulCardAdapterElementsRefs extends KulComponentAdapterRefs {
+  layouts: {
+    debug: {
+      button: HTMLKulButtonElement;
+      code: HTMLKulCodeElement;
+      toggle: HTMLKulToggleElement;
+    };
+    keywords: {
+      button: HTMLKulButtonElement;
+      chip: HTMLKulChipElement;
+    };
+  };
+}
+export interface KulCardAdapterHandlers extends KulComponentAdapterHandlers {
+  layouts: {
+    debug: {
+      button: (e: CustomEvent<KulButtonEventPayload>) => void;
+      code: (e: CustomEvent<KulCodeEventPayload>) => void;
+      list: (e: CustomEvent<KulListEventPayload>) => void;
+      toggle: (e: CustomEvent<KulToggleEventPayload>) => void;
+    };
+    keywords: {
+      button: (e: CustomEvent<KulButtonEventPayload>) => void;
+    };
+  };
+}
 export interface KulCardAdapterStateGetters
   extends KulComponentAdapterStateGetters<KulCard> {
   compInstance: KulCard;
   defaults: KulCardAdapterDefaults;
   shapes: () => KulDataShapesMap;
 }
+export type KulCardAdapterDefaults = {
+  [K in KulCardLayout]: KulDataShapeDefaults;
+};
 //#endregion
 
 //#region Events

@@ -1,14 +1,15 @@
 import { h, VNode } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
-import * as HANDLERS from "src/components/kul-card/handlers/kul-card-debug-layout";
 import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 
 export const prepDebug = (adapter: KulCardAdapter): VNode => {
-  const { state } = adapter;
+  const { elements, handlers, state } = adapter;
+  const { refs } = elements;
+  const { layouts } = handlers;
   const { get } = state;
-  const { comp, defaults } = get;
-  const { kulLayout } = comp;
+  const { compInstance, defaults } = get;
+  const { kulLayout } = compInstance;
   const { debug } = defaults;
 
   const shapes = get.shapes();
@@ -18,9 +19,9 @@ export const prepDebug = (adapter: KulCardAdapter): VNode => {
   const buttons = decorator(
     "button",
     shapes.button,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     debug.button(),
-    HANDLERS.button,
+    layouts.debug.button,
   );
   const hasButton = buttons?.element?.length;
   const hasButton2 = buttons?.element?.length > 1;
@@ -30,9 +31,9 @@ export const prepDebug = (adapter: KulCardAdapter): VNode => {
   const codes = decorator(
     "code",
     shapes.code,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     debug.code(),
-    HANDLERS.code,
+    layouts.debug.code,
   );
   const hasCode = codes?.element?.length;
   //#endregion
@@ -41,9 +42,9 @@ export const prepDebug = (adapter: KulCardAdapter): VNode => {
   const toggles = decorator(
     "toggle",
     shapes.toggle,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     debug.toggle(),
-    HANDLERS.toggle,
+    layouts.debug.toggle,
   );
   const hasToggle = toggles?.element?.length;
   //#endregion
@@ -51,6 +52,10 @@ export const prepDebug = (adapter: KulCardAdapter): VNode => {
   const className = {
     [`${kulLayout}-layout`]: true,
   };
+
+  refs.layouts.debug.button = buttons.ref;
+  refs.layouts.debug.code = codes.ref;
+  refs.layouts.debug.toggle = toggles.ref;
 
   return (
     <div class={className}>

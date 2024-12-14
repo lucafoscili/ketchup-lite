@@ -6,7 +6,7 @@ import {
   KulComponentAdapter,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
-  KulComponentAdapterRef,
+  KulComponentAdapterRefs,
   KulComponentAdapterStateGetters,
   KulComponentAdapterStateSetters,
   KulEventPayload,
@@ -29,17 +29,19 @@ export interface KulCanvasAdapterElementsJsx extends KulComponentAdapterJsx {
   image: () => VNode;
   preview: () => VNode;
 }
-export interface KulCanvasAdapterElementsRefs extends KulComponentAdapterRef {
+export interface KulCanvasAdapterElementsRefs extends KulComponentAdapterRefs {
   board: HTMLCanvasElement;
   image: HTMLKulImageElement;
   preview: HTMLCanvasElement;
 }
 export interface KulCanvasAdapterHandlers extends KulComponentAdapterHandlers {
-  endCapture: (e: PointerEvent) => void;
-  onPointerDown: (e: PointerEvent) => void;
-  onPointerMove: (e: PointerEvent) => void;
-  onPointerOut: (e: PointerEvent) => void;
-  onPointerUp: (e: PointerEvent) => void;
+  board: {
+    endCapture: (e: PointerEvent) => void;
+    onPointerDown: (e: PointerEvent) => void;
+    onPointerMove: (e: PointerEvent) => void;
+    onPointerOut: (e: PointerEvent) => void;
+    onPointerUp: (e: PointerEvent) => void;
+  };
 }
 export interface KulCanvasAdapterStateGetters
   extends KulComponentAdapterStateGetters<KulCanvas> {

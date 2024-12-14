@@ -9,7 +9,7 @@ import {
   KulComponentAdapter,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
-  KulComponentAdapterRef,
+  KulComponentAdapterRefs,
   KulComponentAdapterStateGetters,
   KulComponentAdapterStateSetters,
   KulEventPayload,
@@ -31,7 +31,8 @@ export interface KulCarouselAdapterElementsJsx extends KulComponentAdapterJsx {
   back: () => VNode;
   forward: () => VNode;
 }
-export interface KulCarouselAdapterElementsRefs extends KulComponentAdapterRef {
+export interface KulCarouselAdapterElementsRefs
+  extends KulComponentAdapterRefs {
   back: HTMLKulButtonElement;
   forward: HTMLKulButtonElement;
 }

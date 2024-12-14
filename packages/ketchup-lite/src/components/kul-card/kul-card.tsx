@@ -16,6 +16,7 @@ import { kulManagerSingleton } from "src";
 import {
   createDefaults,
   createElements,
+  createHandlers,
 } from "src/components/kul-card/helpers/kul-card-hub";
 import {
   KulCardAdapter,
@@ -92,7 +93,8 @@ export class KulCard {
 
   //#region Internal variables
   #adapter: KulCardAdapter = {
-    elements: { jsx: null, refs: null },
+    elements: { jsx: { layouts: null }, refs: { layouts: null } },
+    handlers: { layouts: null },
     state: {
       get: {
         compInstance: this,
@@ -182,8 +184,6 @@ export class KulCard {
   }
   //#endregion
 
-  //#endregion
-
   //#region Lifecycle hooks
   componentWillLoad() {
     const { language, theme } = kulManagerSingleton;
@@ -193,7 +193,8 @@ export class KulCard {
 
     this.updateShapes();
 
-    this.#adapter.elements.jsx = createElements(this.#adapter);
+    this.#adapter.handlers.layouts = createHandlers(this.#adapter);
+    this.#adapter.elements.jsx.layouts = createElements(this.#adapter);
   }
   componentDidLoad() {
     const { debug } = kulManagerSingleton;

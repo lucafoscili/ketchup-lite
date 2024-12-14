@@ -1,4 +1,4 @@
-import * as MAIN_WIDGETS from "src/components/kul-carousel/elements/kul-carousel-main";
+import { prepSideButtons } from "src/components/kul-carousel/elements/kul-carousel-main";
 import {
   autoplay,
   navigation,
@@ -12,10 +12,7 @@ import {
 export const createElements: (
   adapter: KulCarouselAdapter,
 ) => KulCarouselAdapterElementsJsx = (adapter) => {
-  return {
-    back: () => MAIN_WIDGETS.prepBack(adapter),
-    forward: () => MAIN_WIDGETS.prepForward(adapter),
-  };
+  return prepSideButtons(adapter);
 };
 
 export const createAutoplayStateSetters: (
