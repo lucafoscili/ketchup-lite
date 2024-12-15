@@ -12,6 +12,7 @@ export const prepChat = (
   const { elements, handlers, state } = adapter;
   const { refs } = elements;
   const { get } = state;
+  const { chat } = refs;
   const { compInstance } = get;
 
   const progressbarClass = {
@@ -23,9 +24,8 @@ export const prepChat = (
   return {
     //#region Clear
     clear: () => {
-      const { chat } = handlers;
+      const { button } = handlers.chat;
       const { currentPrompt } = get;
-      const { button } = chat;
 
       return (
         <kul-button
@@ -36,7 +36,7 @@ export const prepChat = (
           onKul-button-event={button}
           ref={(el) => {
             if (el) {
-              refs.chat.clear = el;
+              chat.clear = el;
             }
           }}
           title="Clear the textarea."
@@ -63,7 +63,7 @@ export const prepChat = (
           kulValue={value}
           ref={(el) => {
             if (el) {
-              refs.chat.progressbar = el;
+              chat.progressbar = el;
             }
           }}
           title={title}
@@ -74,8 +74,7 @@ export const prepChat = (
 
     //#region Send
     send: () => {
-      const { chat } = handlers;
-      const { button } = chat;
+      const { button } = handlers.chat;
       const { currentPrompt } = get;
 
       return (
@@ -87,7 +86,7 @@ export const prepChat = (
           onKul-button-event={button}
           ref={(el) => {
             if (el) {
-              refs.chat.send = el;
+              chat.send = el;
             }
           }}
           title="Send your prompt (CTRL + Enter)."
@@ -104,8 +103,7 @@ export const prepChat = (
 
     //#region Settings
     settings: () => {
-      const { chat } = handlers;
-      const { button } = chat;
+      const { button } = handlers.chat;
 
       return (
         <kul-button
@@ -116,7 +114,7 @@ export const prepChat = (
           onKul-button-event={button}
           ref={(el) => {
             if (el) {
-              refs.chat.settings = el;
+              chat.settings = el;
             }
           }}
         ></kul-button>
@@ -134,7 +132,7 @@ export const prepChat = (
           kulBarVariant={true}
           ref={(el) => {
             if (el) {
-              refs.chat.spinner = el;
+              chat.spinner = el;
             }
           }}
         ></kul-spinner>
@@ -144,8 +142,7 @@ export const prepChat = (
 
     //#region Stt
     stt: () => {
-      const { chat } = handlers;
-      const { button } = chat;
+      const { button } = handlers.chat;
 
       return (
         <kul-button
@@ -156,7 +153,7 @@ export const prepChat = (
           onKul-button-event={button}
           ref={(el) => {
             if (el) {
-              refs.chat.stt = el;
+              chat.stt = el;
             }
           }}
           title="Activate Speech To Text with your browser's API (if supported)."
@@ -186,7 +183,7 @@ export const prepChat = (
           kulStyling="textarea"
           ref={(el) => {
             if (el) {
-              refs.chat.textarea = el;
+              chat.textarea = el;
             }
           }}
         ></kul-textfield>

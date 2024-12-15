@@ -71,8 +71,6 @@ export const prepCanvasHandlers = (adapter: KulCanvasAdapter) => {
       onPointerMove: (e: PointerEvent) => {
         e.preventDefault();
 
-        const { state } = adapter;
-        const { get } = state;
         const { isPainting } = get;
 
         if (!isPainting()) {
@@ -88,16 +86,14 @@ export const prepCanvasHandlers = (adapter: KulCanvasAdapter) => {
       //#region onPointerOut
       onPointerOut: (e: PointerEvent) => {
         const { isPainting } = get;
-        const { board } = handlers;
-        const { endCapture } = board;
+        const { endCapture } = handlers.board;
 
         if (isPainting()) {
           endCapture(e);
         }
       },
       onPointerUp: (e: PointerEvent) => {
-        const { board } = handlers;
-        const { endCapture } = board;
+        const { endCapture } = handlers.board;
 
         endCapture(e);
       },

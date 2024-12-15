@@ -8,10 +8,8 @@ export const draw = {
   //#region Cursor
   cursor: (adapter: KulCanvasAdapter, e: PointerEvent) => {
     const { elements, state } = adapter;
-    const { refs } = elements;
-    const { get } = state;
-    const { board } = refs;
-    const { compInstance, isPainting } = get;
+    const { board } = elements.refs;
+    const { compInstance, isPainting } = state.get;
 
     if (!compInstance || isPainting()) {
       return;
@@ -35,10 +33,7 @@ export const draw = {
     y: number,
     isFill = true,
   ) => {
-    const { state } = adapter;
-    const { get } = state;
-    const { compInstance } = get;
-    const { kulBrush, kulSize } = compInstance;
+    const { kulBrush, kulSize } = adapter.state.get.compInstance;
 
     const { ctx } = toolkit.context.get(adapter, type);
 
@@ -64,10 +59,8 @@ export const draw = {
   //#region Point
   point: (adapter: KulCanvasAdapter, e: PointerEvent) => {
     const { elements, state } = adapter;
-    const { refs } = elements;
-    const { get } = state;
-    const { board } = refs;
-    const { points } = get;
+    const { board } = elements.refs;
+    const { points } = state.get;
 
     const rect = board.getBoundingClientRect();
 

@@ -15,9 +15,7 @@ export const context = {
 
   //#region Get
   get: (adapter: KulCanvasAdapter, type: KulCanvasType) => {
-    const { elements } = adapter;
-    const { refs } = elements;
-    const { board, preview } = refs;
+    const { board, preview } = adapter.elements.refs;
 
     const canvas = type === "board" ? board : preview;
     const ctx = canvas.getContext("2d");
@@ -29,9 +27,7 @@ export const context = {
 
   //#region Redraw
   redraw: (adapter: KulCanvasAdapter, type: KulCanvasType) => {
-    const { state } = adapter;
-    const { get } = state;
-    const { points } = get;
+    const { points } = adapter.state.get;
 
     const { ctx, height, width } = toolkit.context.get(adapter, type);
     toolkit.context.clear(adapter, type);
@@ -60,10 +56,7 @@ export const context = {
 
   //#region Setup
   setup: (adapter: KulCanvasAdapter, type: KulCanvasType, isFill = false) => {
-    const { state } = adapter;
-    const { get } = state;
-    const { compInstance } = get;
-    const { kulColor, kulOpacity, kulSize } = compInstance;
+    const { kulColor, kulOpacity, kulSize } = adapter.state.get.compInstance;
 
     const { ctx } = toolkit.context.get(adapter, type);
 

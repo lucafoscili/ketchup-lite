@@ -1,6 +1,10 @@
 import { VNode } from "@stencil/core";
 
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { KulCard } from "src/components/kul-card/kul-card";
+import { KulCodeEventPayload } from "src/components/kul-code/kul-code-declarations";
+import { KulListEventPayload } from "src/components/kul-list/kul-list-declarations";
+import { KulToggleEventPayload } from "src/components/kul-toggle/kul-toggle-declarations";
 import {
   KulDataDataset,
   KulDataShapeDefaults,
@@ -14,10 +18,6 @@ import {
   KulComponentAdapterStateGetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
-import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
-import { KulCodeEventPayload } from "../kul-code/kul-code-declarations";
-import { KulListEventPayload } from "../kul-list/kul-list-declarations";
-import { KulToggleEventPayload } from "../kul-toggle/kul-toggle-declarations";
 
 //#region Adapter
 export interface KulCardAdapter extends KulComponentAdapter<KulCard> {

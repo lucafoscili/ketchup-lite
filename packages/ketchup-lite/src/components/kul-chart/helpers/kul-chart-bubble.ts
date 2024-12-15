@@ -11,11 +11,10 @@ import {
 export const bubble = (adapter: KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { state } = adapter;
-  const { get } = state;
+  const { get } = adapter.state;
   const { columnById, compInstance, style } = get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, tooltip } = style;
+  const { layout, seriesColor, tooltip } = style;
 
   const xAxisKey = kulAxis[0];
   const yAxisKey = kulAxis[1];
@@ -72,7 +71,7 @@ export const bubble = (adapter: KulChartAdapter) => {
         data,
         symbolSize: (val) => val[2],
         itemStyle: {
-          color: style.series(1)[0],
+          color: seriesColor(1)[0],
         },
       },
     ],

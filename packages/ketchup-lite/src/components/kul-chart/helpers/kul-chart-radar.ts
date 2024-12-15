@@ -8,11 +8,9 @@ import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations
 export const radar = (adapter: KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { state } = adapter;
-  const { get } = state;
-  const { compInstance, seriesData, style } = get;
+  const { compInstance, seriesData, style } = adapter.state.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, legend, tooltip } = style;
+  const { layout, legend, seriesColor, tooltip } = style;
 
   const indicator = kulSeries.map((seriesName) => {
     const max =
@@ -36,7 +34,7 @@ export const radar = (adapter: KulChartAdapter) => {
     };
   });
 
-  const colors = style.series(data.length);
+  const colors = seriesColor(data.length);
   const options: EChartsOption = {
     color: colors,
     legend: {

@@ -2,17 +2,14 @@ import { KulButtonEventPayload } from "src/components/kul-button/kul-button-decl
 import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 
 export const prepKeywordsHandlers = (adapter: KulCardAdapter) => {
-  const { elements } = adapter;
-  const { refs } = elements;
-  const { layouts } = refs;
+  const { layouts } = adapter.elements.refs;
 
   return {
     //#region Button
     button: async (e: CustomEvent<KulButtonEventPayload>) => {
       const { comp, eventType } = e.detail;
 
-      const { keywords } = layouts;
-      const { chip } = keywords;
+      const { chip } = layouts.keywords;
 
       if (!chip) {
         return;

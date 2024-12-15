@@ -12,8 +12,8 @@ import { RIPPLE_SURFACE_CLASS } from "src/variables/GenericVariables";
 export const prepMaterial = (adapter: KulCardAdapter): VNode => {
   const { state } = adapter;
   const { get } = state;
-  const { comp, defaults } = get;
-  const { kulLayout } = comp;
+  const { compInstance, defaults } = get;
+  const { kulLayout } = compInstance;
   const { material } = defaults;
 
   const shapes = get.shapes();
@@ -21,7 +21,7 @@ export const prepMaterial = (adapter: KulCardAdapter): VNode => {
 
   //#region Button
   const buttons = decorator("button", shapes.button, async (e) =>
-    comp.onKulEvent(e, "kul-event"),
+    compInstance.onKulEvent(e, "kul-event"),
   );
   const hasButton = buttons?.element?.length;
   //#endregion
@@ -30,7 +30,7 @@ export const prepMaterial = (adapter: KulCardAdapter): VNode => {
   const images = decorator(
     "image",
     shapes.image,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     material.image(),
   );
   const hasImage = images?.element?.length;
@@ -38,7 +38,7 @@ export const prepMaterial = (adapter: KulCardAdapter): VNode => {
 
   //#region Text
   const texts = decorator("text", shapes.text, async (e) =>
-    comp.onKulEvent(e, "kul-event"),
+    compInstance.onKulEvent(e, "kul-event"),
   );
   const hasText = texts?.element?.length;
   const title = hasText ? shapes.text?.[0]?.value : null;
@@ -70,7 +70,7 @@ export const prepMaterial = (adapter: KulCardAdapter): VNode => {
           {description && <div class="sub-2 description">{description}</div>}
         </div>
       </div>
-      {hasButton ? <div class="section-3">{buttons.element}</div> : null}
+      {hasButton && <div class="section-3">{buttons.element}</div>}
     </div>
   );
 };

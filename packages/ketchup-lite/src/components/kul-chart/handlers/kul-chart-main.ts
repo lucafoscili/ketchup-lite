@@ -6,8 +6,8 @@ import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations
 export const onClick = (adapter: KulChartAdapter, e: ECElementEvent) => {
   const { state } = adapter;
   const { get } = state;
-  const { comp, seriesColumn } = get;
-  const { kulData } = comp;
+  const { compInstance, seriesColumn } = get;
+  const { kulData } = compInstance;
 
   const seriesName = e.seriesName;
   const dataIndex = e.dataIndex;
@@ -28,7 +28,7 @@ export const onClick = (adapter: KulChartAdapter, e: ECElementEvent) => {
     y = String(y);
   }
 
-  comp.onKulEvent(new Event("click"), "click", {
+  compInstance.onKulEvent(new Event("click"), "click", {
     column,
     node,
     x,

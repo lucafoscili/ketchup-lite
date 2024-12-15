@@ -58,7 +58,7 @@ export const createStyleStateGetters: (
     label: () => prepLabel(adapter),
     layout: layout,
     legend: () => prepLegend(adapter),
-    series: (amount: number) => prepSeries(adapter, amount),
+    seriesColor: (amount: number) => prepSeries(adapter, amount),
     tooltip: (formatter) => prepTooltip(adapter, formatter),
   };
 };

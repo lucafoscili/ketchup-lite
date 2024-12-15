@@ -17,10 +17,8 @@ import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations
 export const basic = (adapter: KulChartAdapter) => {
   const { theme } = kulManagerSingleton;
 
-  const { state } = adapter;
-  const { get } = state;
-  const { mappedType, seriesData, style, xAxesData } = get;
-  const { axis, layout, legend, tooltip } = style;
+  const { mappedType, seriesData, style, xAxesData } = adapter.state.get;
+  const { axis, layout, legend, seriesColor, tooltip } = style;
 
   const xAxes: XAXisComponentOption[] = [];
   const yAxes: YAXisComponentOption[] = [];
@@ -55,7 +53,7 @@ export const basic = (adapter: KulChartAdapter) => {
 
   const dataset = seriesData();
 
-  const sColors = style.series(dataset.length);
+  const sColors = seriesColor(dataset.length);
   const seriesOptions: SeriesOption[] = dataset.map((s, index) => {
     const { axisIndex, data, name, type } = s;
 

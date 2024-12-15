@@ -8,11 +8,9 @@ import {
 
 //#region Pie
 export const pie = (adapter: KulChartAdapter) => {
-  const { state } = adapter;
-  const { get } = state;
-  const { columnById, compInstance, seriesData, style } = get;
+  const { columnById, compInstance, seriesData, style } = adapter.state.get;
   const { kulAxis } = compInstance;
-  const { label, legend, tooltip } = style;
+  const { label, legend, seriesColor, tooltip } = style;
 
   const data = seriesData().map((s) => ({
     name: s.name,
@@ -31,7 +29,7 @@ export const pie = (adapter: KulChartAdapter) => {
     return `<strong>${title}</strong><br/>${name}: ${value.toLocaleString()} (${percent.toFixed(2)}%)`;
   };
 
-  const colors = style.series(data.length);
+  const colors = seriesColor(data.length);
   const options: EChartsOption = {
     color: colors,
     label: label(),

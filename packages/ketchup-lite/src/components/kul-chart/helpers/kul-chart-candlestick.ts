@@ -7,9 +7,7 @@ import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations
 export const candlestick = (adapter: KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { state } = adapter;
-  const { get } = state;
-  const { compInstance, style } = get;
+  const { compInstance, style } = adapter.state.get;
   const { kulAxis, kulData } = compInstance;
   const { layout, tooltip } = style;
 

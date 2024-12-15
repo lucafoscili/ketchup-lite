@@ -9,8 +9,8 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
   const { refs } = elements;
   const { layouts } = handlers;
   const { get } = state;
-  const { comp, defaults } = get;
-  const { kulLayout } = comp;
+  const { compInstance, defaults } = get;
+  const { kulLayout } = compInstance;
   const { keywords } = defaults;
 
   const shapes = get.shapes();
@@ -23,7 +23,7 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
   const buttons = decorator(
     "button",
     shapes.button,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     keywords.button(),
     buttonCb,
   );
@@ -34,7 +34,7 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
   const charts = decorator(
     "chart",
     shapes.chart,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     keywords.chart(),
   );
   const hasChart = charts?.element?.length;
@@ -44,7 +44,7 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
   const chips = decorator(
     "chip",
     shapes.chip,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     keywords.chip(),
   );
   const hasChip = chips?.element?.length;

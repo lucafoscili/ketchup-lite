@@ -20,7 +20,10 @@ import {
   createElements,
   createHandlers,
 } from "src/components/kul-chat/helpers/kul-chat-hub";
-import { calcTokens } from "src/components/kul-chat/helpers/kul-chat-utils";
+import {
+  calcTokens,
+  submitPrompt,
+} from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatEvent,
@@ -158,6 +161,19 @@ export class KulChat {
         currentPrompt: () => this.currentPrompt,
         currentTokens: () => this.currentTokens,
         history: () => this.history,
+        newPrompt: async () => {
+          const { textarea } = this.#adapter.elements.refs.chat;
+
+          await textarea.setBlur();
+          const message = await textarea.getValue();
+          if (message) {
+            const newMessage: KulLLMChoiceMessage = {
+              role: "user",
+              content: message,
+            };
+            return newMessage;
+          }
+        },
         status: () => this.status,
         toolbarMessage: () => this.toolbarMessage,
         view: () => this.view,
@@ -167,7 +183,7 @@ export class KulChat {
         currentTokens: (value) => (this.currentTokens = value),
         history: async (cb) => {
           cb();
-          this.currentTokens = await calcTokens(this, this.history);
+          this.currentTokens = await calcTokens(this.#adapter);
           this.onKulEvent(new CustomEvent("update"), "update");
         },
         status: (status) => (this.status = status),
@@ -228,16 +244,12 @@ export class KulChat {
   //#region Listeners
   @Listen("keydown")
   listenKeydown(e: KeyboardEvent) {
-    const { handlers } = this.#adapter;
-    const { chat } = handlers;
-    const { submit } = chat;
-
     switch (e.key) {
       case "Enter":
         if (e.ctrlKey) {
           e.preventDefault();
           e.stopPropagation();
-          submit();
+          submitPrompt(this.#adapter);
         }
         break;
       default:
@@ -249,7 +261,7 @@ export class KulChat {
   //#region Watchers
   @Watch("kulSystem")
   async updateTokensCount() {
-    this.currentTokens = await calcTokens(this, this.history);
+    this.currentTokens = await calcTokens(this.#adapter);
   }
   //#endregion
 
@@ -344,10 +356,8 @@ export class KulChat {
     this.onKulEvent(new CustomEvent("polling"), "polling");
   }
   #prepChat = (): VNode => {
-    const { elements } = this.#adapter;
-    const { jsx } = elements;
-    const { chat } = jsx;
-    const { clear, progressbar, send, settings, spinner, stt, textarea } = chat;
+    const { clear, progressbar, send, settings, spinner, stt, textarea } =
+      this.#adapter.elements.jsx.chat;
 
     return (
       <Fragment>
@@ -479,11 +489,8 @@ export class KulChat {
     );
   };
   #prepSettings = () => {
-    const { elements } = this.#adapter;
-    const { jsx } = elements;
-    const { settings } = jsx;
     const { back, endpoint, maxTokens, polling, system, temperature } =
-      settings;
+      this.#adapter.elements.jsx.settings;
 
     return (
       <Fragment>
@@ -499,10 +506,8 @@ export class KulChat {
     );
   };
   #prepToolbar = (m: KulLLMChoiceMessage): VNode => {
-    const { elements } = this.#adapter;
-    const { jsx } = elements;
-    const { toolbar } = jsx;
-    const { copyContent, deleteMessage, regenerate } = toolbar;
+    const { copyContent, deleteMessage, regenerate } =
+      this.#adapter.elements.jsx.toolbar;
 
     return (
       <div class="chat__messages__toolbar">

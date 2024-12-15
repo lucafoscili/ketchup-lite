@@ -11,11 +11,9 @@ import {
 export const calendar = (adapter: KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { state } = adapter;
-  const { get } = state;
-  const { compInstance, style } = get;
+  const { compInstance, style } = adapter.state.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, tooltip } = style;
+  const { layout, seriesColor, tooltip } = style;
 
   const dateKey = kulAxis[0];
   const valueKey = kulSeries[0];
@@ -44,7 +42,7 @@ export const calendar = (adapter: KulChartAdapter) => {
               <strong>Value:</strong> ${dataValue}
           `;
   };
-  const colors = style.series(1);
+  const colors = seriesColor(1);
   const options: EChartsOption = {
     color: colors[0],
     calendar: {

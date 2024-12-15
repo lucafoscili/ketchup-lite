@@ -3,17 +3,16 @@ import { h, VNode } from "@stencil/core";
 import { KulCanvasAdapter } from "src/components/kul-canvas/kul-canvas-declarations";
 
 export const prepCanvasElements = (adapter: KulCanvasAdapter) => {
-  const { elements, state } = adapter;
+  const { elements, handlers, state } = adapter;
   const { refs } = elements;
   const { get } = state;
-  const { comp } = get;
+  const { compInstance } = get;
 
   return {
     //#region Board
     board: (): VNode => {
-      const { handlers } = adapter;
-      const { board } = handlers;
-      const { onPointerDown, onPointerMove, onPointerOut, onPointerUp } = board;
+      const { onPointerDown, onPointerMove, onPointerOut, onPointerUp } =
+        handlers.board;
 
       return (
         <canvas
@@ -37,7 +36,7 @@ export const prepCanvasElements = (adapter: KulCanvasAdapter) => {
       return (
         <kul-image
           class="canvas__image kul-fit"
-          {...comp.kulImageProps}
+          {...compInstance.kulImageProps}
           ref={(el) => {
             if (el) {
               refs.image = el;

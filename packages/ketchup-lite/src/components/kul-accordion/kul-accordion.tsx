@@ -157,6 +157,7 @@ export class KulAccordion {
     if (!node) {
       return;
     }
+
     if (this.#isExpandible(node)) {
       if (this.#isExpanded(node)) {
         this.expandedNodes.delete(node);
@@ -172,6 +173,7 @@ export class KulAccordion {
     if (!this.#isExpandible(node)) {
       this.onKulEvent(e || new CustomEvent("click"), "click");
     }
+
     this.refresh();
   }
   /**

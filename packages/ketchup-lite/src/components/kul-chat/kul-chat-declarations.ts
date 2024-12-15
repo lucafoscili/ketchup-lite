@@ -4,10 +4,7 @@ import { KulButtonEventPayload } from "src/components/kul-button/kul-button-decl
 import { KulChat } from "src/components/kul-chat/kul-chat";
 import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
 import { KulTypewriterPropsInterface } from "src/components/kul-typewriter/kul-typewriter-declarations";
-import {
-  KulLLMChoiceMessage,
-  KulLLMRequest,
-} from "src/managers/kul-llm/kul-llm-declarations";
+import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 import {
   KulComponentAdapter,
   KulComponentAdapterHandlers,
@@ -81,11 +78,16 @@ export interface KulChatAdapterElementsRefs extends KulComponentAdapterRefs {
 export interface KulChatAdapterHandlers extends KulComponentAdapterHandlers {
   chat: {
     button: (e: CustomEvent<KulButtonEventPayload>) => void;
-    submit: () => void;
   };
   settings: {
     button: (e: CustomEvent<KulButtonEventPayload>) => void;
     textfield: (e: CustomEvent<KulTextfieldEventPayload>) => void;
+  };
+  toolbar: {
+    button: (
+      e: CustomEvent<KulButtonEventPayload>,
+      m: KulLLMChoiceMessage,
+    ) => void;
   };
 }
 export interface KulChatAdapterStateGetters
@@ -94,6 +96,7 @@ export interface KulChatAdapterStateGetters
   currentPrompt: () => KulLLMChoiceMessage;
   currentTokens: () => number;
   history: () => KulChatHistory;
+  newPrompt: () => Promise<KulLLMChoiceMessage>;
   status: () => KulChatStatus;
   toolbarMessage: () => KulLLMChoiceMessage;
   view: () => KulChatView;
@@ -106,12 +109,6 @@ export interface KulChatAdapterStateSetters
   status: (status: KulChatStatus) => void;
   toolbarMessage: (message: KulLLMChoiceMessage) => void;
   view: (view: KulChatView) => void;
-}
-export interface KulChatPrompt {
-  clear: () => Promise<void>;
-  get: () => Promise<KulLLMChoiceMessage>;
-  newRequest: () => KulLLMRequest;
-  submit: () => Promise<void>;
 }
 //#endregion
 

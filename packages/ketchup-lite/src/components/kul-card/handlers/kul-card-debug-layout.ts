@@ -10,8 +10,7 @@ import { KulToggleEventPayload } from "src/components/kul-toggle/kul-toggle-decl
 
 export const prepDebugHandlers = (adapter: KulCardAdapter) => {
   const { debug, theme } = kulManagerSingleton;
-  const { handlers } = adapter;
-  const { layouts } = handlers;
+  const { layouts } = adapter.handlers;
 
   return {
     //#region Button

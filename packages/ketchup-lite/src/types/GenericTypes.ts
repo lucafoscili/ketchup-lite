@@ -414,23 +414,23 @@ export type ComponentPropsMap = {
 };
 export type KulComponentAdapterHandler = (
   e?: ECElementEvent | Event | PointerEvent | KulGenericEvent,
-  ...args: any[]
-) => void;
+  ...args: unknown[]
+) => unknown | Promise<unknown>;
 export type KulComponentAdapterHandlers = {
   [key: string]: KulComponentAdapterHandler | KulComponentAdapterHandlers;
 };
 export type KulComponentAdapterJsx = {
-  [key: string]: ((...args: any[]) => VNode) | KulComponentAdapterJsx;
+  [key: string]: ((...args: unknown[]) => VNode) | KulComponentAdapterJsx;
 };
 export type KulComponentAdapterRefs = {
   [key: string]: HTMLElement | KulComponentAdapterRefs;
 };
 export type KulComponentAdapterStateGetters<C extends KulGenericComponent> = {
-  [key: string]: any;
+  [key: string]: unknown;
   compInstance: C;
 };
 export type KulComponentAdapterStateSetters = {
-  [key: string]: ((value: any) => void) | KulComponentAdapterStateSetters;
+  [key: string]: ((value: unknown) => void) | KulComponentAdapterStateSetters;
 };
 export interface KulComponentAdapter<
   C extends KulGenericComponent,

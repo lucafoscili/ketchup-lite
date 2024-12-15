@@ -17,23 +17,20 @@ import {
 const baseAxis = (
   adapter: KulChartAdapter,
 ): XAXisComponentOption | YAXisComponentOption => {
-  const { state } = adapter;
-  const { get } = state;
-  const { style } = get;
-  const { layout } = style;
+  const { border, font, text } = adapter.state.get.style.layout;
 
   return {
     axisLabel: {
-      color: layout.text,
-      fontFamily: layout.font,
+      color: text,
+      fontFamily: font,
       hideOverlap: true,
       margin: 12,
       overflow: "truncate",
     },
-    axisLine: { lineStyle: { color: layout.text } },
-    axisTick: { lineStyle: { color: layout.border } },
+    axisLine: { lineStyle: { color: text } },
+    axisTick: { lineStyle: { color: border } },
     boundaryGap: ["0%", "0%"],
-    splitLine: { lineStyle: { color: layout.border } },
+    splitLine: { lineStyle: { color: border } },
   };
 };
 //#endregion
@@ -91,9 +88,7 @@ export const prepLabel = (adapter: KulChartAdapter) => {
 
 //#region prepLegend
 export const prepLegend = (adapter: KulChartAdapter) => {
-  const { state } = adapter;
-  const { get } = state;
-  const { compInstance, seriesData, style } = get;
+  const { compInstance, seriesData, style } = adapter.state.get;
   const { kulLegend } = compInstance;
   const { layout } = style;
 
@@ -119,10 +114,7 @@ export const prepSeries = (adapter: KulChartAdapter, amount: number) => {
   const { theme } = kulManagerSingleton;
   const { cssVars, randomColor } = theme;
 
-  const { state } = adapter;
-  const { get } = state;
-  const { compInstance } = get;
-  const { kulColors } = compInstance;
+  const { kulColors } = adapter.state.get.compInstance;
 
   const colorArray: string[] = [];
 
@@ -151,17 +143,14 @@ export const prepTooltip = (
   adapter: KulChartAdapter,
   formatter?: TooltipComponentFormatterCallback<any>,
 ) => {
-  const { state } = adapter;
-  const { get } = state;
-  const { style } = get;
-  const { layout } = style;
+  const { background, font, text } = adapter.state.get.style.layout;
 
   const tooltip: TooltipComponentOption = {
-    backgroundColor: layout.background,
+    backgroundColor: background,
     formatter,
     textStyle: {
-      color: layout.text,
-      fontFamily: layout.font,
+      color: text,
+      fontFamily: font,
     },
   };
   return tooltip;

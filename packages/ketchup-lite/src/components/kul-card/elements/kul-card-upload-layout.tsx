@@ -7,8 +7,8 @@ import { KulCardAdapter } from "src/components/kul-card/kul-card-declarations";
 export const prepUpload = (adapter: KulCardAdapter): VNode => {
   const { state } = adapter;
   const { get } = state;
-  const { comp, defaults } = get;
-  const { kulLayout } = comp;
+  const { compInstance, defaults } = get;
+  const { kulLayout } = compInstance;
   const { upload } = defaults;
 
   const shapes = get.shapes();
@@ -18,7 +18,7 @@ export const prepUpload = (adapter: KulCardAdapter): VNode => {
   const buttons = decorator(
     "button",
     shapes.button,
-    async (e) => comp.onKulEvent(e, "kul-event"),
+    async (e) => compInstance.onKulEvent(e, "kul-event"),
     upload.button(),
   );
   const hasButton = buttons?.element?.length;
@@ -26,7 +26,7 @@ export const prepUpload = (adapter: KulCardAdapter): VNode => {
 
   //#region Upload
   const uploads = decorator("upload", shapes.upload, async (e) =>
-    comp.onKulEvent(e, "kul-event"),
+    compInstance.onKulEvent(e, "kul-event"),
   );
   const hasUpload = uploads?.element?.length;
   //#endregion

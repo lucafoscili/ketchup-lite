@@ -11,11 +11,9 @@ import {
 export const funnel = (adapter: KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { state } = adapter;
-  const { get } = state;
-  const { compInstance, style } = get;
+  const { compInstance, style } = adapter.state.get;
   const { kulData, kulSeries } = compInstance;
-  const { layout, legend, tooltip } = style;
+  const { layout, legend, seriesColor, tooltip } = style;
 
   const data = kulSeries.map((seriesName) => {
     const totalValue = kulData.nodes.reduce((sum, node) => {
@@ -38,7 +36,7 @@ export const funnel = (adapter: KulChartAdapter) => {
           `;
   };
 
-  const colors = style.series(data.length);
+  const colors = seriesColor(data.length);
   const options: EChartsOption = {
     color: colors,
     legend: {

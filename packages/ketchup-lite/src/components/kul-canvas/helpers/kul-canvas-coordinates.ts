@@ -1,4 +1,4 @@
-import { KulCanvasPoints } from "../kul-canvas-declarations";
+import { KulCanvasPoints } from "src/components/kul-canvas/kul-canvas-declarations";
 
 export const coordinates = {
   //#region Get coords
@@ -86,6 +86,7 @@ export const coordinates = {
     const simplified = [points[0]];
     simplifyRecursive(0, points.length - 1, sqTolerance, simplified);
     simplified.push(points[points.length - 1]);
+
     return simplified;
   },
   //#endregion

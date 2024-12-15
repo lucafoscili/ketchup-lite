@@ -69,7 +69,7 @@ export interface KulChartAdapterStyle {
   tooltip: (
     formatter?: TooltipComponentFormatterCallback<unknown>,
   ) => TooltipComponentOption;
-  series: (amount: number) => string[];
+  seriesColor: (amount: number) => string[];
 }
 export interface KulChartAdapterOptions {
   basic: () => EChartsOption;

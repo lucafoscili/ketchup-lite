@@ -1,5 +1,6 @@
 import { h, VNode } from "@stencil/core";
 
+import { TOOLBAR_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
@@ -20,36 +21,42 @@ export const prepToolbar = (
 
   return {
     //#region Copy content
-    copyContent: (m: KulLLMChoiceMessage): VNode => (
-      <kul-button
-        class={className}
-        kulIcon="content_copy"
-        onClick={() => navigator.clipboard.writeText(m.content)}
-        ref={(el) => {
-          if (el) {
-            toolbar.copyContent = el;
-          }
-        }}
-        title="Copy text to clipboard."
-      ></kul-button>
-    ),
+    copyContent: (m: KulLLMChoiceMessage): VNode => {
+      const { button } = handlers.toolbar;
+
+      return (
+        <kul-button
+          class={className}
+          id={TOOLBAR_IDS.copyContent}
+          kulIcon="content_copy"
+          onKul-button-event={(e) => button(e, m)}
+          ref={(el) => {
+            if (el) {
+              toolbar.copyContent = el;
+            }
+          }}
+          title="Copy text to clipboard."
+        ></kul-button>
+      );
+    },
     //#endregion
 
     //#region Delete message
     deleteMessage: (m: KulLLMChoiceMessage): VNode => {
-      const { prompt } = handlers;
+      const { button } = handlers.toolbar;
 
       return (
         <kul-button
           class={{ ...className, "kul-danger": true }}
+          id={TOOLBAR_IDS.deleteMessage}
           kulIcon="delete"
-          onClick={() => prompt.deleteMessage(m)}
+          onKul-button-event={(e) => button(e, m)}
           ref={(el) => {
             if (el) {
               toolbar.deleteMessage = el;
             }
           }}
-          title="Remove this message from history."
+          title="Delete this message from the chat history."
         ></kul-button>
       );
     },
@@ -57,19 +64,20 @@ export const prepToolbar = (
 
     //#region Regenerate
     regenerate: (m: KulLLMChoiceMessage): VNode => {
-      const { regenerate } = handlers;
+      const { button } = handlers.toolbar;
 
       return (
         <kul-button
           class={className}
+          id={TOOLBAR_IDS.regenerate}
           kulIcon="refresh"
-          onClick={() => regenerate(m)}
+          onKul-button-event={(e) => button(e, m)}
           ref={(el) => {
             if (el) {
               toolbar.regenerate = el;
             }
           }}
-          title="Regenerate answer to this question."
+          title="Regenerate the response to this request."
         ></kul-button>
       );
     },
