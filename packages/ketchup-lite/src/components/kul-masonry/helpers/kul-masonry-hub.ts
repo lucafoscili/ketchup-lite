@@ -1,24 +1,19 @@
-export const createHandlers: (
-  adapter: KulImageviewerAdapter,
-) => KulImageviewerAdapterHandlers = (adapter) => {
-  return {
-    clearHistory: (index: number) => clearHistory(adapter, index),
-    clearSelection: () => clearSelection(adapter),
-    deleteShape: () => deleteShape(adapter),
-    findImage: () => findImage(adapter),
-    load: () => load(adapter),
-    redo: () => redo(adapter),
-    save: () => save(adapter),
-    undo: () => clearHistory(adapter),
-    updateValue: () => clearHistory(adapter),
-  };
+import { prepMasonry } from "src/components/kul-masonry/elements/kul-masonry-main";
+import { masonryHandlers } from "src/components/kul-masonry/handlers/kul-masonry-main";
+import {
+  KulMasonryAdapter,
+  KulMasonryAdapterElementsJsx,
+  KulMasonryAdapterHandlers,
+} from "src/components/kul-masonry/kul-masonry-declarations";
+
+export const createElements: (
+  adapter: KulMasonryAdapter,
+) => KulMasonryAdapterElementsJsx = (adapter) => {
+  return prepMasonry(adapter);
 };
 
-export const createWidgets: (
-  adapter: KulImageviewerAdapter,
-) => KulImageviewerAdapterWidgets["jsx"] = (adapter) => {
-  return {
-    explorer: prepExplorer(adapter),
-    imageviewer: prepImageviewer(adapter),
-  };
+export const createHandlers: (
+  adapter: KulMasonryAdapter,
+) => KulMasonryAdapterHandlers = (adapter) => {
+  return masonryHandlers(adapter);
 };

@@ -1,9 +1,9 @@
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { KulCanvasEventPayload } from "src/components/kul-canvas/kul-canvas-declarations";
+import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-constants";
 import {
   clearHistory,
   deleteShape,
-  IDS,
   redo,
   save,
   toggleButtonSpinner,

@@ -1,14 +1,21 @@
 import { h } from "@stencil/core";
 
+import {
+  ICONS,
+  IDS,
+  STYLING,
+} from "src/components/kul-masonry/helpers/kul-masonry-constants";
 import { KulMasonryAdapter } from "src/components/kul-masonry/kul-masonry-declarations";
-import { ICONS, IDS, STYLING } from "../helpers/kul-masonry-utils";
-import { buttonEventHandler } from "../handlers/kul-masonry-main";
 
 export const prepMasonry = (adapter: KulMasonryAdapter) => {
-  const { handlers } = adapter;
+  const { elements, handlers, state } = adapter;
+  const { refs } = elements;
+  const { isMasonry, isVertical } = state.get;
 
   return {
     addColumn: () => {
+      const { button } = handlers;
+
       return (
         <kul-button
           class={"grid__add-column kul-slim"}
@@ -16,10 +23,10 @@ export const prepMasonry = (adapter: KulMasonryAdapter) => {
           key={IDS.addColumn}
           kulIcon={ICONS.addColumn}
           kulStyling={STYLING}
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
-              adapter.components.buttons.addColumn = el;
+              refs.addColumn = el;
             }
           }}
           title="Click to add a column to the masonry."
@@ -27,6 +34,8 @@ export const prepMasonry = (adapter: KulMasonryAdapter) => {
       );
     },
     removeColumn: () => {
+      const { button } = handlers;
+
       return (
         <kul-button
           class={"grid__remove-column kul-slim"}
@@ -34,10 +43,10 @@ export const prepMasonry = (adapter: KulMasonryAdapter) => {
           key={IDS.removeColumn}
           kulIcon={ICONS.removeColumn}
           kulStyling={STYLING}
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
-              adapter.components.buttons.removeColumn = el;
+              refs.removeColumn = el;
             }
           }}
           title="Click to remove a column from the masonry."
@@ -45,29 +54,31 @@ export const prepMasonry = (adapter: KulMasonryAdapter) => {
       );
     },
     changeView: () => {
+      const { button } = handlers;
+
       return (
         <kul-button
           class={"grid__change-view"}
           id={IDS.masonry}
           key={IDS.masonry}
           kulIcon={
-            adapter.isMasonry()
+            isMasonry()
               ? ICONS.vertical
-              : adapter.isVertical()
+              : isVertical()
                 ? ICONS.horizontal
                 : ICONS.masonry
           }
           kulStyling={STYLING}
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
-              adapter.components.buttons.changeView = el;
+              refs.changeView = el;
             }
           }}
           title={
-            adapter.isMasonry()
+            isMasonry()
               ? "Click to view the images arranged vertically."
-              : adapter.isVertical()
+              : isVertical()
                 ? "Click to view the images arranged horizontally."
                 : "Click to view the images arranged in a masonry."
           }

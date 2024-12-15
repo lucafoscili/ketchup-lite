@@ -14,6 +14,7 @@ import {
   KulComponentAdapterStateSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
+import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
 
 //#region Adapter
 export interface KulCarouselAdapter extends KulComponentAdapter<KulCarousel> {
@@ -37,7 +38,9 @@ export interface KulCarouselAdapterElementsRefs
   forward: HTMLKulButtonElement;
 }
 export interface KulCarouselAdapterHandlers
-  extends KulComponentAdapterHandlers {}
+  extends KulComponentAdapterHandlers {
+  button: (e: CustomEvent<KulButtonEventPayload>) => void;
+}
 export interface KulCarouselAdapterStateGetters
   extends KulComponentAdapterStateGetters<KulCarousel> {
   compInstance: KulCarousel;

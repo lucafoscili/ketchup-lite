@@ -14,7 +14,7 @@ import {
 import Prism from "prismjs";
 
 import { kulManagerSingleton } from "src";
-import { STATIC_LANGUAGES } from "src/components/kul-code/helpers/kul-code-utils";
+import { STATIC_LANGUAGES } from "src/components/kul-code/helpers/kul-code-languages";
 import {
   KulCodeEvent,
   KulCodeEventPayload,

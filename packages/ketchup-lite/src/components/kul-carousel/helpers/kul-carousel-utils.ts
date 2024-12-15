@@ -1,12 +1,5 @@
 import { KulCarouselAdapter } from "src/components/kul-carousel/kul-carousel-declarations";
 
-//#region Icons
-export const ICONS = {
-  back: "chevron_left",
-  forward: "chevron_right",
-};
-//#endregion
-
 export const autoplay = {
   //#region Start
   start: (adapter: KulCarouselAdapter) => {

@@ -1,27 +1,3 @@
-import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declarations";
+import { DEFAULTS } from "./kul-compare-constants";
 
-export const createDefaults: (isOverlay: boolean) => {
-  left: KulDataShapeDefaults;
-  right: KulDataShapeDefaults;
-} = (_isOverlay) => {
-  return {
-    left: {
-      image: () => [
-        {
-          htmlProps: { className: "kul-fit" },
-          kulSizeX: "100%",
-          kulSizeY: "100%",
-        },
-      ],
-    },
-    right: {
-      image: () => [
-        {
-          htmlProps: { className: "kul-fit" },
-          kulSizeX: "100%",
-          kulSizeY: "100%",
-        },
-      ],
-    },
-  };
-};
+export const createDefaults = () => DEFAULTS();

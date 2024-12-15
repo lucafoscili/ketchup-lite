@@ -1,7 +1,7 @@
 import { h } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,

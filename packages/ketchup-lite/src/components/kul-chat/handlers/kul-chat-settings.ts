@@ -1,5 +1,5 @@
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
 import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
 import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
 

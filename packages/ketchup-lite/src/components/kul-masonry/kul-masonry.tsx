@@ -16,25 +16,25 @@ import {
 
 import { kulManagerSingleton } from "src";
 import {
-  KulDataCell,
-  KulDataDataset,
-  KulDataShapes,
-  KulDataShapesMap,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import {
-  KulGenericEvent,
-  KulGenericEventPayload,
-  type GenericObject,
-} from "../../types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import {
   KulMasonryAdapter,
   KulMasonryEvent,
   KulMasonryEventPayload,
   KulMasonrySelectedShape,
   KulMasonryView,
-} from "./kul-masonry-declarations";
+} from "src/components/kul-masonry/kul-masonry-declarations";
+import {
+  KulDataCell,
+  KulDataDataset,
+  KulDataShapes,
+  KulDataShapesMap,
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import {
+  GenericObject,
+  KulGenericEvent,
+  KulGenericEventPayload,
+} from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-masonry",
@@ -47,10 +47,7 @@ export class KulMasonry {
    */
   @Element() rootElement: HTMLKulMasonryElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
@@ -73,11 +70,9 @@ export class KulMasonry {
    * @see KulDataShapesMap - For a list of possible shapes.
    */
   @State() shapes: KulDataShapesMap = {};
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Number of columns of the masonry, doesn't affect sequential views.
    * @default 3
@@ -108,14 +103,9 @@ export class KulMasonry {
    * @default null
    */
   @Prop({ mutable: true }) kulView: KulMasonryView = "masonry";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-masonry-event",
     composed: true,
@@ -123,8 +113,9 @@ export class KulMasonry {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulMasonryEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulMasonryEvent) {
+    const { kulSelectable, kulShape, selectedShape, shapes } = this;
+
     let shouldUpdateState = false;
     const state: KulMasonrySelectedShape = {};
 
@@ -133,13 +124,13 @@ export class KulMasonry {
         const { eventType } = (e as KulGenericEvent).detail;
         switch (eventType) {
           case "click":
-            if (this.kulSelectable) {
+            if (kulSelectable) {
               const { comp } = (e as CustomEvent<KulGenericEventPayload>)
                 .detail;
               const index = parseInt(comp.rootElement.dataset.index);
-              if (this.selectedShape.index !== index) {
+              if (selectedShape.index !== index) {
                 state.index = index;
-                state.shape = this.shapes[this.kulShape][index];
+                state.shape = shapes[kulShape][index];
               }
               shouldUpdateState = true;
             }
@@ -160,11 +151,9 @@ export class KulMasonry {
       selectedShape: this.selectedShape,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                 W a t c h e r s                 */
-  /*-------------------------------------------------*/
-
+  //#region Watchers
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
@@ -176,11 +165,31 @@ export class KulMasonry {
       debug.logs.new(this, "Error updating shapes: " + error, "error");
     }
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
+  //#region Internal variables
+  #adapter: KulMasonryAdapter = {
+    elements: {
+      jsx: null,
+      refs: {
+        addColumn: null,
+        removeColumn: null,
+        changeView: null,
+      },
+    },
+    handlers: null,
+    state: {
+      get: {
+        compInstance: this,
+        isMasonry: () => this.#isMasonry(),
+        isVertical: () => this.#isVertical(),
+        shapes: () => this.shapes,
+      },
+    },
+  };
+  //#endregion
 
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -252,55 +261,23 @@ export class KulMasonry {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
-  #adapter: KulMasonryAdapter = {
-    actions: {
-      addColumn: async () => {
-        this.kulColumns++;
-      },
-      removeColumn: async () => {
-        if (this.kulColumns > 2) {
-          this.kulColumns--;
-        }
-      },
-      changeView: async () => {
-        if (this.#isMasonry()) {
-          this.kulView = "vertical";
-        } else if (this.#isVertical()) {
-          this.kulView = "horizontal";
-        } else {
-          this.kulView = "masonry";
-        }
-      },
-    },
-    components: {
-      buttons: {
-        addColumn: null,
-        removeColumn: null,
-        changeView: null,
-      },
-    },
-    isMasonry: () => this.#isMasonry(),
-    isVertical: () => this.#isVertical(),
-    get: { masonry: () => this, shapes: () => this.shapes },
-  };
-
+  //#region Private methods
   #divideShapesIntoColumns(columnCount: number): VNode[][] {
     const { decorate } = kulManagerSingleton.data.cell.shapes;
 
-    const props: Partial<KulDataCell<KulDataShapes>>[] = this.shapes[
+    const { kulShape, selectedShape, shapes } = this;
+
+    const props: Partial<KulDataCell<KulDataShapes>>[] = shapes[
       this.kulShape
     ].map(() => ({
       htmlProps: {
         dataset: { selected: "" },
       },
     }));
-    if (this.selectedShape.index !== undefined) {
-      props[this.selectedShape.index] = {
+    if (selectedShape.index !== undefined) {
+      props[selectedShape.index] = {
         htmlProps: {
           dataset: { selected: "true" },
         },
@@ -312,8 +289,8 @@ export class KulMasonry {
       [],
     );
     const decoratedShapes = decorate(
-      this.kulShape,
-      this.shapes[this.kulShape],
+      kulShape,
+      shapes[kulShape],
       async (e) => this.onKulEvent(e, "kul-event"),
       props,
     );
@@ -325,33 +302,30 @@ export class KulMasonry {
 
     return columns;
   }
-
   #hasShapes() {
     return !!this.shapes?.[this.kulShape];
   }
-
-  #isVertical() {
-    return this.kulView === "vertical";
-  }
-
   #isMasonry() {
     return this.kulView === "masonry";
   }
-
+  #isVertical() {
+    return this.kulView === "vertical";
+  }
   #prepChangeView() {
+    const { addColumn, changeView, removeColumn } = this.#adapter.elements.jsx;
+
     return (
       <div class="grid__actions">
-        {this.#isMasonry() ? (
+        {this.#isMasonry() && (
           <div class="grid__actions__sub">
-            {ACTIONS.masonry.add(this.#adapter)}
-            {ACTIONS.masonry.remove(this.#adapter)}
+            {addColumn()}
+            {removeColumn()}
           </div>
-        ) : null}
-        {ACTIONS.changeView(this.#adapter)}
+        )}
+        {changeView()}
       </div>
     );
   }
-
   #prepView(): VNode[] {
     const columnCount = this.#isMasonry() ? this.kulColumns : 1;
     const columns = this.#divideShapesIntoColumns(columnCount);
@@ -364,51 +338,45 @@ export class KulMasonry {
       </div>
     ));
   }
-
   #prepMasonry(): VNode {
+    const { kulShape, kulView, shapes } = this;
+
     if (this.#hasShapes()) {
-      const shapes = this.shapes[this.kulShape];
-      if (shapes?.length) {
+      if (shapes[kulShape]?.length) {
         return (
           <Fragment>
-            <div class={`grid grid--${this.kulView}`}>{this.#prepView()}</div>
+            <div class={`grid grid--${kulView}`}>{this.#prepView()}</div>
             {this.#prepChangeView()}
           </Fragment>
         );
       }
     }
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
     this.updateShapes();
   }
-
   componentDidLoad() {
     const { debug } = kulManagerSingleton;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.updateDebugInfo(this, "did-load");
   }
-
   componentWillRender() {
     const { debug } = kulManagerSingleton;
 
     debug.updateDebugInfo(this, "will-render");
   }
-
   componentDidRender() {
     const { debug } = kulManagerSingleton;
 
     debug.updateDebugInfo(this, "did-render");
   }
-
   render() {
     const { theme } = kulManagerSingleton;
 
@@ -427,10 +395,10 @@ export class KulMasonry {
       </Host>
     );
   }
-
   disconnectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.unregister(this);
   }
+  //#endregion
 }

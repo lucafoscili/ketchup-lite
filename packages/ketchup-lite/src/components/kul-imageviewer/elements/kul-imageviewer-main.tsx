@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 
-import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
+import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-constants";
 import {
   KulImageviewerAdapter,
   KulImageviewerAdapterElementsJsx,

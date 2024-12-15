@@ -1,7 +1,7 @@
 import { kulManagerSingleton } from "src";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
 import {
-  IDS,
   clearTextarea,
   submitPrompt,
 } from "src/components/kul-chat/helpers/kul-chat-utils";

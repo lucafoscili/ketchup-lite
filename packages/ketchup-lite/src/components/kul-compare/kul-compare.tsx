@@ -17,7 +17,6 @@ import {
 import { kulManagerSingleton } from "src";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { createDefaults } from "src/components/kul-compare/helpers/kul-compare-hub";
-import { IDS } from "src/components/kul-compare/helpers/kul-compare-utils";
 import {
   KulCompareEvent,
   KulCompareEventPayload,
@@ -33,6 +32,7 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { IDS } from "./helpers/kul-compare-constants";
 
 @Component({
   tag: "kul-compare",
@@ -315,7 +315,7 @@ export class KulCompare {
       rightShape,
     } = this;
 
-    const { left, right } = createDefaults(this.#isOverlay());
+    const { left, right } = createDefaults();
     const shapes = data.cell.shapes.decorate(
       kulShape,
       [leftShape, rightShape],

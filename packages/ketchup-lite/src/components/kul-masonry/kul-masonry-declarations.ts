@@ -1,3 +1,6 @@
+import { VNode } from "@stencil/core";
+
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { KulMasonry } from "src/components/kul-masonry/kul-masonry";
 import {
   KulDataCell,
@@ -5,33 +8,45 @@ import {
   KulDataShapes,
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
-import { KulEventPayload } from "src/types/GenericTypes";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterJsx,
+  KulComponentAdapterRefs,
+  KulComponentAdapterStateGetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
 
 //#region Adapter
-export interface KulMasonryAdapter {
+export interface KulMasonryAdapter extends KulComponentAdapter<KulMasonry> {
+  elements: {
+    jsx: KulMasonryAdapterElementsJsx;
+    refs: KulMasonryAdapterElementsRefs;
+  };
   handlers: KulMasonryAdapterHandlers;
-  hooks: KulMasonryAdapterHooks;
-  widgets: KulMasonryAdapterWidgets;
-}
-export interface KulMasonryAdapterHandlers {
-  addColumn: () => Promise<void>;
-  removeColumn: () => Promise<void>;
-  changeView: () => Promise<void>;
-}
-export interface KulMasonryAdapterHooks {
-  get: {
-    isMasonry: () => boolean;
-    isVertical: () => boolean;
-    masonry: () => KulMasonry;
-    shapes: () => KulDataShapesMap;
+  state: {
+    get: KulMasonryAdapterStateGetters;
   };
 }
-export interface KulMasonryAdapterWidgets {
-  buttons: {
-    addColumn: HTMLKulButtonElement;
-    removeColumn: HTMLKulButtonElement;
-    changeView: HTMLKulButtonElement;
-  };
+export interface KulMasonryAdapterElementsJsx extends KulComponentAdapterJsx {
+  addColumn: () => VNode;
+  removeColumn: () => VNode;
+  changeView: () => VNode;
+}
+export interface KulMasonryAdapterElementsRefs extends KulComponentAdapterRefs {
+  addColumn: HTMLKulButtonElement;
+  removeColumn: HTMLKulButtonElement;
+  changeView: HTMLKulButtonElement;
+}
+export interface KulMasonryAdapterHandlers extends KulComponentAdapterHandlers {
+  button: (e: CustomEvent<KulButtonEventPayload>) => void;
+}
+export interface KulMasonryAdapterStateGetters
+  extends KulComponentAdapterStateGetters<KulMasonry> {
+  compInstance: KulMasonry;
+  isMasonry: () => boolean;
+  isVertical: () => boolean;
+  shapes: () => KulDataShapesMap;
 }
 //#endregion
 

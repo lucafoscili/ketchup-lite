@@ -1,7 +1,7 @@
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
 import {
   deleteMessage,
-  IDS,
   regenerateMessage,
 } from "src/components/kul-chat/helpers/kul-chat-utils";
 import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
