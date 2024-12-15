@@ -16,7 +16,10 @@ import {
 } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
-import { createHandlers } from "src/components/kul-chat/helpers/kul-chat-hub";
+import {
+  createElements,
+  createHandlers,
+} from "src/components/kul-chat/helpers/kul-chat-hub";
 import { calcTokens } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
@@ -246,10 +249,7 @@ export class KulChat {
   //#region Watchers
   @Watch("kulSystem")
   async updateTokensCount() {
-    const { handlers } = this.#adapter;
-    const { updateTokensCount } = handlers;
-
-    updateTokensCount();
+    this.currentTokens = await calcTokens(this, this.history);
   }
   //#endregion
 
@@ -304,12 +304,10 @@ export class KulChat {
    */
   @Method()
   async setHistory(history: string): Promise<void> {
-    const { handlers } = this.#adapter;
-    const { updateHistory } = handlers;
+    const { set } = this.#adapter.state;
 
     try {
-      const cb = () => (this.history = JSON.parse(history));
-      updateHistory(cb);
+      set.history(() => (this.history = JSON.parse(history)));
     } catch {}
   }
   /**
@@ -346,17 +344,17 @@ export class KulChat {
     this.onKulEvent(new CustomEvent("polling"), "polling");
   }
   #prepChat = (): VNode => {
-    const { widgets } = this.#adapter;
-    const { jsx } = widgets;
+    const { elements } = this.#adapter;
+    const { jsx } = elements;
     const { chat } = jsx;
-    const { clear, progressbar, prompt, send, settings, spinner, stt } = chat;
+    const { clear, progressbar, send, settings, spinner, stt, textarea } = chat;
 
     return (
       <Fragment>
         <div class="chat__request">
           <div class="chat__request__input">
             {settings()}
-            {prompt()}
+            {textarea()}
             {progressbar()}
           </div>
           <div class="chat__request__buttons">
@@ -454,8 +452,7 @@ export class KulChat {
     return elements;
   };
   #prepOffline: () => VNode[] = () => {
-    const { hooks } = this.#adapter;
-    const { set } = hooks;
+    const { set } = this.#adapter.state;
 
     return (
       <Fragment>
@@ -482,8 +479,8 @@ export class KulChat {
     );
   };
   #prepSettings = () => {
-    const { widgets } = this.#adapter;
-    const { jsx } = widgets;
+    const { elements } = this.#adapter;
+    const { jsx } = elements;
     const { settings } = jsx;
     const { back, endpoint, maxTokens, polling, system, temperature } =
       settings;
@@ -502,8 +499,8 @@ export class KulChat {
     );
   };
   #prepToolbar = (m: KulLLMChoiceMessage): VNode => {
-    const { widgets } = this.#adapter;
-    const { jsx } = widgets;
+    const { elements } = this.#adapter;
+    const { jsx } = elements;
     const { toolbar } = jsx;
     const { copyContent, deleteMessage, regenerate } = toolbar;
 
@@ -524,10 +521,9 @@ export class KulChat {
     theme.register(this);
 
     this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.widgets.jsx = createWidgets(this.#adapter);
+    this.#adapter.elements.jsx = createElements(this.#adapter);
 
-    const { handlers } = this.#adapter;
-    const { updateHistory } = handlers;
+    const { set } = this.#adapter.state;
 
     if (this.kulValue) {
       try {
@@ -535,8 +531,7 @@ export class KulChat {
           typeof this.kulValue === "string"
             ? JSON.parse(this.kulValue)
             : this.kulValue;
-        const cb = () => (this.history = parsedValue);
-        updateHistory(cb);
+        set.history(() => (this.history = parsedValue));
       } catch (error) {
         debug.logs.new(this, "Couldn't set value for chat history", "warning");
       }
