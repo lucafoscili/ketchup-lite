@@ -1,22 +1,18 @@
 import { h } from "@stencil/core";
 
+import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
 import {
-  buttonEventHandler,
-  masonryEventHandler,
-  textfieldEventHandler,
-} from "src/components/kul-imageviewer/handlers/kul-imageviewer-explorer";
-import { EXPLORER_IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
-import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
+  KulImageviewerAdapter,
+  KulImageviewerAdapterElementsJsx,
+} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
 import { KulDataCyAttributes } from "src/types/GenericTypes";
 
 export const prepExplorer = (
   adapter: KulImageviewerAdapter,
-): KulImageviewerAdapter["widgets"]["jsx"]["explorer"] => {
-  const { hooks, widgets } = adapter;
-  const { refs } = widgets;
-  const { get } = hooks;
-  const { explorer } = refs;
-  const { comp } = get;
+): KulImageviewerAdapterElementsJsx["explorer"] => {
+  const { elements, handlers, state } = adapter;
+  const { explorer } = elements.refs;
+  const { compInstance } = state.get;
 
   return {
     // #region Load
@@ -26,14 +22,16 @@ export const prepExplorer = (
         "kul-full-width": true,
       };
 
+      const { button } = handlers.explorer;
+
       return (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={EXPLORER_IDS.load}
+          id={IDS.explorer.load}
           kulIcon="find_replace"
           kulLabel="Load"
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
               explorer.load = el;
@@ -57,13 +55,15 @@ export const prepExplorer = (
         "navigation-grid__masonry": true,
       };
 
+      const { masonry } = handlers.explorer;
+
       return (
         <kul-masonry
           class={className}
-          id={EXPLORER_IDS.masonry}
-          kulData={comp.kulData}
+          id={IDS.explorer.masonry}
+          kulData={compInstance.kulData}
           kulSelectable={true}
-          onKul-masonry-event={(e) => masonryEventHandler(adapter, e)}
+          onKul-masonry-event={masonry}
           ref={(el) => {
             if (el) {
               explorer.masonry = el;
@@ -80,14 +80,16 @@ export const prepExplorer = (
         "navigation-grid__textfield": true,
       };
 
+      const { textfield } = handlers.explorer;
+
       return (
         <kul-textfield
           class={className}
-          id={EXPLORER_IDS.textfield}
+          id={IDS.explorer.textfield}
           kulIcon="folder"
           kulLabel="Directory"
           kulStyling="flat"
-          onKul-textfield-event={(e) => textfieldEventHandler(adapter, e)}
+          onKul-textfield-event={textfield}
           ref={(el) => {
             if (el) {
               explorer.textfield = el;

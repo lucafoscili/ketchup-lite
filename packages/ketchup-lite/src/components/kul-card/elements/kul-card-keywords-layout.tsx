@@ -54,8 +54,9 @@ export const prepKeywords = (adapter: KulCardAdapter): VNode => {
     [`${kulLayout}-layout`]: true,
   };
 
-  refs.layouts.keywords.button = buttons.ref;
-  refs.layouts.keywords.chip = chips.ref;
+  refs.layouts.keywords.button =
+    hasButton && (buttons.ref[0] as HTMLKulButtonElement);
+  refs.layouts.keywords.chip = hasChip && (chips.ref[0] as HTMLKulChipElement);
 
   return (
     <div class={className}>

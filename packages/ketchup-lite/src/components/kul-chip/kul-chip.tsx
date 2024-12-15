@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Method,
@@ -107,6 +106,7 @@ export class KulChip {
     args?: KulChipEventArguments,
   ) {
     const { theme } = kulManagerSingleton;
+
     const { expandedNodes, kulData, kulRipple, refresh, selectedNodes } = this;
 
     const { expansion, node } = args || {};
@@ -142,6 +142,7 @@ export class KulChip {
         }
         break;
     }
+
     this.kulEvent.emit({
       comp: this,
       eventType,
@@ -303,7 +304,9 @@ export class KulChip {
     return elements;
   }
   #prepDeleteIcon(node: KulDataNode) {
-    const path = getAssetPath(`./assets/svg/clear.svg`);
+    const { get } = kulManagerSingleton.assets;
+
+    const path = get(`./assets/svg/clear.svg`);
     const style = {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
@@ -321,6 +324,8 @@ export class KulChip {
     );
   }
   #prepIcons(node: KulDataNode) {
+    const { get } = kulManagerSingleton.assets;
+
     const icons: VNode[] = [];
 
     const className = {
@@ -331,7 +336,7 @@ export class KulChip {
     };
 
     if (node.icon) {
-      const path = getAssetPath(`./assets/svg/${node.icon}.svg`);
+      const path = get(`./assets/svg/${node.icon}.svg`);
       const style = {
         mask: `url('${path}') no-repeat center`,
         webkitMask: `url('${path}') no-repeat center`,
@@ -451,6 +456,7 @@ export class KulChip {
   }
   render() {
     const { theme } = kulManagerSingleton;
+
     const { kulStyle } = this;
 
     this.#nodeItems = [];

@@ -138,11 +138,11 @@ export class KulHeader {
   render() {
     const { theme } = kulManagerSingleton;
 
+    const { kulStyle } = this;
+
     return (
       <Host class="header">
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <header class="header">
             <section class="header__section">

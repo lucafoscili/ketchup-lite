@@ -1,7 +1,7 @@
 import { h } from "@stencil/core";
 
 import { KulMasonryAdapter } from "src/components/kul-masonry/kul-masonry-declarations";
-import { ICONS, STYLING } from "../helpers/kul-masonry-utils";
+import { ICONS, IDS, STYLING } from "../helpers/kul-masonry-utils";
 import { buttonEventHandler } from "../handlers/kul-masonry-main";
 
 export const prepMasonry = (adapter: KulMasonryAdapter) => {
@@ -12,8 +12,8 @@ export const prepMasonry = (adapter: KulMasonryAdapter) => {
       return (
         <kul-button
           class={"grid__add-column kul-slim"}
-          id={ICONS.addColumn}
-          key={ICONS.addColumn}
+          id={IDS.addColumn}
+          key={IDS.addColumn}
           kulIcon={ICONS.addColumn}
           kulStyling={STYLING}
           onKul-button-event={(e) => buttonEventHandler(adapter, e)}
@@ -30,8 +30,8 @@ export const prepMasonry = (adapter: KulMasonryAdapter) => {
       return (
         <kul-button
           class={"grid__remove-column kul-slim"}
-          id={ICONS.removeColumn}
-          key={ICONS.removeColumn}
+          id={IDS.removeColumn}
+          key={IDS.removeColumn}
           kulIcon={ICONS.removeColumn}
           kulStyling={STYLING}
           onKul-button-event={(e) => buttonEventHandler(adapter, e)}
@@ -48,8 +48,8 @@ export const prepMasonry = (adapter: KulMasonryAdapter) => {
       return (
         <kul-button
           class={"grid__change-view"}
-          id={ICONS.masonry}
-          key={ICONS.masonry}
+          id={IDS.masonry}
+          key={IDS.masonry}
           kulIcon={
             adapter.isMasonry()
               ? ICONS.vertical

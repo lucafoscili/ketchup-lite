@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 
-import { CHAT_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
@@ -29,7 +29,7 @@ export const prepChat = (
 
       return (
         <kul-button
-          id={CHAT_IDS.clear}
+          id={IDS.chat.clear}
           kulDisabled={Boolean(currentPrompt())}
           kulLabel="Clear"
           kulStyling={"flat"}
@@ -79,7 +79,7 @@ export const prepChat = (
 
       return (
         <kul-button
-          id={CHAT_IDS.send}
+          id={IDS.chat.send}
           kulIcon="check"
           kulLabel="Send"
           kulShowSpinner={Boolean(currentPrompt())}
@@ -108,7 +108,7 @@ export const prepChat = (
       return (
         <kul-button
           class="chat__request__input__button kul-full-height"
-          id={CHAT_IDS.settings}
+          id={IDS.chat.settings}
           kulIcon="settings"
           kulStyling="flat"
           onKul-button-event={button}
@@ -146,7 +146,7 @@ export const prepChat = (
 
       return (
         <kul-button
-          id={CHAT_IDS.stt}
+          id={IDS.chat.stt}
           class="chat__request__buttons__stt"
           kulIcon="keyboard_voice"
           kulStyling="icon"
@@ -176,7 +176,7 @@ export const prepChat = (
       return (
         <kul-textfield
           class="chat__request__input__textarea"
-          id={CHAT_IDS.prompt}
+          id={IDS.chat.prompt}
           kulDisabled={Boolean(currentPrompt())}
           kulFullWidth={true}
           kulLabel="What's on your mind?"

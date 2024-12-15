@@ -281,9 +281,9 @@ export class KulList {
     }
   }
   #prepDeleteIcon(node: KulDataNode) {
-    const { assets } = kulManagerSingleton;
+    const { get } = kulManagerSingleton.assets;
 
-    const path = assets.get(`./assets/svg/clear.svg`);
+    const path = get(`./assets/svg/clear.svg`);
     const style = {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
@@ -302,9 +302,9 @@ export class KulList {
     );
   }
   #prepIcon(node: KulDataNode) {
-    const { assets } = kulManagerSingleton;
+    const { get } = kulManagerSingleton.assets;
 
-    const path = assets.get(`./assets/svg/${node.icon}.svg`);
+    const path = get(`./assets/svg/${node.icon}.svg`);
     const style = {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
@@ -312,10 +312,12 @@ export class KulList {
     return <div class="node__icon" style={style}></div>;
   }
   #prepNode(node: KulDataNode, index: number) {
+    const { kulData, kulRipple } = this;
+
     const isFocused =
-      this.focused === this.kulData.nodes.findIndex((n) => n.id === node.id);
+      this.focused === kulData.nodes.findIndex((n) => n.id === node.id);
     const isSelected =
-      this.selected === this.kulData.nodes.findIndex((n) => n.id === node.id);
+      this.selected === kulData.nodes.findIndex((n) => n.id === node.id);
     const className = {
       node: true,
       "node--focused": isFocused,
@@ -345,7 +347,7 @@ export class KulList {
         >
           <div
             ref={(el) => {
-              if (this.kulRipple && el) {
+              if (kulRipple && el) {
                 this.#rippleSurface.push(el);
               }
             }}
@@ -403,6 +405,7 @@ export class KulList {
 
   render() {
     const { language, theme } = kulManagerSingleton;
+
     const { kulData, kulEmptyLabel, kulSelectable, kulStyle } = this;
 
     const isEmpty = !!!kulData?.nodes?.length;

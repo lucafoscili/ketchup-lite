@@ -167,6 +167,7 @@ export class KulImage {
   //#region Private methods
   #createIcon(): VNode {
     const { theme } = kulManagerSingleton;
+
     const { error, kulColor, kulValue } = this;
 
     const className = {
@@ -246,6 +247,7 @@ export class KulImage {
   }
   render() {
     const { debug, theme } = kulManagerSingleton;
+
     const {
       error,
       kulBadgeProps,

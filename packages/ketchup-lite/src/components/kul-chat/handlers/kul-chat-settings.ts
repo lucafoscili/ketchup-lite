@@ -1,5 +1,5 @@
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import { OPTIONS_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
 import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
 import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
 
@@ -16,7 +16,7 @@ export const prepSettingsHandlers = (adapter: KulChatAdapter) => {
       switch (eventType) {
         case "click":
           switch (id) {
-            case OPTIONS_IDS.back:
+            case IDS.options.back:
               compInstance.onKulEvent(e, "config");
               set.view("chat");
               break;
@@ -32,22 +32,22 @@ export const prepSettingsHandlers = (adapter: KulChatAdapter) => {
       switch (eventType) {
         case "change":
           switch (id) {
-            case OPTIONS_IDS.contextWindow:
+            case IDS.options.contextWindow:
               compInstance.kulContextWindow = parseInt(value);
               break;
-            case OPTIONS_IDS.endpointUrl:
+            case IDS.options.endpointUrl:
               compInstance.kulEndpointUrl = value;
               break;
-            case OPTIONS_IDS.maxTokens:
+            case IDS.options.maxTokens:
               compInstance.kulMaxTokens = parseInt(value);
               break;
-            case OPTIONS_IDS.polling:
+            case IDS.options.polling:
               compInstance.kulPollingInterval = parseInt(value);
               break;
-            case OPTIONS_IDS.system:
+            case IDS.options.system:
               compInstance.kulSystem = value;
               break;
-            case OPTIONS_IDS.temperature:
+            case IDS.options.temperature:
               compInstance.kulTemperature = parseFloat(value);
               break;
           }

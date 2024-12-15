@@ -11,6 +11,12 @@ import {
   State,
 } from "@stencil/core";
 
+import { kulManagerSingleton } from "src";
+import { KulDataCell } from "../../managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import type { GenericObject } from "../../types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
 import { getters } from "./helpers/kul-messenger-getters";
 import { setters } from "./helpers/kul-messenger-setters";
 import {
@@ -19,34 +25,26 @@ import {
   IMAGE_TYPE_IDS,
 } from "./kul-messenger-constants";
 import {
-  KulMessengerProps,
-  KulMessengerEvent,
   KulMessengerAdapter,
-  KulMessengerCharacterNode,
-  KulMessengerDataset,
-  KulMessengerHistory,
-  KulMessengerCovers,
-  KulMessengerConfig,
-  KulMessengerEventPayload,
-  KulMessengerUI,
-  KulMessengerChat,
-  KulMessengerEditingStatus,
   KulMessengerBaseChildNode,
+  KulMessengerCharacterNode,
+  KulMessengerChat,
   KulMessengerChildIds,
+  KulMessengerConfig,
+  KulMessengerCovers,
+  KulMessengerDataset,
+  KulMessengerEditingStatus,
+  KulMessengerEvent,
+  KulMessengerEventPayload,
+  KulMessengerHistory,
   KulMessengerImageTypes,
+  KulMessengerUI,
   KulMessengerUnionChildIds,
 } from "./kul-messenger-declarations";
 import { prepCenter } from "./layout/kul-messenger-center";
 import { prepLeft } from "./layout/kul-messenger-left";
 import { prepRight } from "./layout/kul-messenger-right";
 import { prepGrid } from "./selection-grid/kul-messenger-selection-grid";
-import { KulDataCell } from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import type { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
 
 @Component({
   tag: "kul-messenger",
@@ -143,12 +141,6 @@ export class KulMessenger {
    * @default ""
    */
   @Prop() kulValue: KulMessengerConfig = null;
-
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
 
   /*-------------------------------------------------*/
   /*                   E v e n t s                   */
@@ -364,7 +356,9 @@ export class KulMessenger {
   /*-------------------------------------------------*/
 
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
     this.#adapter.get = getters(
       this.#adapter,
       this.#kulManager,

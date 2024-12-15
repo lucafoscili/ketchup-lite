@@ -1,6 +1,6 @@
 import { h, VNode } from "@stencil/core";
 
-import { TOOLBAR_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
@@ -27,7 +27,7 @@ export const prepToolbar = (
       return (
         <kul-button
           class={className}
-          id={TOOLBAR_IDS.copyContent}
+          id={IDS.toolbar.copyContent}
           kulIcon="content_copy"
           onKul-button-event={(e) => button(e, m)}
           ref={(el) => {
@@ -48,7 +48,7 @@ export const prepToolbar = (
       return (
         <kul-button
           class={{ ...className, "kul-danger": true }}
-          id={TOOLBAR_IDS.deleteMessage}
+          id={IDS.toolbar.deleteMessage}
           kulIcon="delete"
           onKul-button-event={(e) => button(e, m)}
           ref={(el) => {
@@ -69,7 +69,7 @@ export const prepToolbar = (
       return (
         <kul-button
           class={className}
-          id={TOOLBAR_IDS.regenerate}
+          id={IDS.toolbar.regenerate}
           kulIcon="refresh"
           onKul-button-event={(e) => button(e, m)}
           ref={(el) => {

@@ -1,7 +1,7 @@
 import { kulManagerSingleton } from "src";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import {
-  CHAT_IDS,
+  IDS,
   clearTextarea,
   submitPrompt,
 } from "src/components/kul-chat/helpers/kul-chat-utils";
@@ -24,16 +24,16 @@ export const prepChatHandlers = (adapter: KulChatAdapter) => {
       switch (eventType) {
         case "click":
           switch (id) {
-            case CHAT_IDS.clear:
+            case IDS.chat.clear:
               clearTextarea(adapter);
               break;
-            case CHAT_IDS.send:
+            case IDS.chat.send:
               submitPrompt(adapter);
               break;
-            case CHAT_IDS.settings:
+            case IDS.chat.settings:
               set.view("settings");
               break;
-            case CHAT_IDS.stt:
+            case IDS.chat.stt:
               llm.speechToText(textarea, stt);
               break;
           }

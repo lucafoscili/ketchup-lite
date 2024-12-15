@@ -173,6 +173,7 @@ export class KulDrawer {
   }
   render() {
     const { theme } = kulManagerSingleton;
+
     const { kulStyle, opened } = this;
 
     return (

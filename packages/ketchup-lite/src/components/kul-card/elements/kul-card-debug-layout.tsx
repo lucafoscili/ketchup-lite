@@ -53,9 +53,11 @@ export const prepDebug = (adapter: KulCardAdapter): VNode => {
     [`${kulLayout}-layout`]: true,
   };
 
-  refs.layouts.debug.button = buttons.ref;
-  refs.layouts.debug.code = codes.ref;
-  refs.layouts.debug.toggle = toggles.ref;
+  refs.layouts.debug.button =
+    hasButton && (buttons.ref[0] as HTMLKulButtonElement);
+  refs.layouts.debug.code = hasCode && (codes.ref[0] as HTMLKulCodeElement);
+  refs.layouts.debug.toggle =
+    hasToggle && (toggles.ref[0] as HTMLKulToggleElement);
 
   return (
     <div class={className}>

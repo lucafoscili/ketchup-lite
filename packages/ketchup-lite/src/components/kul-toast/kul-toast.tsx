@@ -22,6 +22,7 @@ import { GenericObject } from "../../types/GenericTypes";
 import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
+import { kulManagerSingleton } from "src";
 
 @Component({
   tag: "kul-toast",

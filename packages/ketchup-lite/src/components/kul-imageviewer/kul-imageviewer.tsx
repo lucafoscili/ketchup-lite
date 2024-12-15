@@ -14,16 +14,18 @@ import {
 
 import { kulManagerSingleton } from "src";
 import {
+  createElements,
   createHandlers,
-  createWidgets,
 } from "src/components/kul-imageviewer/helpers/kul-imageviewer-hub";
 import {
+  clearHistory,
+  clearSelection,
   newShape,
   updateValue,
 } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
 import {
   KulImageviewerAdapter,
-  KulImageviewerAdapterWidgets,
+  KulImageviewerAdapterElementsRefs,
   KulImageviewerEvent,
   KulImageviewerEventPayload,
   KulImageviewerHistory,
@@ -103,10 +105,30 @@ export class KulImageviewer {
 
   //#region Internal variables
   #adapter: KulImageviewerAdapter = {
+    elements: {
+      jsx: null,
+      refs: {
+        explorer: {
+          load: null,
+          masonry: null,
+          textfield: null,
+        },
+        imageviewer: {
+          canvas: null,
+          clearHistory: null,
+          deleteShape: null,
+          redo: null,
+          save: null,
+          spinner: null,
+          undo: null,
+          tree: null,
+        },
+      },
+    },
     handlers: null,
-    hooks: {
+    state: {
       get: {
-        comp: this,
+        compInstance: this,
         currentShape: () => this.#getSelectedShapeValue(this.currentShape),
         history: {
           current: () => this.history[this.currentShape.index],
@@ -160,27 +182,7 @@ export class KulImageviewer {
           },
         },
         spinnerStatus: (active) =>
-          (this.#adapter.widgets.refs.imageviewer.spinner.kulActive = active),
-      },
-    },
-    widgets: {
-      jsx: null,
-      refs: {
-        explorer: {
-          load: null,
-          masonry: null,
-          textfield: null,
-        },
-        imageviewer: {
-          canvas: null,
-          clearHistory: null,
-          deleteShape: null,
-          redo: null,
-          save: null,
-          spinner: null,
-          undo: null,
-          tree: null,
-        },
+          (this.#adapter.elements.refs.imageviewer.spinner.kulActive = active),
       },
     },
   };
@@ -211,15 +213,15 @@ export class KulImageviewer {
    */
   @Method()
   async addSnapshot(value: string): Promise<void> {
-    if (!this.currentShape || !Object.keys(this.currentShape)?.length) {
+    const { currentShape } = this;
+
+    if (!currentShape || !Object.keys(currentShape)?.length) {
       return;
     }
 
-    const { hooks } = this.#adapter;
-    const { set } = hooks;
-    const { history } = set;
+    const { history } = this.#adapter.state.set;
 
-    const s = newShape(this.currentShape);
+    const s = newShape(currentShape);
     updateValue(s.shape, value);
     history.new(s, true);
   }
@@ -229,30 +231,21 @@ export class KulImageviewer {
    */
   @Method()
   async clearHistory(index: number = null): Promise<void> {
-    const { handlers } = this.#adapter;
-    const { clearHistory } = handlers;
-
-    await clearHistory(index);
+    await clearHistory(this.#adapter, index);
   }
   /**
    * Clears the currently selected shape.
    */
   @Method()
   async clearSelection(): Promise<void> {
-    const { handlers } = this.#adapter;
-    const { clearSelection } = handlers;
-
-    await clearSelection();
+    await clearSelection(this.#adapter);
   }
   /**
    * This method is used to retrieve the references to the subcomponents.
    */
   @Method()
-  async getComponents(): Promise<KulImageviewerAdapterWidgets["refs"]> {
-    const { widgets } = this.#adapter;
-    const { refs } = widgets;
-
-    return refs;
+  async getComponents(): Promise<KulImageviewerAdapterElementsRefs> {
+    return this.#adapter.elements.refs;
   }
   /**
    * Fetches the current snapshot.
@@ -263,12 +256,7 @@ export class KulImageviewer {
     shape: KulMasonrySelectedShape;
     value: string;
   }> {
-    const { hooks } = this.#adapter;
-    const { get } = hooks;
-    const { history } = get;
-    const { currentSnapshot } = history;
-
-    return currentSnapshot();
+    return this.#adapter.state.get.history.currentSnapshot();
   }
   /**
    * Fetches debug information of the component's current state.
@@ -300,11 +288,8 @@ export class KulImageviewer {
    */
   @Method()
   async reset(): Promise<void> {
-    const { handlers } = this.#adapter;
-    const { clearHistory, clearSelection } = handlers;
-
-    await clearHistory();
-    await clearSelection();
+    await clearHistory(this.#adapter);
+    await clearSelection(this.#adapter);
   }
   /**
    * Displays/hides the spinner over the preview.
@@ -343,9 +328,6 @@ export class KulImageviewer {
     }
   }
   #prepViewer(): VNode {
-    const { widgets } = this.#adapter;
-    const { jsx } = widgets;
-    const { imageviewer } = jsx;
     const {
       canvas,
       clearHistory,
@@ -355,7 +337,7 @@ export class KulImageviewer {
       spinner,
       tree,
       undo,
-    } = imageviewer;
+    } = this.#adapter.elements.jsx.imageviewer;
 
     return (
       <div class="details-grid">
@@ -378,9 +360,7 @@ export class KulImageviewer {
     );
   }
   #prepImageviewer(): VNode {
-    const { hooks } = this.#adapter;
-    const { get } = hooks;
-    const { currentShape } = get;
+    const { currentShape } = this.#adapter.state.get;
 
     const className = {
       "main-grid": true,
@@ -395,10 +375,7 @@ export class KulImageviewer {
     );
   }
   #prepExplorer(): VNode {
-    const { widgets } = this.#adapter;
-    const { jsx } = widgets;
-    const { explorer } = jsx;
-    const { load, masonry, textfield } = explorer;
+    const { load, masonry, textfield } = this.#adapter.elements.jsx.explorer;
 
     return (
       <div class="navigation-grid">
@@ -415,7 +392,7 @@ export class KulImageviewer {
     const { theme } = kulManagerSingleton;
 
     this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.widgets.jsx = createWidgets(this.#adapter);
+    this.#adapter.elements.jsx = createElements(this.#adapter);
 
     theme.register(this);
   }

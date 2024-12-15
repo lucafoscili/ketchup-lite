@@ -1,7 +1,7 @@
 import { h } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
-import { OPTIONS_IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "src/components/kul-chat/helpers/kul-chat-utils";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
@@ -26,7 +26,7 @@ export const prepSettings = (
       return (
         <kul-button
           class="kul-full-width"
-          id={OPTIONS_IDS.back}
+          id={IDS.options.back}
           kulIcon="arrow_back"
           kulLabel="Back"
           onKul-button-event={button}
@@ -46,7 +46,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
-          id={OPTIONS_IDS.endpointUrl}
+          id={IDS.options.endpointUrl}
           kulIcon="http"
           kulLabel="Endpoint URL"
           kulValue={compInstance.kulEndpointUrl}
@@ -67,7 +67,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
-          id={OPTIONS_IDS.maxTokens}
+          id={IDS.options.maxTokens}
           kulHtmlAttributes={{
             min: 10,
             step: 100,
@@ -93,7 +93,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
-          id={OPTIONS_IDS.polling}
+          id={IDS.options.polling}
           kulHtmlAttributes={{
             min: 10,
             step: 10,
@@ -119,7 +119,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
-          id={OPTIONS_IDS.system}
+          id={IDS.options.system}
           class="settings__system kul-full-height"
           kulLabel="System prompt"
           kulStyling="textarea"
@@ -141,7 +141,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
-          id={OPTIONS_IDS.temperature}
+          id={IDS.options.temperature}
           kulHtmlAttributes={{
             min: 0,
             step: 0.1,

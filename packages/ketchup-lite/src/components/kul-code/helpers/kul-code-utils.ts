@@ -1,4 +1,5 @@
 export const STATIC_LANGUAGES = {
+  //#region CSS
   css: (Prism: Prism.Environment) => {
     var e =
       /(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;
@@ -64,6 +65,9 @@ export const STATIC_LANGUAGES = {
     var t = Prism.languages.markup;
     t && (t.tag.addInlined("style", "css"), t.tag.addAttribute("style", "css"));
   },
+  //#endregion
+
+  //#region JavaScript
   javascript: (Prism: Prism.Environment) => {
     (Prism.languages.javascript = Prism.languages.extend("clike", {
       "class-name": [
@@ -196,6 +200,9 @@ export const STATIC_LANGUAGES = {
         )),
       (Prism.languages.js = Prism.languages.javascript);
   },
+  //#endregion
+
+  //#region JSON
   json: (Prism: Prism.Environment) => {
     (Prism.languages.json = {
       property: {
@@ -217,6 +224,9 @@ export const STATIC_LANGUAGES = {
     }),
       (Prism.languages.webmanifest = Prism.languages.json);
   },
+  //#endregion
+
+  //#region JSX
   jsx: (Prism: Prism.Environment) => {
     var n = Prism.util.clone(Prism.languages.javascript),
       e = "(?:\\{<S>*\\.{3}(?:[^{}]|<BRACES>)*\\})";
@@ -329,6 +339,9 @@ export const STATIC_LANGUAGES = {
       ("jsx" !== t.language && "tsx" !== t.language) || g(t.tokens);
     });
   },
+  //#endregion
+
+  //#region Markdown
   markdown: (Prism: Prism.Environment) => {
     function e(reg: string) {
       return (
@@ -623,6 +636,9 @@ export const STATIC_LANGUAGES = {
       l = String.fromCodePoint || String.fromCharCode;
     Prism.languages.md = Prism.languages.markdown;
   },
+  //#endregion
+
+  //#region Markup
   markup: (Prism: Prism.Environment) => {
     (Prism.languages.markup = {
       comment: { pattern: /<!--(?:(?!<!--)[\s\S])*?-->/, greedy: !0 },
@@ -760,6 +776,9 @@ export const STATIC_LANGUAGES = {
       (Prism.languages.atom = Prism.languages.xml),
       (Prism.languages.rss = Prism.languages.xml);
   },
+  //#endregion
+
+  //#region Python
   python: (Prism: Prism.Environment) => {
     (Prism.languages.python = {
       comment: { pattern: /(^|[^\\])#.*/, lookbehind: !0, greedy: !0 },
@@ -822,6 +841,9 @@ export const STATIC_LANGUAGES = {
       ].inside.interpolation.inside.rest = Prism.languages.python),
       (Prism.languages.py = Prism.languages.python);
   },
+  //#endregion
+
+  //#region RegEx
   regex: (Prism: Prism.Environment) => {
     var e = { pattern: /\\[\\(){}[\]^$+*?|.]/, alias: "escape" },
       n =
@@ -896,6 +918,9 @@ export const STATIC_LANGUAGES = {
       alternation: { pattern: /\|/, alias: "keyword" },
     };
   },
+  //#endregion
+
+  //#region Scss
   scss: (Prism: Prism.Environment) => {
     (Prism.languages.scss = Prism.languages.extend("css", {
       comment: {
@@ -949,6 +974,9 @@ export const STATIC_LANGUAGES = {
       }),
       (Prism.languages.scss.atrule.inside.rest = Prism.languages.scss);
   },
+  //#endregion
+
+  //#region TSX
   tsx: (Prism: Prism.Environment) => {
     const a = Prism.util.clone(Prism.languages.typescript);
     (Prism.languages.tsx = Prism.languages.extend("jsx", a)),
@@ -961,6 +989,9 @@ export const STATIC_LANGUAGES = {
     )),
       (t.lookbehind = !0);
   },
+  //#endregion
+
+  //#region TypeScript
   typescript: (Prism: Prism.Environment) => {
     (Prism.languages.typescript = Prism.languages.extend("javascript", {
       "class-name": {
@@ -1008,4 +1039,5 @@ export const STATIC_LANGUAGES = {
       }),
       (Prism.languages.ts = Prism.languages.typescript);
   },
+  //#endregion
 };

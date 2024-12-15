@@ -14,15 +14,7 @@ import {
   Watch,
 } from "@stencil/core";
 
-import { ACTIONS } from "./handlers/kul-masonry-main";
-import {
-  KulMasonryAdapter,
-  KulMasonryEvent,
-  KulMasonryEventPayload,
-  KulMasonryProps,
-  KulMasonrySelectedShape,
-  KulMasonryView,
-} from "./kul-masonry-declarations";
+import { kulManagerSingleton } from "src";
 import {
   KulDataCell,
   KulDataDataset,
@@ -30,14 +22,19 @@ import {
   KulDataShapesMap,
 } from "../../managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import {
   KulGenericEvent,
   KulGenericEventPayload,
   type GenericObject,
 } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import {
+  KulMasonryAdapter,
+  KulMasonryEvent,
+  KulMasonryEventPayload,
+  KulMasonrySelectedShape,
+  KulMasonryView,
+} from "./kul-masonry-declarations";
 
 @Component({
   tag: "kul-masonry",
@@ -113,12 +110,6 @@ export class KulMasonry {
   @Prop({ mutable: true }) kulView: KulMasonryView = "masonry";
 
   /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
   /*                   E v e n t s                   */
   /*-------------------------------------------------*/
 
@@ -177,14 +168,12 @@ export class KulMasonry {
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
+    const { data, debug } = kulManagerSingleton;
+
     try {
-      this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
+      this.shapes = data.cell.shapes.getAll(this.kulData);
     } catch (error) {
-      this.#kulManager.debug.logs.new(
-        this,
-        "Error updating shapes: " + error,
-        "error",
-      );
+      debug.logs.new(this, "Error updating shapes: " + error, "error");
     }
   }
 
@@ -237,6 +226,8 @@ export class KulMasonry {
    */
   @Method()
   async setSelectedShape(index: number): Promise<void> {
+    const { debug } = kulManagerSingleton;
+
     const shape = this.shapes?.[this.kulShape]?.[index];
     if (shape) {
       const newState: KulMasonrySelectedShape = {
@@ -246,10 +237,7 @@ export class KulMasonry {
       this.selectedShape = newState;
     } else {
       this.selectedShape = {};
-      this.#kulManager.debug.logs.new(
-        this,
-        `Couldn't set shape with index: ${index}`,
-      );
+      debug.logs.new(this, `Couldn't set shape with index: ${index}`);
     }
     this.updateShapes();
   }
@@ -302,6 +290,8 @@ export class KulMasonry {
   };
 
   #divideShapesIntoColumns(columnCount: number): VNode[][] {
+    const { decorate } = kulManagerSingleton.data.cell.shapes;
+
     const props: Partial<KulDataCell<KulDataShapes>>[] = this.shapes[
       this.kulShape
     ].map(() => ({
@@ -321,7 +311,7 @@ export class KulMasonry {
       () => [],
       [],
     );
-    const decoratedShapes = this.#kulManager.data.cell.shapes.decorate(
+    const decoratedShapes = decorate(
       this.kulShape,
       this.shapes[this.kulShape],
       async (e) => this.onKulEvent(e, "kul-event"),
@@ -394,35 +384,43 @@ export class KulMasonry {
   /*-------------------------------------------------*/
 
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
     this.updateShapes();
   }
 
   componentDidLoad() {
+    const { debug } = kulManagerSingleton;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.updateDebugInfo(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { debug } = kulManagerSingleton;
+
+    debug.updateDebugInfo(this, "did-render");
   }
 
   render() {
+    const { theme } = kulManagerSingleton;
+
+    const { kulStyle } = this;
+
     const style = {
       ["--kul_masonry_columns"]: this.kulColumns?.toString() || "4",
     };
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID} style={style}>
           <div class="masonry">{this.#prepMasonry()}</div>
         </div>
@@ -431,6 +429,8 @@ export class KulMasonry {
   }
 
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
 }

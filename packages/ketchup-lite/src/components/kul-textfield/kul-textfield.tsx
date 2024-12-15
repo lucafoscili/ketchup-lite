@@ -13,19 +13,17 @@ import {
   VNode,
 } from "@stencil/core";
 
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import {
   KulTextfieldEvent,
   KulTextfieldEventPayload,
   KulTextfieldHelper,
-  KulTextfieldProps,
   KulTextfieldStatus,
   KulTextfieldStyling,
 } from "./kul-textfield-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
 
 @Component({
   tag: "kul-textfield",
@@ -130,7 +128,6 @@ export class KulTextfield {
 
   #hasOutline: boolean;
   #input: HTMLInputElement | HTMLTextAreaElement;
-  #kulManager = kulManagerInstance();
   #maxLength: number;
 
   /*-------------------------------------------------*/

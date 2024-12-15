@@ -11,20 +11,18 @@ import {
   State,
 } from "@stencil/core";
 
-import {
-  KulToggleEvent,
-  KulToggleEventPayload,
-  KulToggleProps,
-  KulToggleState,
-} from "./kul-toggle-declarations";
 import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
 import {
   KulDataCyAttributes,
   type GenericObject,
 } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import {
+  KulToggleEvent,
+  KulToggleEventPayload,
+  KulToggleState,
+} from "./kul-toggle-declarations";
+import { kulManagerSingleton } from "src";
 
 @Component({
   tag: "kul-toggle",
@@ -98,7 +96,6 @@ export class KulToggle {
   /*       I n t e r n a l   V a r i a b l e s       */
   /*-------------------------------------------------*/
 
-  #kulManager = kulManagerInstance();
   #rippleSurface: HTMLElement;
 
   /*-------------------------------------------------*/
@@ -127,7 +124,6 @@ export class KulToggle {
         }
         break;
     }
-
     this.kulEvent.emit({
       comp: this,
       eventType,

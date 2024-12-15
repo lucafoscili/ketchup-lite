@@ -1,22 +1,18 @@
 import { h } from "@stencil/core";
 
+import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
 import {
-  buttonEventHandler,
-  canvasEventHandler,
-  treeEventHandler,
-} from "src/components/kul-imageviewer/handlers/kul-imageviewer-main";
-import { IMAGEVIEWER_IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
-import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
+  KulImageviewerAdapter,
+  KulImageviewerAdapterElementsJsx,
+} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
 import { KulDataCyAttributes } from "src/types/GenericTypes";
 
 export const prepImageviewer = (
   adapter: KulImageviewerAdapter,
-): KulImageviewerAdapter["widgets"]["jsx"]["imageviewer"] => {
-  const { hooks, widgets } = adapter;
-  const { refs } = widgets;
-  const { get } = hooks;
-  const { imageviewer } = refs;
-  const { comp, history, spinnerStatus } = get;
+): KulImageviewerAdapterElementsJsx["imageviewer"] => {
+  const { elements, handlers, state } = adapter;
+  const { imageviewer } = elements.refs;
+  const { compInstance, history, spinnerStatus } = state.get;
   const { current, currentSnapshot, index } = history;
 
   return {
@@ -31,13 +27,15 @@ export const prepImageviewer = (
         return;
       }
 
+      const { canvas } = handlers.imageviewer;
+
       return (
         <kul-canvas
           class={className}
           data-cy={KulDataCyAttributes.SHAPE}
-          id={IMAGEVIEWER_IDS.canvas}
+          id={IDS.imageviewer.canvas}
           kulImageProps={{ kulValue: snapshot.value }}
-          onKul-canvas-event={(e) => canvasEventHandler(adapter, e)}
+          onKul-canvas-event={canvas}
           ref={(el) => {
             if (el) {
               imageviewer.canvas = el;
@@ -56,6 +54,8 @@ export const prepImageviewer = (
         "kul-full-width": true,
       };
 
+      const { button } = handlers.imageviewer;
+
       const hasHistory = !!(current()?.length > 1);
       const isDisabled = !hasHistory;
 
@@ -63,12 +63,12 @@ export const prepImageviewer = (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IMAGEVIEWER_IDS.clearHistory}
+          id={IDS.imageviewer.clearHistory}
           kulDisabled={isDisabled}
           kulIcon="layers_clear"
           kulLabel="Clear history"
           kulStyling="flat"
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
               imageviewer.clearHistory = el;
@@ -94,14 +94,16 @@ export const prepImageviewer = (
         "kul-full-width": true,
       };
 
+      const { button } = handlers.imageviewer;
+
       return (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IMAGEVIEWER_IDS.deleteShape}
+          id={IDS.imageviewer.deleteShape}
           kulIcon="delete-empty"
           kulLabel="Delete image"
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
               imageviewer.deleteShape = el;
@@ -126,6 +128,8 @@ export const prepImageviewer = (
         "kul-full-width": true,
       };
 
+      const { button } = handlers.imageviewer;
+
       const currentHistory = current();
       const hasHistory = !!currentHistory?.length;
       const isDisabled = !(hasHistory && index() < currentHistory.length - 1);
@@ -134,12 +138,12 @@ export const prepImageviewer = (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IMAGEVIEWER_IDS.redo}
+          id={IDS.imageviewer.redo}
           kulDisabled={isDisabled}
           kulIcon="redo"
           kulLabel="Redo"
           kulStyling="flat"
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
               imageviewer.redo = el;
@@ -158,6 +162,8 @@ export const prepImageviewer = (
         "kul-full-width": true,
       };
 
+      const { button } = handlers.imageviewer;
+
       const hasHistory = !!(current()?.length > 1);
       const isDisabled = !hasHistory;
 
@@ -165,11 +171,11 @@ export const prepImageviewer = (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IMAGEVIEWER_IDS.save}
+          id={IDS.imageviewer.save}
           kulDisabled={isDisabled}
           kulIcon="save"
           kulLabel="Save snapshot"
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
               imageviewer.save = el;
@@ -196,7 +202,7 @@ export const prepImageviewer = (
       return (
         <kul-spinner
           class={className}
-          id={IMAGEVIEWER_IDS.spinner}
+          id={IDS.imageviewer.spinner}
           kulActive={spinnerStatus()}
           kulDimensions="16px"
           kulFader={true}
@@ -218,15 +224,17 @@ export const prepImageviewer = (
         "details-grid__tree": true,
       };
 
+      const { tree } = handlers.imageviewer;
+
       return (
         <kul-tree
           class={className}
           data-cy={KulDataCyAttributes.INPUT}
-          id={IMAGEVIEWER_IDS.tree}
+          id={IDS.imageviewer.tree}
           kulAccordionLayout={true}
-          kulData={comp.kulValue}
+          kulData={compInstance.kulValue}
           kulSelectable={true}
-          onKul-tree-event={(e) => treeEventHandler(adapter, e)}
+          onKul-tree-event={tree}
           ref={(el) => {
             if (el) {
               imageviewer.tree = el;
@@ -244,6 +252,8 @@ export const prepImageviewer = (
         "kul-full-width": true,
       };
 
+      const { button } = handlers.imageviewer;
+
       const hasHistory = !!current()?.length;
       const isDisabled = !(hasHistory && index() > 0);
 
@@ -251,12 +261,12 @@ export const prepImageviewer = (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IMAGEVIEWER_IDS.undo}
+          id={IDS.imageviewer.undo}
           kulDisabled={isDisabled}
           kulIcon="undo"
           kulLabel="Undo"
           kulStyling="flat"
-          onKul-button-event={(e) => buttonEventHandler(adapter, e)}
+          onKul-button-event={button}
           ref={(el) => {
             if (el) {
               imageviewer.undo = el;

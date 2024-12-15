@@ -17,6 +17,7 @@ import {
 import { kulManagerSingleton } from "src";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { createDefaults } from "src/components/kul-compare/helpers/kul-compare-hub";
+import { IDS } from "src/components/kul-compare/helpers/kul-compare-utils";
 import {
   KulCompareEvent,
   KulCompareEventPayload,
@@ -76,7 +77,7 @@ export class KulCompare {
    * Shape on the left.
    * @default undefined
    */
-  @State() leftShape: Partial<KulDataCell<KulDataShapes>>=;
+  @State() leftShape: Partial<KulDataCell<KulDataShapes>>;
   /**
    * Shape on the right.
    * @default undefined
@@ -192,11 +193,6 @@ export class KulCompare {
     return !!(this.kulView === "overlay");
   }
   #prepChangeView(): VNode {
-    const ids = {
-      left: "toggle-left-panel",
-      right: "toggle-right-panel",
-      view: "toggle-view",
-    };
     const panelIcon = "close";
     const panelIconOff = "view-sequential";
     const styling = "icon";
@@ -208,13 +204,13 @@ export class KulCompare {
       switch (eventType) {
         case "click":
           switch (id) {
-            case ids.left:
+            case IDS.left:
               this.isLeftPanelOpened = value === "on" ? true : false;
               break;
-            case ids.right:
+            case IDS.right:
               this.isRightPanelOpened = value === "on" ? true : false;
               break;
-            case ids.view:
+            case IDS.view:
               this.kulView = value === "on" ? "split" : "overlay";
               break;
           }
@@ -224,7 +220,7 @@ export class KulCompare {
     return (
       <div class="change-view">
         <kul-button
-          id={ids.left}
+          id={IDS.left}
           kulIcon={panelIcon}
           kulIconOff={panelIconOff}
           kulStyling={styling}
@@ -237,7 +233,7 @@ export class KulCompare {
           }
         ></kul-button>
         <kul-button
-          id={ids.view}
+          id={IDS.view}
           kulIcon="compare"
           kulIconOff="book-open"
           kulStyling={styling}
@@ -250,7 +246,7 @@ export class KulCompare {
           }
         ></kul-button>
         <kul-button
-          id={ids.right}
+          id={IDS.right}
           kulIcon={panelIcon}
           kulIconOff={panelIconOff}
           kulStyling={styling}
@@ -402,6 +398,7 @@ export class KulCompare {
   }
   render() {
     const { theme } = kulManagerSingleton;
+
     const { kulStyle } = this;
 
     return (
