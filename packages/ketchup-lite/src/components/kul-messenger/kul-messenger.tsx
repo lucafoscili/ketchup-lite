@@ -4,6 +4,7 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
+  Fragment,
   h,
   Host,
   Method,
@@ -12,39 +13,11 @@ import {
 } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
-import { KulDataCell } from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import type { GenericObject } from "../../types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
-import { getters } from "./helpers/kul-messenger-getters";
-import { setters } from "./helpers/kul-messenger-setters";
-import {
-  CLEAN_COMPONENTS,
-  CLEAN_UI_JSON,
-  IMAGE_TYPE_IDS,
-} from "./kul-messenger-constants";
-import {
-  KulMessengerAdapter,
-  KulMessengerBaseChildNode,
-  KulMessengerCharacterNode,
-  KulMessengerChat,
-  KulMessengerChildIds,
-  KulMessengerConfig,
-  KulMessengerCovers,
-  KulMessengerDataset,
-  KulMessengerEditingStatus,
-  KulMessengerEvent,
-  KulMessengerEventPayload,
-  KulMessengerHistory,
-  KulMessengerImageTypes,
-  KulMessengerUI,
-  KulMessengerUnionChildIds,
-} from "./kul-messenger-declarations";
-import { prepCenter } from "./layout/kul-messenger-center";
-import { prepLeft } from "./layout/kul-messenger-left";
-import { prepRight } from "./layout/kul-messenger-right";
-import { prepGrid } from "./selection-grid/kul-messenger-selection-grid";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulMessengerAdapter, KulMessengerBaseChildNode, KulMessengerCharacterNode, KulMessengerChat, KulMessengerChildIds, KulMessengerConfig, KulMessengerCovers, KulMessengerDataset, KulMessengerEditingStatus, KulMessengerEvent, KulMessengerEventPayload, KulMessengerHistory, KulMessengerImageTypes, KulMessengerUI, KulMessengerUnionChildIds } from "src/components/kul-messenger/kul-messenger-declarations";
+import { KulChatStatus } from "src/components/kul-chat/kul-chat-declarations";
+import { CLEAN_COMPONENTS, IMAGE_TYPE_IDS } from "src/components/kul-messenger/helpers/kul-messenger-constants";
+import { GenericObject } from "src/types/GenericTypes";
 
 @Component({
   tag: "kul-messenger",
@@ -57,10 +30,7 @@ export class KulMessenger {
    */
   @Element() rootElement: HTMLKulMessengerElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+//#region States
   /**
    * Debug information.
    */
@@ -112,15 +82,9 @@ export class KulMessenger {
    * Signals to the widget when the dataset is being saved.
    */
   @State() saveInProgress = false;
-  /**
-   * State of options' filters.
-   */
-  @State() ui: KulMessengerUI = CLEAN_UI_JSON;
+//#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+//#region Props
   /**
    * Automatically saves the dataset when a chat updates.
    * @default true
@@ -141,14 +105,33 @@ export class KulMessenger {
    * @default ""
    */
   @Prop() kulValue: KulMessengerConfig = null;
+//#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
+//#region Internal variables
+#adapter: KulMessengerAdapter = {
+ /* state: {
+    delete: {
+      option: (node, type) => {
+        const root = this.#adapter.get.image.root(type);
+        const idx = root.children.indexOf(node);
+        if (idx !== -1) {
+          delete root.children[idx];
+        }
+        this.refresh();
+      },
+    },
+    save: async () => this.#save(),
+  },*/
+  elements: { jsx: null, refs: {} },
+  handlers: null,
+  state: {
+    get: null,
+    set: null,
+  }
+};
+ //#endregion
 
-  /**
-   * Describes event emitted.
-   */
+//#region Events
   @Event({
     eventName: "kul-messenger-event",
     composed: true,
@@ -156,7 +139,6 @@ export class KulMessenger {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulMessengerEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
     const config: KulMessengerConfig = {
       currentCharacter: this.currentCharacter?.id,
@@ -170,11 +152,9 @@ export class KulMessenger {
       config,
     });
   }
+//#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+//#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -207,7 +187,6 @@ export class KulMessenger {
   async reset(): Promise<void> {
     this.covers = {};
     this.currentCharacter = null;
-    this.ui = CLEAN_UI_JSON;
     this.history = {};
 
     this.#initStates();
@@ -223,29 +202,9 @@ export class KulMessenger {
       this.rootElement.remove();
     }, ms);
   }
+//#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
-  #adapter: KulMessengerAdapter = {
-    actions: {
-      delete: {
-        option: (node, type) => {
-          const root = this.#adapter.get.image.root(type);
-          const idx = root.children.indexOf(node);
-          if (idx !== -1) {
-            delete root.children[idx];
-          }
-          this.refresh();
-        },
-      },
-      save: async () => this.#save(),
-    },
-    components: { ...CLEAN_COMPONENTS, messenger: this },
-    get: null,
-    set: null,
-  };
+//#region Private methods
 
   #hasCharacters() {
     const nodes = this.kulData?.nodes || [];
@@ -350,6 +309,75 @@ export class KulMessenger {
     }
     this.onKulEvent(new CustomEvent("save"), "save");
   }
+  #prepCenter = () => {
+   return  <div class="messenger__center">
+      <div class="messenger__expander messenger__expander--left">
+        {leftExpander}
+      </div>
+      <div class="messenger__navigation">{tabbar}</div>
+      <div class="messenger__chat">{chat}</div>
+      <div class="messenger__expander messenger__expander--right">
+        {rightExpander}
+      </div>
+    </div>}
+
+  #prepLeft = () => {
+    const isCollapsed = this.#adapter.get.messenger.ui().panels.isLeftCollapsed;
+
+    return (
+      <div
+        class={`messenger__left ${isCollapsed ? "messenger__left--collapsed" : ""}`}
+      >
+        <div class="messenger__avatar">
+      <Fragment>
+        <img
+          alt={image.title || ""}
+          class="messenger__avatar__image"
+          src={image.value}
+          title={image.title || ""}
+        />
+        <div class="messenger__avatar__name-wrapper">
+          <div class="messenger__avatar__name">
+            {avatar()}
+            <div class="messenger__avatar__label">
+              {adapter.get.character.name()}
+            </div>
+          </div>
+          {save()}
+        </div>
+      </Fragment>
+      </div>
+        <div class="messenger__biography">{biography()}</div>
+      </div>
+  }
+  #prepRight = () => {
+    const className = {
+      messenger__right: true,
+      "messenger__right--collapsed": ui.panels.isRightCollapsed,
+      "messenger__right--customization": ui.customization,
+    };
+
+    return (
+      <div class={className}>
+        {ui.customization ? (
+          <Fragment>
+            <div class="messenger__options__filters">
+              {prepFilters(adapter)}
+              <div class="messenger__options__list">{prepList(adapter)}</div>
+            </div>
+            {back}
+          </Fragment>
+        ) : (
+          <Fragment>
+            <div class="messenger__options__active">{prepOptions(adapter)}</div>
+            
+            {customization}
+          </Fragment>
+        )}
+      </div>
+    );
+  };
+  
 
   /*-------------------------------------------------*/
   /*          L i f e c y c l e   H o o k s          */
@@ -396,7 +424,7 @@ export class KulMessenger {
         <div id={KUL_WRAPPER_ID}>
           {this.currentCharacter ? (
             <div class="messenger">
-              {prepLeft(this.#adapter)}
+              {this.#prepLeft(this.#adapter)}
               {prepCenter(this.#adapter)}
               {prepRight(this.#adapter)}
             </div>

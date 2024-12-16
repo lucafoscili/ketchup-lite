@@ -45,7 +45,7 @@ export class KulManager {
 
     this.data = new KulData();
     this.dates = new KulDates();
-    this.debug = new KulDebug();
+    this.debug = new KulDebug(this);
     this.dynamicPosition = new KulDynamicPosition();
     this.language = new KulLanguage();
     this.llm = new KulLLM();
@@ -105,6 +105,14 @@ export class KulManager {
       clickCallbacks.add(cb);
     }
   }
+  /**
+   * Assigns an element to the related refs' key.
+   * @param {Record<string, any>} refs - The refs object.
+   * @param {string} key - The key to assign.
+   */
+  assignRef = (refs: Record<string, any>, key: string) => (el: any) => {
+    if (el) refs[key] = el;
+  };
   /**
    * Retrieves component's prop values based on a list and option to include descriptions.
    * @param {KulComponent} comp - The component requesting prop values.

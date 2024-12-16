@@ -1,9 +1,11 @@
-import type { KulDom } from "../kul-manager/kul-manager-declarations";
-import type {
+import { KulCode } from "src/components/kul-code/kul-code";
+import { KulToggle } from "src/components/kul-toggle/kul-toggle";
+import { KulManager } from "src/managers/kul-manager/kul-manager";
+import {
   KulComponent,
   KulComponentName,
   KulGenericComponent,
-} from "../../types/GenericTypes";
+} from "src/types/GenericTypes";
 import {
   KulDebugLifecycles,
   KulDebugLog,
@@ -13,21 +15,20 @@ import {
   KulDebugLogToPrintEntry,
   KulDebugManagedComponents,
 } from "./kul-debug-declarations";
-import { KulCode } from "../../components/kul-code/kul-code";
-import { KulToggle } from "../../components/kul-toggle/kul-toggle";
 
 export class KulDebug {
-  #DOM = document.documentElement as KulDom;
-  #IS_ENABLED: boolean;
-  #LOG_LIMIT: number;
-  #LOGS: KulDebugLog[];
-  #MANAGED_COMPONENTS: { codes: Set<KulCode>; togglees: Set<KulToggle> };
+  //#region Internal usage
+  #IS_ENABLED = false;
+  #KUL_MANAGER: KulManager;
+  #LOG_LIMIT = 250;
+  #LOGS: KulDebugLog[] = [];
+  #MANAGED_COMPONENTS = {
+    codes: new Set<KulCode>(),
+    togglees: new Set<KulToggle>(),
+  };
 
-  constructor(active?: boolean, logLimit?: number) {
-    this.#IS_ENABLED = active ? true : false;
-    this.#LOG_LIMIT = logLimit ? logLimit : 250;
-    this.#LOGS = [];
-    this.#MANAGED_COMPONENTS = { codes: new Set(), togglees: new Set() };
+  constructor(kulManager: KulManager) {
+    this.#KUL_MANAGER = kulManager;
   }
 
   #codeDispatcher = (log?: KulDebugLog) => {
@@ -45,7 +46,69 @@ export class KulDebug {
       comp.setValue(this.#IS_ENABLED ? "on" : "off");
     });
   };
+  //#endregion
 
+  //#region Info
+  info = {
+    create: () => {
+      return {
+        endTime: 0,
+        renderCount: 0,
+        renderEnd: 0,
+        renderStart: 0,
+        startTime: performance.now(),
+      };
+    },
+
+    update: async (
+      comp: KulComponent<KulComponentName>,
+      lifecycle: KulDebugLifecycles,
+    ): Promise<void> => {
+      switch (lifecycle) {
+        case "custom":
+          if (this.isEnabled()) {
+            this.logs.new(
+              comp,
+              "Custom breakpoint " +
+                " took " +
+                (window.performance.now() - comp.debugInfo.renderStart) +
+                "ms.",
+            );
+          }
+          break;
+        case "did-render":
+          comp.debugInfo.renderEnd = window.performance.now();
+          if (this.isEnabled()) {
+            this.logs.new(
+              comp,
+              "Render #" +
+                comp.debugInfo.renderCount +
+                " took " +
+                (comp.debugInfo.renderEnd - comp.debugInfo.renderStart) +
+                "ms.",
+            );
+          }
+          break;
+        case "did-load":
+          comp.debugInfo.endTime = window.performance.now();
+          this.logs.new(
+            comp,
+            "Component ready after " +
+              (comp.debugInfo.endTime - comp.debugInfo.startTime) +
+              "ms.",
+          );
+          break;
+        case "will-render":
+          comp.debugInfo.renderCount++;
+          comp.debugInfo.renderStart = window.performance.now();
+        default:
+          break;
+      }
+    },
+  };
+  //#endregion
+
+  //#region Logs
   logs: KulDebugLogFactory = {
     dump: () => {
       this.#LOGS = [];
@@ -58,6 +121,8 @@ export class KulDebug {
       if (this.#MANAGED_COMPONENTS.codes.has(comp as KulCode)) {
         return;
       }
+
+      const { dates } = this.#KUL_MANAGER;
 
       const isFromComponent = this.logs.fromComponent(comp);
       const log: KulDebugLog = {
@@ -81,7 +146,7 @@ export class KulDebug {
       if (this.#LOGS.length > this.#LOG_LIMIT) {
         if (this.#IS_ENABLED) {
           console.warn(
-            this.#DOM.ketchupLite.dates.format(log.date, "LLL:ms") +
+            dates.format(log.date, "LLL:ms") +
               " kul-debug => " +
               "Too many logs (> " +
               this.#LOG_LIMIT +
@@ -95,17 +160,13 @@ export class KulDebug {
       switch (category) {
         case "error":
           console.error(
-            this.#DOM.ketchupLite.dates.format(log.date, "LLL:ms") +
-              log.id +
-              log.message,
+            dates.format(log.date, "LLL:ms") + log.id + log.message,
             log.class,
           );
           break;
         case "warning":
           console.warn(
-            this.#DOM.ketchupLite.dates.format(log.date, "LLL:ms") +
-              log.id +
-              log.message,
+            dates.format(log.date, "LLL:ms") + log.id + log.message,
             log.class,
           );
           break;
@@ -116,6 +177,8 @@ export class KulDebug {
       }
     },
     print: () => {
+      const { dates } = this.#KUL_MANAGER;
+
       const logsToPrint: KulDebugLogsToPrint = {
         load: [],
         misc: [],
@@ -126,7 +189,7 @@ export class KulDebug {
         const log = this.#LOGS[index];
         const printEntry: KulDebugLogToPrintEntry = {
           class: log.class,
-          date: this.#DOM.ketchupLite.dates.format(log.date, "LLL:ms"),
+          date: dates.format(log.date, "LLL:ms"),
           message: log.id + log.message,
         };
         logsToPrint[log.type].push(printEntry);
@@ -157,11 +220,15 @@ export class KulDebug {
       }
     },
   };
+  //#endregion
 
+  //#region isEnabled
   isEnabled(): boolean {
     return this.#IS_ENABLED;
   }
+  //#endregion
 
+  //#region Register
   register(comp: KulDebugManagedComponents): void {
     if (comp.rootElement.tagName.toLowerCase() === "kul-code") {
       this.#MANAGED_COMPONENTS.codes.add(comp as KulCode);
@@ -169,7 +236,9 @@ export class KulDebug {
       this.#MANAGED_COMPONENTS.togglees.add(comp as KulToggle);
     }
   }
+  //#endregion
 
+  //#region Toggle
   toggle(value?: boolean, dispatch = true) {
     if (value === false || value === true) {
       this.#IS_ENABLED = value;
@@ -183,7 +252,9 @@ export class KulDebug {
 
     return this.#IS_ENABLED;
   }
+  //#endregion
 
+  //#region Unregister
   unregister(comp: KulDebugManagedComponents): void {
     if (comp.rootElement.tagName.toLowerCase() === "kul-code") {
       this.#MANAGED_COMPONENTS.codes.delete(comp as KulCode);
@@ -191,50 +262,5 @@ export class KulDebug {
       this.#MANAGED_COMPONENTS.togglees.delete(comp as KulToggle);
     }
   }
-
-  async updateDebugInfo(
-    comp: KulComponent<KulComponentName>,
-    lifecycle: KulDebugLifecycles,
-  ): Promise<void> {
-    switch (lifecycle) {
-      case "custom":
-        if (this.isEnabled()) {
-          this.logs.new(
-            comp,
-            "Custom breakpoint " +
-              " took " +
-              (window.performance.now() - comp.debugInfo.renderStart) +
-              "ms.",
-          );
-        }
-        break;
-      case "did-render":
-        comp.debugInfo.renderEnd = window.performance.now();
-        if (this.isEnabled()) {
-          this.logs.new(
-            comp,
-            "Render #" +
-              comp.debugInfo.renderCount +
-              " took " +
-              (comp.debugInfo.renderEnd - comp.debugInfo.renderStart) +
-              "ms.",
-          );
-        }
-        break;
-      case "did-load":
-        comp.debugInfo.endTime = window.performance.now();
-        this.logs.new(
-          comp,
-          "Component ready after " +
-            (comp.debugInfo.endTime - comp.debugInfo.startTime) +
-            "ms.",
-        );
-        break;
-      case "will-render":
-        comp.debugInfo.renderCount++;
-        comp.debugInfo.renderStart = window.performance.now();
-      default:
-        break;
-    }
-  }
+  //#endregion
 }

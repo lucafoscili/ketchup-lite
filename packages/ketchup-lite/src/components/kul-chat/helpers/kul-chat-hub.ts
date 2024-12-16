@@ -4,6 +4,7 @@ import { prepToolbar } from "src/components/kul-chat/elements/kul-chat-toolbar";
 import { prepChatHandlers } from "src/components/kul-chat/handlers/kul-chat-main";
 import { prepSettingsHandlers } from "src/components/kul-chat/handlers/kul-chat-settings";
 import { prepToolbarHandlers } from "src/components/kul-chat/handlers/kul-chat-toolbar";
+import { REFS } from "src/components/kul-chat/helpers/kul-chat-constants";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
@@ -29,3 +30,5 @@ export const createHandlers: (
     toolbar: prepToolbarHandlers(adapter),
   };
 };
+
+export const createRefs = REFS;

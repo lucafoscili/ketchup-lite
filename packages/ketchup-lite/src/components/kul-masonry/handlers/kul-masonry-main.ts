@@ -1,16 +1,20 @@
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { IDS } from "src/components/kul-masonry/helpers/kul-masonry-constants";
 import {
   addColumn,
   changeView,
   removeColumn,
 } from "src/components/kul-masonry/helpers/kul-masonry-utils";
-import { KulMasonryAdapter } from "src/components/kul-masonry/kul-masonry-declarations";
+import {
+  KulMasonryAdapter,
+  KulMasonryAdapterHandlers,
+} from "src/components/kul-masonry/kul-masonry-declarations";
 
 //#region Button
-export const masonryHandlers = (adapter: KulMasonryAdapter) => {
+export const masonryHandlers = (
+  adapter: KulMasonryAdapter,
+): KulMasonryAdapterHandlers => {
   return {
-    button: (e: CustomEvent<KulButtonEventPayload>) => {
+    button: (e) => {
       const { eventType, id } = e.detail;
 
       switch (eventType) {

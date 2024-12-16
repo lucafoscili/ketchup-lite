@@ -102,7 +102,7 @@ export class KulTextfield {
    * This allows for fine-grained control over the appearance of the component beyond predefined styling options.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Determines the overall styling theme of the text field, affecting its shape and border.
    * Options include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.

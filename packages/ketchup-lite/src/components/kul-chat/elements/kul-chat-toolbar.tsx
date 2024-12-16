@@ -1,11 +1,10 @@
-import { h, VNode } from "@stencil/core";
+import { h } from "@stencil/core";
 
 import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
 } from "src/components/kul-chat/kul-chat-declarations";
-import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 
 export const prepToolbar = (
   adapter: KulChatAdapter,
@@ -21,7 +20,7 @@ export const prepToolbar = (
 
   return {
     //#region Copy content
-    copyContent: (m: KulLLMChoiceMessage): VNode => {
+    copyContent: (m) => {
       const { button } = handlers.toolbar;
 
       return (
@@ -42,7 +41,7 @@ export const prepToolbar = (
     //#endregion
 
     //#region Delete message
-    deleteMessage: (m: KulLLMChoiceMessage): VNode => {
+    deleteMessage: (m) => {
       const { button } = handlers.toolbar;
 
       return (
@@ -63,7 +62,7 @@ export const prepToolbar = (
     //#endregion
 
     //#region Regenerate
-    regenerate: (m: KulLLMChoiceMessage): VNode => {
+    regenerate: (m) => {
       const { button } = handlers.toolbar;
 
       return (

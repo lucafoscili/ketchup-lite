@@ -5,9 +5,14 @@ import {
   clearTextarea,
   submitPrompt,
 } from "src/components/kul-chat/helpers/kul-chat-utils";
-import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
+import {
+  KulChatAdapter,
+  KulChatAdapterHandlers,
+} from "src/components/kul-chat/kul-chat-declarations";
 
-export const prepChatHandlers = (adapter: KulChatAdapter) => {
+export const prepChatHandlers = (
+  adapter: KulChatAdapter,
+): KulChatAdapterHandlers["chat"] => {
   const { llm } = kulManagerSingleton;
 
   const { elements, state } = adapter;

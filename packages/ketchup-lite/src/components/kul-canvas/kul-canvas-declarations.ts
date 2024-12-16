@@ -1,29 +1,37 @@
 import { VNode } from "@stencil/core";
-
-import { KulCanvas } from "src/components/kul-canvas/kul-canvas";
 import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
 import {
   KulComponentAdapter,
+  KulComponentAdapterControllerGetters,
+  KulComponentAdapterControllerSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
-  KulComponentAdapterStateGetters,
-  KulComponentAdapterStateSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
+import { KulCanvas } from "./kul-canvas";
 
 //#region Adapter
 export interface KulCanvasAdapter extends KulComponentAdapter<KulCanvas> {
+  controller: {
+    get: KulCanvasAdapterControllerGetters;
+    set: KulCanvasAdapterControllerSetters;
+  };
   elements: {
     jsx: KulCanvasAdapterElementsJsx;
     refs: KulCanvasAdapterElementsRefs;
   };
   handlers: KulCanvasAdapterHandlers;
-  state: {
-    get: KulCanvasAdapterStateGetters;
-    set: KulCanvasAdapterStateSetters;
-  };
+  toolkit: KulCanvasAdapterToolkit;
 }
+export type KulCanvasAdapterInitializerGetters = Pick<
+  KulCanvasAdapterControllerGetters,
+  "compInstance" | "isCursorPreview" | "isPainting" | "points"
+>;
+export type KulCanvasAdapterInitializerSetters = Pick<
+  KulCanvasAdapterControllerSetters,
+  "isPainting" | "points"
+>;
 export interface KulCanvasAdapterElementsJsx extends KulComponentAdapterJsx {
   board: () => VNode;
   image: () => VNode;
@@ -43,19 +51,55 @@ export interface KulCanvasAdapterHandlers extends KulComponentAdapterHandlers {
     onPointerUp: (e: PointerEvent) => void;
   };
 }
-export interface KulCanvasAdapterStateGetters
-  extends KulComponentAdapterStateGetters<KulCanvas> {
+export interface KulCanvasAdapterControllerGetters
+  extends KulComponentAdapterControllerGetters<KulCanvas> {
   compInstance: KulCanvas;
   isCursorPreview: () => boolean;
   isPainting: () => boolean;
   points: () => KulCanvasPoints;
 }
-export interface KulCanvasAdapterStateSetters
-  extends KulComponentAdapterStateSetters {
+export interface KulCanvasAdapterControllerSetters
+  extends KulComponentAdapterControllerSetters {
   isPainting: (value: boolean) => void;
   points: (value: KulCanvasPoints) => void;
 }
-
+export interface KulCanvasAdapterToolkitCtx {
+  clear(type: KulCanvasType): void;
+  get(type: KulCanvasType): {
+    ctx: CanvasRenderingContext2D;
+    height: number;
+    width: number;
+  };
+  redraw(type: KulCanvasType): void;
+  setup(type: KulCanvasType, isFill?: boolean): void;
+}
+export interface KulCanvasAdapterToolkitCoordinates {
+  get: (
+    e: PointerEvent,
+    rect: DOMRect,
+  ) => {
+    x: number;
+    y: number;
+  };
+  normalize: (
+    e: PointerEvent,
+    rect: DOMRect,
+  ) => {
+    x: number;
+    y: number;
+  };
+  simplify: (points: KulCanvasPoints, tolerance: number) => KulCanvasPoints;
+}
+export interface KulCanvasAdapterToolkitDraw {
+  cursor: (e: PointerEvent) => void;
+  shape: (type: KulCanvasType, x: number, y: number, isFill?: boolean) => void;
+  point: (e: PointerEvent) => void;
+}
+export interface KulCanvasAdapterToolkit {
+  ctx: KulCanvasAdapterToolkitCtx;
+  coordinates: KulCanvasAdapterToolkitCoordinates;
+  draw: KulCanvasAdapterToolkitDraw;
+}
 //#endregion
 
 //#region Events

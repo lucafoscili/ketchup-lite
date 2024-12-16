@@ -12,18 +12,17 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 import {
   KulArticleDataset,
   KulArticleEvent,
   KulArticleEventPayload,
   KulArticleNode,
-} from "src/components/kul-article/kul-article-declarations";
-import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
-import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+} from "./kul-article-declarations";
 
 @Component({
   assetsDirs: ["assets/fonts"],
@@ -41,13 +40,7 @@ export class KulArticle {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   //#endregion
 
   //#region Props
@@ -60,7 +53,7 @@ export class KulArticle {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Events
@@ -247,20 +240,20 @@ export class KulArticle {
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { language, theme } = kulManagerSingleton;

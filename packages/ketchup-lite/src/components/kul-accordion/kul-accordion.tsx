@@ -11,12 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import {
-  KulAccordionEvent,
-  KulAccordionEventPayload,
-} from "src/components/kul-accordion//kul-accordion-declarations";
 import {
   KulDataDataset,
   KulDataNode,
@@ -24,6 +19,10 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import {
+  KulAccordionEvent,
+  KulAccordionEventPayload,
+} from "./kul-accordion-declarations";
 
 @Component({
   tag: "kul-accordion",
@@ -40,13 +39,7 @@ export class KulAccordion {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Set of expanded nodes.
    */
@@ -67,12 +60,12 @@ export class KulAccordion {
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Internal variables
@@ -283,15 +276,15 @@ export class KulAccordion {
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
     const { debug, theme } = kulManagerSingleton;
@@ -304,7 +297,7 @@ export class KulAccordion {
         }
       }
     }
-    debug.updateDebugInfo(this, "did-render");
+    debug.info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;

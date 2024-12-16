@@ -1,6 +1,6 @@
 import { Fragment, h } from "@stencil/core";
 
-import { OPTION_TYPE_IDS } from "../kul-messenger-constants";
+import { OPTION_TYPE_IDS } from "../helpers/kul-messenger-constants";
 import { KulMessengerAdapter } from "../kul-messenger-declarations";
 
 export const prepOptions = (adapter: KulMessengerAdapter) => {

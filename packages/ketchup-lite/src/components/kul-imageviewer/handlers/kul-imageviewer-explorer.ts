@@ -1,20 +1,22 @@
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import {
   clearSelection,
   load,
   toggleButtonSpinner,
 } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
-import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
-import { KulMasonryEventPayload } from "src/components/kul-masonry/kul-masonry-declarations";
-import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
+import {
+  KulImageviewerAdapter,
+  KulImageviewerAdapterHandlers,
+} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
 import { KulGenericEvent } from "src/types/GenericTypes";
 
-export const prepExplorerHandlers = (adapter: KulImageviewerAdapter) => {
+export const prepExplorerHandlers = (
+  adapter: KulImageviewerAdapter,
+): KulImageviewerAdapterHandlers["explorer"] => {
   const { compInstance } = adapter.state.get;
 
   return {
     //#region Button handler
-    button: async (e: CustomEvent<KulButtonEventPayload>) => {
+    button: async (e) => {
       const { comp, eventType } = e.detail;
 
       compInstance.onKulEvent(e, "kul-event");
@@ -28,7 +30,7 @@ export const prepExplorerHandlers = (adapter: KulImageviewerAdapter) => {
     //#endregion
 
     //#region Masonry handler
-    masonry: (e: CustomEvent<KulMasonryEventPayload>) => {
+    masonry: (e) => {
       const { eventType, originalEvent, selectedShape } = e.detail;
 
       const { state } = adapter;
@@ -60,7 +62,7 @@ export const prepExplorerHandlers = (adapter: KulImageviewerAdapter) => {
     //#endregion
 
     //#region Textfield handler
-    textfield: (e: CustomEvent<KulTextfieldEventPayload>) => {
+    textfield: (e) => {
       compInstance.onKulEvent(e, "kul-event");
     },
     //#endregion

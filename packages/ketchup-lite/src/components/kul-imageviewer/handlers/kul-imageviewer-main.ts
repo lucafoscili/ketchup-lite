@@ -1,5 +1,3 @@
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import { KulCanvasEventPayload } from "src/components/kul-canvas/kul-canvas-declarations";
 import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-constants";
 import {
   clearHistory,
@@ -9,15 +7,19 @@ import {
   toggleButtonSpinner,
   undo,
 } from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
-import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
-import { KulTreeEventPayload } from "src/components/kul-tree/kul-tree-declarations";
+import {
+  KulImageviewerAdapter,
+  KulImageviewerAdapterHandlers,
+} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
 
-export const imageviewerHandlers = (adapter: KulImageviewerAdapter) => {
+export const imageviewerHandlers = (
+  adapter: KulImageviewerAdapter,
+): KulImageviewerAdapterHandlers["imageviewer"] => {
   const { compInstance, currentShape } = adapter.state.get;
 
   return {
     //#region Button handler
-    button: async (e: CustomEvent<KulButtonEventPayload>) => {
+    button: async (e) => {
       const { comp, eventType, id } = e.detail;
 
       compInstance.onKulEvent(e, "kul-event");
@@ -49,13 +51,13 @@ export const imageviewerHandlers = (adapter: KulImageviewerAdapter) => {
     //#endregion
 
     //#region Canvas handler
-    canvas: (e: CustomEvent<KulCanvasEventPayload>) => {
+    canvas: (e) => {
       compInstance.onKulEvent(e, "kul-event");
     },
     //#endregion
 
     //#region Tree handler
-    tree: (e: CustomEvent<KulTreeEventPayload>) => {
+    tree: (e) => {
       compInstance.onKulEvent(e, "kul-event");
     },
     //#endregion

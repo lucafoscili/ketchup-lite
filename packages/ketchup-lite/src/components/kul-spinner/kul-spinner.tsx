@@ -96,7 +96,7 @@ export class KulSpinner {
    * Sets a custom style for the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Duration for the progress bar to fill up (in milliseconds).
    * @default undefined

@@ -19,11 +19,12 @@ import {
   createAutoplayStateSetters,
   createElements,
   createIndexStateSetters,
-} from "src/components/kul-carousel/helpers/kul-carousel-hub";
+  createRefs,
+} from "src/components/kul-carousel/kul-carousel-adapter";
 import {
   autoplay,
   navigation,
-} from "src/components/kul-carousel/helpers/kul-carousel-utils";
+} from "src/components/kul-carousel/helpers/navigation";
 import {
   KulCarouselAdapter,
   KulCarouselEvent,
@@ -98,7 +99,7 @@ export class KulCarousel {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Internal variables
@@ -110,7 +111,7 @@ export class KulCarousel {
   #adapter: KulCarouselAdapter = {
     elements: {
       jsx: null,
-      refs: { back: null, forward: null },
+      refs: createRefs(),
     },
     handlers: null,
     state: {

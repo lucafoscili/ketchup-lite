@@ -85,7 +85,7 @@ export class KulToggle {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Sets the initial boolean state of the toggle.
    * @default false

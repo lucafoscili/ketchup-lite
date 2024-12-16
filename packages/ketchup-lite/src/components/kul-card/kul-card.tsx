@@ -11,26 +11,20 @@ import {
   State,
   Watch,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import {
-  createDefaults,
-  createElements,
-  createHandlers,
-} from "src/components/kul-card/helpers/kul-card-hub";
-import {
-  KulCardAdapter,
-  KulCardEvent,
-  KulCardEventPayload,
-  KulCardLayout,
-} from "src/components/kul-card/kul-card-declarations";
 import {
   KulDataDataset,
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericMap, GenericObject } from "src/types/GenericTypes";
+import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { createAdapter } from "./kul-card-adapter";
+import {
+  KulCardEvent,
+  KulCardEventPayload,
+  KulCardLayout,
+} from "./kul-card-declarations";
 
 @Component({
   tag: "kul-card",
@@ -47,13 +41,7 @@ export class KulCard {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The shapes of the component.
    * @default ""
@@ -78,32 +66,24 @@ export class KulCard {
    * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
    * @default "100%"
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeX = "100%";
+  @Prop({ mutable: true }) kulSizeX = "100%";
   /**
    * The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).
    * @default "100%"
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeY = "100%";
+  @Prop({ mutable: true }) kulSizeY = "100%";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Internal variables
-  #adapter: KulCardAdapter = {
-    elements: { jsx: { layouts: null }, refs: { layouts: null } },
-    handlers: { layouts: null },
-    state: {
-      get: {
-        compInstance: this,
-        defaults: createDefaults(),
-        layout: null,
-        shapes: () => this.shapes,
-      },
-    },
-  };
+  #adapter = createAdapter(
+    { compInstance: this, shapes: () => this.shapes },
+    () => this.#adapter,
+  );
   //#endregion
 
   //#region Events
@@ -192,28 +172,26 @@ export class KulCard {
     theme.register(this);
 
     this.updateShapes();
-
-    this.#adapter.handlers.layouts = createHandlers(this.#adapter);
-    this.#adapter.elements.jsx.layouts = createElements(this.#adapter);
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillUpdate() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;
+
     const { kulData, kulLayout, kulSizeX, kulSizeY, kulStyle, rootElement } =
       this;
 
@@ -221,11 +199,9 @@ export class KulCard {
       return;
     }
 
-    const { elements } = this.#adapter;
-    const { jsx } = elements;
-    const { layout } = jsx;
+    const { layout } = this.#adapter.elements.jsx;
 
-    const style: GenericMap = {
+    const style = {
       "--kul_card_height": kulSizeY ? kulSizeY : "100%",
       "--kul_card_width": kulSizeX ? kulSizeX : "100%",
     };

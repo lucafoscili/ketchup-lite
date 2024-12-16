@@ -1,16 +1,19 @@
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
-import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
-import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
+import {
+  KulChatAdapter,
+  KulChatAdapterHandlers,
+} from "src/components/kul-chat/kul-chat-declarations";
 
-export const prepSettingsHandlers = (adapter: KulChatAdapter) => {
+export const prepSettingsHandlers = (
+  adapter: KulChatAdapter,
+): KulChatAdapterHandlers["settings"] => {
   const { state } = adapter;
   const { get, set } = state;
   const { compInstance } = get;
 
   return {
     //#region Button
-    button: async (e: CustomEvent<KulButtonEventPayload>) => {
+    button: async (e) => {
       const { eventType, id } = e.detail;
 
       switch (eventType) {
@@ -26,7 +29,7 @@ export const prepSettingsHandlers = (adapter: KulChatAdapter) => {
     //#endregion
 
     //#region Textfield
-    textfield: (e: CustomEvent<KulTextfieldEventPayload>) => {
+    textfield: (e) => {
       const { eventType, id, value } = e.detail;
 
       switch (eventType) {

@@ -66,7 +66,7 @@ export class KulPhotoframe {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Percentage of the component dimensions entering the viewport (0.1 => 1).
    * @default 0.25

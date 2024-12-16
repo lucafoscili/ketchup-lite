@@ -5,9 +5,14 @@ import {
   IDS,
   STYLING,
 } from "src/components/kul-masonry/helpers/kul-masonry-constants";
-import { KulMasonryAdapter } from "src/components/kul-masonry/kul-masonry-declarations";
+import {
+  KulMasonryAdapter,
+  KulMasonryAdapterElementsJsx,
+} from "src/components/kul-masonry/kul-masonry-declarations";
 
-export const prepMasonry = (adapter: KulMasonryAdapter) => {
+export const prepMasonry = (
+  adapter: KulMasonryAdapter,
+): KulMasonryAdapterElementsJsx => {
   const { elements, handlers, state } = adapter;
   const { refs } = elements;
   const { isMasonry, isVertical } = state.get;

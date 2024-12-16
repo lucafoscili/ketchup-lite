@@ -54,7 +54,7 @@ export class KulDrawer {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Events

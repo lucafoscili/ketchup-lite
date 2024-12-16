@@ -91,7 +91,7 @@ export class KulSlider {
    * Custom CSS style to apply to the slider component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * The initial numeric value for the slider within the defined range.
    * @default 50

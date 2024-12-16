@@ -10,26 +10,20 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
+import { createAdapter } from "./kul-canvas-adapter";
 import {
-  createElements,
-  createHandlers,
-  toolkit,
-} from "src/components/kul-canvas/helpers/kul-canvas-hub";
-import {
-  KulCanvasAdapter,
   KulCanvasBrush,
   KulCanvasCursor,
   KulCanvasEvent,
   KulCanvasEventPayload,
   KulCanvasPoints,
   KulCanvasType,
-} from "src/components/kul-canvas/kul-canvas-declarations";
-import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
-import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+} from "./kul-canvas-declarations";
 
 @Component({
   tag: "kul-canvas",
@@ -46,13 +40,7 @@ export class KulCanvas {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Indicates whether the user is currently painting.
    * @default false
@@ -70,18 +58,17 @@ export class KulCanvas {
    * The shape of the brush.
    * @default 'round'
    */
-  @Prop({ mutable: true, reflect: true }) kulBrush: KulCanvasBrush = "round";
+  @Prop({ mutable: true }) kulBrush: KulCanvasBrush = "round";
   /**
    * The color of the brush.
    * @default '#ff0000'
    */
-  @Prop({ mutable: true, reflect: true }) kulColor = "#ff0000";
+  @Prop({ mutable: true }) kulColor = "#ff0000";
   /**
    * Sets the style of the cursor.
    * @default 'preview'
    */
-  @Prop({ mutable: true, reflect: true }) kulCursor: KulCanvasCursor =
-    "preview";
+  @Prop({ mutable: true }) kulCursor: KulCanvasCursor = "preview";
   /**
    * The props of the image displayed inside the badge.
    * @default null
@@ -91,57 +78,47 @@ export class KulCanvas {
    * The opacity of the brush.
    * @default 1.0
    */
-  @Prop({ mutable: true, reflect: true }) kulOpacity = 1.0;
+  @Prop({ mutable: true }) kulOpacity = 1.0;
   /**
    * Displays the brush track of the current stroke.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulPreview = true;
+  @Prop({ mutable: true }) kulPreview = true;
   /**
    * Simplifies the coordinates array by applying the Ramer-Douglas-Peucker algorithm.
    * This prop sets the tolerance of the algorithm (null to disable).
    * @default null
    */
-  @Prop({ mutable: true, reflect: true }) kulStrokeTolerance: number = null;
+  @Prop({ mutable: true }) kulStrokeTolerance: number = null;
   /**
    * The size of the brush.
    * @default 10
    */
-  @Prop({ mutable: true, reflect: true }) kulSize = 10;
+  @Prop({ mutable: true }) kulSize = 10;
   /**
    * Customizes the style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Internal variables
   #container: HTMLDivElement;
   #resizeObserver: ResizeObserver;
   #resizeTimeout: NodeJS.Timeout;
-  #adapter: KulCanvasAdapter = {
-    elements: {
-      jsx: null,
-      refs: {
-        board: null,
-        image: null,
-        preview: null,
-      },
+  #adapter = createAdapter(
+    {
+      compInstance: this,
+      isCursorPreview: this.#isCursorPreview,
+      isPainting: () => this.isPainting,
+      points: () => this.points,
     },
-    handlers: null,
-    state: {
-      get: {
-        compInstance: this,
-        isCursorPreview: this.#isCursorPreview,
-        isPainting: () => this.isPainting,
-        points: () => this.points,
-      },
-      set: {
-        isPainting: (value) => (this.isPainting = value),
-        points: (value) => (this.points = value),
-      },
+    {
+      isPainting: (value) => (this.isPainting = value),
+      points: (value) => (this.points = value),
     },
-  };
+    () => this.#adapter,
+  );
   //#endregion
 
   //#region Events
@@ -153,17 +130,18 @@ export class KulCanvas {
   })
   kulEvent: EventEmitter<KulCanvasEventPayload>;
   onKulEvent(e: Event | CustomEvent, eventType: KulCanvasEvent) {
-    const { coordinates } = toolkit;
+    const { coordinates } = this.#adapter.toolkit;
+    const { kulStrokeTolerance, points, rootElement } = this;
 
     this.kulEvent.emit({
       comp: this,
-      id: this.rootElement.id,
+      id: rootElement.id,
       originalEvent: e,
       eventType,
       points:
-        this.kulStrokeTolerance !== null && this.points?.length
-          ? coordinates.simplify(this.points, this.kulStrokeTolerance)
-          : this.points,
+        kulStrokeTolerance !== null && points?.length
+          ? coordinates.simplify(points, kulStrokeTolerance)
+          : points,
     });
   }
   //#endregion
@@ -175,10 +153,9 @@ export class KulCanvas {
    */
   @Method()
   async clearCanvas(type: KulCanvasType = "board"): Promise<void> {
-    const { context } = toolkit;
-    const { clear } = context;
+    const { clear } = this.#adapter.toolkit.ctx;
 
-    clear(this.#adapter, type);
+    clear(type);
   }
   /**
    * Returns the canvas HTML element.
@@ -187,9 +164,7 @@ export class KulCanvas {
    */
   @Method()
   async getCanvas(type: KulCanvasType = "board"): Promise<HTMLCanvasElement> {
-    const { elements } = this.#adapter;
-    const { refs } = elements;
-    const { board, preview } = refs;
+    const { board, preview } = this.#adapter.elements.refs;
 
     return type === "board" ? board : preview;
   }
@@ -206,9 +181,7 @@ export class KulCanvas {
    */
   @Method()
   async getImage(): Promise<HTMLKulImageElement> {
-    const { elements } = this.#adapter;
-    const { refs } = elements;
-    const { image } = refs;
+    const { image } = this.#adapter.elements.refs;
 
     return image;
   }
@@ -234,9 +207,7 @@ export class KulCanvas {
    */
   @Method()
   async resizeCanvas(): Promise<void> {
-    const { elements } = this.#adapter;
-    const { refs } = elements;
-    const { board, preview } = refs;
+    const { board, preview } = this.#adapter.elements.refs;
 
     const { height, width } = this.#container.getBoundingClientRect();
     board.height = height;
@@ -252,9 +223,7 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasHeight(value?: number): Promise<void> {
-    const { elements } = this.#adapter;
-    const { refs } = elements;
-    const { board, preview } = refs;
+    const { board, preview } = this.#adapter.elements.refs;
 
     if (value !== undefined) {
       board.height = value;
@@ -276,9 +245,7 @@ export class KulCanvas {
    */
   @Method()
   async setCanvasWidth(value?: number): Promise<void> {
-    const { elements } = this.#adapter;
-    const { refs } = elements;
-    const { board, preview } = refs;
+    const { board, preview } = this.#adapter.elements.refs;
 
     if (value !== undefined) {
       board.width = value;
@@ -319,12 +286,9 @@ export class KulCanvas {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
-
-    this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.elements.jsx = createElements(this.#adapter);
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.resizeCanvas();
 
@@ -337,23 +301,22 @@ export class KulCanvas {
     this.#resizeObserver.observe(this.#container);
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;
-    const { elements } = this.#adapter;
-    const { jsx } = elements;
-    const { board, image, preview } = jsx;
+
+    const { board, image, preview } = this.#adapter.elements.jsx;
     const { kulStyle } = this;
 
     const className = {

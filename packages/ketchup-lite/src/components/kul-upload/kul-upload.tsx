@@ -71,7 +71,7 @@ export class KulUpload {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Initializes the component with these files.
    * @default null

@@ -78,7 +78,7 @@ export class KulTabbar {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Sets the initial selected node's index.
    * @default null

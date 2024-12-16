@@ -12,16 +12,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import {
-  KulButtonEvent,
-  KulButtonEventPayload,
-  KulButtonState,
-  KulButtonStyling,
-} from "src/components/kul-button/kul-button-declarations";
-import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
-import { KulListEventPayload } from "src/components/kul-list/kul-list-declarations";
 import {
   KulDataDataset,
   KulDataNode,
@@ -36,6 +27,14 @@ import {
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/variables/GenericVariables";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
+import { KulListEventPayload } from "../kul-list/kul-list-declarations";
+import {
+  KulButtonEvent,
+  KulButtonEventPayload,
+  KulButtonState,
+  KulButtonStyling,
+} from "./kul-button-declarations";
 
 @Component({
   tag: "kul-button",
@@ -52,13 +51,7 @@ export class KulButton {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The value of the component ("on" or "off").
    * @default ""
@@ -78,37 +71,37 @@ export class KulButton {
    * Defaults at false. When set to true, the component is disabled.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulDisabled = false;
+  @Prop({ mutable: true }) kulDisabled = false;
   /**
    * When set, the button will show this icon.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulIcon = "";
+  @Prop({ mutable: true }) kulIcon = "";
   /**
    * When set, the icon button off state will show this icon. Otherwise, an outlined version of the icon prop will be displayed.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulIconOff = "";
+  @Prop({ mutable: true }) kulIconOff = "";
   /**
    * When set, the button will show this text.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = "";
+  @Prop({ mutable: true }) kulLabel = "";
   /**
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * When set to true, the button show a spinner received in slot.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulShowSpinner = false;
+  @Prop({ mutable: true }) kulShowSpinner = false;
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Defines the style of the button. This property controls the visual appearance of the button.
    *
@@ -116,26 +109,22 @@ export class KulButton {
    *
    * @see KulButtonStyling - For a list of available styles.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyling: KulButtonStyling =
-    "raised";
+  @Prop({ mutable: true }) kulStyling: KulButtonStyling = "raised";
   /**
    * When set to true, the icon button will be toggable on/off.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulToggable = false;
+  @Prop({ mutable: true }) kulToggable = false;
   /**
    * When set, the icon will be shown after the text.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulTrailingIcon = false;
+  @Prop({ mutable: true }) kulTrailingIcon = false;
   /**
    * Sets the type of the button.
    * @default "button"
    */
-  @Prop({ mutable: true, reflect: true }) kulType:
-    | "button"
-    | "reset"
-    | "submit" = "button";
+  @Prop({ mutable: true }) kulType: "button" | "reset" | "submit" = "button";
   /**
    * When set to true, the icon button state will be on.
    * @default false
@@ -592,17 +581,17 @@ export class KulButton {
       theme.ripple.setup(this.#dropdownRippleSurface);
     }
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { debug, theme } = kulManagerSingleton;

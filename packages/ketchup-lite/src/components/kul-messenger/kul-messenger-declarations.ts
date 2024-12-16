@@ -1,46 +1,108 @@
-import { KulMessenger } from "./kul-messenger";
+import { VNode } from "@stencil/core";
+
+import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
+import {
+  KulChatEventPayload,
+  KulChatPropsInterface,
+  KulChatStatus,
+} from "src/components/kul-chat/kul-chat-declarations";
+import { KulListEventPayload } from "src/components/kul-list/kul-list-declarations";
+import { KulMessenger } from "src/components/kul-messenger/kul-messenger";
+import { KulTabbarEventPayload } from "src/components/kul-tabbar/kul-tabbar-declarations";
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import type { KulEventPayload } from "../../types/GenericTypes";
+} from "src/managers/kul-data/kul-data-declarations";
 import {
-  KulChatPropsInterface,
-  KulChatStatus,
-} from "../kul-chat/kul-chat-declarations";
+  KulComponentAdapter,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterJsx,
+  KulComponentAdapterRefs,
+  KulComponentAdapterStateGetters,
+  KulComponentAdapterStateSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
 
 //#region Adapter
-export interface KulMessengerAdapter {
-  actions: KulMessengerAdapterActions;
-  components: KulMessengerAdapterComponents;
-  get: KulMessengerAdapterGetters;
-  set: KulMessengerAdapterSetters;
+export interface KulMessengerAdapter extends KulComponentAdapter<KulMessenger> {
+  elements: {
+    jsx: KulMessengerAdapterElementsJsx;
+    refs: KulMessengerAdapterElementsRefs;
+  };
+  handlers: KulMessengerAdapterHandlers;
+  state: {
+    get: KulMessengerAdapterStateGetters;
+    set: KulMessengerAdapterStateSetters;
+  };
 }
-export interface KulMessengerAdapterGetters {
+export interface KulMessengerAdapterElementsJsx extends KulComponentAdapterJsx {
+  left: {
+    avatar: () => VNode;
+    biography: () => VNode;
+    save: () => VNode;
+    statusIcon: () => VNode;
+  };
+  messenger: {
+    chat: () => VNode;
+    leftExpander: () => VNode;
+    rightExpander: () => VNode;
+    tabbar: () => VNode;
+  };
+  right: {
+    back: () => VNode;
+    customization: () => VNode;
+  };
+}
+
+/*editing: {
+  [K in KulMessengerImageTypes]: KulMessengerImageEditComponents;
+};*/
+export interface KulMessengerAdapterElementsRefs
+  extends KulComponentAdapterRefs {
+  left: {
+    avatar: HTMLImageElement;
+    biography: HTMLKulCodeElement;
+    save: HTMLKulButtonElement;
+    statusIcon: HTMLKulImageElement;
+  };
+  messenger: {
+    chat: HTMLKulChatElement;
+    leftExpander: HTMLKulButtonELement;
+    rightExpander: HTMLKulButtonELement;
+    tabbar: HTMLKulTabbarELement;
+  };
+  right: {
+    back: HTMLKulButtonELement;
+    customization: HTMLKulButtonELement;
+  };
+}
+export interface KulMessengerAdapterHandlers
+  extends KulComponentAdapterHandlers {
+  left: {
+    button: (e: CustomEvent<KulButtonEventPayload>) => Promise<void>;
+    list: (e: CustomEvent<KulListEventPayload>) => Promise<void>;
+  };
+  messenger: {
+    button: (e: CustomEvent<KulButtonEventPayload>) => Promise<void>;
+    chat: (e: CustomEvent<KulChatEventPayload>) => Promise<void>;
+    tabbar: (e: CustomEvent<KulTabbarEventPayload>) => Promise<void>;
+  };
+  right: {
+    button: (e: CustomEvent<KulButtonEventPayload>) => Promise<void>;
+  };
+}
+export interface KulMessengerAdapterStateGetters
+  extends KulComponentAdapterStateGetters<KulMessenger> {
+  compInstance: KulMessenger;
   character: KulMessengerAdapterGetCharacter;
   image: KulMessengerAdapterGetImage;
   messenger: KulMessengerAdapterGetMessenger;
 }
-export interface KulMessengerAdapterSetters {
+export interface KulMessengerAdapterStateSetters
+  extends KulComponentAdapterStateSetters {
   character: KulMessengerAdapterSetCharacter;
   image: KulMessengerAdapterSetImage;
   messenger: KulMessengerAdapterSetMessenger;
-}
-export interface KulMessengerAdapterActions {
-  delete: {
-    option: (
-      node: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
-      type: KulMessengerImageTypes,
-    ) => void;
-  };
-  save: () => Promise<void>;
-}
-export interface KulMessengerAdapterComponents {
-  editing: {
-    [K in KulMessengerImageTypes]: KulMessengerImageEditComponents;
-  };
-  messenger: KulMessenger;
-  saveButton: HTMLKulButtonElement;
 }
 export interface KulMessengerAdapterGetCharacter {
   biography: (character?: KulMessengerCharacterNode) => string;
@@ -97,7 +159,8 @@ export interface KulMessengerAdapterGetMessenger {
   };
   ui: () => KulMessengerUI;
 }
-export interface KulMessengerAdapterSetCharacter {
+export interface KulMessengerAdapterSetCharacter
+  extends KulComponentAdapterStateSetters {
   chat: (
     chat: KulChatPropsInterface,
     character?: KulMessengerCharacterNode,
@@ -107,14 +170,16 @@ export interface KulMessengerAdapterSetCharacter {
   next: (character?: KulMessengerCharacterNode) => void;
   previous: (character?: KulMessengerCharacterNode) => void;
 }
-export interface KulMessengerAdapterSetImage {
+export interface KulMessengerAdapterSetImage
+  extends KulComponentAdapterStateSetters {
   cover: (
     type: KulMessengerImageTypes,
     value: number,
     character?: KulMessengerCharacterNode,
   ) => void;
 }
-export interface KulMessengerAdapterSetMessenger {
+export interface KulMessengerAdapterSetMessenger
+  extends KulComponentAdapterStateSetters {
   data: () => void;
   status: {
     connection: (status: KulChatStatus) => void;

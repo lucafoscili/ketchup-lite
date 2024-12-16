@@ -16,6 +16,7 @@ import { kulManagerSingleton } from "src";
 import {
   createElements,
   createHandlers,
+  createRefs,
 } from "src/components/kul-imageviewer/helpers/kul-imageviewer-hub";
 import {
   clearHistory,
@@ -107,23 +108,7 @@ export class KulImageviewer {
   #adapter: KulImageviewerAdapter = {
     elements: {
       jsx: null,
-      refs: {
-        explorer: {
-          load: null,
-          masonry: null,
-          textfield: null,
-        },
-        imageviewer: {
-          canvas: null,
-          clearHistory: null,
-          deleteShape: null,
-          redo: null,
-          save: null,
-          spinner: null,
-          undo: null,
-          tree: null,
-        },
-      },
+      refs: createRefs(),
     },
     handlers: null,
     state: {

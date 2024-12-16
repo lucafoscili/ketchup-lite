@@ -5,7 +5,7 @@ import {
   OUTFIT_COVER,
   STYLE_COVER,
   TIMEFRAME_COVER,
-} from "../kul-messenger-constants";
+} from "./kul-messenger-constants";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterGetters,

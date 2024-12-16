@@ -19,6 +19,7 @@ import { kulManagerSingleton } from "src";
 import {
   createElements,
   createHandlers,
+  createRefs,
 } from "src/components/kul-chat/helpers/kul-chat-hub";
 import {
   calcTokens,
@@ -123,7 +124,7 @@ export class KulChat {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * System message for the LLM.
    * @default ""
@@ -193,30 +194,7 @@ export class KulChat {
     },
     elements: {
       jsx: null,
-      refs: {
-        chat: {
-          clear: null,
-          progressbar: null,
-          send: null,
-          settings: null,
-          spinner: null,
-          stt: null,
-          textarea: null,
-        },
-        settings: {
-          back: null,
-          endpoint: null,
-          maxTokens: null,
-          polling: null,
-          system: null,
-          temperature: null,
-        },
-        toolbar: {
-          deleteMessage: null,
-          copyContent: null,
-          regenerate: null,
-        },
-      },
+      refs: createRefs(),
     },
   };
   //#endregion

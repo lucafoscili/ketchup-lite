@@ -1,19 +1,19 @@
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
 import {
   deleteMessage,
   regenerateMessage,
 } from "src/components/kul-chat/helpers/kul-chat-utils";
-import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
-import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
+import {
+  KulChatAdapter,
+  KulChatAdapterHandlers,
+} from "src/components/kul-chat/kul-chat-declarations";
 
-export const prepToolbarHandlers = (adapter: KulChatAdapter) => {
+export const prepToolbarHandlers = (
+  adapter: KulChatAdapter,
+): KulChatAdapterHandlers["toolbar"] => {
   return {
     //#region Button
-    button: async (
-      e: CustomEvent<KulButtonEventPayload>,
-      m: KulLLMChoiceMessage,
-    ) => {
+    button: async (e, m) => {
       const { eventType, id } = e.detail;
 
       switch (eventType) {

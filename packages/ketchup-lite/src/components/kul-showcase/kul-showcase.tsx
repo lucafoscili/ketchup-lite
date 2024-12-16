@@ -39,7 +39,7 @@ export class KulShowcase {
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Internal variables

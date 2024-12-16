@@ -15,6 +15,7 @@ import {
 } from "@stencil/core";
 
 import { kulManagerSingleton } from "src";
+import { createRefs } from "src/components/kul-masonry/helpers/kul-masonry-hub";
 import {
   KulMasonryAdapter,
   KulMasonryEvent,
@@ -97,12 +98,30 @@ export class KulMasonry {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Sets the type of view, either the actual masonry or a sequential view.
    * @default null
    */
   @Prop({ mutable: true }) kulView: KulMasonryView = "masonry";
+  //#endregion
+
+  //#region Internal variables
+  #adapter: KulMasonryAdapter = {
+    elements: {
+      jsx: null,
+      refs: createRefs(),
+    },
+    handlers: null,
+    state: {
+      get: {
+        compInstance: this,
+        isMasonry: () => this.#isMasonry(),
+        isVertical: () => this.#isVertical(),
+        shapes: () => this.shapes,
+      },
+    },
+  };
   //#endregion
 
   //#region Events
@@ -165,28 +184,6 @@ export class KulMasonry {
       debug.logs.new(this, "Error updating shapes: " + error, "error");
     }
   }
-  //#endregion
-
-  //#region Internal variables
-  #adapter: KulMasonryAdapter = {
-    elements: {
-      jsx: null,
-      refs: {
-        addColumn: null,
-        removeColumn: null,
-        changeView: null,
-      },
-    },
-    handlers: null,
-    state: {
-      get: {
-        compInstance: this,
-        isMasonry: () => this.#isMasonry(),
-        isVertical: () => this.#isVertical(),
-        shapes: () => this.shapes,
-      },
-    },
-  };
   //#endregion
 
   //#region Public methods

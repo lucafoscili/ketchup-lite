@@ -72,7 +72,7 @@ export class KulCode {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * String containing the snippet of code to display.
    * @default ""

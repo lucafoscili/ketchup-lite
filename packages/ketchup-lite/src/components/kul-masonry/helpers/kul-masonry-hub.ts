@@ -5,6 +5,7 @@ import {
   KulMasonryAdapterElementsJsx,
   KulMasonryAdapterHandlers,
 } from "src/components/kul-masonry/kul-masonry-declarations";
+import { REFS } from "./kul-masonry-constants";
 
 export const createElements: (
   adapter: KulMasonryAdapter,
@@ -17,3 +18,5 @@ export const createHandlers: (
 ) => KulMasonryAdapterHandlers = (adapter) => {
   return masonryHandlers(adapter);
 };
+
+export const createRefs = REFS;

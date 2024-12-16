@@ -425,30 +425,34 @@ export type KulComponentAdapterJsx = {
 export type KulComponentAdapterRefs = {
   [key: string]: HTMLElement | KulComponentAdapterRefs;
 };
-export type KulComponentAdapterStateGetters<C extends KulGenericComponent> = {
+export type KulComponentAdapterControllerGetters<
+  C extends KulGenericComponent,
+> = {
   [key: string]: unknown;
   compInstance: C;
 };
-export type KulComponentAdapterStateSetters = {
-  [key: string]: ((value: unknown) => void) | KulComponentAdapterStateSetters;
+export type KulComponentAdapterControllerSetters = {
+  [key: string]:
+    | ((value?: unknown) => void)
+    | KulComponentAdapterControllerSetters;
 };
 export interface KulComponentAdapter<
   C extends KulGenericComponent,
   H = KulComponentAdapterHandlers,
   J = KulComponentAdapterJsx,
   R = KulComponentAdapterRefs,
-  SGet = KulComponentAdapterStateGetters<C>,
-  SSet = KulComponentAdapterStateSetters,
+  CGet = KulComponentAdapterControllerGetters<C>,
+  CSet = KulComponentAdapterControllerSetters,
 > {
+  controller?: {
+    get: CGet;
+    set?: CSet;
+  };
   elements?: {
     jsx: J;
     refs: R;
   };
   handlers?: H;
-  state?: {
-    get: SGet;
-    set?: SSet;
-  };
 }
 type ExtractComponentName<C> = C extends KulComponent<infer N> ? N : never;
 export type KulEventType<C extends KulComponent<KulComponentName>> =

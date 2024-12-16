@@ -100,7 +100,7 @@ export class KulCompare {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Sets the type of view, either styled as a before-after or a side-by-side comparison.
    * @default null
