@@ -15,12 +15,12 @@ import {
 
 //#region Adapter
 export const createAdapter = (
-  get: KulCardAdapterInitializerGetters,
+  getters: KulCardAdapterInitializerGetters,
   getAdapter: () => KulCardAdapter,
 ): KulCardAdapter => {
   return {
     controller: {
-      get: createGetters(get),
+      get: createGetters(getters),
     },
     elements: {
       jsx: { layouts: createJsx(getAdapter) },

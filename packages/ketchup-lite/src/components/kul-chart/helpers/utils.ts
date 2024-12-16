@@ -6,18 +6,14 @@ import {
   XAXisComponentOption,
   YAXisComponentOption,
 } from "echarts";
-
 import { kulManagerSingleton } from "src";
-import {
-  KulChartAdapter,
-  KulChartAxesTypes,
-} from "src/components/kul-chart/kul-chart-declarations";
+import { KulChartAdapter, KulChartAxesTypes } from "../kul-chart-declarations";
 
 //#region baseAxis
 const baseAxis = (
-  adapter: KulChartAdapter,
+  getAdapter: () => KulChartAdapter,
 ): XAXisComponentOption | YAXisComponentOption => {
-  const { border, font, text } = adapter.state.get.style.layout;
+  const { border, font, text } = getAdapter().controller.get.style.theme;
 
   return {
     axisLabel: {
@@ -49,10 +45,10 @@ export const getHexColor = (color: string) => {
 
 //#region prepAxis
 export const prepAxis = (
-  adapter: KulChartAdapter,
+  getAdapter: () => KulChartAdapter,
   axisType: KulChartAxesTypes,
 ) => {
-  const commonAxis = baseAxis(adapter);
+  const commonAxis = baseAxis(getAdapter);
 
   return axisType === "x"
     ? (commonAxis as XAXisComponentOption)
@@ -61,19 +57,16 @@ export const prepAxis = (
 //#endregion
 
 //#region prepLabel
-export const prepLabel = (adapter: KulChartAdapter) => {
-  const { state } = adapter;
-  const { get } = state;
-  const { style } = get;
-  const { layout } = style;
+export const prepLabel = (getAdapter: () => KulChartAdapter) => {
+  const { font, text } = getAdapter().controller.get.style.theme;
 
   const label: EChartsOption = {
     show: true,
     formatter: "{b|{b}}",
     rich: {
       b: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: text,
+        fontFamily: font,
         textShadow: "none",
       },
     },
@@ -87,10 +80,10 @@ export const prepLabel = (adapter: KulChartAdapter) => {
 //#endregion
 
 //#region prepLegend
-export const prepLegend = (adapter: KulChartAdapter) => {
-  const { compInstance, seriesData, style } = adapter.state.get;
+export const prepLegend = (getAdapter: () => KulChartAdapter) => {
+  const { compInstance, seriesData, style } = getAdapter().controller.get;
   const { kulLegend } = compInstance;
-  const { layout } = style;
+  const { theme } = style;
 
   if (kulLegend === "hidden") {
     return null;
@@ -101,8 +94,8 @@ export const prepLegend = (adapter: KulChartAdapter) => {
     data,
     [kulLegend]: 0,
     textStyle: {
-      color: layout.text,
-      fontFamily: layout.font,
+      color: theme.text,
+      fontFamily: theme.font,
     },
   };
   return legend;
@@ -110,11 +103,14 @@ export const prepLegend = (adapter: KulChartAdapter) => {
 //#endregion
 
 //#region prepSeries
-export const prepSeries = (adapter: KulChartAdapter, amount: number) => {
+export const prepSeries = (
+  getAdapter: () => KulChartAdapter,
+  amount: number,
+) => {
   const { theme } = kulManagerSingleton;
   const { cssVars, randomColor } = theme;
 
-  const { kulColors } = adapter.state.get.compInstance;
+  const { kulColors } = getAdapter().controller.get.compInstance;
 
   const colorArray: string[] = [];
 
@@ -140,10 +136,10 @@ export const prepSeries = (adapter: KulChartAdapter, amount: number) => {
 
 //#region prepTooltip
 export const prepTooltip = (
-  adapter: KulChartAdapter,
+  getAdapter: () => KulChartAdapter,
   formatter?: TooltipComponentFormatterCallback<any>,
 ) => {
-  const { background, font, text } = adapter.state.get.style.layout;
+  const { background, font, text } = getAdapter().controller.get.style.theme;
 
   const tooltip: TooltipComponentOption = {
     backgroundColor: background,

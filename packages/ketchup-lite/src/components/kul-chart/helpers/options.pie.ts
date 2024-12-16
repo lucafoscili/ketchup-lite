@@ -1,14 +1,14 @@
 import { EChartsOption, PieSeriesOption } from "echarts";
-
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
   KulChartTooltipDataDictionary,
-} from "src/components/kul-chart/kul-chart-declarations";
+} from "../kul-chart-declarations";
 
 //#region Pie
-export const pie = (adapter: KulChartAdapter) => {
-  const { columnById, compInstance, seriesData, style } = adapter.state.get;
+export const pie = (getAdapter: () => KulChartAdapter) => {
+  const { columnById, compInstance, seriesData, style } =
+    getAdapter().controller.get;
   const { kulAxis } = compInstance;
   const { label, legend, seriesColor, tooltip } = style;
 

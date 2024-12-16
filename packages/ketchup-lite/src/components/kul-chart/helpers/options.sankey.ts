@@ -1,19 +1,18 @@
 import { EChartsOption, SankeySeriesOption } from "echarts";
-
 import { kulManagerSingleton } from "src";
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
   KulChartTooltipDataDictionary,
-} from "src/components/kul-chart/kul-chart-declarations";
+} from "../kul-chart-declarations";
 
 //#region Sankey
-export const sankey = (adapter: KulChartAdapter) => {
+export const sankey = (getAdapter: () => KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { compInstance, style } = adapter.state.get;
+  const { compInstance, style } = getAdapter().controller.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, seriesColor, tooltip } = style;
+  const { seriesColor, theme, tooltip } = style;
 
   const sourceKey = kulAxis[0];
   const targetKey = kulSeries[0];
@@ -53,8 +52,8 @@ export const sankey = (adapter: KulChartAdapter) => {
         links: links,
         label: {
           show: true,
-          color: layout.text,
-          fontFamily: layout.font,
+          color: theme.text,
+          fontFamily: theme.font,
         },
         lineStyle: {
           color: "gradient",

@@ -8,8 +8,6 @@ import {
   XAXisComponentOption,
   YAXisComponentOption,
 } from "echarts";
-
-import { KulChart } from "src/components/kul-chart/kul-chart";
 import {
   KulDataColumn,
   KulDataDataset,
@@ -17,41 +15,25 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulComponentAdapter,
+  KulComponentAdapterControllerGetters,
+  KulComponentAdapterControllerSetters,
   KulComponentAdapterHandlers,
-  KulComponentAdapterStateGetters,
-  KulComponentAdapterStateSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
+import { KulChart } from "./kul-chart";
 
 //#region Adapter
 export interface KulChartAdapter extends KulComponentAdapter<KulChart> {
-  handlers: KulChartAdapterHandlers;
-  state: {
-    get: KulChartAdapterStateGetters;
-    set: KulChartAdapterStateSetters;
+  controller: {
+    get: KulChartAdapterControllerGetters;
+    set: KulChartAdapterControllerSetters;
   };
+  handlers: KulChartAdapterHandlers;
 }
 export interface KulChartAdapterHandlers extends KulComponentAdapterHandlers {
   onClick: (e: ECElementEvent) => boolean | void;
 }
-export interface KulChartAdapterStateGetters
-  extends KulComponentAdapterStateGetters<KulChart> {
-  compInstance: KulChart;
-  columnById: (id: string) => KulDataColumn;
-  mappedType: (type: KulChartType) => SeriesOption["type"];
-  options: KulChartAdapterOptions;
-  seriesColumn: (seriesName: string) => KulDataColumn[];
-  seriesData: () => KulChartSeriesData[];
-  style: KulChartAdapterStyle;
-  xAxesData: () => { id: string; data: string[] }[];
-}
-export interface KulChartAdapterStateSetters
-  extends KulComponentAdapterStateSetters {
-  style: {
-    layout: () => KulChartAdapterLayoutStyle;
-  };
-}
-export interface KulChartAdapterLayoutStyle {
+export interface KulChartAdapterThemeStyle {
   background: string;
   border: string;
   danger: string;
@@ -64,8 +46,8 @@ export interface KulChartAdapterStyle {
     axisType: KulChartAxesTypes,
   ) => XAXisComponentOption | YAXisComponentOption;
   label: () => EChartsOption;
-  layout: KulChartAdapterLayoutStyle;
   legend: () => LegendComponentOption;
+  theme: KulChartAdapterThemeStyle;
   tooltip: (
     formatter?: TooltipComponentFormatterCallback<unknown>,
   ) => TooltipComponentOption;
@@ -81,6 +63,37 @@ export interface KulChartAdapterOptions {
   pie: () => EChartsOption;
   radar: () => EChartsOption;
   sankey: () => EChartsOption;
+}
+export type KulChartAdapterInitializerGetters = Pick<
+  KulChartAdapterControllerGetters,
+  | "compInstance"
+  | "columnById"
+  | "mappedType"
+  | "seriesColumn"
+  | "seriesData"
+  | "theme"
+  | "xAxesData"
+>;
+export type KulChartAdapterInitializerSetters = Pick<
+  KulChartAdapterControllerSetters,
+  "style"
+>;
+export interface KulChartAdapterControllerGetters
+  extends KulComponentAdapterControllerGetters<KulChart> {
+  compInstance: KulChart;
+  columnById: (id: string) => KulDataColumn;
+  mappedType: (type: KulChartType) => SeriesOption["type"];
+  options: KulChartAdapterOptions;
+  seriesColumn: (seriesName: string) => KulDataColumn[];
+  seriesData: () => KulChartSeriesData[];
+  style: KulChartAdapterStyle;
+  xAxesData: () => { id: string; data: string[] }[];
+}
+export interface KulChartAdapterControllerSetters
+  extends KulComponentAdapterControllerSetters {
+  style: {
+    theme: () => void;
+  };
 }
 //#endregion
 

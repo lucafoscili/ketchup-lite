@@ -1,15 +1,14 @@
 import { CandlestickSeriesOption, EChartsOption } from "echarts";
-
 import { kulManagerSingleton } from "src";
-import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations";
+import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Candlestick
-export const candlestick = (adapter: KulChartAdapter) => {
+export const candlestick = (getAdapter: () => KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { compInstance, style } = adapter.state.get;
+  const { compInstance, style } = getAdapter().controller.get;
   const { kulAxis, kulData } = compInstance;
-  const { layout, tooltip } = style;
+  const { theme, tooltip } = style;
 
   const xAxisKey = kulAxis[0];
 
@@ -26,34 +25,34 @@ export const candlestick = (adapter: KulChartAdapter) => {
   );
 
   const options: EChartsOption = {
-    color: [layout.success, layout.danger],
+    color: [theme.success, theme.danger],
     xAxis: {
       type: "category",
       data: xAxisData,
       axisLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
       axisLine: {
         lineStyle: {
-          color: layout.border,
+          color: theme.border,
         },
       },
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
       axisLine: {
         lineStyle: {
-          color: layout.border,
+          color: theme.border,
         },
       },
       splitLine: {
         lineStyle: {
-          color: layout.border,
+          color: theme.border,
         },
       },
     },
@@ -62,10 +61,10 @@ export const candlestick = (adapter: KulChartAdapter) => {
         type: "candlestick",
         data: data,
         itemStyle: {
-          color: layout.success,
-          color0: layout.danger,
-          borderColor: layout.success,
-          borderColor0: layout.danger,
+          color: theme.success,
+          color0: theme.danger,
+          borderColor: theme.success,
+          borderColor0: theme.danger,
         },
       } as CandlestickSeriesOption,
     ],

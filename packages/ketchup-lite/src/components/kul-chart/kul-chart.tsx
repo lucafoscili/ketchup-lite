@@ -11,16 +11,15 @@ import {
   State,
 } from "@stencil/core";
 import { dispose, ECharts, init } from "echarts";
-
 import { kulManagerSingleton } from "src";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { createAdapter } from "./kul-chart-adapter";
 import {
-  createHandlers,
-  createOptionsStateGetters,
-  createStyleStateGetters,
-} from "src/components/kul-chart/helpers/kul-chart-hub";
-import {
-  KulChartAdapter,
-  KulChartAdapterLayoutStyle,
+  KulChartAdapterThemeStyle,
   KulChartAxis,
   KulChartEvent,
   KulChartEventData,
@@ -30,12 +29,7 @@ import {
   KulChartType,
   KulChartXAxis,
   KulChartYAxis,
-} from "src/components/kul-chart/kul-chart-declarations";
-import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
-import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+} from "./kul-chart-declarations";
 
 @Component({
   tag: "kul-chart",
@@ -52,17 +46,11 @@ export class KulChart {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Layout style.
    */
-  @State() layoutStyle: KulChartAdapterLayoutStyle = {
+  @State() themeValues: KulChartAdapterThemeStyle = {
     background: null,
     border: null,
     danger: null,
@@ -137,37 +125,38 @@ export class KulChart {
   #chartEl: ECharts;
   #axesData: { id: string; data: string[] }[] = [];
   #seriesData: KulChartSeriesData[] = [];
-  #adapter: KulChartAdapter = {
-    handlers: null,
-    state: {
-      get: {
-        compInstance: this,
-        columnById: (id: string) => this.#findColumn(this.kulData, { id })[0],
-        mappedType: (type) => {
-          switch (type) {
-            case "area":
-            case "gaussian":
-              return "line";
-            case "calendar":
-            case "hbar":
-            case "sbar":
-              return "bar";
-            case "bubble":
-              return "scatter";
-            default:
-              return type;
-          }
-        },
-        options: null,
-        seriesColumn: (series) =>
-          this.#findColumn(this.kulData, { title: series }),
-        seriesData: () => this.#seriesData,
-        style: null,
-        xAxesData: () => this.#axesData,
+  #adapter = createAdapter(
+    {
+      compInstance: this,
+      columnById: (id: string) => this.#findColumn(this.kulData, { id })[0],
+      mappedType: (type) => {
+        switch (type) {
+          case "area":
+          case "gaussian":
+            return "line";
+          case "calendar":
+          case "hbar":
+          case "sbar":
+            return "bar";
+          case "bubble":
+            return "scatter";
+          default:
+            return type;
+        }
       },
-      set: null,
+      seriesColumn: (series) =>
+        this.#findColumn(this.kulData, { title: series }),
+      seriesData: () => this.#seriesData,
+      theme: () => this.themeValues,
+      xAxesData: () => this.#axesData,
     },
-  };
+    {
+      style: {
+        theme: () => this.#updateThemeColors(),
+      },
+    },
+    () => this.#adapter,
+  );
   //#endregion
 
   //#region Events
@@ -333,9 +322,7 @@ export class KulChart {
     this.#chartEl.on("click", this.#adapter.handlers.onClick);
   }
   #createChartOptions() {
-    const { state } = this.#adapter;
-    const { get } = state;
-    const { options } = get;
+    const { options } = this.#adapter.controller.get;
     const {
       basic,
       bubble,
@@ -373,16 +360,15 @@ export class KulChart {
     }
   }
   #updateThemeColors() {
-    const { theme } = kulManagerSingleton;
-    const { cssVars } = theme;
-    const { layoutStyle } = this;
+    const { cssVars } = kulManagerSingleton.theme;
+    const { themeValues } = this;
 
-    layoutStyle.background = cssVars[KulThemeColorValues.BACKGROUND];
-    layoutStyle.border = cssVars[KulThemeColorValues.BORDER];
-    layoutStyle.danger = cssVars[KulThemeColorValues.DANGER];
-    layoutStyle.font = cssVars["--kul-font-family"];
-    layoutStyle.success = cssVars[KulThemeColorValues.SUCCESS];
-    layoutStyle.text = cssVars[KulThemeColorValues.TEXT];
+    themeValues.background = cssVars[KulThemeColorValues.BACKGROUND];
+    themeValues.border = cssVars[KulThemeColorValues.BORDER];
+    themeValues.danger = cssVars[KulThemeColorValues.DANGER];
+    themeValues.font = cssVars["--kul-font-family"];
+    themeValues.success = cssVars[KulThemeColorValues.SUCCESS];
+    themeValues.text = cssVars[KulThemeColorValues.TEXT];
   }
   //#endregion
 
@@ -392,35 +378,26 @@ export class KulChart {
 
     theme.register(this);
 
-    this.#updateThemeColors();
-
-    this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.state.get.options = createOptionsStateGetters(this.#adapter);
-    this.#adapter.state.get.style = createStyleStateGetters(
-      this.#adapter,
-      this.layoutStyle,
-    );
-
     if (typeof this.kulAxis === "string") {
       this.kulAxis = [this.kulAxis];
     }
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
-  }
-  componentWillUpdate() {
-    this.#updateThemeColors();
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    this.#adapter.controller.set.style.theme();
+
+    info.update(this, "will-render");
   }
   componentDidRender() {
     const { debug } = kulManagerSingleton;
+
     const { kulData } = this;
 
     if (kulData?.columns && kulData?.nodes) {
@@ -432,10 +409,11 @@ export class KulChart {
         "informational",
       );
     }
-    debug.updateDebugInfo(this, "did-render");
+    debug.info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;
+
     const { kulSizeX, kulSizeY, kulStyle } = this;
 
     const style = {

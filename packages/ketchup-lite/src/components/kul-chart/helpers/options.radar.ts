@@ -1,16 +1,15 @@
 import { EChartsOption, RadarSeriesOption } from "echarts";
-
 import { kulManagerSingleton } from "src";
-import { applyOpacity } from "src/components/kul-chart/helpers/kul-chart-utils";
-import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations";
+import { applyOpacity } from "../helpers/utils";
+import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Radar
-export const radar = (adapter: KulChartAdapter) => {
+export const radar = (getAdapter: () => KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { compInstance, seriesData, style } = adapter.state.get;
+  const { compInstance, seriesData, style } = getAdapter().controller.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, legend, seriesColor, tooltip } = style;
+  const { legend, seriesColor, theme, tooltip } = style;
 
   const indicator = kulSeries.map((seriesName) => {
     const max =
@@ -45,8 +44,8 @@ export const radar = (adapter: KulChartAdapter) => {
       indicator,
       shape: "circle",
       axisName: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
       splitArea: {
         show: true,

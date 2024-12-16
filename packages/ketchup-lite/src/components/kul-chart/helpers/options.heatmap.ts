@@ -1,15 +1,14 @@
 import { EChartsOption } from "echarts";
-
 import { kulManagerSingleton } from "src";
-import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations";
+import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Heatmap
-export const heatmap = (adapter: KulChartAdapter) => {
+export const heatmap = (getAdapter: () => KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { compInstance, style } = adapter.state.get;
+  const { compInstance, style } = getAdapter().controller.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, seriesColor, tooltip } = style;
+  const { seriesColor, theme, tooltip } = style;
 
   const xAxisKey = kulAxis[0];
   const yAxisKey = kulSeries[0];
@@ -48,16 +47,16 @@ export const heatmap = (adapter: KulChartAdapter) => {
       type: "category",
       data: xCategoriesArray,
       axisLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
     yAxis: {
       type: "category",
       data: yCategoriesArray,
       axisLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
     series: [
@@ -68,7 +67,7 @@ export const heatmap = (adapter: KulChartAdapter) => {
           show: false,
         },
         itemStyle: {
-          borderColor: layout.border,
+          borderColor: theme.border,
           borderWidth: 1,
         },
         emphasis: {
@@ -92,8 +91,8 @@ export const heatmap = (adapter: KulChartAdapter) => {
       },
       text: ["High", "Low"],
       textStyle: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
   };

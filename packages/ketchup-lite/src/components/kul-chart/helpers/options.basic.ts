@@ -9,16 +9,16 @@ import {
   XAXisComponentOption,
   YAXisComponentOption,
 } from "echarts";
-
 import { kulManagerSingleton } from "src";
-import { KulChartAdapter } from "src/components/kul-chart/kul-chart-declarations";
+import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Basic
-export const basic = (adapter: KulChartAdapter) => {
-  const { theme } = kulManagerSingleton;
+export const basic = (getAdapter: () => KulChartAdapter) => {
+  const { colorCheck } = kulManagerSingleton.theme;
 
-  const { mappedType, seriesData, style, xAxesData } = adapter.state.get;
-  const { axis, layout, legend, seriesColor, tooltip } = style;
+  const { mappedType, seriesData, style, xAxesData } =
+    getAdapter().controller.get;
+  const { axis, legend, seriesColor, theme, tooltip } = style;
 
   const xAxes: XAXisComponentOption[] = [];
   const yAxes: YAXisComponentOption[] = [];
@@ -77,7 +77,7 @@ export const basic = (adapter: KulChartAdapter) => {
           color: new graphic.LinearGradient(0, 0, 0, 0.25, [
             {
               offset: 0,
-              color: `rgba(${theme.colorCheck(color).rgbValues}, 0.375)`,
+              color: `rgba(${colorCheck(color).rgbValues}, 0.375)`,
             },
           ]),
         };
@@ -120,7 +120,7 @@ export const basic = (adapter: KulChartAdapter) => {
         xAxisIndex: 0,
         yAxisIndex: 0,
         itemStyle: {
-          borderColor: layout.border,
+          borderColor: theme.border,
           borderWidth: 1,
         },
         emphasis: {
@@ -176,8 +176,8 @@ export const basic = (adapter: KulChartAdapter) => {
       },
       text: ["High", "Low"],
       textStyle: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
   };

@@ -1,20 +1,19 @@
 import { EChartsOption } from "echarts";
-
 import { kulManagerSingleton } from "src";
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
   KulChartTooltipDataArray,
-} from "src/components/kul-chart/kul-chart-declarations";
+} from "../kul-chart-declarations";
 
 //#region Bubble
-export const bubble = (adapter: KulChartAdapter) => {
+export const bubble = (getAdapter: () => KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { get } = adapter.state;
+  const { get } = getAdapter().controller;
   const { columnById, compInstance, style } = get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, seriesColor, tooltip } = style;
+  const { seriesColor, theme, tooltip } = style;
 
   const xAxisKey = kulAxis[0];
   const yAxisKey = kulAxis[1];
@@ -54,15 +53,15 @@ export const bubble = (adapter: KulChartAdapter) => {
       nameLocation: "middle",
       nameGap: 25,
       axisLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
     yAxis: {
       name: columnById(yAxisKey)?.title || yAxisKey,
       axisLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
     series: [

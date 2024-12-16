@@ -61,14 +61,14 @@ export const getToolkit = (
 
 //#region Adapter
 export const createAdapter = (
-  get: KulCanvasAdapterInitializerGetters,
-  set: KulCanvasAdapterInitializerSetters,
+  getters: KulCanvasAdapterInitializerGetters,
+  setters: KulCanvasAdapterInitializerSetters,
   getAdapter: () => KulCanvasAdapter,
 ): KulCanvasAdapter => {
   return {
     controller: {
-      get: createGetters(get),
-      set: createSetters(set),
+      get: createGetters(getters),
+      set: createSetters(setters),
     },
     elements: {
       jsx: createJsx(getAdapter),

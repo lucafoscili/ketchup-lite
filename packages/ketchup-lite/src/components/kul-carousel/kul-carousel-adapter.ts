@@ -14,14 +14,14 @@ import {
 
 //#region Adapter
 export const createAdapter = (
-  get: KulCarouselAdapterInitializerGetters,
-  set: KulCarouselAdapterInitializerSetters,
+  getters: KulCarouselAdapterInitializerGetters,
+  setters: KulCarouselAdapterInitializerSetters,
   getAdapter: () => KulCarouselAdapter,
 ): KulCarouselAdapter => {
   return {
     controller: {
-      get: createGetters(get),
-      set: createSetters(set, getAdapter),
+      get: createGetters(getters),
+      set: createSetters(setters, getAdapter),
     },
     elements: {
       jsx: createJsx(getAdapter),

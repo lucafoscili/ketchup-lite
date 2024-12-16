@@ -1,19 +1,18 @@
 import { EChartsOption, HeatmapSeriesOption } from "echarts";
-
 import { kulManagerSingleton } from "src";
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
   KulChartTooltipDataDictionary,
-} from "src/components/kul-chart/kul-chart-declarations";
+} from "../kul-chart-declarations";
 
 //#region Calendar
-export const calendar = (adapter: KulChartAdapter) => {
+export const calendar = (getAdapter: () => KulChartAdapter) => {
   const { stringify } = kulManagerSingleton.data.cell;
 
-  const { compInstance, style } = adapter.state.get;
+  const { compInstance, style } = getAdapter().controller.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { layout, seriesColor, tooltip } = style;
+  const { seriesColor, theme, tooltip } = style;
 
   const dateKey = kulAxis[0];
   const valueKey = kulSeries[0];
@@ -50,20 +49,20 @@ export const calendar = (adapter: KulChartAdapter) => {
       cellSize: ["auto", 24],
       itemStyle: {
         borderWidth: 1,
-        borderColor: layout.border,
-        color: layout.background,
+        borderColor: theme.border,
+        color: theme.background,
       },
       dayLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
       monthLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
       yearLabel: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
     series: [
@@ -84,7 +83,7 @@ export const calendar = (adapter: KulChartAdapter) => {
       align: "auto",
       bottom: "bottom",
       inRange: {
-        color: [layout.background, colors[0]],
+        color: [theme.background, colors[0]],
       },
       left: "center",
       max: Math.max(...data.map(([_, value]) => Number(value))),
@@ -92,8 +91,8 @@ export const calendar = (adapter: KulChartAdapter) => {
       orient: "horizontal",
       text: ["High", "Low"],
       textStyle: {
-        color: layout.text,
-        fontFamily: layout.font,
+        color: theme.text,
+        fontFamily: theme.font,
       },
     },
   };
