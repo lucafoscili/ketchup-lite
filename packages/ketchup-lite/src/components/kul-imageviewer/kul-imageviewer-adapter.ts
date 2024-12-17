@@ -1,8 +1,8 @@
-import { prepExplorer } from "src/components/kul-imageviewer/elements/kul-imageviewer-explorer";
-import { prepImageviewer } from "src/components/kul-imageviewer/elements/kul-imageviewer-main";
-import { prepExplorerHandlers } from "src/components/kul-imageviewer/handlers/kul-imageviewer-explorer";
-import { imageviewerHandlers } from "src/components/kul-imageviewer/handlers/kul-imageviewer-main";
-import { REFS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-constants";
+import { prepExplorer } from "src/components/kul-imageviewer/elements/navigation";
+import { prepImageviewer } from "src/components/kul-imageviewer/elements/details";
+import { prepExplorerHandlers } from "src/components/kul-imageviewer/handlers/navigation";
+import { imageviewerHandlers } from "src/components/kul-imageviewer/handlers/details";
+import { REFS } from "src/components/kul-imageviewer/helpers/constants";
 import {
   KulImageviewerAdapter,
   KulImageviewerAdapterElementsJsx,

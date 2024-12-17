@@ -2,12 +2,7 @@ import { KulImageviewerAdapterElementsRefs } from "../kul-imageviewer-declaratio
 
 //#region Ids
 export const IDS = {
-  explorer: {
-    load: "explorer-load",
-    masonry: "explorer-masonry",
-    textfield: "explorer-textfield",
-  },
-  imageviewer: {
+  details: {
     canvas: "imageviewer-canvas",
     clearHistory: "imageviewer-clear-history",
     deleteShape: "imageviewer-delete-shape",
@@ -17,18 +12,18 @@ export const IDS = {
     tree: "imageviewer-tree",
     undo: "imageviewer-undo",
   },
+  navigation: {
+    load: "explorer-load",
+    masonry: "explorer-masonry",
+    textfield: "explorer-textfield",
+  },
 };
 //#endregion
 
 //#region Refs
 export const REFS = (): KulImageviewerAdapterElementsRefs => {
   return {
-    explorer: {
-      load: null,
-      masonry: null,
-      textfield: null,
-    },
-    imageviewer: {
+    details: {
       canvas: null,
       clearHistory: null,
       deleteShape: null,
@@ -37,6 +32,11 @@ export const REFS = (): KulImageviewerAdapterElementsRefs => {
       spinner: null,
       undo: null,
       tree: null,
+    },
+    navigation: {
+      load: null,
+      masonry: null,
+      textfield: null,
     },
   };
 };

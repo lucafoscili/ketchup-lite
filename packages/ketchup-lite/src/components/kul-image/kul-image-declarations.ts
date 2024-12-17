@@ -1,4 +1,4 @@
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulEventPayload } from "src/types/GenericTypes";
 import { KulBadgePropsInterface } from "../kul-badge/kul-badge-declarations";
 
 //#region Events

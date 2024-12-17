@@ -1,23 +1,20 @@
-import {
-  clearSelection,
-  load,
-  toggleButtonSpinner,
-} from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
+import { KulGenericEvent } from "src/types/GenericTypes";
+import { clearSelection, load, toggleButtonSpinner } from "../helpers/utils";
 import {
   KulImageviewerAdapter,
   KulImageviewerAdapterHandlers,
-} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
-import { KulGenericEvent } from "src/types/GenericTypes";
+} from "../kul-imageviewer-declarations";
 
 export const prepExplorerHandlers = (
-  adapter: KulImageviewerAdapter,
-): KulImageviewerAdapterHandlers["explorer"] => {
-  const { compInstance } = adapter.state.get;
-
+  getAdapter: () => KulImageviewerAdapter,
+): KulImageviewerAdapterHandlers["navigation"] => {
   return {
     //#region Button handler
     button: async (e) => {
       const { comp, eventType } = e.detail;
+
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
 
       compInstance.onKulEvent(e, "kul-event");
 
@@ -33,9 +30,10 @@ export const prepExplorerHandlers = (
     masonry: (e) => {
       const { eventType, originalEvent, selectedShape } = e.detail;
 
-      const { state } = adapter;
-      const { get, set } = state;
-      const { history } = get;
+      const adapter = getAdapter();
+      const { controller } = adapter;
+      const { get, set } = controller;
+      const { compInstance, history } = get;
       const { current } = history;
 
       compInstance.onKulEvent(e, "kul-event");
@@ -63,6 +61,9 @@ export const prepExplorerHandlers = (
 
     //#region Textfield handler
     textfield: (e) => {
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
+
       compInstance.onKulEvent(e, "kul-event");
     },
     //#endregion

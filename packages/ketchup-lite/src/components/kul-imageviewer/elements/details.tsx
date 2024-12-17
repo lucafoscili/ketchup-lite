@@ -1,46 +1,73 @@
 import { h } from "@stencil/core";
-
-import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-constants";
+import { kulManagerSingleton } from "src";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
+import { IDS } from "../helpers/constants";
 import {
   KulImageviewerAdapter,
   KulImageviewerAdapterElementsJsx,
-} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
+} from "../kul-imageviewer-declarations";
 
-export const prepImageviewer = (
-  adapter: KulImageviewerAdapter,
-): KulImageviewerAdapterElementsJsx["imageviewer"] => {
-  const { elements, handlers, state } = adapter;
-  const { imageviewer } = elements.refs;
-  const { compInstance, history, spinnerStatus } = state.get;
-  const { current, currentSnapshot, index } = history;
+export const prepDetails = (
+  getAdapter: () => KulImageviewerAdapter,
+): KulImageviewerAdapterElementsJsx["details"] => {
+  const { assignRef } = kulManagerSingleton;
+
+  const className = {
+    canvas: {
+      "details-grid__canvas": true,
+    },
+    clearHistory: {
+      "details-grid__clear-history": true,
+      "kul-danger": true,
+      "kul-full-width": true,
+    },
+    deleteShape: {
+      "details-grid__delete": true,
+      "kul-danger": true,
+      "kul-full-width": true,
+    },
+    redo: {
+      "details-grid__redo": true,
+      "kul-full-width": true,
+    },
+    save: {
+      "details-grid__commit-changes": true,
+      "kul-success": true,
+      "kul-full-width": true,
+    },
+    spinner: {
+      "details-grid__spinner": true,
+    },
+    tree: {
+      "details-grid__tree": true,
+    },
+    undo: {
+      "details-grid__undo": true,
+      "kul-full-width": true,
+    },
+  };
 
   return {
     // #region Canvas
     canvas: () => {
-      const className = {
-        "details-grid__canvas": true,
-      };
+      const { controller, elements, handlers } = getAdapter();
+      const { currentSnapshot } = controller.get.history;
+      const { details } = elements.refs;
+      const { canvas } = handlers.details;
 
       const snapshot = currentSnapshot();
       if (!snapshot) {
         return;
       }
 
-      const { canvas } = handlers.imageviewer;
-
       return (
         <kul-canvas
-          class={className}
+          class={className.canvas}
           data-cy={KulDataCyAttributes.SHAPE}
-          id={IDS.imageviewer.canvas}
+          id={IDS.details.canvas}
           kulImageProps={{ kulValue: snapshot.value }}
           onKul-canvas-event={canvas}
-          ref={(el) => {
-            if (el) {
-              imageviewer.canvas = el;
-            }
-          }}
+          ref={assignRef(details, "canvas")}
         ></kul-canvas>
       );
     },
@@ -48,32 +75,25 @@ export const prepImageviewer = (
 
     // #region Clear history
     clearHistory: () => {
-      const className = {
-        "details-grid__clear-history": true,
-        "kul-danger": true,
-        "kul-full-width": true,
-      };
-
-      const { button } = handlers.imageviewer;
+      const { controller, elements, handlers } = getAdapter();
+      const { current } = controller.get.history;
+      const { details } = elements.refs;
+      const { button } = handlers.details;
 
       const hasHistory = !!(current()?.length > 1);
       const isDisabled = !hasHistory;
 
       return (
         <kul-button
-          class={className}
+          class={className.clearHistory}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IDS.imageviewer.clearHistory}
+          id={IDS.details.clearHistory}
           kulDisabled={isDisabled}
           kulIcon="layers_clear"
           kulLabel="Clear history"
           kulStyling="flat"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              imageviewer.clearHistory = el;
-            }
-          }}
+          ref={assignRef(details, "clearHistory")}
         >
           <kul-spinner
             kulActive={true}
@@ -88,27 +108,19 @@ export const prepImageviewer = (
 
     // #region Delete shape
     deleteShape: () => {
-      const className = {
-        "details-grid__delete": true,
-        "kul-danger": true,
-        "kul-full-width": true,
-      };
-
-      const { button } = handlers.imageviewer;
+      const { elements, handlers } = getAdapter();
+      const { details } = elements.refs;
+      const { button } = handlers.details;
 
       return (
         <kul-button
-          class={className}
+          class={className.deleteShape}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IDS.imageviewer.deleteShape}
+          id={IDS.details.deleteShape}
           kulIcon="delete-empty"
           kulLabel="Delete image"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              imageviewer.deleteShape = el;
-            }
-          }}
+          ref={assignRef(details, "deleteShape")}
         >
           <kul-spinner
             kulActive={true}
@@ -123,12 +135,10 @@ export const prepImageviewer = (
 
     // #region Redo
     redo: () => {
-      const className = {
-        "details-grid__redo": true,
-        "kul-full-width": true,
-      };
-
-      const { button } = handlers.imageviewer;
+      const { controller, elements, handlers } = getAdapter();
+      const { current, index } = controller.get.history;
+      const { details } = elements.refs;
+      const { button } = handlers.details;
 
       const currentHistory = current();
       const hasHistory = !!currentHistory?.length;
@@ -138,17 +148,13 @@ export const prepImageviewer = (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IDS.imageviewer.redo}
+          id={IDS.details.redo}
           kulDisabled={isDisabled}
           kulIcon="redo"
           kulLabel="Redo"
           kulStyling="flat"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              imageviewer.redo = el;
-            }
-          }}
+          ref={assignRef(details, "redo")}
         ></kul-button>
       );
     },
@@ -156,13 +162,10 @@ export const prepImageviewer = (
 
     // #region Save
     save: () => {
-      const className = {
-        "details-grid__commit-changes": true,
-        "kul-success": true,
-        "kul-full-width": true,
-      };
-
-      const { button } = handlers.imageviewer;
+      const { controller, elements, handlers } = getAdapter();
+      const { current } = controller.get.history;
+      const { details } = elements.refs;
+      const { button } = handlers.details;
 
       const hasHistory = !!(current()?.length > 1);
       const isDisabled = !hasHistory;
@@ -171,16 +174,12 @@ export const prepImageviewer = (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IDS.imageviewer.save}
+          id={IDS.details.save}
           kulDisabled={isDisabled}
           kulIcon="save"
           kulLabel="Save snapshot"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              imageviewer.save = el;
-            }
-          }}
+          ref={assignRef(details, "save")}
         >
           <kul-spinner
             kulActive={true}
@@ -195,24 +194,20 @@ export const prepImageviewer = (
 
     // #region Spinner
     spinner: () => {
-      const className = {
-        "details-grid__spinner": true,
-      };
+      const { controller, elements } = getAdapter();
+      const { spinnerStatus } = controller.get;
+      const { details } = elements.refs;
 
       return (
         <kul-spinner
           class={className}
-          id={IDS.imageviewer.spinner}
+          id={IDS.details.spinner}
           kulActive={spinnerStatus()}
           kulDimensions="16px"
           kulFader={true}
           kulFaderTimeout={125}
           kulLayout={14}
-          ref={(el) => {
-            if (el) {
-              imageviewer.spinner = el;
-            }
-          }}
+          ref={assignRef(details, "save")}
         ></kul-spinner>
       );
     },
@@ -220,26 +215,21 @@ export const prepImageviewer = (
 
     // #region Tree
     tree: () => {
-      const className = {
-        "details-grid__tree": true,
-      };
-
-      const { tree } = handlers.imageviewer;
+      const { controller, elements, handlers } = getAdapter();
+      const { compInstance } = controller.get;
+      const { details } = elements.refs;
+      const { tree } = handlers.details;
 
       return (
         <kul-tree
           class={className}
           data-cy={KulDataCyAttributes.INPUT}
-          id={IDS.imageviewer.tree}
+          id={IDS.details.tree}
           kulAccordionLayout={true}
           kulData={compInstance.kulValue}
           kulSelectable={true}
           onKul-tree-event={tree}
-          ref={(el) => {
-            if (el) {
-              imageviewer.tree = el;
-            }
-          }}
+          ref={assignRef(details, "tree")}
         ></kul-tree>
       );
     },
@@ -247,12 +237,10 @@ export const prepImageviewer = (
 
     // #region Undo
     undo: () => {
-      const className = {
-        "details-grid__undo": true,
-        "kul-full-width": true,
-      };
-
-      const { button } = handlers.imageviewer;
+      const { controller, elements, handlers } = getAdapter();
+      const { current, index } = controller.get.history;
+      const { details } = elements.refs;
+      const { button } = handlers.details;
 
       const hasHistory = !!current()?.length;
       const isDisabled = !(hasHistory && index() > 0);
@@ -261,17 +249,13 @@ export const prepImageviewer = (
         <kul-button
           class={className}
           data-cy={KulDataCyAttributes.BUTTON}
-          id={IDS.imageviewer.undo}
+          id={IDS.details.undo}
           kulDisabled={isDisabled}
           kulIcon="undo"
           kulLabel="Undo"
           kulStyling="flat"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              imageviewer.undo = el;
-            }
-          }}
+          ref={assignRef(details, "undo")}
         ></kul-button>
       );
     },

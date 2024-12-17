@@ -10,15 +10,14 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import {
-  KulDrawerEvent,
-  KulDrawerEventPayload,
-} from "src/components/kul-drawer/kul-drawer-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import {
+  KulDrawerEvent,
+  KulDrawerEventPayload,
+} from "./kul-drawer-declarations";
 
 @Component({
   tag: "kul-drawer",
@@ -35,13 +34,7 @@ export class KulDrawer {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * True when the drawer is open.
    * @default false
@@ -156,20 +149,20 @@ export class KulDrawer {
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;

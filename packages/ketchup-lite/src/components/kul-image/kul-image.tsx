@@ -13,13 +13,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import { KulBadgePropsInterface } from "src/components/kul-badge/kul-badge-declarations";
-import {
-  KulImageEvent,
-  KulImageEventPayload,
-} from "src/components/kul-image/kul-image-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
 import { GenericObject } from "src/types/GenericTypes";
@@ -28,6 +22,8 @@ import {
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/variables/GenericVariables";
+import { KulBadgePropsInterface } from "../kul-badge/kul-badge-declarations";
+import { KulImageEvent, KulImageEventPayload } from "./kul-image-declarations";
 
 @Component({
   tag: "kul-image",
@@ -45,13 +41,7 @@ export class KulImage {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The selected element.
    * @default false
@@ -213,12 +203,11 @@ export class KulImage {
   #isResourceUrl(): boolean {
     const { kulValue } = this;
 
-    return !!(
-      kulValue &&
-      (kulValue.indexOf(".") > -1 ||
-        kulValue.indexOf("/") > -1 ||
-        kulValue.indexOf("\\") > -1)
-    );
+    if (!kulValue || typeof kulValue !== "string") return false;
+
+    const resourceUrlPattern = /^(https?:\/\/|\/|\.{1,2}\/|[a-zA-Z]:\\|\\\\).+/;
+
+    return resourceUrlPattern.test(kulValue);
   }
   //#endregion
 
@@ -229,21 +218,21 @@ export class KulImage {
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
 
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { debug, theme } = kulManagerSingleton;

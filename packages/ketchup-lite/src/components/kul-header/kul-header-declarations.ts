@@ -1,4 +1,4 @@
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Events
 export type KulHeaderEvent = "ready" | "unmount";

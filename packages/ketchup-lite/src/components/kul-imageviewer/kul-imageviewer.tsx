@@ -12,35 +12,6 @@ import {
   VNode,
 } from "@stencil/core";
 
-import { kulManagerSingleton } from "src";
-import {
-  createElements,
-  createHandlers,
-  createRefs,
-} from "src/components/kul-imageviewer/helpers/kul-imageviewer-hub";
-import {
-  clearHistory,
-  clearSelection,
-  newShape,
-  updateValue,
-} from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
-import {
-  KulImageviewerAdapter,
-  KulImageviewerAdapterElementsRefs,
-  KulImageviewerEvent,
-  KulImageviewerEventPayload,
-  KulImageviewerHistory,
-  KulImageviewerLoadCallback,
-} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
-import { KulMasonrySelectedShape } from "src/components/kul-masonry/kul-masonry-declarations";
-import {
-  KulDataCell,
-  KulDataDataset,
-} from "src/managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
-
 @Component({
   tag: "kul-imageviewer",
   styleUrl: "kul-imageviewer.scss",
@@ -56,13 +27,7 @@ export class KulImageviewer {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Currently selected image.
    */

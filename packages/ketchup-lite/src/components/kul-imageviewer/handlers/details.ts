@@ -1,4 +1,4 @@
-import { IDS } from "src/components/kul-imageviewer/helpers/kul-imageviewer-constants";
+import { IDS } from "../helpers/constants";
 import {
   clearHistory,
   deleteShape,
@@ -6,43 +6,44 @@ import {
   save,
   toggleButtonSpinner,
   undo,
-} from "src/components/kul-imageviewer/helpers/kul-imageviewer-utils";
+} from "../helpers/utils";
 import {
   KulImageviewerAdapter,
   KulImageviewerAdapterHandlers,
-} from "src/components/kul-imageviewer/kul-imageviewer-declarations";
+} from "../kul-imageviewer-declarations";
 
 export const imageviewerHandlers = (
-  adapter: KulImageviewerAdapter,
-): KulImageviewerAdapterHandlers["imageviewer"] => {
-  const { compInstance, currentShape } = adapter.state.get;
-
+  getAdapter: () => KulImageviewerAdapter,
+): KulImageviewerAdapterHandlers["details"] => {
   return {
     //#region Button handler
     button: async (e) => {
       const { comp, eventType, id } = e.detail;
+
+      const adapter = getAdapter();
+      const { compInstance, currentShape } = adapter.controller.get;
 
       compInstance.onKulEvent(e, "kul-event");
 
       switch (eventType) {
         case "click":
           switch (id) {
-            case IDS.imageviewer.clearHistory:
+            case IDS.details.clearHistory:
               const index = currentShape().shape.index;
               const cb = async () => clearHistory(adapter, index);
               toggleButtonSpinner(comp, cb);
               break;
-            case IDS.imageviewer.deleteShape:
+            case IDS.details.deleteShape:
               toggleButtonSpinner(comp, () => deleteShape(adapter));
               break;
-            case IDS.imageviewer.redo:
+            case IDS.details.redo:
               toggleButtonSpinner(comp, () => redo(adapter));
               break;
 
-            case IDS.imageviewer.save:
+            case IDS.details.save:
               toggleButtonSpinner(comp, () => save(adapter));
               break;
-            case IDS.imageviewer.undo:
+            case IDS.details.undo:
               toggleButtonSpinner(comp, () => undo(adapter));
               break;
           }
@@ -52,12 +53,18 @@ export const imageviewerHandlers = (
 
     //#region Canvas handler
     canvas: (e) => {
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
+
       compInstance.onKulEvent(e, "kul-event");
     },
     //#endregion
 
     //#region Tree handler
     tree: (e) => {
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
+
       compInstance.onKulEvent(e, "kul-event");
     },
     //#endregion
