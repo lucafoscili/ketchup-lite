@@ -7,8 +7,7 @@ import {
 
 //#region calcTokens
 export const calcTokens = async (adapter: KulChatAdapter) => {
-  const { get } = adapter.state;
-  const { compInstance, history } = get;
+  const { compInstance, history } = adapter.controller.get;
   const { kulContextWindow, kulSystem } = compInstance;
 
   if (!kulContextWindow) {
@@ -24,8 +23,7 @@ export const calcTokens = async (adapter: KulChatAdapter) => {
 
 //#region newRequest
 export const newRequest = (adapter: KulChatAdapter) => {
-  const { get } = adapter.state;
-  const { compInstance, history } = get;
+  const { compInstance, history } = adapter.controller.get;
   const { kulMaxTokens, kulSeed, kulSystem, kulTemperature } = compInstance;
 
   const messages: KulLLMRequest["messages"] = [];
@@ -55,8 +53,7 @@ export const newRequest = (adapter: KulChatAdapter) => {
 export const submitPrompt = async (adapter: KulChatAdapter) => {
   const { debug, llm } = kulManagerSingleton;
 
-  const { state } = adapter;
-  const { get, set } = state;
+  const { get, set } = adapter.controller;
   const { compInstance, history } = get;
   const { kulEndpointUrl } = compInstance;
 
@@ -97,7 +94,7 @@ export const deleteMessage = (
   adapter: KulChatAdapter,
   m: KulLLMChoiceMessage,
 ) => {
-  const { get, set } = adapter.state;
+  const { get, set } = adapter.controller;
 
   const h = get.history();
   const index = h.indexOf(m);
@@ -112,7 +109,7 @@ export const regenerateMessage = (
   adapter: KulChatAdapter,
   m: KulLLMChoiceMessage,
 ) => {
-  const { get, set } = adapter.state;
+  const { get, set } = adapter.controller;
 
   const h = get.history();
   const index = h.indexOf(m);

@@ -13,15 +13,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import { createDefaults } from "src/components/kul-compare/helpers/kul-compare-hub";
-import {
-  KulCompareEvent,
-  KulCompareEventPayload,
-  KulCompareView,
-} from "src/components/kul-compare/kul-compare-declarations";
 import {
   KulDataCell,
   KulDataDataset,
@@ -32,7 +24,14 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
-import { IDS } from "./helpers/kul-compare-constants";
+import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { IDS } from "./helpers/constants";
+import { createDefaults } from "./kul-compare-adapter";
+import {
+  KulCompareEvent,
+  KulCompareEventPayload,
+  KulCompareView,
+} from "./kul-compare-declarations";
 
 @Component({
   tag: "kul-compare",
@@ -49,13 +48,7 @@ export class KulCompare {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The shapes of the component.
    * @default {}
@@ -381,20 +374,20 @@ export class KulCompare {
     this.updateShapes();
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;

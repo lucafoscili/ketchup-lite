@@ -1,17 +1,15 @@
 import { h } from "@stencil/core";
-
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
+import { kulManagerSingleton } from "src";
+import { IDS } from "../helpers/constants";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
-} from "src/components/kul-chat/kul-chat-declarations";
+} from "../kul-chat-declarations";
 
 export const prepToolbar = (
-  adapter: KulChatAdapter,
+  getAdapter: () => KulChatAdapter,
 ): KulChatAdapterElementsJsx["toolbar"] => {
-  const { elements, handlers } = adapter;
-  const { refs } = elements;
-  const { toolbar } = refs;
+  const { assignRef } = kulManagerSingleton;
 
   const className = {
     chat__messages__toolbar__button: true,
@@ -21,6 +19,8 @@ export const prepToolbar = (
   return {
     //#region Copy content
     copyContent: (m) => {
+      const { elements, handlers } = getAdapter();
+      const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
 
       return (
@@ -29,11 +29,7 @@ export const prepToolbar = (
           id={IDS.toolbar.copyContent}
           kulIcon="content_copy"
           onKul-button-event={(e) => button(e, m)}
-          ref={(el) => {
-            if (el) {
-              toolbar.copyContent = el;
-            }
-          }}
+          ref={assignRef(toolbar, "copyContent")}
           title="Copy text to clipboard."
         ></kul-button>
       );
@@ -42,6 +38,8 @@ export const prepToolbar = (
 
     //#region Delete message
     deleteMessage: (m) => {
+      const { elements, handlers } = getAdapter();
+      const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
 
       return (
@@ -50,11 +48,7 @@ export const prepToolbar = (
           id={IDS.toolbar.deleteMessage}
           kulIcon="delete"
           onKul-button-event={(e) => button(e, m)}
-          ref={(el) => {
-            if (el) {
-              toolbar.deleteMessage = el;
-            }
-          }}
+          ref={assignRef(toolbar, "deleteMessage")}
           title="Delete this message from the chat history."
         ></kul-button>
       );
@@ -63,6 +57,8 @@ export const prepToolbar = (
 
     //#region Regenerate
     regenerate: (m) => {
+      const { elements, handlers } = getAdapter();
+      const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
 
       return (
@@ -71,11 +67,7 @@ export const prepToolbar = (
           id={IDS.toolbar.regenerate}
           kulIcon="refresh"
           onKul-button-event={(e) => button(e, m)}
-          ref={(el) => {
-            if (el) {
-              toolbar.regenerate = el;
-            }
-          }}
+          ref={assignRef(toolbar, "regenerate")}
           title="Regenerate the response to this request."
         ></kul-button>
       );

@@ -11,18 +11,17 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
+import {
+  KulDataDataset,
+  KulDataNode,
+} from "src/managers/kul-data/kul-data-declarations";
 import {
   KulChipEvent,
   KulChipEventArguments,
   KulChipEventPayload,
   KulChipStyling,
-} from "src/components/kul-chip/kul-chip-declarations";
-import {
-  KulDataDataset,
-  KulDataNode,
-} from "src/managers/kul-data/kul-data-declarations";
+} from "./kul-chip-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
@@ -42,13 +41,7 @@ export class KulChip {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Set of expanded nodes.
    */
@@ -74,7 +67,7 @@ export class KulChip {
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Custom style of the component.
    * @default ""
@@ -433,12 +426,12 @@ export class KulChip {
       });
     }
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
     const { debug, theme } = kulManagerSingleton;
@@ -452,7 +445,7 @@ export class KulChip {
       }
     }
 
-    debug.updateDebugInfo(this, "did-render");
+    debug.info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;

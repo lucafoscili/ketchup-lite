@@ -1,26 +1,22 @@
 import { h } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
+import { IDS } from "../helpers/constants";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
-} from "src/components/kul-chat/kul-chat-declarations";
+} from "../kul-chat-declarations";
 
 export const prepSettings = (
-  adapter: KulChatAdapter,
+  getAdapter: () => KulChatAdapter,
 ): KulChatAdapterElementsJsx["settings"] => {
-  const { stringify } = kulManagerSingleton.data.cell;
-
-  const { elements, handlers, state } = adapter;
-  const { refs } = elements;
-  const { get } = state;
-  const { settings } = refs;
-  const { compInstance } = get;
+  const { assignRef, data } = kulManagerSingleton;
+  const { stringify } = data.cell;
 
   return {
     //#region Back
     back: () => {
+      const { elements, handlers } = getAdapter();
+      const { settings } = elements.refs;
       const { button } = handlers.settings;
 
       return (
@@ -30,11 +26,7 @@ export const prepSettings = (
           kulIcon="arrow_back"
           kulLabel="Back"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              settings.back = el;
-            }
-          }}
+          ref={assignRef(settings, "back")}
         ></kul-button>
       );
     },
@@ -42,6 +34,9 @@ export const prepSettings = (
 
     //#region Endpoint
     endpoint: () => {
+      const { controller, elements, handlers } = getAdapter();
+      const { compInstance } = controller.get;
+      const { settings } = elements.refs;
       const { textfield } = handlers.settings;
 
       return (
@@ -51,11 +46,7 @@ export const prepSettings = (
           kulLabel="Endpoint URL"
           kulValue={compInstance.kulEndpointUrl}
           onKul-textfield-event={textfield}
-          ref={(el) => {
-            if (el) {
-              settings.endpoint = el;
-            }
-          }}
+          ref={assignRef(settings, "endpoint")}
         ></kul-textfield>
       );
     },
@@ -63,6 +54,9 @@ export const prepSettings = (
 
     //#region Max tokens
     maxTokens: () => {
+      const { controller, elements, handlers } = getAdapter();
+      const { compInstance } = controller.get;
+      const { settings } = elements.refs;
       const { textfield } = handlers.settings;
 
       return (
@@ -77,11 +71,7 @@ export const prepSettings = (
           kulLabel="Max tokens count"
           kulValue={stringify(compInstance.kulMaxTokens)}
           onKul-textfield-event={textfield}
-          ref={(el) => {
-            if (el) {
-              settings.maxTokens = el;
-            }
-          }}
+          ref={assignRef(settings, "maxTokens")}
         ></kul-textfield>
       );
     },
@@ -89,6 +79,9 @@ export const prepSettings = (
 
     //#region Polling
     polling: () => {
+      const { controller, elements, handlers } = getAdapter();
+      const { compInstance } = controller.get;
+      const { settings } = elements.refs;
       const { textfield } = handlers.settings;
 
       return (
@@ -103,11 +96,7 @@ export const prepSettings = (
           kulLabel="Polling interval"
           kulValue={stringify(compInstance.kulPollingInterval)}
           onKul-textfield-event={textfield}
-          ref={(el) => {
-            if (el) {
-              settings.polling = el;
-            }
-          }}
+          ref={assignRef(settings, "polling")}
         ></kul-textfield>
       );
     },
@@ -115,6 +104,9 @@ export const prepSettings = (
 
     //#region System
     system: () => {
+      const { controller, elements, handlers } = getAdapter();
+      const { compInstance } = controller.get;
+      const { settings } = elements.refs;
       const { textfield } = handlers.settings;
 
       return (
@@ -125,11 +117,7 @@ export const prepSettings = (
           kulStyling="textarea"
           kulValue={compInstance.kulSystem}
           onKul-textfield-event={textfield}
-          ref={(el) => {
-            if (el) {
-              settings.system = el;
-            }
-          }}
+          ref={assignRef(settings, "system")}
         ></kul-textfield>
       );
     },
@@ -137,6 +125,9 @@ export const prepSettings = (
 
     //#region Temperature
     temperature: () => {
+      const { controller, elements, handlers } = getAdapter();
+      const { compInstance } = controller.get;
+      const { settings } = elements.refs;
       const { textfield } = handlers.settings;
 
       return (
@@ -151,11 +142,7 @@ export const prepSettings = (
           kulLabel="Temperature"
           kulValue={stringify(compInstance.kulTemperature)}
           onKul-textfield-event={textfield}
-          ref={(el) => {
-            if (el) {
-              settings.temperature = el;
-            }
-          }}
+          ref={assignRef(settings, "temperature")}
         ></kul-textfield>
       );
     },

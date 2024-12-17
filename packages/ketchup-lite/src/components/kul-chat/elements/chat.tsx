@@ -1,31 +1,23 @@
 import { h } from "@stencil/core";
-
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
+import { kulManagerSingleton } from "src";
+import { IDS } from "../helpers/constants";
 import {
   KulChatAdapter,
   KulChatAdapterElementsJsx,
-} from "src/components/kul-chat/kul-chat-declarations";
+} from "../kul-chat-declarations";
 
 export const prepChat = (
-  adapter: KulChatAdapter,
+  getAdapter: () => KulChatAdapter,
 ): KulChatAdapterElementsJsx["chat"] => {
-  const { elements, handlers, state } = adapter;
-  const { refs } = elements;
-  const { get } = state;
-  const { chat } = refs;
-  const { compInstance } = get;
-
-  const progressbarClass = {
-    chat__request__input__progressbar: true,
-    ["kul-animated"]: true,
-    ["kul-striped"]: true,
-  };
+  const { assignRef } = kulManagerSingleton;
 
   return {
     //#region Clear
     clear: () => {
+      const { controller, elements, handlers } = getAdapter();
       const { button } = handlers.chat;
-      const { currentPrompt } = get;
+      const { chat } = elements.refs;
+      const { currentPrompt } = controller.get;
 
       return (
         <kul-button
@@ -34,11 +26,7 @@ export const prepChat = (
           kulLabel="Clear"
           kulStyling={"flat"}
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              chat.clear = el;
-            }
-          }}
+          ref={assignRef(chat, "clear")}
           title="Clear the textarea."
         ></kul-button>
       );
@@ -47,8 +35,16 @@ export const prepChat = (
 
     //#region Progressbar
     progressbar: () => {
-      const { currentTokens } = get;
+      const { controller, elements } = getAdapter();
+      const { chat } = elements.refs;
+      const { compInstance, currentTokens } = controller.get;
       const { kulContextWindow } = compInstance;
+
+      const progressbarClass = {
+        chat__request__input__progressbar: true,
+        ["kul-animated"]: true,
+        ["kul-striped"]: true,
+      };
 
       const value = currentTokens();
       const className = { ...progressbarClass, "kul-danger": value > 90 };
@@ -61,11 +57,7 @@ export const prepChat = (
           kulIcon="data_usage"
           kulLabel="Context window"
           kulValue={value}
-          ref={(el) => {
-            if (el) {
-              chat.progressbar = el;
-            }
-          }}
+          ref={assignRef(chat, "progressbar")}
           title={title}
         ></kul-progressbar>
       );
@@ -74,25 +66,25 @@ export const prepChat = (
 
     //#region Send
     send: () => {
+      const { controller, elements, handlers } = getAdapter();
+      const { currentPrompt } = controller.get;
+      const { chat } = elements.refs;
       const { button } = handlers.chat;
-      const { currentPrompt } = get;
+
+      const showSpinner = Boolean(currentPrompt());
 
       return (
         <kul-button
           id={IDS.chat.send}
           kulIcon="check"
           kulLabel="Send"
-          kulShowSpinner={Boolean(currentPrompt())}
+          kulShowSpinner={showSpinner}
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              chat.send = el;
-            }
-          }}
+          ref={assignRef(chat, "send")}
           title="Send your prompt (CTRL + Enter)."
         >
           <kul-spinner
-            kulActive={true}
+            kulActive={showSpinner}
             kulDimensions="0.6em"
             slot="spinner"
           ></kul-spinner>
@@ -103,6 +95,8 @@ export const prepChat = (
 
     //#region Settings
     settings: () => {
+      const { elements, handlers } = getAdapter();
+      const { chat } = elements.refs;
       const { button } = handlers.chat;
 
       return (
@@ -112,11 +106,7 @@ export const prepChat = (
           kulIcon="settings"
           kulStyling="flat"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              chat.settings = el;
-            }
-          }}
+          ref={assignRef(chat, "settings")}
         ></kul-button>
       );
     },
@@ -124,17 +114,17 @@ export const prepChat = (
 
     //#region Spinner
     spinner: () => {
-      const { currentPrompt } = get;
+      const { controller, elements } = getAdapter();
+      const { currentPrompt } = controller.get;
+      const { chat } = elements.refs;
+
+      const showSpinner = Boolean(currentPrompt());
 
       return (
         <kul-spinner
-          kulActive={Boolean(currentPrompt())}
+          kulActive={showSpinner}
           kulBarVariant={true}
-          ref={(el) => {
-            if (el) {
-              chat.spinner = el;
-            }
-          }}
+          ref={assignRef(chat, "spinner")}
         ></kul-spinner>
       );
     },
@@ -142,24 +132,27 @@ export const prepChat = (
 
     //#region Stt
     stt: () => {
+      //const { controller, elements, handlers } = getAdapter();
+      //const { isSttActive } = controller.get;
+      const { elements, handlers } = getAdapter();
+      const { chat } = elements.refs;
       const { button } = handlers.chat;
+
+      //const showSpinner = Boolean(currentPrompt());
 
       return (
         <kul-button
           id={IDS.chat.stt}
           class="chat__request__buttons__stt"
           kulIcon="keyboard_voice"
+          //  kulShowSpinner={showSpinner}
           kulStyling="icon"
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              chat.stt = el;
-            }
-          }}
+          ref={assignRef(chat, "stt")}
           title="Activate Speech To Text with your browser's API (if supported)."
         >
           <kul-spinner
-            kulActive={true}
+            //    kulActive={showSpinner}
             kulDimensions="0.6em"
             kulLayout={6}
             slot="spinner"
@@ -171,7 +164,9 @@ export const prepChat = (
 
     //#region Textarea
     textarea: () => {
-      const { currentPrompt } = get;
+      const { controller, elements } = getAdapter();
+      const { currentPrompt } = controller.get;
+      const { chat } = elements.refs;
 
       return (
         <kul-textfield
@@ -181,11 +176,7 @@ export const prepChat = (
           kulFullWidth={true}
           kulLabel="What's on your mind?"
           kulStyling="textarea"
-          ref={(el) => {
-            if (el) {
-              chat.textarea = el;
-            }
-          }}
+          ref={assignRef(chat, "textarea")}
         ></kul-textfield>
       );
     },

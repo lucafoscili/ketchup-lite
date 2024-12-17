@@ -68,12 +68,12 @@ export class KulCarousel {
    * Enable or disable autoplay for the carousel.
    * @default false
    */
-  @Prop() kulAutoPlay = false;
+  @Prop({ mutable: false }) kulAutoPlay = false;
   /**
    * Interval in milliseconds for autoplay.
    * @default 3000
    */
-  @Prop() kulInterval = 3000;
+  @Prop({ mutable: false }) kulInterval = 3000;
   /**
    * Sets the type of shapes to compare.
    * @default ""

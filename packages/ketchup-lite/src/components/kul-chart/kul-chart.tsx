@@ -70,52 +70,52 @@ export class KulChart {
    * Overrides theme's colors.
    * @default []
    */
-  @Prop() kulColors: string[] = [];
+  @Prop({ mutable: true }) kulColors: string[] = [];
   /**
    * The actual data of the chart.
    * @default null
    */
-  @Prop() kulData: KulDataDataset = null;
+  @Prop({ mutable: true }) kulData: KulDataDataset = null;
   /**
    * Sets the position of the legend. Supported values: bottom, left, right, top, hidden. Keep in mind that legend types are tied to chart types, some combinations might not work.
    * @default "bottom"
    */
-  @Prop() kulLegend: KulChartLegendPlacement = "bottom";
+  @Prop({ mutable: true }) kulLegend: KulChartLegendPlacement = "bottom";
   /**
    * The data series to be displayed. They must be of the same type.
    * @default []
    */
-  @Prop() kulSeries: string[] = [];
+  @Prop({ mutable: true }) kulSeries: string[] = [];
   /**
    * The width of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
    * @default "100%"
    */
-  @Prop() kulSizeX = "100%";
+  @Prop({ mutable: true }) kulSizeX = "100%";
   /**
    * The height of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).
    * @default "100%"
    */
-  @Prop() kulSizeY = "100%";
+  @Prop({ mutable: true }) kulSizeY = "100%";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop() kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * The type of the chart. Supported formats: Bar, Gaussian, Line, Pie, Map and Scatter.
    * @default ["line"]
    */
-  @Prop() kulTypes: KulChartType[] = ["line"];
+  @Prop({ mutable: true }) kulTypes: KulChartType[] = ["line"];
   /**
    * Customization options for the x Axis.
    * @default null
    */
-  @Prop() kulXAxis: KulChartXAxis = null;
+  @Prop({ mutable: true }) kulXAxis: KulChartXAxis = null;
   /**
    * Customization options for the y Axis.
    * @default null
    */
-  @Prop() kulYAxis: KulChartYAxis = null;
+  @Prop({ mutable: true }) kulYAxis: KulChartYAxis = null;
   //#endregion
 
   //#region Internal variables

@@ -1,28 +1,26 @@
 import { kulManagerSingleton } from "src";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
-import {
-  clearTextarea,
-  submitPrompt,
-} from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "../helpers/constants";
+import { clearTextarea, submitPrompt } from "../helpers/utils";
 import {
   KulChatAdapter,
   KulChatAdapterHandlers,
-} from "src/components/kul-chat/kul-chat-declarations";
+} from "../kul-chat-declarations";
 
 export const prepChatHandlers = (
-  adapter: KulChatAdapter,
+  getAdapter: () => KulChatAdapter,
 ): KulChatAdapterHandlers["chat"] => {
   const { llm } = kulManagerSingleton;
-
-  const { elements, state } = adapter;
-  const { refs } = elements;
-  const { set } = state;
 
   return {
     //#region Button
     button: async (e: CustomEvent<KulButtonEventPayload>) => {
       const { eventType, id } = e.detail;
+
+      const adapter = getAdapter();
+      const { controller, elements } = adapter;
+      const { refs } = elements;
+      const { set } = controller;
 
       const { stt, textarea } = refs.chat;
 

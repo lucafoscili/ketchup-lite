@@ -4,15 +4,20 @@ import {
   KulCarouselAdapter,
   KulCarouselAdapterElementsJsx,
 } from "../kul-carousel-declarations";
+import { kulManagerSingleton } from "src";
 
 //#endregion
 export const prepSideButtonsJsx = (
   getAdapter: () => KulCarouselAdapter,
 ): KulCarouselAdapterElementsJsx => {
+  const { assignRef } = kulManagerSingleton;
+
   return {
     //#region Back
     back: () => {
-      const { button } = getAdapter().handlers;
+      const { elements, handlers } = getAdapter();
+      const { refs } = elements;
+      const { button } = handlers;
 
       return (
         <kul-button
@@ -20,6 +25,7 @@ export const prepSideButtonsJsx = (
           id={IDS.back}
           kulIcon={ICONS.back}
           onKul-button-event={button}
+          ref={assignRef(refs, "back")}
           title="View previous slide."
         ></kul-button>
       );
@@ -28,7 +34,9 @@ export const prepSideButtonsJsx = (
 
     //#region Forward
     forward: () => {
-      const { button } = getAdapter().handlers;
+      const { elements, handlers } = getAdapter();
+      const { refs } = elements;
+      const { button } = handlers;
 
       return (
         <kul-button
@@ -36,6 +44,7 @@ export const prepSideButtonsJsx = (
           id={IDS.forward}
           kulIcon={ICONS.forward}
           onKul-button-event={button}
+          ref={assignRef(refs, "forward")}
           title="View next slide."
         ></kul-button>
       );

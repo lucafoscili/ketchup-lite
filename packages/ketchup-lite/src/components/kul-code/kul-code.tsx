@@ -12,16 +12,12 @@ import {
   State,
 } from "@stencil/core";
 import Prism from "prismjs";
-
 import { kulManagerSingleton } from "src";
-import { STATIC_LANGUAGES } from "src/components/kul-code/helpers/kul-code-languages";
-import {
-  KulCodeEvent,
-  KulCodeEventPayload,
-} from "src/components/kul-code/kul-code-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { STATIC_LANGUAGES } from "./helpers/languages";
+import { KulCodeEvent, KulCodeEventPayload } from "./kul-code-declarations";
 
 @Component({
   assetsDirs: ["assets/prism"],
@@ -39,13 +35,7 @@ export class KulCode {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Value.
    */
@@ -57,17 +47,17 @@ export class KulCode {
    * Automatically formats the value.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulFormat = true;
+  @Prop({ mutable: true }) kulFormat = true;
   /**
    * Sets the language of the snippet.
    * @default "javascript"
    */
-  @Prop({ mutable: true, reflect: true }) kulLanguage = "javascript";
+  @Prop({ mutable: true }) kulLanguage = "javascript";
   /**
    * Whether to preserve spaces or not. When missing it is set automatically.
    * @default undefined
    */
-  @Prop({ mutable: true, reflect: true }) kulPreserveSpaces: boolean;
+  @Prop({ mutable: true }) kulPreserveSpaces: boolean;
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
@@ -77,7 +67,7 @@ export class KulCode {
    * String containing the snippet of code to display.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: false }) kulValue = "";
+  @Prop({ mutable: true }) kulValue = "";
   //#endregion
 
   //#region Internal variables
@@ -143,7 +133,7 @@ export class KulCode {
 
   //#region Private methods
   #format(value: string) {
-    const { data } = kulManagerSingleton;
+    const { stringify } = kulManagerSingleton.data.cell;
 
     if (typeof value === "string" && /^[\{\}]\s*$/i.test(value)) {
       return value.trim();
@@ -151,7 +141,7 @@ export class KulCode {
       const parsed = JSON.parse(value);
       return JSON.stringify(parsed, null, 2);
     } else {
-      return data.cell.stringify(value);
+      return stringify(value);
     }
   }
   async #highlightCode(): Promise<void> {
@@ -240,27 +230,27 @@ export class KulCode {
     this.#updateValue();
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillUpdate() {
     this.value = this.#format(this.kulValue);
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     if (this.#el) {
       this.#highlightCode();
     }
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;

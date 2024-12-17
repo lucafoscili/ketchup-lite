@@ -1,20 +1,19 @@
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
+import { IDS } from "../helpers/constants";
 import {
   KulChatAdapter,
   KulChatAdapterHandlers,
-} from "src/components/kul-chat/kul-chat-declarations";
+} from "../kul-chat-declarations";
 
 export const prepSettingsHandlers = (
-  adapter: KulChatAdapter,
+  getAdapter: () => KulChatAdapter,
 ): KulChatAdapterHandlers["settings"] => {
-  const { state } = adapter;
-  const { get, set } = state;
-  const { compInstance } = get;
-
   return {
     //#region Button
     button: async (e) => {
       const { eventType, id } = e.detail;
+
+      const { get, set } = getAdapter().controller;
+      const { compInstance } = get;
 
       switch (eventType) {
         case "click":
@@ -31,6 +30,9 @@ export const prepSettingsHandlers = (
     //#region Textfield
     textfield: (e) => {
       const { eventType, id, value } = e.detail;
+
+      const { get } = getAdapter().controller;
+      const { compInstance } = get;
 
       switch (eventType) {
         case "change":

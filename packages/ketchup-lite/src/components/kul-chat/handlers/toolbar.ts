@@ -1,15 +1,12 @@
-import { IDS } from "src/components/kul-chat/helpers/kul-chat-constants";
-import {
-  deleteMessage,
-  regenerateMessage,
-} from "src/components/kul-chat/helpers/kul-chat-utils";
+import { IDS } from "../helpers/constants";
+import { deleteMessage, regenerateMessage } from "../helpers/utils";
 import {
   KulChatAdapter,
   KulChatAdapterHandlers,
-} from "src/components/kul-chat/kul-chat-declarations";
+} from "../kul-chat-declarations";
 
 export const prepToolbarHandlers = (
-  adapter: KulChatAdapter,
+  getAdapter: () => KulChatAdapter,
 ): KulChatAdapterHandlers["toolbar"] => {
   return {
     //#region Button
@@ -23,10 +20,10 @@ export const prepToolbarHandlers = (
               navigator.clipboard.writeText(m.content);
               break;
             case IDS.toolbar.deleteMessage:
-              deleteMessage(adapter, m);
+              deleteMessage(getAdapter(), m);
               break;
             case IDS.toolbar.regenerate:
-              regenerateMessage(adapter, m);
+              regenerateMessage(getAdapter(), m);
               break;
           }
       }

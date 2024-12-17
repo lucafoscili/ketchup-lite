@@ -1,31 +1,30 @@
 import { VNode } from "@stencil/core";
-
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import { KulChat } from "src/components/kul-chat/kul-chat";
-import { KulTextfieldEventPayload } from "src/components/kul-textfield/kul-textfield-declarations";
-import { KulTypewriterPropsInterface } from "src/components/kul-typewriter/kul-typewriter-declarations";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 import {
   KulComponentAdapter,
+  KulComponentAdapterControllerGetters,
+  KulComponentAdapterControllerSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
-  KulComponentAdapterStateGetters,
-  KulComponentAdapterStateSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
+import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
+import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
+import { KulChat } from "./kul-chat";
 
 //#region Adapter
 export interface KulChatAdapter extends KulComponentAdapter<KulChat> {
+  controller: {
+    get: KulChatAdapterControllerGetters;
+    set: KulChatAdapterControllerSetters;
+  };
   elements: {
     jsx: KulChatAdapterElementsJsx;
     refs: KulChatAdapterElementsRefs;
   };
   handlers: KulChatAdapterHandlers;
-  state: {
-    get: KulChatAdapterStateGetters;
-    set: KulChatAdapterStateSetters;
-  };
 }
 export interface KulChatAdapterElementsJsx extends KulComponentAdapterJsx {
   chat: {
@@ -90,8 +89,27 @@ export interface KulChatAdapterHandlers extends KulComponentAdapterHandlers {
     ) => void;
   };
 }
-export interface KulChatAdapterStateGetters
-  extends KulComponentAdapterStateGetters<KulChat> {
+export type KulChatAdapterInitializerGetters = Pick<
+  KulChatAdapterControllerGetters,
+  | "compInstance"
+  | "currentPrompt"
+  | "currentTokens"
+  | "history"
+  | "status"
+  | "toolbarMessage"
+  | "view"
+>;
+export type KulChatAdapterInitializerSetters = Pick<
+  KulChatAdapterControllerSetters,
+  | "currentPrompt"
+  | "currentTokens"
+  | "history"
+  | "status"
+  | "toolbarMessage"
+  | "view"
+>;
+export interface KulChatAdapterControllerGetters
+  extends KulComponentAdapterControllerGetters<KulChat> {
   compInstance: KulChat;
   currentPrompt: () => KulLLMChoiceMessage;
   currentTokens: () => number;
@@ -101,8 +119,8 @@ export interface KulChatAdapterStateGetters
   toolbarMessage: () => KulLLMChoiceMessage;
   view: () => KulChatView;
 }
-export interface KulChatAdapterStateSetters
-  extends KulComponentAdapterStateSetters {
+export interface KulChatAdapterControllerSetters
+  extends KulComponentAdapterControllerSetters {
   currentPrompt: (value: KulLLMChoiceMessage) => void;
   currentTokens: (value: number) => void;
   history: (cb: () => unknown) => void;

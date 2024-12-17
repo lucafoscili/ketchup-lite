@@ -14,31 +14,22 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
+import { calcTokens, submitPrompt } from "./helpers/utils";
+import { createAdapter } from "./kul-chat-adapter";
 import {
-  createElements,
-  createHandlers,
-  createRefs,
-} from "src/components/kul-chat/helpers/kul-chat-hub";
-import {
-  calcTokens,
-  submitPrompt,
-} from "src/components/kul-chat/helpers/kul-chat-utils";
-import {
-  KulChatAdapter,
   KulChatEvent,
   KulChatEventPayload,
   KulChatHistory,
   KulChatLayout,
   KulChatStatus,
   KulChatView,
-} from "src/components/kul-chat/kul-chat-declarations";
-import { KulTypewriterPropsInterface } from "src/components/kul-typewriter/kul-typewriter-declarations";
-import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
-import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+} from "./kul-chat-declarations";
 
 @Component({
   tag: "kul-chat",
@@ -55,13 +46,7 @@ export class KulChat {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * History of the messages.
    */
@@ -103,8 +88,7 @@ export class KulChat {
    * Sets the layout of the chat.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLayout: KulChatLayout =
-    "top-textarea";
+  @Prop({ mutable: true }) kulLayout: KulChatLayout = "top-textarea";
   /**
    * The maximum amount of tokens allowed in the LLM's answer.
    * @default ""
@@ -154,49 +138,30 @@ export class KulChat {
 
   //#region Internal variables
   #statusinterval: NodeJS.Timeout;
-  #adapter: KulChatAdapter = {
-    handlers: null,
-    state: {
-      get: {
-        compInstance: this,
-        currentPrompt: () => this.currentPrompt,
-        currentTokens: () => this.currentTokens,
-        history: () => this.history,
-        newPrompt: async () => {
-          const { textarea } = this.#adapter.elements.refs.chat;
-
-          await textarea.setBlur();
-          const message = await textarea.getValue();
-          if (message) {
-            const newMessage: KulLLMChoiceMessage = {
-              role: "user",
-              content: message,
-            };
-            return newMessage;
-          }
-        },
-        status: () => this.status,
-        toolbarMessage: () => this.toolbarMessage,
-        view: () => this.view,
-      },
-      set: {
-        currentPrompt: (value) => (this.currentPrompt = value),
-        currentTokens: (value) => (this.currentTokens = value),
-        history: async (cb) => {
-          cb();
-          this.currentTokens = await calcTokens(this.#adapter);
-          this.onKulEvent(new CustomEvent("update"), "update");
-        },
-        status: (status) => (this.status = status),
-        toolbarMessage: (element) => (this.toolbarMessage = element),
-        view: (view) => (this.view = view),
-      },
+  #adapter = createAdapter(
+    {
+      compInstance: this,
+      currentPrompt: () => this.currentPrompt,
+      currentTokens: () => this.currentTokens,
+      history: () => this.history,
+      status: () => this.status,
+      toolbarMessage: () => this.toolbarMessage,
+      view: () => this.view,
     },
-    elements: {
-      jsx: null,
-      refs: createRefs(),
+    {
+      currentPrompt: (value) => (this.currentPrompt = value),
+      currentTokens: (value) => (this.currentTokens = value),
+      history: async (cb) => {
+        cb();
+        this.currentTokens = await calcTokens(this.#adapter);
+        this.onKulEvent(new CustomEvent("update"), "update");
+      },
+      status: (status) => (this.status = status),
+      toolbarMessage: (element) => (this.toolbarMessage = element),
+      view: (view) => (this.view = view),
     },
-  };
+    () => this.#adapter,
+  );
   //#endregion
 
   //#region Events
@@ -294,7 +259,7 @@ export class KulChat {
    */
   @Method()
   async setHistory(history: string): Promise<void> {
-    const { set } = this.#adapter.state;
+    const { set } = this.#adapter.controller;
 
     try {
       set.history(() => (this.history = JSON.parse(history)));
@@ -440,7 +405,7 @@ export class KulChat {
     return elements;
   };
   #prepOffline: () => VNode[] = () => {
-    const { set } = this.#adapter.state;
+    const { set } = this.#adapter.controller;
 
     return (
       <Fragment>
@@ -503,10 +468,7 @@ export class KulChat {
 
     theme.register(this);
 
-    this.#adapter.handlers = createHandlers(this.#adapter);
-    this.#adapter.elements.jsx = createElements(this.#adapter);
-
-    const { set } = this.#adapter.state;
+    const { set } = this.#adapter.controller;
 
     if (this.kulValue) {
       try {
@@ -521,24 +483,24 @@ export class KulChat {
     }
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.#statusinterval = setInterval(() => {
       this.#checkLLMStatus();
     }, this.kulPollingInterval);
     this.onKulEvent(new CustomEvent("ready"), "ready");
     this.#checkLLMStatus();
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;
