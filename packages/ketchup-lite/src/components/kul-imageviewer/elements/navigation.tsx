@@ -4,12 +4,12 @@ import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { IDS } from "../helpers/constants";
 import {
   KulImageviewerAdapter,
-  KulImageviewerAdapterElementsJsx,
+  KulImageviewerAdapterJsx,
 } from "../kul-imageviewer-declarations";
 
-export const prepExplorer = (
+export const prepNavigation = (
   getAdapter: () => KulImageviewerAdapter,
-): KulImageviewerAdapterElementsJsx["navigation"] => {
+): KulImageviewerAdapterJsx["navigation"] => {
   const { assignRef } = kulManagerSingleton;
 
   const className = {

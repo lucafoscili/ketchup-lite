@@ -2,8 +2,8 @@ import { VNode } from "@stencil/core";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulComponentAdapter,
-  KulComponentAdapterControllerGetters,
-  KulComponentAdapterControllerSetters,
+  KulComponentAdapterGetters,
+  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
@@ -27,13 +27,12 @@ export interface KulImageviewerAdapter
     set: KulImageviewerAdapterControllerSetters;
   };
   elements: {
-    jsx: KulImageviewerAdapterElementsJsx;
-    refs: KulImageviewerAdapterElementsRefs;
+    jsx: KulImageviewerAdapterJsx;
+    refs: KulImageviewerAdapterRefs;
   };
   handlers: KulImageviewerAdapterHandlers;
 }
-export interface KulImageviewerAdapterElementsJsx
-  extends KulComponentAdapterJsx {
+export interface KulImageviewerAdapterJsx extends KulComponentAdapterJsx {
   details: {
     canvas: () => VNode;
     clearHistory: () => VNode;
@@ -50,8 +49,7 @@ export interface KulImageviewerAdapterElementsJsx
     textfield: () => VNode;
   };
 }
-export interface KulImageviewerAdapterElementsRefs
-  extends KulComponentAdapterRefs {
+export interface KulImageviewerAdapterRefs extends KulComponentAdapterRefs {
   details: {
     canvas: HTMLKulCanvasElement;
     clearHistory: HTMLKulButtonElement;
@@ -81,8 +79,16 @@ export interface KulImageviewerAdapterHandlers
     textfield: (e: CustomEvent<KulTextfieldEventPayload>) => void;
   };
 }
+export type KulImageviewerAdapterInitializerGetters = Pick<
+  KulImageviewerAdapterControllerGetters,
+  "compInstance" | "currentShape" | "history" | "spinnerStatus"
+>;
+export type KulImageviewerAdapterInitializerSetters = Pick<
+  KulImageviewerAdapterControllerSetters,
+  "currentShape" | "history"
+>;
 export interface KulImageviewerAdapterControllerGetters
-  extends KulComponentAdapterControllerGetters<KulImageviewer> {
+  extends KulComponentAdapterGetters<KulImageviewer> {
   compInstance: KulImageviewer;
   currentShape: () => { shape: KulMasonrySelectedShape; value: string };
   history: {
@@ -97,7 +103,7 @@ export interface KulImageviewerAdapterControllerGetters
   spinnerStatus: () => boolean;
 }
 export interface KulImageviewerAdapterControllerSetters
-  extends KulComponentAdapterControllerSetters {
+  extends KulComponentAdapterSetters {
   currentShape: (node: KulMasonrySelectedShape) => void;
   history: {
     index: (index: number) => void;

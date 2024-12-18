@@ -2,8 +2,8 @@ import { VNode } from "@stencil/core";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 import {
   KulComponentAdapter,
-  KulComponentAdapterControllerGetters,
-  KulComponentAdapterControllerSetters,
+  KulComponentAdapterGetters,
+  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
@@ -21,12 +21,12 @@ export interface KulChatAdapter extends KulComponentAdapter<KulChat> {
     set: KulChatAdapterControllerSetters;
   };
   elements: {
-    jsx: KulChatAdapterElementsJsx;
-    refs: KulChatAdapterElementsRefs;
+    jsx: KulChatAdapterJsx;
+    refs: KulChatAdapterRefs;
   };
   handlers: KulChatAdapterHandlers;
 }
-export interface KulChatAdapterElementsJsx extends KulComponentAdapterJsx {
+export interface KulChatAdapterJsx extends KulComponentAdapterJsx {
   chat: {
     clear: () => VNode;
     progressbar: () => VNode;
@@ -50,7 +50,7 @@ export interface KulChatAdapterElementsJsx extends KulComponentAdapterJsx {
     regenerate: (m: KulLLMChoiceMessage) => VNode;
   };
 }
-export interface KulChatAdapterElementsRefs extends KulComponentAdapterRefs {
+export interface KulChatAdapterRefs extends KulComponentAdapterRefs {
   chat: {
     clear: HTMLKulButtonElement;
     progressbar: HTMLKulProgressbarElement;
@@ -109,7 +109,7 @@ export type KulChatAdapterInitializerSetters = Pick<
   | "view"
 >;
 export interface KulChatAdapterControllerGetters
-  extends KulComponentAdapterControllerGetters<KulChat> {
+  extends KulComponentAdapterGetters<KulChat> {
   compInstance: KulChat;
   currentPrompt: () => KulLLMChoiceMessage;
   currentTokens: () => number;
@@ -120,7 +120,7 @@ export interface KulChatAdapterControllerGetters
   view: () => KulChatView;
 }
 export interface KulChatAdapterControllerSetters
-  extends KulComponentAdapterControllerSetters {
+  extends KulComponentAdapterSetters {
   currentPrompt: (value: KulLLMChoiceMessage) => void;
   currentTokens: (value: number) => void;
   history: (cb: () => unknown) => void;

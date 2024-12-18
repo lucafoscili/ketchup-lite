@@ -6,7 +6,7 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulComponentAdapter,
-  KulComponentAdapterControllerGetters,
+  KulComponentAdapterGetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
@@ -24,15 +24,15 @@ export interface KulCardAdapter extends KulComponentAdapter<KulCard> {
     get: KulCardAdapterControllerGetters;
   };
   elements: {
-    jsx: KulCardAdapterElementsJsx;
-    refs: KulCardAdapterElementsRefs;
+    jsx: KulCardAdapterJsx;
+    refs: KulCardAdapterRefs;
   };
   handlers: KulCardAdapterHandlers;
 }
-export interface KulCardAdapterElementsJsx extends KulComponentAdapterJsx {
+export interface KulCardAdapterJsx extends KulComponentAdapterJsx {
   layouts: { [K in KulCardLayout]: () => VNode };
 }
-export interface KulCardAdapterElementsRefs extends KulComponentAdapterRefs {
+export interface KulCardAdapterRefs extends KulComponentAdapterRefs {
   layouts: {
     debug: {
       button: HTMLKulButtonElement;
@@ -63,7 +63,7 @@ export type KulCardAdapterInitializerGetters = Pick<
   "compInstance" | "shapes"
 >;
 export interface KulCardAdapterControllerGetters
-  extends KulComponentAdapterControllerGetters<KulCard> {
+  extends KulComponentAdapterGetters<KulCard> {
   compInstance: KulCard;
   defaults: KulCardAdapterDefaults;
   shapes: () => KulDataShapesMap;

@@ -1,5 +1,5 @@
 import { KulButtonStyling } from "src/components/kul-button/kul-button-declarations";
-import { KulMasonryAdapterElementsRefs } from "../kul-masonry-declarations";
+import { KulMasonryAdapterRefs } from "../kul-masonry-declarations";
 
 //#region Icons
 export const ICONS = {
@@ -22,7 +22,7 @@ export const IDS = {
 //#endregion
 
 //#region Refs
-export const REFS = (): KulMasonryAdapterElementsRefs => {
+export const REFS = (): KulMasonryAdapterRefs => {
   return {
     addColumn: null,
     removeColumn: null,

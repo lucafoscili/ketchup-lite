@@ -1,22 +1,21 @@
 import { KulListEventPayload } from "src/components/kul-list/kul-list-declarations";
-import { downloadJson } from "src/components/kul-messenger/helpers/kul-messenger-utils";
+import { downloadJson } from "../helpers/utils";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterHandlers,
-} from "src/components/kul-messenger/kul-messenger-declarations";
+} from "../kul-messenger-declarations";
 
-export const prepLeftHandlers = (
-  adapter: KulMessengerAdapter,
-): KulMessengerAdapterHandlers["left"] => {
-  const { handlers, state } = adapter;
-  const { get, set } = state;
-
+export const prepCharacterHandlers = (
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterHandlers["character"] => {
   return {
     //#region Button
     button: async (e) => {
       const { eventType, originalEvent } = e.detail;
 
-      const { list } = handlers.left;
+      const { controller, handlers } = getAdapter();
+      const { get, set } = controller;
+      const { list } = handlers.character;
       const { inProgress } = get.messenger.status.save;
 
       switch (eventType) {
@@ -36,7 +35,8 @@ export const prepLeftHandlers = (
     list: async (e) => {
       const { eventType, node } = e.detail;
 
-      const { character, messenger } = get;
+      const { controller } = getAdapter();
+      const { character, messenger } = controller.get;
 
       let strJson = "";
       switch (eventType) {

@@ -1,24 +1,21 @@
 import { h } from "@stencil/core";
-
-import {
-  ICONS,
-  IDS,
-  STYLING,
-} from "src/components/kul-masonry/helpers/kul-masonry-constants";
+import { kulManagerSingleton } from "src";
+import { ICONS, IDS, STYLING } from "../helpers/constants";
 import {
   KulMasonryAdapter,
-  KulMasonryAdapterElementsJsx,
-} from "src/components/kul-masonry/kul-masonry-declarations";
+  KulMasonryAdapterJsx,
+} from "../kul-masonry-declarations";
 
-export const prepMasonry = (
-  adapter: KulMasonryAdapter,
-): KulMasonryAdapterElementsJsx => {
-  const { elements, handlers, state } = adapter;
-  const { refs } = elements;
-  const { isMasonry, isVertical } = state.get;
+export const prepControls = (
+  getAdapter: () => KulMasonryAdapter,
+): KulMasonryAdapterJsx => {
+  const { assignRef } = kulManagerSingleton;
 
   return {
+    //#region Add column
     addColumn: () => {
+      const { elements, handlers } = getAdapter();
+      const { refs } = elements;
       const { button } = handlers;
 
       return (
@@ -29,16 +26,17 @@ export const prepMasonry = (
           kulIcon={ICONS.addColumn}
           kulStyling={STYLING}
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              refs.addColumn = el;
-            }
-          }}
+          ref={assignRef(refs, "addColumn")}
           title="Click to add a column to the masonry."
         ></kul-button>
       );
     },
+    //#endregion
+
+    //#region Remove column
     removeColumn: () => {
+      const { elements, handlers } = getAdapter();
+      const { refs } = elements;
       const { button } = handlers;
 
       return (
@@ -49,16 +47,18 @@ export const prepMasonry = (
           kulIcon={ICONS.removeColumn}
           kulStyling={STYLING}
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              refs.removeColumn = el;
-            }
-          }}
+          ref={assignRef(refs, "removeColumns")}
           title="Click to remove a column from the masonry."
         ></kul-button>
       );
     },
+    //#endregion
+
+    //#region Change view
     changeView: () => {
+      const { controller, elements, handlers } = getAdapter();
+      const { refs } = elements;
+      const { isMasonry, isVertical } = controller.get;
       const { button } = handlers;
 
       return (
@@ -75,11 +75,7 @@ export const prepMasonry = (
           }
           kulStyling={STYLING}
           onKul-button-event={button}
-          ref={(el) => {
-            if (el) {
-              refs.changeView = el;
-            }
-          }}
+          ref={assignRef(refs, "changeView")}
           title={
             isMasonry()
               ? "Click to view the images arranged vertically."
@@ -90,5 +86,6 @@ export const prepMasonry = (
         ></kul-button>
       );
     },
+    //#endregion
   };
 };

@@ -11,12 +11,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import {
-  KulListEvent,
-  KulListEventPayload,
-} from "src/components/kul-list/kul-list-declarations";
 import {
   KulDataDataset,
   KulDataNode,
@@ -25,6 +20,7 @@ import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarat
 import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KulListEvent, KulListEventPayload } from "./kul-list-declarations";
 
 @Component({
   tag: "kul-list",
@@ -41,13 +37,7 @@ export class KulList {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The focused list item.
    * @default undefined
@@ -388,19 +378,19 @@ export class KulList {
       });
     }
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    debug.info.update(this, "did-load");
   }
 
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
 
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
 
   render() {

@@ -7,7 +7,7 @@ import {
   CHILD_ROOT_MAP,
   FILTER_DATASET,
   IMAGE_TYPE_IDS,
-} from "../helpers/kul-messenger-constants";
+} from "../helpers/constants";
 import {
   KulMessengerAdapter,
   KulMessengerBaseChildNode,

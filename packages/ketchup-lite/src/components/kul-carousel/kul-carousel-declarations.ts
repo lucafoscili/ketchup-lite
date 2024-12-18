@@ -5,8 +5,8 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulComponentAdapter,
-  KulComponentAdapterControllerGetters,
-  KulComponentAdapterControllerSetters,
+  KulComponentAdapterGetters,
+  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
@@ -22,17 +22,16 @@ export interface KulCarouselAdapter extends KulComponentAdapter<KulCarousel> {
     set: KulCarouselAdapterControllerSetters;
   };
   elements: {
-    jsx: KulCarouselAdapterElementsJsx;
-    refs: KulCarouselAdapterElementsRefs;
+    jsx: KulCarouselAdapterJsx;
+    refs: KulCarouselAdapterRefs;
   };
   handlers: KulCarouselAdapterHandlers;
 }
-export interface KulCarouselAdapterElementsJsx extends KulComponentAdapterJsx {
+export interface KulCarouselAdapterJsx extends KulComponentAdapterJsx {
   back: () => VNode;
   forward: () => VNode;
 }
-export interface KulCarouselAdapterElementsRefs
-  extends KulComponentAdapterRefs {
+export interface KulCarouselAdapterRefs extends KulComponentAdapterRefs {
   back: HTMLKulButtonElement;
   forward: HTMLKulButtonElement;
 }
@@ -49,7 +48,7 @@ export type KulCarouselAdapterInitializerSetters = Pick<
   "interval"
 >;
 export interface KulCarouselAdapterControllerGetters
-  extends KulComponentAdapterControllerGetters<KulCarousel> {
+  extends KulComponentAdapterGetters<KulCarousel> {
   compInstance: KulCarousel;
   index: {
     current: () => number;
@@ -58,7 +57,7 @@ export interface KulCarouselAdapterControllerGetters
   totalSlides: () => number;
 }
 export interface KulCarouselAdapterControllerSetters
-  extends KulComponentAdapterControllerSetters {
+  extends KulComponentAdapterSetters {
   autoplay: {
     start: () => void;
     stop: () => void;

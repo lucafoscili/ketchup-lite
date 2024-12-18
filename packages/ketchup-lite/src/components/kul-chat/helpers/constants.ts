@@ -1,4 +1,4 @@
-import { KulChatAdapterElementsRefs } from "src/components/kul-chat/kul-chat-declarations";
+import { KulChatAdapterRefs } from "src/components/kul-chat/kul-chat-declarations";
 
 //#region Ids
 export const IDS = {
@@ -27,7 +27,7 @@ export const IDS = {
 //#endregion
 
 //#region Refs
-export const REFS = (): KulChatAdapterElementsRefs => {
+export const REFS = (): KulChatAdapterRefs => {
   return {
     chat: {
       clear: null,

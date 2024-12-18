@@ -2,8 +2,8 @@ import { VNode } from "@stencil/core";
 import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
 import {
   KulComponentAdapter,
-  KulComponentAdapterControllerGetters,
-  KulComponentAdapterControllerSetters,
+  KulComponentAdapterGetters,
+  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
@@ -18,8 +18,8 @@ export interface KulCanvasAdapter extends KulComponentAdapter<KulCanvas> {
     set: KulCanvasAdapterControllerSetters;
   };
   elements: {
-    jsx: KulCanvasAdapterElementsJsx;
-    refs: KulCanvasAdapterElementsRefs;
+    jsx: KulCanvasAdapterJsx;
+    refs: KulCanvasAdapterRefs;
   };
   handlers: KulCanvasAdapterHandlers;
   toolkit: KulCanvasAdapterToolkit;
@@ -32,12 +32,12 @@ export type KulCanvasAdapterInitializerSetters = Pick<
   KulCanvasAdapterControllerSetters,
   "isPainting" | "points"
 >;
-export interface KulCanvasAdapterElementsJsx extends KulComponentAdapterJsx {
+export interface KulCanvasAdapterJsx extends KulComponentAdapterJsx {
   board: () => VNode;
   image: () => VNode;
   preview: () => VNode;
 }
-export interface KulCanvasAdapterElementsRefs extends KulComponentAdapterRefs {
+export interface KulCanvasAdapterRefs extends KulComponentAdapterRefs {
   board: HTMLCanvasElement;
   image: HTMLKulImageElement;
   preview: HTMLCanvasElement;
@@ -52,14 +52,14 @@ export interface KulCanvasAdapterHandlers extends KulComponentAdapterHandlers {
   };
 }
 export interface KulCanvasAdapterControllerGetters
-  extends KulComponentAdapterControllerGetters<KulCanvas> {
+  extends KulComponentAdapterGetters<KulCanvas> {
   compInstance: KulCanvas;
   isCursorPreview: () => boolean;
   isPainting: () => boolean;
   points: () => KulCanvasPoints;
 }
 export interface KulCanvasAdapterControllerSetters
-  extends KulComponentAdapterControllerSetters {
+  extends KulComponentAdapterSetters {
   isPainting: (value: boolean) => void;
   points: (value: KulCanvasPoints) => void;
 }

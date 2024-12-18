@@ -10,7 +10,7 @@ import {
   KulChatAdapter,
   KulChatAdapterControllerGetters,
   KulChatAdapterControllerSetters,
-  KulChatAdapterElementsJsx,
+  KulChatAdapterJsx,
   KulChatAdapterHandlers,
   KulChatAdapterInitializerGetters,
   KulChatAdapterInitializerSetters,
@@ -70,7 +70,7 @@ export const createSetters = (
 //#region Elements
 export const createElementsJsx = (
   getAdapter: () => KulChatAdapter,
-): KulChatAdapterElementsJsx => {
+): KulChatAdapterJsx => {
   return {
     chat: prepChat(getAdapter),
     settings: prepSettings(getAdapter),

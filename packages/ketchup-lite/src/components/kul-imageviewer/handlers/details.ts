@@ -12,7 +12,7 @@ import {
   KulImageviewerAdapterHandlers,
 } from "../kul-imageviewer-declarations";
 
-export const imageviewerHandlers = (
+export const prepDetailsHandlers = (
   getAdapter: () => KulImageviewerAdapter,
 ): KulImageviewerAdapterHandlers["details"] => {
   return {

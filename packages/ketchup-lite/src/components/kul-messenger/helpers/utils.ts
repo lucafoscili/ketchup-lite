@@ -1,8 +1,17 @@
-import { KulChatStatus } from "src/components/kul-chat/kul-chat-declarations";
-import { KulDataNode } from "src/managers/kul-data/kul-data-declarations";
-import { KulMessengerAdapter } from "../kul-messenger-declarations";
+import {
+  KulChatPropsInterface,
+  KulChatStatus,
+} from "src/components/kul-chat/kul-chat-declarations";
+import {
+  KulDataCell,
+  KulDataNode,
+} from "src/managers/kul-data/kul-data-declarations";
+import {
+  KulMessengerAdapter,
+  KulMessengerCharacterNode,
+} from "../kul-messenger-declarations";
 
-//#region getStatusIconOptions
+//#region statusIconOptions
 export const statusIconOptions = (status: KulChatStatus) => {
   const color =
     status === "ready"
@@ -23,6 +32,42 @@ export const statusIconOptions = (status: KulChatStatus) => {
 };
 //#endregion
 
+//#region assignChatProps
+export const extractPropsFromChatCell = (
+  chatCell: KulDataCell<"chat">,
+  target: KulChatPropsInterface,
+) => {
+  const { kulEndpointUrl, kulMaxTokens, kulPollingInterval, kulTemperature } =
+    chatCell;
+
+  target.kulEndpointUrl = kulEndpointUrl;
+  target.kulMaxTokens = kulMaxTokens;
+  target.kulPollingInterval = kulPollingInterval;
+  target.kulTemperature = kulTemperature;
+};
+//#endregion
+
+//#region extractChatProps
+export const assignPropsToChatCell = (
+  chatCell: KulDataCell<"chat">,
+  source: KulChatPropsInterface,
+) => {
+  const {
+    kulEndpointUrl,
+    kulMaxTokens,
+    kulPollingInterval,
+    kulSystem,
+    kulTemperature,
+  } = source;
+
+  chatCell.kulEndpointUrl = kulEndpointUrl;
+  chatCell.kulMaxTokens = kulMaxTokens;
+  chatCell.kulPollingInterval = kulPollingInterval;
+  chatCell.kulSystem = kulSystem;
+  chatCell.kulTemperature = kulTemperature;
+};
+//#endregion
+
 //#region downloadJson
 export const downloadJson = (strJson: string, node: KulDataNode) => {
   const url = window.URL.createObjectURL(
@@ -39,9 +84,29 @@ export const downloadJson = (strJson: string, node: KulDataNode) => {
 };
 //#endregion
 
+//#region hasCharacters
+export const hasCharacters = (adapter: KulMessengerAdapter) => {
+  const { kulData } = adapter.controller.get.compInstance;
+
+  const nodes = kulData?.nodes || [];
+  return !!nodes.length;
+};
+//#endregion
+
+//#region defaultToCurrentCharacter
+export const defaultToCurrentCharacter = (
+  adapter: KulMessengerAdapter,
+  character: KulMessengerCharacterNode,
+) => {
+  const { currentCharacter } = adapter.controller.get.compInstance;
+  return character ?? currentCharacter;
+};
+//#endregion
+
+//#region systemMessage
 export const systemMessage = (adapter: KulMessengerAdapter) => {
   const getDynamicPrompts = () => {
-    const { character, image, ui } = adapter.state.get;
+    const { character, image, ui } = adapter.controller.get;
     const { biography } = character;
     const { asCover } = image;
     //const { options: isEnabled } = adapter.get.messenger.ui();
@@ -95,3 +160,4 @@ ${timeframe}
 Begin your performance...
     `;
 };
+//#endregion

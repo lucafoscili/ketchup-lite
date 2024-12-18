@@ -1,7 +1,7 @@
 import { kulManagerSingleton } from "src";
 import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declarations";
 import {
-  KulCardAdapterElementsRefs,
+  KulCardAdapterRefs,
   KulCardLayout,
   KulCardShapesIds,
 } from "../kul-card-declarations";
@@ -91,7 +91,7 @@ export const DEFAULTS: () => {
 //#endregion
 
 //#region Refs
-export const REFS = (): KulCardAdapterElementsRefs => {
+export const REFS = (): KulCardAdapterRefs => {
   return {
     layouts: {
       debug: { button: null, code: null, toggle: null },

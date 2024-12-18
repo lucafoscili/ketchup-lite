@@ -4,21 +4,17 @@ import { prepDetailsHandlers } from "./handlers/details";
 import { prepNavigationHandlers } from "./handlers/navigation";
 import { REFS } from "./helpers/constants";
 import {
-  KulImageviewerAdapter,
-  KulImageviewerAdapterControllerGetters,
-  KulImageviewerAdapterControllerSetters,
-  KulImageviewerAdapterJsx,
-  KulImageviewerAdapterHandlers,
-  KulImageviewerAdapterInitializerGetters,
-  KulImageviewerAdapterInitializerSetters,
-} from "./kul-imageviewer-declarations";
+  KulMessengerAdapter,
+  KulMessengerAdapterJsx,
+  KulMessengerAdapterHandlers,
+} from "./kul-messenger-declarations";
 
 //#region Adapter
 export const createAdapter = (
-  getters: KulImageviewerAdapterInitializerGetters,
-  setters: KulImageviewerAdapterInitializerSetters,
-  getAdapter: () => KulImageviewerAdapter,
-): KulImageviewerAdapter => {
+  getters: KulMessengerAdapterInitializerGetters,
+  setters: KulMessengerAdapterInitializerSetters,
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapter => {
   return {
     controller: {
       get: createGetters(getters),
@@ -35,16 +31,16 @@ export const createAdapter = (
 
 //#region Controller
 export const createGetters = (
-  getters: KulImageviewerAdapterInitializerGetters,
-): KulImageviewerAdapterControllerGetters => {
+  getters: KulMessengerAdapterInitializerGetters,
+): KulMessengerAdapterControllerGetters => {
   return {
     ...getters,
   };
 };
 export const createSetters = (
-  setters: KulImageviewerAdapterInitializerSetters,
-  getAdapter: () => KulImageviewerAdapter,
-): KulImageviewerAdapterControllerSetters => {
+  setters: KulMessengerAdapterInitializerSetters,
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterControllerSetters => {
   return {
     ...setters,
     spinnerStatus: (active) =>
@@ -55,8 +51,8 @@ export const createSetters = (
 
 //#region Elements
 export const createJsx = (
-  getAdapter: () => KulImageviewerAdapter,
-): KulImageviewerAdapterJsx => {
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterJsx => {
   return {
     details: prepDetails(getAdapter),
     navigation: prepNavigation(getAdapter),
@@ -66,8 +62,8 @@ export const createJsx = (
 
 //#region Handlers
 export const createHandlers = (
-  getAdapter: () => KulImageviewerAdapter,
-): KulImageviewerAdapterHandlers => {
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterHandlers => {
   return {
     details: prepDetailsHandlers(getAdapter),
     navigation: prepNavigationHandlers(getAdapter),

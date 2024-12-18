@@ -1,18 +1,18 @@
 import { kulManagerSingleton } from "src";
 import { KulButton } from "src/components/kul-button/kul-button";
-import { KulImageviewerAdapter } from "src/components/kul-imageviewer/kul-imageviewer-declarations";
 import { KulMasonrySelectedShape } from "src/components/kul-masonry/kul-masonry-declarations";
 import {
   KulDataCell,
   KulDataShapes,
 } from "src/managers/kul-data/kul-data-declarations";
+import { KulImageviewerAdapter } from "../kul-imageviewer-declarations";
 
 //#region Clear history
 export const clearHistory = async (
   adapter: KulImageviewerAdapter,
   index: number = null,
 ) => {
-  const { history } = adapter.state.set;
+  const { history } = adapter.controller.set;
 
   if (index === null) {
     history.pop();
@@ -25,9 +25,9 @@ export const clearHistory = async (
 
 //#region Clear selection
 export const clearSelection = async (adapter: KulImageviewerAdapter) => {
-  const { elements, state } = adapter;
-  const { masonry } = elements.refs.explorer;
-  const { set } = state;
+  const { controller, elements } = adapter;
+  const { masonry } = elements.refs.navigation;
+  const { set } = controller;
 
   set.currentShape({});
   set.history.index(null);
@@ -39,7 +39,7 @@ export const clearSelection = async (adapter: KulImageviewerAdapter) => {
 export const deleteShape = async (adapter: KulImageviewerAdapter) => {
   const { findNodeByCell, pop } = kulManagerSingleton.data.node;
 
-  const { compInstance, currentShape } = adapter.state.get;
+  const { compInstance, currentShape } = adapter.controller.get;
   const { kulData } = compInstance;
 
   await clearHistory(adapter, currentShape().shape.index);
@@ -57,7 +57,7 @@ export const deleteShape = async (adapter: KulImageviewerAdapter) => {
 export const findImage = (adapter: KulImageviewerAdapter) => {
   const { getAll } = kulManagerSingleton.data.cell.shapes;
 
-  const { compInstance, currentShape } = adapter.state.get;
+  const { compInstance, currentShape } = adapter.controller.get;
   const { kulData } = compInstance;
 
   const s = currentShape();
@@ -71,9 +71,9 @@ export const findImage = (adapter: KulImageviewerAdapter) => {
 
 //#region Load
 export const load = async (adapter: KulImageviewerAdapter) => {
-  const { elements, state } = adapter;
-  const { textfield } = elements.refs.explorer;
-  const { compInstance } = state.get;
+  const { controller, elements } = adapter;
+  const { textfield } = elements.refs.navigation;
+  const { compInstance } = controller.get;
   const { kulLoadCallback } = compInstance;
 
   try {
@@ -87,8 +87,8 @@ export const load = async (adapter: KulImageviewerAdapter) => {
 
 //#region Redo
 export const redo = async (adapter: KulImageviewerAdapter) => {
-  const { state } = adapter;
-  const { get, set } = state;
+  const { controller } = adapter;
+  const { get, set } = controller;
   const { current, index } = get.history;
 
   const currentHistory = current();
@@ -101,7 +101,7 @@ export const redo = async (adapter: KulImageviewerAdapter) => {
 
 //#region Save
 export const save = async (adapter: KulImageviewerAdapter) => {
-  const { compInstance, currentShape, history } = adapter.state.get;
+  const { compInstance, currentShape, history } = adapter.controller.get;
   const { kulData } = compInstance;
 
   const s = currentShape();
@@ -148,8 +148,8 @@ export const toggleButtonSpinner = async (
 
 //#region Undo
 export const undo = async (adapter: KulImageviewerAdapter) => {
-  const { state } = adapter;
-  const { get, set } = state;
+  const { controller } = adapter;
+  const { get, set } = controller;
   const { history } = get;
   const { index } = history;
 

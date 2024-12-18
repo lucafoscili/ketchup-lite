@@ -1,2 +1,299 @@
-@import "./styles/kul-masonry-main.scss";
-@import "./styles/kul-masonry-classes.scss";
+:host {
+  /**
+       * @prop --kul-masonry-button-bottom: Sets the bottom placement of the change view button.
+       * Defaults to 16px.
+       */
+  --kul_masonry_button_bottom: var(--kul-masonry-button-bottom, 16px);
+  /**
+       * @prop --kul-masonry-button-right: Sets the right placement of the change view button.
+       * Defaults to 16px.
+       */
+  --kul_masonry_button_right: var(--kul-masonry-button-right, 16px);
+  /**
+       * @prop --kul-masonry-column-size: Sets the dimension of the masonry columns.
+       * Defaults to minmax(0px, 1fr).
+       */
+  --kul_masonry_column_size: var(--kul-masonry-column-size, minmax(0px, 1fr));
+  /**
+       * @prop --kul-masonry-grid-items-alignment: Sets the alignment of grid items.
+       * Defaults to start.
+       */
+  --kul_masonry_grid_items_alignment: var(
+    --kul-masonry-grid-items-alignment,
+    start
+  );
+  /**
+       * @prop --kul-masonry-grid-gap: Sets the gaps of the grid.
+       * Defaults to 8px.
+       */
+  --kul_masonry_grid_gap: var(--kul-masonry-grid-gap, 8px);
+  /**
+       * @prop --kul-masonry-padding: Sets the padding of the grid.
+       * Defaults to 12px.
+       */
+  --kul_masonry_padding: var(--kul-masonry-padding, 12px);
+  /**
+       * @prop --kul-masonry-selected-border: Sets the border color of selected items.
+       * Defaults to var(--kul-primary-color).
+       */
+  --kul_masonry_selected_border: var(
+    --kul-masonry-selected-border,
+    var(--kul-primary-color)
+  );
+  /* Additional CSS Variables */
+  /**
+       * @prop --kul-masonry-transition-duration: Sets the duration of transitions.
+       * Defaults to 0.3s.
+       */
+  --kul_masonry_transition_duration: var(
+    --kul-masonry-transition-duration,
+    0.3s
+  );
+  /**
+       * @prop --kul-masonry-transition-timing-function: Sets the timing function of transitions.
+       * Defaults to ease.
+       */
+  --kul_masonry_transition_timing_function: var(
+    --kul-masonry-transition-timing-function,
+    ease
+  );
+  /**
+       * @prop --kul-masonry-grid-gap-actions: Sets the gap for action grids.
+       * Defaults to 8px.
+       */
+  --kul_masonry_grid_gap_actions: var(--kul-masonry-grid-gap-actions, 8px);
+  /**
+       * @prop --kul-masonry-grid-gap-actions-sub: Sets the gap for sub-action grids.
+       * Defaults to 4px.
+       */
+  --kul_masonry_grid_gap_actions_sub: var(
+    --kul-masonry-grid-gap-actions-sub,
+    4px
+  );
+  /**
+       * @prop --kul-masonry-selected-border-radius: Sets the border radius of selected items.
+       * Defaults to 5px.
+       */
+  --kul_masonry_selected_border_radius: var(
+    --kul-masonry-selected-border-radius,
+    5px
+  );
+  /**
+       * @prop --kul-masonry-selected-outline-offset: Sets the outline offset of selected items.
+       * Defaults to 4px.
+       */
+  --kul_masonry_selected_outline_offset: var(
+    --kul-masonry-selected-outline-offset,
+    4px
+  );
+
+  /**
+       * @prop --kul-masonry-selected-outline-width: Sets the outline width of selected items.
+       * Defaults to 2px.
+       */
+  --kul_masonry_selected_outline_width: var(
+    --kul-masonry-selected-outline-width,
+    2px
+  );
+  /**
+       * @prop --kul-masonry-selected-transform-scale: Sets the scale transform of selected items.
+       * Defaults to 1.05.
+       */
+  --kul_masonry_selected_transform_scale: var(
+    --kul-masonry-selected-transform-scale,
+    1.05
+  );
+  /**
+       * @prop --kul-masonry-hover-brightness: Sets the brightness on hover.
+       * Defaults to 125%.
+       */
+  --kul_masonry_hover_brightness: var(--kul-masonry-hover-brightness, 125%);
+  /**
+       * @prop --kul-masonry-selected-after-border-width: Sets the border width of the ::after pseudo-element.
+       * Defaults to 4px.
+       */
+  --kul_masonry_selected_after_border_width: var(
+    --kul-masonry-selected-after-border-width,
+    4px
+  );
+  /**
+       * @prop --kul-masonry-selected-after-border-radius: Sets the border radius of the ::after pseudo-element.
+       * Defaults to 8px.
+       */
+  --kul_masonry_selected_after_border_radius: var(
+    --kul-masonry-selected-after-border-radius,
+    8px
+  );
+  /**
+       * @prop --kul-masonry-selected-after-offset: Sets the offset for the ::after pseudo-element.
+       * Defaults to -4px.
+       */
+  --kul_masonry_selected_after_offset: var(
+    --kul-masonry-selected-after-offset,
+    -4px
+  );
+  /**
+       * @prop --kul-masonry-selected-box-shadow-offset-y: Sets the Y-offset of the box-shadow.
+       * Defaults to 4px.
+       */
+  --kul_masonry_selected_box_shadow_offset_y: var(
+    --kul-masonry-selected-box-shadow-offset-y,
+    4px
+  );
+  /**
+       * @prop --kul-masonry-selected-box-shadow-blur: Sets the blur radius of the box-shadow.
+       * Defaults to 10px.
+       */
+  --kul_masonry_selected_box_shadow_blur: var(
+    --kul-masonry-selected-box-shadow-blur,
+    10px
+  );
+  /**
+       * @prop --kul-masonry-selected-z-index: Sets the z-index of selected items.
+       * Defaults to 1.
+       */
+  --kul_masonry_selected_z_index: var(--kul-masonry-selected-z-index, 1);
+  /**
+       * @prop --kul-masonry-actions-z-index: Sets the z-index of action elements.
+       * Defaults to 2.
+       */
+  --kul_masonry_actions_z_index: var(--kul-masonry-actions-z-index, 2);
+
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+
+:host([kul-selectable]) {
+  kul-image {
+    & {
+      cursor: pointer;
+      overflow: hidden;
+      transition: filter var(--kul_masonry_transition_duration)
+        var(--kul_masonry_transition_timing_function);
+    }
+
+    &:hover {
+      filter: brightness(var(--kul_masonry_hover_brightness));
+    }
+  }
+}
+
+#kul-component {
+  height: 100%;
+  width: 100%;
+}
+
+.masonry {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: var(--kul_masonry_grid_gap);
+  height: 100%;
+  padding: var(--kul_masonry_padding);
+  width: 100%;
+
+  &:not(:hover) {
+    .grid__actions {
+      display: none;
+    }
+  }
+}
+
+.grid {
+  & {
+    align-items: var(--kul_masonry_grid_items_alignment);
+    column-gap: var(--kul_masonry_grid_gap);
+    display: grid;
+  }
+
+  &--horizontal {
+    & {
+      grid-template-rows: 1fr;
+    }
+
+    .grid__column {
+      flex-direction: row;
+    }
+  }
+
+  &--masonry {
+    & {
+      grid-template-columns: repeat(
+        var(--kul_masonry_columns),
+        var(--kul_masonry_column_size)
+      );
+    }
+
+    .grid__column {
+      flex-direction: column;
+    }
+  }
+
+  &--vertical {
+    & {
+      grid-template-columns: 1fr;
+    }
+
+    .grid__column {
+      flex-direction: column;
+    }
+  }
+
+  &__column {
+    display: flex;
+    flex: 1;
+    gap: var(--kul_masonry_grid_gap);
+    width: 100%;
+  }
+
+  &__actions {
+    animation: fade-in-grid 125ms ease-in;
+    bottom: var(--kul_masonry_button_bottom);
+    display: grid;
+    grid-auto-flow: row;
+    grid-gap: var(--kul_masonry_grid_gap_actions);
+    justify-items: center;
+    position: absolute;
+    right: var(--kul_masonry_button_right);
+    z-index: var(--kul_masonry_actions_z_index);
+
+    &__sub {
+      display: grid;
+      grid-gap: var(--kul_masonry_grid_gap_actions_sub);
+    }
+  }
+}
+
+[data-selected="true"] {
+  border-radius: var(--kul_masonry_selected_border_radius);
+  box-shadow: 0 var(--kul_masonry_selected_box_shadow_offset_y)
+    var(--kul_masonry_selected_box_shadow_blur)
+    var(--kul_masonry_selected_border);
+  outline: var(--kul_masonry_selected_outline_width) solid
+    var(--kul_masonry_selected_border);
+  outline-offset: var(--kul_masonry_selected_outline_offset);
+  position: relative;
+  transform: scale(var(--kul_masonry_selected_transform_scale));
+  transition:
+    transform var(--kul_masonry_transition_duration)
+      var(--kul_masonry_transition_timing_function),
+    box-shadow var(--kul_masonry_transition_duration)
+      var(--kul_masonry_transition_timing_function),
+    outline-offset var(--kul_masonry_transition_duration)
+      var(--kul_masonry_transition_timing_function);
+  z-index: var(--kul_masonry_selected_z_index);
+
+  &:after {
+    border: var(--kul_masonry_selected_after_border_width) solid
+      var(--kul_masonry_selected_border);
+    border-radius: var(--kul_masonry_selected_after_border_radius);
+    bottom: var(--kul_masonry_selected_after_offset);
+    content: "";
+    left: var(--kul_masonry_selected_after_offset);
+    pointer-events: none;
+    position: absolute;
+    right: var(--kul_masonry_selected_after_offset);
+    top: var(--kul_masonry_selected_after_offset);
+  }
+}

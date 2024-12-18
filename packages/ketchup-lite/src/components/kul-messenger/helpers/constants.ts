@@ -1,5 +1,5 @@
 import {
-  KulMessengerAdapterElementsRefs,
+  KulMessengerAdapterRefs,
   KulMessengerChildTypes,
   KulMessengerImageRootIds,
   KulMessengerImageTypes,
@@ -37,23 +37,23 @@ const CLEAN_UI: KulMessengerUI = {
 };
 
 //#region Refs
-export const REFS = (): KulMessengerAdapterElementsRefs => {
+export const REFS = (): KulMessengerAdapterRefs => {
   return {
-    left: { avatar: null, biography: null, save: null, statusIcon: null },
-    messenger: {
+    character: { avatar: null, biography: null, save: null, statusIcon: null },
+    chat: {
       chat: null,
       leftExpander: null,
       rightExpander: null,
       tabbar: null,
     },
-    right: { back: null, customization: null },
+    options: { back: null, customization: null },
   };
 };
 //#endregion
 
 //#region Icons
 export const ICONS = {
-  messenger: {
+  chat: {
     leftExpander: "chevron_left",
     rightExpander: "chevron_right",
   },
@@ -62,11 +62,11 @@ export const ICONS = {
 
 //#region Ids
 export const IDS = {
-  messenger: {
+  chat: {
     leftExpander: "left-expander",
     rightExpander: "right-expaner",
   },
-  right: {
+  options: {
     back: "back-button",
     customization: "customization-button",
   },
@@ -164,7 +164,7 @@ export const NAV_DATASET: KulDataDataset = {
   nodes: [
     {
       description: "Previous character",
-      icon: ICONS.messenger.leftExpander,
+      icon: ICONS.chat.leftExpander,
       id: "previous",
       value: "",
     },
@@ -176,7 +176,7 @@ export const NAV_DATASET: KulDataDataset = {
     },
     {
       description: "Next character",
-      icon: ICONS.messenger.rightExpander,
+      icon: ICONS.chat.rightExpander,
       id: "next",
       value: "",
     },

@@ -2,12 +2,12 @@ import { h } from "@stencil/core";
 import { kulManagerSingleton } from "src";
 import {
   KulCanvasAdapter,
-  KulCanvasAdapterElementsJsx,
+  KulCanvasAdapterJsx,
 } from "../kul-canvas-declarations";
 
 export const prepCanvasJsx = (
   getAdapter: () => KulCanvasAdapter,
-): KulCanvasAdapterElementsJsx => {
+): KulCanvasAdapterJsx => {
   const { assignRef } = kulManagerSingleton;
 
   return {

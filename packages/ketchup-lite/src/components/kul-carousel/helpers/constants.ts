@@ -1,4 +1,4 @@
-import { KulCarouselAdapterElementsRefs } from "../kul-carousel-declarations";
+import { KulCarouselAdapterRefs } from "../kul-carousel-declarations";
 
 //#region Icons
 export const ICONS = {
@@ -15,7 +15,7 @@ export const IDS = {
 //#endregion
 
 //#region Refs
-export const REFS = (): KulCarouselAdapterElementsRefs => {
+export const REFS = (): KulCarouselAdapterRefs => {
   return { back: null, forward: null };
 };
 //#endregion

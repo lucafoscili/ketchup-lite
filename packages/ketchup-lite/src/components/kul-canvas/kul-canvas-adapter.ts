@@ -8,7 +8,7 @@ import {
   KulCanvasAdapter,
   KulCanvasAdapterControllerGetters,
   KulCanvasAdapterControllerSetters,
-  KulCanvasAdapterElementsJsx,
+  KulCanvasAdapterJsx,
   KulCanvasAdapterHandlers,
   KulCanvasAdapterInitializerGetters,
   KulCanvasAdapterInitializerSetters,
@@ -35,7 +35,7 @@ export const createSetters = (
 //#region Elements
 export const createJsx = (
   getAdapter: () => KulCanvasAdapter,
-): KulCanvasAdapterElementsJsx => {
+): KulCanvasAdapterJsx => {
   return prepCanvasJsx(getAdapter);
 };
 export const createRefs = REFS;

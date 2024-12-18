@@ -2,14 +2,14 @@ import { h } from "@stencil/core";
 import { ICONS, IDS } from "../helpers/constants";
 import {
   KulCarouselAdapter,
-  KulCarouselAdapterElementsJsx,
+  KulCarouselAdapterJsx,
 } from "../kul-carousel-declarations";
 import { kulManagerSingleton } from "src";
 
 //#endregion
 export const prepSideButtonsJsx = (
   getAdapter: () => KulCarouselAdapter,
-): KulCarouselAdapterElementsJsx => {
+): KulCarouselAdapterJsx => {
   const { assignRef } = kulManagerSingleton;
 
   return {

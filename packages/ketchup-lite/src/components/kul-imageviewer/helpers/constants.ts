@@ -1,27 +1,27 @@
-import { KulImageviewerAdapterElementsRefs } from "../kul-imageviewer-declarations";
+import { KulImageviewerAdapterRefs } from "../kul-imageviewer-declarations";
 
 //#region Ids
 export const IDS = {
   details: {
-    canvas: "imageviewer-canvas",
-    clearHistory: "imageviewer-clear-history",
-    deleteShape: "imageviewer-delete-shape",
-    redo: "imageviewer-redo",
-    save: "imageviewer-save",
-    spinner: "imageviewer-spinner",
-    tree: "imageviewer-tree",
-    undo: "imageviewer-undo",
+    canvas: "details-canvas",
+    clearHistory: "details-clear-history",
+    deleteShape: "details-delete-shape",
+    redo: "details-redo",
+    save: "details-save",
+    spinner: "details-spinner",
+    tree: "details-tree",
+    undo: "details-undo",
   },
   navigation: {
-    load: "explorer-load",
-    masonry: "explorer-masonry",
-    textfield: "explorer-textfield",
+    load: "navigation-load",
+    masonry: "navigation-masonry",
+    textfield: "navigation-textfield",
   },
 };
 //#endregion
 
 //#region Refs
-export const REFS = (): KulImageviewerAdapterElementsRefs => {
+export const REFS = (): KulImageviewerAdapterRefs => {
   return {
     details: {
       canvas: null,

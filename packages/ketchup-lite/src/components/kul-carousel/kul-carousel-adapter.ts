@@ -6,7 +6,7 @@ import {
   KulCarouselAdapter,
   KulCarouselAdapterControllerGetters,
   KulCarouselAdapterControllerSetters,
-  KulCarouselAdapterElementsJsx,
+  KulCarouselAdapterJsx,
   KulCarouselAdapterHandlers,
   KulCarouselAdapterInitializerGetters,
   KulCarouselAdapterInitializerSetters,
@@ -65,7 +65,7 @@ export const createSetters = (
 //#region Elements
 export const createJsx = (
   getAdapter: () => KulCarouselAdapter,
-): KulCarouselAdapterElementsJsx => {
+): KulCarouselAdapterJsx => {
   return prepSideButtonsJsx(getAdapter);
 };
 //#endregion

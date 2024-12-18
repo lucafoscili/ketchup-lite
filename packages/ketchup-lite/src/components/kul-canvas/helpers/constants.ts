@@ -1,6 +1,6 @@
-import { KulCanvasAdapterElementsRefs } from "src/components/kul-canvas/kul-canvas-declarations";
+import { KulCanvasAdapterRefs } from "src/components/kul-canvas/kul-canvas-declarations";
 
-export const REFS = (): KulCanvasAdapterElementsRefs => {
+export const REFS = (): KulCanvasAdapterRefs => {
   return {
     board: null,
     image: null,

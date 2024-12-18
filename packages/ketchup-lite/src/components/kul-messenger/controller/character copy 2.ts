@@ -1,52 +1,31 @@
-import { KulManager } from "../../../managers/kul-manager/kul-manager";
-import {
-  AVATAR_COVER,
-  LOCATION_COVER,
-  OUTFIT_COVER,
-  STYLE_COVER,
-  TIMEFRAME_COVER,
-} from "./kul-messenger-constants";
+import { kulManagerSingleton } from "src";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterGetters,
-  KulMessengerBaseChildNode,
-  KulMessengerBaseRootNode,
-  KulMessengerChildIds,
-  KulMessengerChildTypes,
-  KulMessengerImageTypes,
-  KulMessengerPrefix,
-  KulMessengerUnionChildIds,
+  KulMessengerCharacterNode,
 } from "../kul-messenger-declarations";
 
-export const getters: (
-  adapter: KulMessengerAdapter,
-  kulManager: KulManager,
-  hasCharacters: boolean,
-) => KulMessengerAdapterGetters = (adapter, kulManager, hasCharacters) => {
-  const messenger = adapter.components.messenger;
+export const  = (
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterGetters => {
   return {
     character: {
-      biography: (character = messenger.currentCharacter) => {
-        try {
-          const bio = character.children.find(
-            (n) => n.id === "biography",
-          ).value;
-          return bio
-            ? kulManager.data.cell.stringify(bio)
-            : "You know nothing about messenger character...";
-        } catch (error) {
-          return "You know nothing about messenger character...";
-        }
+      biography: (character?) => getBiography(getAdapter, character),
+      byId: (id) => {
+        const { kulData } = getAdapter().controller.get.compInstance;
+        return kulData.nodes.find((n) => n.id === id);
       },
-      byId: (id) => messenger.kulData.nodes.find((n) => n.id === id),
-      chat: (character = messenger.currentCharacter) =>
-        messenger.chat[character.id],
-      current: () => messenger.currentCharacter,
-      history: (character = messenger.currentCharacter) =>
-        messenger.history[character.id],
-      list: () => messenger.kulData.nodes || [],
-      name: (character = messenger.currentCharacter) =>
-        character.value || character.id || character.description || "?",
+      chat: (character?) => getChat(getAdapter, character),
+      current: () => {
+        const { currentCharacter } = getAdapter().controller.get.compInstance;
+        return currentCharacter;
+      },
+      history: (character?) => getHistory(getAdapter, character),
+      list: () => {
+        const { kulData } = getAdapter().controller.get.compInstance;
+        return kulData.nodes || [];
+      },
+      name: (character?) => getName(getAdapter, character),
       next: (character = messenger.currentCharacter) => {
         if (!hasCharacters) {
           return;
@@ -68,6 +47,7 @@ export const getters: (
         return nodes[prevIdx];
       },
     },
+    compInstance: null,
     image: {
       asCover: (type, character = messenger.currentCharacter) => {
         try {
@@ -178,4 +158,62 @@ export const getters: (
       ui: () => messenger.ui,
     },
   };
+};
+
+const defaultToCurrentCharacter = (
+  adapter: KulMessengerAdapter,
+  character: KulMessengerCharacterNode,
+) => {
+  const { currentCharacter } = adapter.controller.get.compInstance;
+  return character ?? currentCharacter;
+};
+
+const getBiography = (
+  getAdapter: () => KulMessengerAdapter,
+  character: KulMessengerCharacterNode,
+) => {
+  const { stringify } = kulManagerSingleton.data.cell;
+
+  const c = defaultToCurrentCharacter(getAdapter(), character);
+
+  try {
+    const bio = c.children.find((n) => n.id === "biography").value;
+    return bio ? stringify(bio) : "You know nothing about this character...";
+  } catch (error) {
+    return "You know nothing about this character...";
+  }
+};
+
+const getChat = (
+  getAdapter: () => KulMessengerAdapter,
+  character: KulMessengerCharacterNode,
+) => {
+  const adapter = getAdapter();
+  const { chat } = adapter.controller.get.compInstance;
+  const { id } = defaultToCurrentCharacter(adapter, character);
+
+  return chat[id];
+};
+
+const getHistory = (
+  getAdapter: () => KulMessengerAdapter,
+  character: KulMessengerCharacterNode,
+) => {
+  const adapter = getAdapter();
+  const { history } = adapter.controller.get.compInstance;
+  const { id } = defaultToCurrentCharacter(getAdapter(), character);
+
+  return history[id];
+};
+
+const getName = (
+  getAdapter: () => KulMessengerAdapter,
+  character: KulMessengerCharacterNode,
+) => {
+  const { description, id, value } = defaultToCurrentCharacter(
+    getAdapter(),
+    character,
+  );
+
+  return value || id || description || "?";
 };

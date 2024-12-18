@@ -1,14 +1,11 @@
 import { h } from "@stencil/core";
 import { kulManagerSingleton } from "src";
 import { IDS } from "../helpers/constants";
-import {
-  KulChatAdapter,
-  KulChatAdapterElementsJsx,
-} from "../kul-chat-declarations";
+import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 
 export const prepChat = (
   getAdapter: () => KulChatAdapter,
-): KulChatAdapterElementsJsx["chat"] => {
+): KulChatAdapterJsx["chat"] => {
   const { assignRef } = kulManagerSingleton;
 
   return {

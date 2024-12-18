@@ -13,16 +13,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-
 import { kulManagerSingleton } from "src";
-import { createRefs } from "src/components/kul-masonry/helpers/kul-masonry-hub";
-import {
-  KulMasonryAdapter,
-  KulMasonryEvent,
-  KulMasonryEventPayload,
-  KulMasonrySelectedShape,
-  KulMasonryView,
-} from "src/components/kul-masonry/kul-masonry-declarations";
 import {
   KulDataCell,
   KulDataDataset,
@@ -36,6 +27,13 @@ import {
   KulGenericEventPayload,
 } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { createAdapter } from "./kul-masonry-adapter";
+import {
+  KulMasonryEvent,
+  KulMasonryEventPayload,
+  KulMasonrySelectedShape,
+  KulMasonryView,
+} from "./kul-masonry-declarations";
 
 @Component({
   tag: "kul-masonry",
@@ -52,13 +50,7 @@ export class KulMasonry {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The selected element.
    * @default {}
@@ -93,7 +85,7 @@ export class KulMasonry {
    * Sets the type of shapes to compare.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulShape: KulDataShapes = "image";
+  @Prop({ mutable: true }) kulShape: KulDataShapes = "image";
   /**
    * Custom style of the component.
    * @default ""
@@ -107,21 +99,15 @@ export class KulMasonry {
   //#endregion
 
   //#region Internal variables
-  #adapter: KulMasonryAdapter = {
-    elements: {
-      jsx: null,
-      refs: createRefs(),
+  #adapter = createAdapter(
+    {
+      compInstance: this,
+      isMasonry: () => this.#isMasonry(),
+      isVertical: () => this.#isVertical(),
+      shapes: () => this.shapes,
     },
-    handlers: null,
-    state: {
-      get: {
-        compInstance: this,
-        isMasonry: () => this.#isMasonry(),
-        isVertical: () => this.#isVertical(),
-        shapes: () => this.shapes,
-      },
-    },
-  };
+    () => this.#adapter,
+  );
   //#endregion
 
   //#region Events
@@ -359,20 +345,20 @@ export class KulMasonry {
     this.updateShapes();
   }
   componentDidLoad() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { info } = kulManagerSingleton.debug;
 
-    debug.updateDebugInfo(this, "did-render");
+    info.update(this, "did-render");
   }
   render() {
     const { theme } = kulManagerSingleton;

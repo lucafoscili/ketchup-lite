@@ -1,14 +1,11 @@
 import { h } from "@stencil/core";
 import { kulManagerSingleton } from "src";
 import { IDS } from "../helpers/constants";
-import {
-  KulChatAdapter,
-  KulChatAdapterElementsJsx,
-} from "../kul-chat-declarations";
+import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 
 export const prepToolbar = (
   getAdapter: () => KulChatAdapter,
-): KulChatAdapterElementsJsx["toolbar"] => {
+): KulChatAdapterJsx["toolbar"] => {
   const { assignRef } = kulManagerSingleton;
 
   const className = {

@@ -425,24 +425,20 @@ export type KulComponentAdapterJsx = {
 export type KulComponentAdapterRefs = {
   [key: string]: HTMLElement | KulComponentAdapterRefs;
 };
-export type KulComponentAdapterControllerGetters<
-  C extends KulGenericComponent,
-> = {
+export type KulComponentAdapterGetters<C extends KulGenericComponent> = {
   [key: string]: unknown;
   compInstance: C;
 };
-export type KulComponentAdapterControllerSetters = {
-  [key: string]:
-    | ((value?: unknown) => void)
-    | KulComponentAdapterControllerSetters;
+export type KulComponentAdapterSetters = {
+  [key: string]: ((value?: unknown) => void) | KulComponentAdapterSetters;
 };
 export interface KulComponentAdapter<
   C extends KulGenericComponent,
   H = KulComponentAdapterHandlers,
   J = KulComponentAdapterJsx,
   R = KulComponentAdapterRefs,
-  CGet = KulComponentAdapterControllerGetters<C>,
-  CSet = KulComponentAdapterControllerSetters,
+  CGet = KulComponentAdapterGetters<C>,
+  CSet = KulComponentAdapterSetters,
 > {
   controller?: {
     get: CGet;

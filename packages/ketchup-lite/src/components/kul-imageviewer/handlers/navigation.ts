@@ -5,7 +5,7 @@ import {
   KulImageviewerAdapterHandlers,
 } from "../kul-imageviewer-declarations";
 
-export const prepExplorerHandlers = (
+export const prepNavigationHandlers = (
   getAdapter: () => KulImageviewerAdapter,
 ): KulImageviewerAdapterHandlers["navigation"] => {
   return {

@@ -8,7 +8,7 @@ import { DEFAULTS, REFS } from "./helpers/constants";
 import {
   KulCardAdapter,
   KulCardAdapterControllerGetters,
-  KulCardAdapterElementsJsx,
+  KulCardAdapterJsx,
   KulCardAdapterHandlers,
   KulCardAdapterInitializerGetters,
 } from "./kul-card-declarations";
@@ -45,7 +45,7 @@ export const createGetters = (
 //#region Elements
 export const createJsx = (
   getAdapter: () => KulCardAdapter,
-): KulCardAdapterElementsJsx["layouts"] => {
+): KulCardAdapterJsx["layouts"] => {
   return {
     debug: () => prepDebug(getAdapter),
     keywords: () => prepKeywords(getAdapter),

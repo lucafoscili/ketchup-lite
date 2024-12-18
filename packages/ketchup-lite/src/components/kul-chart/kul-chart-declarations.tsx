@@ -15,8 +15,8 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulComponentAdapter,
-  KulComponentAdapterControllerGetters,
-  KulComponentAdapterControllerSetters,
+  KulComponentAdapterGetters,
+  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulEventPayload,
 } from "src/types/GenericTypes";
@@ -79,7 +79,7 @@ export type KulChartAdapterInitializerSetters = Pick<
   "style"
 >;
 export interface KulChartAdapterControllerGetters
-  extends KulComponentAdapterControllerGetters<KulChart> {
+  extends KulComponentAdapterGetters<KulChart> {
   compInstance: KulChart;
   columnById: (id: string) => KulDataColumn;
   mappedType: (type: KulChartType) => SeriesOption["type"];
@@ -90,7 +90,7 @@ export interface KulChartAdapterControllerGetters
   xAxesData: () => { id: string; data: string[] }[];
 }
 export interface KulChartAdapterControllerSetters
-  extends KulComponentAdapterControllerSetters {
+  extends KulComponentAdapterSetters {
   style: {
     theme: () => void;
   };

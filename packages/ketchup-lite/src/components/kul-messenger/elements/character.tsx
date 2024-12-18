@@ -1,24 +1,25 @@
 import { h } from "@stencil/core";
-
-import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
-import { MENU_DATASET } from "src/components/kul-messenger/helpers/kul-messenger-constants";
-import { statusIconOptions } from "src/components/kul-messenger/helpers/kul-messenger-utils";
+import { kulManagerSingleton } from "src";
 import {
   KulMessengerAdapter,
-  KulMessengerAdapterElementsJsx,
-} from "src/components/kul-messenger/kul-messenger-declarations";
+  KulMessengerAdapterJsx,
+} from "../kul-messenger-declarations";
+import { statusIconOptions } from "../helpers/utils";
+import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
+import { MENU_DATASET } from "../helpers/constants";
 
-export const prepLeft = (
-  adapter: KulMessengerAdapter,
-): KulMessengerAdapterElementsJsx["left"] => {
-  const { elements, handlers, state } = adapter;
-  const { left } = elements.refs;
-  const { get } = state;
+export const prepCharacter = (
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterJsx["character"] => {
+  const { assignRef } = kulManagerSingleton;
 
   return {
     //#region Avatar
     avatar: () => {
-      const { asCover } = get.image;
+      const { controller, elements } = getAdapter();
+      const { character } = elements.refs;
+      const { image } = controller.get;
+      const { asCover } = image;
 
       const { title, value } = asCover("avatars");
 
@@ -26,11 +27,7 @@ export const prepLeft = (
         <img
           alt={title || ""}
           class="messenger__avatar__image"
-          ref={(el) => {
-            if (el) {
-              left.avatar = el;
-            }
-          }}
+          ref={assignRef(character, "avatar")}
           src={value}
           title={title || ""}
         />
@@ -40,7 +37,9 @@ export const prepLeft = (
 
     //#region Status icon
     statusIcon: () => {
-      const { connection } = get.messenger.status;
+      const { controller, elements } = getAdapter();
+      const { character } = elements.refs;
+      const { connection } = controller.get.messenger.status;
 
       const { color, title } = statusIconOptions(connection());
 
@@ -51,11 +50,7 @@ export const prepLeft = (
           kulSizeX="16px"
           kulSizeY="16px"
           kulValue="brightness-1"
-          ref={(el) => {
-            if (el) {
-              left.statusIcon = el;
-            }
-          }}
+          ref={assignRef(character, "statusIcon")}
           title={title}
         ></kul-image>
       );
@@ -64,13 +59,17 @@ export const prepLeft = (
 
     //#region Save
     save: () => {
-      const { button } = handlers.left;
-      const isSaving = get.messenger.status.save.inProgress();
+      const { controller, elements, handlers } = getAdapter();
+      const { character } = elements.refs;
+      const { inProgress } = controller.get.messenger.status.save;
+      const { button } = handlers.character;
+
+      const isSaving = inProgress();
 
       const props: KulButtonPropsInterface = {
         kulIcon: isSaving ? "" : "save",
         kulLabel: isSaving ? "Saving..." : "Save",
-        kulShowSpinner: isSaving ? true : false,
+        kulShowSpinner: isSaving,
       };
 
       return (
@@ -80,13 +79,11 @@ export const prepLeft = (
           kulData={MENU_DATASET}
           kulStyling="flat"
           onKul-button-event={button}
-          ref={(el) => {
-            left.save = el;
-          }}
+          ref={assignRef(character, "save")}
           title="Update the dataset with current settings."
         >
           <kul-spinner
-            kulActive={true}
+            kulActive={isSaving}
             kulDimensions="0.6em"
             kulLayout={4}
             slot="spinner"
@@ -98,15 +95,15 @@ export const prepLeft = (
 
     //#region Biography
     biography: () => {
-      const { biography } = get.character;
+      const { controller, elements } = getAdapter();
+      const { character } = elements.refs;
+      const { biography } = controller.get.character;
 
       return (
         <kul-code
           kulLanguage="markdown"
           kulValue={biography()}
-          ref={(el) => {
-            left.biography = el;
-          }}
+          ref={assignRef(character, "biography")}
         ></kul-code>
       );
     },
