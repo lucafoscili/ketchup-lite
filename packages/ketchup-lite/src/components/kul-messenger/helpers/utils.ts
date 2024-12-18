@@ -8,29 +8,13 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulMessengerAdapter,
+  KulMessengerBaseChildNode,
   KulMessengerCharacterNode,
+  KulMessengerChildIds,
+  KulMessengerImageRootIds,
+  KulMessengerImageTypes,
+  KulMessengerUnionChildIds,
 } from "../kul-messenger-declarations";
-
-//#region statusIconOptions
-export const statusIconOptions = (status: KulChatStatus) => {
-  const color =
-    status === "ready"
-      ? "var(--kul-success-color)"
-      : status === "offline"
-        ? "var(--kul-danger-color)"
-        : "var(--kul-warning-color)";
-  const title =
-    status === "ready"
-      ? "Ready to chat!"
-      : status === "offline"
-        ? "This character seems to be offline..."
-        : "Contacting this character...";
-  return {
-    color,
-    title,
-  };
-};
-//#endregion
 
 //#region assignChatProps
 export const extractPropsFromChatCell = (
@@ -44,6 +28,72 @@ export const extractPropsFromChatCell = (
   target.kulMaxTokens = kulMaxTokens;
   target.kulPollingInterval = kulPollingInterval;
   target.kulTemperature = kulTemperature;
+};
+//#endregion
+
+//#region createNode
+const createNode = async <
+  T extends KulMessengerImageRootIds<KulMessengerImageTypes>,
+>(
+  adapter: KulMessengerAdapter,
+  type: T,
+) => {
+  const {controller, elements} = adapter;
+  const {} = controller.get.;
+  const {} = elements.refs.customization;
+
+  const editing = adapter.components.editing;
+  const images = adapter.get.image.byType(type);
+
+  const id = (await editing[
+    type
+  ].idTextfield.getValue()) as KulMessengerChildIds<KulMessengerUnionChildIds>;
+
+  const value = await editing[type].titleTextarea.getValue();
+  const imageUrl = await editing[type].imageUrlTextarea.getValue();
+  const description = await editing[type].descriptionTextarea.getValue();
+
+  const existingImage = images?.find((i) => i.id === id);
+  if (existingImage) {
+    existingImage.description = description;
+    existingImage.cells.kulImage.value = imageUrl;
+    existingImage.value = value;
+  } else {
+    const node: KulMessengerBaseChildNode<KulMessengerUnionChildIds> = {
+      cells: { kulImage: { shape: "image", value: imageUrl } },
+      id,
+      description,
+      value,
+    };
+
+    images.push(node);
+  }
+};
+//#endregion
+
+//#region defaultToCurrentCharacter
+export const defaultToCurrentCharacter = (
+  adapter: KulMessengerAdapter,
+  character: KulMessengerCharacterNode,
+) => {
+  const { currentCharacter } = adapter.controller.get.compInstance;
+  return character ?? currentCharacter;
+};
+//#endregion
+
+//#region downloadJson
+export const downloadJson = (strJson: string, node: KulDataNode) => {
+  const url = window.URL.createObjectURL(
+    new Blob([strJson], {
+      type: "application/json",
+    }),
+  );
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", node.id + ".json");
+  document.body.appendChild(link);
+  link.click();
+  link.parentNode.removeChild(link);
 };
 //#endregion
 
@@ -68,22 +118,6 @@ export const assignPropsToChatCell = (
 };
 //#endregion
 
-//#region downloadJson
-export const downloadJson = (strJson: string, node: KulDataNode) => {
-  const url = window.URL.createObjectURL(
-    new Blob([strJson], {
-      type: "application/json",
-    }),
-  );
-  const link = document.createElement("a");
-  link.href = url;
-  link.setAttribute("download", node.id + ".json");
-  document.body.appendChild(link);
-  link.click();
-  link.parentNode.removeChild(link);
-};
-//#endregion
-
 //#region hasCharacters
 export const hasCharacters = (adapter: KulMessengerAdapter) => {
   const { kulData } = adapter.controller.get.compInstance;
@@ -93,13 +127,24 @@ export const hasCharacters = (adapter: KulMessengerAdapter) => {
 };
 //#endregion
 
-//#region defaultToCurrentCharacter
-export const defaultToCurrentCharacter = (
-  adapter: KulMessengerAdapter,
-  character: KulMessengerCharacterNode,
-) => {
-  const { currentCharacter } = adapter.controller.get.compInstance;
-  return character ?? currentCharacter;
+//#region statusIconOptions
+export const statusIconOptions = (status: KulChatStatus) => {
+  const color =
+    status === "ready"
+      ? "var(--kul-success-color)"
+      : status === "offline"
+        ? "var(--kul-danger-color)"
+        : "var(--kul-warning-color)";
+  const title =
+    status === "ready"
+      ? "Ready to chat!"
+      : status === "offline"
+        ? "This character seems to be offline..."
+        : "Contacting this character...";
+  return {
+    color,
+    title,
+  };
 };
 //#endregion
 

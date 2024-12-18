@@ -3,6 +3,7 @@ import { defaultToCurrentCharacter, hasCharacters } from "../helpers/utils";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterGetters,
+  KulMessengerAdapterSetters,
   KulMessengerCharacterNode,
 } from "../kul-messenger-declarations";
 
@@ -28,6 +29,65 @@ export const prepCharacterGetters = (
     name: (character?) => getName(getAdapter, character),
     next: (character?) => fetch(getAdapter, character, true),
     previous: (character?) => fetch(getAdapter, character),
+  };
+};
+
+export const prepCharacterSetters = (
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterSetters["character"] => {
+  return {
+    chat: (chat, character?) => {
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
+      const { id } = defaultToCurrentCharacter(getAdapter(), character);
+
+      compInstance.chat[id] = chat;
+    },
+    current: (character) => {
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
+
+      compInstance.currentCharacter = character;
+    },
+    history: (history, character?) => {
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
+      const { id } = defaultToCurrentCharacter(getAdapter(), character);
+
+      if (compInstance.history[id] !== history) {
+        compInstance.history[id] = history;
+
+        if (compInstance.kulAutosave) {
+          adapter.controller.set.messenger.data();
+        }
+      }
+    },
+    next: (character?) => {
+      const adapter = getAdapter();
+      if (!hasCharacters(adapter)) {
+        return;
+      }
+
+      const { set } = adapter.controller;
+
+      const c = defaultToCurrentCharacter(getAdapter(), character);
+      const { next } = adapter.controller.get.character;
+
+      set.character.current(next(c));
+    },
+    previous: (character?) => {
+      const adapter = getAdapter();
+      if (!hasCharacters(adapter)) {
+        return;
+      }
+
+      const { set } = adapter.controller;
+
+      const c = defaultToCurrentCharacter(getAdapter(), character);
+      const { previous } = adapter.controller.get.character;
+
+      set.character.current(previous(c));
+    },
   };
 };
 

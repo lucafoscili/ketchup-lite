@@ -13,6 +13,16 @@ import {
   VNode,
 } from "@stencil/core";
 import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
+import { IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from "./helpers/constants";
+import {
+  assignPropsToChatCell,
+  extractPropsFromChatCell,
+} from "./helpers/utils";
+import { createAdapter } from "./kul-messenger-adapter";
 import {
   KulMessengerBaseChildNode,
   KulMessengerCharacterNode,
@@ -28,18 +38,6 @@ import {
   KulMessengerImageTypes,
   KulMessengerUnionChildIds,
 } from "./kul-messenger-declarations";
-import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
-import { IMAGE_TYPE_IDS } from "./helpers/constants";
-import { createAdapter } from "./kul-messenger-adapter";
-import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
-import { KulDataCell } from "src/managers/kul-data/kul-data-declarations";
-import {
-  assignChatProps,
-  assignPropsToChatCell,
-  extractPropsFromChatCell,
-} from "./helpers/utils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 
 @Component({
   tag: "kul-messenger",
@@ -188,6 +186,13 @@ export class KulMessenger {
     this.history = {};
 
     this.#initialize();
+  }
+  /**
+   * Saves the current status of the messenger.
+   */
+  @Method()
+  async save(): Promise<void> {
+    this.#save();
   }
   /**
    * Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -356,7 +361,7 @@ export class KulMessenger {
       </div>
     );
   }
-  #prepOptions() {
+  #prepExtraContext() {
     const { back, customization } = this.#adapter.elements.jsx.options;
 
     const className = {
@@ -377,13 +382,67 @@ export class KulMessenger {
           </Fragment>
         ) : (
           <Fragment>
-            <div class="messenger__options__active">{prepOptions(adapter)}</div>
-
+            <div class="messenger__options__active">{this.#prepOptions()}</div>
             {customization()}
           </Fragment>
         )}
       </div>
     );
+  }
+  #prepOptions() {
+    return OPTION_TYPE_IDS.map((opt) => {
+      const { image, messenger } = this.#adapter.controller.get;
+      const { asCover } = image;
+
+      const cover = asCover(opt);
+      const isEnabled = messenger.ui().options[opt];
+      const option = opt.slice(0, -1);
+
+      return (
+        <div class="messenger__options__wrapper">
+          {cover.node ? (
+            <Fragment>
+              <img
+                class={`messenger__options__cover`}
+                alt={cover.title}
+                src={cover.value}
+              ></img>
+              <div
+                class={`messenger__options__blocker ${!isEnabled ? "messenger__options__blocker--active" : ""}`}
+                onClick={() => messenger.ui.options(!isEnabled, opt)}
+              >
+                <kul-image
+                  kulValue={`${isEnabled ? "touch_app" : "block"}`}
+                ></kul-image>
+                <div class={`messenger__options__blocker__label`}>
+                  {isEnabled ? "Click to disable" : "Click to enable"}
+                </div>
+              </div>
+            </Fragment>
+          ) : (
+            <kul-image
+              class={`messenger__options__placeholder`}
+              kulValue={cover.value}
+              title={`No ${option} selected.`}
+            ></kul-image>
+          )}
+          <div class="messenger__options__name">
+            <div class="messenger__options__label" title={`Active ${option}.`}>
+              {option}
+            </div>
+            {cover.title ? (
+              <kul-image
+                class={`messenger__options__info`}
+                kulSizeX="16px"
+                kulSizeY="16px"
+                kulValue="information-variant"
+                title={cover.title}
+              ></kul-image>
+            ) : undefined}
+          </div>
+        </div>
+      );
+    });
   }
   #prepRoster() {
     const { get, set } = this.#adapter.controller;

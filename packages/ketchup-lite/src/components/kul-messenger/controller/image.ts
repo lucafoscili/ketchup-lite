@@ -1,89 +1,45 @@
-import { kulManagerSingleton } from "src";
+import {
+  AVATAR_COVER,
+  LOCATION_COVER,
+  OUTFIT_COVER,
+  STYLE_COVER,
+  TIMEFRAME_COVER,
+} from "../helpers/constants";
+import { defaultToCurrentCharacter } from "../helpers/utils";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterGetters,
+  KulMessengerAdapterSetters,
+  KulMessengerBaseChildNode,
+  KulMessengerBaseRootNode,
   KulMessengerCharacterNode,
+  KulMessengerChildIds,
+  KulMessengerChildTypes,
+  KulMessengerImageTypes,
+  KulMessengerPrefix,
+  KulMessengerUnionChildIds,
 } from "../kul-messenger-declarations";
 
 export const prepImageGetters = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterGetters["image"] => {
   return {
-    asCover: (type, character = messenger.currentCharacter) => {
-      try {
-        const root = character.children.find((n) => n.id === type);
-        const index = messenger.covers[character.id][type];
-        const node = root.children[index];
-        return {
-          node: root.children[
-            index
-          ] as KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
-          title: adapter.get.image.title(
-            node as KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
-          ),
-          value: node.cells.kulImage.value,
-        };
-      } catch (error) {
-        switch (type) {
-          case "avatars":
-            return { value: AVATAR_COVER };
-          case "locations":
-            return { value: LOCATION_COVER };
-          case "outfits":
-            return { value: OUTFIT_COVER };
-          case "styles":
-            return { value: STYLE_COVER };
-          case "timeframes":
-            return { value: TIMEFRAME_COVER };
-        }
-      }
-    },
-    byType: (type, character = messenger.currentCharacter) => {
-      const node = character.children.find((child) => child.id === type);
+    asCover: (type, character?) => getAsCover(getAdapter, type, character),
+    byType: (type, character?) => getByType(getAdapter, type, character),
+    coverIndex: (type, character?) => {
+      const adapter = getAdapter();
+      const { covers } = adapter.controller.get.compInstance;
+      const { id } = defaultToCurrentCharacter(adapter, character);
 
-      if (node?.children) {
-        return node.children as KulMessengerBaseChildNode<KulMessengerUnionChildIds>[];
-      } else {
-        return [];
-      }
+      return covers[id][type];
     },
-    coverIndex: (type, character = messenger.currentCharacter) => {
-      return messenger.covers[character.id][type];
-    },
-    newId: (type) => {
-      const images = adapter.get.image.byType(type);
-      let index = 0;
-      let prefix: KulMessengerPrefix<KulMessengerChildTypes>;
-      let nodeId: KulMessengerChildIds<KulMessengerUnionChildIds>;
-      switch (type) {
-        case "avatars":
-          prefix = "avatar_";
-          break;
-        case "locations":
-          prefix = "location_";
-          break;
-        case "outfits":
-          prefix = "outfit_";
-          break;
-        case "styles":
-          prefix = "style_";
-          break;
-        case "timeframes":
-          prefix = "timeframe_";
-          break;
-        default:
-          throw new Error(`Unknown image type: ${type}`);
-      }
-      do {
-        nodeId =
-          `${prefix}${index.toString()}` as KulMessengerChildIds<KulMessengerUnionChildIds>;
-        index++;
-      } while (images.some((node) => node.id === nodeId));
+    newId: (type) => getNewId(getAdapter, type),
+    root: (type, character?) => {
+      const adapter = getAdapter();
+      const { children } = defaultToCurrentCharacter(adapter, character);
 
-      return nodeId;
-    },
-    root: (type, character = messenger.currentCharacter) => {
-      const node = character.children.find((n) => n.id === type);
+      const node = children.find((n) => n.id === type);
+
       return node as KulMessengerBaseRootNode<KulMessengerImageTypes>;
     },
     title: (node) => {
@@ -100,60 +56,116 @@ export const prepImageGetters = (
   };
 };
 
-const defaultToCurrentCharacter = (
-  adapter: KulMessengerAdapter,
-  character: KulMessengerCharacterNode,
-) => {
-  const { currentCharacter } = adapter.controller.get.compInstance;
-  return character ?? currentCharacter;
+export const prepImageSetters = (
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterSetters["image"] => {
+  return {
+    cover: (
+      type: KulMessengerImageTypes,
+      value: number,
+      character?: KulMessengerCharacterNode,
+    ) => {
+      const adapter = getAdapter();
+      const { compInstance } = adapter.controller.get;
+      const { id } = defaultToCurrentCharacter(getAdapter(), character);
+
+      compInstance.covers[id][type] = value;
+      compInstance.refresh();
+    },
+  };
 };
 
-const getBiography = (
+const getAsCover = (
   getAdapter: () => KulMessengerAdapter,
+  type: KulMessengerImageTypes,
   character: KulMessengerCharacterNode,
 ) => {
-  const { stringify } = kulManagerSingleton.data.cell;
-
-  const c = defaultToCurrentCharacter(getAdapter(), character);
+  const adapter = getAdapter();
+  const { compInstance, image } = adapter.controller.get;
+  const { children, id } = defaultToCurrentCharacter(adapter, character);
+  const { covers } = compInstance;
 
   try {
-    const bio = c.children.find((n) => n.id === "biography").value;
-    return bio ? stringify(bio) : "You know nothing about this character...";
+    const root = children.find((n) => n.id === type);
+    const index = covers[id][type];
+    const node = root.children[index];
+
+    return {
+      node: root.children[
+        index
+      ] as KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+      title: image.title(
+        node as KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+      ),
+      value: node.cells.kulImage.value,
+    };
   } catch (error) {
-    return "You know nothing about this character...";
+    switch (type) {
+      case "avatars":
+        return { value: AVATAR_COVER };
+      case "locations":
+        return { value: LOCATION_COVER };
+      case "outfits":
+        return { value: OUTFIT_COVER };
+      case "styles":
+        return { value: STYLE_COVER };
+      case "timeframes":
+        return { value: TIMEFRAME_COVER };
+    }
   }
 };
 
-const getChat = (
+const getByType = (
   getAdapter: () => KulMessengerAdapter,
+  type: KulMessengerImageTypes,
   character: KulMessengerCharacterNode,
 ) => {
-  const adapter = getAdapter();
-  const { chat } = adapter.controller.get.compInstance;
-  const { id } = defaultToCurrentCharacter(adapter, character);
+  const { children } = defaultToCurrentCharacter(getAdapter(), character);
 
-  return chat[id];
+  const node = children.find((child) => child.id === type);
+
+  if (node?.children) {
+    return node.children as KulMessengerBaseChildNode<KulMessengerUnionChildIds>[];
+  } else {
+    return [];
+  }
 };
 
-const getHistory = (
+const getNewId = (
   getAdapter: () => KulMessengerAdapter,
-  character: KulMessengerCharacterNode,
+  type: KulMessengerImageTypes,
 ) => {
-  const adapter = getAdapter();
-  const { history } = adapter.controller.get.compInstance;
-  const { id } = defaultToCurrentCharacter(getAdapter(), character);
+  const { byType } = getAdapter().controller.get.image;
 
-  return history[id];
-};
+  let index = 0;
+  let prefix: KulMessengerPrefix<KulMessengerChildTypes>;
+  let nodeId: KulMessengerChildIds<KulMessengerUnionChildIds>;
 
-const getName = (
-  getAdapter: () => KulMessengerAdapter,
-  character: KulMessengerCharacterNode,
-) => {
-  const { description, id, value } = defaultToCurrentCharacter(
-    getAdapter(),
-    character,
-  );
+  switch (type) {
+    case "avatars":
+      prefix = "avatar_";
+      break;
+    case "locations":
+      prefix = "location_";
+      break;
+    case "outfits":
+      prefix = "outfit_";
+      break;
+    case "styles":
+      prefix = "style_";
+      break;
+    case "timeframes":
+      prefix = "timeframe_";
+      break;
+    default:
+      throw new Error(`Unknown image type: ${type}`);
+  }
 
-  return value || id || description || "?";
+  do {
+    nodeId =
+      `${prefix}${index.toString()}` as KulMessengerChildIds<KulMessengerUnionChildIds>;
+    index++;
+  } while (byType(type).some((node) => node.id === nodeId));
+
+  return nodeId;
 };

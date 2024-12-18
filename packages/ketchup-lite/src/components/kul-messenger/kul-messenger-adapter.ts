@@ -1,12 +1,16 @@
-import { prepDetails } from "./elements/details";
-import { prepNavigation } from "./elements/navigation";
-import { prepDetailsHandlers } from "./handlers/details";
-import { prepNavigationHandlers } from "./handlers/navigation";
+import { prepCharacter } from "./elements/character";
+import { prepChat } from "./elements/chat";
+import { prepOptions } from "./elements/options";
+import { prepCharacterHandlers } from "./handlers/character";
+import { prepChatHandlers } from "./handlers/chat";
+import { prepOptionsHandlers } from "./handlers/options";
 import { REFS } from "./helpers/constants";
 import {
   KulMessengerAdapter,
-  KulMessengerAdapterJsx,
+  KulMessengerAdapterGetters,
   KulMessengerAdapterHandlers,
+  KulMessengerAdapterJsx,
+  KulMessengerAdapterSetters,
 } from "./kul-messenger-declarations";
 
 //#region Adapter
@@ -32,7 +36,7 @@ export const createAdapter = (
 //#region Controller
 export const createGetters = (
   getters: KulMessengerAdapterInitializerGetters,
-): KulMessengerAdapterControllerGetters => {
+): KulMessengerAdapterGetters => {
   return {
     ...getters,
   };
@@ -40,7 +44,7 @@ export const createGetters = (
 export const createSetters = (
   setters: KulMessengerAdapterInitializerSetters,
   getAdapter: () => KulMessengerAdapter,
-): KulMessengerAdapterControllerSetters => {
+): KulMessengerAdapterSetters => {
   return {
     ...setters,
     spinnerStatus: (active) =>
@@ -54,8 +58,9 @@ export const createJsx = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterJsx => {
   return {
-    details: prepDetails(getAdapter),
-    navigation: prepNavigation(getAdapter),
+    character: prepCharacter(getAdapter),
+    chat: prepChat(getAdapter),
+    options: prepOptions(getAdapter),
   };
 };
 //#endregion
@@ -65,8 +70,9 @@ export const createHandlers = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterHandlers => {
   return {
-    details: prepDetailsHandlers(getAdapter),
-    navigation: prepNavigationHandlers(getAdapter),
+    character: prepCharacterHandlers(getAdapter),
+    chat: prepChatHandlers(getAdapter),
+    options: prepOptionsHandlers(getAdapter),
   };
 };
 //#endregion

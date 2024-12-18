@@ -48,6 +48,7 @@ export interface KulMessengerAdapterJsx extends KulComponentAdapterJsx {
     rightExpander: () => VNode;
     tabbar: () => VNode;
   };
+  customization: {};
   options: {
     back: () => VNode;
     customization: () => VNode;
@@ -70,6 +71,7 @@ export interface KulMessengerAdapterRefs extends KulComponentAdapterRefs {
     rightExpander: HTMLKulButtonELement;
     tabbar: HTMLKulTabbarELement;
   };
+  customization: {};
   options: {
     back: HTMLKulButtonELement;
     customization: HTMLKulButtonELement;
@@ -86,6 +88,7 @@ export interface KulMessengerAdapterHandlers
     chat: (e: CustomEvent<KulChatEventPayload>) => Promise<void>;
     tabbar: (e: CustomEvent<KulTabbarEventPayload>) => Promise<void>;
   };
+  customization: {};
   options: {
     button: (e: CustomEvent<KulButtonEventPayload>) => Promise<void>;
   };
