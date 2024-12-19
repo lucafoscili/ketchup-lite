@@ -12,20 +12,17 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 import {
   KulArticleDataset,
   KulArticleEvent,
   KulArticleEventPayload,
   KulArticleNode,
-  KulArticleProps,
 } from "./kul-article-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { KulLanguageGeneric } from "../../managers/kul-language/kul-language-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   assetsDirs: ["assets/fonts"],
@@ -39,25 +36,14 @@ export class KulArticle {
    */
   @Element() rootElement: HTMLKulArticleElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The actual data of the article.
    * @default null
@@ -67,21 +53,10 @@ export class KulArticle {
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-article-event",
     composed: true,
@@ -89,7 +64,6 @@ export class KulArticle {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulArticleEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulArticleEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -98,11 +72,9 @@ export class KulArticle {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -112,13 +84,14 @@ export class KulArticle {
     return this.debugInfo;
   }
   /**
-   * Retrieves the properties of the component, with optional descriptions.
-   * @param {boolean} descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
-   * @returns {Promise<GenericObject>} A promise that resolves to an object where each key is a property name, optionally with its description.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulArticleProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -138,11 +111,9 @@ export class KulArticle {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #recursive(node: KulArticleNode, depth: number) {
     switch (depth) {
       case 0:
@@ -157,7 +128,6 @@ export class KulArticle {
           : this.#contentTemplate(node, depth);
     }
   }
-
   #articleTemplate(node: KulArticleNode, depth: number): VNode {
     return (
       <Fragment>
@@ -174,7 +144,6 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #sectionTemplate(node: KulArticleNode, depth: number): VNode {
     return (
       <Fragment>
@@ -191,7 +160,6 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #wrapperTemplate(node: KulArticleNode, depth: number): VNode {
     const ComponentTag = node.children?.some((child) => child.tagName === "li")
       ? "ul"
@@ -213,7 +181,6 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #paragraphTemplate(node: KulArticleNode, depth: number): VNode {
     return (
       <Fragment>
@@ -230,15 +197,15 @@ export class KulArticle {
       </Fragment>
     );
   }
-
   #contentTemplate(node: KulArticleNode, depth: number): VNode {
-    const decorator = kulManagerInstance().data.cell.shapes.decorate;
+    const { data } = kulManagerSingleton;
+    const { decorate } = data.cell.shapes;
 
     const key = node?.cells && Object.keys(node.cells)[0];
     const cell = node?.cells?.[key];
 
     if (cell) {
-      const shape = decorator(cell.shape, [cell], async (e) =>
+      const shape = decorate(cell.shape, [cell], async (e) =>
         this.onKulEvent(e, "kul-event"),
       );
       return shape.element[0];
@@ -255,7 +222,6 @@ export class KulArticle {
       );
     }
   }
-
   #prepArticle(): VNode[] {
     const elements: VNode[] = [];
     const nodes = this.kulData.nodes;
@@ -265,45 +231,44 @@ export class KulArticle {
     }
     return <Fragment>{elements}</Fragment>;
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
+    const { language, theme } = kulManagerSingleton;
+    const { kulData, kulStyle } = this;
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          {this.kulData?.nodes?.length ? (
+          {kulData?.nodes?.length ? (
             this.#prepArticle()
           ) : (
             <div class="empty-data">
               <div class="empty-data__text">
-                {this.#kulManager.language.translate(
-                  KulLanguageGeneric.EMPTY_DATA,
-                )}
+                {language.translate(KulLanguageGeneric.EMPTY_DATA)}
               </div>
             </div>
           )}
@@ -311,8 +276,10 @@ export class KulArticle {
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

@@ -1,4 +1,5 @@
 import { h, VNode } from "@stencil/core";
+import { kulManagerSingleton } from "src";
 import {
   GenericObject,
   KulComponent,
@@ -25,6 +26,8 @@ const decorateSpreader = (
     htmlProps?: Record<string, any>;
   },
 ) => {
+  const { sanitizeProps } = kulManagerSingleton;
+
   const clean = () => {
     if (toSpread["value"] && !toSpread["kulValue"]) {
       toSpread["kulValue"] = toSpread["value"];
@@ -56,6 +59,7 @@ const decorateSpreader = (
   }
 
   clean();
+  sanitizeProps(toSpread);
 };
 
 export const cellDecorateShapes = <

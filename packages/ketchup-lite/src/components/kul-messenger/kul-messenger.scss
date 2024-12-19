@@ -1,5 +1,553 @@
-@import "./styles/kul-messenger-main.scss";
-@import "./styles/kul-messenger-customization.scss";
-@import "./styles/kul-messenger-options.scss";
-@import "./styles/kul-messenger-selection-grid.scss";
-@import "./styles/kul-messenger-classes.scss";
+:host {
+  /**
+    * @prop --kul-messenger-active-options-name-padding: Sets the padding of active options' names.
+    * Defaults to 4px.
+    */
+  --kul_messenger_active_options_name_padding: var(
+    --kul-messenger-active-options-name-padding,
+    4px
+  );
+  /**
+    * @prop --kul-messenger-avatar-name-padding: Sets the padding of the avatar's name.
+    * Defaults to 12px.
+    */
+  --kul_messenger_avatar_name_padding: var(
+    --kul-messenger-avatar-name-padding,
+    12px
+  );
+  /**
+    * @prop --kul-messenger-backdrop-filter: Sets the backdrop filter.
+    * Defaults to 5px.
+    */
+  --kul_messenger_backdrop_filter: var(
+    --kul-messenger-backdrop-filter,
+    blur(5px)
+  );
+  /**
+    * @prop --kul-messenger-background-color: Sets the background color.
+    * Defaults to var(--kul-background-color).
+    */
+  --kul_messenger_background_color: var(
+    --kul-messenger-background-color,
+    rgba(var(--kul-background-color-rgb), 0.375)
+  );
+  /**
+    * @prop --kul-messenger-font-size: Sets the font size of the component.
+    * Defaults to var(--kul-font-size).
+    */
+  --kul_messenger_font_size: var(
+    --kul-messenger-font-size,
+    var(--kul-font-size)
+  );
+  /**
+    * @prop --kul-messenger-name-background-color: Sets the color of text.
+    * Defaults to rgba(var(--kul-title-background-color-rgb), 0.75).
+    */
+  --kul_messenger_name_background_color: var(
+    --kul-messenger-name-background-color,
+    rgba(var(--kul-title-background-color-rgb), 0.75)
+  );
+  /**
+     * @prop --kul-messenger-letter-spacing: Sets the letter spacing.
+     * Defaults to 5px.
+     */
+  --kul_messenger_letter_spacing: var(--kul-messenger-letter-spacing, 5px);
+  /**
+     * @prop --kul-messenger-name-height: Sets the height of the character's name.
+     * Defaults to 50px.
+     */
+  --kul_messenger_name_height: var(--kul-messenger-avatar-height, 50px);
+  /**
+     * @prop --kul-messenger-nav-box-shadow: Sets the box shadow of the messenger's navigation bar.
+     * Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375).
+     */
+  --kul_messenger_nav_box_shadow: var(
+    --kul-messenger-nav-box-shadow,
+    0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375)
+  );
+  /**
+     * @prop --kul-messenger-customization-title-padding: Sets the padding of customization panel titles.
+     * Defaults to 8px 12px.
+     */
+  --kul_messenger_customization_title_padding: var(
+    --kul-messenger-customization-title-padding,
+    8px 12px
+  );
+  /**
+    * @prop --kul-messenger-text-color: Sets the color of text.
+    * Defaults to var(--kul-text-color).
+    */
+  --kul_messenger_text_color: var(
+    --kul-messenger-text-color,
+    var(--kul-text-color)
+  );
+  /**
+     * @prop --kul-messenger-transition: Sets the transition effect.
+     * Defaults to 125ms ease-out.
+     */
+  --kul_messenger_transition: var(--kul-messenger-transition, 125ms ease-out);
+
+  box-sizing: border-box;
+  background-color: var(--kul_messenger_background_color);
+  color: var(--kul_messenger_text_color);
+  display: block;
+  font-family: var(--kul-font-family);
+  font-size: var(--kul-font-size);
+  height: 100%;
+  width: 100%;
+}
+
+#kul-component {
+  height: 100%;
+  width: 100%;
+}
+
+.messenger {
+  & {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  &:has(.messenger__left--collapsed) {
+    grid-template-columns: 0 4fr 1fr;
+  }
+
+  &:has(.messenger__right--collapsed) {
+    grid-template-columns: 1fr 4fr 0;
+  }
+
+  &:has(.messenger__left--collapsed):has(.messenger__right--collapsed) {
+    grid-template-columns: 0 1fr 0;
+  }
+
+  &__left {
+    display: grid;
+    grid-template-rows: minmax(auto, 40%) minmax(auto, 1fr);
+    height: 100%;
+    overflow: auto;
+    transition: height var(--kul_messenger_transition);
+
+    &--collapsed {
+      overflow: hidden;
+      width: 0;
+    }
+  }
+
+  &__center {
+    display: grid;
+    grid-template-areas:
+      "nav nav nav"
+      "expander-l chat expander-r";
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__right {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    overflow: auto;
+    transition: height var(--kul_messenger_transition);
+
+    &--collapsed {
+      overflow: hidden;
+      width: 0;
+    }
+
+    &--customization {
+      grid-template-rows: 1fr auto;
+    }
+  }
+
+  &__avatar {
+    & {
+      position: relative;
+    }
+
+    &__image {
+      animation: fade-in-block 250ms ease-in;
+      display: block;
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    &__name {
+      display: flex;
+    }
+
+    &__status {
+      padding-right: 8px;
+    }
+
+    &__name-wrapper {
+      align-items: center;
+      background-color: var(--kul_messenger_name_background_color);
+      backdrop-filter: var(--kul_messenger_backdrop_filter);
+      box-sizing: border-box;
+      display: flex;
+      height: var(--kul_messenger_name_height);
+      justify-content: space-between;
+      left: 0;
+      letter-spacing: var(--kul_messenger_letter_spacing);
+      padding-left: var(--kul_messenger_avatar_name_padding);
+      position: absolute;
+      text-transform: uppercase;
+      top: 0;
+      width: 100%;
+    }
+  }
+
+  &__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__biography {
+    font-size: 0.8em;
+    overflow: auto;
+  }
+
+  &__expander {
+    & {
+      box-shadow: var(--kul_messenger_nav_box_shadow);
+    }
+
+    &--left {
+      grid-area: expander-l;
+    }
+
+    &--right {
+      grid-area: expander-r;
+    }
+  }
+
+  &__navigation {
+    box-shadow: var(--kul_messenger_nav_box_shadow);
+    grid-area: nav;
+  }
+
+  &__chat {
+    --kul-chat-padding: 16px 8px 0 8px;
+    --kul-chat-buttons-padding: 8px 0 0 0;
+
+    overflow: auto;
+    grid-area: chat;
+  }
+
+  &__customization {
+    &__title {
+      align-items: center;
+      background: var(--kul-title-background-color);
+      color: var(--kul-title-color);
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: var(--kul_messenger_letter_spacing);
+      overflow: hidden;
+      position: sticky;
+      text-align: center;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      top: -1px;
+      z-index: 1;
+    }
+
+    &__label {
+      overflow: hidden;
+      padding: var(--kul_messenger_customization_title_padding);
+      text-overflow: ellipsis;
+    }
+
+    &__section {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      height: 100%;
+    }
+
+    &__actions {
+      background-color: rgba(var(--kul-title-background-color-rgb), 0.875);
+      bottom: 0;
+      display: flex;
+      left: 0;
+      overflow: hidden;
+      position: absolute;
+      width: 100%;
+    }
+
+    &__add {
+      --kul-button-border-radius: 0;
+    }
+
+    &__images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      overflow: auto;
+      width: 100%;
+    }
+
+    &__image-wrapper {
+      & {
+        position: relative;
+      }
+
+      &:after {
+        box-shadow: none;
+        content: "";
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        transition:
+          background-color var(--kul_messenger_transition),
+          box-shadow var(--kul_messenger_transition);
+        width: 100%;
+      }
+
+      &:hover:not(&--selected):after {
+        box-shadow: inset 0 0 5px 3px var(--kul-primary-color, white);
+        pointer-events: none;
+      }
+
+      &--selected:after {
+        align-content: center;
+        background-color: rgba(var(--kul-title-background-color-rgb), 0.875);
+        content: "Current";
+        cursor: default;
+        font-size: 0.775em;
+        letter-spacing: var(--kul_messenger_letter_spacing);
+        overflow: hidden;
+        position: absolute;
+        text-align: center;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+      }
+    }
+
+    &__image {
+      & {
+        animation: fade-in-block 250ms ease-in;
+        cursor: pointer;
+        display: block;
+        height: 100%;
+        min-height: 256px;
+        object-fit: cover;
+        width: 100%;
+      }
+    }
+
+    &__edit {
+      &__label {
+        background: var(--kul-title-background-color);
+        color: var(--kul-title-color);
+        display: flex;
+        justify-content: center;
+        letter-spacing: var(--kul_messenger_letter_spacing);
+        overflow: hidden;
+        padding: var(--kul_messenger_customization_title_padding);
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+        top: -1px;
+        z-index: 1;
+      }
+
+      &__confirm {
+        display: flex;
+        justify-content: center;
+        padding-top: 16px;
+      }
+
+      &__button {
+        margin: 0 4px;
+      }
+    }
+  }
+
+  &__options {
+    &__active {
+      display: grid;
+      grid-template-columns: repeat(2, 50%);
+      grid-template-rows: repeat(2, 50%);
+    }
+
+    &__wrapper {
+      overflow: hidden;
+      position: relative;
+    }
+
+    &__cover {
+      animation: fade-in-block 250ms ease-in;
+      display: block;
+      height: 100%;
+      object-fit: cover;
+      width: 100%;
+    }
+
+    &__placeholder {
+      box-sizing: border-box;
+      opacity: 0.375;
+      padding: 20%;
+    }
+
+    &__blocker {
+      & {
+        align-content: center;
+        background: rgba(var(--kul-background-color-rgb), 0.775);
+        box-sizing: border-box;
+        cursor: pointer;
+        display: grid;
+        grid-template-rows: 50% auto;
+        height: 100%;
+        left: 0;
+        opacity: 0;
+        padding: 20%;
+        position: absolute;
+        top: 0;
+        transition: opacity var(--kul_messenger_transition);
+        width: 100%;
+      }
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &--active {
+        opacity: 0.875;
+      }
+
+      &__label {
+        font-size: 0.8em;
+        letter-spacing: 1px;
+        overflow: hidden;
+        padding-top: 12px;
+        text-align: center;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
+      }
+    }
+
+    &__filters {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: auto;
+      padding: 16px 0;
+    }
+
+    &__label {
+      font-size: 0.8em;
+      letter-spacing: var(--kul_messenger_letter_spacing);
+      margin-left: 8px;
+      overflow: hidden;
+      text-align: center;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+    }
+
+    &__list {
+      display: grid;
+      overflow: auto;
+    }
+
+    &__info {
+      cursor: help;
+      margin: 0;
+    }
+
+    &__name {
+      align-items: center;
+      background: var(--kul_messenger_name_background_color);
+      bottom: 0;
+      box-sizing: border-box;
+      display: flex;
+      overflow: hidden;
+      padding: var(--kul_messenger_active_options_name_padding);
+      position: absolute;
+      width: 100%;
+    }
+  }
+}
+
+.roster {
+  & {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 100%;
+    overflow: auto;
+    width: 100%;
+  }
+
+  &__image {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  &__portrait {
+    & {
+      --kul_messenger_name_background_color: rgba(
+        var(--kul-background-color-rgb),
+        0.375
+      );
+      --kul_messenger_portrait_foredrop_color: rgba(
+        var(--kul-background-color-rgb),
+        0.275
+      );
+
+      cursor: pointer;
+      overflow: auto;
+      position: relative;
+    }
+
+    &:hover {
+      --kul_messenger_name_background_color: rgba(
+        var(--kul-background-color-rgb),
+        0.775
+      );
+      --kul_messenger_portrait_foredrop_color: rgba(
+        var(--kul-background-color-rgb),
+        0
+      );
+    }
+
+    &:after {
+      background: var(--kul_messenger_portrait_foredrop_color);
+      content: "";
+      height: 100%;
+      left: 0;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      transition: background-color var(--kul_messenger_transition);
+      width: 100%;
+    }
+  }
+
+  &__name {
+    & {
+      align-items: center;
+      backdrop-filter: blur(5px);
+      background-color: var(--kul_messenger_name_background_color);
+      bottom: 0;
+      display: flex;
+      height: var(--kul_messenger_name_height);
+      left: 0;
+      position: absolute;
+      transition: background-color var(--kul_messenger_transition);
+      width: 100%;
+    }
+  }
+
+  &__label {
+    letter-spacing: var(--kul_messenger_letter_spacing);
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    width: 100%;
+  }
+}

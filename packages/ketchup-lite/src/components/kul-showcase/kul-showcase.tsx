@@ -39,7 +39,7 @@ export class KulShowcase {
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   //#endregion
 
   //#region Internal variables
@@ -86,7 +86,11 @@ export class KulShowcase {
           }
         }}
       >
-        <kul-typewriter kulTag="h2" kulValue={current || type}></kul-typewriter>
+        <kul-typewriter
+          kulStyle="h2 { margin: 0; padding: 8px 0 }"
+          kulTag="h2"
+          kulValue={current || type}
+        ></kul-typewriter>
         <div class={`navigation ${current ? "active" : ""}`}>
           <kul-button
             class="kul-full-height kul-full-width"

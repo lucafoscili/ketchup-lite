@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-chip-event` | Describes event emitted. | `CustomEvent<KulChipEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-chip-event` |             | `CustomEvent<KulChipEventPayload>` |
 
 
 ## Methods

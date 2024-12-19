@@ -1,164 +1,167 @@
-import {
-  KulArticleEvent,
-  KulArticleProps,
-} from "../components/kul-article/kul-article-declarations";
-import {
-  KulBadgeEvent,
-  KulBadgeProps,
-} from "../components/kul-badge/kul-badge-declarations";
-import {
-  KulButtonEvent,
-  KulButtonProps,
-} from "../components/kul-button/kul-button-declarations";
-import {
-  KulCanvasEvent,
-  KulCanvasProps,
-} from "../components/kul-canvas/kul-canvas-declarations";
-import {
-  KulCardEvent,
-  KulCardProps,
-} from "../components/kul-card/kul-card-declarations";
-import {
-  KulChatEvent,
-  KulChatProps,
-} from "../components/kul-chat/kul-chat-declarations";
-import {
-  KulCodeEvent,
-  KulCodeProps,
-} from "../components/kul-code/kul-code-declarations";
-import {
-  KulImageEvent,
-  KulImageProps,
-} from "../components/kul-image/kul-image-declarations";
-import {
-  KulSpinnerEvent,
-  KulSpinnerProps,
-} from "../components/kul-spinner/kul-spinner-declarations";
-import {
-  KulSplashEvent,
-  KulSplashProps,
-} from "../components/kul-splash/kul-splash-declarations";
-import {
-  KulUploadEvent,
-  KulUploadProps,
-} from "../components/kul-upload/kul-upload-declarations";
-import {
-  KulToastEvent,
-  KulToastProps,
-} from "../components/kul-toast/kul-toast-declarations";
-import {
-  KulDrawerEvent,
-  KulDrawerProps,
-} from "../components/kul-drawer/kul-drawer-declarations";
-import {
-  KulTextfieldEvent,
-  KulTextfieldProps,
-} from "../components/kul-textfield/kul-textfield-declarations";
-import {
-  KulChartEvent,
-  KulChartProps,
-} from "../components/kul-chart/kul-chart-declarations";
-import {
-  KulHeaderEvent,
-  KulHeaderProps,
-} from "../components/kul-header/kul-header-declarations";
-import {
-  KulLazyEvent,
-  KulLazyProps,
-} from "../components/kul-lazy/kul-lazy-declarations";
-import {
-  KulPhotoframeEvent,
-  KulPhotoframeProps,
-} from "../components/kul-photoframe/kul-photoframe-declarations";
-import {
-  KulTabbarEvent,
-  KulTabbarProps,
-} from "../components/kul-tabbar/kul-tabbar-declarations";
-import {
-  KulTreeEvent,
-  KulTreeProps,
-} from "../components/kul-tree/kul-tree-declarations";
+import { VNode } from "@stencil/core";
+import { ECElementEvent } from "echarts";
+
+import { KulAccordion } from "../components/kul-accordion/kul-accordion";
 import {
   KulAccordionEvent,
   KulAccordionProps,
 } from "../components/kul-accordion/kul-accordion-declarations";
+import { KulArticle } from "../components/kul-article/kul-article";
 import {
-  KulListEvent,
-  KulListProps,
-} from "../components/kul-list/kul-list-declarations";
+  KulArticleEvent,
+  KulArticleProps,
+} from "../components/kul-article/kul-article-declarations";
+import { KulBadge } from "../components/kul-badge/kul-badge";
 import {
-  KulProgressbarEvent,
-  KulProgressbarProps,
-} from "../components/kul-progressbar/kul-progressbar-declarations";
-import { KulDebugLifecycleInfo } from "../managers/kul-debug/kul-debug-declarations";
+  KulBadgeEvent,
+  KulBadgeProps,
+} from "../components/kul-badge/kul-badge-declarations";
+import { KulButton } from "../components/kul-button/kul-button";
 import {
-  KulMessengerEvent,
-  KulMessengerProps,
-} from "../components/kul-messenger/kul-messenger-declarations";
+  KulButtonEvent,
+  KulButtonProps,
+} from "../components/kul-button/kul-button-declarations";
+import { KulCanvas } from "../components/kul-canvas/kul-canvas";
 import {
-  KulToggleEvent,
-  KulToggleProps,
-} from "../components/kul-toggle/kul-toggle-declarations";
+  KulCanvasEvent,
+  KulCanvasProps,
+} from "../components/kul-canvas/kul-canvas-declarations";
+import { KulCard } from "../components/kul-card/kul-card";
+import {
+  KulCardEvent,
+  KulCardProps,
+} from "../components/kul-card/kul-card-declarations";
+import { KulCarousel } from "../components/kul-carousel/kul-carousel";
+import {
+  KulCarouselEvent,
+  KulCarouselProps,
+} from "../components/kul-carousel/kul-carousel-declarations";
+import { KulChart } from "../components/kul-chart/kul-chart";
+import {
+  KulChartEvent,
+  KulChartProps,
+} from "../components/kul-chart/kul-chart-declarations";
+import { KulChat } from "../components/kul-chat/kul-chat";
+import {
+  KulChatEvent,
+  KulChatProps,
+} from "../components/kul-chat/kul-chat-declarations";
+import { KulChip } from "../components/kul-chip/kul-chip";
 import {
   KulChipEvent,
   KulChipProps,
 } from "../components/kul-chip/kul-chip-declarations";
-import { KulAccordion } from "../components/kul-accordion/kul-accordion";
-import { KulArticle } from "../components/kul-article/kul-article";
-import { KulBadge } from "../components/kul-badge/kul-badge";
-import { KulButton } from "../components/kul-button/kul-button";
-import { KulCanvas } from "../components/kul-canvas/kul-canvas";
-import { KulCard } from "../components/kul-card/kul-card";
-import { KulChart } from "../components/kul-chart/kul-chart";
-import { KulChat } from "../components/kul-chat/kul-chat";
-import { KulChip } from "../components/kul-chip/kul-chip";
 import { KulCode } from "../components/kul-code/kul-code";
+import {
+  KulCodeEvent,
+  KulCodeProps,
+} from "../components/kul-code/kul-code-declarations";
 import { KulCompare } from "../components/kul-compare/kul-compare";
-import { KulDrawer } from "../components/kul-drawer/kul-drawer";
-import { KulHeader } from "../components/kul-header/kul-header";
-import { KulImage } from "../components/kul-image/kul-image";
-import { KulLazy } from "../components/kul-lazy/kul-lazy";
-import { KulList } from "../components/kul-list/kul-list";
-import { KulMessenger } from "../components/kul-messenger/kul-messenger";
-import { KulPhotoframe } from "../components/kul-photoframe/kul-photoframe";
-import { KulProgressbar } from "../components/kul-progressbar/kul-progressbar";
-import { KulSpinner } from "../components/kul-spinner/kul-spinner";
-import { KulSplash } from "../components/kul-splash/kul-splash";
-import { KulToggle } from "../components/kul-toggle/kul-toggle";
-import { KulTabbar } from "../components/kul-tabbar/kul-tabbar";
-import { KulTextfield } from "../components/kul-textfield/kul-textfield";
-import { KulToast } from "../components/kul-toast/kul-toast";
-import { KulTree } from "../components/kul-tree/kul-tree";
-import { KulUpload } from "../components/kul-upload/kul-upload";
 import {
   KulCompareEvent,
   KulCompareProps,
 } from "../components/kul-compare/kul-compare-declarations";
+import { KulDrawer } from "../components/kul-drawer/kul-drawer";
+import {
+  KulDrawerEvent,
+  KulDrawerProps,
+} from "../components/kul-drawer/kul-drawer-declarations";
+import { KulHeader } from "../components/kul-header/kul-header";
+import {
+  KulHeaderEvent,
+  KulHeaderProps,
+} from "../components/kul-header/kul-header-declarations";
+import { KulImage } from "../components/kul-image/kul-image";
+import {
+  KulImageEvent,
+  KulImageProps,
+} from "../components/kul-image/kul-image-declarations";
+import { KulImageviewer } from "../components/kul-imageviewer/kul-imageviewer";
+import {
+  KulImageviewerEvent,
+  KulImageviewerProps,
+} from "../components/kul-imageviewer/kul-imageviewer-declarations";
+import { KulLazy } from "../components/kul-lazy/kul-lazy";
+import {
+  KulLazyEvent,
+  KulLazyProps,
+} from "../components/kul-lazy/kul-lazy-declarations";
+import { KulList } from "../components/kul-list/kul-list";
+import {
+  KulListEvent,
+  KulListProps,
+} from "../components/kul-list/kul-list-declarations";
 import { KulMasonry } from "../components/kul-masonry/kul-masonry";
 import {
   KulMasonryEvent,
   KulMasonryProps,
 } from "../components/kul-masonry/kul-masonry-declarations";
+import { KulMessenger } from "../components/kul-messenger/kul-messenger";
 import {
-  KulTypewriterEvent,
-  KulTypewriterProps,
-} from "../components/kul-typewriter/kul-typewriter-declarations";
-import { KulTypewriter } from "../components/kul-typewriter/kul-typewriter";
+  KulMessengerEvent,
+  KulMessengerProps,
+} from "../components/kul-messenger/kul-messenger-declarations";
+import { KulPhotoframe } from "../components/kul-photoframe/kul-photoframe";
 import {
-  KulCarouselEvent,
-  KulCarouselProps,
-} from "../components/kul-carousel/kul-carousel-declarations";
-import { KulCarousel } from "../components/kul-carousel/kul-carousel";
+  KulPhotoframeEvent,
+  KulPhotoframeProps,
+} from "../components/kul-photoframe/kul-photoframe-declarations";
+import { KulProgressbar } from "../components/kul-progressbar/kul-progressbar";
+import {
+  KulProgressbarEvent,
+  KulProgressbarProps,
+} from "../components/kul-progressbar/kul-progressbar-declarations";
+import { KulSlider } from "../components/kul-slider/kul-slider";
 import {
   KulSliderEvent,
   KulSliderProps,
 } from "../components/kul-slider/kul-slider-declarations";
-import { KulSlider } from "../components/kul-slider/kul-slider";
+import { KulSpinner } from "../components/kul-spinner/kul-spinner";
 import {
-  KulImageviewerEvent,
-  KulImageviewerProps,
-} from "../components/kul-imageviewer/kul-imageviewer-declarations";
-import { KulImageviewer } from "../components/kul-imageviewer/kul-imageviewer";
+  KulSpinnerEvent,
+  KulSpinnerProps,
+} from "../components/kul-spinner/kul-spinner-declarations";
+import { KulSplash } from "../components/kul-splash/kul-splash";
+import {
+  KulSplashEvent,
+  KulSplashProps,
+} from "../components/kul-splash/kul-splash-declarations";
+import { KulTabbar } from "../components/kul-tabbar/kul-tabbar";
+import {
+  KulTabbarEvent,
+  KulTabbarProps,
+} from "../components/kul-tabbar/kul-tabbar-declarations";
+import { KulTextfield } from "../components/kul-textfield/kul-textfield";
+import {
+  KulTextfieldEvent,
+  KulTextfieldProps,
+} from "../components/kul-textfield/kul-textfield-declarations";
+import { KulToast } from "../components/kul-toast/kul-toast";
+import {
+  KulToastEvent,
+  KulToastProps,
+} from "../components/kul-toast/kul-toast-declarations";
+import { KulToggle } from "../components/kul-toggle/kul-toggle";
+import {
+  KulToggleEvent,
+  KulToggleProps,
+} from "../components/kul-toggle/kul-toggle-declarations";
+import { KulTree } from "../components/kul-tree/kul-tree";
+import {
+  KulTreeEvent,
+  KulTreeProps,
+} from "../components/kul-tree/kul-tree-declarations";
+import { KulTypewriter } from "../components/kul-typewriter/kul-typewriter";
+import {
+  KulTypewriterEvent,
+  KulTypewriterProps,
+} from "../components/kul-typewriter/kul-typewriter-declarations";
+import { KulUpload } from "../components/kul-upload/kul-upload";
+import {
+  KulUploadEvent,
+  KulUploadProps,
+} from "../components/kul-upload/kul-upload-declarations";
+import { KulDebugLifecycleInfo } from "../managers/kul-debug/kul-debug-declarations";
 
 export interface GenericMap {
   [index: string]: string;
@@ -409,6 +412,44 @@ export type ComponentPropsMap = {
   KulTypewriter: KulTypewriterProps;
   KulUpload: KulUploadProps;
 };
+export type KulComponentAdapterHandler = (
+  e?: ECElementEvent | Event | PointerEvent | KulGenericEvent,
+  ...args: unknown[]
+) => unknown | Promise<unknown>;
+export type KulComponentAdapterHandlers = {
+  [key: string]: KulComponentAdapterHandler | KulComponentAdapterHandlers;
+};
+export type KulComponentAdapterJsx = {
+  [key: string]: ((...args: unknown[]) => VNode) | KulComponentAdapterJsx;
+};
+export type KulComponentAdapterRefs = {
+  [key: string]: HTMLElement | KulComponentAdapterRefs;
+};
+export type KulComponentAdapterGetters<C extends KulGenericComponent> = {
+  [key: string]: unknown;
+  compInstance: C;
+};
+export type KulComponentAdapterSetters = {
+  [key: string]: ((...args: unknown[]) => void) | KulComponentAdapterSetters;
+};
+export interface KulComponentAdapter<
+  C extends KulGenericComponent,
+  H = KulComponentAdapterHandlers,
+  J = KulComponentAdapterJsx,
+  R = KulComponentAdapterRefs,
+  CGet = KulComponentAdapterGetters<C>,
+  CSet = KulComponentAdapterSetters,
+> {
+  controller?: {
+    get: CGet;
+    set?: CSet;
+  };
+  elements?: {
+    jsx: J;
+    refs: R;
+  };
+  handlers?: H;
+}
 type ExtractComponentName<C> = C extends KulComponent<infer N> ? N : never;
 export type KulEventType<C extends KulComponent<KulComponentName>> =
   ComponentEventMap[ExtractComponentName<C>];

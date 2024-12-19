@@ -20,9 +20,9 @@
 
 ## Events
 
-| Event             | Description              | Type                                |
-| ----------------- | ------------------------ | ----------------------------------- |
-| `kul-image-event` | Describes event emitted. | `CustomEvent<KulImageEventPayload>` |
+| Event             | Description | Type                                |
+| ----------------- | ----------- | ----------------------------------- |
+| `kul-image-event` |             | `CustomEvent<KulImageEventPayload>` |
 
 
 ## Methods

@@ -13,19 +13,17 @@ import {
   VNode,
 } from "@stencil/core";
 
+import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
+import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 import {
   KulTextfieldEvent,
   KulTextfieldEventPayload,
   KulTextfieldHelper,
-  KulTextfieldProps,
   KulTextfieldStatus,
   KulTextfieldStyling,
 } from "./kul-textfield-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
 
 @Component({
   tag: "kul-textfield",
@@ -104,7 +102,7 @@ export class KulTextfield {
    * This allows for fine-grained control over the appearance of the component beyond predefined styling options.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Determines the overall styling theme of the text field, affecting its shape and border.
    * Options include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.
@@ -130,7 +128,6 @@ export class KulTextfield {
 
   #hasOutline: boolean;
   #input: HTMLInputElement | HTMLTextAreaElement;
-  #kulManager = kulManagerInstance();
   #maxLength: number;
 
   /*-------------------------------------------------*/
@@ -184,13 +181,14 @@ export class KulTextfield {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulTextfieldProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Used to retrieve the component's current state.
