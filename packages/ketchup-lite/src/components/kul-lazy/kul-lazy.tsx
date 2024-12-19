@@ -12,8 +12,12 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import {
+  GenericObject,
+  KulComponentName,
+  KulComponentPropsFor,
+} from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { SVG } from "./elements/svg";
 import {
   KulLazyEvent,
@@ -199,7 +203,7 @@ export class KulLazy {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManagerSingleton;
     const {
       isInViewport,
       kulComponentName,
@@ -241,7 +245,9 @@ export class KulLazy {
       const Tag = kulComponentName;
       content = (
         <Tag
-          {...(kulComponentProps as GenericObject)}
+          {...sanitizeProps(
+            kulComponentProps as KulComponentPropsFor<KulComponentName>,
+          )}
           ref={(el: HTMLElement) => (this.#lazyComponent = el)}
         ></Tag>
       );

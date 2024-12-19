@@ -10,10 +10,10 @@ import {
   KulChatAdapter,
   KulChatAdapterControllerGetters,
   KulChatAdapterControllerSetters,
-  KulChatAdapterJsx,
   KulChatAdapterHandlers,
   KulChatAdapterInitializerGetters,
   KulChatAdapterInitializerSetters,
+  KulChatAdapterJsx,
 } from "./kul-chat-declarations";
 
 //#region Adapter
@@ -61,9 +61,7 @@ export const createGetters = (
 export const createSetters = (
   setters: KulChatAdapterInitializerSetters,
 ): KulChatAdapterControllerSetters => {
-  return {
-    ...setters,
-  };
+  return setters;
 };
 //#endregion
 

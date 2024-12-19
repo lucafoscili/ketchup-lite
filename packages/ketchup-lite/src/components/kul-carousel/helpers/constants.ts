@@ -1,4 +1,17 @@
-import { KulCarouselAdapterRefs } from "../kul-carousel-declarations";
+import {
+  KulCarouselAdapterRefs,
+  KulCarouselPropsInterface,
+} from "../kul-carousel-declarations";
+
+//#region Props
+export const KUL_CAROUSEL_PROPS: (keyof KulCarouselPropsInterface)[] = [
+  "kulAutoPlay",
+  "kulData",
+  "kulInterval",
+  "kulShape",
+  "kulStyle",
+];
+//#endregion
 
 //#region Icons
 export const ICONS = {

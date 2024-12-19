@@ -36,9 +36,7 @@ export const createAdapter = (
 export const createGetters = (
   getters: KulCarouselAdapterInitializerGetters,
 ): KulCarouselAdapterControllerGetters => {
-  return {
-    ...getters,
-  };
+  return getters;
 };
 export const createSetters = (
   setters: KulCarouselAdapterInitializerSetters,
@@ -48,6 +46,7 @@ export const createSetters = (
   const { next, previous, toSlide } = navigation;
 
   return {
+    ...setters,
     autoplay: {
       start: () => start(getAdapter()),
       stop: () => stop(getAdapter()),
@@ -57,7 +56,6 @@ export const createSetters = (
       next: () => next(getAdapter()),
       previous: () => previous(getAdapter()),
     },
-    ...setters,
   };
 };
 //#endregion

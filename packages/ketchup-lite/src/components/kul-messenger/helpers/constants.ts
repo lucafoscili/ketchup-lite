@@ -4,22 +4,32 @@ import {
   KulMessengerImageRootIds,
   KulMessengerImageTypes,
   KulMessengerOptionTypes,
+  KulMessengerPropsInterface,
   KulMessengerUI,
 } from "src/components/kul-messenger/kul-messenger-declarations";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 
+//#region Props
+export const KUL_MESSENGER_PROPS: (keyof KulMessengerPropsInterface)[] = [
+  "kulAutosave",
+  "kulData",
+  "kulStyle",
+  "kulValue",
+];
+//#endregion
+
 //#region Clean UI flags
 export const CLEAN_UI = (): KulMessengerUI => {
   return {
-    customization: false,
-    editing: {
+    customizationView: false,
+    filters: {
       avatars: false,
       locations: false,
       outfits: false,
       styles: false,
       timeframes: false,
     },
-    filters: {
+    form: {
       avatars: false,
       locations: false,
       outfits: false,
@@ -50,8 +60,18 @@ export const REFS = (): KulMessengerAdapterRefs => {
       rightExpander: null,
       tabbar: null,
     },
-    customization: { filters: null },
-    options: { back: null, customization: null },
+    customization: {
+      filters: null,
+      form: {
+        avatars: null,
+        locations: null,
+        outfits: null,
+        styles: null,
+        timeframes: null,
+      },
+      list: { edit: null, remove: null },
+    },
+    options: { back: null, customize: null },
   };
 };
 //#endregion
@@ -73,7 +93,7 @@ export const IDS = {
   },
   options: {
     back: "back-button",
-    customization: "customization-button",
+    customize: "customize-button",
   },
 };
 //#endregion

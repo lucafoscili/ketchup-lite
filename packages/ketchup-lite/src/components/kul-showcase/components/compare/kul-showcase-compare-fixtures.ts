@@ -1,4 +1,4 @@
-import { getAssetPath } from "@stencil/core";
+import { kulManagerSingleton } from "src";
 import { KulDataDataset } from "src/components";
 import {
   KulComponentEventName,
@@ -21,6 +21,8 @@ export const COMPARE_FIXTURES: () => {
   documentation: KulArticleDataset;
   examples: CompareData;
 } = () => {
+  const { get } = kulManagerSingleton.assets;
+
   const kulData: Partial<{
     [K in KulComponentName]: KulDataDataset;
   }> = {
@@ -30,7 +32,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_thor.png`),
+              value: get(`./assets/media/avatar_thor.png`),
             },
           },
           id: "image_1",
@@ -40,7 +42,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_freya.png`),
+              value: get(`./assets/media/avatar_freya.png`),
             },
           },
           id: "image_2",
@@ -50,7 +52,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+              value: get(`./assets/media/avatar_thor_2.png`),
             },
           },
           id: "image_3",
@@ -60,7 +62,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_freya_2.png`),
+              value: get(`./assets/media/avatar_freya_2.png`),
             },
           },
           id: "image_4",

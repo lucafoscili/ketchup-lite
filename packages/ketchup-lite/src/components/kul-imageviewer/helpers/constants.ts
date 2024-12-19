@@ -1,4 +1,16 @@
-import { KulImageviewerAdapterRefs } from "../kul-imageviewer-declarations";
+import {
+  KulImageviewerAdapterRefs,
+  KulImageviewerPropsInterface,
+} from "../kul-imageviewer-declarations";
+
+//#region Props
+export const KUL_IMAGEVIEWER_PROPS: (keyof KulImageviewerPropsInterface)[] = [
+  "kulData",
+  "kulLoadCallback",
+  "kulStyle",
+  "kulValue",
+];
+//#endregion
 
 //#region Ids
 export const IDS = {

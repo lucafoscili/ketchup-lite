@@ -3,8 +3,8 @@ import { KulCarouselAdapter } from "src/components/kul-carousel/kul-carousel-dec
 export const autoplay = {
   //#region Start
   start: (adapter: KulCarouselAdapter) => {
-    const { state } = adapter;
-    const { get, set } = state;
+    const { controller } = adapter;
+    const { get, set } = controller;
     const { compInstance } = get;
     const { kulAutoPlay, kulInterval } = compInstance;
 
@@ -22,8 +22,8 @@ export const autoplay = {
 
   //#region Stop
   stop: (adapter: KulCarouselAdapter) => {
-    const { state } = adapter;
-    const { get, set } = state;
+    const { controller } = adapter;
+    const { get, set } = controller;
     const { interval } = get;
 
     if (interval()) {
@@ -37,8 +37,8 @@ export const autoplay = {
 export const navigation = {
   //#region Next
   next: (adapter: KulCarouselAdapter) => {
-    const { state } = adapter;
-    const { get, set } = state;
+    const { controller } = adapter;
+    const { get, set } = controller;
     const { index, totalSlides } = get;
     const { current } = index;
 
@@ -48,8 +48,8 @@ export const navigation = {
 
   //#region Previous
   previous: (adapter: KulCarouselAdapter) => {
-    const { state } = adapter;
-    const { get, set } = state;
+    const { controller } = adapter;
+    const { get, set } = controller;
     const { index, totalSlides } = get;
     const { current } = index;
 
@@ -59,8 +59,8 @@ export const navigation = {
 
   //#region To slide
   toSlide: (adapter: KulCarouselAdapter, value: number) => {
-    const { state } = adapter;
-    const { set } = state;
+    const { controller } = adapter;
+    const { set } = controller;
 
     set.index.current(value);
   },

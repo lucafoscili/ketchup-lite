@@ -27,11 +27,9 @@ export const prepUiSetters = (
     customization: (value) => {
       const { compInstance } = getAdapter().controller.get;
 
-      compInstance.ui.customization = value;
+      compInstance.ui.customizationView = value;
       compInstance.refresh();
     },
-    editing: async (value, type, node = null) =>
-      setEditing(getAdapter, value, type, node),
     filters: (filters) => {
       const { compInstance } = getAdapter().controller.get;
 
@@ -45,12 +43,14 @@ export const prepUiSetters = (
       compInstance.refresh();
     },
     panel: (panel, value?) => setPanel(getAdapter, panel, value),
+    setFormState: async (value, type, node = null) =>
+      setFormState(getAdapter, value, type, node),
   };
 };
 //#endregion
 
 //#region Helpers
-const setEditing = async <T extends KulMessengerUnionChildIds>(
+const setFormState = async <T extends KulMessengerUnionChildIds>(
   getAdapter: () => KulMessengerAdapter,
   value: boolean,
   type: KulMessengerImageTypes,
@@ -59,21 +59,25 @@ const setEditing = async <T extends KulMessengerUnionChildIds>(
   const adapter = getAdapter();
   const { controller, elements } = adapter;
   const { compInstance, image } = controller.get;
-  const {} = elements.refs;
+  const { form } = elements.refs.customization;
+  const { formStatusMap, ui } = compInstance;
 
-  compInstance.ui.editing[type] = value;
-  compInstance.editingStatus[type] = node ? node.id : image.newId(type);
+  ui.form[type] = value;
+  formStatusMap[type] = node?.id ?? image.newId(type);
+
   if (!node) {
     compInstance.refresh();
   } else {
     await compInstance.refresh();
     requestAnimationFrame(() => {
-      const comps = adapter.components.editing[type];
+      const { description, imageUrl, title } = form[type];
       const hasImage = node?.cells?.kulImage?.value;
-      comps.descriptionTextarea.setValue(node.description);
-      comps.titleTextarea.setValue(node.value);
+
+      description.setValue(node.description);
+      title.setValue(node.value);
+
       if (hasImage) {
-        comps.imageUrlTextarea.setValue(node.cells.kulImage.value);
+        imageUrl.setValue(node.cells.kulImage.value);
       }
     });
   }
@@ -85,7 +89,7 @@ const setPanel = (
 ) => {
   const adapter = getAdapter();
   const { compInstance } = adapter.controller.get;
-  const { panels } = adapter.controller.get.ui();
+  const { panels } = compInstance.ui;
 
   switch (panel) {
     case "left":

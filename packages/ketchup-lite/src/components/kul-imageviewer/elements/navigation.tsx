@@ -34,7 +34,7 @@ export const prepNavigation = (
 
       return (
         <kul-button
-          class={className}
+          class={className.load}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.navigation.load}
           kulIcon="find_replace"
@@ -63,7 +63,7 @@ export const prepNavigation = (
 
       return (
         <kul-masonry
-          class={className}
+          class={className.masonry}
           id={IDS.navigation.masonry}
           kulData={kulData}
           kulSelectable={true}
@@ -82,7 +82,7 @@ export const prepNavigation = (
 
       return (
         <kul-textfield
-          class={className}
+          class={className.textfield}
           id={IDS.navigation.textfield}
           kulIcon="folder"
           kulLabel="Directory"

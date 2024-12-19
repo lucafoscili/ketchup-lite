@@ -23,7 +23,7 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
 import { IDS } from "./helpers/constants";
 import { createDefaults } from "./kul-compare-adapter";
@@ -298,7 +298,7 @@ export class KulCompare {
     );
   }
   #prepView(): VNode {
-    const { data } = kulManagerSingleton;
+    const { data, sanitizeProps } = kulManagerSingleton;
     const {
       isLeftPanelOpened,
       isRightPanelOpened,
@@ -313,7 +313,7 @@ export class KulCompare {
       kulShape,
       [leftShape, rightShape],
       async (e) => this.onKulEvent(e, "kul-event"),
-      [...left[kulShape](), ...right[kulShape]()],
+      [...sanitizeProps(left[kulShape]()), ...sanitizeProps(right[kulShape]())],
     ).element;
 
     return (

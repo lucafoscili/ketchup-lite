@@ -1,3 +1,4 @@
+import { CHILD_ROOT_MAP } from "../helpers/constants";
 import { createNode } from "../helpers/utils";
 import {
   KulMessengerAdapter,
@@ -15,39 +16,36 @@ export const prepCustomizationHandlers = (
 
       const adapter = getAdapter();
       const { get, set } = adapter.controller;
-      const { form } = adapter.elements.refs.customization;
+      const { title } = adapter.elements.refs.customization.form[type];
+      const { compInstance } = get;
 
       if (eventType === "click") {
-        const handleEditing = (enabled: boolean) =>
-          set.ui.editing(enabled, type);
-
         switch (action) {
           case "add":
-            handleEditing(true);
+            set.ui.setFormState(true, type);
             break;
           case "cancel":
-            handleEditing(false);
+            set.ui.setFormState(false, type);
             break;
           case "confirm": {
-            const titleTextarea = editing[type].titleTextarea;
-            const value = await titleTextarea.getValue();
-            titleTextarea.classList.remove("kul-danger");
+            const value = await title.getValue();
+            title.classList.remove("kul-danger");
             if (value) {
               createNode(adapter, type);
-              handleEditing(false);
+              set.ui.setFormState(false, type);
             } else {
-              titleTextarea.classList.add("kul-danger");
-              titleTextarea.kulHelper = {
+              title.classList.add("kul-danger");
+              title.kulHelper = {
                 value: "This field is mandatory",
               };
             }
             break;
           }
           case "delete":
-            adapter.actions.delete.option(node, type);
+            compInstance.deleteOption(node, type);
             break;
           case "edit":
-            handleEditing(true);
+            set.ui.setFormState(true, type);
             break;
         }
       }
@@ -58,7 +56,9 @@ export const prepCustomizationHandlers = (
     chip: async (e) => {
       const { comp, eventType, selectedNodes } = e.detail;
 
-      const filtersSetter = adapter.set.messenger.ui.filters;
+      const { get, set } = getAdapter().controller;
+      const { compInstance } = get;
+      const { filters } = compInstance.ui;
 
       switch (eventType) {
         case "click":
@@ -72,10 +72,9 @@ export const prepCustomizationHandlers = (
           Array.from(selectedNodes).forEach((n) => {
             newFilters[n.id] = true;
           });
-          filtersSetter(newFilters);
+          set.ui.filters(newFilters);
           break;
         case "ready":
-          const filters = adapter.get.messenger.ui().filters;
           const nodes: string[] = [];
           for (const key in filters) {
             if (Object.prototype.hasOwnProperty.call(filters, key)) {
@@ -92,14 +91,14 @@ export const prepCustomizationHandlers = (
 
     //#region Image
     image: async (_e, node, index) => {
-      const coverSetter = adapter.set.image.cover;
+      const { image } = getAdapter().controller.set;
 
       const matchedType = Object.keys(CHILD_ROOT_MAP).find((key) =>
         node.id.includes(key),
       ) as keyof typeof CHILD_ROOT_MAP;
 
       if (matchedType) {
-        coverSetter(CHILD_ROOT_MAP[matchedType], index);
+        image.cover(CHILD_ROOT_MAP[matchedType], index);
       }
     },
   };

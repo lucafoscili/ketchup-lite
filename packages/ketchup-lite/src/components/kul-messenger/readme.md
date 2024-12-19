@@ -17,12 +17,29 @@
 
 ## Events
 
-| Event                 | Description              | Type                                    |
-| --------------------- | ------------------------ | --------------------------------------- |
-| `kul-messenger-event` | Describes event emitted. | `CustomEvent<KulMessengerEventPayload>` |
+| Event                 | Description | Type                                    |
+| --------------------- | ----------- | --------------------------------------- |
+| `kul-messenger-event` |             | `CustomEvent<KulMessengerEventPayload>` |
 
 
 ## Methods
+
+### `deleteOption(node: KulMessengerBaseChildNode<KulMessengerUnionChildIds>, type: KulMessengerImageTypes) => Promise<void>`
+
+Deletes the options identified by the node and type.
+
+#### Parameters
+
+| Name   | Type                                                   | Description             |
+| ------ | ------------------------------------------------------ | ----------------------- |
+| `node` | `KulMessengerBaseChildNode<KulMessengerUnionChildIds>` | - The node to delete.   |
+| `type` | `"avatars" \| KulMessengerOptionTypes`                 | - The type of the node. |
+
+#### Returns
+
+Type: `Promise<void>`
+
+
 
 ### `getDebugInfo() => Promise<KulDebugLifecycleInfo>`
 
@@ -34,21 +51,15 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<GenericObject>`
 
-Used to retrieve component's props values.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
-| `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
 Type: `Promise<GenericObject<unknown>>`
 
-List of props as object, each key will be a prop.
+Promise resolved with an object containing the component's properties.
 
 ### `refresh() => Promise<void>`
 
@@ -63,6 +74,16 @@ Type: `Promise<void>`
 ### `reset() => Promise<void>`
 
 Resets the states of the component.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
+### `save() => Promise<void>`
+
+Saves the current status of the messenger.
 
 #### Returns
 
@@ -113,32 +134,32 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [kul-button](../kul-button)
-- [kul-tabbar](../kul-tabbar)
-- [kul-chat](../kul-chat)
 - [kul-image](../kul-image)
+- [kul-button](../kul-button)
 - [kul-spinner](../kul-spinner)
 - [kul-code](../kul-code)
+- [kul-chat](../kul-chat)
+- [kul-tabbar](../kul-tabbar)
 - [kul-chip](../kul-chip)
 - [kul-textfield](../kul-textfield)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-messenger --> kul-button
-  kul-messenger --> kul-tabbar
-  kul-messenger --> kul-chat
   kul-messenger --> kul-image
+  kul-messenger --> kul-button
   kul-messenger --> kul-spinner
   kul-messenger --> kul-code
+  kul-messenger --> kul-chat
+  kul-messenger --> kul-tabbar
   kul-messenger --> kul-chip
   kul-messenger --> kul-textfield
-  kul-button --> kul-image
-  kul-button --> kul-list
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-tabbar --> kul-image
+  kul-button --> kul-image
+  kul-button --> kul-list
+  kul-code --> kul-button
   kul-chat --> kul-spinner
   kul-chat --> kul-typewriter
   kul-chat --> kul-code
@@ -146,7 +167,7 @@ graph TD;
   kul-chat --> kul-button
   kul-chat --> kul-progressbar
   kul-chat --> kul-textfield
-  kul-code --> kul-button
+  kul-tabbar --> kul-image
   kul-showcase-messenger --> kul-messenger
   style kul-messenger fill:#f9f,stroke:#333,stroke-width:4px
 ```

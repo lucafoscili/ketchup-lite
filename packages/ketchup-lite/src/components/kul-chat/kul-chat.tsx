@@ -18,7 +18,7 @@ import { kulManagerSingleton } from "src";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
 import { calcTokens, submitPrompt } from "./helpers/utils";
 import { createAdapter } from "./kul-chat-adapter";
@@ -352,6 +352,8 @@ export class KulChat {
     );
   };
   #prepContent = (message: KulLLMChoiceMessage): VNode[] => {
+    const { sanitizeProps } = kulManagerSingleton;
+
     const { kulTypewriterProps } = this;
 
     const useTypewriter = !!(
@@ -374,7 +376,7 @@ export class KulChat {
           useTypewriter ? (
             <kul-typewriter
               class="chat__messages__paragraph"
-              {...kulTypewriterProps}
+              {...sanitizeProps(kulTypewriterProps, "KulTypewriter")}
               kulValue={textPart}
             ></kul-typewriter>
           ) : (

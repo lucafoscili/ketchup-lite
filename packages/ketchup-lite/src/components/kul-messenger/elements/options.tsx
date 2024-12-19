@@ -32,7 +32,7 @@ export const prepOptions = (
     //#endregion
 
     //#region Customization
-    customization: () => {
+    customize: () => {
       const { elements, handlers } = getAdapter();
       const { options } = elements.refs;
       const { button } = handlers.options;
@@ -40,11 +40,11 @@ export const prepOptions = (
       return (
         <kul-button
           class="kul-full-width"
-          id={IDS.options.customization}
+          id={IDS.options.customize}
           kulIcon="auto-fix"
           kulLabel="Customize"
           onKul-button-event={button}
-          ref={assignRef(options, "customization")}
+          ref={assignRef(options, "customize")}
         ></kul-button>
       );
     },

@@ -26,7 +26,7 @@ import {
   KUL_DROPDOWN_CLASS_VISIBLE,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
-} from "src/variables/GenericVariables";
+} from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulListEventPayload } from "../kul-list/kul-list-declarations";
 import {

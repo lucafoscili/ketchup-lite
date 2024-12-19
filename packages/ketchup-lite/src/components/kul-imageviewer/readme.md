@@ -68,13 +68,13 @@ Type: `Promise<void>`
 
 
 
-### `getComponents() => Promise<KulImageviewerAdapterComponents["refs"]>`
+### `getComponents() => Promise<KulImageviewerAdapterRefs>`
 
 This method is used to retrieve the references to the subcomponents.
 
 #### Returns
 
-Type: `Promise<{ explorer: { load: HTMLKulButtonElement; masonry: HTMLKulMasonryElement; textfield: HTMLKulTextfieldElement; }; imageviewer: { canvas: HTMLKulCanvasElement; clearHistory: HTMLKulButtonElement; deleteShape: HTMLKulButtonElement; redo: HTMLKulButtonElement; save: HTMLKulButtonElement; spinner: HTMLKulSpinnerElement; tree: HTMLKulTreeElement; undo: HTMLKulButtonElement; }; }>`
+Type: `Promise<KulImageviewerAdapterRefs>`
 
 
 
@@ -98,15 +98,9 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<GenericObject>`
 
 Used to retrieve component's properties and descriptions.
-
-#### Parameters
-
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `descriptions` | `boolean` | - When true, includes descriptions for each property. |
 
 #### Returns
 
@@ -231,30 +225,30 @@ Type: `Promise<void>`
 
 ### Depends on
 
+- [kul-canvas](../kul-canvas)
 - [kul-button](../kul-button)
 - [kul-spinner](../kul-spinner)
+- [kul-tree](../kul-tree)
 - [kul-masonry](../kul-masonry)
 - [kul-textfield](../kul-textfield)
-- [kul-canvas](../kul-canvas)
-- [kul-tree](../kul-tree)
 
 ### Graph
 ```mermaid
 graph TD;
+  kul-imageviewer --> kul-canvas
   kul-imageviewer --> kul-button
   kul-imageviewer --> kul-spinner
+  kul-imageviewer --> kul-tree
   kul-imageviewer --> kul-masonry
   kul-imageviewer --> kul-textfield
-  kul-imageviewer --> kul-canvas
-  kul-imageviewer --> kul-tree
-  kul-button --> kul-image
-  kul-button --> kul-list
+  kul-canvas --> kul-image
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-masonry --> kul-button
-  kul-canvas --> kul-image
+  kul-button --> kul-image
+  kul-button --> kul-list
   kul-tree --> kul-textfield
+  kul-masonry --> kul-button
   kul-showcase-imageviewer --> kul-imageviewer
   style kul-imageviewer fill:#f9f,stroke:#333,stroke-width:4px
 ```

@@ -1,4 +1,4 @@
-import { getAssetPath } from "@stencil/core";
+import { kulManagerSingleton } from "src";
 import { KulDataDataset } from "src/components";
 import {
   KulComponentEventName,
@@ -22,6 +22,8 @@ export const IMAGEVIEWER_FIXTURES: () => {
   documentation: KulArticleDataset;
   examples: ImageviewerData;
 } = () => {
+  const { get } = kulManagerSingleton.assets;
+
   const data: { [index: string]: KulDataDataset } = {
     kulData: {
       nodes: [
@@ -29,7 +31,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+              value: get(`./assets/media/avatar_thor_2.png`),
             },
           },
           id: "image_0",
@@ -39,7 +41,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/location_forest.png`),
+              value: get(`./assets/media/location_forest.png`),
             },
           },
           id: "image_1",
@@ -49,7 +51,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_freya.png`),
+              value: get(`./assets/media/avatar_freya.png`),
             },
           },
           id: "image_2",

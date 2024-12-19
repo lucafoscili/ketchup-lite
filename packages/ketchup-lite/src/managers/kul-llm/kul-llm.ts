@@ -1,4 +1,4 @@
-import { kulManagerInstance } from "../kul-manager/kul-manager";
+import { kulManagerSingleton } from "src";
 import { KulLLMRequest } from "./kul-llm-declarations";
 
 export class KulLLM {
@@ -30,7 +30,7 @@ export class KulLLM {
     textarea: HTMLKulTextfieldElement,
     button: HTMLKulButtonElement,
   ) {
-    const kulManager = kulManagerInstance();
+    const { debug, language } = kulManagerSingleton;
 
     const speechConstructor =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -39,7 +39,7 @@ export class KulLLM {
       return;
     }
     const recognition = new speechConstructor();
-    recognition.lang = kulManager.language.getBCP47();
+    recognition.lang = language.getBCP47();
     recognition.interimResults = true;
     recognition.maxAlternatives = 1;
 
@@ -48,7 +48,7 @@ export class KulLLM {
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join("");
-      kulManager.debug.logs.new(this, "STT response: " + transcript);
+      debug.logs.new(this, "STT response: " + transcript);
       textarea.setValue(transcript);
       const isFinal = event.results[event.results.length - 1].isFinal;
       if (isFinal) {
@@ -69,7 +69,7 @@ export class KulLLM {
     try {
       recognition.start();
     } catch (err) {
-      kulManager.debug.logs.new(this, "Error: " + err, "error");
+      debug.logs.new(this, "Error: " + err, "error");
     }
   }
 }

@@ -1,5 +1,4 @@
-import { getAssetPath } from "@stencil/core";
-
+import { kulManagerSingleton } from "src";
 import {
   KulMessengerAvatarNode,
   KulMessengerDataset,
@@ -49,7 +48,9 @@ export const FREYA_AVATARS: () => KulMessengerAvatarNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/avatar_freya.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/avatar_freya.png",
+        ),
       },
     },
     description: "Freya dressed for war",
@@ -60,7 +61,9 @@ export const FREYA_AVATARS: () => KulMessengerAvatarNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/avatar_freya_2.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/avatar_freya_2.png",
+        ),
       },
     },
     description: "Freya during a ceremony",
@@ -74,7 +77,9 @@ export const FREYA_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/location_lake.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/location_lake.png",
+        ),
       },
     },
     description: "Lake at night, the sky feats a beautiful aurora borealis.",
@@ -85,7 +90,9 @@ export const FREYA_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/location_armory.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/location_armory.png",
+        ),
       },
     },
     description: "Armory of Asgard.",
@@ -99,7 +106,9 @@ export const FREYA_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/outfit_armor_2.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/outfit_armor_2.png",
+        ),
       },
     },
     description: "Regal armor made of gold and engraved.",
@@ -110,7 +119,9 @@ export const FREYA_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/outfit_dress.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/outfit_dress.png",
+        ),
       },
     },
     description: "Elegant summer dress fit for a goddess",
@@ -124,7 +135,9 @@ export const FREYA_STYLES: () => KulMessengerStyleNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/style_photorealistic.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/style_photorealistic.png",
+        ),
       },
     },
     description: "Photorealistic image.",
@@ -135,7 +148,7 @@ export const FREYA_STYLES: () => KulMessengerStyleNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/style_anime.png"),
+        value: kulManagerSingleton.assets.get("./assets/media/style_anime.png"),
       },
     },
     description: "Anime styled image.",
@@ -189,7 +202,7 @@ export const THOR_AVATARS: () => KulMessengerAvatarNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/avatar_thor.png"),
+        value: kulManagerSingleton.assets.get("./assets/media/avatar_thor.png"),
       },
     },
     description: "Thor with Mjollnir",
@@ -200,7 +213,9 @@ export const THOR_AVATARS: () => KulMessengerAvatarNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/avatar_thor_2.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/avatar_thor_2.png",
+        ),
       },
     },
     description: "Thor in the land of fire",
@@ -214,7 +229,9 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/location_asgard_halls.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/location_asgard_halls.png",
+        ),
       },
     },
     description: "The halls of the Palace of Asgard",
@@ -225,7 +242,9 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/location_bifrost_bridge.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/location_bifrost_bridge.png",
+        ),
       },
     },
     description: "The portal to other realms.",
@@ -236,7 +255,9 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/location_forest.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/location_forest.png",
+        ),
       },
     },
     description: "A misteryous forest on Earth.",
@@ -247,7 +268,9 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/location_armory.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/location_armory.png",
+        ),
       },
     },
     description: "Armory of Asgard.",
@@ -261,7 +284,9 @@ export const THOR_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/outfit_armor.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/outfit_armor.png",
+        ),
       },
     },
     description: "Regal armor made of gold and engraved.",
@@ -272,7 +297,9 @@ export const THOR_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/outfit_armor_3.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/outfit_armor_3.png",
+        ),
       },
     },
     description: "Armor made of steel.",
@@ -286,7 +313,7 @@ export const THOR_STYLES: () => KulMessengerStyleNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/style_comic.png"),
+        value: kulManagerSingleton.assets.get("./assets/media/style_comic.png"),
       },
     },
     description: "Comic image.",
@@ -297,7 +324,9 @@ export const THOR_STYLES: () => KulMessengerStyleNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: getAssetPath("./assets/media/style_painting.png"),
+        value: kulManagerSingleton.assets.get(
+          "./assets/media/style_painting.png",
+        ),
       },
     },
     description: "Painting styled image.",

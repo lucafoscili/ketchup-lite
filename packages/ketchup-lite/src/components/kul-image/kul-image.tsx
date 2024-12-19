@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Method,
@@ -21,7 +20,7 @@ import {
   CSS_VAR_PREFIX,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
-} from "src/variables/GenericVariables";
+} from "src/utils/constants";
 import { KulBadgePropsInterface } from "../kul-badge/kul-badge-declarations";
 import { KulImageEvent, KulImageEventPayload } from "./kul-image-declarations";
 
@@ -156,7 +155,7 @@ export class KulImage {
 
   //#region Private methods
   #createIcon(): VNode {
-    const { theme } = kulManagerSingleton;
+    const { assets, theme } = kulManagerSingleton;
 
     const { error, kulColor, kulValue } = this;
 
@@ -181,7 +180,7 @@ export class KulImage {
         ? theme.list[theme.name].icons[kulValue]
         : kulValue;
     style["--kul_image_mask"] =
-      `url('${getAssetPath(`./assets/svg/${icon}.svg`)}') no-repeat center`;
+      `url('${assets.get(`./assets/svg/${icon}.svg`)}') no-repeat center`;
 
     return <div class={className} style={style}></div>;
   }
@@ -235,7 +234,7 @@ export class KulImage {
     info.update(this, "did-render");
   }
   render() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, sanitizeProps, theme } = kulManagerSingleton;
 
     const {
       error,
@@ -292,7 +291,11 @@ export class KulImage {
             }}
           >
             {el}
-            {kulBadgeProps && <kul-badge {...kulBadgeProps}></kul-badge>}
+            {kulBadgeProps && (
+              <kul-badge
+                {...sanitizeProps(kulBadgeProps, "KulBadge")}
+              ></kul-badge>
+            )}
           </div>
         </div>
       </Host>

@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Method,
@@ -15,7 +14,7 @@ import Prism from "prismjs";
 import { kulManagerSingleton } from "src";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { STATIC_LANGUAGES } from "./helpers/languages";
 import { KulCodeEvent, KulCodeEventPayload } from "./kul-code-declarations";
 
@@ -177,10 +176,10 @@ export class KulCode {
     );
   }
   async #loadLanguage() {
+    const { get } = kulManagerSingleton.assets;
+
     try {
-      const module = getAssetPath(
-        `./assets/prism/prism-${this.kulLanguage}.min.js`,
-      );
+      const module = get(`./assets/prism/prism-${this.kulLanguage}.min.js`);
       await import(module);
     } catch (error) {
       console.error(

@@ -73,9 +73,9 @@ export const createGetters = (
         const { connectionStatus } = getAdapter().controller.get.compInstance;
         return connectionStatus;
       },
-      editing: () => {
-        const { editingStatus } = getAdapter().controller.get.compInstance;
-        return editingStatus;
+      formStatus: () => {
+        const { formStatusMap } = getAdapter().controller.get.compInstance;
+        return formStatusMap;
       },
       hoveredCustomizationOption: () => {
         const { hoveredCustomizationOption } =
@@ -106,7 +106,7 @@ export const createSetters = (
       },
       editing: (type, id) => {
         const { compInstance } = getAdapter().controller.get;
-        compInstance.editingStatus[type] = id;
+        compInstance.formStatusMap[type] = id;
       },
       hoveredCustomizationOption: (node) => {
         const { compInstance } = getAdapter().controller.get;

@@ -3,8 +3,19 @@ import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declaration
 import {
   KulCardAdapterRefs,
   KulCardLayout,
+  KulCardPropsInterface,
   KulCardShapesIds,
 } from "../kul-card-declarations";
+
+//#region Props
+export const KUL_CARD_PROPS: (keyof KulCardPropsInterface)[] = [
+  "kulData",
+  "kulLayout",
+  "kulSizeX",
+  "kulSizeY",
+  "kulStyle",
+];
+//#endregion
 
 //#region Defaults
 export const DEFAULTS: () => {

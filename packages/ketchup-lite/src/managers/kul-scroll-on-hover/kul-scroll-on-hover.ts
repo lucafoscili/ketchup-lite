@@ -1,4 +1,4 @@
-import type { KulDom } from "../kul-manager/kul-manager-declarations";
+import { kulManagerSingleton } from "src";
 import {
   KulScrollOnHoverElement,
   KulScrollOnHoverPercentages,
@@ -11,7 +11,6 @@ export class KulScrollOnHover {
   managedElements: Set<KulScrollOnHoverElement>;
   step: number;
   #arrowsContainer: HTMLElement;
-  #DOM: KulDom = document.documentElement as KulDom;
   #leftArrows: HTMLElement[];
   #rightArrows: HTMLElement[];
   #scrollEvent: (event: Event) => void;
@@ -104,6 +103,8 @@ export class KulScrollOnHover {
     return !this.managedElements ? false : this.managedElements.has(el);
   }
   async start(event: MouseEvent): Promise<void> {
+    const { run } = kulManagerSingleton.scrollOnHover;
+
     const el: KulScrollOnHoverElement =
       event.currentTarget as KulScrollOnHoverElement;
     el.scrollOnHover.rect = el.getBoundingClientRect();
@@ -145,17 +146,10 @@ export class KulScrollOnHover {
               this.#rightArrows[i].classList.add("kul-activated");
             }
           }
-          const dom = this.#DOM;
           this.#timeout = setTimeout(() => {
             el.scrollOnHover.active = true;
             this.#rAF = requestAnimationFrame(function () {
-              dom.ketchupLite.scrollOnHover.run(
-                el,
-                maxScrollLeft,
-                percRight,
-                percLeft,
-                direction,
-              );
+              run(el, maxScrollLeft, percRight, percLeft, direction);
             });
           }, this.delay);
         }
@@ -176,17 +170,10 @@ export class KulScrollOnHover {
               ? ScrollOnHoverDirection.BOTTOM
               : null;
         if (direction) {
-          const dom = this.#DOM;
           this.#timeout = setTimeout(() => {
             el.scrollOnHover.active = true;
             this.#rAF = requestAnimationFrame(function () {
-              dom.ketchupLite.scrollOnHover.run(
-                el,
-                maxScrollTop,
-                percBottom,
-                percTop,
-                direction,
-              );
+              run(el, maxScrollTop, percBottom, percTop, direction);
             });
           }, this.delay);
         }
@@ -214,6 +201,8 @@ export class KulScrollOnHover {
     percBack: number,
     direction: ScrollOnHoverDirection,
   ): void {
+    const { run } = kulManagerSingleton.scrollOnHover;
+
     if (!el.scrollOnHover.active) {
       this.stop(el);
       return;
@@ -310,15 +299,8 @@ export class KulScrollOnHover {
       arrow[i].classList.add("kul-animated");
     }
 
-    const dom = this.#DOM;
     this.#rAF = requestAnimationFrame(function () {
-      dom.ketchupLite.scrollOnHover.run(
-        el,
-        maxScrollLeft,
-        percForward,
-        percBack,
-        direction,
-      );
+      run(el, maxScrollLeft, percForward, percBack, direction);
     });
   }
   updateChildren(el: KulScrollOnHoverElement): void {

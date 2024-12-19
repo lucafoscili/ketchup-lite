@@ -38,32 +38,27 @@ export const createNode = async <
   adapter: KulMessengerAdapter,
   type: T,
 ) => {
-  const {controller, elements} = adapter;
-  const {} = controller.get.;
-  const {} = elements.refs.customization;
+  const { controller, elements } = adapter;
+  const { byType } = controller.get.image;
+  const { description, id, imageUrl, title } =
+    elements.refs.customization.form[type];
 
-  const editing = adapter.components.editing;
-  const images = adapter.get.image.byType(type);
+  const images = byType(type);
 
-  const id = (await editing[
-    type
-  ].idTextfield.getValue()) as KulMessengerChildIds<KulMessengerUnionChildIds>;
+  const nodeId =
+    (await id.getValue()) as KulMessengerChildIds<KulMessengerUnionChildIds>;
 
-  const value = await editing[type].titleTextarea.getValue();
-  const imageUrl = await editing[type].imageUrlTextarea.getValue();
-  const description = await editing[type].descriptionTextarea.getValue();
-
-  const existingImage = images?.find((i) => i.id === id);
+  const existingImage = images?.find((i) => i.id === nodeId);
   if (existingImage) {
-    existingImage.description = description;
-    existingImage.cells.kulImage.value = imageUrl;
-    existingImage.value = value;
+    existingImage.description = await description.getValue();
+    existingImage.cells.kulImage.value = await imageUrl.getValue();
+    existingImage.value = await title.getValue();
   } else {
     const node: KulMessengerBaseChildNode<KulMessengerUnionChildIds> = {
-      cells: { kulImage: { shape: "image", value: imageUrl } },
-      id,
-      description,
-      value,
+      cells: { kulImage: { shape: "image", value: await imageUrl.getValue() } },
+      id: nodeId,
+      description: await description.getValue(),
+      value: await title.getValue(),
     };
 
     images.push(node);
@@ -128,11 +123,11 @@ export const hasCharacters = (adapter: KulMessengerAdapter) => {
 //#endregion
 
 //#region hasNodes
-export const hasNodes = (adapter: KulMessengerAdapter) =>  {
+export const hasNodes = (adapter: KulMessengerAdapter) => {
   const { kulData } = adapter.controller.get.compInstance;
 
   return !!kulData?.nodes?.length;
-}
+};
 //#endregion
 
 //#region statusIconOptions
@@ -159,10 +154,10 @@ export const statusIconOptions = (status: KulChatStatus) => {
 //#region systemMessage
 export const systemMessage = (adapter: KulMessengerAdapter) => {
   const getDynamicPrompts = () => {
-    const { character, image, ui } = adapter.controller.get;
+    const { character, compInstance, image } = adapter.controller.get;
     const { biography } = character;
     const { asCover } = image;
-    //const { options: isEnabled } = adapter.get.messenger.ui();
+    const { options: isEnabled } = compInstance.ui;
 
     const location = asCover("locations").node;
     const outfit = asCover("outfits").node;
@@ -216,7 +211,7 @@ Begin your performance...
 //#endregion
 
 //#region updateDataset
-export const updateDataset = (adapter:  KulMessengerAdapter) => {
+export const updateDataset = (adapter: KulMessengerAdapter) => {
   const { controller, elements } = adapter;
   const { compInstance } = controller.get;
   const { save } = elements.refs.character;

@@ -1,3 +1,4 @@
+import { kulManagerSingleton } from "src";
 import { KulDataNode } from "src/components";
 import type {
   GenericMap,
@@ -5,8 +6,7 @@ import type {
   KulComponent,
   KulComponentName,
 } from "../../types/GenericTypes";
-import { RIPPLE_SURFACE_CLASS } from "../../variables/GenericVariables";
-import type { KulDom } from "../kul-manager/kul-manager-declarations";
+import { RIPPLE_SURFACE_CLASS } from "../../utils/constants";
 import {
   KulThemeAttribute,
   KulThemeCSSVariables,
@@ -17,7 +17,7 @@ import {
 import { themesJson } from "./kul-theme-values";
 
 export class KulTheme {
-  #DOM = document.documentElement as KulDom;
+  #DOM = document.documentElement;
   #MASTER_CUSTOM_STYLE = "MASTER";
   cssVars: Partial<KulThemeCSSVariables>;
   isDarkTheme: boolean;
@@ -82,12 +82,14 @@ export class KulTheme {
 
   //#region font
   #font = () => {
+    const { get } = kulManagerSingleton.assets;
+
     let fonts = "";
     const theme = this.list[this.name];
 
     if (theme.font?.length) {
       theme.font.forEach((f) => {
-        const fontPath = getAssetPath(`./assets/fonts/${f}-Regular`);
+        const fontPath = get(`./assets/fonts/${f}-Regular`);
         const fontFace = `@font-face{font-family:${f.split("-")[0].replace(/(?<!^)(?=[A-Z])/g, " ")};src:url('${fontPath}.woff2')format('woff2'),url('${fontPath}.woff') format('woff');}`;
         fonts += fontFace;
       });
@@ -99,13 +101,15 @@ export class KulTheme {
 
   //#region icons
   #icons = () => {
+    const { get } = kulManagerSingleton.assets;
+
     const theme = this.list[this.name];
 
     const icons = theme.icons;
     let css = "";
     for (var key in icons) {
       if (icons.hasOwnProperty(key)) {
-        const val = `url('${getAssetPath(
+        const val = `url('${get(
           `./assets/svg/${icons[key]}.svg`,
         )}') no-repeat center`;
         this.cssVars[key] = val;
@@ -118,23 +122,19 @@ export class KulTheme {
 
   //#region set
   set = (name?: string, list?: KulThemeJSON) => {
+    const { logs } = kulManagerSingleton.debug;
+
     if (name) {
       this.name = name;
     }
     if (list) {
       this.list = list;
     }
-    this.#DOM.ketchupLite.debug.logs.new(
-      this,
-      "Setting theme to: " + this.name + ".",
-    );
+    logs.new(this, "Setting theme to: " + this.name + ".");
 
     const theme = this.list?.[this.name];
     if (!theme) {
-      this.#DOM.ketchupLite.debug.logs.new(
-        this,
-        'Invalid theme name, falling back to default ("silver").',
-      );
+      logs.new(this, 'Invalid theme name, falling back to default ("silver").');
       this.name = "silver";
     }
 
@@ -200,6 +200,8 @@ export class KulTheme {
 
   //#region refresh
   refresh = () => {
+    const { logs } = kulManagerSingleton.debug;
+
     try {
       this.styleTag.innerText =
         ':root[kul-theme="' +
@@ -209,17 +211,13 @@ export class KulTheme {
         this.#icons() +
         "}";
       this.#customStyle();
-      this.#DOM.ketchupLite.debug.logs.new(
+      logs.new(
         this,
         "Theme " + this.#DOM.getAttribute("kul-theme") + " refreshed.",
       );
       document.dispatchEvent(new CustomEvent("kul-theme-refresh"));
     } catch (error) {
-      this.#DOM.ketchupLite.debug.logs.new(
-        this,
-        "Theme not refreshed.",
-        "warning",
-      );
+      logs.new(this, "Theme not refreshed.", "warning");
     }
   };
   //#endregion
@@ -327,6 +325,8 @@ export class KulTheme {
 
   //#region randomTheme
   randomTheme = () => {
+    const { logs } = kulManagerSingleton.debug;
+
     let themes: string[] = [];
     for (var key in this.list) {
       if (this.list.hasOwnProperty(key)) {
@@ -342,7 +342,7 @@ export class KulTheme {
       }
       this.set(themes[index]);
     } else {
-      this.#DOM.ketchupLite.debug.logs.new(
+      logs.new(
         this,
         "Couldn't set a random theme: no themes available!",
         "warning",
@@ -353,9 +353,11 @@ export class KulTheme {
 
   //#region colorCheck
   colorCheck = (color: string) => {
+    const { logs } = kulManagerSingleton.debug;
+
     if (color === "transparent") {
       color = this.cssVars["--kul-background-color"];
-      this.#DOM.ketchupLite.debug.logs.new(
+      logs.new(
         this,
         "Received TRANSPARENT color, converted to " +
           color +
@@ -378,7 +380,7 @@ export class KulTheme {
       const oldColor = color;
       color = this.codeToHex(color);
       isHex = color.substring(0, 1) === "#" ? true : false;
-      this.#DOM.ketchupLite.debug.logs.new(
+      logs.new(
         this,
         "Received CODE NAME color " +
           oldColor +
@@ -439,15 +441,12 @@ export class KulTheme {
         } else {
           hexColor = this.rgbToHex(rgbColorObj.r, rgbColorObj.g, rgbColorObj.b);
         }
-        this.#DOM.ketchupLite.debug.logs.new(
+        logs.new(
           this,
           "Received HEX color " + oldColor + ", converted to " + color + ".",
         );
       } catch (error) {
-        this.#DOM.ketchupLite.debug.logs.new(
-          this,
-          "Invalid color: " + color + ".",
-        );
+        logs.new(this, "Invalid color: " + color + ".");
       }
     }
 
@@ -460,10 +459,7 @@ export class KulTheme {
       rgbValues = values[1] + "," + values[2] + "," + values[3];
       rgbColor = color;
     } catch (error) {
-      this.#DOM.ketchupLite.debug.logs.new(
-        this,
-        "Color not converted to rgb values: " + color + ".",
-      );
+      logs.new(this, "Color not converted to rgb values: " + color + ".");
     }
 
     if (!hexColor) {
@@ -474,10 +470,7 @@ export class KulTheme {
           parseInt(values[3]),
         );
       } catch (error) {
-        this.#DOM.ketchupLite.debug.logs.new(
-          this,
-          "Color not converted to hex value: " + color + ".",
-        );
+        logs.new(this, "Color not converted to hex value: " + color + ".");
       }
     }
 
@@ -494,10 +487,7 @@ export class KulTheme {
         hslValues = hsl.h + "," + hsl.s + "%," + hsl.l + "%";
         hslColor = "hsl(" + hsl.h + "," + hsl.s + "%," + hsl.l + "%)";
       } catch (error) {
-        this.#DOM.ketchupLite.debug.logs.new(
-          this,
-          "Color not converted to hex value: " + color + ".",
-        );
+        logs.new(this, "Color not converted to hex value: " + color + ".");
       }
     }
 
@@ -624,6 +614,8 @@ export class KulTheme {
 
   //#region codeToHex
   codeToHex(color: string): string {
+    const { logs } = kulManagerSingleton.debug;
+
     const colorCodes: GenericMap = {
       aliceblue: "#f0f8ff",
       antiquewhite: "#faebd7",
@@ -777,10 +769,7 @@ export class KulTheme {
     if (colorCodes[color.toLowerCase()]) {
       return colorCodes[color.toLowerCase()];
     } else {
-      this.#DOM.ketchupLite.debug.logs.new(
-        this,
-        "Could not decode color " + color + "!",
-      );
+      logs.new(this, "Could not decode color " + color + "!");
       return color;
     }
   }

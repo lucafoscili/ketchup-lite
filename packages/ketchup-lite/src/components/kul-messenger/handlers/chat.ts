@@ -19,13 +19,13 @@ export const prepChatHandlers = (
         case "click":
           switch (id) {
             case IDS.chat.leftExpander:
-              const newLeft = set.messenger.ui.panel("left");
+              const newLeft = set.ui.panel("left");
               comp.kulIcon = newLeft
                 ? ICONS.chat.rightExpander
                 : ICONS.chat.leftExpander;
               break;
             case IDS.chat.rightExpander:
-              const newRight = set.messenger.ui.panel("right");
+              const newRight = set.ui.panel("right");
               comp.kulIcon = newRight
                 ? ICONS.chat.leftExpander
                 : ICONS.chat.rightExpander;
@@ -59,7 +59,7 @@ export const prepChatHandlers = (
           });
           break;
         case "polling":
-          set.messenger.status.connection(status);
+          set.status.connection(status);
           break;
         case "update":
           set.character.history(history);
@@ -76,12 +76,16 @@ export const prepChatHandlers = (
 
       switch (eventType) {
         case "click":
-          if (node.id === "previous") {
-            previous();
-          } else if (node.id === "next") {
-            next();
-          } else {
-            current(null);
+          switch (node.id) {
+            case "next":
+              next();
+              break;
+            case "previous":
+              previous();
+              break;
+            default:
+              current(null);
+              break;
           }
       }
     },

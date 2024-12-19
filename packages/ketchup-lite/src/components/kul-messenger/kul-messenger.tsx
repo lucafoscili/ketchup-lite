@@ -15,7 +15,7 @@ import {
 import { kulManagerSingleton } from "src";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
 import { CLEAN_UI, IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from "./helpers/constants";
 import {
@@ -37,7 +37,6 @@ import {
   KulMessengerEventPayload,
   KulMessengerHistory,
   KulMessengerImageTypes,
-  KulMessengerUI,
   KulMessengerUnionChildIds,
 } from "./kul-messenger-declarations";
 
@@ -74,10 +73,10 @@ export class KulMessenger {
    */
   @State() currentCharacter: KulMessengerCharacterNode;
   /**
-   * Node representing the current active character.
+   * Maps an active form with the id of its related node.
    */
   @State()
-  editingStatus: KulMessengerEditingStatus<KulMessengerImageTypes> =
+  formStatusMap: KulMessengerEditingStatus<KulMessengerImageTypes> =
     IMAGE_TYPE_IDS.reduce((acc, type) => {
       acc[type] = null;
       return acc;
@@ -140,11 +139,11 @@ export class KulMessenger {
   })
   kulEvent: EventEmitter<KulMessengerEventPayload>;
   onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
-    const { currentCharacter, rootElement } = this;
+    const { currentCharacter, rootElement, ui } = this;
 
     const config: KulMessengerConfig = {
       currentCharacter: currentCharacter?.id,
-      ui: "this.ui" as any,
+      ui,
     };
     this.kulEvent.emit({
       comp: this,
@@ -157,6 +156,24 @@ export class KulMessenger {
   //#endregion
 
   //#region Public methods
+  /**
+   * Deletes the options identified by the node and type.
+   * @param {KulMessengerBaseChildNode<KulMessengerUnionChildIds>} node - The node to delete.
+   * @param {KulMessengerImageTypes} type - The type of the node.
+   */
+  @Method()
+  async deleteOption(
+    node: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+    type: KulMessengerImageTypes,
+  ): Promise<void> {
+    const { root } = this.#adapter.controller.get.image;
+
+    const rootNode = root(type);
+    const idx = rootNode.children.indexOf(node);
+    if (idx > -1) {
+      delete rootNode.children[idx];
+    }
+  }
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -215,7 +232,7 @@ export class KulMessenger {
 
   //#region Private methods
   #initialize() {
-    const { kulData } = this;
+    const { kulData, kulValue } = this;
 
     if (hasNodes(this.#adapter)) {
       for (let index = 0; index < kulData.nodes.length; index++) {
@@ -224,7 +241,7 @@ export class KulMessenger {
       }
     }
 
-    if (this.kulValue) {
+    if (kulValue) {
       this.#initConfig();
     }
   }
@@ -255,13 +272,17 @@ export class KulMessenger {
     Object.assign(this.covers, covers);
   }
   #initConfig() {
-    const currentCharacter = this.kulValue.currentCharacter;
-    const filters = this.kulValue.ui?.filters || {};
-    const panels = this.kulValue.ui?.panels || {};
+    const { byId } = this.#adapter.controller.get.character;
+    const { kulValue } = this;
+
+    const currentCharacter = kulValue.currentCharacter;
+    const filters = kulValue.ui?.filters || {};
+    const panels = kulValue.ui?.panels || {};
+
     if (currentCharacter) {
-      this.currentCharacter =
-        this.#adapter.get.character.byId(currentCharacter);
+      this.currentCharacter = byId(currentCharacter);
     }
+
     for (const key in filters) {
       if (Object.prototype.hasOwnProperty.call(filters, key)) {
         const filter = filters[key];
@@ -323,25 +344,21 @@ export class KulMessenger {
     const { controller, elements } = this.#adapter;
     const { name } = controller.get.character;
     const { avatar, biography, save, statusIcon } = elements.jsx.character;
-
-    const isCollapsed =
-      this.#adapter.controller.get.messenger.ui().panels.isLeftCollapsed;
+    const { isLeftCollapsed } = this.ui.panels;
 
     return (
       <div
-        class={`messenger__left ${isCollapsed ? "messenger__left--collapsed" : ""}`}
+        class={`messenger__left ${isLeftCollapsed ? "messenger__left--collapsed" : ""}`}
       >
         <div class="messenger__avatar">
-          <Fragment>
-            {avatar()}
-            <div class="messenger__avatar__name-wrapper">
-              <div class="messenger__avatar__name">
-                {statusIcon()}
-                <div class="messenger__avatar__label">{name()}</div>
-              </div>
-              {save()}
+          {avatar()}
+          <div class="messenger__avatar__name-wrapper">
+            <div class="messenger__avatar__name">
+              {statusIcon()}
+              <div class="messenger__avatar__label">{name()}</div>
             </div>
-          </Fragment>
+            {save()}
+          </div>
         </div>
         <div class="messenger__biography">{biography()}</div>
       </div>
@@ -364,31 +381,66 @@ export class KulMessenger {
       </div>
     );
   }
+  #prepCovers(type: KulMessengerImageTypes, images: VNode[]) {
+    const { add } = this.#adapter.elements.jsx.customization.form[type];
+
+    return (
+      <Fragment>
+        <div class="messenger__customization__title">
+          <div class="messenger__customization__label">{type}</div>
+          {add()}
+        </div>
+        <div class="messenger__customization__images">{images}</div>
+      </Fragment>
+    );
+  }
   #prepExtraContext() {
-    const { back, customization } = this.#adapter.elements.jsx.options;
+    const { customization, options } = this.#adapter.elements.jsx;
+    const { back, customize } = options;
+    const { filters } = customization;
+    const { customizationView } = this.ui;
+    const { isRightCollapsed } = this.ui.panels;
 
     const className = {
       messenger__right: true,
-      "messenger__right--collapsed": ui.panels.isRightCollapsed,
-      "messenger__right--customization": ui.customization,
+      "messenger__right--collapsed": isRightCollapsed,
+      "messenger__right--customization": customizationView,
     };
 
     return (
       <div class={className}>
-        {ui.customization ? (
+        {customizationView ? (
           <Fragment>
             <div class="messenger__options__filters">
-              {prepFilters(adapter)}
-              <div class="messenger__options__list">{prepList(adapter)}</div>
+              {filters()}
+              <div class="messenger__options__list">{this.#prepList()}</div>
             </div>
             {back()}
           </Fragment>
         ) : (
           <Fragment>
             <div class="messenger__options__active">{this.#prepOptions()}</div>
-            {customization()}
+            {customize()}
           </Fragment>
         )}
+      </div>
+    );
+  }
+  #prepForm(type: KulMessengerImageTypes) {
+    const { cancel, confirm, description, id, imageUrl, title } =
+      this.#adapter.elements.jsx.customization.form[type];
+
+    return (
+      <div class="messenger__customization__edit__panel">
+        <div class="messenger__customization__edit__label">Create {type}</div>
+        {id()}
+        {title()}
+        {description()}
+        {imageUrl()}
+        <div class="messenger__customization__edit__confirm">
+          {cancel()}
+          {confirm()}
+        </div>
       </div>
     );
   }
@@ -397,12 +449,12 @@ export class KulMessenger {
     const { byType, coverIndex, title } = controller.get.image;
     const { edit, remove } = elements.jsx.customization.list;
     const { image } = handlers.customization;
-    const { hoveredCustomizationOption, ui } = this;
-    const { editing, filters } = ui;
+    const { formStatusMap, hoveredCustomizationOption, ui } = this;
+    const { filters } = ui;
 
     IMAGE_TYPE_IDS.map((type) => {
       if (filters[type]) {
-        const isEditingEnabled = editing[type];
+        const isFormActive = formStatusMap[type];
         const activeIndex = coverIndex(type);
         const images: VNode[] = byType(type).map((node, j) => (
           <div
@@ -434,9 +486,9 @@ export class KulMessenger {
         ));
         return (
           <div class="messenger__customization__section">
-            {isEditingEnabled
-              ? prepEditPanel(adapter, type)
-              : prepCovers(adapter, type, images)}
+            {isFormActive
+              ? this.#prepForm(type)
+              : this.#prepCovers(type, images)}
           </div>
         );
       }
@@ -444,25 +496,26 @@ export class KulMessenger {
   }
   #prepOptions() {
     return OPTION_TYPE_IDS.map((opt) => {
-      const { image, messenger } = this.#adapter.controller.get;
+      const { image } = this.#adapter.controller.get;
       const { asCover } = image;
+      const { ui } = this;
 
-      const cover = asCover(opt);
-      const isEnabled = messenger.ui().options[opt];
+      const { value, node, title } = asCover(opt);
+      const isEnabled = ui.options[opt];
       const option = opt.slice(0, -1);
 
       return (
         <div class="messenger__options__wrapper">
-          {cover.node ? (
+          {node ? (
             <Fragment>
               <img
                 class={`messenger__options__cover`}
-                alt={cover.title}
-                src={cover.value}
+                alt={title}
+                src={value}
               ></img>
               <div
                 class={`messenger__options__blocker ${!isEnabled ? "messenger__options__blocker--active" : ""}`}
-                onClick={() => messenger.ui.options(!isEnabled, opt)}
+                onClick={() => (ui.options[opt] = !isEnabled)}
               >
                 <kul-image
                   kulValue={`${isEnabled ? "touch_app" : "block"}`}
@@ -475,7 +528,7 @@ export class KulMessenger {
           ) : (
             <kul-image
               class={`messenger__options__placeholder`}
-              kulValue={cover.value}
+              kulValue={value}
               title={`No ${option} selected.`}
             ></kul-image>
           )}
@@ -483,15 +536,15 @@ export class KulMessenger {
             <div class="messenger__options__label" title={`Active ${option}.`}>
               {option}
             </div>
-            {cover.title ? (
+            {title && (
               <kul-image
                 class={`messenger__options__info`}
                 kulSizeX="16px"
                 kulSizeY="16px"
                 kulValue="information-variant"
-                title={cover.title}
+                title={title}
               ></kul-image>
-            ) : undefined}
+            )}
           </div>
         </div>
       );
@@ -558,7 +611,7 @@ export class KulMessenger {
   render() {
     const { theme } = kulManagerSingleton;
 
-    if (!this.#hasNodes()) {
+    if (!hasNodes(this.#adapter)) {
       return;
     }
 
@@ -572,7 +625,7 @@ export class KulMessenger {
             <div class="messenger">
               {this.#prepCharacter()}
               {this.#prepChat()}
-              {this.#prepOptions()}
+              {this.#prepExtraContext()}
             </div>
           ) : (
             <div class="roster">{this.#prepRoster()}</div>

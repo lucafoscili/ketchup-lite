@@ -16,7 +16,7 @@ import { kulManagerSingleton } from "src";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
 import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulArticleDataset,
   KulArticleEvent,

@@ -18,7 +18,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<GenericObject<unknown>>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getSelectedNodes",
@@ -150,12 +150,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -264,12 +264,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -356,7 +356,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<GenericObject<unknown>>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getValue",
@@ -537,21 +537,21 @@ export const KUL_DOC: KulShowcaseDoc = {
     methods: [
       {
         name: "clearCanvas",
-        docs: "Clears the painting canvas .",
+        docs: "Clears the specified canvas.",
         returns: {
           type: "Promise<void>",
           docs: "",
         },
-        signature: "() => Promise<void>",
+        signature: "(type?: KulCanvasType) => Promise<void>",
       },
       {
         name: "getCanvas",
-        docs: "Returns the painting canvas .",
+        docs: "Returns the canvas HTML element.",
         returns: {
           type: "Promise<HTMLCanvasElement>",
           docs: "The painting canvas.",
         },
-        signature: "() => Promise<HTMLCanvasElement>",
+        signature: "(type?: KulCanvasType) => Promise<HTMLCanvasElement>",
       },
       {
         name: "getDebugInfo",
@@ -573,12 +573,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -688,12 +688,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getShapes",
@@ -770,12 +770,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "goToSlide",
@@ -865,12 +865,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -981,12 +981,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -1137,12 +1137,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "Chip of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getSelectedNodes",
@@ -1272,12 +1272,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -1390,7 +1390,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<GenericObject<unknown>>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -1478,12 +1478,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "isOpened",
@@ -1574,12 +1574,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -1643,12 +1643,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -1782,10 +1782,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getComponents",
         docs: "This method is used to retrieve the references to the subcomponents.",
         returns: {
-          type: "Promise<{ explorer: { load: HTMLKulButtonElement; masonry: HTMLKulMasonryElement; textfield: HTMLKulTextfieldElement; }; imageviewer: { canvas: HTMLKulCanvasElement; clearHistory: HTMLKulButtonElement; deleteShape: HTMLKulButtonElement; redo: HTMLKulButtonElement; save: HTMLKulButtonElement; spinner: HTMLKulSpinnerElement; tree: HTMLKulTreeElement; undo: HTMLKulButtonElement; }; }>",
+          type: "Promise<KulImageviewerAdapterRefs>",
           docs: "",
         },
-        signature: '() => Promise<KulImageviewerAdapterComponents["refs"]>',
+        signature: "() => Promise<KulImageviewerAdapterRefs>",
       },
       {
         name: "getCurrentSnapshot",
@@ -1813,7 +1813,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<GenericObject<unknown>>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -2099,12 +2099,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -2210,12 +2210,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getSelected",
@@ -2364,7 +2364,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<GenericObject<unknown>>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getSelectedShape",
@@ -2542,6 +2542,16 @@ export const KUL_DOC: KulShowcaseDoc = {
   "kul-messenger": {
     methods: [
       {
+        name: "deleteOption",
+        docs: "Deletes the options identified by the node and type.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature:
+          "(node: KulMessengerBaseChildNode<KulMessengerUnionChildIds>, type: KulMessengerImageTypes) => Promise<void>",
+      },
+      {
         name: "getDebugInfo",
         docs: "Fetches debug information of the component's current state.",
         returns: {
@@ -2552,12 +2562,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -2571,6 +2581,15 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "reset",
         docs: "Resets the states of the component.",
+        returns: {
+          type: "Promise<void>",
+          docs: "",
+        },
+        signature: "() => Promise<void>",
+      },
+      {
+        name: "save",
+        docs: "Saves the current status of the messenger.",
         returns: {
           type: "Promise<void>",
           docs: "",
@@ -2673,12 +2692,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -2745,12 +2764,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -3090,7 +3109,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<GenericObject<unknown>>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getValue",
@@ -3336,12 +3355,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -3429,12 +3448,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -3515,12 +3534,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getValue",
@@ -3629,12 +3648,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getValue",
@@ -3819,12 +3838,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -3918,7 +3937,7 @@ export const KUL_DOC: KulShowcaseDoc = {
           type: "Promise<GenericObject<unknown>>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getValue",
@@ -4033,12 +4052,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -4168,12 +4187,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Used to retrieve component's props values.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "List of props as object, each key will be a prop.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "refresh",
@@ -4272,12 +4291,12 @@ export const KUL_DOC: KulShowcaseDoc = {
       },
       {
         name: "getProps",
-        docs: "Retrieves the properties of the component, with optional descriptions.",
+        docs: "Used to retrieve component's properties and descriptions.",
         returns: {
           type: "Promise<GenericObject<unknown>>",
-          docs: "A promise that resolves to an object where each key is a property name, optionally with its description.",
+          docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "(descriptions?: boolean) => Promise<GenericObject>",
+        signature: "() => Promise<GenericObject>",
       },
       {
         name: "getValue",

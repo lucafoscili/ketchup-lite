@@ -2,7 +2,7 @@ import { KulMasonryAdapter } from "src/components/kul-masonry/kul-masonry-declar
 
 //#region addColumn
 export const addColumn = async (adapter: KulMasonryAdapter) => {
-  const { compInstance } = adapter.state.get;
+  const { compInstance } = adapter.controller.get;
 
   compInstance.kulColumns++;
 };
@@ -10,7 +10,7 @@ export const addColumn = async (adapter: KulMasonryAdapter) => {
 
 //#region removeColumn
 export const removeColumn = async (adapter: KulMasonryAdapter) => {
-  const { compInstance } = adapter.state.get;
+  const { compInstance } = adapter.controller.get;
 
   if (compInstance.kulColumns > 2) {
     compInstance.kulColumns--;
@@ -20,7 +20,7 @@ export const removeColumn = async (adapter: KulMasonryAdapter) => {
 
 //#region changeView
 export const changeView = async (adapter: KulMasonryAdapter) => {
-  const { compInstance, isMasonry, isVertical } = adapter.state.get;
+  const { compInstance, isMasonry, isVertical } = adapter.controller.get;
 
   if (isMasonry()) {
     compInstance.kulView = "vertical";

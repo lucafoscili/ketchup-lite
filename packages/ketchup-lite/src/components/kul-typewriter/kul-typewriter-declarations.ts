@@ -1,4 +1,4 @@
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Events
 export type KulTypewriterEvent = "ready" | "unmount";
@@ -7,16 +7,6 @@ export interface KulTypewriterEventPayload
 //#endregion
 
 //#region Props
-export enum KulTypewriterProps {
-  kulCursor = "Sets the behavior of the bliking cursor.",
-  kulDeleteSpeed = "Sets the deleting speed in milliseconds.",
-  kulLoop = "Enables or disables looping of the text.",
-  kulPause = "Sets the duration of the pause after typing a complete text.",
-  kulSpeed = "Sets the typing speed in milliseconds.",
-  kulStyle = "Custom style of the component.",
-  kulTag = "The name of the HTML tag that will wrap the text.",
-  kulValue = "Sets the text or array of texts to display with the typewriter effect.",
-}
 export interface KulTypewriterPropsInterface {
   kulCursor?: KulTypewriterCursor;
   kulDeleteSpeed?: number;

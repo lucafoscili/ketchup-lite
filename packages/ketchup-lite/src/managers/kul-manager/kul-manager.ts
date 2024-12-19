@@ -2,7 +2,9 @@ import {
   GenericObject,
   KulComponent,
   KulComponentName,
+  KulComponentPropsFor,
 } from "src/types/GenericTypes";
+import { KUL_COMPONENT_PROPS } from "src/utils/constants";
 import { KulData } from "../kul-data/kul-data";
 import { KulDates } from "../kul-dates/kul-dates";
 import { KulDatesLocales } from "../kul-dates/kul-dates-declarations";
@@ -141,31 +143,51 @@ export class KulManager {
   }
   /**
    * Removes suspicious props from an object.
-   * @param props - The props object.
+   * @param  props - The object to sanitize.
+   * @param  compName - The component name to use for specific sanitization.
+   * @returns The sanitized object.
    */
-  sanitizeProps(props: GenericObject) {
-    const ALLOWED_ATTRS = new Set([
-      "class",
-      "id",
-      "name",
-      "value",
-      "type",
-      "title",
+  sanitizeProps<C extends KulComponentName>(
+    props: GenericObject<any>,
+    compName: C,
+  ): KulComponentPropsFor<C>;
+  sanitizeProps<P extends GenericObject<any>>(props: P): P;
+  sanitizeProps<P extends GenericObject<any>, C extends KulComponentName>(
+    props: P,
+    compName?: C,
+  ): KulComponentPropsFor<C> | P {
+    const ALLOWED_ATTRS = new Set<string>([
       "alt",
-      "src",
+      "autocomplete",
+      "autofocus",
+      "checked",
+      "class",
+      "disabled",
       "href",
-      "style",
-      "role",
-      "step",
-      "min",
+      "id",
       "max",
+      "min",
+      "name",
       "placeholder",
+      "role",
+      "src",
+      "step",
+      "title",
+      "type",
+      "value",
     ]);
+
+    if (compName && KUL_COMPONENT_PROPS[compName]) {
+      for (const key of KUL_COMPONENT_PROPS[compName]) {
+        ALLOWED_ATTRS.add(key as string);
+      }
+    }
 
     const isAllowedAttribute = (attrName: string): boolean => {
       if (ALLOWED_ATTRS.has(attrName)) return true;
       if (attrName.startsWith("data-")) return true;
       if (attrName.startsWith("aria-")) return true;
+      if (!compName && attrName.startsWith("kul")) return true;
       return false;
     };
 
@@ -175,26 +197,24 @@ export class KulManager {
       if (/<script>/i.test(value)) return true;
       return false;
     };
+
     const sanitized: GenericObject = {};
     for (const key in props) {
       if (!Object.prototype.hasOwnProperty.call(props, key)) continue;
       const value = props[key];
 
-      if (key.toLowerCase().startsWith("on")) {
-        continue;
-      }
-
-      if (!isAllowedAttribute(key)) {
-        continue;
-      }
-
-      if (isMaliciousValue(value)) {
-        continue;
-      }
+      if (key.toLowerCase().startsWith("on")) continue;
+      if (!isAllowedAttribute(key)) continue;
+      if (isMaliciousValue(value)) continue;
 
       sanitized[key] = value;
     }
-    return sanitized;
+
+    if (compName) {
+      return sanitized as unknown as KulComponentPropsFor<C>;
+    } else {
+      return sanitized as P;
+    }
   }
   /**
    * Spreads the specified locale to all the submodules.

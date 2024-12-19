@@ -10,21 +10,15 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulSliderEvent,
   KulSliderEventPayload,
-  KulSliderProps,
   KulSliderValue,
 } from "./kul-slider-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import {
-  KulDataCyAttributes,
-  type GenericObject,
-} from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   tag: "kul-slider",
@@ -32,41 +26,35 @@ import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
   shadow: true,
 })
 export class KulSlider {
-  //#region Root Element
   @Element() rootElement: HTMLKulSliderElement;
-  //#endregion
+
   //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The value of the component.
    */
   @State() value: KulSliderValue = { display: 0, real: 0 };
   //#endregion
+
   //#region Props
   /**
    * When true, the component is disabled, preventing user interaction.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulDisabled = false;
+  @Prop({ mutable: true }) kulDisabled = false;
   /**
    * Defines text to display as a label for the slider.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = "";
+  @Prop({ mutable: true }) kulLabel = "";
   /**
    * When true, displays the label before the slider component. Defaults to `false`.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulLeadingLabel = false;
+  @Prop({ mutable: true }) kulLeadingLabel = false;
   /**
    * The maximum value allowed by the slider.
    * @default 100
@@ -86,7 +74,7 @@ export class KulSlider {
    * Adds a ripple effect when interacting with the slider.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Custom CSS style to apply to the slider component.
    * @default ""
@@ -96,17 +84,15 @@ export class KulSlider {
    * The initial numeric value for the slider within the defined range.
    * @default 50
    */
-  @Prop({ mutable: true, reflect: true }) kulValue = 50;
+  @Prop({ mutable: true }) kulValue = 50;
   //#endregion
+
   //#region Internal variables
   #input: HTMLInputElement;
-  #kulManager = kulManagerInstance();
   #rippleSurface: HTMLElement;
   //#endregion
+
   //#region Events
-  /**
-   * Describes event emitted for various slider interactions like click, focus, blur.
-   */
   @Event({
     eventName: "kul-slider-event",
     composed: true,
@@ -115,6 +101,8 @@ export class KulSlider {
   })
   kulEvent: EventEmitter<KulSliderEventPayload>;
   onKulEvent(e: Event | CustomEvent, eventType: KulSliderEvent) {
+    const { theme } = kulManagerSingleton;
+
     switch (eventType) {
       case "change":
         this.setValue(+this.#input.value);
@@ -126,10 +114,7 @@ export class KulSlider {
         break;
       case "pointerdown":
         if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface,
-          );
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface);
         }
     }
     this.kulEvent.emit({
@@ -196,61 +181,83 @@ export class KulSlider {
     }, ms);
   }
   //#endregion
+
   //#region Lifecycle hooks
   componentWillLoad() {
-    if (this.kulValue) {
-      this.setValue(this.kulValue);
+    const { theme } = kulManagerSingleton;
+
+    const { kulValue } = this;
+
+    if (kulValue) {
+      this.setValue(kulValue);
     }
 
-    this.#kulManager.theme.register(this);
+    theme.register(this);
   }
   componentDidLoad() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (this.#rippleSurface) {
-      this.#kulManager.theme.ripple.setup(this.#rippleSurface);
+      theme.ripple.setup(this.#rippleSurface);
     }
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "did-render");
   }
   render() {
-    const className: Record<string, boolean> = {
+    const { theme } = kulManagerSingleton;
+
+    const {
+      kulDisabled,
+      kulLabel,
+      kulMax,
+      kulMin,
+      kulRipple,
+      kulStep,
+      kulStyle,
+      value,
+    } = this;
+
+    const className = {
       slider: true,
       "slider--disabled": this.kulDisabled,
     };
-    const formClassName: Record<string, boolean> = {
+
+    const formClassName = {
       "form-field": true,
       "form-field--align-end": this.kulLeadingLabel,
     };
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class={formClassName}>
             <div
               class={className}
               style={{
-                "--kul_slider_value": `${((this.value.display - this.kulMin) / (this.kulMax - this.kulMin)) * 100}%`,
+                "--kul_slider_value": `${((value.display - kulMin) / (kulMax - kulMin)) * 100}%`,
               }}
             >
               <input
                 type="range"
                 class="slider__native-control"
                 data-cy={KulDataCyAttributes.INPUT}
-                min={this.kulMin}
-                max={this.kulMax}
-                step={this.kulStep}
-                value={this.value.real}
-                disabled={this.kulDisabled}
+                min={kulMin}
+                max={kulMax}
+                step={kulStep}
+                value={value.real}
+                disabled={kulDisabled}
                 onBlur={(e) => {
                   this.onKulEvent(e, "blur");
                 }}
@@ -277,23 +284,25 @@ export class KulSlider {
                   <div
                     class="slider__thumb"
                     ref={(el) => {
-                      if (this.kulRipple) {
+                      if (kulRipple) {
                         this.#rippleSurface = el;
                       }
                     }}
                   ></div>
                 </div>
               </div>
-              <span class="slider__value">{this.value.display}</span>
+              <span class="slider__value">{value.display}</span>
             </div>
-            <label class="form-field__label">{this.kulLabel}</label>
+            <label class="form-field__label">{kulLabel}</label>
           </div>
         </div>
       </Host>
     );
   }
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
 }
 //#endregion

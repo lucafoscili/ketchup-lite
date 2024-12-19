@@ -1,15 +1,14 @@
-import { KUL_DROPDOWN_CLASS_VISIBLE } from "../../variables/GenericVariables";
-import type { KulDom } from "../kul-manager/kul-manager-declarations";
+import { kulManagerSingleton } from "src";
+import { KUL_DROPDOWN_CLASS_VISIBLE } from "src/utils/constants";
 import {
   KulDynamicPositionAnchor,
   kulDynamicPositionAnchorAttribute,
   kulDynamicPositionAttribute,
   KulDynamicPositionElement,
+  KulDynamicPositionPlacement,
 } from "./kul-dynamic-position-declarations";
-import { KulDynamicPositionPlacement } from "./kul-dynamic-position-declarations";
 
 export class KulDynamicPosition {
-  #DOM = document.documentElement as KulDom;
   container: HTMLElement;
   managedElements: Set<KulDynamicPositionElement>;
   constructor() {
@@ -18,89 +17,30 @@ export class KulDynamicPosition {
     document.body.appendChild(this.container);
     this.managedElements = new Set();
   }
+  //#region Anchor is HTMLElement
   anchorIsHTMLElement(anchor: KulDynamicPositionAnchor): anchor is HTMLElement {
     return (anchor as HTMLElement).tagName !== undefined;
   }
-  register(
-    el: KulDynamicPositionElement,
-    anchorEl: KulDynamicPositionAnchor,
-    margin?: number,
-    placement?: KulDynamicPositionPlacement,
-    detach?: boolean,
-  ): void {
-    if (this.isRegistered(el)) {
-      this.changeAnchor(el, anchorEl);
-      return;
-    }
-    const runCb = () => this.#DOM.ketchupLite.dynamicPosition.run(el);
-    el.setAttribute(kulDynamicPositionAttribute, "");
-    if (this.anchorIsHTMLElement(anchorEl)) {
-      anchorEl.setAttribute(kulDynamicPositionAnchorAttribute, "");
-    }
-    el.style.zIndex = `calc(var(--kul-header-zindex) + 1)`;
-    const originalPath: HTMLElement[] = [];
-    if (detach) {
-      let currentEl: unknown = el;
-      while (currentEl && currentEl !== document.body) {
-        currentEl = (currentEl as HTMLElement).parentNode
-          ? (currentEl as HTMLElement).parentNode
-          : (currentEl as ShadowRoot).host;
-        originalPath.push(currentEl as HTMLElement);
-      }
-      el.style.position = "absolute";
-      this.container.appendChild(el);
-    } else {
-      el.style.position = "fixed";
-    }
-    el.kulDynamicPosition = {
-      anchor: anchorEl,
-      detach: detach ? true : false,
-      originalPath: originalPath,
-      margin: margin ? margin : 0,
-      placement: placement ? placement : KulDynamicPositionPlacement.AUTO,
-      rAF: null,
-    };
-    const mutObserver: MutationObserver = new MutationObserver(function (
-      mutations,
-    ) {
-      const target: Node = mutations[0].target;
-      if (
-        (target as HTMLElement).classList.contains(KUL_DROPDOWN_CLASS_VISIBLE)
-      ) {
-        requestAnimationFrame(runCb);
-      }
-    });
-    mutObserver.observe(el, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-    this.managedElements.add(el);
-  }
-  changeAnchor(
-    el: KulDynamicPositionElement,
-    anchorEl: KulDynamicPositionAnchor,
-  ): void {
-    el.kulDynamicPosition.anchor = anchorEl;
-  }
-  unregister(elements: KulDynamicPositionElement[]): void {
-    if (this.managedElements) {
-      for (let index = 0; index < elements.length; index++) {
-        this.managedElements.delete(elements[index]);
-      }
-    }
-  }
-  isRegistered(el: KulDynamicPositionElement): boolean {
-    return !this.managedElements ? false : this.managedElements.has(el);
-  }
+  //#endregion
+
+  //#region Start
   start(el: KulDynamicPositionElement): void {
     el.classList.add(KUL_DROPDOWN_CLASS_VISIBLE);
   }
+  //#endregion
+
+  //#region Stop
   stop(el: KulDynamicPositionElement): void {
     el.classList.remove(KUL_DROPDOWN_CLASS_VISIBLE);
   }
+  //#endregion
+
+  //#region Run
   run(el: KulDynamicPositionElement): void {
+    const { managedElements, run } = kulManagerSingleton.dynamicPosition;
+
     if (!el.isConnected) {
-      this.#DOM.ketchupLite.dynamicPosition.managedElements.delete(el);
+      managedElements.delete(el);
       cancelAnimationFrame(el.kulDynamicPosition.rAF);
       return;
     }
@@ -206,11 +146,97 @@ export class KulDynamicPosition {
     }
     if (!el.kulDynamicPosition.detach) {
       el.kulDynamicPosition.rAF = requestAnimationFrame(function () {
-        this.#DOM.ketchupLite.dynamicPosition.run(el);
+        run(el);
       });
     } else {
       cancelAnimationFrame(el.kulDynamicPosition.rAF);
       return;
     }
   }
+  //#endregion
+
+  //#region Register
+  register(
+    el: KulDynamicPositionElement,
+    anchorEl: KulDynamicPositionAnchor,
+    margin?: number,
+    placement?: KulDynamicPositionPlacement,
+    detach?: boolean,
+  ): void {
+    const { run } = kulManagerSingleton.dynamicPosition;
+
+    if (this.isRegistered(el)) {
+      this.changeAnchor(el, anchorEl);
+      return;
+    }
+    const runCb = () => run(el);
+    el.setAttribute(kulDynamicPositionAttribute, "");
+    if (this.anchorIsHTMLElement(anchorEl)) {
+      anchorEl.setAttribute(kulDynamicPositionAnchorAttribute, "");
+    }
+    el.style.zIndex = `calc(var(--kul-header-zindex) + 1)`;
+    const originalPath: HTMLElement[] = [];
+    if (detach) {
+      let currentEl: unknown = el;
+      while (currentEl && currentEl !== document.body) {
+        currentEl = (currentEl as HTMLElement).parentNode
+          ? (currentEl as HTMLElement).parentNode
+          : (currentEl as ShadowRoot).host;
+        originalPath.push(currentEl as HTMLElement);
+      }
+      el.style.position = "absolute";
+      this.container.appendChild(el);
+    } else {
+      el.style.position = "fixed";
+    }
+    el.kulDynamicPosition = {
+      anchor: anchorEl,
+      detach: detach ? true : false,
+      originalPath: originalPath,
+      margin: margin ? margin : 0,
+      placement: placement ? placement : KulDynamicPositionPlacement.AUTO,
+      rAF: null,
+    };
+    const mutObserver: MutationObserver = new MutationObserver(function (
+      mutations,
+    ) {
+      const target: Node = mutations[0].target;
+      if (
+        (target as HTMLElement).classList.contains(KUL_DROPDOWN_CLASS_VISIBLE)
+      ) {
+        requestAnimationFrame(runCb);
+      }
+    });
+    mutObserver.observe(el, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+    this.managedElements.add(el);
+  }
+  //#endregion
+
+  //#region Unregister
+  unregister(elements: KulDynamicPositionElement[]): void {
+    if (this.managedElements) {
+      for (let index = 0; index < elements.length; index++) {
+        this.managedElements.delete(elements[index]);
+      }
+    }
+  }
+  //#endregion
+
+  //#region Change anchor
+  changeAnchor(
+    el: KulDynamicPositionElement,
+    anchorEl: KulDynamicPositionAnchor,
+  ): void {
+    el.kulDynamicPosition.anchor = anchorEl;
+  }
+  //#endregion
+
+  //#region Is registered
+  isRegistered(el: KulDynamicPositionElement): boolean {
+    return !this.managedElements ? false : this.managedElements.has(el);
+  }
+  //#endregion
 }

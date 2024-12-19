@@ -16,7 +16,7 @@ import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
 import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { createAdapter } from "./kul-chart-adapter";
 import {
   KulChartAdapterThemeStyle,

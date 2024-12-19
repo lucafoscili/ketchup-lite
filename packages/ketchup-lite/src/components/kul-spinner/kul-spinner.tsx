@@ -9,24 +9,17 @@ import {
   Method,
   Prop,
   State,
-  VNode,
   Watch,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { BAR_SPINNER_CONFIGS, SPINNER_CONFIGS } from "./helpers/constants";
 import {
   KulSpinnerEvent,
   KulSpinnerEventPayload,
-  KulSpinnerProps,
 } from "./kul-spinner-declarations";
-import {
-  BAR_SPINNER_CONFIGS,
-  SPINNER_CONFIGS,
-} from "./layouts/kul-spinner-layouts";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   tag: "kul-spinner",
@@ -34,28 +27,26 @@ import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
   shadow: true,
 })
 export class KulSpinner {
-  //#region Root
   /**
    * References the root HTML element of the component (<kul-spinner>).
    */
   @Element() rootElement: HTMLKulSpinnerElement;
-  //#endregion
+
   //#region States
+  /**
+   * Signals when to display the fader.
+   */
+  @State() bigWait = false;
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Progress percentage for the progress bar.
    */
-  @State() kulProgress = 0;
+  @State() progress = 0;
   //#endregion
+
   //#region Props
   /**
    * Specifies if the spinner is animating.
@@ -71,17 +62,17 @@ export class KulSpinner {
    * Defines the width and height of the spinner. In the bar variant, it specifies only the height.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulDimensions = "";
+  @Prop({ mutable: true }) kulDimensions = "";
   /**
    * Applies a blending modal over the component to darken or lighten the view, based on the theme.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulFader = false;
+  @Prop({ mutable: true }) kulFader = false;
   /**
    * Duration needed for the fader to become active.
    * @default 3500
    */
-  @Prop({ mutable: true, reflect: true }) kulFaderTimeout = 3500;
+  @Prop({ mutable: true }) kulFaderTimeout = 3500;
   /**
    * Fills the entire viewport when enabled.
    * @default false
@@ -91,7 +82,7 @@ export class KulSpinner {
    * Selects the spinner layout.
    * @default 1
    */
-  @Prop({ mutable: true, reflect: true }) kulLayout = 1;
+  @Prop({ mutable: true }) kulLayout = 1;
   /**
    * Sets a custom style for the component.
    * @default ""
@@ -101,12 +92,13 @@ export class KulSpinner {
    * Duration for the progress bar to fill up (in milliseconds).
    * @default undefined
    */
-  @Prop({ mutable: true, reflect: true }) kulTimeout: number;
+  @Prop({ mutable: true }) kulTimeout: number;
   //#endregion
+
   //#region Internal variables
-  #kulManager = kulManagerInstance();
   #progressAnimationFrame: number;
   //#endregion
+
   //#region Watchers
   @Watch("kulTimeout")
   kulTimeoutChanged(newValue: number, oldValue: number) {
@@ -119,11 +111,12 @@ export class KulSpinner {
     if (newValue && this.kulTimeout) {
       this.#startProgressBar();
     } else {
-      this.kulProgress = 0;
+      this.progress = 0;
       cancelAnimationFrame(this.#progressAnimationFrame);
     }
   }
   //#endregion
+
   //#region Event
   @Event({
     eventName: "kul-spinner-event",
@@ -132,7 +125,6 @@ export class KulSpinner {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulSpinnerEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulSpinnerEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -142,6 +134,7 @@ export class KulSpinner {
     });
   }
   //#endregion
+
   //#region Public methods
   /**
    * Fetches debug information of the component's current state.
@@ -180,128 +173,18 @@ export class KulSpinner {
     }, ms);
   }
   //#endregion
-  //#region Lifecycle hooks
-  componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
-  componentDidLoad() {
-    this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
 
-    if (this.kulBarVariant && this.kulTimeout) {
-      this.#startProgressBar();
-    }
-  }
-  componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
-  componentDidUpdate() {
-    const root = this.rootElement.shadowRoot;
-    if (root) {
-      root
-        .querySelector("#loading-wrapper-master")
-        .classList.remove("loading-wrapper-big-wait");
-    }
-  }
-  componentDidRender() {
-    const root = this.rootElement.shadowRoot;
-
-    if (root) {
-      if (this.kulFader) {
-        setTimeout(() => {
-          root
-            .querySelector("#loading-wrapper-master")
-            .classList.add("loading-wrapper-big-wait");
-        }, this.kulFaderTimeout);
-      }
-    }
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
-
-  render() {
-    let masterClass = "";
-    let wrapperClass = "";
-    let spinnerClass = "";
-    let spinnerEl: VNode[] = [];
-    let elStyle = undefined;
-
-    if (this.kulBarVariant) {
-      wrapperClass = "loading-wrapper-master-bar";
-      const barConfig = BAR_SPINNER_CONFIGS[this.kulLayout];
-      if (barConfig) {
-        spinnerClass = barConfig.className;
-        spinnerEl = barConfig.elements(this.kulProgress);
-      } else {
-        spinnerClass = "spinner-bar-v" + this.kulLayout;
-      }
-    } else {
-      masterClass += " spinner-version";
-      wrapperClass = "loading-wrapper-master-spinner";
-
-      const config = SPINNER_CONFIGS[this.kulLayout];
-      if (config) {
-        spinnerClass = config.className;
-        spinnerEl = config.elements();
-      } else {
-        spinnerClass = "spinner-v" + this.kulLayout;
-      }
-    }
-
-    if (!this.kulFullScreen) {
-      elStyle = {
-        height: "100%",
-        width: "100%",
-      };
-    }
-
-    if (this.kulDimensions) {
-      elStyle = {
-        ...elStyle,
-        fontSize: this.kulDimensions,
-      };
-    } else if (!this.kulBarVariant) {
-      elStyle = {
-        ...elStyle,
-        fontSize: "16px",
-      };
-    } else {
-      elStyle = {
-        ...elStyle,
-        fontSize: "3px",
-      };
-    }
-
-    return (
-      <Host style={elStyle}>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
-        <div id={KUL_WRAPPER_ID} style={elStyle}>
-          <div id="loading-wrapper-master" class={masterClass} style={elStyle}>
-            <div id={wrapperClass} style={elStyle}>
-              <div class={spinnerClass}>{spinnerEl}</div>
-            </div>
-          </div>
-        </div>
-      </Host>
-    );
-  }
-  disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
-    cancelAnimationFrame(this.#progressAnimationFrame);
-  }
   //#region Private methods
   #startProgressBar() {
-    this.kulProgress = 0;
+    this.progress = 0;
     const startTime = Date.now();
     const duration = this.kulTimeout;
 
     const updateProgress = () => {
       const elapsed = Date.now() - startTime;
-      this.kulProgress = Math.min((elapsed / duration) * 100, 100);
-      if (this.kulProgress < 100) {
+      this.progress = Math.min((elapsed / duration) * 100, 100);
+
+      if (this.progress < 100) {
         this.#progressAnimationFrame = requestAnimationFrame(updateProgress);
       } else {
         cancelAnimationFrame(this.#progressAnimationFrame);
@@ -311,4 +194,110 @@ export class KulSpinner {
     this.#progressAnimationFrame = requestAnimationFrame(updateProgress);
   }
   //#endregion
+
+  //#region Lifecycle hooks
+  componentWillLoad() {
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
+  }
+  componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
+    const { kulBarVariant, kulTimeout } = this;
+
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    info.update(this, "did-load");
+
+    if (kulBarVariant && kulTimeout) {
+      this.#startProgressBar();
+    }
+  }
+  componentWillRender() {
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "will-render");
+  }
+  componentWillUpdate() {
+    if (this.kulFader) {
+      this.bigWait = false;
+    }
+  }
+  componentDidRender() {
+    const { info } = kulManagerSingleton.debug;
+
+    const root = this.rootElement.shadowRoot;
+
+    if (root) {
+      if (this.kulFader && this.kulActive) {
+        setTimeout(() => {
+          this.bigWait = true;
+        }, this.kulFaderTimeout);
+      }
+    }
+
+    info.update(this, "did-render");
+  }
+  render() {
+    const { theme } = kulManagerSingleton;
+
+    const {
+      bigWait,
+      kulBarVariant,
+      kulDimensions,
+      kulFullScreen,
+      kulLayout,
+      kulStyle,
+      progress,
+    } = this;
+
+    const elStyle: Record<string, string | undefined> = {
+      height: kulFullScreen ? undefined : "100%",
+      width: kulFullScreen ? undefined : "100%",
+      fontSize: kulDimensions || (kulBarVariant ? "3px" : "16px"),
+    };
+
+    const config = kulBarVariant
+      ? BAR_SPINNER_CONFIGS[kulLayout]
+      : SPINNER_CONFIGS[kulLayout];
+
+    const wrapperClass = kulBarVariant
+      ? "loading-wrapper-master-bar"
+      : "loading-wrapper-master-spinner";
+
+    const masterClass = {
+      "spinner-version": !kulBarVariant,
+      "big-wait": bigWait,
+    };
+
+    const spinnerClass =
+      config?.className ||
+      `spinner-${kulBarVariant ? "bar-v" : "v"}${kulLayout}`;
+    const spinnerEl = config?.elements(progress) || [];
+
+    return (
+      <Host style={elStyle}>
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        <div id={KUL_WRAPPER_ID} style={elStyle}>
+          <div
+            id="loading-wrapper-master"
+            class={{
+              ...masterClass,
+            }}
+            style={elStyle}
+          >
+            <div id={wrapperClass} style={elStyle}>
+              <div class={spinnerClass}>{spinnerEl}</div>
+            </div>
+          </div>
+        </div>
+      </Host>
+    );
+  }
+  disconnectedCallback() {
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
+    cancelAnimationFrame(this.#progressAnimationFrame);
+  }
 }

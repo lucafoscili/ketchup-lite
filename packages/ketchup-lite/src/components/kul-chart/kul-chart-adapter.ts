@@ -78,9 +78,7 @@ export const createGetters = (
 export const createSetters = (
   setters: KulChartAdapterInitializerSetters,
 ): KulChartAdapterControllerSetters => {
-  return {
-    ...setters,
-  };
+  return setters;
 };
 //#endregion
 

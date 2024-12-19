@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Method,
@@ -12,17 +11,14 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulProgressbarEvent,
   KulProgressbarEventPayload,
-  KulProgressbarProps,
 } from "./kul-progressbar-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   tag: "kul-progressbar",
@@ -35,25 +31,14 @@ export class KulProgressbar {
    */
   @Element() rootElement: HTMLKulProgressbarElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Displays the label in the middle of the progress bar. It's the default for the radial variant and can't be changed.
    * @default false
@@ -84,17 +69,9 @@ export class KulProgressbar {
    * @default 0
    */
   @Prop() kulValue = 0;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
+  //#region Events
   /**
    * Describes event emitted.
    */
@@ -105,7 +82,6 @@ export class KulProgressbar {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulProgressbarEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulProgressbarEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -114,11 +90,9 @@ export class KulProgressbar {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -155,35 +129,37 @@ export class KulProgressbar {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #prepIcon() {
-    const path = getAssetPath(`./assets/svg/${this.kulIcon}.svg`);
+    const { get } = kulManagerSingleton.assets;
+
+    const { kulIcon } = this;
+
+    const path = get(`./assets/svg/${kulIcon}.svg`);
     const style = {
       mask: `url('${path}') no-repeat center`,
       webkitMask: `url('${path}') no-repeat center`,
     };
     return <div class="progress-bar__icon" style={style}></div>;
   }
-
   #prepLabel() {
-    const label: VNode[] = this.kulLabel
-      ? [<div class="progress-bar__text">{this.kulLabel}</div>]
+    const { kulIcon, kulLabel, kulValue } = this;
+
+    const label: VNode[] = kulLabel
+      ? [<div class="progress-bar__text">{kulLabel}</div>]
       : [
-          <div class="progress-bar__text">{this.kulValue}</div>,
+          <div class="progress-bar__text">{kulValue}</div>,
           <div class="progress-bar__mu">%</div>,
         ];
     return (
       <div class="progress-bar__label">
-        {this.kulIcon && this.#prepIcon()}
+        {kulIcon && this.#prepIcon()}
         {label}
       </div>
     );
   }
-
   #prepProgressBar() {
     return (
       <div class={"progress-bar"}>
@@ -191,7 +167,6 @@ export class KulProgressbar {
       </div>
     );
   }
-
   #prepRadialBar() {
     return (
       <div class={"progress-bar"}>
@@ -206,49 +181,53 @@ export class KulProgressbar {
       </div>
     );
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
+    const { theme } = kulManagerSingleton;
+
+    const { kulIsRadial, kulStyle, kulValue } = this;
+
     const style = {
-      ["--kul_progressbar_percentage_width"]: `${this.kulValue}%`,
-      ["--kul_progressbar_transform"]: `rotate(${this.kulValue * 3.6}deg)`,
+      ["--kul_progressbar_percentage_width"]: `${kulValue}%`,
+      ["--kul_progressbar_transform"]: `rotate(${kulValue * 3.6}deg)`,
     };
 
     return (
       <Host>
-        {this.kulStyle && (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        )}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID} style={style}>
-          {this.kulIsRadial ? this.#prepRadialBar() : this.#prepProgressBar()}
+          {kulIsRadial ? this.#prepRadialBar() : this.#prepProgressBar()}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

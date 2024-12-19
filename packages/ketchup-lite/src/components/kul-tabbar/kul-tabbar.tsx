@@ -11,24 +11,21 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
-import {
-  KulTabbarEventPayload,
-  KulTabbarEvent,
-  KulTabbarProps,
-  KulTabbarState,
-} from "./kul-tabbar-declarations";
+import { kulManagerSingleton } from "src";
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { KulScrollOnHoverElement } from "../../managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations";
-import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarations";
-import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulScrollOnHoverElement } from "src/managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations";
+import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
+import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  KulTabbarEvent,
+  KulTabbarEventPayload,
+  KulTabbarState,
+} from "./kul-tabbar-declarations";
 
 @Component({
   tag: "kul-tabbar",
@@ -41,29 +38,18 @@ export class KulTabbar {
    */
   @Element() rootElement: HTMLKulTabbarElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The node currently selected.
    */
   @State() value: KulTabbarState = null;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Actual data of the component.
    * @default null
@@ -73,7 +59,7 @@ export class KulTabbar {
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Custom style of the component.
    * @default ""
@@ -83,23 +69,15 @@ export class KulTabbar {
    * Sets the initial selected node's index.
    * @default null
    */
-  @Prop({ mutable: false, reflect: true }) kulValue: number | string = 0;
+  @Prop({ mutable: false }) kulValue: number | string = 0;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
+  //#region Internal variables
   #rippleSurface: HTMLElement[];
   #scrollArea: KulScrollOnHoverElement;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes events emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-tabbar-event",
     composed: true,
@@ -107,26 +85,27 @@ export class KulTabbar {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulTabbarEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulTabbarEvent,
     index = 0,
     node?: KulDataNode,
   ) {
-    if (eventType === "pointerdown") {
-      if (this.kulRipple) {
-        this.#kulManager.theme.ripple.trigger(
-          e as PointerEvent,
-          this.#rippleSurface[index],
-        );
-      }
-    }
-    if (eventType === "click") {
-      this.value = {
-        index,
-        node,
-      };
+    const { theme } = kulManagerSingleton;
+
+    switch (eventType) {
+      case "click":
+        this.value = {
+          index,
+          node,
+        };
+        break;
+
+      case "pointerdown":
+        if (this.kulRipple) {
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface[index]);
+        }
+        break;
     }
 
     this.kulEvent.emit({
@@ -137,11 +116,9 @@ export class KulTabbar {
       node,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -211,75 +188,83 @@ export class KulTabbar {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
+    const { debug, theme } = kulManagerSingleton;
+
+    const { kulData, kulValue } = this;
+
     try {
-      if (this.kulValue !== null) {
-        if (typeof this.kulValue === "number") {
+      if (kulValue !== null) {
+        if (typeof kulValue === "number") {
           this.value = {
-            index: this.kulValue,
-            node: this.kulData.nodes[this.kulValue],
+            index: kulValue,
+            node: kulData.nodes[kulValue],
           };
         }
-        if (typeof this.kulValue === "string") {
-          const node = this.kulData.nodes.find(
-            (node) => node.id === this.kulValue,
-          );
+        if (typeof kulValue === "string") {
+          const node = kulData.nodes.find((node) => node.id === kulValue);
           this.value = {
-            index: this.kulData.nodes.indexOf(node),
+            index: kulData.nodes.indexOf(node),
             node,
           };
         }
       }
     } catch (error) {
-      this.#kulManager.debug.logs.new(
+      debug.logs.new(
         this,
         "Something went wrong while setting the initial selected value.",
         "warning",
       );
     }
 
-    this.#kulManager.theme.register(this);
+    theme.register(this);
   }
-
   componentDidLoad() {
-    if (this.#scrollArea) {
-      this.#kulManager.scrollOnHover.register(this.#scrollArea);
-    }
-    this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
-  }
+    const { debug, scrollOnHover } = kulManagerSingleton;
 
+    if (this.#scrollArea) {
+      scrollOnHover.register(this.#scrollArea);
+    }
+
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    debug.info.update(this, "did-load");
+  }
   componentWillRender() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (this.#rippleSurface?.length) {
       this.#rippleSurface.forEach((el) => {
-        this.#kulManager.theme.ripple.setup(el);
+        theme.ripple.setup(el);
       });
     }
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
 
+    debug.info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
-    if (!this.#kulManager.data.node.exists(this.kulData)) {
+    const { data, theme } = kulManagerSingleton;
+
+    const { kulData, kulRipple, kulStyle, value } = this;
+
+    if (!data.node.exists(kulData)) {
       return;
     }
 
     this.#rippleSurface = [];
-    const nodes = this.kulData.nodes;
+    const nodes = kulData.nodes;
     const elements: Array<VNode> = [];
 
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
-      const isActive = node === this.value?.node;
-      const tabClass: Record<string, boolean> = {
+      const isActive = node === value?.node;
+      const tabClass = {
         tab: true,
         "tab--active": isActive ? true : false,
       };
@@ -297,17 +282,17 @@ export class KulTabbar {
           }}
           role="tab"
           tabIndex={i}
-          title={node.description ? node.description : null}
+          title={node?.description ?? ""}
         >
           <div
             ref={(el) => {
-              if (el && this.kulRipple) {
+              if (el && kulRipple) {
                 this.#rippleSurface.push(el);
               }
             }}
           ></div>
           <span class="tab__content">
-            {node.icon ? (
+            {node.icon && (
               <kul-image
                 class="tab__icon"
                 kulColor={`var(${KulThemeColorValues.PRIMARY})`}
@@ -315,10 +300,8 @@ export class KulTabbar {
                 kulSizeY="24px"
                 kulValue={node.icon}
               />
-            ) : null}
-            {node.value ? (
-              <span class="tab__text-label">{node.value}</span>
-            ) : null}
+            )}
+            {node.value && <span class="tab__text-label">{node.value}</span>}
           </span>
           <span
             class={`tab__indicator ${
@@ -333,11 +316,7 @@ export class KulTabbar {
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class="tabbar" role="tablist">
             <div class="tabbar_scroller">
@@ -355,11 +334,13 @@ export class KulTabbar {
       </Host>
     );
   }
-
   disconnectedCallback() {
+    const { scrollOnHover, theme } = kulManagerSingleton;
+
     if (this.#scrollArea) {
-      this.#kulManager.scrollOnHover.unregister(this.#scrollArea);
+      scrollOnHover.unregister(this.#scrollArea);
     }
-    this.#kulManager.theme.unregister(this);
+    theme.unregister(this);
   }
+  //#endregion
 }

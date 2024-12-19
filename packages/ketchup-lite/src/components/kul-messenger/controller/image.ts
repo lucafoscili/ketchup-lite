@@ -165,8 +165,7 @@ const getNewId = (
   }
 
   do {
-    nodeId =
-      `${prefix}${index.toString()}` as KulMessengerChildIds<KulMessengerUnionChildIds>;
+    nodeId = `${prefix}${index.toString()}`;
     index++;
   } while (byType(type).some((node) => node.id === nodeId));
 

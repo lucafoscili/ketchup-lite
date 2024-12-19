@@ -1,4 +1,23 @@
-import { KulChatAdapterRefs } from "src/components/kul-chat/kul-chat-declarations";
+import {
+  KulChatAdapterRefs,
+  KulChatPropsInterface,
+} from "src/components/kul-chat/kul-chat-declarations";
+
+//#region Props
+export const KUL_CHAT_PROPS: (keyof KulChatPropsInterface)[] = [
+  "kulContextWindow",
+  "kulEndpointUrl",
+  "kulLayout",
+  "kulMaxTokens",
+  "kulPollingInterval",
+  "kulSeed",
+  "kulStyle",
+  "kulSystem",
+  "kulTemperature",
+  "kulTypewriterProps",
+  "kulValue",
+];
+//#endregion
 
 //#region Ids
 export const IDS = {

@@ -1,5 +1,6 @@
-import { Fragment, h, VNode } from "@stencil/core";
+import { h } from "@stencil/core";
 
+import { kulManagerSingleton } from "src";
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,
@@ -8,7 +9,6 @@ import {
   KulMessengerImageRootIds,
   KulMessengerImageTypes,
 } from "../kul-messenger-declarations";
-import { kulManagerSingleton } from "src";
 
 export const prepCustomization = (
   getAdapter: () => KulMessengerAdapter,
@@ -42,64 +42,9 @@ export const prepCustomization = (
     },
     //#endregion
 
-    form: {
-      description: () => {
-        const { controller, elements, handlers } = getAdapter();
-        const { character, image } = controller.get;
-        const { customization } = elements.refs;
-        const { chip } = handlers.customization;
-
-        return (
-          <kul-textfield
-            kulFullWidth={true}
-            kulIcon="format-float-left"
-            kulLabel="Description"
-            ref={(el) =>
-              (adapter.components.editing[type].descriptionTextarea = el)
-            }
-            title="A more accurate description to give more context to the LLM."
-          ></kul-textfield>
-        );
-      },
-      id: () => {
-        return (
-          <kul-textfield
-            key={`id-edit-${id}`}
-            kulDisabled
-            kulFullWidth={true}
-            kulIcon="key-variant"
-            kulLabel="ID"
-            kulValue={id}
-            ref={(el) => (adapter.components.editing[type].idTextfield = el)}
-            title="The cover image displayed in the selection panel."
-          ></kul-textfield>
-        );
-      },
-      image: () => {
-        return (
-          <kul-textfield
-            kulFullWidth={true}
-            kulIcon="image"
-            kulLabel="Image URL"
-            ref={(el) =>
-              (adapter.components.editing[type].imageUrlTextarea = el)
-            }
-            title="The cover image displayed in the selection panel."
-          ></kul-textfield>
-        );
-      },
-      title: () => {
-        return (
-          <kul-textfield
-            kulFullWidth={true}
-            kulIcon="title"
-            kulLabel="Title"
-            ref={(el) => (adapter.components.editing[type].titleTextarea = el)}
-            title="The overall theme of this option."
-          ></kul-textfield>
-        );
-      },
-    },
+    //#region Form
+    form: prepForms(getAdapter),
+    //#endregion
 
     //#region List
     list: {
@@ -138,35 +83,112 @@ export const prepCustomization = (
   //#endregion
 };
 
-const prepCovers = (
-  adapter: KulMessengerAdapter,
-  type: KulMessengerImageTypes,
-  images: VNode[],
-) => {
-  return (
-    <Fragment>
-      <div class="messenger__customization__title">
-        <div class="messenger__customization__label">{type}</div>
-        <kul-button
-          class="messenger__customization__add kul-full-height kul-slim"
-          kulIcon="plus"
-          kulLabel="New"
-          kulStyling="flat"
-          onKul-button-event={buttonEventHandler.bind(
-            buttonEventHandler,
-            adapter,
-            type,
-            "add",
-            null,
-          )}
-        ></kul-button>
-      </div>
-      <div class="messenger__customization__images">{images}</div>
-    </Fragment>
+//#region Helpers
+const prepForms = (
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterJsx["customization"]["form"] => {
+  const formElements = IMAGE_TYPE_IDS.reduce(
+    (acc, type) => {
+      const { assignRef } = kulManagerSingleton;
+
+      const { controller, elements, handlers } = getAdapter();
+      const { formStatusMap } = controller.get.compInstance;
+      const { form } = elements.refs.customization;
+      const { button } = handlers.customization;
+
+      acc[type] = {
+        add: () => {
+          return (
+            <kul-button
+              class="messenger__customization__add kul-full-height kul-slim"
+              kulIcon="plus"
+              kulLabel="New"
+              kulStyling="flat"
+              onKul-button-event={(e) => button(e, type, "add", null)}
+              ref={assignRef(form, "add")}
+            ></kul-button>
+          );
+        },
+        cancel: () => {
+          return (
+            <kul-button
+              class={"messenger__customization__edit__button"}
+              kulIcon="clear"
+              kulLabel="Cancel"
+              kulStyling="flat"
+              onKul-button-event={(e) => button(e, type, "cancel", null)}
+              ref={assignRef(form, "cancel")}
+            ></kul-button>
+          );
+        },
+        confirm: () => {
+          return (
+            <kul-button
+              class={"messenger__customization__edit__button"}
+              kulIcon="check"
+              kulLabel="Confirm"
+              kulStyling="outlined"
+              onKul-button-event={(e) => button(e, type, "confirm", null)}
+              ref={assignRef(form, "confirm")}
+            ></kul-button>
+          );
+        },
+        description: () => {
+          return (
+            <kul-textfield
+              kulFullWidth={true}
+              kulIcon="format-float-left"
+              kulLabel="Description"
+              ref={assignRef(form, "description")}
+              title="A more accurate description to give extra context to the LLM."
+            ></kul-textfield>
+          );
+        },
+        id: () => {
+          const id = formStatusMap[type];
+
+          return (
+            <kul-textfield
+              key={`id-edit-${id}`}
+              kulDisabled={true}
+              kulFullWidth={true}
+              kulIcon="key-variant"
+              kulLabel="ID"
+              kulValue={id}
+              ref={assignRef(form, "id")}
+              title="The cover image displayed in the selection panel."
+            ></kul-textfield>
+          );
+        },
+        imageUrl: () => {
+          return (
+            <kul-textfield
+              kulFullWidth={true}
+              kulIcon="image"
+              kulLabel="Image URL"
+              ref={assignRef(form, "image")}
+              title="The cover image displayed in the selection panel."
+            ></kul-textfield>
+          );
+        },
+        title: () => {
+          return (
+            <kul-textfield
+              kulFullWidth={true}
+              kulIcon="title"
+              kulLabel="Title"
+              ref={assignRef(form, "title")}
+              title="The overall theme of this option."
+            ></kul-textfield>
+          );
+        },
+      };
+      return acc;
+    },
+    {} as KulMessengerAdapterJsx["customization"]["form"],
   );
+
+  return formElements;
 };
 
-const prepEditPanel = (
-  adapter: KulMessengerAdapter,
-  type: KulMessengerImageTypes,
-) => {};
+//#endregion

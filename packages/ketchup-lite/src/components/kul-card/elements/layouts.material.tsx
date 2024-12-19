@@ -1,7 +1,7 @@
 import { h, VNode } from "@stencil/core";
 import { kulManagerSingleton } from "src";
 import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { RIPPLE_SURFACE_CLASS } from "src/variables/GenericVariables";
+import { RIPPLE_SURFACE_CLASS } from "src/utils/constants";
 import { KulCardAdapter, KulCardCSSClasses } from "../kul-card-declarations";
 
 //#region Material layout

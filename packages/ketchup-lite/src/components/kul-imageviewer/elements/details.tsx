@@ -146,7 +146,7 @@ export const prepDetails = (
 
       return (
         <kul-button
-          class={className}
+          class={className.redo}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.redo}
           kulDisabled={isDisabled}
@@ -172,7 +172,7 @@ export const prepDetails = (
 
       return (
         <kul-button
-          class={className}
+          class={className.save}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.save}
           kulDisabled={isDisabled}
@@ -200,7 +200,7 @@ export const prepDetails = (
 
       return (
         <kul-spinner
-          class={className}
+          class={className.spinner}
           id={IDS.details.spinner}
           kulActive={spinnerStatus()}
           kulDimensions="16px"
@@ -222,7 +222,7 @@ export const prepDetails = (
 
       return (
         <kul-tree
-          class={className}
+          class={className.tree}
           data-cy={KulDataCyAttributes.INPUT}
           id={IDS.details.tree}
           kulAccordionLayout={true}
@@ -247,7 +247,7 @@ export const prepDetails = (
 
       return (
         <kul-button
-          class={className}
+          class={className.undo}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.undo}
           kulDisabled={isDisabled}

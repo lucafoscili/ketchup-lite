@@ -37,9 +37,7 @@ export const createAdapter = (
 export const createGetters = (
   getters: KulImageviewerAdapterInitializerGetters,
 ): KulImageviewerAdapterControllerGetters => {
-  return {
-    ...getters,
-  };
+  return getters;
 };
 export const createSetters = (
   setters: KulImageviewerAdapterInitializerSetters,

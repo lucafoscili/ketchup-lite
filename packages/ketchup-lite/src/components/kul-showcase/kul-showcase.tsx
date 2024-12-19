@@ -1,7 +1,6 @@
 import { Component, Element, h, Host, Prop, State, VNode } from "@stencil/core";
-
-import { KulDataDataset } from "src/components";
-import { kulManagerInstance } from "src/managers/kul-manager/kul-manager";
+import { kulManagerSingleton } from "src";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
 import {
   KUL_DOC,
@@ -53,7 +52,6 @@ export class KulShowcase {
     Framework: null,
     Utilities: null,
   };
-  #kulManager = kulManagerInstance();
   //#endregion
 
   //#region Private methods
@@ -213,6 +211,8 @@ export class KulShowcase {
     return <div>No state available for type: {type}</div>;
   }
   #cards(type: KulShowcaseTitle): VNode[] {
+    const { stringify } = kulManagerSingleton.data.cell;
+
     const dataset =
       type === "Components"
         ? KUL_SHOWCASE_COMPONENTS
@@ -230,7 +230,7 @@ export class KulShowcase {
                 value: node.icon,
               },
               text1: {
-                value: this.#kulManager.data.cell.stringify(node.value),
+                value: stringify(node.value),
               },
               text2: { value: "" },
               text3: { value: node.description },

@@ -11,17 +11,14 @@ import {
   State,
   Watch,
 } from "@stencil/core";
-
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulTypewriterCursor,
   KulTypewriterEvent,
   KulTypewriterEventPayload,
-  KulTypewriterProps,
   KulTypewriterTag,
   KulTypewriterValue,
 } from "./kul-typewriter-declarations";
@@ -41,13 +38,7 @@ export class KulTypewriter {
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The current text being displayed as it types.
    */
@@ -106,7 +97,6 @@ export class KulTypewriter {
   //#endregion
 
   //#region Internal variables
-  #kulManager = kulManagerInstance();
   #timeout: NodeJS.Timeout;
   #texts: string[] = [];
   //#endregion
@@ -134,7 +124,7 @@ export class KulTypewriter {
   @Watch("kulValue")
   handleKulValueChange() {
     this.#initializeTexts();
-    this.#resetTyping(); // This now animates the deletion before switching values
+    this.#resetTyping();
   }
   //#endregion
 
@@ -179,9 +169,9 @@ export class KulTypewriter {
 
   //#region Private methods
   #initializeTexts() {
-    this.#texts = Array.isArray(this.kulValue)
-      ? this.kulValue
-      : [this.kulValue];
+    const { kulValue } = this;
+
+    this.#texts = Array.isArray(kulValue) ? kulValue : [kulValue];
   }
   #startTyping() {
     const currentText = this.#texts[this.currentTextIndex] || "";
@@ -239,15 +229,20 @@ export class KulTypewriter {
     this.#startTyping();
   }
   #prepText() {
+    const { currentTextIndex, displayedText, isDeleting, kulCursor, kulTag } =
+      this;
+
     const shouldShowCursor =
-      this.kulCursor === "enabled" ||
-      (this.kulCursor === "auto" &&
-        !this.isDeleting &&
-        this.displayedText !== this.#texts[this.currentTextIndex]);
-    const TagName = this.kulTag || "div";
+      kulCursor === "enabled" ||
+      (kulCursor === "auto" &&
+        !isDeleting &&
+        displayedText !== this.#texts[currentTextIndex]);
+
+    const TagName = kulTag || "div";
+
     return (
       <TagName>
-        <span>{this.displayedText || "\u00A0"}</span>
+        <span>{displayedText || "\u00A0"}</span>
         {shouldShowCursor ? <span class="cursor">|</span> : null}
       </TagName>
     );
@@ -256,34 +251,44 @@ export class KulTypewriter {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
     this.#initializeTexts();
   }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
     requestAnimationFrame(async () => this.#startTyping());
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "will-render");
   }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "did-render");
   }
   render() {
+    const { theme } = kulManagerSingleton;
+
+    const { kulStyle } = this;
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>{this.#prepText()}</div>
       </Host>
     );
   }
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
     clearTimeout(this.#timeout);
   }
   //#endregion

@@ -106,9 +106,11 @@ const getBiography = (
 
   try {
     const bio = c.children.find((n) => n.id === "biography").value;
-    return bio ? stringify(bio) : "You know nothing about this character...";
+    return bio
+      ? stringify(bio)
+      : "You have no informations about this character...";
   } catch (error) {
-    return "You know nothing about this character...";
+    return "You have no informations about this character...";
   }
 };
 const getChat = (

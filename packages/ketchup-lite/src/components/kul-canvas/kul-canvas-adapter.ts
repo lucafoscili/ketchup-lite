@@ -8,10 +8,10 @@ import {
   KulCanvasAdapter,
   KulCanvasAdapterControllerGetters,
   KulCanvasAdapterControllerSetters,
-  KulCanvasAdapterJsx,
   KulCanvasAdapterHandlers,
   KulCanvasAdapterInitializerGetters,
   KulCanvasAdapterInitializerSetters,
+  KulCanvasAdapterJsx,
   KulCanvasAdapterToolkit,
 } from "./kul-canvas-declarations";
 
@@ -19,16 +19,12 @@ import {
 export const createGetters = (
   getters: KulCanvasAdapterControllerGetters,
 ): KulCanvasAdapterControllerGetters => {
-  return {
-    ...getters,
-  };
+  return getters;
 };
 export const createSetters = (
   setters: KulCanvasAdapterControllerSetters,
 ): KulCanvasAdapterControllerSetters => {
-  return {
-    ...setters,
-  };
+  return setters;
 };
 //#endregion
 

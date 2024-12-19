@@ -1,5 +1,5 @@
-import type { KulDom } from "../kul-manager/kul-manager-declarations";
-import { KulComponent, KulComponentName } from "../../types/GenericTypes";
+import { kulManagerSingleton } from "src";
+import { KulComponent, KulComponentName } from "src/types/GenericTypes";
 import {
   KulLanguageDecode,
   KulLanguageDefaults,
@@ -11,7 +11,6 @@ import {
 import { languagesJson } from "./kul-language-values";
 
 export class KulLanguage {
-  dom: KulDom = document.documentElement as KulDom;
   list: KulLanguageJSON;
   managedComponents: Set<KulComponent<KulComponentName>["rootElement"]>;
   name: string;
@@ -20,6 +19,8 @@ export class KulLanguage {
     this.managedComponents = new Set();
     this.name = name ? name : KulLanguageDefaults.en;
   }
+
+  //#region Translate
   translate(key: KulLanguageKey, language?: string): string {
     const decodedLanguage: KulLanguageDecode = this.decodeLanguage(
       language ? language : this.name,
@@ -60,11 +61,16 @@ export class KulLanguage {
       return key;
     }
   }
+  //#endregion
+
+  //#region Set
   set(language: string): void {
+    const { logs } = kulManagerSingleton.debug;
+
     if (language && typeof language === "string") {
       language = language.toLowerCase();
     } else {
-      this.dom.ketchupLite.debug.logs.new(
+      logs.new(
         this,
         "Couldn't set language, invalid string received (" + language + ")!",
         "warning",
@@ -76,19 +82,11 @@ export class KulLanguage {
     const dVariant: string = decodedLanguage.variant;
     if (this.list[dLanguage]) {
       if (dVariant && !this.list[dLanguage].variants[dVariant]) {
-        this.dom.ketchupLite.debug.logs.new(
-          this,
-          "Variant not found (" + dVariant + ")!",
-          "warning",
-        );
+        logs.new(this, "Variant not found (" + dVariant + ")!", "warning");
         return;
       }
     } else {
-      this.dom.ketchupLite.debug.logs.new(
-        this,
-        "Language not found (" + dLanguage + ")!",
-        "warning",
-      );
+      logs.new(this, "Language not found (" + dLanguage + ")!", "warning");
       return;
     }
     this.name = language;
@@ -99,6 +97,9 @@ export class KulLanguage {
     });
     document.dispatchEvent(new CustomEvent("kul-language-change"));
   }
+  //#endregion
+
+  //#region Decode language
   decodeLanguage(language: string): KulLanguageDecode {
     const result: KulLanguageDecode = {
       language: null,
@@ -113,6 +114,9 @@ export class KulLanguage {
     }
     return result;
   }
+  //#endregion
+
+  //#region Get BCP47
   getBCP47(language: string = this.name?.split("_")[0]): string {
     const bcp47Map: Record<KulLanguageDefaults, string> = {
       chinese: "zh-CN",
@@ -125,6 +129,9 @@ export class KulLanguage {
     };
     return bcp47Map[language];
   }
+  //#endregion
+
+  //#region Get languages
   getLanguages(): Array<string> {
     const languages: Array<string> = [];
     for (var key in this.list) {
@@ -138,11 +145,17 @@ export class KulLanguage {
     }
     return languages;
   }
+  //#endregion
+
+  //#region Register
   register(component: any): void {
     this.managedComponents.add(
       component.rootElement ? component.rootElement : component,
     );
   }
+  //#endregion
+
+  //#region Unregister
   unregister(component: any): void {
     if (this.managedComponents) {
       this.managedComponents.delete(
@@ -150,4 +163,5 @@ export class KulLanguage {
       );
     }
   }
+  //#endregion
 }

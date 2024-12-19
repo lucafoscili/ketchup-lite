@@ -10,7 +10,7 @@ import {
 export const prepChat = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterJsx["chat"] => {
-  const { assignRef } = kulManagerSingleton;
+  const { assignRef, sanitizeProps } = kulManagerSingleton;
 
   return {
     //#region Chat
@@ -28,7 +28,7 @@ export const prepChat = (
           kulLayout="bottom-textarea"
           kulSystem={system}
           kulValue={JSON.parse(history())}
-          {...chat()}
+          {...sanitizeProps(chat(), "KulChat")}
           onKul-chat-event={handlers.chat.chat}
           ref={assignRef(refs.chat, "chat")}
         ></kul-chat>
@@ -85,7 +85,7 @@ export const prepChat = (
       return (
         <kul-tabbar
           kulData={NAV_DATASET}
-          kulValue={1}
+          kulValue={null}
           onKul-tabbar-event={tabbar}
           ref={assignRef(refs.chat, "tabbar")}
         ></kul-tabbar>

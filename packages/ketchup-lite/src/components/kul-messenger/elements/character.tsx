@@ -1,12 +1,12 @@
 import { h } from "@stencil/core";
 import { kulManagerSingleton } from "src";
+import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
+import { MENU_DATASET } from "../helpers/constants";
+import { statusIconOptions } from "../helpers/utils";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterJsx,
 } from "../kul-messenger-declarations";
-import { statusIconOptions } from "../helpers/utils";
-import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
-import { MENU_DATASET } from "../helpers/constants";
 
 export const prepCharacter = (
   getAdapter: () => KulMessengerAdapter,

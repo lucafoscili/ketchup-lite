@@ -26,7 +26,7 @@ import {
   KulGenericEvent,
   KulGenericEventPayload,
 } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { createAdapter } from "./kul-masonry-adapter";
 import {
   KulMasonryEvent,

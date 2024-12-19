@@ -29,9 +29,15 @@
 
 ## Methods
 
-### `clearCanvas() => Promise<void>`
+### `clearCanvas(type?: KulCanvasType) => Promise<void>`
 
-Clears the painting canvas .
+Clears the specified canvas.
+
+#### Parameters
+
+| Name   | Type                   | Description               |
+| ------ | ---------------------- | ------------------------- |
+| `type` | `"preview" \| "board"` | - The type of the canvas. |
 
 #### Returns
 
@@ -39,9 +45,15 @@ Type: `Promise<void>`
 
 
 
-### `getCanvas() => Promise<HTMLCanvasElement>`
+### `getCanvas(type?: KulCanvasType) => Promise<HTMLCanvasElement>`
 
-Returns the painting canvas .
+Returns the canvas HTML element.
+
+#### Parameters
+
+| Name   | Type                   | Description               |
+| ------ | ---------------------- | ------------------------- |
+| `type` | `"preview" \| "board"` | - The type of the canvas. |
 
 #### Returns
 
@@ -69,21 +81,15 @@ Type: `Promise<HTMLKulImageElement>`
 
 
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<GenericObject>`
 
-Used to retrieve component's props values.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
-| `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
 Type: `Promise<GenericObject<unknown>>`
 
-List of props as object, each key will be a prop.
+Promise resolved with an object containing the component's properties.
 
 ### `refresh() => Promise<void>`
 

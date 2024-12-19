@@ -8,7 +8,7 @@ import {
 export const prepCanvasJsx = (
   getAdapter: () => KulCanvasAdapter,
 ): KulCanvasAdapterJsx => {
-  const { assignRef } = kulManagerSingleton;
+  const { assignRef, sanitizeProps } = kulManagerSingleton;
 
   return {
     //#region Board
@@ -40,7 +40,7 @@ export const prepCanvasJsx = (
       return (
         <kul-image
           class="canvas__image kul-fit"
-          {...compInstance.kulImageProps}
+          {...sanitizeProps(compInstance.kulImageProps, "KulImage")}
           ref={assignRef(refs, "image")}
         ></kul-image>
       );

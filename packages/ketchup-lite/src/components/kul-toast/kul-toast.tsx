@@ -10,19 +10,12 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
-import {
-  KulToastEvent,
-  KulToastEventPayload,
-  KulToastProps,
-} from "./kul-toast-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
+import { KulToastEvent, KulToastEventPayload } from "./kul-toast-declarations";
 
 @Component({
   tag: "kul-toast",
@@ -35,25 +28,14 @@ export class KulToast {
    */
   @Element() rootElement: HTMLKulToastElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Sets the props of the clickable icon used to close the toast.
    * @default { kulSizeX: '18px', kulSizeY: '18px', kulValue: 'clear' }
@@ -75,7 +57,7 @@ export class KulToast {
    *  Sets the props of an optional icon that will be displayed along with the message.
    * @default { kulSizeX: '18px', kulSizeY: '18px', kulValue: 'info' }
    */
-  @Prop({ mutable: true, reflect: true }) kulIcon: KulImagePropsInterface = {
+  @Prop({ mutable: true }) kulIcon: KulImagePropsInterface = {
     kulSizeX: "18px",
     kulSizeY: "18px",
     kulValue: "info",
@@ -89,26 +71,15 @@ export class KulToast {
    * Sets the message of the toast.
    * @default 'Wow, such empty.'
    */
-  @Prop({ mutable: true, reflect: true }) kulMessage = "Wow, such empty.";
+  @Prop({ mutable: true }) kulMessage = "Wow, such empty.";
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
   @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-toast-event",
     composed: true,
@@ -116,7 +87,6 @@ export class KulToast {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulToastEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulToastEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -125,11 +95,9 @@ export class KulToast {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -166,63 +134,71 @@ export class KulToast {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
   }
 
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "will-render");
   }
 
   componentDidRender() {
-    if (this.kulTimer) {
-      setTimeout(() => {}, this.kulTimer);
+    const { info } = kulManagerSingleton.debug;
+
+    const { kulTimer } = this;
+
+    if (kulTimer) {
+      setTimeout(() => {}, kulTimer);
     }
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+
+    info.update(this, "did-render");
   }
 
   render() {
+    const { theme } = kulManagerSingleton;
+
+    const { kulCloseIcon, kulIcon, kulMessage, kulStyle, kulTimer } = this;
+
+    const className = {
+      ["toast__accent"]: true,
+      ["toast__accent--temporary"]: !!kulTimer,
+    };
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class="toast">
-            <div
-              class={`toast__accent ${
-                this.kulTimer ? "toast__accent--temporary" : ""
-              }`}
-            ></div>
+            <div class={className}></div>
             <div class="toast__message-wrapper">
-              {this.kulIcon ? (
+              {this.kulIcon && (
                 <div class="toast__icon">
-                  <kul-image {...this.kulIcon}></kul-image>
+                  <kul-image {...kulIcon}></kul-image>
                 </div>
-              ) : undefined}
-              {this.kulMessage ? (
-                <div class="toast__message">{this.kulMessage}</div>
-              ) : undefined}
-              {this.kulCloseIcon ? (
+              )}
+              {kulMessage && <div class="toast__message">{kulMessage}</div>}
+              {this.kulCloseIcon && (
                 <div
                   class="toast__icon toast__icon--close"
                   onClick={() => this.kulCloseCallback()}
                 >
-                  <kul-image {...this.kulCloseIcon}></kul-image>
+                  <kul-image {...kulCloseIcon}></kul-image>
                 </div>
-              ) : undefined}
+              )}
             </div>
           </div>
         </div>
@@ -231,6 +207,9 @@ export class KulToast {
   }
 
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

@@ -43,15 +43,9 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<GenericObject>`
 
 Used to retrieve component's properties and descriptions.
-
-#### Parameters
-
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `descriptions` | `boolean` | - When true, includes descriptions for each property. |
 
 #### Returns
 
@@ -87,7 +81,7 @@ Sets the component's state.
 
 | Name    | Type            | Description                                 |
 | ------- | --------------- | ------------------------------------------- |
-| `value` | `"off" \| "on"` | - The new state to be set on the component. |
+| `value` | `"on" \| "off"` | - The new state to be set on the component. |
 
 #### Returns
 

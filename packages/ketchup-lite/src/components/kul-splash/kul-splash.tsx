@@ -10,18 +10,15 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulSplashEvent,
   KulSplashEventPayload,
-  KulSplashProps,
   KulSplashStates,
 } from "./kul-splash-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   tag: "kul-splash",
@@ -34,56 +31,32 @@ export class KulSplash {
    */
   @Element() rootElement: HTMLKulSplashElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
-   * The value of the component ("on" or "off").
+   * The status of the component.
    * @default ""
-   *
-   * @see KulButtonState - For a list of possible states.
    */
   @State() state: KulSplashStates = "initializing";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Initial text displayed within the component, typically shown during loading.
    * @default "Loading..." - Indicates that loading or initialization is in progress.
    */
-  @Prop({ mutable: true, reflect: false }) kulLabel = "Loading...";
+  @Prop({ mutable: true }) kulLabel = "Loading...";
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
   @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-splash-event",
     composed: true,
@@ -91,7 +64,6 @@ export class KulSplash {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulSplashEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulSplashEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -100,11 +72,9 @@ export class KulSplash {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -144,53 +114,56 @@ export class KulSplash {
       }, 300);
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
+    const { theme } = kulManagerSingleton;
+
+    const { kulLabel, kulStyle, state } = this;
+    const isUnmounting = state === "unmounting";
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class={"modal" + (this.state === "unmounting" ? " active" : "")}>
+          <div class={"modal" + (isUnmounting ? " active" : "")}>
             <div class="wrapper">
               <div class="widget">
                 <slot></slot>
               </div>
-              <div class="label">
-                {this.state === "unmounting" ? "Ready!" : this.kulLabel}
-              </div>
+              <div class="label">{isUnmounting ? "Ready!" : kulLabel}</div>
             </div>
           </div>
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

@@ -16,12 +16,12 @@ export const prepCharacterHandlers = (
       const { controller, handlers } = getAdapter();
       const { get, set } = controller;
       const { list } = handlers.character;
-      const { inProgress } = get.messenger.status.save;
+      const { inProgress } = get.status.save;
 
       switch (eventType) {
         case "click":
           if (!inProgress()) {
-            set.messenger.data();
+            set.data();
           }
           break;
         case "kul-event":
@@ -36,23 +36,23 @@ export const prepCharacterHandlers = (
       const { eventType, node } = e.detail;
 
       const { controller } = getAdapter();
-      const { character, messenger } = controller.get;
+      const { character, compInstance, config, history } = controller.get;
 
       let strJson = "";
       switch (eventType) {
         case "click":
           switch (node.id) {
             case "full_history":
-              strJson = JSON.stringify(messenger.history(), null, 2);
+              strJson = JSON.stringify(history(), null, 2);
               break;
             case "history":
               strJson = character.history();
               break;
             case "kulData":
-              strJson = JSON.stringify(messenger.data(), null, 2);
+              strJson = JSON.stringify(compInstance.kulData, null, 2);
               break;
             case "settings":
-              strJson = JSON.stringify(messenger.config(), null, 2);
+              strJson = JSON.stringify(config(), null, 2);
               break;
           }
 

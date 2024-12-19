@@ -15,6 +15,7 @@ import { KulChartAdapter } from "../kul-chart-declarations";
 //#region Basic
 export const basic = (getAdapter: () => KulChartAdapter) => {
   const { colorCheck } = kulManagerSingleton.theme;
+  const { sanitizeProps } = kulManagerSingleton;
 
   const { mappedType, seriesData, style, xAxesData } =
     getAdapter().controller.get;
@@ -37,17 +38,17 @@ export const basic = (getAdapter: () => KulChartAdapter) => {
       position: xAxisPosition,
       offset: i * 30,
       axisLabel: {
-        ...axis("x").axisLabel,
+        ...sanitizeProps(axis("x")).axisLabel,
         interval: 0,
       },
-      ...axis("x"),
+      ...sanitizeProps(axis("x")),
     } as XAXisComponentOption);
 
     yAxes.push({
       type: "value",
       position: yAxisPosition,
       offset: i * 30,
-      ...axis("y"),
+      ...sanitizeProps(axis("y")),
     } as YAXisComponentOption);
   }
 

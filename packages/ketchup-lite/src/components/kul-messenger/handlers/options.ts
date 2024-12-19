@@ -11,18 +11,17 @@ export const prepOptionsHandlers = (
     //#region Button
     button: async (e) => {
       const { eventType, id } = e.detail;
-      //const customizationSetter = adapter.set.messenger.ui.customization;
 
-      const {} = getAdapter();
+      const { customization } = getAdapter().controller.set.ui;
 
       switch (eventType) {
         case "click":
           switch (id) {
-            case IDS.options.customization:
-              //      customizationSetter(true);
+            case IDS.options.customize:
+              customization(true);
               break;
             case IDS.options.back:
-              //    customizationSetter(false);
+              customization(false);
               break;
           }
           break;

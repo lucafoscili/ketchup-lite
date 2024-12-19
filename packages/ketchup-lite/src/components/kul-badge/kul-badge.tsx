@@ -14,7 +14,7 @@ import { kulManagerSingleton } from "src";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
 import { GenericObject } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulBadgeEvent, KulBadgeEventPayload } from "./kul-badge-declarations";
 
@@ -143,9 +143,7 @@ export class KulBadge {
         kulImageProps.kulColor = `var(${KulThemeColorValues.TEXT_ON_PRIMARY})`;
       }
       imageEl = (
-        <kul-image
-          {...sanitizeProps(kulImageProps as GenericObject)}
-        ></kul-image>
+        <kul-image {...sanitizeProps(kulImageProps, "KulImage")}></kul-image>
       );
     }
 

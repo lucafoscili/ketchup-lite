@@ -1,5 +1,4 @@
-import { getAssetPath } from "@stencil/core";
-
+import { kulManagerSingleton } from "src";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -22,7 +21,9 @@ export const IMAGE_FIXTURES: () => {
   documentation: KulArticleDataset;
   examples: ImageData;
 } = () => {
-  const image = getAssetPath(`./assets/media/color_splash.jpg`);
+  const { get } = kulManagerSingleton.assets;
+
+  const image = get(`./assets/media/color_splash.jpg`);
   const documentation: KulArticleDataset = {
     nodes: [
       {
