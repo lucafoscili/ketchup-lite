@@ -1,8 +1,16 @@
+import {
+  prepCharacterGetters,
+  prepCharacterSetters,
+} from "./controller/character";
+import { prepImageGetters, prepImageSetters } from "./controller/image";
+import { prepUiGetters, prepUiSetters } from "./controller/ui";
 import { prepCharacter } from "./elements/character";
 import { prepChat } from "./elements/chat";
+import { prepCustomization } from "./elements/customization";
 import { prepOptions } from "./elements/options";
 import { prepCharacterHandlers } from "./handlers/character";
 import { prepChatHandlers } from "./handlers/chat";
+import { prepCustomizationHandlers } from "./handlers/customization";
 import { prepOptionsHandlers } from "./handlers/options";
 import { REFS } from "./helpers/constants";
 import { updateDataset } from "./helpers/utils";
@@ -10,6 +18,7 @@ import {
   KulMessengerAdapter,
   KulMessengerAdapterGetters,
   KulMessengerAdapterHandlers,
+  KulMessengerAdapterInitializerGetters,
   KulMessengerAdapterJsx,
   KulMessengerAdapterSetters,
 } from "./kul-messenger-declarations";
@@ -17,13 +26,12 @@ import {
 //#region Adapter
 export const createAdapter = (
   getters: KulMessengerAdapterInitializerGetters,
-  setters: KulMessengerAdapterInitializerSetters,
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapter => {
   return {
     controller: {
-      get: createGetters(getters),
-      set: createSetters(setters, getAdapter),
+      get: createGetters(getters, getAdapter),
+      set: createSetters(getAdapter),
     },
     elements: {
       jsx: createJsx(getAdapter),
@@ -41,11 +49,15 @@ export const createGetters = (
 ): KulMessengerAdapterGetters => {
   return {
     ...getters,
+    character: prepCharacterGetters(getAdapter),
+    image: prepImageGetters(getAdapter),
     config: () => {
-      const { currentCharacter } = getAdapter().controller.get.compInstance;
+      const { compInstance } = getAdapter().controller.get;
+      const { currentCharacter, ui } = compInstance;
+
       return {
         currentCharacter: currentCharacter.id,
-        ui: "messenger.ui" as any,
+        ui,
       };
     },
     data: () => {
@@ -77,18 +89,15 @@ export const createGetters = (
         },
       },
     },
-    ui: () => {
-      const { ui } = getAdapter().controller.get.compInstance;
-      return ui;
-    },
+    ui: prepUiGetters(getAdapter),
   };
 };
 export const createSetters = (
-  setters: KulMessengerAdapterInitializerSetters,
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterSetters => {
   return {
-    ...setters,
+    character: prepCharacterSetters(getAdapter),
+    image: prepImageSetters(getAdapter),
     data: () => updateDataset(getAdapter()),
     status: {
       connection: (status) => {
@@ -110,68 +119,7 @@ export const createSetters = (
         },
       },
     },
-    ui: {
-      customization: (value) => {
-        const { compInstance } = getAdapter().controller.get;
-
-        compInstance.ui.customization = value;
-        compInstance.refresh();
-      },
-      editing: async (value, type, node = null) => {
-        const adapter = getAdapter();
-        const { controller, elements } = adapter;
-        const { compInstance, image } = controller.get;
-        const {} = elements.refs;
-
-        compInstance.ui.editing[type] = value;
-        compInstance.editingStatus[type] = node ? node.id : image.newId(type);
-        if (!node) {
-          compInstance.refresh();
-        } else {
-          await compInstance.refresh();
-          requestAnimationFrame(() => {
-            const comps = adapter.components.editing[type];
-            const hasImage = node?.cells?.kulImage?.value;
-            comps.descriptionTextarea.setValue(node.description);
-            comps.titleTextarea.setValue(node.value);
-            if (hasImage) {
-              comps.imageUrlTextarea.setValue(node.cells.kulImage.value);
-            }
-          });
-        }
-      },
-      filters: (filters) => {
-        const { compInstance } = getAdapter().controller.get;
-
-        compInstance.ui.filters = filters;
-        compInstance.refresh();
-      },
-      options: (value, type) => {
-        const { compInstance } = getAdapter().controller.get;
-
-        compInstance.ui.options[type] = value;
-        compInstance.refresh();
-      },
-      panel: (panel, value?) => {
-        const adapter = getAdapter();
-        const { compInstance } = adapter.controller.get;
-        const { panels } = adapter.controller.get.ui();
-
-        switch (panel) {
-          case "left":
-            panels.isLeftCollapsed = value ?? !panels.isLeftCollapsed;
-            break;
-          case "right":
-            panels.isRightCollapsed = value ?? !panels.isRightCollapsed;
-            break;
-        }
-
-        compInstance.refresh();
-        return value;
-      },
-    },
-    spinnerStatus: (active) =>
-      (getAdapter().elements.refs.details.spinner.kulActive = active),
+    ui: prepUiSetters(getAdapter),
   };
 };
 //#endregion
@@ -183,6 +131,7 @@ export const createJsx = (
   return {
     character: prepCharacter(getAdapter),
     chat: prepChat(getAdapter),
+    customization: prepCustomization(getAdapter),
     options: prepOptions(getAdapter),
   };
 };
@@ -194,6 +143,7 @@ export const createHandlers = (
 ): KulMessengerAdapterHandlers => {
   return {
     character: prepCharacterHandlers(getAdapter),
+    customization: prepCustomizationHandlers(getAdapter),
     chat: prepChatHandlers(getAdapter),
     options: prepOptionsHandlers(getAdapter),
   };

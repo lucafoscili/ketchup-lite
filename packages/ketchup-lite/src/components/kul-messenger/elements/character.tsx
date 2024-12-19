@@ -39,7 +39,7 @@ export const prepCharacter = (
     statusIcon: () => {
       const { controller, elements } = getAdapter();
       const { character } = elements.refs;
-      const { connection } = controller.get.messenger.status;
+      const { connection } = controller.get.status;
 
       const { color, title } = statusIconOptions(connection());
 
@@ -61,7 +61,7 @@ export const prepCharacter = (
     save: () => {
       const { controller, elements, handlers } = getAdapter();
       const { character } = elements.refs;
-      const { inProgress } = controller.get.messenger.status.save;
+      const { inProgress } = controller.get.status.save;
       const { button } = handlers.character;
 
       const isSaving = inProgress();

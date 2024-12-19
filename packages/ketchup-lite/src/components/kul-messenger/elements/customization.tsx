@@ -3,16 +3,20 @@ import { Fragment, h, VNode } from "@stencil/core";
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,
+  KulMessengerAdapterJsx,
   KulMessengerBaseRootNode,
   KulMessengerImageRootIds,
   KulMessengerImageTypes,
 } from "../kul-messenger-declarations";
 import { kulManagerSingleton } from "src";
 
-export const prepCustomization = (getAdapter: () => KulMessengerAdapter) => {
+export const prepCustomization = (
+  getAdapter: () => KulMessengerAdapter,
+): KulMessengerAdapterJsx["customization"] => {
   const { assignRef } = kulManagerSingleton;
 
   return {
+    //#region Filters
     filters: () => {
       const { controller, elements, handlers } = getAdapter();
       const { character, image } = controller.get;
@@ -36,90 +40,102 @@ export const prepCustomization = (getAdapter: () => KulMessengerAdapter) => {
         ></kul-chip>
       );
     },
-    list: () => {
-      const { controller, elements, handlers } = getAdapter();
-      const { image, messenger } = controller.get;
+    //#endregion
 
-      const elms = [];
-      const editing = messenger.ui().editing;
-      const filters = messenger.ui().filters;
-      const imagesGetter = image.byType;
-      const hoverGetter = messenger.status.hoveredCustomizationOption;
+    form: {
+      description: () => {
+        const { controller, elements, handlers } = getAdapter();
+        const { character, image } = controller.get;
+        const { customization } = elements.refs;
+        const { chip } = handlers.customization;
 
-      for (let index = 0; index < IMAGE_TYPE_IDS.length; index++) {
-        const type = IMAGE_TYPE_IDS[index];
-        if (filters[type]) {
-          const isEditingEnabled = editing[type];
-          const activeIndex = adapter.get.image.coverIndex(type);
-          const images: VNode[] = imagesGetter(type).map((node, j) => (
-            <div
-              class={`messenger__customization__image-wrapper  ${activeIndex === j ? "messenger__customization__image-wrapper--selected" : ""}`}
-              onClick={imageEventHandler.bind(
-                imageEventHandler,
-                adapter,
-                node,
-                j,
-              )}
-              onPointerEnter={() => {
-                if (activeIndex !== j) {
-                  adapter.set.messenger.status.hoveredCustomizationOption(node);
-                }
-              }}
-              onPointerLeave={() =>
-                adapter.set.messenger.status.hoveredCustomizationOption(null)
-              }
-            >
-              <img
-                alt={adapter.get.image.title(node)}
-                class={`messenger__customization__image`}
-                src={node.cells.kulImage.value}
-                title={adapter.get.image.title(node)}
-              />
-              {hoverGetter() === node ? (
-                <div
-                  class="messenger__customization__actions"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <kul-button
-                    class="kul-full-width kul-danger"
-                    kulIcon="delete"
-                    onKul-button-event={buttonEventHandler.bind(
-                      buttonEventHandler,
-                      adapter,
-                      type,
-                      "delete",
-                      node,
-                    )}
-                    title="Delete this option."
-                  ></kul-button>
-                  <kul-button
-                    class="kul-full-width"
-                    kulIcon="pencil"
-                    onKul-button-event={buttonEventHandler.bind(
-                      buttonEventHandler,
-                      adapter,
-                      type,
-                      "edit",
-                      node,
-                    )}
-                    title="Edit this option."
-                  ></kul-button>
-                </div>
-              ) : undefined}
-            </div>
-          ));
-          elms.push(
-            <div class="messenger__customization__section">
-              {isEditingEnabled
-                ? prepEditPanel(adapter, type)
-                : prepCovers(adapter, type, images)}
-            </div>,
-          );
-        }
-      }
-      return elms;
+        return (
+          <kul-textfield
+            kulFullWidth={true}
+            kulIcon="format-float-left"
+            kulLabel="Description"
+            ref={(el) =>
+              (adapter.components.editing[type].descriptionTextarea = el)
+            }
+            title="A more accurate description to give more context to the LLM."
+          ></kul-textfield>
+        );
+      },
+      id: () => {
+        return (
+          <kul-textfield
+            key={`id-edit-${id}`}
+            kulDisabled
+            kulFullWidth={true}
+            kulIcon="key-variant"
+            kulLabel="ID"
+            kulValue={id}
+            ref={(el) => (adapter.components.editing[type].idTextfield = el)}
+            title="The cover image displayed in the selection panel."
+          ></kul-textfield>
+        );
+      },
+      image: () => {
+        return (
+          <kul-textfield
+            kulFullWidth={true}
+            kulIcon="image"
+            kulLabel="Image URL"
+            ref={(el) =>
+              (adapter.components.editing[type].imageUrlTextarea = el)
+            }
+            title="The cover image displayed in the selection panel."
+          ></kul-textfield>
+        );
+      },
+      title: () => {
+        return (
+          <kul-textfield
+            kulFullWidth={true}
+            kulIcon="title"
+            kulLabel="Title"
+            ref={(el) => (adapter.components.editing[type].titleTextarea = el)}
+            title="The overall theme of this option."
+          ></kul-textfield>
+        );
+      },
+    },
+
+    //#region List
+    list: {
+      edit: (type, node) => {
+        const { elements, handlers } = getAdapter();
+        const { customization } = elements.refs;
+        const { button } = handlers.customization;
+
+        return (
+          <kul-button
+            class="kul-full-width"
+            kulIcon="pencil"
+            onKul-button-event={(e) => button(e, type, "edit", node)}
+            title="Edit this option."
+            ref={assignRef(customization, "edit")}
+          ></kul-button>
+        );
+      },
+      remove: (type, node) => {
+        const { elements, handlers } = getAdapter();
+        const { customization } = elements.refs;
+        const { button } = handlers.customization;
+
+        return (
+          <kul-button
+            class="kul-full-width kul-danger"
+            kulIcon="delete"
+            onKul-button-event={(e) => button(e, type, "delete", node)}
+            title="Delete this option."
+            ref={assignRef(customization, "delete")}
+          ></kul-button>
+        );
+      },
     },
   };
+  //#endregion
 };
 
 const prepCovers = (
@@ -153,72 +169,4 @@ const prepCovers = (
 const prepEditPanel = (
   adapter: KulMessengerAdapter,
   type: KulMessengerImageTypes,
-) => {
-  const id = adapter.get.messenger.status.editing()[type];
-  return (
-    <div class="messenger__customization__edit__panel">
-      <div class="messenger__customization__edit__label">Create {type}</div>
-      <kul-textfield
-        key={`id-edit-${id}`}
-        kulDisabled
-        kulFullWidth={true}
-        kulIcon="key-variant"
-        kulLabel="ID"
-        kulValue={id}
-        ref={(el) => (adapter.components.editing[type].idTextfield = el)}
-        title="The cover image displayed in the selection panel."
-      ></kul-textfield>
-      <kul-textfield
-        kulFullWidth={true}
-        kulIcon="title"
-        kulLabel="Title"
-        ref={(el) => (adapter.components.editing[type].titleTextarea = el)}
-        title="The overall theme of this option."
-      ></kul-textfield>
-      <kul-textfield
-        kulFullWidth={true}
-        kulIcon="format-float-left"
-        kulLabel="Description"
-        ref={(el) =>
-          (adapter.components.editing[type].descriptionTextarea = el)
-        }
-        title="A more accurate description to give more context to the LLM."
-      ></kul-textfield>
-      <kul-textfield
-        kulFullWidth={true}
-        kulIcon="image"
-        kulLabel="Image URL"
-        ref={(el) => (adapter.components.editing[type].imageUrlTextarea = el)}
-        title="The cover image displayed in the selection panel."
-      ></kul-textfield>
-      <div class="messenger__customization__edit__confirm">
-        <kul-button
-          class={"messenger__customization__edit__button"}
-          kulIcon="clear"
-          kulLabel="Cancel"
-          kulStyling="flat"
-          onKul-button-event={buttonEventHandler.bind(
-            buttonEventHandler,
-            adapter,
-            type,
-            "cancel",
-            null,
-          )}
-        ></kul-button>
-        <kul-button
-          class={"messenger__customization__edit__button"}
-          kulIcon="check"
-          kulLabel="Confirm"
-          kulStyling="outlined"
-          onKul-button-event={buttonEventHandler.bind(
-            buttonEventHandler,
-            adapter,
-            type,
-            "confirm",
-            null,
-          )}
-        ></kul-button>
-      </div>
-    </div>
-  );
-};
+) => {};

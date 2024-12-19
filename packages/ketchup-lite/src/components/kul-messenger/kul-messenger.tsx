@@ -128,7 +128,7 @@ export class KulMessenger {
   //#endregion
 
   //#region Internal variables
-  #adapter = createAdapter({}, {}, () => this.#adapter);
+  #adapter = createAdapter({ compInstance: this }, () => this.#adapter);
   //#endregion
 
   //#region Events
@@ -391,6 +391,56 @@ export class KulMessenger {
         )}
       </div>
     );
+  }
+  #prepList() {
+    const { controller, elements, handlers } = this.#adapter;
+    const { byType, coverIndex, title } = controller.get.image;
+    const { edit, remove } = elements.jsx.customization.list;
+    const { image } = handlers.customization;
+    const { hoveredCustomizationOption, ui } = this;
+    const { editing, filters } = ui;
+
+    IMAGE_TYPE_IDS.map((type) => {
+      if (filters[type]) {
+        const isEditingEnabled = editing[type];
+        const activeIndex = coverIndex(type);
+        const images: VNode[] = byType(type).map((node, j) => (
+          <div
+            class={`messenger__customization__image-wrapper  ${activeIndex === j ? "messenger__customization__image-wrapper--selected" : ""}`}
+            onClick={(e) => image(e, node, j)}
+            onPointerEnter={() => {
+              if (activeIndex !== j) {
+                this.hoveredCustomizationOption = node;
+              }
+            }}
+            onPointerLeave={() => (this.hoveredCustomizationOption = null)}
+          >
+            <img
+              alt={title(node)}
+              class={`messenger__customization__image`}
+              src={node.cells.kulImage.value}
+              title={title(node)}
+            />
+            {hoveredCustomizationOption === node && (
+              <div
+                class="messenger__customization__actions"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {edit(type, node)}
+                {remove(type, node)}
+              </div>
+            )}
+          </div>
+        ));
+        return (
+          <div class="messenger__customization__section">
+            {isEditingEnabled
+              ? prepEditPanel(adapter, type)
+              : prepCovers(adapter, type, images)}
+          </div>
+        );
+      }
+    });
   }
   #prepOptions() {
     return OPTION_TYPE_IDS.map((opt) => {

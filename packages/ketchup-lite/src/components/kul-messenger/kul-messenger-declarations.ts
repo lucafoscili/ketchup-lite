@@ -1,5 +1,4 @@
 import { VNode } from "@stencil/core";
-
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import {
   KulChatEventPayload,
@@ -51,7 +50,18 @@ export interface KulMessengerAdapterJsx extends KulComponentAdapterJsx {
     tabbar: () => VNode;
   };
   customization: {
+    editing: {};
     filters: () => VNode;
+    list: {
+      edit: (
+        type: KulMessengerImageTypes,
+        node: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+      ) => VNode;
+      remove: (
+        type: KulMessengerImageTypes,
+        node: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+      ) => VNode;
+    };
   };
   options: {
     back: () => VNode;
@@ -77,6 +87,10 @@ export interface KulMessengerAdapterRefs extends KulComponentAdapterRefs {
   };
   customization: {
     filters: HTMLKulChipElement;
+    list: {
+      edit: HTMLKulButtonElement;
+      remove: HTMLKulButtonElement;
+    };
   };
   options: {
     back: HTMLKulButtonELement;
@@ -106,7 +120,7 @@ export interface KulMessengerAdapterHandlers
     ) => Promise<void>;
     chip: (e: CustomEvent<KulChipEventPayload>) => Promise<void>;
     image: <T extends KulMessengerUnionChildIds>(
-      e: CustomEvent<KulImageEventPayload>,
+      e: MouseEvent,
       node: KulMessengerBaseChildNode<T>,
       index: number,
     ) => Promise<void>;
@@ -115,6 +129,10 @@ export interface KulMessengerAdapterHandlers
     button: (e: CustomEvent<KulButtonEventPayload>) => Promise<void>;
   };
 }
+export type KulMessengerAdapterInitializerGetters = Pick<
+  KulMessengerAdapterGetters,
+  "compInstance"
+>;
 export interface KulMessengerAdapterGetCharacter {
   biography: (character?: KulMessengerCharacterNode) => string;
   byId: (id: string) => KulMessengerCharacterNode;
@@ -366,6 +384,7 @@ export interface KulMessengerTimeframeNode
   id: KulMessengerChildIds<KulMessengerTimeframeId>;
 }
 //#endregion
+
 //#region States
 export interface KulMessengerChat {
   [index: KulMessengerCharacterId]: KulChatPropsInterface;

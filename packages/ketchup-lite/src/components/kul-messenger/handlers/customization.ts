@@ -1,3 +1,4 @@
+import { createNode } from "../helpers/utils";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterHandlers,
@@ -14,10 +15,11 @@ export const prepCustomizationHandlers = (
 
       const adapter = getAdapter();
       const { get, set } = adapter.controller;
+      const { form } = adapter.elements.refs.customization;
 
       if (eventType === "click") {
         const handleEditing = (enabled: boolean) =>
-          set.messenger.ui.editing(enabled, type);
+          set.ui.editing(enabled, type);
 
         switch (action) {
           case "add":
@@ -27,8 +29,7 @@ export const prepCustomizationHandlers = (
             handleEditing(false);
             break;
           case "confirm": {
-            const titleTextarea =
-              adapter.components.editing[type].titleTextarea;
+            const titleTextarea = editing[type].titleTextarea;
             const value = await titleTextarea.getValue();
             titleTextarea.classList.remove("kul-danger");
             if (value) {
@@ -90,7 +91,7 @@ export const prepCustomizationHandlers = (
     //#endregion
 
     //#region Image
-    image: (_e, node, index) => {
+    image: async (_e, node, index) => {
       const coverSetter = adapter.set.image.cover;
 
       const matchedType = Object.keys(CHILD_ROOT_MAP).find((key) =>

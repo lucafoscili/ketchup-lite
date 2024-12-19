@@ -119,7 +119,6 @@ const getAsCover = (
     }
   }
 };
-
 const getByType = (
   getAdapter: () => KulMessengerAdapter,
   type: KulMessengerImageTypes,
@@ -135,7 +134,6 @@ const getByType = (
     return [];
   }
 };
-
 const getNewId = (
   getAdapter: () => KulMessengerAdapter,
   type: KulMessengerImageTypes,
