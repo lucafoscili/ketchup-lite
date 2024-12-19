@@ -17,10 +17,11 @@ import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarat
 import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/variables/GenericVariables";
 import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
-import { IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from "./helpers/constants";
+import { CLEAN_UI, IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from "./helpers/constants";
 import {
   assignPropsToChatCell,
   extractPropsFromChatCell,
+  hasNodes,
 } from "./helpers/utils";
 import { createAdapter } from "./kul-messenger-adapter";
 import {
@@ -36,6 +37,7 @@ import {
   KulMessengerEventPayload,
   KulMessengerHistory,
   KulMessengerImageTypes,
+  KulMessengerUI,
   KulMessengerUnionChildIds,
 } from "./kul-messenger-declarations";
 
@@ -96,6 +98,10 @@ export class KulMessenger {
    * Signals to the widget when the dataset is being saved.
    */
   @State() saveInProgress = false;
+  /**
+   * State of options' filters.
+   */
+  @State() ui = CLEAN_UI();
   //#endregion
 
   //#region Props
@@ -208,13 +214,10 @@ export class KulMessenger {
   //#endregion
 
   //#region Private methods
-  #hasNodes() {
-    return !!this.kulData?.nodes?.length;
-  }
   #initialize() {
     const { kulData } = this;
 
-    if (this.#hasNodes()) {
+    if (hasNodes(this.#adapter)) {
       for (let index = 0; index < kulData.nodes.length; index++) {
         const character = kulData.nodes[index];
         this.#initCharacter(character);

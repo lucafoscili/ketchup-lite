@@ -430,7 +430,7 @@ export type KulComponentAdapterGetters<C extends KulGenericComponent> = {
   compInstance: C;
 };
 export type KulComponentAdapterSetters = {
-  [key: string]: ((value?: unknown) => void) | KulComponentAdapterSetters;
+  [key: string]: ((...args: unknown[]) => void) | KulComponentAdapterSetters;
 };
 export interface KulComponentAdapter<
   C extends KulGenericComponent,

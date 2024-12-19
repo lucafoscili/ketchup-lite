@@ -8,33 +8,37 @@ import {
 } from "src/components/kul-messenger/kul-messenger-declarations";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 
-const CLEAN_UI: KulMessengerUI = {
-  customization: false,
-  editing: {
-    avatars: false,
-    locations: false,
-    outfits: false,
-    styles: false,
-    timeframes: false,
-  },
-  filters: {
-    avatars: false,
-    locations: false,
-    outfits: false,
-    styles: false,
-    timeframes: false,
-  },
-  options: {
-    locations: true,
-    outfits: true,
-    styles: true,
-    timeframes: true,
-  },
-  panels: {
-    isLeftCollapsed: false,
-    isRightCollapsed: false,
-  },
+//#region Clean UI flags
+export const CLEAN_UI = (): KulMessengerUI => {
+  return {
+    customization: false,
+    editing: {
+      avatars: false,
+      locations: false,
+      outfits: false,
+      styles: false,
+      timeframes: false,
+    },
+    filters: {
+      avatars: false,
+      locations: false,
+      outfits: false,
+      styles: false,
+      timeframes: false,
+    },
+    options: {
+      locations: true,
+      outfits: true,
+      styles: true,
+      timeframes: true,
+    },
+    panels: {
+      isLeftCollapsed: false,
+      isRightCollapsed: false,
+    },
+  };
 };
+//#endregion
 
 //#region Refs
 export const REFS = (): KulMessengerAdapterRefs => {
@@ -46,6 +50,7 @@ export const REFS = (): KulMessengerAdapterRefs => {
       rightExpander: null,
       tabbar: null,
     },
+    customization: { filters: null },
     options: { back: null, customization: null },
   };
 };

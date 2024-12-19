@@ -32,7 +32,7 @@ export const extractPropsFromChatCell = (
 //#endregion
 
 //#region createNode
-const createNode = async <
+export const createNode = async <
   T extends KulMessengerImageRootIds<KulMessengerImageTypes>,
 >(
   adapter: KulMessengerAdapter,
@@ -127,6 +127,14 @@ export const hasCharacters = (adapter: KulMessengerAdapter) => {
 };
 //#endregion
 
+//#region hasNodes
+export const hasNodes = (adapter: KulMessengerAdapter) =>  {
+  const { kulData } = adapter.controller.get.compInstance;
+
+  return !!kulData?.nodes?.length;
+}
+//#endregion
+
 //#region statusIconOptions
 export const statusIconOptions = (status: KulChatStatus) => {
   const color =
@@ -204,5 +212,25 @@ ${timeframe}
 
 Begin your performance...
     `;
+};
+//#endregion
+
+//#region updateDataset
+export const updateDataset = (adapter:  KulMessengerAdapter) => {
+  const { controller, elements } = adapter;
+  const { compInstance } = controller.get;
+  const { save } = elements.refs.character;
+
+  compInstance.save().then(() => {
+    requestAnimationFrame(() => {
+      save.kulIcon = "check";
+      save.kulLabel = "Saved!";
+      save.kulShowSpinner = false;
+    });
+
+    setTimeout(() => {
+      requestAnimationFrame(() => (compInstance.saveInProgress = false));
+    }, 1000);
+  });
 };
 //#endregion

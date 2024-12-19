@@ -20,6 +20,7 @@ import {
   KulMessengerUnionChildIds,
 } from "../kul-messenger-declarations";
 
+//#region Getters
 export const prepImageGetters = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterGetters["image"] => {
@@ -55,7 +56,9 @@ export const prepImageGetters = (
     },
   };
 };
+//#endregion
 
+//#region Setters
 export const prepImageSetters = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterSetters["image"] => {
@@ -74,7 +77,9 @@ export const prepImageSetters = (
     },
   };
 };
+//#endregion
 
+//#region Helpers
 const getAsCover = (
   getAdapter: () => KulMessengerAdapter,
   type: KulMessengerImageTypes,
@@ -169,3 +174,4 @@ const getNewId = (
 
   return nodeId;
 };
+//#endregion

@@ -7,6 +7,7 @@ import {
   KulMessengerCharacterNode,
 } from "../kul-messenger-declarations";
 
+//#region Getters
 export const prepCharacterGetters = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterGetters["character"] => {
@@ -31,7 +32,9 @@ export const prepCharacterGetters = (
     previous: (character?) => fetch(getAdapter, character),
   };
 };
+//#endregion
 
+//#region Setters
 export const prepCharacterSetters = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterSetters["character"] => {
@@ -58,7 +61,7 @@ export const prepCharacterSetters = (
         compInstance.history[id] = history;
 
         if (compInstance.kulAutosave) {
-          adapter.controller.set.messenger.data();
+          adapter.controller.set.data();
         }
       }
     },
@@ -90,7 +93,9 @@ export const prepCharacterSetters = (
     },
   };
 };
+//#endregion
 
+//#region Helpers
 const getBiography = (
   getAdapter: () => KulMessengerAdapter,
   character: KulMessengerCharacterNode,
@@ -106,7 +111,6 @@ const getBiography = (
     return "You know nothing about this character...";
   }
 };
-
 const getChat = (
   getAdapter: () => KulMessengerAdapter,
   character: KulMessengerCharacterNode,
@@ -117,7 +121,6 @@ const getChat = (
 
   return chat[id];
 };
-
 const getHistory = (
   getAdapter: () => KulMessengerAdapter,
   character: KulMessengerCharacterNode,
@@ -128,7 +131,6 @@ const getHistory = (
 
   return history[id];
 };
-
 const getName = (
   getAdapter: () => KulMessengerAdapter,
   character: KulMessengerCharacterNode,
@@ -140,7 +142,6 @@ const getName = (
 
   return value || id || description || "?";
 };
-
 const fetch = (
   getAdapter: () => KulMessengerAdapter,
   character: KulMessengerCharacterNode,
@@ -165,3 +166,4 @@ const fetch = (
       return characters[pIdx];
   }
 };
+//#endregion

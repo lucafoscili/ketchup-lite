@@ -1,11 +1,7 @@
-import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
-import { IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterHandlers,
-  KulMessengerBaseChildNode,
-  KulMessengerImageTypes,
-  KulMessengerUnionChildIds,
+  KulMessengerFilters,
 } from "../kul-messenger-declarations";
 
 export const prepCustomizationHandlers = (
@@ -13,15 +9,7 @@ export const prepCustomizationHandlers = (
 ): KulMessengerAdapterHandlers["customization"] => {
   return {
     //#region Button
-    button: async <
-      T1 extends KulMessengerImageTypes,
-      T2 extends KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
-    >(
-      type: T1,
-      action: "add" | "cancel" | "confirm" | "edit" | "delete",
-      node: T2 = null,
-      e: CustomEvent<KulButtonEventPayload>,
-    ) => {
+    button: async (e, type, action, node = null) => {
       const { eventType } = e.detail;
 
       const adapter = getAdapter();
@@ -66,11 +54,9 @@ export const prepCustomizationHandlers = (
     //#endregion
 
     //#region Chip
-    chip: (
-      adapter: KulMessengerAdapter,
-      e: CustomEvent<KulChipEventPayload>,
-    ) => {
+    chip: async (e) => {
       const { comp, eventType, selectedNodes } = e.detail;
+
       const filtersSetter = adapter.set.messenger.ui.filters;
 
       switch (eventType) {
@@ -98,19 +84,13 @@ export const prepCustomizationHandlers = (
               }
             }
           }
-          requestAnimationFrame(() =>
-            (comp as KulChip).setSelectedNodes(nodes),
-          );
+          requestAnimationFrame(() => comp.setSelectedNodes(nodes));
       }
     },
     //#endregion
 
     //#region Image
-    image: <T extends KulMessengerUnionChildIds>(
-      adapter: KulMessengerAdapter,
-      node: KulMessengerBaseChildNode<T>,
-      index: number,
-    ) => {
+    image: (_e, node, index) => {
       const coverSetter = adapter.set.image.cover;
 
       const matchedType = Object.keys(CHILD_ROOT_MAP).find((key) =>
