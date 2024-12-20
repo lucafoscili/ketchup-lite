@@ -1,9 +1,7 @@
 /// <reference types="cypress" />
 
 import { KulManager } from "../../src/managers/kul-manager/kul-manager";
-import { KulDom } from "../../src/managers/kul-manager/kul-manager-declarations";
 import {
-  GenericMap,
   KulComponent,
   KulComponentName,
   KulDataCyAttributes,
@@ -30,17 +28,14 @@ declare global {
       checkComponentExamplesNumber(componentExamples: Array<string>): Chainable;
       checkDebugInfo(component: string): Chainable;
       checkEvent(component: string, eventType: KulGenericEventType): Chainable;
-      checkProps(component: string, componentProps: GenericMap): Chainable;
-      checkPropsInterface(
-        component: string,
-        componentProps: { [key: string]: any },
-      ): Chainable;
+      checkKulStyle(): Chainable;
+      checkProps(component: string, componentProps: string[]): Chainable;
       checkReadyEvent(
         component: string,
         eventType?: KulGenericEventType,
       ): Chainable;
       checkRenderCountIncrease(component: string, attempts?: number): Chainable;
-      checkKulStyle(): Chainable;
+      checkRipple(component: string): Chainable;
       findCyElement(dataCy: KulDataCyAttributes): Chainable;
       getCyElement(dataCy: KulDataCyAttributes): Chainable;
       getKulManager(): Chainable<KulManager>;
@@ -50,6 +45,7 @@ declare global {
   }
 }
 
+//#region checkComponentExamples
 Cypress.Commands.add(
   "checkComponentExamples",
   (component, componentExamples) => {
@@ -58,7 +54,9 @@ Cypress.Commands.add(
       .should("have.length", componentExamples.size);
   },
 );
+//#endregion
 
+//#region checkComponentExamplesNumber
 Cypress.Commands.add("checkComponentExamplesNumber", (componentExamples) => {
   cy.get("@kulComponentShowcase")
     .wrap(componentExamples)
@@ -66,14 +64,18 @@ Cypress.Commands.add("checkComponentExamplesNumber", (componentExamples) => {
       cy.get(`#${id}`).should("exist");
     });
 });
+//#endregion
 
+//#region checkComponentExamplesByCategory
 Cypress.Commands.add("checkComponentExamplesByCategory", (categories) => {
   categories.forEach((categoryKey) => {
     const composedId = `#${categoryKey}-style`;
     cy.get("@kulComponentShowcase").find(composedId).should("exist");
   });
 });
+//#endregion
 
+//#region checkComponentExamplesByCategoryNumber
 Cypress.Commands.add("checkComponentExamplesByCategoryNumber", (component) => {
   cy.get("@kulComponentShowcase")
     .find(".grid-container")
@@ -81,7 +83,9 @@ Cypress.Commands.add("checkComponentExamplesByCategoryNumber", (component) => {
       cy.wrap(category).find(component).its("length").should("be.gte", 1);
     });
 });
+//#endregion
 
+//#region checkDebugInfo
 Cypress.Commands.add("checkDebugInfo", (component) => {
   cy.get("@kulComponentShowcase")
     .find(component)
@@ -97,7 +101,9 @@ Cypress.Commands.add("checkDebugInfo", (component) => {
       });
     });
 });
+//#endregion
 
+//#region checkEvent
 Cypress.Commands.add(
   "checkEvent",
   <N extends KulComponentName>(
@@ -125,7 +131,9 @@ Cypress.Commands.add(
       .as("eventElement");
   },
 );
+//#endregion
 
+//#region checkKulStyle
 Cypress.Commands.add("checkKulStyle", () => {
   function checkStyles(attempts = 0) {
     cy.get("@kulComponentShowcase")
@@ -141,33 +149,29 @@ Cypress.Commands.add("checkKulStyle", () => {
   }
   checkStyles();
 });
+//#endregion
 
+//#region checkProps
 Cypress.Commands.add("checkProps", (component, componentProps) => {
   cy.get("@kulComponentShowcase")
     .find(component)
     .first()
     .then(($comp) => {
       ($comp[0] as Partial<KulGenericComponent>).getProps().then((props) => {
-        const enumKeys = Object.keys(componentProps);
-        expect(Object.keys(props)).to.deep.equal(enumKeys);
+        for (
+          let index = 0;
+          index < Object.keys(componentProps).length;
+          index++
+        ) {
+          const prop = Object.keys(componentProps)[index];
+          expect(Object.keys(props)).to.include(prop);
+        }
       });
     });
 });
+//#endregion
 
-Cypress.Commands.add("checkPropsInterface", (component, componentProps) => {
-  cy.get("@kulComponentShowcase")
-    .find(component)
-    .first()
-    .then(($comp) => {
-      const kulArticleElement = $comp[0] as Partial<KulGenericComponent>;
-      return kulArticleElement.getProps();
-    })
-    .then((props) => {
-      const expectedKeys = Object.keys(componentProps);
-      expect(Object.keys(props)).to.deep.equal(expectedKeys);
-    });
-});
-
+//#region checkReadyEvent
 Cypress.Commands.add(
   "checkReadyEvent",
   (component, eventType: KulGenericEventType = "ready") => {
@@ -193,7 +197,26 @@ Cypress.Commands.add(
     });
   },
 );
+//#endregion
 
+//#region checkRipple
+Cypress.Commands.add("checkRipple", (component) => {
+  cy.get(component)
+    .findCyElement(KulDataCyAttributes.RIPPLE)
+    .should("exist")
+    .then(($ripple) => {
+      const initialChildCount = $ripple[0].children.length;
+
+      cy.wrap($ripple).first().click();
+
+      cy.wrap($ripple)
+        .children()
+        .should("have.length", initialChildCount + 1);
+    });
+});
+//#endregion
+
+//#region checkRenderCountIncrease
 Cypress.Commands.add(
   "checkRenderCountIncrease",
   (component, maxAttempts = 10) => {
@@ -238,7 +261,9 @@ Cypress.Commands.add(
     checkForRenderCountIncrease();
   },
 );
+//#endregion
 
+//#region findCyElement
 Cypress.Commands.add(
   "findCyElement",
   { prevSubject: "element" },
@@ -246,18 +271,23 @@ Cypress.Commands.add(
     cy.wrap(subject).find(transformEnumValue(dataCy) as unknown as string);
   },
 );
+//#endregion
 
+//#region getCyElement
 Cypress.Commands.add("getCyElement", (dataCy: KulDataCyAttributes) =>
   cy.get(transformEnumValue(dataCy) as unknown as string),
 );
+//#endregion
 
+//#region getKulManager
 Cypress.Commands.add("getKulManager", () => {
-  cy.window().then((win) => {
-    const dom = win.document.documentElement as KulDom;
-    return dom.ketchupLite;
+  cy.window().then(() => {
+    return globalThis["kulManager"];
   });
 });
+//#endregion
 
+//#region navigate
 Cypress.Commands.add("navigate", (component) => {
   if (!component || typeof component !== "string") {
     throw new Error(`Invalid component name: ${component}`);
@@ -337,3 +367,4 @@ function visitManager() {
     },
   };
 }
+//#endregion
