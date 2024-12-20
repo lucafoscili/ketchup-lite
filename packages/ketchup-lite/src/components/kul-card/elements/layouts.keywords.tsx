@@ -26,7 +26,7 @@ export const prepKeywords = (getAdapter: () => KulCardAdapter): VNode => {
     keywords.button(),
     buttonCb,
   );
-  const hasButton = buttons?.element?.length;
+  const hasButton = Boolean(buttons?.element?.length);
   //#endregion
 
   //#region Chart
@@ -36,7 +36,7 @@ export const prepKeywords = (getAdapter: () => KulCardAdapter): VNode => {
     async (e) => compInstance.onKulEvent(e, "kul-event"),
     keywords.chart(),
   );
-  const hasChart = charts?.element?.length;
+  const hasChart = Boolean(charts?.element?.length);
   //#endregion
 
   //#region Chip
@@ -46,7 +46,7 @@ export const prepKeywords = (getAdapter: () => KulCardAdapter): VNode => {
     async (e) => compInstance.onKulEvent(e, "kul-event"),
     keywords.chip(),
   );
-  const hasChip = chips?.element?.length;
+  const hasChip = Boolean(chips?.element?.length);
   //#endregion
 
   const className = {

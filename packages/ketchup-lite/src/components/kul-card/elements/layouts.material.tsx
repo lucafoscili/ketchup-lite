@@ -18,7 +18,7 @@ export const prepMaterial = (getAdapter: () => KulCardAdapter): VNode => {
   const buttons = decorate("button", button, async (e) =>
     compInstance.onKulEvent(e, "kul-event"),
   );
-  const hasButton = buttons?.element?.length;
+  const hasButton = Boolean(buttons?.element?.length);
   //#endregion
 
   //#region Image
@@ -28,14 +28,14 @@ export const prepMaterial = (getAdapter: () => KulCardAdapter): VNode => {
     async (e) => compInstance.onKulEvent(e, "kul-event"),
     material.image(),
   );
-  const hasImage = images?.element?.length;
+  const hasImage = Boolean(images?.element?.length);
   //#endregion
 
   //#region Text
   const texts = decorate("text", text, async (e) =>
     compInstance.onKulEvent(e, "kul-event"),
   );
-  const hasText = texts?.element?.length;
+  const hasText = Boolean(texts?.element?.length);
   const title = hasText ? text?.[0]?.value : null;
   const subtitle = hasText ? text?.[1]?.value : null;
   const description = hasText ? text?.[2]?.value : null;
@@ -65,7 +65,7 @@ export const prepMaterial = (getAdapter: () => KulCardAdapter): VNode => {
           {description && <div class="sub-2 description">{description}</div>}
         </div>
       </div>
-      {hasButton && <div class="section-3">{buttons.element}</div>}
+      {hasButton && <div class="section-3">{...buttons.element}</div>}
     </div>
   );
 };

@@ -22,8 +22,8 @@ export const prepDebug = (getAdapter: () => KulCardAdapter): VNode => {
     debug.button(),
     layouts.debug.button,
   );
-  const hasButton = buttons?.element?.length;
-  const hasButton2 = buttons?.element?.length > 1;
+  const hasButton = Boolean(buttons?.element?.length);
+  const hasButton2 = Boolean(buttons?.element?.length > 1);
   //#endregion
 
   //#region Code
@@ -34,7 +34,7 @@ export const prepDebug = (getAdapter: () => KulCardAdapter): VNode => {
     debug.code(),
     layouts.debug.code,
   );
-  const hasCode = codes?.element?.length;
+  const hasCode = Boolean(codes?.element?.length);
   //#endregion
 
   //#region Toggle
@@ -45,7 +45,7 @@ export const prepDebug = (getAdapter: () => KulCardAdapter): VNode => {
     debug.toggle(),
     layouts.debug.toggle,
   );
-  const hasToggle = toggles?.element?.length;
+  const hasToggle = Boolean(toggles?.element?.length);
   //#endregion
 
   const className = {

@@ -17,14 +17,14 @@ export const prepUpload = (getAdapter: () => KulCardAdapter): VNode => {
     async (e) => compInstance.onKulEvent(e, "kul-event"),
     defaults.upload.button(),
   );
-  const hasButton = buttons?.element?.length;
+  const hasButton = Boolean(buttons?.element?.length);
   //#endregion
 
   //#region Upload
   const uploads = decorator("upload", upload, async (e) =>
     compInstance.onKulEvent(e, "kul-event"),
   );
-  const hasUpload = uploads?.element?.length;
+  const hasUpload = Boolean(uploads?.element?.length);
   //#endregion
 
   const className = {
