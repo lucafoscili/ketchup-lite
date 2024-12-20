@@ -119,9 +119,11 @@
 }
 
 .content {
-  color: var(--kul_article_content_color);
-  font-family: var(--kul_article_content_font_family);
-  font-size: var(--kul_article_content_font_size);
+  &__body {
+    color: var(--kul_article_content_color);
+    font-family: var(--kul_article_content_font_family);
+    font-size: var(--kul_article_content_font_size);
+  }
 }
 
 h1 {

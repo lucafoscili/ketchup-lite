@@ -17,6 +17,7 @@ import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulBadgeEvent, KulBadgeEventPayload } from "./kul-badge-declarations";
+import { KUL_BADGE_EVENT } from "./helpers/constants";
 
 @Component({
   tag: "kul-badge",
@@ -56,7 +57,7 @@ export class KulBadge {
 
   //#region Events
   @Event({
-    eventName: "kul-badge-event",
+    eventName: KUL_BADGE_EVENT,
     composed: true,
     cancelable: false,
     bubbles: true,

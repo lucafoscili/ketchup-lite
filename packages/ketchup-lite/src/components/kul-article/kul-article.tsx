@@ -15,8 +15,9 @@ import {
 import { kulManagerSingleton } from "src";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
-import { GenericObject } from "src/types/GenericTypes";
+import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { KUL_ARTICLE_EVENT } from "./helpers/constants";
 import {
   KulArticleDataset,
   KulArticleEvent,
@@ -58,7 +59,7 @@ export class KulArticle {
 
   //#region Events
   @Event({
-    eventName: "kul-article-event",
+    eventName: KUL_ARTICLE_EVENT,
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -129,80 +130,91 @@ export class KulArticle {
     }
   }
   #articleTemplate(node: KulArticleNode, depth: number): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { children, cssStyle, value } = node;
+
     return (
       <Fragment>
         <article
-          class="article"
+          class={bemClass("article")}
+          data-cy={KulDataCyAttributes.NODE}
           data-depth={depth.toString()}
-          style={node.cssStyle}
+          style={cssStyle}
         >
-          {node.value ? <h1>{node.value}</h1> : undefined}
-          {node.children
-            ? node.children.map((child) => this.#recursive(child, depth + 1))
-            : null}
+          {value && <h1>{value}</h1>}
+          {children && node.children.map((c) => this.#recursive(c, depth + 1))}
         </article>
       </Fragment>
     );
   }
   #sectionTemplate(node: KulArticleNode, depth: number): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { children, cssStyle, value } = node;
+
     return (
       <Fragment>
         <section
-          class="section"
+          class={bemClass("section")}
+          data-cy={KulDataCyAttributes.NODE}
           data-depth={depth.toString()}
-          style={node.cssStyle}
+          style={cssStyle}
         >
-          {node.value ? <h2>{node.value}</h2> : undefined}
-          {node.children
-            ? node.children.map((child) => this.#recursive(child, depth + 1))
-            : null}
+          {value && <h2>{value}</h2>}
+          {children && children.map((c) => this.#recursive(c, depth + 1))}
         </section>
       </Fragment>
     );
   }
   #wrapperTemplate(node: KulArticleNode, depth: number): VNode {
-    const ComponentTag = node.children?.some((child) => child.tagName === "li")
-      ? "ul"
-      : node.tagName
-        ? node.tagName
-        : "div";
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { children, cssStyle, tagName, value } = node;
+
+    const isList = !!children?.some((c) => c.tagName === "li");
+
+    const ComponentTag = isList ? "ul" : tagName ? tagName : "div";
     return (
       <Fragment>
-        {node.value ? <div>{node.value}</div> : ""}
+        {value && <div>{value}</div>}
         <ComponentTag
-          class="content-wrapper"
+          class={bemClass("content")}
+          data-cy={KulDataCyAttributes.NODE}
           data-depth={depth.toString()}
-          style={node.cssStyle}
+          style={cssStyle}
         >
-          {node.children
-            ? node.children.map((child) => this.#recursive(child, depth + 1))
-            : null}
+          {children && children.map((c) => this.#recursive(c, depth + 1))}
         </ComponentTag>
       </Fragment>
     );
   }
   #paragraphTemplate(node: KulArticleNode, depth: number): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { children, cssStyle, value } = node;
+
     return (
       <Fragment>
         <p
-          class="paragraph"
+          class={bemClass("paragraph")}
+          data-cy={KulDataCyAttributes.NODE}
           data-depth={depth.toString()}
-          style={node.cssStyle}
+          style={cssStyle}
         >
-          {node.value ? <h3>{node.value}</h3> : undefined}
-          {node.children
-            ? node.children.map((child) => this.#recursive(child, depth + 1))
-            : null}
+          {value && <h3>{value}</h3>}
+          {children && children.map((c) => this.#recursive(c, depth + 1))}
         </p>
       </Fragment>
     );
   }
   #contentTemplate(node: KulArticleNode, depth: number): VNode {
-    const { data } = kulManagerSingleton;
+    const { data, theme } = kulManagerSingleton;
     const { decorate } = data.cell.shapes;
 
-    const key = node?.cells && Object.keys(node.cells)[0];
-    const cell = node?.cells?.[key];
+    const { cells, cssStyle, tagName, value } = node;
+    const key = cells && Object.keys(cells)[0];
+    const cell = cells?.[key];
 
     if (cell) {
       const shape = decorate(cell.shape, [cell], async (e) =>
@@ -210,21 +222,24 @@ export class KulArticle {
       );
       return shape.element[0];
     } else {
-      const ComponentTag = node.tagName ? node.tagName : "span";
+      const ComponentTag = tagName ? tagName : "span";
       return (
         <ComponentTag
-          class={`content content--${ComponentTag}`}
+          class={theme.bemClass("content", "body", {
+            [`content--${ComponentTag}`]: true,
+          })}
           data-depth={depth.toString()}
-          style={node.cssStyle}
+          style={cssStyle}
         >
-          {node.value}
+          {value}
         </ComponentTag>
       );
     }
   }
   #prepArticle(): VNode[] {
     const elements: VNode[] = [];
-    const nodes = this.kulData.nodes;
+    const { nodes } = this.kulData;
+
     for (let index = 0; index < nodes.length; index++) {
       const node = nodes[index];
       elements.push(this.#recursive(node, 0));
@@ -257,17 +272,19 @@ export class KulArticle {
   }
   render() {
     const { language, theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = theme;
+
     const { kulData, kulStyle } = this;
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           {kulData?.nodes?.length ? (
             this.#prepArticle()
           ) : (
-            <div class="empty-data">
-              <div class="empty-data__text">
+            <div class={bemClass("empty-data")}>
+              <div class={bemClass("empty-data", "text")}>
                 {language.translate(KulLanguageGeneric.EMPTY_DATA)}
               </div>
             </div>
