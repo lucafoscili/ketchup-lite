@@ -11,7 +11,7 @@ import {
   State,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataDataset,
   KulDataShapesMap,
@@ -166,9 +166,8 @@ export class KulCard {
 
   //#region Lifecycle hooks
   componentWillLoad() {
-    const { language, theme } = kulManagerSingleton;
+    const { theme } = kulManagerSingleton;
 
-    language.register(this);
     theme.register(this);
 
     this.updateShapes();
@@ -222,9 +221,8 @@ export class KulCard {
     );
   }
   disconnectedCallback() {
-    const { language, theme } = kulManagerSingleton;
+    const { theme } = kulManagerSingleton;
 
-    language.unregister(this);
     theme.unregister(this);
   }
   //#endregion

@@ -10,6 +10,7 @@ import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 const button = "button";
 const buttonTag = "kul-" + button;
 
+//#region Basic
 describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(button).waitForWebComponents([buttonTag]);
@@ -23,7 +24,9 @@ describe("Basic", () => {
     cy.checkComponentExamplesByCategoryNumber(buttonTag);
   });
 });
+//#endregion
 
+//#region Events
 describe("Events", () => {
   it(`blur`, () => {
     cy.navigate(button);
@@ -78,7 +81,9 @@ describe("Events", () => {
     cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
+//#endregion
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(button);
@@ -151,3 +156,4 @@ describe("Props", () => {
       });
   });
 });
+//#endregion

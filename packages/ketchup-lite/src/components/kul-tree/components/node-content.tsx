@@ -1,5 +1,5 @@
 import { FunctionalComponent, h } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulDataNode } from "src/managers/kul-data/kul-data-declarations";
 
 //#region Tree node content

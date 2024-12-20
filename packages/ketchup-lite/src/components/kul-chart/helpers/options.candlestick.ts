@@ -1,5 +1,5 @@
 import { CandlestickSeriesOption, EChartsOption } from "echarts";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Candlestick

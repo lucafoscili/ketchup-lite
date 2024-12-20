@@ -1,5 +1,5 @@
 import { h, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import {
   GenericObject,
   KulComponent,
@@ -18,50 +18,9 @@ import {
   KulDataShapes,
   KulDataShapesMap,
 } from "../kul-data-declarations";
-import { nodeExists } from "./kul-data-node-utils";
+import { nodeExists } from "./node";
 
-const decorateSpreader = (
-  toSpread: GenericObject,
-  props: Partial<KulDataCell<KulDataShapes>> & {
-    htmlProps?: Record<string, any>;
-  },
-) => {
-  const { sanitizeProps } = kulManagerSingleton;
-
-  const clean = () => {
-    if (toSpread["value"] && !toSpread["kulValue"]) {
-      toSpread["kulValue"] = toSpread["value"];
-    } else if (toSpread["kulValue"] && !toSpread["value"]) {
-      toSpread["value"] = toSpread["kulValue"];
-    }
-    delete toSpread["htmlProps"];
-    delete toSpread["shape"];
-    delete toSpread["value"];
-  };
-  if (props.htmlProps) {
-    for (const key in props.htmlProps) {
-      const prop = props.htmlProps[key];
-      if (key === "className") {
-        toSpread["class"] = prop;
-      } else {
-        toSpread[key] = prop;
-      }
-      if (key === "dataset") {
-        for (const k in prop) {
-          toSpread[`data-${k}`] = prop[k];
-        }
-      }
-    }
-  }
-  for (const key in props) {
-    const prop = props[key];
-    toSpread[key] = prop;
-  }
-
-  clean();
-  sanitizeProps(toSpread);
-};
-
+//#region cellDecorateShapes
 export const cellDecorateShapes = <
   C extends KulComponentName,
   S extends KulDataShapes | "text",
@@ -145,10 +104,15 @@ export const cellDecorateShapes = <
 
   return r;
 };
+//#endregion
 
+//#region cellExists
 export const cellExists = (node: KulDataNode) => {
   return !!(node && node.cells && Object.keys(node.cells).length);
 };
+//#endregion
+
+//#region cellGetShape
 export const cellGetShape = <T extends KulDataShapes>(
   cell: KulDataCell<T>,
   deepCopy: boolean,
@@ -180,6 +144,9 @@ export const cellGetShape = <T extends KulDataShapes>(
   }
   return shapeProps;
 };
+//#endregion
+
+//#region cellGetAllShapes
 export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
   if (!nodeExists(dataset)) {
     return;
@@ -268,6 +235,9 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
   }
   return shapes;
 };
+//#endregion
+
+//#region cellStringify
 export const cellStringify = (value: KulDataCell<KulDataShapes>["value"]) => {
   if (value === null || value === undefined) {
     return String(value).valueOf();
@@ -283,4 +253,47 @@ export const cellStringify = (value: KulDataCell<KulDataShapes>["value"]) => {
   } else {
     return String(value).valueOf();
   }
+};
+//#endregion
+
+const decorateSpreader = (
+  toSpread: GenericObject,
+  props: Partial<KulDataCell<KulDataShapes>> & {
+    htmlProps?: Record<string, any>;
+  },
+) => {
+  const { sanitizeProps } = kulManagerSingleton;
+
+  const clean = () => {
+    if (toSpread["value"] && !toSpread["kulValue"]) {
+      toSpread["kulValue"] = toSpread["value"];
+    } else if (toSpread["kulValue"] && !toSpread["value"]) {
+      toSpread["value"] = toSpread["kulValue"];
+    }
+    delete toSpread["htmlProps"];
+    delete toSpread["shape"];
+    delete toSpread["value"];
+  };
+  if (props.htmlProps) {
+    for (const key in props.htmlProps) {
+      const prop = props.htmlProps[key];
+      if (key === "className") {
+        toSpread["class"] = prop;
+      } else {
+        toSpread[key] = prop;
+      }
+      if (key === "dataset") {
+        for (const k in prop) {
+          toSpread[`data-${k}`] = prop[k];
+        }
+      }
+    }
+  }
+  for (const key in props) {
+    const prop = props[key];
+    toSpread[key] = prop;
+  }
+
+  clean();
+  sanitizeProps(toSpread);
 };

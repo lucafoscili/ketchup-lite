@@ -11,7 +11,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,

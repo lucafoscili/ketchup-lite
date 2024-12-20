@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulButton } from "src/components/kul-button/kul-button";
 import { KulMasonrySelectedShape } from "src/components/kul-masonry/kul-masonry-declarations";
 import {

@@ -1,7 +1,14 @@
-import { kulManagerSingleton } from "src";
+import { KulManager } from "../kul-manager/kul-manager";
 import { KulLLMRequest } from "./kul-llm-declarations";
 
 export class KulLLM {
+  #KUL_MANAGER: KulManager;
+
+  constructor(kulManager: KulManager) {
+    this.#KUL_MANAGER = kulManager;
+  }
+
+  //#region Fetch
   async fetch(request: KulLLMRequest, url: string) {
     try {
       const response = await fetch(`${url}/v1/chat/completions`, {
@@ -21,16 +28,20 @@ export class KulLLM {
       throw error;
     }
   }
+  //#endregion
 
+  //#region Poll
   async poll(url: string) {
     return fetch(url);
   }
+  //#endregion
 
+  //#region SpeechToText
   async speechToText(
     textarea: HTMLKulTextfieldElement,
     button: HTMLKulButtonElement,
   ) {
-    const { debug, language } = kulManagerSingleton;
+    const { debug } = this.#KUL_MANAGER;
 
     const speechConstructor =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -39,7 +50,6 @@ export class KulLLM {
       return;
     }
     const recognition = new speechConstructor();
-    recognition.lang = language.getBCP47();
     recognition.interimResults = true;
     recognition.maxAlternatives = 1;
 
@@ -72,4 +82,5 @@ export class KulLLM {
       debug.logs.new(this, "Error: " + err, "error");
     }
   }
+  //#endregion
 }

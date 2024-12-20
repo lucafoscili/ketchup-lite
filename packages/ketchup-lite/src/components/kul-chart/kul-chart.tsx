@@ -11,7 +11,7 @@ import {
   State,
 } from "@stencil/core";
 import { dispose, ECharts, init } from "echarts";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";

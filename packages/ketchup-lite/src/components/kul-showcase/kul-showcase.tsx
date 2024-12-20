@@ -1,5 +1,5 @@
 import { Component, Element, h, Host, Prop, State, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
 import {

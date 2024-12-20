@@ -14,11 +14,9 @@ describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(article).waitForWebComponents([articleTag, "kul-code"]);
   });
-
   it(`Should check that all <${articleTag}> exist.`, () => {
     cy.checkComponentExamples(articleTag, new Set(ARTICLE_EXAMPLES_KEYS));
   });
-
   it(`Should check that the number of <${articleTag}> elements matches the number of examples.`, () => {
     cy.checkComponentExamplesNumber(Array.from(ARTICLE_EXAMPLES_KEYS));
   });
@@ -38,12 +36,10 @@ describe("Events", () => {
       .click();
     cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
-
   it(`ready`, () => {
     cy.checkReadyEvent(article);
     cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
-
   it(`unmount`, () => {
     cy.navigate(article);
     const eventType: KulArticleEvent = "unmount";
@@ -62,15 +58,12 @@ describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(article);
   });
-
   it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(articleTag);
   });
-
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(articleTag);
   });
-
   it(`getProps: check keys against props array.`, () => {
     cy.checkProps(articleTag, KUL_ARTICLE_PROPS);
   });
@@ -82,7 +75,6 @@ describe("Props", () => {
   beforeEach(() => {
     cy.navigate(article);
   });
-
   it("kulData: Should check for the presence of shapes in the dataset.", () => {
     cy.get("@kulComponentShowcase")
       .find(`${articleTag}#simple`)
@@ -111,7 +103,6 @@ describe("Props", () => {
           });
       });
   });
-
   it("kulStyle: Should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
@@ -123,7 +114,6 @@ describe("e2e", () => {
   beforeEach(() => {
     cy.navigate(article);
   });
-
   it(`Should check whether all <${articleTag}> elements have the correct number of <section> elements and matching content.`, () => {
     cy.get("@kulComponentShowcase");
 
@@ -146,7 +136,6 @@ describe("e2e", () => {
       }
     });
   });
-
   it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${articleTag}#simple`)

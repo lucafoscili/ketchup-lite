@@ -8,7 +8,7 @@ import {
 import { KUL_WRAPPER_ID } from "../../../../utils/constants";
 import { KulButtonEventPayload } from "../../../kul-button/kul-button-declarations";
 import { KulListEventPayload } from "../../../kul-list/kul-list-declarations";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 
 @Component({
   tag: "kul-showcase-debug",

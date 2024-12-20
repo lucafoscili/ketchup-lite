@@ -1,4 +1,3 @@
-import { kulManagerSingleton } from "src";
 import { KulDataNode } from "src/components";
 import type {
   GenericMap,
@@ -7,32 +6,30 @@ import type {
   KulComponentName,
 } from "../../types/GenericTypes";
 import { RIPPLE_SURFACE_CLASS } from "../../utils/constants";
+import { KulManager } from "../kul-manager/kul-manager";
 import {
-  KulThemeAttribute,
   KulThemeBEMModifier,
   KulThemeCSSVariables,
   KulThemeHSLValues,
-  KulThemeJSON,
+  KulThemeList,
   KulThemeRGBValues,
 } from "./kul-theme-declarations";
-import { themesJson } from "./kul-theme-values";
 
 export class KulTheme {
-  #DOM = document.documentElement;
+  #KUL_MANAGER: KulManager;
   #MASTER_CUSTOM_STYLE = "MASTER";
   cssVars: Partial<KulThemeCSSVariables>;
   isDarkTheme: boolean;
-  list: KulThemeJSON;
+  list: KulThemeList;
   managedComponents: Set<KulComponent<KulComponentName>>;
   name: string;
   styleTag: HTMLStyleElement;
 
-  constructor(list?: KulThemeJSON, name?: string) {
+  constructor(kulManager: KulManager) {
+    this.#KUL_MANAGER = kulManager;
     this.cssVars = {};
-    this.list = list ? list : themesJson;
     this.managedComponents = new Set();
-    this.name = name ? name : "silver";
-    this.styleTag = this.#DOM
+    this.styleTag = document.documentElement
       .querySelector("head")
       .appendChild(document.createElement("style"));
   }
@@ -83,7 +80,7 @@ export class KulTheme {
 
   //#region font
   #font = () => {
-    const { get } = kulManagerSingleton.assets;
+    const { get } = this.#KUL_MANAGER.assets;
 
     let fonts = "";
     const theme = this.list[this.name];
@@ -102,7 +99,7 @@ export class KulTheme {
 
   //#region icons
   #icons = () => {
-    const { get } = kulManagerSingleton.assets;
+    const { get } = this.#KUL_MANAGER.assets;
 
     const theme = this.list[this.name];
 
@@ -141,8 +138,8 @@ export class KulTheme {
   //#endregion
 
   //#region set
-  set = (name?: string, list?: KulThemeJSON) => {
-    const { logs } = kulManagerSingleton.debug;
+  set = (name?: string, list?: KulThemeList) => {
+    const { logs } = this.#KUL_MANAGER.debug;
 
     if (name) {
       this.name = name;
@@ -170,13 +167,14 @@ export class KulTheme {
 
     this.#customStyle();
 
-    this.#DOM.setAttribute("kul-theme", this.name);
+    const dom = document.documentElement;
+    dom.setAttribute("kul-theme", this.name);
     if (this.isDarkTheme) {
-      this.#DOM.removeAttribute(KulThemeAttribute.LIGHT);
-      this.#DOM.setAttribute(KulThemeAttribute.DARK, "");
+      dom.removeAttribute("light");
+      dom.setAttribute("dark", "");
     } else {
-      this.#DOM.removeAttribute(KulThemeAttribute.DARK);
-      this.#DOM.setAttribute(KulThemeAttribute.LIGHT, "");
+      dom.removeAttribute("dark");
+      dom.setAttribute("light", "");
     }
     document.dispatchEvent(new CustomEvent("kul-theme-change"));
   };
@@ -220,7 +218,7 @@ export class KulTheme {
 
   //#region refresh
   refresh = () => {
-    const { logs } = kulManagerSingleton.debug;
+    const { logs } = this.#KUL_MANAGER.debug;
 
     try {
       this.styleTag.innerText =
@@ -231,10 +229,7 @@ export class KulTheme {
         this.#icons() +
         "}";
       this.#customStyle();
-      logs.new(
-        this,
-        "Theme " + this.#DOM.getAttribute("kul-theme") + " refreshed.",
-      );
+      logs.new(this, "Theme " + this.name + " refreshed.");
       document.dispatchEvent(new CustomEvent("kul-theme-refresh"));
     } catch (error) {
       logs.new(this, "Theme not refreshed.", "warning");
@@ -345,7 +340,7 @@ export class KulTheme {
 
   //#region randomTheme
   randomTheme = () => {
-    const { logs } = kulManagerSingleton.debug;
+    const { logs } = this.#KUL_MANAGER.debug;
 
     let themes: string[] = [];
     for (var key in this.list) {
@@ -373,7 +368,7 @@ export class KulTheme {
 
   //#region colorCheck
   colorCheck = (color: string) => {
-    const { logs } = kulManagerSingleton.debug;
+    const { logs } = this.#KUL_MANAGER.debug;
 
     if (color === "transparent") {
       color = this.cssVars["--kul-background-color"];
@@ -634,7 +629,7 @@ export class KulTheme {
 
   //#region codeToHex
   codeToHex(color: string): string {
-    const { logs } = kulManagerSingleton.debug;
+    const { logs } = this.#KUL_MANAGER.debug;
 
     const colorCodes: GenericMap = {
       aliceblue: "#f0f8ff",

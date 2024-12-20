@@ -11,11 +11,9 @@ describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(accordion).waitForWebComponents([accordionTag]);
   });
-
   it(`Should check that all <${accordionTag}> exist.`, () => {
     cy.checkComponentExamples(accordionTag, new Set(ACCORDION_EXAMPLES_KEYS));
   });
-
   it(`Should check that the number of <${accordionTag}> elements matches the number of examples.`, () => {
     cy.checkComponentExamplesNumber(Array.from(ACCORDION_EXAMPLES_KEYS));
   });
@@ -34,7 +32,6 @@ describe("Events", () => {
       .click();
     cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
-
   it(`pointerdown`, () => {
     cy.navigate(accordion);
     const eventType: KulAccordionEvent = "pointerdown";
@@ -45,11 +42,9 @@ describe("Events", () => {
       .click();
     cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
-
   it(`ready`, () => {
     cy.checkReadyEvent(accordion);
   });
-
   it(`unmount`, () => {
     cy.navigate(accordion);
     const eventType: KulAccordionEvent = "unmount";
@@ -68,19 +63,15 @@ describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(accordion);
   });
-
   it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(accordionTag);
   });
-
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(accordionTag);
   });
-
   it(`getProps: check keys against props array.`, () => {
     cy.checkProps(accordionTag, KUL_ACCORDION_PROPS);
   });
-
   it(`getSelectedNodes: asserts that the payload of the promise includes the selected node.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)
@@ -95,7 +86,6 @@ describe("Methods", () => {
         });
       });
   });
-
   it(`toggleNode: asserts that the method correctly selects the node.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)
@@ -118,7 +108,6 @@ describe("Props", () => {
   beforeEach(() => {
     cy.navigate(accordion);
   });
-
   it("kulData: should check that for each node whose `id` matches a slot name, the accordion is expandable.", () => {
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)
@@ -152,11 +141,9 @@ describe("Props", () => {
           });
       });
   });
-
   it("kulRipple: should check for the presence of a ripple element.", () => {
     cy.checkRipple(`${accordionTag}`);
   });
-
   it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
@@ -168,7 +155,6 @@ describe("e2e", () => {
   beforeEach(() => {
     cy.navigate(accordion);
   });
-
   it("Should check that when an expandable item is clicked, the content is displayed.", () => {
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)
@@ -182,7 +168,6 @@ describe("e2e", () => {
         cy.get(".node__content").should("exist").and("not.be.empty");
       });
   });
-
   it("Should check that when a previously expanded item is clicked the node is collapsed.", () => {
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)

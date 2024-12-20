@@ -12,13 +12,12 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDynamicPositionPlacement } from "src/managers/kul-dynamic-position/kul-dynamic-position-declarations";
 import { KulManagerClickCb } from "src/managers/kul-manager/kul-manager-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import {
@@ -284,13 +283,7 @@ export class KulButton {
         if (dynamicPosition.isRegistered(this.#list)) {
           dynamicPosition.changeAnchor(this.#list, this.#dropdown);
         } else {
-          dynamicPosition.register(
-            this.#list,
-            this.#dropdown,
-            0,
-            KulDynamicPositionPlacement.AUTO,
-            true,
-          );
+          dynamicPosition.register(this.#list, this.#dropdown, 0, "", true);
         }
         dynamicPosition.start(this.#list);
         if (!this.#clickCb) {
@@ -540,9 +533,7 @@ export class KulButton {
         })}
         data-cy={KulDataCyAttributes.DROPDOWN_BUTTON}
         disabled={kulDisabled}
-        onClick={() => {
-          this.#listManager().toggle();
-        }}
+        onClick={this.#listManager().toggle}
         onPointerDown={(e) => this.onKulEvent(e, "pointerdown", true)}
         ref={(el) => {
           if (el) {

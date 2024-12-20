@@ -12,7 +12,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";

@@ -1,5 +1,5 @@
 import { h, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { KulCardAdapter } from "../kul-card-declarations";
 

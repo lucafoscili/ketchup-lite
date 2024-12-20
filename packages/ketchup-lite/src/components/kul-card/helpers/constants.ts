@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulCardAdapterRefs,

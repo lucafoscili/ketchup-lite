@@ -6,7 +6,7 @@ import {
   XAXisComponentOption,
   YAXisComponentOption,
 } from "echarts";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulChartAdapter, KulChartAxesTypes } from "../kul-chart-declarations";
 
 //#region baseAxis

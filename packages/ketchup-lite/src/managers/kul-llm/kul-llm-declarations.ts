@@ -1,22 +1,3 @@
-export interface KulLLMChoice {
-  index: number;
-  message: KulLLMChoiceMessage;
-  finish_reason: string;
-}
-export interface KulLLMChoiceMessage {
-  role: KulLLMRole;
-  content: string;
-  tool_calls?: unknown[];
-}
-
-export interface KulLLMCompletionObject {
-  id: string;
-  object: string;
-  created: number;
-  model: string;
-  choices: KulLLMChoice[];
-}
-
 /**
  * Interface representing the standard request JSON for the OpenAI API.
  *
@@ -64,9 +45,24 @@ export interface KulLLMRequest {
     content: string;
   }>;
 }
-
+export interface KulLLMChoice {
+  index: number;
+  message: KulLLMChoiceMessage;
+  finish_reason: string;
+}
+export interface KulLLMChoiceMessage {
+  role: KulLLMRole;
+  content: string;
+  tool_calls?: unknown[];
+}
+export interface KulLLMCompletionObject {
+  id: string;
+  object: string;
+  created: number;
+  model: string;
+  choices: KulLLMChoice[];
+}
 export type KulLLMRole = "system" | "user" | "assistant";
-
 export interface KulLLMUsage {
   prompt_tokens: number;
   completion_tokens: number;

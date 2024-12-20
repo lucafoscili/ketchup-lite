@@ -3,8 +3,9 @@ import {
   KulDataGenericCell,
   KulDataNode,
 } from "../kul-data-declarations";
-import { cellStringify } from "./kul-data-cell-utils";
+import { cellStringify } from "./cell";
 
+//#region findNodeByCell
 export const findNodeByCell = (
   dataset: KulDataDataset,
   targetCell: KulDataGenericCell,
@@ -28,9 +29,15 @@ export const findNodeByCell = (
 
   return recursive(dataset.nodes);
 };
+//#endregion
+
+//#region nodeExists
 export const nodeExists = (dataset: KulDataDataset) => {
   return !!(dataset && dataset.nodes?.length);
 };
+//#endregion
+
+//#region nodeFilter
 export const nodeFilter = (
   dataset: KulDataDataset,
   filters: Partial<KulDataNode>,
@@ -100,6 +107,9 @@ export const nodeFilter = (
     ancestorNodes,
   };
 };
+//#endregion
+
+//#region nodeFixIds
 export const nodeFixIds = (nodes: KulDataNode[]) => {
   function updateNodeIds(node: KulDataNode, depth: string = "0"): void {
     node.id = depth;
@@ -116,6 +126,9 @@ export const nodeFixIds = (nodes: KulDataNode[]) => {
   });
   return nodes;
 };
+//#endregion
+
+//#region nodeGetAncestors
 export const nodeGetAncestors = (node: KulDataNode, nodes: KulDataNode[]) => {
   const ancestors: KulDataNode[] = [];
   let current: KulDataNode = node;
@@ -127,6 +140,10 @@ export const nodeGetAncestors = (node: KulDataNode, nodes: KulDataNode[]) => {
   ancestors.reverse();
   return ancestors;
 };
+
+//#endregion
+
+//#region nodeGetDrilldownInfo
 export const nodeGetDrilldownInfo = (nodes: KulDataNode[]) => {
   let maxChildren = 0;
   let maxDepth = 0;
@@ -162,6 +179,9 @@ export const nodeGetDrilldownInfo = (nodes: KulDataNode[]) => {
     maxDepth,
   };
 };
+//#endregion
+
+//#region nodeGetParent
 export const nodeGetParent = (nodes: KulDataNode[], child: KulDataNode) => {
   let parent: KulDataNode = null;
   for (let index = 0; index < nodes.length; index++) {
@@ -187,6 +207,9 @@ export const nodeGetParent = (nodes: KulDataNode[], child: KulDataNode) => {
   }
   return parent;
 };
+//#endregion
+
+//#region nodePop
 export const nodePop = (nodes: KulDataNode[], node2remove: KulDataNode) => {
   let removed: KulDataNode = null;
   for (let index = 0; index < nodes.length; index++) {
@@ -212,6 +235,9 @@ export const nodePop = (nodes: KulDataNode[], node2remove: KulDataNode) => {
   }
   return removed;
 };
+//#endregion
+
+//#region nodeSort
 export const nodeSort = (
   stringify: (value: unknown) => string,
   nodes: KulDataNode[],
@@ -231,6 +257,9 @@ export const nodeSort = (
   });
   return nodes;
 };
+//#endregion
+
+//#region nodeSetProperties
 export const nodeSetProperties = (
   nodes: KulDataNode[],
   properties: Partial<KulDataNode>,
@@ -255,6 +284,9 @@ export const nodeSetProperties = (
   }
   return updated;
 };
+//#endregion
+
+//#region nodeToStream
 export const nodeToStream = (nodes: KulDataNode[]) => {
   function recursive(node: KulDataNode) {
     streamlined.push(node);
@@ -274,6 +306,9 @@ export const nodeToStream = (nodes: KulDataNode[]) => {
   }
   return streamlined;
 };
+//#endregion
+
+//#region removeNodeByCell
 export const removeNodeByCell = (
   dataset: KulDataDataset,
   targetCell: KulDataGenericCell,
@@ -301,3 +336,4 @@ export const removeNodeByCell = (
 
   return recursive(dataset.nodes, targetNode) ? targetNode : null;
 };
+//#endregion

@@ -1,5 +1,5 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { ICONS, IDS, STYLING } from "../helpers/constants";
 import {
   KulMasonryAdapter,

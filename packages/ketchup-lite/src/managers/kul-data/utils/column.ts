@@ -1,5 +1,6 @@
 import { KulDataColumn, KulDataDataset } from "../kul-data-declarations";
 
+//#region columnFind
 export const columnFind = (
   dataset: KulDataDataset | KulDataColumn[],
   filters: Partial<KulDataColumn>,
@@ -22,3 +23,4 @@ export const columnFind = (
   }
   return result;
 };
+//#endregion

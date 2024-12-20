@@ -6,13 +6,9 @@ import {
 } from "src/types/GenericTypes";
 import { KUL_COMPONENT_PROPS } from "src/utils/constants";
 import { KulData } from "../kul-data/kul-data";
-import { KulDates } from "../kul-dates/kul-dates";
-import { KulDatesLocales } from "../kul-dates/kul-dates-declarations";
 import { KulDebug } from "../kul-debug/kul-debug";
 import { KulDynamicPosition } from "../kul-dynamic-position/kul-dynamic-position";
 import { KulDynamicPositionElement } from "../kul-dynamic-position/kul-dynamic-position-declarations";
-import { KulLanguage } from "../kul-language/kul-language";
-import { KulLanguageDefaults } from "../kul-language/kul-language-declarations";
 import { KulLLM } from "../kul-llm/kul-llm";
 import { KulScrollOnHover } from "../kul-scroll-on-hover/kul-scroll-on-hover";
 import { KulTheme } from "../kul-theme/kul-theme";
@@ -27,10 +23,8 @@ import type {
 export class KulManager {
   assets: { get: KulManagerComputedGetAssetPath; set: KulManagerSetAssetPath };
   data: KulData;
-  dates: KulDates;
   debug: KulDebug;
   dynamicPosition: KulDynamicPosition;
-  language: KulLanguage;
   llm: KulLLM;
   resize: ResizeObserver;
   scrollOnHover: KulScrollOnHover;
@@ -57,14 +51,12 @@ export class KulManager {
       set: setAssetPath,
     };
 
-    this.data = new KulData();
-    this.dates = new KulDates();
+    this.data = new KulData(this);
     this.debug = new KulDebug(this);
-    this.dynamicPosition = new KulDynamicPosition();
-    this.language = new KulLanguage();
-    this.llm = new KulLLM();
-    this.scrollOnHover = new KulScrollOnHover();
-    this.theme = new KulTheme();
+    this.dynamicPosition = new KulDynamicPosition(this);
+    this.llm = new KulLLM(this);
+    this.scrollOnHover = new KulScrollOnHover(this);
+    this.theme = new KulTheme(this);
     this.utilities = {
       clickCallbacks: new Set(),
     };
@@ -227,26 +219,5 @@ export class KulManager {
     } else {
       return sanitized as P;
     }
-  }
-  /**
-   * Spreads the specified locale to all the submodules.
-   * @param locale - The locale to be set.
-   */
-  setLibraryLocalization(locale: KulDatesLocales) {
-    const { dates, debug, language } = this;
-
-    if (!(locale in KulDatesLocales)) {
-      debug.logs.new(this, `Invalid locale (${locale})!`, "error");
-      return;
-    }
-
-    const languageDefaults = KulLanguageDefaults[locale];
-    if (!languageDefaults) {
-      debug.logs.new(this, `Missing language for locale (${locale})!`, "error");
-      return;
-    }
-
-    dates.setLocale(locale);
-    language.set(KulLanguageDefaults[locale]);
   }
 }

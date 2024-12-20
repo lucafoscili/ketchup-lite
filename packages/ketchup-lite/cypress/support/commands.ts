@@ -282,7 +282,7 @@ Cypress.Commands.add("getCyElement", (dataCy: KulDataCyAttributes) =>
 //#region getKulManager
 Cypress.Commands.add("getKulManager", () => {
   cy.window().then(() => {
-    return globalThis["kulManager"];
+    return ["kulManager"];
   });
 });
 //#endregion
@@ -327,14 +327,13 @@ function transformEnumValue(
 function visitManager() {
   return {
     cardClick: (component: string) => {
+      cy.waitForWebComponents(["kul-showcase", `kul-showcase-${component}`]);
       cy.get("kul-showcase").should("exist").as("kulShowcase");
       cy.get("@kulShowcase").should("exist");
-      cy.get("#" + component.charAt(0).toUpperCase() + component.slice(1))
+      cy.get(`#${component.charAt(0).toUpperCase() + component.slice(1)}`)
         .should("exist")
         .click();
-      cy.get("@kulShowcase")
-        .find("kul-showcase-" + component)
-        .should("exist");
+      cy.get("@kulShowcase").find(`kul-showcase-${component}`).should("exist");
       cy.getCyElement(KulDataCyAttributes.SHOWCASE_GRID_WRAPPER)
         .as("kulComponentShowcase")
         .then(() => cy.log("Alias @kulComponentShowcase created"));

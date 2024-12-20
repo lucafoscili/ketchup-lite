@@ -1,5 +1,6 @@
-import { kulManagerSingleton } from "src";
 import { KUL_DROPDOWN_CLASS_VISIBLE } from "src/utils/constants";
+import { KulManager } from "../kul-manager/kul-manager";
+import { KUL_DYNAMIC_POSITION } from "./helpers/constants";
 import {
   KulDynamicPositionAnchor,
   kulDynamicPositionAnchorAttribute,
@@ -9,14 +10,18 @@ import {
 } from "./kul-dynamic-position-declarations";
 
 export class KulDynamicPosition {
+  #KUL_MANAGER: KulManager;
   container: HTMLElement;
   managedElements: Set<KulDynamicPositionElement>;
-  constructor() {
+
+  constructor(kulManager: KulManager) {
+    this.#KUL_MANAGER = kulManager;
     this.container = document.createElement("div");
     this.container.setAttribute("kul-dynamic-position", "");
     document.body.appendChild(this.container);
     this.managedElements = new Set();
   }
+
   //#region Anchor is HTMLElement
   anchorIsHTMLElement(anchor: KulDynamicPositionAnchor): anchor is HTMLElement {
     return (anchor as HTMLElement).tagName !== undefined;
@@ -37,7 +42,8 @@ export class KulDynamicPosition {
 
   //#region Run
   run(el: KulDynamicPositionElement): void {
-    const { managedElements, run } = kulManagerSingleton.dynamicPosition;
+    const { anchorIsHTMLElement, managedElements, run } =
+      this.#KUL_MANAGER.dynamicPosition;
 
     if (!el.isConnected) {
       managedElements.delete(el);
@@ -48,6 +54,7 @@ export class KulDynamicPosition {
       cancelAnimationFrame(el.kulDynamicPosition.rAF);
       return;
     }
+
     // Reset placement
     el.style.top = "";
     el.style.right = "";
@@ -55,7 +62,7 @@ export class KulDynamicPosition {
     el.style.left = "";
     // Fixed position (usually from mouse events).
     // When anchor doesn't have the tagName property, anchor is considered as a set of coordinates.
-    if (!this.anchorIsHTMLElement(el.kulDynamicPosition.anchor)) {
+    if (!anchorIsHTMLElement(el.kulDynamicPosition.anchor)) {
       const x: number = el.kulDynamicPosition.anchor.x;
       const y: number = el.kulDynamicPosition.anchor.y;
       if (el.offsetWidth > window.innerWidth - el.kulDynamicPosition.anchor.x) {
@@ -76,31 +83,26 @@ export class KulDynamicPosition {
     const detached = !!el.kulDynamicPosition.detach;
     const offsetH = el.clientHeight;
     const offsetW = el.clientWidth;
-    const rect: DOMRect = (
+    const rect = (
       el.kulDynamicPosition.anchor as HTMLElement
     ).getBoundingClientRect();
-    const top: number = detached ? window.pageYOffset + rect.top : rect.top,
-      left: number = detached ? window.pageXOffset + rect.left : rect.left,
-      bottom: number = detached
-        ? window.pageYOffset + rect.bottom
-        : rect.bottom,
-      right: number = detached ? window.pageXOffset + rect.right : rect.right;
+    const top = detached ? window.scrollY + rect.top : rect.top,
+      left = detached ? window.scrollX + rect.left : rect.left,
+      bottom = detached ? window.scrollY + rect.bottom : rect.bottom,
+      right = detached ? window.scrollX + rect.right : rect.right;
     // Vertical position
     if (
-      el.kulDynamicPosition.placement === KulDynamicPositionPlacement.TOP ||
-      el.kulDynamicPosition.placement ===
-        KulDynamicPositionPlacement.TOP_LEFT ||
-      el.kulDynamicPosition.placement === KulDynamicPositionPlacement.TOP_RIGHT
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.top ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.topLeft ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.topRight
     ) {
       el.style.bottom = `${
         window.innerHeight - top + el.kulDynamicPosition.margin
       }px`;
     } else if (
-      el.kulDynamicPosition.placement === KulDynamicPositionPlacement.BOTTOM ||
-      el.kulDynamicPosition.placement ===
-        KulDynamicPositionPlacement.BOTTOM_LEFT ||
-      el.kulDynamicPosition.placement ===
-        KulDynamicPositionPlacement.BOTTOM_RIGHT
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.bottom ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.bottomLeft ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.bottomRight
     ) {
       el.style.top = `${bottom + el.kulDynamicPosition.margin}px`;
     } else {
@@ -114,19 +116,17 @@ export class KulDynamicPosition {
     }
     // Horizontal position
     if (
-      el.kulDynamicPosition.placement === KulDynamicPositionPlacement.LEFT ||
-      el.kulDynamicPosition.placement ===
-        KulDynamicPositionPlacement.BOTTOM_LEFT ||
-      el.kulDynamicPosition.placement === KulDynamicPositionPlacement.TOP_LEFT
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.left ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.bottomLeft ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.topLeft
     ) {
       el.style.left = `${left}px`;
     } else if (
-      el.kulDynamicPosition.placement === KulDynamicPositionPlacement.RIGHT ||
-      el.kulDynamicPosition.placement ===
-        KulDynamicPositionPlacement.BOTTOM_RIGHT ||
-      el.kulDynamicPosition.placement === KulDynamicPositionPlacement.TOP_RIGHT
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.right ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.bottomRight ||
+      el.kulDynamicPosition.placement === KUL_DYNAMIC_POSITION.topRight
     ) {
-      let scrollbarWidth: number =
+      let scrollbarWidth =
         window.innerWidth - document.documentElement.offsetWidth;
       if (scrollbarWidth > 30) {
         scrollbarWidth = 0;
@@ -134,7 +134,7 @@ export class KulDynamicPosition {
       el.style.right = `${window.innerWidth - scrollbarWidth - right}px`;
     } else {
       if (offsetW < rect.right && window.innerWidth - rect.left < offsetW) {
-        let scrollbarWidth: number =
+        let scrollbarWidth =
           window.innerWidth - document.documentElement.offsetWidth;
         if (scrollbarWidth > 30) {
           scrollbarWidth = 0;
@@ -163,7 +163,7 @@ export class KulDynamicPosition {
     placement?: KulDynamicPositionPlacement,
     detach?: boolean,
   ): void {
-    const { run } = kulManagerSingleton.dynamicPosition;
+    const { run } = this.#KUL_MANAGER.dynamicPosition;
 
     if (this.isRegistered(el)) {
       this.changeAnchor(el, anchorEl);
@@ -194,7 +194,7 @@ export class KulDynamicPosition {
       detach: detach ? true : false,
       originalPath: originalPath,
       margin: margin ? margin : 0,
-      placement: placement ? placement : KulDynamicPositionPlacement.AUTO,
+      placement: placement ? placement : KUL_DYNAMIC_POSITION.auto,
       rAF: null,
     };
     const mutObserver: MutationObserver = new MutationObserver(function (

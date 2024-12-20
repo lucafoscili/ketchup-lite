@@ -1,6 +1,6 @@
 import { h } from "@stencil/core";
 
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,

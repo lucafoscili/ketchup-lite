@@ -17,9 +17,7 @@ import {
 } from "./kul-debug-declarations";
 
 export class KulDebug {
-  //#region Internal usage
   #IS_ENABLED = false;
-  #KUL_MANAGER: KulManager;
   #LOG_LIMIT = 250;
   #LOGS: KulDebugLog[] = [];
   #MANAGED_COMPONENTS = {
@@ -27,9 +25,7 @@ export class KulDebug {
     togglees: new Set<KulToggle>(),
   };
 
-  constructor(kulManager: KulManager) {
-    this.#KUL_MANAGER = kulManager;
-  }
+  constructor(_kulManager: KulManager) {}
 
   #codeDispatcher = (log?: KulDebugLog) => {
     Array.from(this.#MANAGED_COMPONENTS.codes).forEach((comp) => {
@@ -46,7 +42,6 @@ export class KulDebug {
       comp.setValue(this.#IS_ENABLED ? "on" : "off");
     });
   };
-  //#endregion
 
   //#region Info
   info = {
@@ -122,8 +117,6 @@ export class KulDebug {
         return;
       }
 
-      const { dates } = this.#KUL_MANAGER;
-
       const isFromComponent = this.logs.fromComponent(comp);
       const log: KulDebugLog = {
         category,
@@ -146,7 +139,7 @@ export class KulDebug {
       if (this.#LOGS.length > this.#LOG_LIMIT) {
         if (this.#IS_ENABLED) {
           console.warn(
-            dates.format(log.date, "LLL:ms") +
+            log.date.toLocaleDateString() +
               " kul-debug => " +
               "Too many logs (> " +
               this.#LOG_LIMIT +
@@ -160,13 +153,13 @@ export class KulDebug {
       switch (category) {
         case "error":
           console.error(
-            dates.format(log.date, "LLL:ms") + log.id + log.message,
+            log.date.toLocaleDateString() + log.id + log.message,
             log.class,
           );
           break;
         case "warning":
           console.warn(
-            dates.format(log.date, "LLL:ms") + log.id + log.message,
+            log.date.toLocaleDateString() + log.id + log.message,
             log.class,
           );
           break;
@@ -177,8 +170,6 @@ export class KulDebug {
       }
     },
     print: () => {
-      const { dates } = this.#KUL_MANAGER;
-
       const logsToPrint: KulDebugLogsToPrint = {
         load: [],
         misc: [],
@@ -189,7 +180,7 @@ export class KulDebug {
         const log = this.#LOGS[index];
         const printEntry: KulDebugLogToPrintEntry = {
           class: log.class,
-          date: dates.format(log.date, "LLL:ms"),
+          date: log.date.toLocaleDateString(),
           message: log.id + log.message,
         };
         logsToPrint[log.type].push(printEntry);
@@ -229,7 +220,7 @@ export class KulDebug {
   //#endregion
 
   //#region Register
-  register(comp: KulDebugManagedComponents): void {
+  register(comp: KulDebugManagedComponents) {
     if (comp.rootElement.tagName.toLowerCase() === "kul-code") {
       this.#MANAGED_COMPONENTS.codes.add(comp as KulCode);
     } else {
@@ -255,7 +246,7 @@ export class KulDebug {
   //#endregion
 
   //#region Unregister
-  unregister(comp: KulDebugManagedComponents): void {
+  unregister(comp: KulDebugManagedComponents) {
     if (comp.rootElement.tagName.toLowerCase() === "kul-code") {
       this.#MANAGED_COMPONENTS.codes.delete(comp as KulCode);
     } else {

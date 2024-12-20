@@ -1,4 +1,5 @@
 import { KulComponentName } from "../../types/GenericTypes";
+import { KulManager } from "../kul-manager/kul-manager";
 import {
   KulDataCell,
   KulDataColumn,
@@ -16,8 +17,8 @@ import {
   cellGetAllShapes,
   cellGetShape,
   cellStringify,
-} from "./utils/kul-data-cell-utils";
-import { columnFind } from "./utils/kul-data-column-utils";
+} from "./utils/cell";
+import { columnFind } from "./utils/column";
 import {
   findNodeByCell,
   nodeExists,
@@ -28,7 +29,7 @@ import {
   nodePop,
   nodeSetProperties,
   nodeToStream,
-} from "./utils/kul-data-node-utils";
+} from "./utils/node";
 
 export class KulData {
   #SHAPES_MAP: KulDataShapeComponentMap = {
@@ -45,6 +46,10 @@ export class KulData {
     text: "KulTextfield",
     upload: "KulUpload",
   };
+
+  constructor(_manager: KulManager) {}
+
+  //#region Cell
   cell = {
     exists: (node: KulDataNode) => cellExists(node),
     shapes: {
@@ -71,12 +76,18 @@ export class KulData {
     stringify: (value: KulDataCell<KulDataShapes>["value"]) =>
       cellStringify(value),
   };
+  //#endregion
+
+  //#region Column
   column = {
     find: (
       dataset: KulDataDataset | KulDataColumn[],
       filters: Partial<KulDataColumn>,
     ) => columnFind(dataset, filters),
   };
+  //#endregion
+
+  //#region Node
   node: KulDataNodeOperations = {
     exists: (dataset) => nodeExists(dataset),
     filter: (dataset, filters, partialMatch = false) =>
@@ -91,4 +102,5 @@ export class KulData {
       nodeSetProperties(nodes, properties, recursively, exclude),
     toStream: (nodes) => nodeToStream(nodes),
   };
+  //#endregion
 }

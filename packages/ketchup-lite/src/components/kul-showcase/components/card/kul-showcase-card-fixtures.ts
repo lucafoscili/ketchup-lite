@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulCardLayout, KulDataDataset } from "src/components";
 import {
   KulComponentEventName,

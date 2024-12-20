@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulButtonEventPayload } from "src/components/kul-button/kul-button-declarations";
 import { IDS } from "../helpers/constants";
 import { clearTextarea, submitPrompt } from "../helpers/utils";

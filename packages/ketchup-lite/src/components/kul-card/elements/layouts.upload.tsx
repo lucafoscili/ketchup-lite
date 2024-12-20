@@ -1,5 +1,5 @@
 import { h, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulCardAdapter } from "../kul-card-declarations";
 
 //#region Upload layout

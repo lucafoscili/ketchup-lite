@@ -4,7 +4,7 @@ import {
   KulCarouselAdapter,
   KulCarouselAdapterJsx,
 } from "../kul-carousel-declarations";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 
 //#endregion
 export const prepSideButtonsJsx = (

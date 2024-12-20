@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
 import {
   KulLLMChoiceMessage,

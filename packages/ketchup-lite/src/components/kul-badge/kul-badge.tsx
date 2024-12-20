@@ -10,9 +10,9 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src";
+import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
+import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
@@ -140,7 +140,7 @@ export class KulBadge {
     let imageEl: HTMLElement = null;
     if (!kulLabel && kulImageProps) {
       if (!kulImageProps?.kulColor) {
-        kulImageProps.kulColor = `var(${KulThemeColorValues.TEXT_ON_PRIMARY})`;
+        kulImageProps.kulColor = `var(${KUL_THEME_COLORS.textOnPrimary})`;
       }
       imageEl = (
         <kul-image {...sanitizeProps(kulImageProps, "KulImage")}></kul-image>
