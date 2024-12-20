@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, h } from "@stencil/core";
 
 import { THEME_DATA } from "./kul-showcase-kultheme-data";
-import { KUL_WRAPPER_ID } from "../../../../variables/GenericVariables";
+import { KUL_WRAPPER_ID } from "../../../../utils/constants";
 
 @Component({
   tag: "kul-showcase-kultheme",

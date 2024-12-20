@@ -52,6 +52,7 @@ export const config: Config = {
       ],
     },
   ],
+  globalScript: "src/global/global.ts",
   namespace: "ketchup-lite",
   outputTargets: [
     {
@@ -62,7 +63,7 @@ export const config: Config = {
       type: "dist-custom-elements",
       externalRuntime: false,
       generateTypeDeclarations: true,
-      includeGlobalScripts: false,
+      includeGlobalScripts: true,
     },
     {
       type: "dist-hydrate-script",

@@ -1,7 +1,14 @@
-import { kulManagerInstance } from "../kul-manager/kul-manager";
+import { KulManager } from "../kul-manager/kul-manager";
 import { KulLLMRequest } from "./kul-llm-declarations";
 
 export class KulLLM {
+  #KUL_MANAGER: KulManager;
+
+  constructor(kulManager: KulManager) {
+    this.#KUL_MANAGER = kulManager;
+  }
+
+  //#region Fetch
   async fetch(request: KulLLMRequest, url: string) {
     try {
       const response = await fetch(`${url}/v1/chat/completions`, {
@@ -21,16 +28,20 @@ export class KulLLM {
       throw error;
     }
   }
+  //#endregion
 
+  //#region Poll
   async poll(url: string) {
     return fetch(url);
   }
+  //#endregion
 
+  //#region SpeechToText
   async speechToText(
     textarea: HTMLKulTextfieldElement,
     button: HTMLKulButtonElement,
   ) {
-    const kulManager = kulManagerInstance();
+    const { debug } = this.#KUL_MANAGER;
 
     const speechConstructor =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -39,7 +50,6 @@ export class KulLLM {
       return;
     }
     const recognition = new speechConstructor();
-    recognition.lang = kulManager.language.getBCP47();
     recognition.interimResults = true;
     recognition.maxAlternatives = 1;
 
@@ -48,7 +58,7 @@ export class KulLLM {
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join("");
-      kulManager.debug.logs.new(this, "STT response: " + transcript);
+      debug.logs.new(this, "STT response: " + transcript);
       textarea.setValue(transcript);
       const isFinal = event.results[event.results.length - 1].isFinal;
       if (isFinal) {
@@ -69,7 +79,8 @@ export class KulLLM {
     try {
       recognition.start();
     } catch (err) {
-      kulManager.debug.logs.new(this, "Error: " + err, "error");
+      debug.logs.new(this, "Error: " + err, "error");
     }
   }
+  //#endregion
 }

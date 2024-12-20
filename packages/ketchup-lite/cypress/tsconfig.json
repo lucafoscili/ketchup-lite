@@ -1,7 +1,12 @@
 {
-    "extends": "../tsconfig.json",
-    "compilerOptions": {
-        "types": ["cypress"]
-    },
-    "include": ["**/*.ts"]
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "types": ["cypress"]
+  },
+  "include": ["**/*.ts"],
+  "paths": {
+    "src/*": ["../src/*"],
+    "src/components": ["../src/components"],
+    "src/utils/constants": ["../src/utils/constants"]
+  }
 }

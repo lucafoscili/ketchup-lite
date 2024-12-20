@@ -1,2 +1,397 @@
-@import "./styles/kul-slider-main.scss";
-@import "./styles/kul-slider-classes.scss";
+:host {
+  /**
+       * @prop --kul-slider-backdrop-filter: Sets backdrop filter effect for the track and thumb underlay.
+       * Defaults to blur(10px).
+       */
+  --kul_slider_backdrop_filter: var(--kul-slider-backdrop-filter, blur(10px));
+  /**
+       * @prop --kul-slider-box-shadow: Sets box shadow for the slider components.
+       * Defaults to 0px 4px 8px rgba(0, 0, 0, 0.2).
+       */
+  --kul_slider_box_shadow: var(
+    --kul-slider-box-shadow,
+    0px 4px 8px rgba(0, 0, 0, 0.2)
+  );
+  /**
+       * @prop --kul-slider-disabled-opacity: Sets opacity of the slider when disabled.
+       * Defaults to 0.5.
+       */
+  --kul_slider_disabled_opacity: var(--kul-slider-disabled-opacity, 0.5);
+  /**
+       * @prop --kul-slider-font-family: Sets font family of the slider's label.
+       * Defaults to var(--kul-font-family).
+       */
+  --kul_slider_font_family: var(
+    --kul-slider-font-family,
+    var(--kul-font-family)
+  );
+  /**
+       * @prop --kul-slider-font-size: Sets font size of the slider's label.
+       * Defaults to var(--kul-font-size).
+       */
+  --kul_slider_font_size: var(--kul-slider-font-size, var(--kul-font-size));
+  /**
+       * @prop --kul-slider-font-weight: Sets font weight of the slider's label.
+       * Defaults to 400.
+       */
+  --kul_slider_font_weight: var(--kul-slider-font-weight, 400);
+  /**
+       * @prop --kul-slider-input-height: Sets the height of the hidden input element.
+       * Defaults to 48px.
+       */
+  --kul_slider_input_height: var(--kul-slider-input-height, 48px);
+  /**
+       * @prop --kul-slider-label-color: Sets text color of the slider's label.
+       * Defaults to var(--kul-text-color).
+       */
+  --kul_slider_label_color: var(
+    --kul-slider-label-color,
+    var(--kul-text-color)
+  );
+  /**
+       * @prop --kul-slider-label-font-size: Sets font size of the slider's label.
+       * Defaults to 0.875em.
+       */
+  --kul_slider_label_font_size: var(--kul-slider-label-font-size, 0.875em);
+  /**
+       * @prop --kul-slider-label-letter-spacing: Sets letter spacing of the slider's label.
+       * Defaults to 0.0178571429em.
+       */
+  --kul_slider_label_letter_spacing: var(
+    --kul-slider-label-letter-spacing,
+    0.0178571429em
+  );
+  /**
+       * @prop --kul-slider-label-line-height: Sets line height of the slider's label.
+       * Defaults to 2em.
+       */
+  --kul_slider_label_line_height: var(--kul-slider-label-line-height, 2em);
+  /**
+       * @prop --kul-slider-label-min-width: Sets the min. width of the label.
+       * Defaults to 0px.
+       */
+  --kul_slider_label_min_width: var(--kul-slider-label-min-width, 0px);
+  /**
+       * @prop --kul-slider-label-overflow: Sets the behavior of the label's overflow.
+       * Defaults to unset.
+       */
+  --kul_slider_label_overflow: var(--kul-slider-label-overflow, unset);
+  /**
+       * @prop --kul-slider-label-padding-left: Sets left padding of the slider's label.
+       * Defaults to 8px.
+       */
+  --kul_slider_label_padding_left: var(--kul-slider-label-padding-left, 8px);
+  /**
+       * @prop --kul-slider-label-padding-right: Sets right padding of the slider's label.
+       * Defaults to 8px.
+       */
+  --kul_slider_label_padding_right: var(--kul-slider-label-padding-right, 8px);
+  /**
+       * @prop --kul-slider-label-white-space: Sets the behavior of the label's white spaces.
+       * Defaults to pre-wrap.
+       */
+  --kul_slider_label_white_space: var(--kul-slider-label-white-space, pre-wrap);
+  /**
+       * @prop --kul-slider-margin: Sets margin around the slider component.
+       * Defaults to 0 0.75em.
+       */
+  --kul_slider_margin: var(--kul-slider-margin, 0 0.75em);
+  /**
+       * @prop --kul-slider-min-width: Sets minimum width of the slider component.
+       * Defaults to 128px.
+       */
+  --kul_slider_min_width: var(--kul-slider-min-width, 128px);
+  /**
+       * @prop --kul-slider-primary-color: Sets primary color of the component.
+       * Used for active parts of the slider such as the track and thumb.
+       * Defaults to var(--kul-primary-color).
+       */
+  --kul_slider_primary_color: var(
+    --kul-slider-primary-color,
+    var(--kul-primary-color)
+  );
+  /**
+       * @prop --kul-slider-primary-color-rgb: Sets primary color RGB values for the component.
+       * Used to create transparent variations of the primary color.
+       * Defaults to var(--kul-primary-color-rgb).
+       */
+  --kul_slider_primary_color_rgb: var(
+    --kul-slider-primary-color-rgb,
+    var(--kul-primary-color-rgb)
+  );
+  /**
+       * @prop --kul-slider-thumb-active-after-scale: Sets scale transform on active state for the thumb's after element.
+       * Defaults to 1.5.
+       */
+  --kul_slider_thumb_active_after_scale: var(
+    --kul-slider-thumb-active-after-scale,
+    1.5
+  );
+  /**
+       * @prop --kul-slider-thumb-backdrop-filter: Sets backdrop filter for the thumb underlay.
+       * Defaults to blur(10px).
+       */
+  --kul_slider_thumb_backdrop_filter: var(
+    --kul-slider-thumb-backdrop-filter,
+    blur(10px)
+  );
+  /**
+       * @prop --kul-slider-thumb-backdrop-filter-active: Sets backdrop filter for the active thumb.
+       * Defaults to blur(12px).
+       */
+  --kul_slider_thumb_backdrop_filter_active: var(
+    --kul-slider-thumb-backdrop-filter-active,
+    blur(12px)
+  );
+  /**
+       * @prop --kul-slider-thumb-border-radius: Sets border radius of the slider thumb.
+       * Defaults to 50%.
+       */
+  --kul_slider_thumb_border_radius: var(--kul-slider-thumb-border-radius, 50%);
+  /**
+       * @prop --kul-slider-thumb-box-shadow: Sets box shadow for the slider thumb.
+       * Defaults to 0px 4px 8px rgba(0, 0, 0, 0.2).
+       */
+  --kul_slider_thumb_box_shadow: var(
+    --kul-slider-thumb-box-shadow,
+    0px 4px 8px rgba(0, 0, 0, 0.2)
+  );
+  /**
+       * @prop --kul-slider-thumb-color: Sets color of the slider thumb.
+       * Defaults to var(--kul-border-color).
+       */
+  --kul_slider_thumb_color: var(
+    --kul-slider-thumb-color,
+    var(--kul-border-color)
+  );
+  /**
+       * @prop --kul-slider-thumb-height: Sets height of the slider thumb.
+       * Defaults to 24px.
+       */
+  --kul_slider_thumb_height: var(--kul-slider-thumb-height, 24px);
+  /**
+       * @prop --kul-slider-thumb-hover-scale: Sets scale transform on hover for the thumb.
+       * Defaults to 1.1.
+       */
+  --kul_slider_thumb_hover_scale: var(--kul-slider-thumb-hover-scale, 1.1);
+  /**
+       * @prop --kul-slider-thumb-underlay-top: Sets top position of the thumb underlay.
+       * Defaults to -9px.
+       */
+  --kul_slider_thumb_underlay_top: var(--kul-slider-thumb-underlay-top, -9px);
+  /**
+       * @prop --kul-slider-thumb-width: Sets width of the slider thumb.
+       * Defaults to 24px.
+       */
+  --kul_slider_thumb_width: var(--kul-slider-thumb-width, 24px);
+  /**
+       * @prop --kul-slider-track-border-radius: Sets border radius of the slider track.
+       * Defaults to 12px.
+       */
+  --kul_slider_track_border_radius: var(--kul-slider-track-border-radius, 12px);
+  /**
+       * @prop --kul-slider-track-height: Sets height of the slider track.
+       * Defaults to 6px.
+       */
+  --kul_slider_track_height: var(--kul-slider-track-height, 6px);
+  /**
+       * @prop --kul-slider-transition-duration: Sets duration of transitions.
+       * Defaults to 0.3s.
+       */
+  --kul_slider_transition_duration: var(--kul-slider-transition-duration, 0.3s);
+  /**
+       * @prop --kul-slider-value-bottom-position: Sets the bottom position of the value display.
+       * Defaults to -3em.
+       */
+  --kul_slider_value_bottom_position: var(
+    --kul-slider-value-bottom-position,
+    -3em
+  );
+  /**
+       * @prop --kul-slider-value-font-size: Sets font size of the slider's value display.
+       * Defaults to 0.875em.
+       */
+  --kul_slider_value_font_size: var(--kul-slider-value-font-size, 0.875em);
+  /**
+       * @prop --kul-slider-value-font-weight: Sets font weight of the slider's value display.
+       * Defaults to 500.
+       */
+  --kul_slider_value_font_weight: var(--kul-slider-value-font-weight, 500);
+
+  display: block;
+  font-family: var(--kul_slider_font_family);
+  font-size: var(--kul_slider_font_size);
+}
+
+.form-field {
+  & {
+    font-size: var(--kul_slider_label_font_size);
+    line-height: var(--kul_slider_label_line_height);
+    font-weight: var(--kul_slider_font_weight);
+    letter-spacing: var(--kul_slider_label_letter_spacing);
+    color: var(--kul_slider_label_color);
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+  }
+
+  &__label {
+    min-width: var(--kul_slider_label_min_width);
+    overflow: var(--kul_slider_label_overflow);
+    padding-left: var(--kul_slider_label_padding_left);
+    text-overflow: ellipsis;
+    white-space: var(--kul_slider_label_white_space);
+  }
+
+  &--align-end {
+    .form-field__label {
+      margin-left: auto;
+      margin-right: 0;
+      padding-left: 0;
+      padding-right: var(--kul_slider_label_padding_right);
+      order: -1;
+    }
+  }
+}
+
+.slider {
+  & {
+    position: relative;
+    display: block;
+    outline: none;
+    user-select: none;
+    margin: var(--kul_slider_margin);
+    min-width: var(--kul_slider_min_width);
+    width: 100%;
+  }
+
+  &__label {
+    color: var(--kul_slider_label_color);
+    cursor: pointer;
+    font-family: var(--kul_slider_font_family);
+    margin-left: 0;
+    margin-right: auto;
+    padding-left: var(--kul_slider_label_padding_left);
+    padding-right: 0;
+    user-select: none;
+  }
+
+  &__value {
+    position: absolute;
+    bottom: var(--kul_slider_value_bottom_position);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--kul_slider_label_color);
+    font-weight: var(--kul_slider_value_font_weight);
+    font-size: var(--kul_slider_value_font_size);
+    white-space: nowrap;
+  }
+
+  &--disabled {
+    cursor: auto;
+    opacity: var(--kul_slider_disabled_opacity);
+    pointer-events: none;
+  }
+
+  &--checked {
+    &__track {
+      background: rgba(var(--kul_slider_primary_color_rgb), 0.75);
+    }
+  }
+
+  &__track {
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--kul_slider_track_height);
+    border-radius: var(--kul_slider_track_border_radius);
+    background: rgba(var(--kul_slider_primary_color_rgb), 0.2);
+    backdrop-filter: var(--kul_slider_backdrop_filter);
+    box-shadow: var(--kul_slider_box_shadow);
+    transition: background-color var(--kul_slider_transition_duration);
+  }
+
+  &__thumb-underlay {
+    position: absolute;
+    top: var(--kul_slider_thumb_underlay_top);
+    left: var(--kul_slider_value);
+    transform: translateX(-50%);
+    width: var(--kul_slider_thumb_width);
+    height: var(--kul_slider_thumb_height);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--kul_slider_thumb_border_radius);
+    backdrop-filter: var(--kul_slider_thumb_backdrop_filter);
+    transition: left var(--kul_slider_transition_duration);
+    pointer-events: none;
+  }
+
+  &__thumb {
+    & {
+      width: var(--kul_slider_thumb_width);
+      height: var(--kul_slider_thumb_height);
+      background: rgba(var(--kul_slider_primary_color_rgb), 0.6);
+      border-radius: var(--kul_slider_thumb_border_radius);
+      backdrop-filter: var(--kul_slider_thumb_backdrop_filter_active);
+      box-shadow: var(--kul_slider_thumb_box_shadow);
+      transition:
+        background-color var(--kul_slider_transition_duration),
+        transform var(--kul_slider_transition_duration);
+      cursor: pointer;
+    }
+
+    &:hover {
+      transform: scale(var(--kul_slider_thumb_hover_scale));
+      background: rgba(var(--kul_slider_primary_color_rgb), 0.8);
+    }
+  }
+
+  &__native-control {
+    position: absolute;
+    top: calc(var(--kul_slider_input_height) / -2);
+    left: 0;
+    width: 100%;
+    height: var(--kul_slider_input_height);
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+  }
+}
+
+/*-------------------------------------------------*/
+/*        C o m p o n e n t   C l a s s e s        */
+/*-------------------------------------------------*/
+
+:host(.#{$kul-class-danger}) {
+  --kul-slider-primary-color: var(--kul-danger-color);
+  --kul-slider-primary-color-rgb: var(--kul-danger-color-rgb);
+}
+
+:host(.#{$kul-class-info}) {
+  --kul-slider-primary-color: var(--kul-info-color);
+  --kul-slider-primary-color-rgb: var(--kul-info-color-rgb);
+}
+
+:host(.#{$kul-class-secondary}) {
+  --kul-slider-primary-color: var(--kul-secondary-color);
+  --kul-slider-primary-color-rgb: var(--kul-secondary-color-rgb);
+}
+
+:host(.#{$kul-class-success}) {
+  --kul-slider-primary-color: var(--kul-success-color);
+  --kul-slider-primary-color-rgb: var(--kul-success-color-rgb);
+}
+
+:host(.#{$kul-class-warning}) {
+  --kul-slider-primary-color: var(--kul-warning-color);
+  --kul-slider-primary-color-rgb: var(--kul-warning-color-rgb);
+}
+
+:host(.#{$kul-class-full-width}) {
+  width: 100%;
+
+  #kul-component,
+  .formfield {
+    width: 100%;
+  }
+}

@@ -1,2 +1,93 @@
-@import "./styles/kul-splash-main.scss";
-@import "./styles/kul-splash-classes.scss";
+:host {
+  /**
+   * @prop --kul-splash-label-color: Sets the color of the label.
+   * Defaults to the value of --kul-text-color.
+   */
+  --kul_splash_label_color: var(
+    --kul-splash-label-color,
+    var(--kul-text-color)
+  );
+  /**
+    * @prop --kul-splash-font-family: Sets the label's font family.
+    * Defaults to the value of --kul-font-family.
+    */
+  --kul_splash_font_family: var(
+    --kul-splash-font-family,
+    var(--kul-font-family)
+  );
+  /**
+    * @prop --kul-splash-font-size: Sets the label's font size.
+    * Defaults to the value of --kul-font-size.
+    */
+  --kul_splash_font_size: var(--kul-splash-font-size, var(--kul-font-size));
+  /**
+    * @prop --kul-splash-background-color: Sets the color of the spinner.
+    * Defaults to the value of --kul-background-color.
+    */
+  --kul_splash_background_color: var(
+    --kul-splash-background-color,
+    var(--kul-background-color)
+  );
+  /**
+    * @prop --kul-splash-label-display: Sets the display property of the label.
+    * Defaults to block.
+    */
+  --kul_splash_label_display: var(--kul-splash-label-display, block);
+  /**
+    * @prop --kul-splash-widget-color: Sets the color of the widget.
+    * Defaults to the value of --kul-primary-color.
+    */
+  --kul_splash_widget_color: var(
+    --kul-splash-widget-color,
+    var(--kul-primary-color)
+  );
+  /**
+    * @prop --kul-splash-widget-height: Sets the height of the widget.
+    * Defaults to 150px.
+    */
+  --kul_splash_widget_height: var(--kul-splash-widget-height, 150px);
+  /**
+    * @prop --kul-splash-widget-width: Sets the width of the widget.
+    * Defaults to 150px.
+    */
+  --kul_splash_widget_width: var(--kul-splash-widget-width, 150px);
+}
+
+.modal {
+  --kul-spinner-color: var(--kul_splash_widget_color);
+
+  background: var(--kul_splash_background_color);
+  display: flex;
+  height: 100dvh;
+  left: 0;
+  opacity: 1;
+  position: fixed;
+  top: 0;
+  transition: opacity 0.5s ease-out;
+  width: 100dvw;
+  z-index: 999;
+
+  &.active {
+    opacity: 0;
+  }
+}
+
+.wrapper {
+  margin: auto;
+}
+
+.widget {
+  height: var(--kul_splash_widget_height);
+  margin: auto;
+  width: var(--kul_splash_widget_width);
+}
+
+.label {
+  color: var(--kul_splash_label_color);
+  display: var(--kul_splash_label_display);
+  font-family: var(--kul_splash_font_family);
+  font-size: var(--kul_splash_font_size);
+  font-weight: bold;
+  letter-spacing: 2px;
+  text-align: center;
+}

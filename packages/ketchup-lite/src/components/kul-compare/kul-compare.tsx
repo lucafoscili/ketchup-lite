@@ -13,27 +13,25 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-
-import { DEFAULTS } from "./helpers/kul-compare-defaults";
-import {
-  KulCompareEvent,
-  KulCompareEventPayload,
-  KulCompareProps,
-  KulCompareView,
-} from "./kul-compare-declarations";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataCell,
   KulDataDataset,
   KulDataNode,
   KulDataShapes,
   KulDataShapesMap,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { type GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { IDS } from "./helpers/constants";
+import { createDefaults } from "./kul-compare-adapter";
+import {
+  KulCompareEvent,
+  KulCompareEventPayload,
+  KulCompareView,
+} from "./kul-compare-declarations";
 
 @Component({
   tag: "kul-compare",
@@ -46,23 +44,14 @@ export class KulCompare {
    */
   @Element() rootElement: HTMLKulCompareElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The shapes of the component.
-   * @default undefined
+   * @default {}
    *
    * @see KulDataShapesMap - For a list of possible shapes.
    */
@@ -79,19 +68,17 @@ export class KulCompare {
   @State() isRightPanelOpened = false;
   /**
    * Shape on the left.
-   * @default false
+   * @default undefined
    */
   @State() leftShape: Partial<KulDataCell<KulDataShapes>>;
   /**
    * Shape on the right.
-   * @default false
+   * @default undefined
    */
   @State() rightShape: Partial<KulDataCell<KulDataShapes>>;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Actual data of the compare.
    * @default null
@@ -106,26 +93,15 @@ export class KulCompare {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Sets the type of view, either styled as a before-after or a side-by-side comparison.
    * @default null
    */
   @Prop({ mutable: true }) kulView: KulCompareView = "overlay";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-compare-event",
     composed: true,
@@ -133,7 +109,6 @@ export class KulCompare {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulCompareEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulCompareEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -142,32 +117,26 @@ export class KulCompare {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                 W a t c h e r s                 */
-  /*-------------------------------------------------*/
-
+  //#region Watchers
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
+    const { data, debug } = kulManagerSingleton;
+
     try {
-      this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
+      this.shapes = data.cell.shapes.getAll(this.kulData);
       const shapes = this.#getShapes();
       this.leftShape = shapes[0];
       this.rightShape = shapes[1];
     } catch (error) {
-      this.#kulManager.debug.logs.new(
-        this,
-        "Error updating shapes: " + error,
-        "error",
-      );
+      debug.logs.new(this, "Error updating shapes: " + error, "error");
     }
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -178,12 +147,13 @@ export class KulCompare {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @param {boolean} descriptions - When true, includes descriptions for each property.
    * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulCompareProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -203,29 +173,19 @@ export class KulCompare {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #getShapes() {
     return this.shapes?.[this.kulShape] || [];
   }
-
   #hasShapes() {
     return !!this.shapes?.[this.kulShape];
   }
-
   #isOverlay() {
     return !!(this.kulView === "overlay");
   }
-
   #prepChangeView(): VNode {
-    const ids = {
-      left: "toggle-left-panel",
-      right: "toggle-right-panel",
-      view: "toggle-view",
-    };
     const panelIcon = "close";
     const panelIconOff = "view-sequential";
     const styling = "icon";
@@ -237,13 +197,13 @@ export class KulCompare {
       switch (eventType) {
         case "click":
           switch (id) {
-            case ids.left:
+            case IDS.left:
               this.isLeftPanelOpened = value === "on" ? true : false;
               break;
-            case ids.right:
+            case IDS.right:
               this.isRightPanelOpened = value === "on" ? true : false;
               break;
-            case ids.view:
+            case IDS.view:
               this.kulView = value === "on" ? "split" : "overlay";
               break;
           }
@@ -253,7 +213,7 @@ export class KulCompare {
     return (
       <div class="change-view">
         <kul-button
-          id={ids.left}
+          id={IDS.left}
           kulIcon={panelIcon}
           kulIconOff={panelIconOff}
           kulStyling={styling}
@@ -266,7 +226,7 @@ export class KulCompare {
           }
         ></kul-button>
         <kul-button
-          id={ids.view}
+          id={IDS.view}
           kulIcon="compare"
           kulIconOff="book-open"
           kulStyling={styling}
@@ -279,7 +239,7 @@ export class KulCompare {
           }
         ></kul-button>
         <kul-button
-          id={ids.right}
+          id={IDS.right}
           kulIcon={panelIcon}
           kulIconOff={panelIconOff}
           kulStyling={styling}
@@ -294,25 +254,25 @@ export class KulCompare {
       </div>
     );
   }
-
   #prepPanel(side: "left" | "right"): VNode {
+    const { kulShape, leftShape, rightShape } = this;
+
     const dataset: KulDataDataset = { nodes: [] };
     const shapes = this.#getShapes();
     for (let index = 0; index < shapes.length; index++) {
       const shape = shapes[index];
-      const isCurrentLeft = side === "left" && this.leftShape === shape;
-      const isCurrentRight = side === "right" && this.rightShape === shape;
+      const isCurrentLeft = side === "left" && leftShape === shape;
+      const isCurrentRight = side === "right" && rightShape === shape;
       const strIndex = String(index).valueOf();
       const node: KulDataNode = {
         id: strIndex,
-        value: `${this.kulShape} #${strIndex}`,
+        value: `${kulShape} #${strIndex}`,
       };
       if (isCurrentLeft || isCurrentRight) {
         node.icon = "check";
       }
       dataset.nodes.push(node);
     }
-
     return (
       <kul-tree
         class={`view__panel view__panel--${side}`}
@@ -337,22 +297,31 @@ export class KulCompare {
       ></kul-tree>
     );
   }
-
   #prepView(): VNode {
-    const { left, right } = DEFAULTS(this.#isOverlay());
-    const shapes = this.#kulManager.data.cell.shapes.decorate(
-      this.kulShape,
-      [this.leftShape, this.rightShape],
+    const { data, sanitizeProps } = kulManagerSingleton;
+    const {
+      isLeftPanelOpened,
+      isRightPanelOpened,
+      kulShape,
+      kulView,
+      leftShape,
+      rightShape,
+    } = this;
+
+    const { left, right } = createDefaults();
+    const shapes = data.cell.shapes.decorate(
+      kulShape,
+      [leftShape, rightShape],
       async (e) => this.onKulEvent(e, "kul-event"),
-      [...left[this.kulShape](), ...right[this.kulShape]()],
+      [...sanitizeProps(left[kulShape]()), ...sanitizeProps(right[kulShape]())],
     ).element;
 
     return (
       <Fragment>
-        <div class={`view view--${this.kulView}`}>
+        <div class={`view view--${kulView}`}>
           <div class="view__left">{shapes[0]}</div>
-          {this.isLeftPanelOpened ? this.#prepPanel("left") : null}
-          {this.isRightPanelOpened ? this.#prepPanel("right") : null}
+          {isLeftPanelOpened ? this.#prepPanel("left") : null}
+          {isRightPanelOpened ? this.#prepPanel("right") : null}
           {this.#isOverlay() ? (
             <div
               class="view__slider"
@@ -373,7 +342,6 @@ export class KulCompare {
       </Fragment>
     );
   }
-
   #prepCompare(): VNode {
     if (this.#hasShapes()) {
       const shapes = this.shapes[this.kulShape];
@@ -387,7 +355,6 @@ export class KulCompare {
       }
     }
   }
-
   #updateOverlayWidth(event: InputEvent) {
     const sliderValue =
       100 - parseInt((event.target as HTMLInputElement).value);
@@ -396,45 +363,50 @@ export class KulCompare {
       `${sliderValue}%`,
     );
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
+
     this.updateShapes();
   }
-
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
+    const { theme } = kulManagerSingleton;
+
+    const { kulStyle } = this;
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div class="compare">{this.#prepCompare()}</div>
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

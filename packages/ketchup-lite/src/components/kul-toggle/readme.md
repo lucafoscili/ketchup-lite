@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event              | Description                                                                      | Type                                 |
-| ------------------ | -------------------------------------------------------------------------------- | ------------------------------------ |
-| `kul-toggle-event` | Describes event emitted for various toggle interactions like click, focus, blur. | `CustomEvent<KulToggleEventPayload>` |
+| Event              | Description | Type                                 |
+| ------------------ | ----------- | ------------------------------------ |
+| `kul-toggle-event` |             | `CustomEvent<KulToggleEventPayload>` |
 
 
 ## Methods
@@ -36,15 +36,9 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<GenericObject>`
 
 Used to retrieve component's properties and descriptions.
-
-#### Parameters
-
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `descriptions` | `boolean` | - When true, includes descriptions for each property. |
 
 #### Returns
 

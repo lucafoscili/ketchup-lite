@@ -1,17 +1,13 @@
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulEventPayload } from "src/types/GenericTypes";
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulDrawerEvent = "close" | "open" | "ready" | "unmount";
 export interface KulDrawerEventPayload
   extends KulEventPayload<"KulDrawer", KulDrawerEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
-export enum KulDrawerProps {
-  kulStyle = "Custom style of the component.",
-}
+//#endregion
+
+//#region Props
 export interface KulDrawerPropsInterface {
   kulStyle?: string;
 }
+//#endregion

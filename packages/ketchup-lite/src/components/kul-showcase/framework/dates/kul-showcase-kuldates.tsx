@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, h } from "@stencil/core";
 
 import { DATES_DOC } from "./kul-showcase-kuldates-data";
-import { KUL_WRAPPER_ID } from "../../../../variables/GenericVariables";
+import { KUL_WRAPPER_ID } from "../../../../utils/constants";
 
 @Component({
   tag: "kul-showcase-kuldates",

@@ -139,12 +139,12 @@ graph TD;
   kul-showcase-chat --> kul-article
   kul-showcase-chat --> kul-chat
   kul-chat --> kul-spinner
-  kul-chat --> kul-image
-  kul-chat --> kul-button
-  kul-chat --> kul-textfield
-  kul-chat --> kul-progressbar
   kul-chat --> kul-typewriter
   kul-chat --> kul-code
+  kul-chat --> kul-image
+  kul-chat --> kul-button
+  kul-chat --> kul-progressbar
+  kul-chat --> kul-textfield
   kul-code --> kul-button
   kul-showcase-chip --> kul-article
   kul-showcase-chip --> kul-chip
@@ -164,9 +164,9 @@ graph TD;
   kul-imageviewer --> kul-canvas
   kul-imageviewer --> kul-button
   kul-imageviewer --> kul-spinner
+  kul-imageviewer --> kul-tree
   kul-imageviewer --> kul-masonry
   kul-imageviewer --> kul-textfield
-  kul-imageviewer --> kul-tree
   kul-masonry --> kul-button
   kul-showcase-lazy --> kul-article
   kul-showcase-lazy --> kul-lazy
@@ -176,12 +176,12 @@ graph TD;
   kul-showcase-masonry --> kul-masonry
   kul-showcase-messenger --> kul-article
   kul-showcase-messenger --> kul-messenger
-  kul-messenger --> kul-button
-  kul-messenger --> kul-tabbar
-  kul-messenger --> kul-chat
   kul-messenger --> kul-image
+  kul-messenger --> kul-button
   kul-messenger --> kul-spinner
   kul-messenger --> kul-code
+  kul-messenger --> kul-chat
+  kul-messenger --> kul-tabbar
   kul-messenger --> kul-chip
   kul-messenger --> kul-textfield
   kul-tabbar --> kul-image

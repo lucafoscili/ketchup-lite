@@ -6,21 +6,18 @@ import {
   forceUpdate,
   h,
   Host,
+  Method,
   Prop,
   State,
 } from "@stencil/core";
-import { Method } from "@stencil/core/internal";
-
+import { kulManagerSingleton } from "src/global/global";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
-  KulPhotoframeEventPayload,
   KulPhotoframeEvent,
-  KulPhotoframeProps,
+  KulPhotoframeEventPayload,
 } from "./kul-photoframe-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   tag: "kul-photoframe",
@@ -33,30 +30,19 @@ export class KulPhotoframe {
    */
   @Element() rootElement: HTMLKulPhotoframeElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * A boolean that flags when the component enters the viewport for the first time to trigger a new render.
    * @default false
    */
   @State() isInViewport = false;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Html attributes of the picture before the component enters the viewport.
    * @default null
@@ -66,7 +52,7 @@ export class KulPhotoframe {
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Percentage of the component dimensions entering the viewport (0.1 => 1).
    * @default 0.25
@@ -77,25 +63,17 @@ export class KulPhotoframe {
    * @default null
    */
   @Prop() kulValue: GenericObject = null;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #intObserver: IntersectionObserver;
-  #kulManager = kulManagerInstance();
   #placeholderEl: HTMLImageElement;
-  #valueEl: HTMLImageElement;
   #renderValue = false;
+  #valueEl: HTMLImageElement;
   #wrapperEl: HTMLElement;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-photoframe-event",
     composed: true,
@@ -103,7 +81,6 @@ export class KulPhotoframe {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulPhotoframeEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulPhotoframeEvent,
@@ -117,11 +94,9 @@ export class KulPhotoframe {
       isPlaceholder,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -131,13 +106,14 @@ export class KulPhotoframe {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulPhotoframeProps, descriptions);
+  async getProps(): Promise<GenericObject> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -157,11 +133,9 @@ export class KulPhotoframe {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #setObserver(): void {
     const callback = (entries: IntersectionObserverEntry[]) => {
       entries.forEach((entry) => {
@@ -176,40 +150,43 @@ export class KulPhotoframe {
     };
     this.#intObserver = new IntersectionObserver(callback, options);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
     this.#setObserver();
   }
-
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
-    if (this.isInViewport && !this.#renderValue) {
+    const { theme } = kulManagerSingleton;
+
+    const { isInViewport, kulPlaceholder, kulStyle, kulValue } = this;
+
+    if (isInViewport && !this.#renderValue) {
       this.#renderValue = true;
     }
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div
           id={KUL_WRAPPER_ID}
           ref={(el) => {
@@ -217,7 +194,7 @@ export class KulPhotoframe {
           }}
         >
           <img
-            {...this.kulPlaceholder}
+            {...kulPlaceholder}
             class="placeholder"
             ref={(el) => (this.#placeholderEl = el)}
             onLoad={(e) => {
@@ -234,9 +211,9 @@ export class KulPhotoframe {
               this.onKulEvent(e, "load", true);
             }}
           ></img>
-          {this.#renderValue ? (
+          {this.#renderValue && (
             <img
-              {...this.kulValue}
+              {...kulValue}
               class="value"
               ref={(el) => (this.#valueEl = el)}
               onLoad={(e) => {
@@ -245,14 +222,16 @@ export class KulPhotoframe {
                 this.onKulEvent(e, "load");
               }}
             ></img>
-          ) : null}
+          )}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
     this.#intObserver?.unobserve(this.rootElement);
   }
+  //#endregion
 }

@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, h } from "@stencil/core";
 
 import { DYNAMIC_POSITION_DATA } from "./kul-showcase-kuldynamicposition-data";
-import { KUL_WRAPPER_ID } from "../../../../variables/GenericVariables";
+import { KUL_WRAPPER_ID } from "../../../../utils/constants";
 
 @Component({
   tag: "kul-showcase-kuldynamicposition",

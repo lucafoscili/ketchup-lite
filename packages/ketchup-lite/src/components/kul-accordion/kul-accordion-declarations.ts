@@ -1,5 +1,5 @@
-import { KulDataDataset } from "../../managers/kul-data/kul-data-declarations";
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Events
 export type KulAccordionEvent = "click" | "pointerdown" | "ready" | "unmount";
@@ -8,11 +8,6 @@ export interface KulAccordionEventPayload
 //#endregion
 
 //#region Props
-export enum KulAccordionProps {
-  kulData = "Actual data of the accordion.",
-  kulRipple = "When set to true, the pointerdown event will trigger a ripple effect.",
-  kulStyle = "Sets a custom CSS style for the component.",
-}
 export interface KulAccordionPropsInterface {
   kulData?: KulDataDataset;
   kulRipple?: boolean;

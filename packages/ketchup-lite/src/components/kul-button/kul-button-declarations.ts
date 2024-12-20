@@ -1,9 +1,7 @@
-import { KulDataDataset } from "../../managers/kul-data/kul-data-declarations";
-import { KulEventPayload } from "../../types/GenericTypes";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulEventPayload } from "src/types/GenericTypes";
 
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#region Events
 export type KulButtonEvent =
   | "blur"
   | "click"
@@ -16,24 +14,13 @@ export interface KulButtonEventPayload
   extends KulEventPayload<"KulButton", KulButtonEvent> {
   value: string;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
-export enum KulButtonProps {
-  kulData = "Actual data of the button, used to render dropdown buttons.",
-  kulDisabled = "When true, the component is disabled.",
-  kulIcon = "Specifies an icon to display.",
-  kulIconOff = "Icon to be used for the off state when the button is toggable.",
-  kulLabel = "Defines text to display on the button.",
-  kulRipple = "When set to true, the pointerdown event will trigger a ripple effect.",
-  kulShowSpinner = "When true, a spinner will be shown on the button.",
-  kulStyle = "Sets a custom CSS style for the component.",
-  kulStyling = 'Defines the button appearance. Possible values are "flat", "floating", "icon", "outlined", and "raised". The default is "raised".',
-  kulToggable = "Makes the button toggable between an on and off state.",
-  kulTrailingIcon = "If set, displays an icon after the text.",
-  kulType = "Defines the button type attribute.",
-  kulValue = "If true, the button is marked as checked.",
-}
+//#endregion
+
+//#region States
+export type KulButtonState = "off" | "on";
+//#endregion
+
+//#region Props
 export interface KulButtonPropsInterface {
   kulData?: KulDataDataset;
   kulDisabled?: boolean;
@@ -55,7 +42,5 @@ export type KulButtonStyling =
   | "icon"
   | "outlined"
   | "raised";
-/*-------------------------------------------------*/
-/*                    S t a t e                    */
-/*-------------------------------------------------*/
-export type KulButtonState = "off" | "on";
+export type KulButtonType = "button" | "reset" | "submit";
+//#endregion

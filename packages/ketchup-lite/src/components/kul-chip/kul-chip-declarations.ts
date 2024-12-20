@@ -1,8 +1,8 @@
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulEventPayload } from "../../types/GenericTypes";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Events
 export type KulChipEvent =
@@ -28,12 +28,6 @@ export interface KulChipEventArguments {
 //#endregion
 
 //#region Props
-export enum KulChipProps {
-  kulData = "The data of the chip chip.",
-  kulRipple = "When set to true, the pointerdown event will trigger a ripple effect.",
-  kulStyle = "Custom style of the component.",
-  kulStyling = 'Styling of the chip component, includes: "choice", "input", "filter" and "standard".',
-}
 export interface KulChipPropsInterface {
   kulData?: KulDataDataset;
   kulRipple?: boolean;
