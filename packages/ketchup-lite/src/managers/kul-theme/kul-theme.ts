@@ -9,6 +9,7 @@ import type {
 import { RIPPLE_SURFACE_CLASS } from "../../utils/constants";
 import {
   KulThemeAttribute,
+  KulThemeBEMModifier,
   KulThemeCSSVariables,
   KulThemeHSLValues,
   KulThemeJSON,
@@ -117,6 +118,25 @@ export class KulTheme {
       }
     }
     return css;
+  };
+  //#endregion
+
+  //#region bemClass
+  bemClass = (
+    block: string,
+    element?: string,
+    modifiers?: KulThemeBEMModifier,
+  ): string => {
+    let baseClass = element ? `${block}__${element}` : block;
+
+    if (modifiers) {
+      const modifierClasses = Object.entries(modifiers)
+        .filter(([_, isActive]) => isActive)
+        .map(([key]) => `${baseClass}--${key}`);
+      baseClass += ` ${modifierClasses.join(" ")}`;
+    }
+
+    return baseClass.trim();
   };
   //#endregion
 

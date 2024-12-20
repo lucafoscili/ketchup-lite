@@ -10,6 +10,7 @@ export interface KulThemeElement {
   font?: KulThemeFonts[];
   customStyles?: GenericObject;
 }
+export type KulThemeBEMModifier = Record<string, boolean>;
 export type KulThemeChartColorKey = `--kul-chart-color-${number}`;
 export type KulThemeAllChartColorKeys = KulThemeChartColorKey[];
 export type KulThemeChartColorCSSVariables = {
