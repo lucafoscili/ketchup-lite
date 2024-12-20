@@ -23,7 +23,7 @@ export const IMAGE_FIXTURES: () => {
 } = () => {
   const { get } = kulManagerSingleton.assets;
 
-  const image = get(`./assets/media/color_splash.jpg`);
+  const image = get(`./assets/media/color_splash.jpg`).path;
   const documentation: KulArticleDataset = {
     nodes: [
       {

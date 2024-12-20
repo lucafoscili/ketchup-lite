@@ -266,11 +266,7 @@ export class KulTextfield {
 
     const { get } = kulManagerSingleton.assets;
 
-    const path = get(`./assets/svg/${this.kulIcon}.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
+    const { style } = get(`./assets/svg/${this.kulIcon}.svg`);
     return <div class="textfield__icon" onClick={() => {}} style={style}></div>;
   }
   #prepInput() {

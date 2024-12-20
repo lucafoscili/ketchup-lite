@@ -64,8 +64,8 @@ export const PHOTOFRAME_FIXTURES: () => {
       },
     ],
   };
-  const placeholder = get(`./assets/media/blur_color_splash.jpg`);
-  const value = get(`./assets/media/color_splash.jpg`);
+  const placeholder = get(`./assets/media/blur_color_splash.jpg`).path;
+  const value = get(`./assets/media/color_splash.jpg`).path;
 
   return {
     documentation,

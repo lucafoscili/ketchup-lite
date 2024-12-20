@@ -273,11 +273,7 @@ export class KulList {
   #prepDeleteIcon(node: KulDataNode) {
     const { get } = kulManagerSingleton.assets;
 
-    const path = get(`./assets/svg/clear.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
+    const { style } = get(`./assets/svg/clear.svg`);
     return (
       <div
         class="delete"
@@ -294,11 +290,7 @@ export class KulList {
   #prepIcon(node: KulDataNode) {
     const { get } = kulManagerSingleton.assets;
 
-    const path = get(`./assets/svg/${node.icon}.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
+    const { style } = get(`./assets/svg/${node.icon}.svg`);
     return <div class="node__icon" style={style}></div>;
   }
   #prepNode(node: KulDataNode, index: number) {

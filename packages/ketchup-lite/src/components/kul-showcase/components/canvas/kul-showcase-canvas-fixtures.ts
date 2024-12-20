@@ -72,7 +72,7 @@ export const CANVAS_FIXTURES: () => {
         kulImageProps: {
           kulSizeX: "256px",
           kulSizeY: "256px",
-          kulValue: get(`./assets/media/color_splash.jpg`),
+          kulValue: get(`./assets/media/color_splash.jpg`).path,
         },
       },
       style: {
@@ -81,7 +81,7 @@ export const CANVAS_FIXTURES: () => {
         kulImageProps: {
           kulSizeX: "256px",
           kulSizeY: "256px",
-          kulValue: get(`./assets/media/color_splash.jpg`),
+          kulValue: get(`./assets/media/color_splash.jpg`).path,
         },
       },
     },

@@ -32,7 +32,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_thor.png`),
+              value: get(`./assets/media/avatar_thor.png`).path,
             },
           },
           id: "image_1",
@@ -42,7 +42,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_freya.png`),
+              value: get(`./assets/media/avatar_freya.png`).path,
             },
           },
           id: "image_2",
@@ -52,7 +52,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_thor_2.png`),
+              value: get(`./assets/media/avatar_thor_2.png`).path,
             },
           },
           id: "image_3",
@@ -62,7 +62,7 @@ export const COMPARE_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_freya_2.png`),
+              value: get(`./assets/media/avatar_freya_2.png`).path,
             },
           },
           id: "image_4",

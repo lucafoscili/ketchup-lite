@@ -179,8 +179,8 @@ export class KulCode {
     const { get } = kulManagerSingleton.assets;
 
     try {
-      const module = get(`./assets/prism/prism-${this.kulLanguage}.min.js`);
-      await import(module);
+      const { path } = get(`./assets/prism/prism-${this.kulLanguage}.min.js`);
+      await import(path);
     } catch (error) {
       console.error(
         `Failed to load Prism.js component for ${this.kulLanguage}:`,

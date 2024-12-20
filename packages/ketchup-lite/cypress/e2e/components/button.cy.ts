@@ -1,15 +1,13 @@
+import { KUL_BUTTON_PROPS } from "src/components/kul-button/helpers/constants";
+import { KUL_DROPDOWN_CLASS_VISIBLE } from "src/utils/constants";
 import {
   KulButtonEvent,
-  KulButtonProps,
-  KulButtonPropsInterface,
   KulButtonState,
 } from "../../../src/components/kul-button/kul-button-declarations";
 import { BUTTON_CATEGORIES_KEYS } from "../../../src/components/kul-showcase/components/button/kul-showcase-button-declarations";
 import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
-import { KUL_DROPDOWN_CLASS_VISIBLE } from "../../../src/variables/GenericVariables";
 
 const button = "button";
-const buttonCapitalized = button.charAt(0).toUpperCase() + button.slice(1);
 const buttonTag = "kul-" + button;
 
 describe("Basic", () => {
@@ -94,32 +92,18 @@ describe("Methods", () => {
     cy.checkRenderCountIncrease(buttonTag);
   });
 
-  it(`getProps: check keys against Kul${buttonCapitalized}Props enum.`, () => {
-    cy.checkProps(buttonTag, KulButtonProps);
-  });
-
-  it(`getProps: check keys against Kul${buttonCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(buttonTag, {
-      kulData: null,
-      kulDisabled: null,
-      kulIcon: null,
-      kulIconOff: null,
-      kulLabel: null,
-      kulRipple: null,
-      kulShowSpinner: null,
-      kulStyle: null,
-      kulStyling: null,
-      kulToggable: null,
-      kulTrailingIcon: null,
-      kulType: null,
-      kulValue: null,
-    } as Required<KulButtonPropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(buttonTag, KUL_BUTTON_PROPS);
   });
 });
 
 describe("Props", () => {
   beforeEach(() => {
     cy.navigate(button);
+  });
+
+  it("kulRipple: should check for the presence of a ripple element.", () => {
+    cy.checkRipple(`${buttonTag}`);
   });
 
   it("kulStyle: Should check for the presence of a <style> element with id kup-style.", () => {

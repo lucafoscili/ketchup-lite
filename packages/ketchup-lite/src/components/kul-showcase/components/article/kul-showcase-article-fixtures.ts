@@ -38,7 +38,7 @@ export const ARTICLE_FIXTURES: () => {
                     cells: {
                       kulImage: {
                         shape: "image",
-                        value: get(`./assets/media/color_splash.jpg`),
+                        value: get(`./assets/media/color_splash.jpg`).path,
                       },
                     },
                     id: "1.1.1.1",
@@ -117,7 +117,7 @@ export const ARTICLE_FIXTURES: () => {
                     cells: {
                       kulImage: {
                         shape: "image",
-                        value: get(`./assets/media/color_splash.jpg`),
+                        value: get(`./assets/media/color_splash.jpg`).path,
                       },
                     },
                     id: "1.3.2.1",

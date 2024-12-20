@@ -179,8 +179,9 @@ export class KulImage {
       : isThemeIcon
         ? theme.list[theme.name].icons[kulValue]
         : kulValue;
-    style["--kul_image_mask"] =
-      `url('${assets.get(`./assets/svg/${icon}.svg`)}') no-repeat center`;
+
+    const { mask } = assets.get(`./assets/svg/${icon}.svg`).style;
+    style["--kul_image_mask"] = mask;
 
     return <div class={className} style={style}></div>;
   }

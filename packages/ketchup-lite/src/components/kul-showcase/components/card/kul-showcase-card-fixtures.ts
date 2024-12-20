@@ -188,7 +188,7 @@ export const CARD_FIXTURES: () => {
               3: { value: "Description" },
               kulImage: {
                 shape: "image",
-                value: get(`./assets/media/color_splash.jpg`),
+                value: get(`./assets/media/color_splash.jpg`).path,
               },
             },
             id: "material",

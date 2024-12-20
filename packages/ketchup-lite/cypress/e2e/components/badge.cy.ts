@@ -1,18 +1,15 @@
-import { KUL_WRAPPER_ID } from "../../../src/variables/GenericVariables";
-import {
-  KulBadgeEvent,
-  KulBadgeProps,
-  KulBadgePropsInterface,
-} from "../../../src/components/kul-badge/kul-badge-declarations";
-import { BADGE_EXAMPLES_KEYS } from "./../../../src/components/kul-showcase/components/badge/kul-showcase-badge-declarations";
-import { DynamicExampleManager } from "../../../src/components/kul-showcase/helpers/kul-showcase-dyn-sample";
+import { KUL_BADGE_PROPS } from "src/components/kul-badge/helpers/constants";
 import { KulImagePropsInterface } from "../../../src/components";
+import { KulBadgeEvent } from "../../../src/components/kul-badge/kul-badge-declarations";
+import { DynamicExampleManager } from "../../../src/components/kul-showcase/helpers/kul-showcase-dyn-sample";
 import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
+import { BADGE_EXAMPLES_KEYS } from "./../../../src/components/kul-showcase/components/badge/kul-showcase-badge-declarations";
+import { KUL_WRAPPER_ID } from "src/utils/constants";
 
 const badge = "badge";
-const badgeCapitalized = badge.charAt(0).toUpperCase() + badge.slice(1);
 const badgeTag = "kul-" + badge;
 
+//#region Basic
 describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(badge).waitForWebComponents([badgeTag]);
@@ -26,7 +23,9 @@ describe("Basic", () => {
     cy.checkComponentExamplesNumber(Array.from(BADGE_EXAMPLES_KEYS));
   });
 });
+//#endregion
 
+//#region CSS Classes
 describe("CSS Classes", () => {
   beforeEach(() => {
     cy.navigate(badge);
@@ -99,7 +98,9 @@ describe("CSS Classes", () => {
       });
   });
 });
+//#endregion
 
+//#region Events
 describe("Events", () => {
   it(`click`, () => {
     cy.navigate(badge);
@@ -125,7 +126,9 @@ describe("Events", () => {
     cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
   });
 });
+//#endregion
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(badge);
@@ -139,19 +142,13 @@ describe("Methods", () => {
     cy.checkRenderCountIncrease(badgeTag);
   });
 
-  it(`getProps: check keys against Kul${badgeCapitalized}Props enum.`, () => {
-    cy.checkProps(badgeTag, KulBadgeProps);
-  });
-
-  it(`getProps: check keys against Kul${badgeCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(badgeTag, {
-      kulImageProps: null,
-      kulLabel: null,
-      kulStyle: null,
-    } as Required<KulBadgePropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(badgeTag, KUL_BADGE_PROPS);
   });
 });
+//#endregion
 
+//#region Props
 describe("Props", () => {
   beforeEach(() => {
     cy.navigate(badge);
@@ -209,3 +206,4 @@ describe("Props", () => {
     cy.checkKulStyle();
   });
 });
+//#endregion

@@ -32,7 +32,7 @@ export const CAROUSEL_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_thor_2.png`),
+              value: get(`./assets/media/avatar_thor_2.png`).path,
             },
           },
           id: "image_0",
@@ -42,7 +42,7 @@ export const CAROUSEL_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/outfit_armor_2.png`),
+              value: get(`./assets/media/outfit_armor_2.png`).path,
             },
           },
           id: "image_8",
@@ -52,7 +52,7 @@ export const CAROUSEL_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/outfit_armor_3.png`),
+              value: get(`./assets/media/outfit_armor_3.png`).path,
             },
           },
           id: "image_9",
@@ -62,7 +62,7 @@ export const CAROUSEL_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/location_lake.png`),
+              value: get(`./assets/media/location_lake.png`).path,
             },
           },
           id: "image_10",
@@ -72,7 +72,7 @@ export const CAROUSEL_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_freya_2.png`),
+              value: get(`./assets/media/avatar_freya_2.png`).path,
             },
           },
           id: "image_11",

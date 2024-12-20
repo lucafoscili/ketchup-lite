@@ -29,11 +29,7 @@ export const TreeNodeContent: FunctionalComponent<{
         ></div>
       );
     case "icon":
-      const path = get(`./assets/svg/${node.icon}.svg`);
-      const style = {
-        mask: `url('${path}') no-repeat center`,
-        webkitMask: `url('${path}') no-repeat center`,
-      };
+      const { style } = get(`./assets/svg/${node.icon}.svg`);
       return <div class={"node__icon"} style={style}></div>;
     case "padding":
       return (

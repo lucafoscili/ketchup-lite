@@ -137,11 +137,7 @@ export class KulProgressbar {
 
     const { kulIcon } = this;
 
-    const path = get(`./assets/svg/${kulIcon}.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
+    const { style } = get(`./assets/svg/${kulIcon}.svg`);
     return <div class="progress-bar__icon" style={style}></div>;
   }
   #prepLabel() {

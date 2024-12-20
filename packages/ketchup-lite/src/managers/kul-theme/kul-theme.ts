@@ -90,7 +90,7 @@ export class KulTheme {
 
     if (theme.font?.length) {
       theme.font.forEach((f) => {
-        const fontPath = get(`./assets/fonts/${f}-Regular`);
+        const fontPath = get(`./assets/fonts/${f}-Regular`).path;
         const fontFace = `@font-face{font-family:${f.split("-")[0].replace(/(?<!^)(?=[A-Z])/g, " ")};src:url('${fontPath}.woff2')format('woff2'),url('${fontPath}.woff') format('woff');}`;
         fonts += fontFace;
       });
@@ -110,9 +110,9 @@ export class KulTheme {
     let css = "";
     for (var key in icons) {
       if (icons.hasOwnProperty(key)) {
-        const val = `url('${get(
-          `./assets/svg/${icons[key]}.svg`,
-        )}') no-repeat center`;
+        const val = `url('${
+          get(`./assets/svg/${icons[key]}.svg`).path
+        }') no-repeat center`;
         this.cssVars[key] = val;
         css += key + ": " + val + ";";
       }

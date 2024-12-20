@@ -16,15 +16,15 @@ import {
   KulDataDataset,
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulChipEvent,
   KulChipEventArguments,
   KulChipEventPayload,
   KulChipStyling,
 } from "./kul-chip-declarations";
-import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 
 @Component({
   tag: "kul-chip",
@@ -299,11 +299,7 @@ export class KulChip {
   #prepDeleteIcon(node: KulDataNode) {
     const { get } = kulManagerSingleton.assets;
 
-    const path = get(`./assets/svg/clear.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
+    const { style } = get(`./assets/svg/clear.svg`);
     return (
       <div
         class="chip__icon chip__icon--trailing"
@@ -329,11 +325,7 @@ export class KulChip {
     };
 
     if (node.icon) {
-      const path = get(`./assets/svg/${node.icon}.svg`);
-      const style = {
-        mask: `url('${path}') no-repeat center`,
-        webkitMask: `url('${path}') no-repeat center`,
-      };
+      const { style } = get(`./assets/svg/${node.icon}.svg`);
       icons.push(<div class={className} style={style}></div>);
     }
 

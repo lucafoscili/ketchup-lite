@@ -31,7 +31,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_thor_2.png`),
+              value: get(`./assets/media/avatar_thor_2.png`).path,
             },
           },
           id: "image_0",
@@ -41,7 +41,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/location_forest.png`),
+              value: get(`./assets/media/location_forest.png`).path,
             },
           },
           id: "image_1",
@@ -51,7 +51,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: get(`./assets/media/avatar_freya.png`),
+              value: get(`./assets/media/avatar_freya.png`).path,
             },
           },
           id: "image_2",

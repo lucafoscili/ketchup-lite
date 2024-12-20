@@ -17,7 +17,6 @@ import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarat
 import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
-import { KUL_ARTICLE_EVENT } from "./helpers/constants";
 import {
   KulArticleDataset,
   KulArticleEvent,
@@ -59,7 +58,7 @@ export class KulArticle {
 
   //#region Events
   @Event({
-    eventName: KUL_ARTICLE_EVENT,
+    eventName: "kul-article-event",
     composed: true,
     cancelable: false,
     bubbles: true,

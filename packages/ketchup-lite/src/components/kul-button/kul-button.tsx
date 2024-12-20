@@ -29,7 +29,6 @@ import {
 } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulListEventPayload } from "../kul-list/kul-list-declarations";
-import { KUL_BUTTON_EVENT } from "./helpers/constants";
 import {
   KulButtonEvent,
   KulButtonEventPayload,
@@ -145,7 +144,7 @@ export class KulButton {
 
   //#region Events
   @Event({
-    eventName: KUL_BUTTON_EVENT,
+    eventName: "kul-button-event",
     composed: true,
     cancelable: false,
     bubbles: true,
