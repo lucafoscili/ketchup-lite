@@ -18,13 +18,14 @@ import { KulScrollOnHover } from "../kul-scroll-on-hover/kul-scroll-on-hover";
 import { KulTheme } from "../kul-theme/kul-theme";
 import type {
   KulManagerClickCb,
+  KulManagerComputedGetAssetPath,
   KulManagerGetAssetPath,
   KulManagerSetAssetPath,
   KulManagerUtilities,
 } from "./kul-manager-declarations";
 
 export class KulManager {
-  assets: { get: KulManagerGetAssetPath; set: KulManagerSetAssetPath };
+  assets: { get: KulManagerComputedGetAssetPath; set: KulManagerSetAssetPath };
   data: KulData;
   dates: KulDates;
   debug: KulDebug;
@@ -41,7 +42,18 @@ export class KulManager {
     setAssetPath: KulManagerSetAssetPath,
   ) {
     this.assets = {
-      get: getAssetPath,
+      get: (value) => {
+        const path = getAssetPath(value);
+        const style = {
+          mask: `url('${path}') no-repeat center`,
+          webkitMask: `url('${path}') no-repeat center`,
+        };
+
+        return {
+          path,
+          style,
+        };
+      },
       set: setAssetPath,
     };
 

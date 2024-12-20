@@ -7,3 +7,7 @@ export interface KulManagerClickCb {
 }
 export type KulManagerGetAssetPath = (value: string) => string;
 export type KulManagerSetAssetPath = (value: string) => void;
+export type KulManagerComputedGetAssetPath = (value: string) => {
+  path: string;
+  style: { mask: string; webkitMask: string };
+};
