@@ -42,4 +42,5 @@ export type KulButtonStyling =
   | "icon"
   | "outlined"
   | "raised";
+export type KulButtonType = "button" | "reset" | "submit";
 //#endregion

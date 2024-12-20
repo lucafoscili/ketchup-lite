@@ -339,9 +339,15 @@
     }
   }
 
-  &__label + .button__icon {
-    margin-left: 0.75em;
-    margin-right: -0.25em;
+  &__label {
+    & + .button__icon {
+      margin-left: 0.75em;
+      margin-right: -0.25em;
+    }
+
+    &--hidden {
+      visibility: hidden;
+    }
   }
 }
 
@@ -395,6 +401,8 @@
   }
 
   &--disabled {
+    color: var(--kul_button_disabled_color);
+    cursor: auto;
     opacity: 0.75;
     pointer-events: none;
   }
@@ -403,10 +411,6 @@
     width: var(--kul_button_spinner_width);
     height: var(--kul_button_spinner_height);
   }
-}
-
-.content--hidden {
-  visibility: hidden;
 }
 
 @keyframes pulsating {
