@@ -61,7 +61,7 @@ export class KulCard {
    * Sets the layout.
    * @default "material"
    */
-  @Prop({ mutable: true, reflect: true }) kulLayout: KulCardLayout = "material";
+  @Prop({ mutable: true }) kulLayout: KulCardLayout = "material";
   /**
    * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
    * @default "100%"
@@ -199,7 +199,8 @@ export class KulCard {
       return;
     }
 
-    const { layout } = this.#adapter.elements.jsx;
+    const { layouts } = this.#adapter.elements.jsx;
+    const layout = layouts[kulLayout.toLowerCase()];
 
     const style = {
       "--kul_card_height": kulSizeY ? kulSizeY : "100%",
@@ -215,7 +216,7 @@ export class KulCard {
           onContextMenu={(e) => this.onKulEvent(e, "contextmenu")}
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
         >
-          {layout[kulLayout.toLowerCase()]}
+          {layout()}
         </div>
       </Host>
     );
