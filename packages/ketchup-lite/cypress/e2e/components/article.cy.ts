@@ -1,14 +1,12 @@
+import { KUL_ARTICLE_PROPS } from "src/components/kul-article/helpers/constants";
 import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 import {
   KulArticleDataset,
   KulArticleEvent,
-  KulArticleProps,
-  KulArticlePropsInterface,
 } from "./../../../src/components/kul-article/kul-article-declarations";
 import { ARTICLE_EXAMPLES_KEYS } from "./../../../src/components/kul-showcase/components/article/kul-showcase-article-declarations";
 
 const article = "article";
-const articleCapitalized = article.charAt(0).toUpperCase() + article.slice(1);
 const articleTag = "kul-" + article;
 
 describe("Basic", () => {
@@ -156,15 +154,8 @@ describe("Methods", () => {
     cy.checkRenderCountIncrease(articleTag);
   });
 
-  it(`getProps: check keys against Kul${articleCapitalized}Props enum.`, () => {
-    cy.checkProps(articleTag, KulArticleProps);
-  });
-
-  it(`getProps: check keys against Kul${articleCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(articleTag, {
-      kulData: null,
-      kulStyle: null,
-    } as Required<KulArticlePropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(articleTag, KUL_ARTICLE_PROPS);
   });
 });
 
