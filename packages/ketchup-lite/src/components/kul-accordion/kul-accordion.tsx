@@ -19,6 +19,7 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { KUL_ACCORDION_EVENT } from "./helpers/constants";
 import {
   KulAccordionEvent,
   KulAccordionEventPayload,
@@ -75,7 +76,7 @@ export class KulAccordion {
 
   //#region Events
   @Event({
-    eventName: "kul-accordion-event",
+    eventName: KUL_ACCORDION_EVENT,
     composed: true,
     cancelable: false,
     bubbles: true,
@@ -86,13 +87,14 @@ export class KulAccordion {
     eventType: KulAccordionEvent,
     node?: KulDataNode,
   ) {
+    const { ripple } = kulManagerSingleton.theme;
+
+    const { kulRipple, rootElement } = this;
+
     switch (eventType) {
       case "pointerdown":
-        if (this.kulRipple) {
-          kulManagerSingleton.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface[node.id],
-          );
+        if (kulRipple) {
+          ripple.trigger(e as PointerEvent, this.#rippleSurface[node.id]);
         }
         break;
     }
@@ -100,7 +102,7 @@ export class KulAccordion {
     this.kulEvent.emit({
       comp: this,
       eventType,
-      id: this.rootElement.id,
+      id: rootElement.id,
       originalEvent: e,
     });
   }
@@ -141,7 +143,7 @@ export class KulAccordion {
     forceUpdate(this);
   }
   /**
-   * This method activates or deactivates an node.
+   * This method activates or deactivates a node.
    * @param {string} id - Id of the node.
    */
   @Method()
@@ -183,29 +185,29 @@ export class KulAccordion {
   //#endregion
 
   //#region Private methods
-  #isExpanded(node: KulDataNode): boolean {
+  #isExpanded(node: KulDataNode) {
     return this.expandedNodes.has(node);
   }
-  #isExpandible(node: KulDataNode): boolean {
+  #isExpandible(node: KulDataNode) {
     return this.#slotsNames.includes(node.id);
   }
-  #isSelected(node: KulDataNode): boolean {
+  #isSelected(node: KulDataNode) {
     return this.selectedNodes.has(node);
   }
-  #prepIcon(icon: string) {
-    const { assets } = kulManagerSingleton;
+  #prepIcon(icon: string): VNode {
+    const { assets, theme } = kulManagerSingleton;
 
-    const path = assets.get(`./assets/svg/${icon}.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
-    return <div class={"node__icon"} style={style}></div>;
+    const { style } = assets.get(`./assets/svg/${icon}.svg`);
+    return <div class={theme.bemClass("node", "icon")} style={style}></div>;
   }
   #prepAccordion(): VNode[] {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { kulData, rootElement } = this;
+
     const nodes: VNode[] = [];
     const slots: Array<HTMLElement> = Array.prototype.slice.call(
-      this.rootElement.children,
+      rootElement.children,
       0,
     );
     this.#slotsNames = [];
@@ -214,33 +216,29 @@ export class KulAccordion {
       this.#slotsNames.push(slot.slot);
     }
 
-    for (let i = 0; i < this.kulData.nodes.length; i++) {
-      const node = this.kulData.nodes[i];
+    for (let i = 0; i < kulData.nodes.length; i++) {
+      const node = kulData.nodes[i];
       const isExpanded = this.#isExpanded(node);
       const isExpandible = this.#isExpandible(node);
       const isSelected = this.#isSelected(node);
-      const headerClassName = {
-        node__header: true,
-        "node__header--selected": !isExpandible && isSelected ? true : false,
-        "node__header--expanded": isExpandible && isExpanded ? true : false,
-      };
-      const contentClassname: { [className: string]: boolean } = {
-        node__content: true,
-        "node__content--selected": isSelected ? true : false,
-      };
+
       nodes.push(
-        <div class="node">
+        <div class={bemClass("node")} data-cy={KulDataCyAttributes.NODE}>
           <div
             tabindex="1"
             title={node.description}
-            class={headerClassName}
-            data-cy={isExpandible ? undefined : KulDataCyAttributes.BUTTON}
+            class={bemClass("node", "header", {
+              expanded: !isExpandible && isSelected,
+              selected: isExpandible && isExpanded,
+            })}
+            data-cy={!isExpandible && KulDataCyAttributes.BUTTON}
             onClick={(e) => this.toggleNode(node.id, e)}
             onPointerDown={(e) => {
               this.onKulEvent(e, "pointerdown", node);
             }}
           >
             <div
+              data-cy={KulDataCyAttributes.RIPPLE}
               ref={(el) => {
                 if (el && this.kulRipple) {
                   this.#rippleSurface[node.id] = el;
@@ -248,20 +246,25 @@ export class KulAccordion {
               }}
             ></div>
             {node.icon ? this.#prepIcon(node.icon) : null}
-            <span class="node__text">{node.value}</span>
-            {isExpandible ? (
+            <span class={bemClass("node", "text")}>{node.value}</span>
+            {isExpandible && (
               <div
-                class={`node__expand ${
-                  isExpanded ? "node__expand--expanded" : ""
-                } `}
+                class={bemClass("node", "expand", {
+                  expanded: isExpanded,
+                })}
+                data-cy={KulDataCyAttributes.DROPDOWN_BUTTON}
               ></div>
-            ) : null}
+            )}
           </div>
-          {isExpanded ? (
-            <div class={contentClassname}>
+          {isExpanded && (
+            <div
+              class={bemClass("node", "content", {
+                selected: isSelected,
+              })}
+            >
               <slot name={node.id}></slot>
             </div>
-          ) : null}
+          )}
         </div>,
       );
     }
@@ -300,16 +303,16 @@ export class KulAccordion {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
     const { kulStyle } = this;
 
     this.#rippleSurface = {};
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="accordion">{this.#prepAccordion()}</div>
+          <div class={bemClass("accordion")}>{this.#prepAccordion()}</div>
         </div>
       </Host>
     );
