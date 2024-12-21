@@ -177,6 +177,7 @@ export class KulButton {
       id: this.rootElement.id,
       originalEvent: e,
       value: this.value,
+      valueAsBoolean: this.value === "on" ? true : false,
     });
   }
   //#endregion

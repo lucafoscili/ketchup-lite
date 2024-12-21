@@ -1,5 +1,8 @@
-import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declarations";
-import { KulComparePropsInterface } from "../kul-compare-declarations";
+import {
+  KulCompareAdapterDefaults,
+  KulCompareAdapterRefs,
+  KulComparePropsInterface,
+} from "../kul-compare-declarations";
 
 //#region Props
 export const KUL_COMPARE_PROPS: (keyof KulComparePropsInterface)[] = [
@@ -10,11 +13,28 @@ export const KUL_COMPARE_PROPS: (keyof KulComparePropsInterface)[] = [
 ];
 //#endregion
 
+//#region Icons
+export const ICONS = {
+  close: "view-sequential",
+  changeView: "compare",
+  changeViewOff: "book-open",
+  leftButton: "view-sequential",
+  rightButton: "view-sequential",
+};
+//#endregion
+
+//#region Ids
+export const IDS = {
+  leftButton: "toggle-left-button",
+  leftTree: "toggle-left-tree",
+  rightButton: "toggle-right-button",
+  rightTree: "toggle-right-tree",
+  changeView: "change-view",
+};
+//#endregion
+
 //#region Defaults
-export const DEFAULTS: () => {
-  left: KulDataShapeDefaults;
-  right: KulDataShapeDefaults;
-} = () => {
+export const DEFAULTS = (): KulCompareAdapterDefaults => {
   return {
     left: {
       image: () => [
@@ -38,10 +58,14 @@ export const DEFAULTS: () => {
 };
 //#endregion
 
-//#region Ids
-export const IDS = {
-  left: "toggle-left-panel",
-  right: "toggle-right-panel",
-  view: "toggle-view",
+//#region Refs
+export const REFS = (): KulCompareAdapterRefs => {
+  return {
+    changeView: null,
+    leftButton: null,
+    leftTree: null,
+    rightButton: null,
+    rightTree: null,
+  };
 };
 //#endregion

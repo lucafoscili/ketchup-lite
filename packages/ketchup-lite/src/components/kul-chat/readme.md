@@ -10,6 +10,7 @@
 | Property             | Attribute              | Description                                                                                                                        | Type                                  | Default                                                                                 |
 | -------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------- |
 | `kulContextWindow`   | `kul-context-window`   | How many tokens the context window can handle, used to calculate the occupied space.                                               | `number`                              | `8192`                                                                                  |
+| `kulEmpty`           | `kul-empty`            | Empty text displayed when there is no data.                                                                                        | `string`                              | `"Your chat history is empty!"`                                                         |
 | `kulEndpointUrl`     | `kul-endpoint-url`     | Enables customization of the component's style.                                                                                    | `string`                              | `"http://localhost:5001"`                                                               |
 | `kulLayout`          | `kul-layout`           | Sets the layout of the chat.                                                                                                       | `"bottom-textarea" \| "top-textarea"` | `"top-textarea"`                                                                        |
 | `kulMaxTokens`       | `kul-max-tokens`       | The maximum amount of tokens allowed in the LLM's answer.                                                                          | `number`                              | `250`                                                                                   |
@@ -61,13 +62,13 @@ Type: `Promise<string>`
 
 The last message of the history.
 
-### `getProps() => Promise<GenericObject>`
+### `getProps() => Promise<KulChatPropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulChatPropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 

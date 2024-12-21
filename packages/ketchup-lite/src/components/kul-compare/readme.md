@@ -34,13 +34,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps() => Promise<GenericObject>`
+### `getProps() => Promise<KulComparePropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulComparePropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 
@@ -90,20 +90,20 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [kul-button](../kul-button)
 - [kul-tree](../kul-tree)
+- [kul-button](../kul-button)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-compare --> kul-button
   kul-compare --> kul-tree
+  kul-compare --> kul-button
+  kul-tree --> kul-textfield
   kul-button --> kul-image
   kul-button --> kul-list
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-tree --> kul-textfield
   kul-showcase-compare --> kul-compare
   style kul-compare fill:#f9f,stroke:#333,stroke-width:4px
 ```

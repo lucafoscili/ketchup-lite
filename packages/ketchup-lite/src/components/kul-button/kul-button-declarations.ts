@@ -13,6 +13,7 @@ export type KulButtonEvent =
 export interface KulButtonEventPayload
   extends KulEventPayload<"KulButton", KulButtonEvent> {
   value: string;
+  valueAsBoolean: boolean;
 }
 //#endregion
 

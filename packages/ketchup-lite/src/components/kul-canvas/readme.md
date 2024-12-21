@@ -81,13 +81,13 @@ Type: `Promise<HTMLKulImageElement>`
 
 
 
-### `getProps() => Promise<GenericObject>`
+### `getProps() => Promise<KulCanvasPropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulCanvasPropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 

@@ -33,13 +33,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps() => Promise<GenericObject>`
+### `getProps() => Promise<KulAccordionPropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulAccordionPropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 
@@ -65,7 +65,7 @@ Type: `Promise<void>`
 
 ### `toggleNode(id: string, e?: Event) => Promise<void>`
 
-This method activates or deactivates an node.
+This method activates or deactivates a node.
 
 #### Parameters
 

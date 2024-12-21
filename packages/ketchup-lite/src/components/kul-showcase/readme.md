@@ -152,8 +152,8 @@ graph TD;
   kul-showcase-code --> kul-code
   kul-showcase-compare --> kul-article
   kul-showcase-compare --> kul-compare
-  kul-compare --> kul-button
   kul-compare --> kul-tree
+  kul-compare --> kul-button
   kul-tree --> kul-textfield
   kul-showcase-drawer --> kul-article
   kul-showcase-header --> kul-article

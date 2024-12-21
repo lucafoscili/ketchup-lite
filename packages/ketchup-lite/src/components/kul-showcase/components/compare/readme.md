@@ -29,14 +29,14 @@
 graph TD;
   kul-showcase-compare --> kul-article
   kul-showcase-compare --> kul-compare
-  kul-compare --> kul-button
   kul-compare --> kul-tree
+  kul-compare --> kul-button
+  kul-tree --> kul-textfield
   kul-button --> kul-image
   kul-button --> kul-list
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-tree --> kul-textfield
   kul-showcase --> kul-showcase-compare
   style kul-showcase-compare fill:#f9f,stroke:#333,stroke-width:4px
 ```

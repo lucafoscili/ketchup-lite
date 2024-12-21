@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property   | Attribute   | Description                                     | Type                | Default |
-| ---------- | ----------- | ----------------------------------------------- | ------------------- | ------- |
-| `kulData`  | --          | The actual data of the article.                 | `KulArticleDataset` | `null`  |
-| `kulStyle` | `kul-style` | Enables customization of the component's style. | `string`            | `""`    |
+| Property   | Attribute   | Description                                     | Type                | Default         |
+| ---------- | ----------- | ----------------------------------------------- | ------------------- | --------------- |
+| `kulData`  | --          | The actual data of the article.                 | `KulArticleDataset` | `null`          |
+| `kulEmpty` | `kul-empty` | Empty text displayed when there is no data.     | `string`            | `"Empty data."` |
+| `kulStyle` | `kul-style` | Enables customization of the component's style. | `string`            | `""`            |
 
 
 ## Events
@@ -32,13 +33,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
 
-### `getProps() => Promise<GenericObject>`
+### `getProps() => Promise<KulArticlePropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulArticlePropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 
