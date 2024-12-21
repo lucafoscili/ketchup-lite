@@ -79,6 +79,7 @@ export const REFS = (): KulMessengerAdapterRefs => {
 //#region Icons
 export const ICONS = {
   chat: {
+    characterList: "account",
     leftExpander: "chevron_left",
     rightExpander: "chevron_right",
   },
@@ -195,7 +196,7 @@ export const NAV_DATASET: KulDataDataset = {
     },
     {
       description: "Character selection",
-      icon: "account",
+      icon: ICONS.chat.characterList,
       id: "character_list",
       value: "Character list",
     },

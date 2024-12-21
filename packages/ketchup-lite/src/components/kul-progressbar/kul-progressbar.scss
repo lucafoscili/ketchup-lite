@@ -162,7 +162,7 @@
       clear: both;
     }
 
-    .pie {
+    &__pie {
       height: 1em;
       width: 1em;
       clip: rect(0, 1em, 1em, 0.5em);
@@ -170,7 +170,7 @@
       position: absolute;
       top: 0;
 
-      &.has-value {
+      &--has-value {
         & .half-circle {
           border-color: var(--kul_progressbar_primary_color);
           &.left-side {
@@ -178,32 +178,32 @@
             transition: transform 0.2s ease;
           }
         }
+      }
 
-        &.half-empty {
-          & .right-side {
-            display: none;
-          }
-        }
-
-        &.half-full {
-          clip: rect(auto, auto, auto, auto);
-
-          & .right-side {
-            transform: rotate(180deg);
-          }
+      &--half-empty {
+        & .right-side {
+          display: none;
         }
       }
 
-      & .half-circle {
-        height: 1em;
-        width: 1em;
-        border: 0.1em solid var(--kul_progressbar_track_color);
-        border-radius: 50%;
-        clip: rect(0, 0.5em, 1em, 0);
-        left: 0;
-        position: absolute;
-        top: 0;
+      &--half-full {
+        clip: rect(auto, auto, auto, auto);
+
+        & .right-side {
+          transform: rotate(180deg);
+        }
       }
+    }
+
+    &__half-circle {
+      height: 1em;
+      width: 1em;
+      border: 0.1em solid var(--kul_progressbar_track_color);
+      border-radius: 50%;
+      clip: rect(0, 0.5em, 1em, 0);
+      left: 0;
+      position: absolute;
+      top: 0;
     }
 
     &__icon {
@@ -254,19 +254,21 @@
 /*-------------------------------------------------*/
 
 :host(.#{$kul-class-animated}) {
-  .progress-bar__percentage {
-    animation: running-stripes 2s linear infinite;
-    background-image: linear-gradient(
-      -45deg,
-      rgba(var(--kul_progressbar_text_color_rgb), 0.125) 25%,
-      transparent 25%,
-      transparent 50%,
-      rgba(var(--kul_progressbar_text_color_rgb), 0.125) 50%,
-      rgba(var(--kul_progressbar_text_color_rgb), 0.125) 75%,
-      transparent 75%,
-      transparent
-    );
-    background-size: 3em 3em;
+  .progress-bar {
+    &__percentage {
+      animation: running-stripes 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.125) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.125) 50%,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.125) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 3em 3em;
+    }
   }
 }
 
@@ -294,8 +296,8 @@
     }
 
     .progress-bar {
-      & .pie {
-        & .half-circle {
+      & {
+        &__half-circle {
           border-width: 0.05em;
         }
       }

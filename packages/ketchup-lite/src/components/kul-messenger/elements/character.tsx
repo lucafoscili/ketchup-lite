@@ -11,7 +11,8 @@ import {
 export const prepCharacter = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterJsx["character"] => {
-  const { assignRef } = kulManagerSingleton;
+  const { assignRef, theme } = kulManagerSingleton;
+  const { bemClass } = theme;
 
   return {
     //#region Avatar
@@ -26,7 +27,7 @@ export const prepCharacter = (
       return (
         <img
           alt={title || ""}
-          class="messenger__avatar__image"
+          class={bemClass("character", "image")}
           ref={assignRef(character, "avatar")}
           src={value}
           title={title || ""}
@@ -45,7 +46,7 @@ export const prepCharacter = (
 
       return (
         <kul-image
-          class="messenger__avatar__status"
+          class={bemClass("character", "status")}
           kulColor={color}
           kulSizeX="16px"
           kulSizeY="16px"

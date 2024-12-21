@@ -1,0 +1,39 @@
+.chat {
+  & {
+    display: grid;
+    grid-template-areas:
+      "nav nav nav"
+      "expander-l chat expander-r";
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+    overflow: auto;
+  }
+
+  &__expander {
+    & {
+      box-shadow: var(--kul_messenger_nav_box_shadow);
+    }
+
+    &--left {
+      grid-area: expander-l;
+    }
+
+    &--right {
+      grid-area: expander-r;
+    }
+  }
+
+  &__navigation {
+    box-shadow: var(--kul_messenger_nav_box_shadow);
+    grid-area: nav;
+  }
+
+  &__chat {
+    --kul-chat-padding: 16px 8px 0 8px;
+    --kul-chat-buttons-padding: 8px 0 0 0;
+
+    overflow: auto;
+    grid-area: chat;
+  }
+}

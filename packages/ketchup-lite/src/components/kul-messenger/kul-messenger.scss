@@ -123,31 +123,7 @@
     grid-template-columns: 0 1fr 0;
   }
 
-  &__left {
-    display: grid;
-    grid-template-rows: minmax(auto, 40%) minmax(auto, 1fr);
-    height: 100%;
-    overflow: auto;
-    transition: height var(--kul_messenger_transition);
-
-    &--collapsed {
-      overflow: hidden;
-      width: 0;
-    }
-  }
-
-  &__center {
-    display: grid;
-    grid-template-areas:
-      "nav nav nav"
-      "expander-l chat expander-r";
-    grid-template-columns: auto 1fr auto;
-    grid-template-rows: auto 1fr;
-    height: 100%;
-    overflow: auto;
-  }
-
-  &__right {
+  .extra-content {
     display: grid;
     grid-template-rows: 1fr auto;
     height: 100%;
@@ -162,392 +138,56 @@
     &--customization {
       grid-template-rows: 1fr auto;
     }
-  }
-
-  &__avatar {
-    & {
-      position: relative;
-    }
-
-    &__image {
-      animation: fade-in-block 250ms ease-in;
-      display: block;
-      height: 100%;
-      object-fit: cover;
-      width: 100%;
-    }
-
-    &__name {
-      display: flex;
-    }
-
-    &__status {
-      padding-right: 8px;
-    }
-
-    &__name-wrapper {
-      align-items: center;
-      background-color: var(--kul_messenger_name_background_color);
-      backdrop-filter: var(--kul_messenger_backdrop_filter);
-      box-sizing: border-box;
-      display: flex;
-      height: var(--kul_messenger_name_height);
-      justify-content: space-between;
-      left: 0;
-      letter-spacing: var(--kul_messenger_letter_spacing);
-      padding-left: var(--kul_messenger_avatar_name_padding);
-      position: absolute;
-      text-transform: uppercase;
-      top: 0;
-      width: 100%;
-    }
-  }
-
-  &__label {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__biography {
-    font-size: 0.8em;
-    overflow: auto;
-  }
-
-  &__expander {
-    & {
-      box-shadow: var(--kul_messenger_nav_box_shadow);
-    }
-
-    &--left {
-      grid-area: expander-l;
-    }
-
-    &--right {
-      grid-area: expander-r;
-    }
-  }
-
-  &__navigation {
-    box-shadow: var(--kul_messenger_nav_box_shadow);
-    grid-area: nav;
-  }
-
-  &__chat {
-    --kul-chat-padding: 16px 8px 0 8px;
-    --kul-chat-buttons-padding: 8px 0 0 0;
-
-    overflow: auto;
-    grid-area: chat;
-  }
-
-  &__customization {
-    &__title {
-      align-items: center;
-      background: var(--kul-title-background-color);
-      color: var(--kul-title-color);
-      display: flex;
-      justify-content: space-between;
-      letter-spacing: var(--kul_messenger_letter_spacing);
-      overflow: hidden;
-      position: sticky;
-      text-align: center;
-      text-overflow: ellipsis;
-      text-transform: uppercase;
-      top: -1px;
-      z-index: 1;
-    }
-
-    &__label {
-      overflow: hidden;
-      padding: var(--kul_messenger_customization_title_padding);
-      text-overflow: ellipsis;
-    }
-
-    &__section {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      height: 100%;
-    }
-
-    &__actions {
-      background-color: rgba(var(--kul-title-background-color-rgb), 0.875);
-      bottom: 0;
-      display: flex;
-      left: 0;
-      overflow: hidden;
-      position: absolute;
-      width: 100%;
-    }
-
-    &__add {
-      --kul-button-border-radius: 0;
-    }
-
-    &__images {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      overflow: auto;
-      width: 100%;
-    }
-
-    &__image-wrapper {
-      & {
-        position: relative;
-      }
-
-      &:after {
-        box-shadow: none;
-        content: "";
-        height: 100%;
-        left: 0;
-        position: absolute;
-        top: 0;
-        transition:
-          background-color var(--kul_messenger_transition),
-          box-shadow var(--kul_messenger_transition);
-        width: 100%;
-      }
-
-      &:hover:not(&--selected):after {
-        box-shadow: inset 0 0 5px 3px var(--kul-primary-color, white);
-        pointer-events: none;
-      }
-
-      &--selected:after {
-        align-content: center;
-        background-color: rgba(var(--kul-title-background-color-rgb), 0.875);
-        content: "Current";
-        cursor: default;
-        font-size: 0.775em;
-        letter-spacing: var(--kul_messenger_letter_spacing);
-        overflow: hidden;
-        position: absolute;
-        text-align: center;
-        text-overflow: ellipsis;
-        text-transform: uppercase;
-      }
-    }
-
-    &__image {
-      & {
-        animation: fade-in-block 250ms ease-in;
-        cursor: pointer;
-        display: block;
-        height: 100%;
-        min-height: 256px;
-        object-fit: cover;
-        width: 100%;
-      }
-    }
-
-    &__edit {
-      &__label {
-        background: var(--kul-title-background-color);
-        color: var(--kul-title-color);
-        display: flex;
-        justify-content: center;
-        letter-spacing: var(--kul_messenger_letter_spacing);
-        overflow: hidden;
-        padding: var(--kul_messenger_customization_title_padding);
-        text-overflow: ellipsis;
-        text-transform: uppercase;
-        top: -1px;
-        z-index: 1;
-      }
-
-      &__confirm {
-        display: flex;
-        justify-content: center;
-        padding-top: 16px;
-      }
-
-      &__button {
-        margin: 0 4px;
-      }
-    }
-  }
-
-  &__options {
-    &__active {
-      display: grid;
-      grid-template-columns: repeat(2, 50%);
-      grid-template-rows: repeat(2, 50%);
-    }
-
-    &__wrapper {
-      overflow: hidden;
-      position: relative;
-    }
-
-    &__cover {
-      animation: fade-in-block 250ms ease-in;
-      display: block;
-      height: 100%;
-      object-fit: cover;
-      width: 100%;
-    }
-
-    &__placeholder {
-      box-sizing: border-box;
-      opacity: 0.375;
-      padding: 20%;
-    }
-
-    &__blocker {
-      & {
-        align-content: center;
-        background: rgba(var(--kul-background-color-rgb), 0.775);
-        box-sizing: border-box;
-        cursor: pointer;
-        display: grid;
-        grid-template-rows: 50% auto;
-        height: 100%;
-        left: 0;
-        opacity: 0;
-        padding: 20%;
-        position: absolute;
-        top: 0;
-        transition: opacity var(--kul_messenger_transition);
-        width: 100%;
-      }
-
-      &:hover {
-        opacity: 1;
-      }
-
-      &--active {
-        opacity: 0.875;
-      }
-
-      &__label {
-        font-size: 0.8em;
-        letter-spacing: 1px;
-        overflow: hidden;
-        padding-top: 12px;
-        text-align: center;
-        text-overflow: ellipsis;
-        text-transform: uppercase;
-      }
-    }
-
-    &__filters {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      overflow: auto;
-      padding: 16px 0;
-    }
-
-    &__label {
-      font-size: 0.8em;
-      letter-spacing: var(--kul_messenger_letter_spacing);
-      margin-left: 8px;
-      overflow: hidden;
-      text-align: center;
-      text-overflow: ellipsis;
-      text-transform: uppercase;
-    }
 
     &__list {
       display: grid;
-      overflow: auto;
-    }
-
-    &__info {
-      cursor: help;
-      margin: 0;
-    }
-
-    &__name {
-      align-items: center;
-      background: var(--kul_messenger_name_background_color);
-      bottom: 0;
-      box-sizing: border-box;
-      display: flex;
-      overflow: hidden;
-      padding: var(--kul_messenger_active_options_name_padding);
-      position: absolute;
-      width: 100%;
+      grid-template-rows: auto 1fr;
+      height: 100%;
     }
   }
 }
 
-.roster {
-  & {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    height: 100%;
-    overflow: auto;
-    width: 100%;
-  }
+&__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
-  &__image {
-    display: block;
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
-  }
+&__biography {
+  font-size: 0.8em;
+  overflow: auto;
+}
 
-  &__portrait {
-    & {
-      --kul_messenger_name_background_color: rgba(
-        var(--kul-background-color-rgb),
-        0.375
-      );
-      --kul_messenger_portrait_foredrop_color: rgba(
-        var(--kul-background-color-rgb),
-        0.275
-      );
-
-      cursor: pointer;
-      overflow: auto;
-      position: relative;
-    }
-
-    &:hover {
-      --kul_messenger_name_background_color: rgba(
-        var(--kul-background-color-rgb),
-        0.775
-      );
-      --kul_messenger_portrait_foredrop_color: rgba(
-        var(--kul-background-color-rgb),
-        0
-      );
-    }
-
-    &:after {
-      background: var(--kul_messenger_portrait_foredrop_color);
-      content: "";
-      height: 100%;
-      left: 0;
-      pointer-events: none;
-      position: absolute;
-      top: 0;
-      transition: background-color var(--kul_messenger_transition);
-      width: 100%;
-    }
-  }
-
-  &__name {
-    & {
-      align-items: center;
-      backdrop-filter: blur(5px);
-      background-color: var(--kul_messenger_name_background_color);
-      bottom: 0;
-      display: flex;
-      height: var(--kul_messenger_name_height);
-      left: 0;
-      position: absolute;
-      transition: background-color var(--kul_messenger_transition);
-      width: 100%;
-    }
-  }
-
-  &__label {
+.covers {
+  &__title {
+    align-items: center;
+    background: var(--kul-title-background-color);
+    color: var(--kul-title-color);
+    display: flex;
+    justify-content: space-between;
     letter-spacing: var(--kul_messenger_letter_spacing);
     overflow: hidden;
+    position: sticky;
     text-align: center;
     text-overflow: ellipsis;
     text-transform: uppercase;
+    top: -1px;
+    z-index: 1;
+  }
+
+  &__label {
+    overflow: hidden;
+    padding: var(--kul_messenger_customization_title_padding);
+    text-overflow: ellipsis;
+  }
+
+  &__add {
+    --kul-button-border-radius: 0;
+  }
+
+  &__images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow: auto;
     width: 100%;
   }
 }

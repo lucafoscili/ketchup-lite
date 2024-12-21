@@ -22,7 +22,6 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
-  GenericObject,
   KulGenericEvent,
   KulGenericEventPayload,
 } from "src/types/GenericTypes";
@@ -31,6 +30,7 @@ import { createAdapter } from "./kul-masonry-adapter";
 import {
   KulMasonryEvent,
   KulMasonryEventPayload,
+  KulMasonryPropsInterface,
   KulMasonrySelectedShape,
   KulMasonryView,
 } from "./kul-masonry-declarations";
@@ -183,13 +183,13 @@ export class KulMasonry {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulMasonryPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulMasonryPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulMasonryPropsInterface;
   }
   /**
    * Returns the selected shape.
@@ -294,13 +294,15 @@ export class KulMasonry {
   #isVertical() {
     return this.kulView === "vertical";
   }
-  #prepChangeView() {
+  #prepChangeView(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { addColumn, changeView, removeColumn } = this.#adapter.elements.jsx;
 
     return (
-      <div class="grid__actions">
+      <div class={bemClass("grid", "actions")}>
         {this.#isMasonry() && (
-          <div class="grid__actions__sub">
+          <div class={bemClass("grid", "sub")}>
             {addColumn()}
             {removeColumn()}
           </div>
@@ -310,11 +312,13 @@ export class KulMasonry {
     );
   }
   #prepView(): VNode[] {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const columnCount = this.#isMasonry() ? this.kulColumns : 1;
     const columns = this.#divideShapesIntoColumns(columnCount);
 
     return columns.map((column, colIndex) => (
-      <div key={colIndex} class="grid__column">
+      <div key={colIndex} class={bemClass("grid", "column")}>
         {column.map((element) => (
           <Fragment>{element}</Fragment>
         ))}
@@ -322,13 +326,21 @@ export class KulMasonry {
     ));
   }
   #prepMasonry(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { kulShape, kulView, shapes } = this;
 
     if (this.#hasShapes()) {
       if (shapes[kulShape]?.length) {
         return (
           <Fragment>
-            <div class={`grid grid--${kulView}`}>{this.#prepView()}</div>
+            <div
+              class={bemClass("grid", null, {
+                [kulView]: true,
+              })}
+            >
+              {this.#prepView()}
+            </div>
             {this.#prepChangeView()}
           </Fragment>
         );
@@ -361,7 +373,7 @@ export class KulMasonry {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { kulStyle } = this;
 
@@ -371,9 +383,9 @@ export class KulMasonry {
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID} style={style}>
-          <div class="masonry">{this.#prepMasonry()}</div>
+          <div class={bemClass("masonry")}>{this.#prepMasonry()}</div>
         </div>
       </Host>
     );

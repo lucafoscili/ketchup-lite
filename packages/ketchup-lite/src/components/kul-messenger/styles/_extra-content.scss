@@ -1,0 +1,19 @@
+.extra-context {
+  & {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: auto;
+    padding: 16px 0;
+  }
+
+  &__active {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: repeat(2, 50%);
+  }
+
+  &__list {
+    display: grid;
+    overflow: auto;
+  }
+}

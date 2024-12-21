@@ -89,7 +89,8 @@ const prepForms = (
 ): KulMessengerAdapterJsx["customization"]["form"] => {
   const formElements = IMAGE_TYPE_IDS.reduce(
     (acc, type) => {
-      const { assignRef } = kulManagerSingleton;
+      const { assignRef, theme } = kulManagerSingleton;
+      const { bemClass } = theme;
 
       const { controller, elements, handlers } = getAdapter();
       const { formStatusMap } = controller.get.compInstance;
@@ -100,7 +101,7 @@ const prepForms = (
         add: () => {
           return (
             <kul-button
-              class="messenger__customization__add kul-full-height kul-slim"
+              class={`${bemClass("covers", "add")} kul-full-height kul-slim`}
               kulIcon="plus"
               kulLabel="New"
               kulStyling="flat"
@@ -112,7 +113,7 @@ const prepForms = (
         cancel: () => {
           return (
             <kul-button
-              class={"messenger__customization__edit__button"}
+              class={bemClass("form", "button")}
               kulIcon="clear"
               kulLabel="Cancel"
               kulStyling="flat"

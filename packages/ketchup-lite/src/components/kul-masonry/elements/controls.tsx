@@ -9,7 +9,8 @@ import {
 export const prepControls = (
   getAdapter: () => KulMasonryAdapter,
 ): KulMasonryAdapterJsx => {
-  const { assignRef } = kulManagerSingleton;
+  const { assignRef, theme } = kulManagerSingleton;
+  const { bemClass } = theme;
 
   return {
     //#region Add column
@@ -20,7 +21,7 @@ export const prepControls = (
 
       return (
         <kul-button
-          class={"grid__add-column kul-slim"}
+          class={`${bemClass("grid", "add-column")} kul-slim`}
           id={IDS.addColumn}
           key={IDS.addColumn}
           kulIcon={ICONS.addColumn}
@@ -41,7 +42,7 @@ export const prepControls = (
 
       return (
         <kul-button
-          class={"grid__remove-column kul-slim"}
+          class={`${bemClass("grid", "remove-column")} kul-slim`}
           id={IDS.removeColumn}
           key={IDS.removeColumn}
           kulIcon={ICONS.removeColumn}
@@ -63,7 +64,7 @@ export const prepControls = (
 
       return (
         <kul-button
-          class={"grid__change-view"}
+          class={bemClass("grid", "change-view")}
           id={IDS.masonry}
           key={IDS.masonry}
           kulIcon={

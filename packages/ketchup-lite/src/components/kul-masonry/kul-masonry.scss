@@ -257,11 +257,11 @@
     position: absolute;
     right: var(--kul_masonry_button_right);
     z-index: var(--kul_masonry_actions_z_index);
+  }
 
-    &__sub {
-      display: grid;
-      grid-gap: var(--kul_masonry_grid_gap_actions_sub);
-    }
+  &__sub {
+    display: grid;
+    grid-gap: var(--kul_masonry_grid_gap_actions_sub);
   }
 }
 

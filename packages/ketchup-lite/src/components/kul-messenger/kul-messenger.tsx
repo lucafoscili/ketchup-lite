@@ -14,7 +14,6 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
 import { CLEAN_UI, IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from "./helpers/constants";
@@ -37,6 +36,7 @@ import {
   KulMessengerEventPayload,
   KulMessengerHistory,
   KulMessengerImageTypes,
+  KulMessengerPropsInterface,
   KulMessengerUnionChildIds,
 } from "./kul-messenger-declarations";
 
@@ -184,13 +184,13 @@ export class KulMessenger {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulMessengerPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulMessengerPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulMessengerPropsInterface;
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -341,6 +341,8 @@ export class KulMessenger {
     this.onKulEvent(new CustomEvent("save"), "save");
   }
   #prepCharacter() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { controller, elements } = this.#adapter;
     const { name } = controller.get.character;
     const { avatar, biography, save, statusIcon } = elements.jsx.character;
@@ -348,78 +350,97 @@ export class KulMessenger {
 
     return (
       <div
-        class={`messenger__left ${isLeftCollapsed ? "messenger__left--collapsed" : ""}`}
+        class={bemClass("character", null, {
+          collapsed: isLeftCollapsed,
+        })}
       >
-        <div class="messenger__avatar">
+        <div class={bemClass("character", "avatar")}>
           {avatar()}
-          <div class="messenger__avatar__name-wrapper">
-            <div class="messenger__avatar__name">
+          <div class={bemClass("character", "name-wrapper")}>
+            <div class={bemClass("character", "name")}>
               {statusIcon()}
-              <div class="messenger__avatar__label">{name()}</div>
+              <div class={bemClass("character", "label")}>{name()}</div>
             </div>
             {save()}
           </div>
         </div>
-        <div class="messenger__biography">{biography()}</div>
+        <div class={bemClass("character", "biography")}>{biography()}</div>
       </div>
     );
   }
   #prepChat() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { chat, leftExpander, rightExpander, tabbar } =
       this.#adapter.elements.jsx.chat;
 
     return (
-      <div class="messenger__center">
-        <div class="messenger__expander messenger__expander--left">
+      <div class={bemClass("chat")}>
+        <div
+          class={bemClass("chat", "expander", {
+            left: true,
+          })}
+        >
           {leftExpander()}
         </div>
-        <div class="messenger__navigation">{tabbar()}</div>
-        <div class="messenger__chat">{chat()}</div>
-        <div class="messenger__expander messenger__expander--right">
+        <div class={bemClass("chat", "navigation")}>{tabbar()}</div>
+        <div class={bemClass("chat", "chat")}>{chat()}</div>
+        <div
+          class={bemClass("chat", "expander", {
+            right: true,
+          })}
+        >
           {rightExpander()}
         </div>
       </div>
     );
   }
   #prepCovers(type: KulMessengerImageTypes, images: VNode[]) {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { add } = this.#adapter.elements.jsx.customization.form[type];
 
     return (
       <Fragment>
-        <div class="messenger__customization__title">
-          <div class="messenger__customization__label">{type}</div>
+        <div class={bemClass("covers")}>
+          <div class={bemClass("covers", "label")}>{type}</div>
           {add()}
         </div>
-        <div class="messenger__customization__images">{images}</div>
+        <div class={bemClass("covers", "images")}>{images}</div>
       </Fragment>
     );
   }
   #prepExtraContext() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { customization, options } = this.#adapter.elements.jsx;
     const { back, customize } = options;
     const { filters } = customization;
     const { customizationView } = this.ui;
     const { isRightCollapsed } = this.ui.panels;
 
-    const className = {
-      messenger__right: true,
-      "messenger__right--collapsed": isRightCollapsed,
-      "messenger__right--customization": customizationView,
-    };
-
     return (
-      <div class={className}>
+      <div
+        class={bemClass("extra-context", null, {
+          collapsed: isRightCollapsed,
+          customization: customizationView,
+        })}
+      >
         {customizationView ? (
           <Fragment>
-            <div class="messenger__options__filters">
+            <div class={bemClass("extra-context")}>
               {filters()}
-              <div class="messenger__options__list">{this.#prepList()}</div>
+              <div class={bemClass("extra-context", "list")}>
+                {this.#prepList()}
+              </div>
             </div>
             {back()}
           </Fragment>
         ) : (
           <Fragment>
-            <div class="messenger__options__active">{this.#prepOptions()}</div>
+            <div class={bemClass("extra-context", "active")}>
+              {this.#prepOptions()}
+            </div>
             {customize()}
           </Fragment>
         )}
@@ -427,17 +448,19 @@ export class KulMessenger {
     );
   }
   #prepForm(type: KulMessengerImageTypes) {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { cancel, confirm, description, id, imageUrl, title } =
       this.#adapter.elements.jsx.customization.form[type];
 
     return (
-      <div class="messenger__customization__edit__panel">
-        <div class="messenger__customization__edit__label">Create {type}</div>
+      <div class={bemClass("form")}>
+        <div class={bemClass("form", "label")}>Create {type}</div>
         {id()}
         {title()}
         {description()}
         {imageUrl()}
-        <div class="messenger__customization__edit__confirm">
+        <div class={bemClass("form", "confirm")}>
           {cancel()}
           {confirm()}
         </div>
@@ -445,6 +468,8 @@ export class KulMessenger {
     );
   }
   #prepList() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { controller, elements, handlers } = this.#adapter;
     const { byType, coverIndex, title } = controller.get.image;
     const { edit, remove } = elements.jsx.customization.list;
@@ -458,7 +483,9 @@ export class KulMessenger {
         const activeIndex = coverIndex(type);
         const images: VNode[] = byType(type).map((node, j) => (
           <div
-            class={`messenger__customization__image-wrapper  ${activeIndex === j ? "messenger__customization__image-wrapper--selected" : ""}`}
+            class={bemClass("list", null, {
+              selected: activeIndex === j,
+            })}
             onClick={(e) => image(e, node, j)}
             onPointerEnter={() => {
               if (activeIndex !== j) {
@@ -469,13 +496,13 @@ export class KulMessenger {
           >
             <img
               alt={title(node)}
-              class={`messenger__customization__image`}
+              class={bemClass("list", "image")}
               src={node.cells.kulImage.value}
               title={title(node)}
             />
             {hoveredCustomizationOption === node && (
               <div
-                class="messenger__customization__actions"
+                class={bemClass("list", "actions")}
                 onClick={(e) => e.stopPropagation()}
               >
                 {edit(type, node)}
@@ -485,7 +512,7 @@ export class KulMessenger {
           </div>
         ));
         return (
-          <div class="messenger__customization__section">
+          <div class={bemClass("list", "section")}>
             {isFormActive
               ? this.#prepForm(type)
               : this.#prepCovers(type, images)}
@@ -495,6 +522,8 @@ export class KulMessenger {
     });
   }
   #prepOptions() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     return OPTION_TYPE_IDS.map((opt) => {
       const { image } = this.#adapter.controller.get;
       const { asCover } = image;
@@ -505,40 +534,45 @@ export class KulMessenger {
       const option = opt.slice(0, -1);
 
       return (
-        <div class="messenger__options__wrapper">
+        <div class={bemClass("options")}>
           {node ? (
             <Fragment>
               <img
-                class={`messenger__options__cover`}
+                class={bemClass("options", "cover")}
                 alt={title}
                 src={value}
               ></img>
               <div
-                class={`messenger__options__blocker ${!isEnabled ? "messenger__options__blocker--active" : ""}`}
+                class={bemClass("options", "blocker", {
+                  active: !isEnabled,
+                })}
                 onClick={() => (ui.options[opt] = !isEnabled)}
               >
                 <kul-image
                   kulValue={`${isEnabled ? "touch_app" : "block"}`}
                 ></kul-image>
-                <div class={`messenger__options__blocker__label`}>
+                <div class={bemClass("options", "blocker-label")}>
                   {isEnabled ? "Click to disable" : "Click to enable"}
                 </div>
               </div>
             </Fragment>
           ) : (
             <kul-image
-              class={`messenger__options__placeholder`}
+              class={bemClass("options", "placeholder")}
               kulValue={value}
               title={`No ${option} selected.`}
             ></kul-image>
           )}
-          <div class="messenger__options__name">
-            <div class="messenger__options__label" title={`Active ${option}.`}>
+          <div class={bemClass("options", "name")}>
+            <div
+              class={bemClass("options", "label")}
+              title={`Active ${option}.`}
+            >
               {option}
             </div>
             {title && (
               <kul-image
-                class={`messenger__options__info`}
+                class={bemClass("options", "info")}
                 kulSizeX="16px"
                 kulSizeY="16px"
                 kulValue="information-variant"
@@ -551,6 +585,8 @@ export class KulMessenger {
     });
   }
   #prepRoster() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { get, set } = this.#adapter.controller;
 
     const avatars: VNode[] = [];
@@ -560,18 +596,20 @@ export class KulMessenger {
       const image = get.image.asCover("avatars", c);
       avatars.push(
         <div
-          class="selection-grid__portrait"
+          class={bemClass("selection-grid", "portrait")}
           onClick={() => {
             set.character.current(c);
           }}
         >
           <img
-            class={"selection-grid__image"}
+            class={bemClass("selection-grid", "image")}
             src={image.value}
             title={image.title || ""}
           />
-          <div class="selection-grid__name">
-            <div class="selection-grid__label">{get.character.name(c)}</div>
+          <div class={bemClass("selection-grid", "name")}>
+            <div class={bemClass("selection-grid", "label")}>
+              {get.character.name(c)}
+            </div>
           </div>
         </div>,
       );
@@ -580,7 +618,9 @@ export class KulMessenger {
     return avatars?.length ? (
       avatars
     ) : (
-      <div class="empty-dataset">There are no characters in your roster!</div>
+      <div class={bemClass("empty-dataset")}>
+        There are no characters in your roster!
+      </div>
     );
   }
   //#endregion
@@ -609,7 +649,7 @@ export class KulMessenger {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     if (!hasNodes(this.#adapter)) {
       return;
@@ -619,16 +659,16 @@ export class KulMessenger {
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           {this.currentCharacter ? (
-            <div class="messenger">
+            <div class={bemClass("messenger")}>
               {this.#prepCharacter()}
               {this.#prepChat()}
               {this.#prepExtraContext()}
             </div>
           ) : (
-            <div class="roster">{this.#prepRoster()}</div>
+            <div class={bemClass("roster")}>{this.#prepRoster()}</div>
           )}
         </div>
       </Host>

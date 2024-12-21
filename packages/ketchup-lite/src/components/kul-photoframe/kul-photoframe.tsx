@@ -17,6 +17,7 @@ import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulPhotoframeEvent,
   KulPhotoframeEventPayload,
+  KulPhotoframePropsInterface,
 } from "./kul-photoframe-declarations";
 
 @Component({
@@ -107,13 +108,13 @@ export class KulPhotoframe {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulPhotoframePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulPhotoframePropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulPhotoframePropsInterface;
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -176,7 +177,7 @@ export class KulPhotoframe {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { isInViewport, kulPlaceholder, kulStyle, kulValue } = this;
 
@@ -186,7 +187,7 @@ export class KulPhotoframe {
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div
           id={KUL_WRAPPER_ID}
           ref={(el) => {
@@ -195,7 +196,7 @@ export class KulPhotoframe {
         >
           <img
             {...kulPlaceholder}
-            class="placeholder"
+            class={bemClass("photoframe", "placeholder")}
             ref={(el) => (this.#placeholderEl = el)}
             onLoad={(e) => {
               if (
@@ -214,7 +215,7 @@ export class KulPhotoframe {
           {this.#renderValue && (
             <img
               {...kulValue}
-              class="value"
+              class={bemClass("photoframe", "value")}
               ref={(el) => (this.#valueEl = el)}
               onLoad={(e) => {
                 this.#placeholderEl.classList.add("placeholder--fade-out");

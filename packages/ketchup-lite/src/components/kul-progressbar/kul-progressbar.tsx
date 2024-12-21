@@ -13,11 +13,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulProgressbarEvent,
   KulProgressbarEventPayload,
+  KulProgressbarPropsInterface,
 } from "./kul-progressbar-declarations";
 
 @Component({
@@ -103,13 +103,13 @@ export class KulProgressbar {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulProgressbarPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulProgressbarPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulProgressbarPropsInterface;
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -134,46 +134,67 @@ export class KulProgressbar {
   //#region Private methods
   #prepIcon() {
     const { get } = kulManagerSingleton.assets;
+    const { bemClass } = kulManagerSingleton.theme;
 
     const { kulIcon } = this;
 
     const { style } = get(`./assets/svg/${kulIcon}.svg`);
-    return <div class="progress-bar__icon" style={style}></div>;
+    return <div class={bemClass("progress-bar", "icon")} style={style}></div>;
   }
   #prepLabel() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { kulIcon, kulLabel, kulValue } = this;
 
     const label: VNode[] = kulLabel
-      ? [<div class="progress-bar__text">{kulLabel}</div>]
+      ? [<div class={bemClass("progress-bar", "text")}>{kulLabel}</div>]
       : [
-          <div class="progress-bar__text">{kulValue}</div>,
-          <div class="progress-bar__mu">%</div>,
+          <div class={bemClass("progress-bar", "text")}>{kulValue}</div>,
+          <div class={bemClass("progress-bar", "mu")}>%</div>,
         ];
     return (
-      <div class="progress-bar__label">
+      <div class={bemClass("progress-bar", "label")}>
         {kulIcon && this.#prepIcon()}
         {label}
       </div>
     );
   }
   #prepProgressBar() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     return (
-      <div class={"progress-bar"}>
-        <div class="progress-bar__percentage">{this.#prepLabel()}</div>
+      <div class={bemClass("progress-bar")}>
+        <div class={bemClass("progress-bar", "percentage")}>
+          {this.#prepLabel()}
+        </div>
       </div>
     );
   }
   #prepRadialBar() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     return (
-      <div class={"progress-bar"}>
+      <div class={bemClass("progress-bar")}>
         {this.#prepLabel()}
         <div
-          class={`pie ${this.kulValue ? "has-value" : ""}  ${this.kulValue > 50 ? "half-full" : "half-empty"}`}
+          class={bemClass("progress-bar", "pie", {
+            "half-empty": this.kulValue <= 50,
+            "half-full": this.kulValue > 50,
+            "has-value": Boolean(this.kulValue),
+          })}
         >
-          <div class="left-side half-circle"></div>
-          <div class="right-side half-circle"></div>
+          <div
+            class={bemClass("progress-bar", "half-circle", {
+              left: true,
+            })}
+          ></div>
+          <div
+            class={bemClass("progress-bar", "half-circle", {
+              right: true,
+            })}
+          ></div>
         </div>
-        <div class="progress-bar__track"></div>
+        <div class={bemClass("progress-bar", "track")}></div>
       </div>
     );
   }
