@@ -12,11 +12,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulDrawerEvent,
   KulDrawerEventPayload,
+  KulDrawerPropsInterface,
 } from "./kul-drawer-declarations";
 
 @Component({
@@ -87,10 +87,10 @@ export class KulDrawer {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulDrawerPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulDrawerPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -165,15 +165,15 @@ export class KulDrawer {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { kulStyle, opened } = this;
 
     return (
       <Host kul-opened={opened}>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div
-          class="backdrop"
+          class={bemClass("backdrop")}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -189,8 +189,8 @@ export class KulDrawer {
           }}
         />
         <div id={KUL_WRAPPER_ID}>
-          <div class={"drawer"}>
-            <div class={`drawer__content`}>
+          <div class={bemClass("drawer")}>
+            <div class={bemClass("drawer", "content")}>
               <slot></slot>
             </div>
           </div>

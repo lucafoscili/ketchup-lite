@@ -17,7 +17,6 @@ import {
   KulDataDataset,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulMasonrySelectedShape } from "../kul-masonry/kul-masonry-declarations";
 import {
@@ -33,6 +32,7 @@ import {
   KulImageviewerEventPayload,
   KulImageviewerHistory,
   KulImageviewerLoadCallback,
+  KulImageviewerPropsInterface,
 } from "./kul-imageviewer-declarations";
 
 @Component({
@@ -233,13 +233,13 @@ export class KulImageviewer {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulImageviewerPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulImageviewerPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulImageviewerPropsInterface;
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -293,6 +293,8 @@ export class KulImageviewer {
     }
   }
   #prepViewer(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const {
       canvas,
       clearHistory,
@@ -305,12 +307,12 @@ export class KulImageviewer {
     } = this.#adapter.elements.jsx.details;
 
     return (
-      <div class="details-grid">
-        <div class="details-grid__preview">
+      <div class={bemClass("details-grid")}>
+        <div class={bemClass("details-grid", "preview")}>
           {canvas()}
           {spinner()}
         </div>
-        <div class="details-grid__actions">
+        <div class={bemClass("details-grid", "actions")}>
           {deleteShape()}
           {clearHistory()}
           {undo()}
@@ -318,32 +320,35 @@ export class KulImageviewer {
           {save()}
         </div>
         {tree()}
-        <div class="details-grid__settings">
+        <div class={bemClass("details-grid", "settings")}>
           <slot name="settings"></slot>
         </div>
       </div>
     );
   }
   #prepImageviewer(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { currentShape } = this.#adapter.controller.get;
 
-    const className = {
-      "main-grid": true,
-      "main-grid--has-selection": !!currentShape(),
-    };
-
     return (
-      <div class={className}>
+      <div
+        class={bemClass("main-grid", null, {
+          "has-selection": !!currentShape(),
+        })}
+      >
         {this.#prepExplorer()}
         {this.#prepViewer()}
       </div>
     );
   }
   #prepExplorer(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { load, masonry, textfield } = this.#adapter.elements.jsx.navigation;
 
     return (
-      <div class="navigation-grid">
+      <div class={bemClass("navigation-grid")}>
         {textfield()}
         {load()}
         {masonry()}
@@ -375,14 +380,14 @@ export class KulImageviewer {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
     const { kulStyle } = this;
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="imageviewer">{this.#prepImageviewer()}</div>
+          <div class={bemClass("imageviewer")}>{this.#prepImageviewer()}</div>
         </div>
       </Host>
     );

@@ -17,9 +17,17 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
-import { KulListEvent, KulListEventPayload } from "./kul-list-declarations";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
+import {
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+  RIPPLE_SURFACE_CLASS,
+} from "src/utils/constants";
+import {
+  KulListEvent,
+  KulListEventPayload,
+  KulListPropsInterface,
+} from "./kul-list-declarations";
 
 @Component({
   tag: "kul-list",
@@ -64,22 +72,22 @@ export class KulList {
    * Defines whether items can be removed from the list or not.
    * @default false
    */
-  @Prop() kulEnableDeletions = false;
+  @Prop({ mutable: true }) kulEnableDeletions = false;
   /**
    * When true, enables items' navigation through arrow keys.
    * @default true
    */
-  @Prop() kulNavigation = true;
+  @Prop({ mutable: true }) kulNavigation = true;
   /**
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Defines whether items are selectable or not.
    * @default true
    */
-  @Prop() kulSelectable = true;
+  @Prop({ mutable: true }) kulSelectable = true;
   /**
    * Custom style of the component.
    * @default ""
@@ -211,10 +219,10 @@ export class KulList {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulListPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulListPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -293,25 +301,26 @@ export class KulList {
     return <div class="node__icon" style={style}></div>;
   }
   #prepNode(node: KulDataNode, index: number) {
-    const { kulData, kulRipple } = this;
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { focused, kulData, kulRipple, selected } = this;
 
     const isFocused =
-      this.focused === kulData.nodes.findIndex((n) => n.id === node.id);
+      focused === kulData.nodes.findIndex((n) => n.id === node.id);
     const isSelected =
-      this.selected === kulData.nodes.findIndex((n) => n.id === node.id);
-    const className = {
-      node: true,
-      "node--focused": isFocused,
-      "node--has-description": !!node.description,
-      "node--selected": isSelected,
-    };
+      selected === kulData.nodes.findIndex((n) => n.id === node.id);
+
     return (
-      <li class="list-item">
+      <li class={bemClass("list-item")}>
         {this.kulEnableDeletions ? this.#prepDeleteIcon(node) : null}
         <div
           aria-selected={isSelected}
           aria-checked={isSelected}
-          class={className}
+          class={bemClass("node", null, {
+            focused: isFocused,
+            "has-description": !!node.description,
+            selected: isSelected,
+          })}
           data-cy={KulDataCyAttributes.NODE}
           data-index={index.toString()}
           onBlur={(e) => this.onKulEvent(e, "blur", node, index)}
@@ -327,14 +336,16 @@ export class KulList {
           tabindex={isSelected ? "0" : "-1"}
         >
           <div
+            class={RIPPLE_SURFACE_CLASS}
+            data-cy={KulDataCyAttributes.RIPPLE}
             ref={(el) => {
               if (kulRipple && el) {
                 this.#rippleSurface.push(el);
               }
             }}
           ></div>
-          {node.icon ? this.#prepIcon(node) : null}
-          <span class="node__text">
+          {node.icon && this.#prepIcon(node)}
+          <span class={bemClass("node", "text")}>
             {this.#prepTitle(node)}
             {this.#prepSubtitle(node)}
           </span>
@@ -343,14 +354,24 @@ export class KulList {
     );
   }
   #prepSubtitle(node: KulDataNode) {
-    return node.description ? (
-      <div class="node__subtitle">{node.description}</div>
-    ) : undefined;
+    const { bemClass } = kulManagerSingleton.theme;
+
+    return (
+      node.description && (
+        <div class={bemClass("node", "subtitle")}>{node.description}</div>
+      )
+    );
   }
   #prepTitle(node: KulDataNode) {
-    return String(node.value).valueOf() ? (
-      <div class="node__title">{String(node.value).valueOf()}</div>
-    ) : undefined;
+    const { bemClass } = kulManagerSingleton.theme;
+
+    return (
+      String(node.value).valueOf() && (
+        <div class={bemClass("node", "title")}>
+          {String(node.value).valueOf()}
+        </div>
+      )
+    );
   }
   //#endregion
 
@@ -385,30 +406,28 @@ export class KulList {
   }
 
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { kulData, kulEmpty, kulSelectable, kulStyle } = this;
 
     const isEmpty = !!!kulData?.nodes?.length;
     this.#listItems = [];
-    const className = {
-      list: true,
-      "list--empty": isEmpty,
-      "list--selectable": kulSelectable,
-    };
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           {isEmpty ? (
-            <div class="empty-data">
-              <div class="empty-data__text">{kulEmpty}</div>
+            <div class={bemClass("empty-data")}>
+              <div class={bemClass("empty-data", "text")}>{kulEmpty}</div>
             </div>
           ) : (
             <ul
               aria-multiselectable={"false"}
-              class={className}
+              class={bemClass("list", null, {
+                empty: isEmpty,
+                selectable: kulSelectable,
+              })}
               role={"listbox"}
             >
               {kulData.nodes.map((item, index) => this.#prepNode(item, index))}

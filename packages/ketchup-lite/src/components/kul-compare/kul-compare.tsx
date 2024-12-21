@@ -177,7 +177,7 @@ export class KulCompare {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulComparePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
   async getProps(): Promise<KulComparePropsInterface> {

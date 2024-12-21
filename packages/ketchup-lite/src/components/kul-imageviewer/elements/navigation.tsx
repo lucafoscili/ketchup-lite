@@ -10,19 +10,13 @@ import {
 export const prepNavigation = (
   getAdapter: () => KulImageviewerAdapter,
 ): KulImageviewerAdapterJsx["navigation"] => {
-  const { assignRef } = kulManagerSingleton;
+  const { assignRef, theme } = kulManagerSingleton;
+  const { bemClass } = theme;
 
   const className = {
-    load: {
-      "navigation-grid__button": true,
-      "kul-full-width": true,
-    },
-    masonry: {
-      "navigation-grid__masonry": true,
-    },
-    textfield: {
-      "navigation-grid__textfield": true,
-    },
+    load: bemClass("navigation-grid", "button"),
+    masonry: `${bemClass("navigation-grid", "masonry")}`,
+    textfield: `${bemClass("navigation-grid", "textfield")}`,
   };
 
   return {

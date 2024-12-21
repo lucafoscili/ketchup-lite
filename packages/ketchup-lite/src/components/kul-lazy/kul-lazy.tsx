@@ -12,16 +12,13 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import {
-  GenericObject,
-  KulComponentName,
-  KulComponentPropsFor,
-} from "src/types/GenericTypes";
+import { KulComponentName, KulComponentPropsFor } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { SVG } from "./elements/svg";
 import {
   KulLazyEvent,
   KulLazyEventPayload,
+  KulLazyPropsInterface,
   KulLazyRenderMode,
 } from "./kul-lazy-declarations";
 
@@ -119,10 +116,10 @@ export class KulLazy {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulLazyPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulLazyPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -204,6 +201,8 @@ export class KulLazy {
   }
   render() {
     const { sanitizeProps, theme } = kulManagerSingleton;
+    const { setKulStyle } = theme;
+
     const {
       isInViewport,
       kulComponentName,
@@ -259,7 +258,7 @@ export class KulLazy {
 
     return (
       <Host class={className}>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>{content}</div>
       </Host>
     );

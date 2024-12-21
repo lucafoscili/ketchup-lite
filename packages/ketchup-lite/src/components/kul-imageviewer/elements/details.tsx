@@ -10,41 +10,18 @@ import {
 export const prepDetails = (
   getAdapter: () => KulImageviewerAdapter,
 ): KulImageviewerAdapterJsx["details"] => {
-  const { assignRef } = kulManagerSingleton;
+  const { assignRef, theme } = kulManagerSingleton;
+  const { bemClass } = theme;
 
   const className = {
-    canvas: {
-      "details-grid__canvas": true,
-    },
-    clearHistory: {
-      "details-grid__clear-history": true,
-      "kul-danger": true,
-      "kul-full-width": true,
-    },
-    deleteShape: {
-      "details-grid__delete": true,
-      "kul-danger": true,
-      "kul-full-width": true,
-    },
-    redo: {
-      "details-grid__redo": true,
-      "kul-full-width": true,
-    },
-    save: {
-      "details-grid__commit-changes": true,
-      "kul-success": true,
-      "kul-full-width": true,
-    },
-    spinner: {
-      "details-grid__spinner": true,
-    },
-    tree: {
-      "details-grid__tree": true,
-    },
-    undo: {
-      "details-grid__undo": true,
-      "kul-full-width": true,
-    },
+    canvas: bemClass("details-grid", "canvas"),
+    clearHistory: `${bemClass("details-grid", "clear-history")} kul-danger kul-full-width`,
+    deleteShape: `${bemClass("details-grid", "delete")} kul-danger kul-full-width`,
+    redo: `${bemClass("details-grid", "redo")} kul-full-width`,
+    save: `${bemClass("details-grid", "commit-changes")} kul-success kul-full-width`,
+    spinner: `${bemClass("details-grid", "spinner")}`,
+    tree: `${bemClass("details-grid", "tree")}`,
+    undo: `${bemClass("details-grid", "undo")} kul-full-width`,
   };
 
   return {

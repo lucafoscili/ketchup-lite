@@ -12,11 +12,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulHeaderEvent,
   KulHeaderEventPayload,
+  KulHeaderPropsInterface,
 } from "./kul-header-declarations";
 
 @Component({
@@ -74,10 +74,10 @@ export class KulHeader {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulHeaderPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulHeaderPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -129,16 +129,16 @@ export class KulHeader {
   }
 
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { kulStyle } = this;
 
     return (
-      <Host class="header">
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+      <Host>
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <header class="header">
-            <section class="header__section">
+          <header class={bemClass("header")}>
+            <section class={bemClass("header", "section")}>
               <slot name="content"></slot>
             </section>
           </header>

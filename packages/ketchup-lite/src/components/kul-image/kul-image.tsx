@@ -15,14 +15,17 @@ import {
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
-import { GenericObject } from "src/types/GenericTypes";
 import {
   CSS_VAR_PREFIX,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
 import { KulBadgePropsInterface } from "../kul-badge/kul-badge-declarations";
-import { KulImageEvent, KulImageEventPayload } from "./kul-image-declarations";
+import {
+  KulImageEvent,
+  KulImageEventPayload,
+  KulImagePropsInterface,
+} from "./kul-image-declarations";
 
 @Component({
   tag: "kul-image",
@@ -60,23 +63,22 @@ export class KulImage {
    *
    * @see KulThemeColorValues - For a list of available CSS variable names for color.
    */
-  @Prop({ mutable: true, reflect: true }) kulColor =
-    `var(${KUL_THEME_COLORS.icon})`;
+  @Prop({ mutable: true }) kulColor = `var(${KUL_THEME_COLORS.icon})`;
   /**
    * Controls the display of a loading indicator. When enabled, a spinner is shown until the image finishes loading. This property is not compatible with SVG images.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulShowSpinner = false;
+  @Prop({ mutable: true }) kulShowSpinner = false;
   /**
    * Sets the width of the icon. This property accepts any valid CSS measurement value (e.g., px, %, vh, etc.) and defaults to 100%.
    * @default '100%'
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeX = "100%";
+  @Prop({ mutable: true }) kulSizeX = "100%";
   /**
    * Sets the height of the icon. This property accepts any valid CSS measurement value (e.g., px, %, vh, etc.) and defaults to 100%.
    * @default '100%'
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeY = "100%";
+  @Prop({ mutable: true }) kulSizeY = "100%";
   /**
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
@@ -86,7 +88,7 @@ export class KulImage {
    * Defines the source URL of the image. This property is used to set the image resource that the component should display.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulValue = "";
+  @Prop({ mutable: true }) kulValue = "";
   //#endregion
 
   //#region Events
@@ -125,13 +127,13 @@ export class KulImage {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulImagePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulImagePropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulImagePropsInterface;
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -156,24 +158,18 @@ export class KulImage {
   //#region Private methods
   #createIcon(): VNode {
     const { assets, theme } = kulManagerSingleton;
+    const { bemClass } = theme;
 
     const { error, kulColor, kulValue } = this;
 
-    const className = {
-      image__icon: true,
-    };
     const style = {
       ["--kul_image_background"]: kulColor
         ? kulColor
         : `var(${KUL_THEME_COLORS.icon})`,
       ["--kul_image_mask"]: "",
     };
+
     const isThemeIcon = kulValue.indexOf(CSS_VAR_PREFIX) > -1;
-    if (isThemeIcon) {
-      const themeIcon = kulValue.replace("--", "");
-      className["kul-icon"] = true;
-      className[themeIcon] = true;
-    }
     const icon = error
       ? "broken_image"
       : isThemeIcon
@@ -183,7 +179,14 @@ export class KulImage {
     const { mask } = assets.get(`./assets/svg/${icon}.svg`).style;
     style["--kul_image_mask"] = mask;
 
-    return <div class={className} style={style}></div>;
+    return (
+      <div
+        class={bemClass("image", "icon", {
+          [kulValue?.replace("--", "")]: isThemeIcon,
+        })}
+        style={style}
+      ></div>
+    );
   }
   #createImage(): VNode {
     return (
@@ -200,7 +203,7 @@ export class KulImage {
       ></img>
     );
   }
-  #isResourceUrl(): boolean {
+  #isResourceUrl() {
     const { kulValue } = this;
 
     if (!kulValue || typeof kulValue !== "string") return false;
@@ -236,6 +239,7 @@ export class KulImage {
   }
   render() {
     const { debug, sanitizeProps, theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = theme;
 
     const {
       error,
@@ -252,46 +256,32 @@ export class KulImage {
       return;
     }
 
-    let el: VNode;
-    let feedback: HTMLElement;
     const isUrl = this.#isResourceUrl();
-    let spinnerLayout: number;
     let style = {
       "--kul_image_height": kulSizeY ? kulSizeY : "auto",
       "--kul_image_width": kulSizeX ? kulSizeX : "100%",
     };
 
-    if (isUrl && !error) {
-      el = this.#createImage();
-    } else {
-      el = this.#createIcon();
-    }
-
-    if (kulShowSpinner && isUrl) {
-      spinnerLayout = 14;
-      feedback = (
-        <div class="spinner" title="Image not loaded yet...">
-          <kul-spinner
-            kulActive={true}
-            kulDimensions="3px"
-            kulLayout={spinnerLayout}
-          ></kul-spinner>
-        </div>
-      );
-    }
-
     return (
       <Host style={style}>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
-        {feedback}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
+        {kulShowSpinner && isUrl && (
+          <div class={bemClass("spinner")} title="Image not loaded yet...">
+            <kul-spinner
+              kulActive={true}
+              kulDimensions="3px"
+              kulLayout={14}
+            ></kul-spinner>
+          </div>
+        )}
         <div id={KUL_WRAPPER_ID}>
           <div
-            class="image"
+            class={bemClass("image")}
             onClick={(e) => {
               this.onKulEvent(e, "click");
             }}
           >
-            {el}
+            {isUrl && !error ? this.#createImage() : this.#createIcon()}
             {kulBadgeProps && (
               <kul-badge
                 {...sanitizeProps(kulBadgeProps, "KulBadge")}
