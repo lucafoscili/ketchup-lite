@@ -13,10 +13,13 @@ import {
 import Prism from "prismjs";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
-import { STATIC_LANGUAGES } from "./helpers/languages";
-import { KulCodeEvent, KulCodeEventPayload } from "./kul-code-declarations";
+import { STATIC_LANGUAGES } from "./helpers/constants";
+import {
+  KulCodeEvent,
+  KulCodeEventPayload,
+  KulCodePropsInterface,
+} from "./kul-code-declarations";
 
 @Component({
   assetsDirs: ["assets/prism"],
@@ -102,13 +105,13 @@ export class KulCode {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulCodePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulCodePropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulCodePropsInterface;
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -252,7 +255,7 @@ export class KulCode {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
     const { kulLanguage, kulPreserveSpaces, kulStyle, kulValue } = this;
 
     const isPreserveSpaceMissing = !!(
@@ -269,11 +272,11 @@ export class KulCode {
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="container">
-            <div class="header">
-              <span class="title">{kulLanguage}</span>
+          <div class={bemClass("code")}>
+            <div class={bemClass("code", "header")}>
+              <span class={bemClass("code", "title")}>{kulLanguage}</span>
               <kul-button
                 class={"kul-slim kul-full-height"}
                 kulIcon="content_copy"
@@ -292,7 +295,7 @@ export class KulCode {
             </div>
             {shouldPreserveSpace ? (
               <pre
-                class={"language-" + kulLanguage}
+                class={bemClass("code", `language-${kulLanguage}`)}
                 key={this.value}
                 ref={(el) => {
                   if (el) {
@@ -304,7 +307,9 @@ export class KulCode {
               </pre>
             ) : (
               <div
-                class={"body language-" + kulLanguage}
+                class={bemClass("code", `language-${kulLanguage}`, {
+                  body: true,
+                })}
                 key={this.value}
                 ref={(el) => {
                   if (el) {

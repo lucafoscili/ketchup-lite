@@ -381,7 +381,9 @@ export interface KulComponent<T extends KulComponentName>
 interface KulComponentCommon {
   debugInfo: KulDebugLifecycleInfo;
   getDebugInfo: () => Promise<KulDebugLifecycleInfo>;
-  getProps: (descriptions?: boolean) => Promise<GenericObject>;
+  getProps: (
+    descriptions?: boolean,
+  ) => Promise<KulComponentPropsFor<KulComponentName>>;
   kulStyle: string;
   refresh: () => Promise<void>;
 }

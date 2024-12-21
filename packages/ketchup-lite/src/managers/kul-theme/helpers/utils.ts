@@ -6,6 +6,12 @@ export function prepKulThemeColors<
   return colors;
 }
 
+export function prepKulThemeFonts<
+  T extends Record<string, keyof KulThemeCSSVariables>,
+>(colors: T): Readonly<T> {
+  return colors;
+}
+
 export function prepKulThemeIcons<
   T extends Record<string, keyof KulThemeIcons>,
 >(icons: T): Readonly<T> {

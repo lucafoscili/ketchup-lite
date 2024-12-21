@@ -14,14 +14,14 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulArticleDataset,
   KulArticleEvent,
   KulArticleEventPayload,
   KulArticleNode,
+  KulArticlePropsInterface,
 } from "./kul-article-declarations";
 
 @Component({
@@ -49,6 +49,11 @@ export class KulArticle {
    * @default null
    */
   @Prop({ mutable: true }) kulData: KulArticleDataset = null;
+  /**
+   * Empty text displayed when there is no data.
+   * @default "Empty data."
+   */
+  @Prop({ mutable: true }) kulEmpty = "Empty data.";
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
@@ -85,10 +90,10 @@ export class KulArticle {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulArticlePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulArticlePropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -270,10 +275,10 @@ export class KulArticle {
     info.update(this, "did-render");
   }
   render() {
-    const { language, theme } = kulManagerSingleton;
+    const { theme } = kulManagerSingleton;
     const { bemClass, setKulStyle } = theme;
 
-    const { kulData, kulStyle } = this;
+    const { kulData, kulEmpty, kulStyle } = this;
 
     return (
       <Host>
@@ -283,9 +288,7 @@ export class KulArticle {
             this.#prepArticle()
           ) : (
             <div class={bemClass("empty-data")}>
-              <div class={bemClass("empty-data", "text")}>
-                {language.translate(KulLanguageGeneric.EMPTY_DATA)}
-              </div>
+              <div class={bemClass("empty-data", "text")}>{kulEmpty}</div>
             </div>
           )}
         </div>

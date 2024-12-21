@@ -33,6 +33,7 @@ export const prepChatHandlers = (
             case IDS.chat.send:
               submitPrompt(adapter);
               break;
+            case IDS.chat.configuration:
             case IDS.chat.settings:
               set.view("settings");
               break;

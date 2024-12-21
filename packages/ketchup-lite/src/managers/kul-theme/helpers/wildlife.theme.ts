@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const WILDLIFE: KulThemeElement = {
   cssVariables: {
@@ -50,6 +50,6 @@ export const WILDLIFE: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.crimsonText],
+  font: [KUL_THEME_FONTFACE.crimsonText],
   isDark: false,
 };

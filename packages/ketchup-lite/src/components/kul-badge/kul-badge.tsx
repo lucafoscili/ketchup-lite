@@ -13,10 +13,13 @@ import {
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
-import { KulBadgeEvent, KulBadgeEventPayload } from "./kul-badge-declarations";
+import {
+  KulBadgeEvent,
+  KulBadgeEventPayload,
+  KulBadgePropsInterface,
+} from "./kul-badge-declarations";
 
 @Component({
   tag: "kul-badge",
@@ -83,10 +86,10 @@ export class KulBadge {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulBadgePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulBadgePropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);

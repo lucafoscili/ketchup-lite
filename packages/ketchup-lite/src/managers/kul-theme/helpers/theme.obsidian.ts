@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const OBSIDIAN: KulThemeElement = {
   cssVariables: {
@@ -56,6 +56,6 @@ export const OBSIDIAN: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.ibmPlex],
+  font: [KUL_THEME_FONTFACE.ibmPlex],
   isDark: false,
 };

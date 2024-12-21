@@ -43,6 +43,7 @@ export interface KulTreeNodeProps {
 export interface KulTreePropsInterface {
   kulAccordionLayout?: boolean;
   kulData?: KulDataDataset;
+  kulEmpty?: string;
   kulFilter?: boolean;
   kulInitialExpansionDepth?: number;
   kulRipple?: boolean;

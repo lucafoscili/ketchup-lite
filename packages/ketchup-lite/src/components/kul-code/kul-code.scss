@@ -95,32 +95,38 @@
   width: 100%;
 }
 
-.container {
+.code {
   display: grid;
   grid-template-rows: max-content 1fr;
-}
 
-.title {
-  font-size: 0.85em;
-  letter-spacing: 2px;
-  padding: 0.5em;
-  text-transform: uppercase;
-}
+  &--body {
+    color: var(--kul_code_text_color);
+    padding: 1em;
+    white-space: pre-line;
+  }
 
-.header {
-  --kul-button-primary-color: var(--kul_code_header_color);
-  align-items: center;
-  background: var(--kul_code_header_background_color);
-  border-color: var(--kul-primary-color);
-  border-left: inset;
-  color: var(--kul_code_header_color);
-  display: flex;
-  height: 36px;
-  justify-content: space-between;
-  padding: 0.25em 0.75em;
-  position: sticky;
-  top: 0;
-  z-index: 1;
+  &__title {
+    font-size: 0.85em;
+    letter-spacing: 2px;
+    padding: 0.5em;
+    text-transform: uppercase;
+  }
+
+  &__header {
+    --kul-button-primary-color: var(--kul_code_header_color);
+    align-items: center;
+    background: var(--kul_code_header_background_color);
+    border-color: var(--kul-primary-color);
+    border-left: inset;
+    color: var(--kul_code_header_color);
+    display: flex;
+    height: 36px;
+    justify-content: space-between;
+    padding: 0.25em 0.75em;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 }
 
 :not(pre) > code,
@@ -166,12 +172,6 @@ pre ::selection,
 pre::selection {
   text-shadow: none;
   background: var(--kul_code_selection_background_color);
-}
-
-.body {
-  color: var(--kul_code_text_color);
-  padding: 1em;
-  white-space: pre-line;
 }
 
 pre {

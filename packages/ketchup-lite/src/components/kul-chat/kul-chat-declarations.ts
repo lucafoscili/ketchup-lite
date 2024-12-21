@@ -29,6 +29,7 @@ export interface KulChatAdapter extends KulComponentAdapter<KulChat> {
 export interface KulChatAdapterJsx extends KulComponentAdapterJsx {
   chat: {
     clear: () => VNode;
+    configuration: () => VNode;
     progressbar: () => VNode;
     send: () => VNode;
     settings: () => VNode;
@@ -53,6 +54,7 @@ export interface KulChatAdapterJsx extends KulComponentAdapterJsx {
 export interface KulChatAdapterRefs extends KulComponentAdapterRefs {
   chat: {
     clear: HTMLKulButtonElement;
+    configuration: HTMLKulButtonElement;
     progressbar: HTMLKulProgressbarElement;
     send: HTMLKulButtonElement;
     settings: HTMLKulButtonElement;
@@ -153,6 +155,7 @@ export type KulChatView = "chat" | "settings";
 //#region Props
 export interface KulChatPropsInterface {
   kulContextWindow?: number;
+  kulEmpty?: string;
   kulEndpointUrl?: string;
   kulLayout?: KulChatLayout;
   kulMaxTokens?: number;

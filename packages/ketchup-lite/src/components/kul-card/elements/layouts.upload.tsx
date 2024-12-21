@@ -4,11 +4,12 @@ import { KulCardAdapter } from "../kul-card-declarations";
 
 //#region Upload layout
 export const prepUpload = (getAdapter: () => KulCardAdapter): VNode => {
+  const { bemClass } = kulManagerSingleton.theme;
+  const decorator = kulManagerSingleton.data.cell.shapes.decorate;
+
   const { compInstance, defaults, shapes } = getAdapter().controller.get;
-  const { kulLayout } = compInstance;
 
   const { button, upload } = shapes();
-  const decorator = kulManagerSingleton.data.cell.shapes.decorate;
 
   //#region Button
   const buttons = decorator(
@@ -27,14 +28,18 @@ export const prepUpload = (getAdapter: () => KulCardAdapter): VNode => {
   const hasUpload = Boolean(uploads?.element?.length);
   //#endregion
 
-  const className = {
-    [`${kulLayout}-layout`]: true,
-  };
-
   return (
-    <div class={className}>
-      {hasUpload && <div class="section-1 upload">{uploads.element[0]}</div>}
-      {hasButton && <div class="section-2 button">{buttons.element[0]}</div>}
+    <div class={bemClass("card", null, { upload: true })}>
+      {hasUpload && (
+        <div class={bemClass("card", "section-1", { upload: true })}>
+          {uploads.element[0]}
+        </div>
+      )}
+      {hasButton && (
+        <div class={bemClass("card", "section-2", { button: true })}>
+          {buttons.element[0]}
+        </div>
+      )}
     </div>
   );
 };

@@ -1,10 +1,10 @@
-import { kulManagerSingleton } from "src/global/global";
 import {
   KulCardAdapter,
   KulCardAdapterHandlers,
-  KulCardShapesIds,
 } from "src/components/kul-card/kul-card-declarations";
 import { KulListEventPayload } from "src/components/kul-list/kul-list-declarations";
+import { kulManagerSingleton } from "src/global/global";
+import { IDS } from "../helpers/constants";
 
 export const prepDebugHandlers = (
   getAdapter: () => KulCardAdapter,
@@ -21,17 +21,17 @@ export const prepDebugHandlers = (
       switch (eventType) {
         case "click":
           switch (id) {
-            case KulCardShapesIds.CLEAR:
+            case IDS.clear:
               debug.logs.dump();
               break;
-            case KulCardShapesIds.THEME:
+            case IDS.theme:
               theme.randomTheme();
               break;
           }
           break;
         case "kul-event":
           switch (id) {
-            case KulCardShapesIds.THEME:
+            case IDS.theme:
               layouts.debug.list(
                 originalEvent as CustomEvent<KulListEventPayload>,
               );

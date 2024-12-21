@@ -1,19 +1,23 @@
 import { KulThemeList } from "../kul-theme-declarations";
-import { CINDER } from "./cinder.theme";
-import { COBALT } from "./cobalt.theme";
-import { FLAMINGO } from "./flamingo.theme";
-import { GRAPHITE } from "./graphite.theme";
-import { KETCHUP } from "./ketchup.theme";
-import { NIGHT } from "./night.theme";
-import { OBSIDIAN } from "./obsidian.theme";
-import { OCEAN } from "./ocean.theme";
-import { RAJ } from "./raj.theme";
-import { RED } from "./red.theme";
-import { SAPPHIRE } from "./sapphire.theme";
-import { SILVER } from "./silver.theme";
-import { SNOW } from "./snow.theme";
-import { TEAL } from "./teal.theme";
-import { prepKulThemeColors, prepKulThemeIcons } from "./utils";
+import { CINDER } from "./theme.cinder";
+import { COBALT } from "./theme.cobalt";
+import { FLAMINGO } from "./theme.flamingo";
+import { GRAPHITE } from "./theme.graphite";
+import { KETCHUP } from "./theme.ketchup";
+import { NIGHT } from "./theme.night";
+import { OBSIDIAN } from "./theme.obsidian";
+import { OCEAN } from "./theme.ocean";
+import { RAJ } from "./theme.raj";
+import { RED } from "./theme.red";
+import { SAPPHIRE } from "./theme.sapphire";
+import { SILVER } from "./theme.silver";
+import { SNOW } from "./theme.snow";
+import { TEAL } from "./theme.teal";
+import {
+  prepKulThemeColors,
+  prepKulThemeFonts,
+  prepKulThemeIcons,
+} from "./utils";
 import { WILDLIFE } from "./wildlife.theme";
 
 //#region Colors
@@ -46,8 +50,22 @@ export const KUL_THEME_COLORS = prepKulThemeColors({
 });
 //#endregion
 
+//#region UI
+export const KUL_THEME_FONTS = prepKulThemeFonts({
+  boxShadow: "--kul-box-shadow",
+  cardZindex: "--kul-card-zindex",
+  drawerWidth: "--kul-drawer-width",
+  drawerZindex: "--kul-drawer-zindex",
+  fontFamily: "--kul-font-family",
+  fontFamilyMonospace: "--kul-font-family-monospace",
+  fontSize: "--kul-font-size",
+  headerHeight: "--kul-header-height",
+  headerZindex: "--kul-header-zindex",
+});
+//#endregion
+
 //#region Fonts
-export const KUL_THEME_FONTS = {
+export const KUL_THEME_FONTFACE = {
   abel: "Abel",
   blinker: "Blinker",
   crimsonText: "CrimsonText",

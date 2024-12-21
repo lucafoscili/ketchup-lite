@@ -85,17 +85,6 @@ export interface KulCardEventPayload
   extends KulEventPayload<"KulCard", KulCardEvent> {}
 //#endregion
 
-//#region Internal usage
-export enum KulCardCSSClasses {
-  HAS_ACTIONS = "has-actions",
-  HAS_CONTENT = "has-content",
-}
-export enum KulCardShapesIds {
-  CLEAR = "clear",
-  THEME = "theme",
-}
-//#endregion
-
 //#region Props
 export interface KulCardPropsInterface {
   kulData?: KulDataDataset;

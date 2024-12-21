@@ -8,7 +8,8 @@ import {
 export const prepCanvasJsx = (
   getAdapter: () => KulCanvasAdapter,
 ): KulCanvasAdapterJsx => {
-  const { assignRef, sanitizeProps } = kulManagerSingleton;
+  const { assignRef, sanitizeProps, theme } = kulManagerSingleton;
+  const { bemClass } = theme;
 
   return {
     //#region Board
@@ -20,7 +21,7 @@ export const prepCanvasJsx = (
 
       return (
         <canvas
-          class="canvas__board"
+          class={bemClass("canvas", "board")}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerOut={onPointerOut}
@@ -39,7 +40,7 @@ export const prepCanvasJsx = (
 
       return (
         <kul-image
-          class="canvas__image kul-fit"
+          class={`${bemClass("canvas", "image")} kul-fit`}
           {...sanitizeProps(compInstance.kulImageProps, "KulImage")}
           ref={assignRef(refs, "image")}
         ></kul-image>
@@ -54,7 +55,7 @@ export const prepCanvasJsx = (
 
       return (
         <canvas
-          class="canvas__cursor"
+          class={bemClass("canvas", "cursor")}
           ref={assignRef(refs, "preview")}
         ></canvas>
       );

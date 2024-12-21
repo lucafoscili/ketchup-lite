@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const SILVER: KulThemeElement = {
   cssVariables: {
@@ -53,6 +53,6 @@ export const SILVER: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.oswald],
+  font: [KUL_THEME_FONTFACE.oswald],
   isDark: true,
 };

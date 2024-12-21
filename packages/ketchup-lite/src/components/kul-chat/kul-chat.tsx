@@ -17,7 +17,6 @@ import {
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
 import { calcTokens, submitPrompt } from "./helpers/utils";
@@ -27,6 +26,7 @@ import {
   KulChatEventPayload,
   KulChatHistory,
   KulChatLayout,
+  KulChatPropsInterface,
   KulChatStatus,
   KulChatView,
 } from "./kul-chat-declarations";
@@ -79,6 +79,11 @@ export class KulChat {
    * @default ""
    */
   @Prop({ mutable: true }) kulContextWindow = 8192;
+  /**
+   * Empty text displayed when there is no data.
+   * @default "Empty data."
+   */
+  @Prop({ mutable: true }) kulEmpty = "Your chat history is empty!";
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
@@ -242,10 +247,10 @@ export class KulChat {
    * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulChatPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulChatPropsInterface;
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -299,33 +304,39 @@ export class KulChat {
     this.onKulEvent(new CustomEvent("polling"), "polling");
   }
   #prepChat = (): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { clear, progressbar, send, settings, spinner, stt, textarea } =
       this.#adapter.elements.jsx.chat;
 
     return (
       <Fragment>
-        <div class="chat__request">
-          <div class="chat__request__input">
+        <div class={bemClass("request")}>
+          <div class={bemClass("input")}>
             {settings()}
             {textarea()}
             {progressbar()}
           </div>
-          <div class="chat__request__buttons">
+          <div class={bemClass("commands")}>
             {clear()}
             {stt()}
             {send()}
           </div>
         </div>
-        <div class={`chat__messages`}>
+        <div class={bemClass("messages")}>
           {this.history?.length ? (
             this.history.map((m) => (
               <div
-                class={`chat__messages__container chat__messages__container--${m.role}`}
+                class={bemClass("messages", "container", {
+                  [m.role]: true,
+                })}
                 onPointerEnter={() => (this.toolbarMessage = m)}
                 onPointerLeave={() => (this.toolbarMessage = null)}
               >
                 <div
-                  class={`chat__messages__content chat__messages__content--${m.role}`}
+                  class={bemClass("messages", "content", {
+                    [m.role]: true,
+                  })}
                 >
                   {this.#prepContent(m)}
                 </div>
@@ -333,26 +344,31 @@ export class KulChat {
               </div>
             ))
           ) : (
-            <div class="chat__messages__empty">Your chat history is empty!</div>
+            <div class={bemClass("messages", "empty")}>{this.kulEmpty}</div>
           )}
         </div>
-        <div class="chat__spinner-bar">{spinner()}</div>
+        <div class={bemClass("chat", "spinner-bar")}>{spinner()}</div>
       </Fragment>
     );
   };
   #prepConnecting: () => VNode[] = () => {
+    const { bemClass } = kulManagerSingleton.theme;
+
     return (
       <Fragment>
-        <div class="spinner">
+        <div class={bemClass("chat", "spinner")}>
           <kul-spinner kulActive={true} kulLayout={6} kulDimensions="7px" />
         </div>
-        <div class="chat__title">Just a moment.</div>
-        <div class="chat__text">Contacting your LLM endpoint...</div>
+        <div class={bemClass("chat", "title")}>Just a moment.</div>
+        <div class={bemClass("chat", "text")}>
+          Contacting your LLM endpoint...
+        </div>
       </Fragment>
     );
   };
   #prepContent = (message: KulLLMChoiceMessage): VNode[] => {
-    const { sanitizeProps } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { bemClass } = theme;
 
     const { kulTypewriterProps } = this;
 
@@ -375,12 +391,12 @@ export class KulChat {
         elements.push(
           useTypewriter ? (
             <kul-typewriter
-              class="chat__messages__paragraph"
+              class={bemClass("messages", "paragraph")}
               {...sanitizeProps(kulTypewriterProps, "KulTypewriter")}
               kulValue={textPart}
             ></kul-typewriter>
           ) : (
-            <div class="paragraph">{textPart}</div>
+            <div class={bemClass("messages", "paragraph")}>{textPart}</div>
           ),
         );
       }
@@ -390,7 +406,7 @@ export class KulChat {
 
       elements.push(
         <kul-code
-          class={"chat__messages__code"}
+          class={bemClass("messages", "code")}
           kulLanguage={language}
           kulValue={codePart}
         ></kul-code>,
@@ -401,23 +417,29 @@ export class KulChat {
 
     if (lastIndex < messageContent.length) {
       const remainingText = messageContent.slice(lastIndex);
-      elements.push(<div class="paragraph">{remainingText}</div>);
+      elements.push(
+        <div class={bemClass("messages", "paragraph")}>{remainingText}</div>,
+      );
     }
 
     return elements;
   };
   #prepOffline: () => VNode[] = () => {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { set } = this.#adapter.controller;
 
     return (
       <Fragment>
-        <div class="chat__error">
+        <div class={bemClass("chat", "error")}>
           <kul-image kulValue="hotel" kulSizeX="4em" kulSizeY="4em"></kul-image>
-          <div class="chat__title">Zzz...</div>
-          <div class="chat__text">The LLM endpoint seems to be offline!</div>
+          <div class={bemClass("chat", "title")}>Zzz...</div>
+          <div class={bemClass("chat", "text")}>
+            The LLM endpoint seems to be offline!
+          </div>
         </div>
         <kul-button
-          class="chat__config kul-full-width"
+          class={`${bemClass("chat", "config")} kul-full-width`}
           kulIcon="wrench"
           kulLabel="Configuration"
           kulStyling="flat"
@@ -434,13 +456,15 @@ export class KulChat {
     );
   };
   #prepSettings = () => {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { back, endpoint, maxTokens, polling, system, temperature } =
       this.#adapter.elements.jsx.settings;
 
     return (
       <Fragment>
         {back()}
-        <div class="settings__options">
+        <div class={bemClass("chat", "options")}>
           {endpoint()}
           {temperature()}
           {maxTokens()}
@@ -451,11 +475,13 @@ export class KulChat {
     );
   };
   #prepToolbar = (m: KulLLMChoiceMessage): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { copyContent, deleteMessage, regenerate } =
       this.#adapter.elements.jsx.toolbar;
 
     return (
-      <div class="chat__messages__toolbar">
+      <div class={bemClass("messages", "toolbar")}>
         {deleteMessage(m)}
         {copyContent(m)}
         {m.role === "user" && regenerate(m)}
@@ -505,16 +531,18 @@ export class KulChat {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     return (
       <Host>
-        {this.kulStyle && (
-          <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>
-        )}
+        {this.kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div
-            class={`${this.view} ${this.view}--${this.kulLayout} ${this.view}--${this.status}`}
+            class={bemClass("chat", null, {
+              [this.view]: true,
+              [this.kulLayout]: true,
+              [this.status]: true,
+            })}
           >
             {this.view === "settings"
               ? this.#prepSettings()

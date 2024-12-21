@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const KETCHUP: KulThemeElement = {
   cssVariables: {
@@ -51,6 +51,6 @@ export const KETCHUP: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.ubuntu],
+  font: [KUL_THEME_FONTFACE.ubuntu],
   isDark: false,
 };

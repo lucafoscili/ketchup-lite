@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const OCEAN: KulThemeElement = {
   cssVariables: {
@@ -50,6 +50,6 @@ export const OCEAN: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.publicSans],
+  font: [KUL_THEME_FONTFACE.publicSans],
   isDark: false,
 };

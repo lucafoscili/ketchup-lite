@@ -6,7 +6,7 @@ import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Dataset
 export interface KulArticleDataset extends KulDataDataset {
-  nodes: KulArticleNode[];
+  nodes?: KulArticleNode[];
 }
 export interface KulArticleNode extends KulDataNode {
   children?: KulArticleNode[];
@@ -34,6 +34,7 @@ export interface KulArticleEventPayload
 //#region Props
 export interface KulArticlePropsInterface {
   kulData?: KulArticleDataset;
+  kulEmpty?: string;
   kulStyle?: string;
 }
 //#endregion

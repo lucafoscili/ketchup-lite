@@ -6,6 +6,7 @@ import {
 //#region Props
 export const KUL_CHAT_PROPS: (keyof KulChatPropsInterface)[] = [
   "kulContextWindow",
+  "kulEmpty",
   "kulEndpointUrl",
   "kulLayout",
   "kulMaxTokens",
@@ -23,6 +24,7 @@ export const KUL_CHAT_PROPS: (keyof KulChatPropsInterface)[] = [
 export const IDS = {
   chat: {
     clear: "chat-clear",
+    configuration: "chat-configuration",
     prompt: "chat-prompt",
     send: "chat-send",
     settings: "chat-settings",
@@ -50,6 +52,7 @@ export const REFS = (): KulChatAdapterRefs => {
   return {
     chat: {
       clear: null,
+      configuration: null,
       progressbar: null,
       send: null,
       settings: null,

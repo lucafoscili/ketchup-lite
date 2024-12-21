@@ -19,7 +19,7 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulManagerClickCb } from "src/managers/kul-manager/kul-manager-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
 import {
   KUL_DROPDOWN_CLASS,
   KUL_DROPDOWN_CLASS_VISIBLE,
@@ -31,6 +31,7 @@ import { KulListEventPayload } from "../kul-list/kul-list-declarations";
 import {
   KulButtonEvent,
   KulButtonEventPayload,
+  KulButtonPropsInterface,
   KulButtonState,
   KulButtonStyling,
   KulButtonType,
@@ -191,13 +192,13 @@ export class KulButton {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulButtonPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulButtonPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulButtonPropsInterface;
   }
   /**
    * Used to retrieve the component's current state.
@@ -471,12 +472,12 @@ export class KulButton {
       kulSizeY: isLarge ? "calc(1.75em * 1.5)" : "1.75em",
     };
 
-    const styleSpinnerContainer: Record<string, string> = {
+    const styleSpinnerContainer = {
       "--kul_button_spinner_height": image.kulSizeY,
       "--kul_button_spinner_width": image.kulSizeX,
     };
 
-    const iconOff: string = kulIconOff ? kulIconOff : kulIcon + "_border";
+    const iconOff = kulIconOff ? kulIconOff : kulIcon + "_border";
 
     return [
       <button

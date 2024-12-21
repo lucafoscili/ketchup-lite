@@ -17,13 +17,13 @@ import {
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { createAdapter } from "./kul-card-adapter";
 import {
   KulCardEvent,
   KulCardEventPayload,
   KulCardLayout,
+  KulCardPropsInterface,
 } from "./kul-card-declarations";
 
 @Component({
@@ -128,13 +128,13 @@ export class KulCard {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulCardPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulCardPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulCardPropsInterface;
   }
   /**
    * Used to retrieve component's shapes.

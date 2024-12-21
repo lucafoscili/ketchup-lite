@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const NIGHT: KulThemeElement = {
   cssVariables: {
@@ -50,6 +50,6 @@ export const NIGHT: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.lato],
+  font: [KUL_THEME_FONTFACE.lato],
   isDark: true,
 };

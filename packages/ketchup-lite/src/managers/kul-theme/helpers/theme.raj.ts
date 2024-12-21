@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const RAJ: KulThemeElement = {
   cssVariables: {
@@ -50,6 +50,6 @@ export const RAJ: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.rajdhani],
+  font: [KUL_THEME_FONTFACE.rajdhani],
   isDark: true,
 };

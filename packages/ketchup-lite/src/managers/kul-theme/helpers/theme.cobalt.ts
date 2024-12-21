@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const COBALT: KulThemeElement = {
   cssVariables: {
@@ -50,6 +50,6 @@ export const COBALT: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.blinker],
+  font: [KUL_THEME_FONTFACE.blinker],
   isDark: true,
 };

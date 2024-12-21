@@ -14,8 +14,7 @@ import { dispose, ECharts, init } from "echarts";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
-import { GenericObject } from "src/types/GenericTypes";
+import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { createAdapter } from "./kul-chart-adapter";
 import {
@@ -25,6 +24,7 @@ import {
   KulChartEventData,
   KulChartEventPayload,
   KulChartLegendPlacement,
+  KulChartPropsInterface,
   KulChartSeriesData,
   KulChartType,
   KulChartXAxis,
@@ -193,10 +193,10 @@ export class KulChart {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulChartPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulChartPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -363,12 +363,12 @@ export class KulChart {
     const { cssVars } = kulManagerSingleton.theme;
     const { themeValues } = this;
 
-    themeValues.background = cssVars[KulThemeColorValues.BACKGROUND];
-    themeValues.border = cssVars[KulThemeColorValues.BORDER];
-    themeValues.danger = cssVars[KulThemeColorValues.DANGER];
+    themeValues.background = cssVars[KUL_THEME_COLORS.background];
+    themeValues.border = cssVars[KUL_THEME_COLORS.border];
+    themeValues.danger = cssVars[KUL_THEME_COLORS.danger];
     themeValues.font = cssVars["--kul-font-family"];
-    themeValues.success = cssVars[KulThemeColorValues.SUCCESS];
-    themeValues.text = cssVars[KulThemeColorValues.TEXT];
+    themeValues.success = cssVars[KUL_THEME_COLORS.success];
+    themeValues.text = cssVars[KUL_THEME_COLORS.text];
   }
   //#endregion
 
@@ -434,6 +434,7 @@ export class KulChart {
   disconnectedCallback() {
     const { theme } = kulManagerSingleton;
 
+    dispose(this.#chartContainer);
     theme.unregister(this);
   }
   //#endregion

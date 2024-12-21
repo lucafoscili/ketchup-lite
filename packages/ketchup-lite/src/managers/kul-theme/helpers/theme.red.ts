@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const RED: KulThemeElement = {
   cssVariables: {
@@ -57,6 +57,6 @@ export const RED: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.openSans],
+  font: [KUL_THEME_FONTFACE.openSans],
   isDark: false,
 };

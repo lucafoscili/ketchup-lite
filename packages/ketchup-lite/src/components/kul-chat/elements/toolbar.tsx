@@ -6,12 +6,8 @@ import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 export const prepToolbar = (
   getAdapter: () => KulChatAdapter,
 ): KulChatAdapterJsx["toolbar"] => {
-  const { assignRef } = kulManagerSingleton;
-
-  const className = {
-    chat__messages__toolbar__button: true,
-    "kul-slim": true,
-  };
+  const { assignRef, theme } = kulManagerSingleton;
+  const { bemClass } = theme;
 
   return {
     //#region Copy content
@@ -22,7 +18,7 @@ export const prepToolbar = (
 
       return (
         <kul-button
-          class={className}
+          class={bemClass("toolbar", "button")}
           id={IDS.toolbar.copyContent}
           kulIcon="content_copy"
           onKul-button-event={(e) => button(e, m)}
@@ -41,7 +37,7 @@ export const prepToolbar = (
 
       return (
         <kul-button
-          class={{ ...className, "kul-danger": true }}
+          class={`${bemClass("toolbar", "button")} kul-danger`}
           id={IDS.toolbar.deleteMessage}
           kulIcon="delete"
           onKul-button-event={(e) => button(e, m)}
@@ -60,7 +56,7 @@ export const prepToolbar = (
 
       return (
         <kul-button
-          class={className}
+          class={bemClass("toolbar", "button")}
           id={IDS.toolbar.regenerate}
           kulIcon="refresh"
           onKul-button-event={(e) => button(e, m)}

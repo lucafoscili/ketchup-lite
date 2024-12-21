@@ -17,10 +17,6 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import {
-  KulLanguageGeneric,
-  KulLanguageSearch,
-} from "src/managers/kul-language/kul-language-declarations";
 import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
@@ -78,6 +74,11 @@ export class KulTree {
    * @default null
    */
   @Prop({ mutable: true }) kulFilter = true;
+  /**
+   * Empty text displayed when there is no data.
+   * @default "Empty data."
+   */
+  @Prop({ mutable: true }) kulEmpty = "Empty data.";
   /**
    * Sets the initial expanded nodes based on the specified depth.
    * If the property is not provided, all nodes in the tree will be expanded.
@@ -344,7 +345,7 @@ export class KulTree {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { language, theme } = kulManagerSingleton;
+    const { theme } = kulManagerSingleton;
 
     const { kulData, kulFilter, kulStyle } = this;
 
@@ -360,7 +361,7 @@ export class KulTree {
               <kul-textfield
                 kulFullWidth={true}
                 kulIcon="magnify"
-                kulLabel={language.translate(KulLanguageSearch.SEARCH)}
+                kulLabel={"Search..."}
                 kulStyling="flat"
                 onKul-textfield-event={(e) => {
                   this.onKulEvent(e, "kul-event");
@@ -372,9 +373,7 @@ export class KulTree {
             )}
             {isEmpty ? (
               <div class="empty-data">
-                <div class="empty-data__text">
-                  {language.translate(KulLanguageGeneric.EMPTY_DATA)}
-                </div>
+                <div class="empty-data__text">{this.kulEmpty}</div>
               </div>
             ) : (
               this.#prepTree()

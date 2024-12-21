@@ -122,10 +122,12 @@ export class KulManager {
   /**
    * Retrieves component's prop values based on a list and option to include descriptions.
    * @param {KulComponent} comp - The component requesting prop values.
-   * @returns {GenericObject} - An object with prop as keys and their related values.
+   * @returns {KulComponentPropsFor<C>} - An object with prop as keys and their related values.
    */
-  getProps(comp: KulComponent<KulComponentName>): GenericObject {
-    const props: GenericObject = {};
+  getProps<C extends KulComponentName>(
+    comp: KulComponent<C>,
+  ): KulComponentPropsFor<C> {
+    const props = {};
 
     for (const key in comp) {
       if (
@@ -136,7 +138,7 @@ export class KulManager {
       }
     }
 
-    return props;
+    return props as KulComponentPropsFor<C>;
   }
   /**
    * Removes a previously added click-callback from the stack.

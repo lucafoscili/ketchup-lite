@@ -17,11 +17,12 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulAccordionEvent,
   KulAccordionEventPayload,
+  KulAccordionPropsInterface,
 } from "./kul-accordion-declarations";
 
 @Component({
@@ -118,10 +119,10 @@ export class KulAccordion {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulAccordionPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulAccordionPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);

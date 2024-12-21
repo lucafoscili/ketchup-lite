@@ -17,7 +17,6 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulLanguageGeneric } from "src/managers/kul-language/kul-language-declarations";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulListEvent, KulListEventPayload } from "./kul-list-declarations";
@@ -57,10 +56,10 @@ export class KulList {
    */
   @Prop({ mutable: true }) kulData: KulDataDataset = null;
   /**
-   * Text displayed when the list is empty.
-   * @default ""
+   * Empty text displayed when there is no data.
+   * @default "Empty data."
    */
-  @Prop() kulEmptyLabel = "";
+  @Prop({ mutable: true }) kulEmpty = "Empty data.";
   /**
    * Defines whether items can be removed from the list or not.
    * @default false
@@ -386,9 +385,9 @@ export class KulList {
   }
 
   render() {
-    const { language, theme } = kulManagerSingleton;
+    const { theme } = kulManagerSingleton;
 
-    const { kulData, kulEmptyLabel, kulSelectable, kulStyle } = this;
+    const { kulData, kulEmpty, kulSelectable, kulStyle } = this;
 
     const isEmpty = !!!kulData?.nodes?.length;
     this.#listItems = [];
@@ -404,10 +403,7 @@ export class KulList {
         <div id={KUL_WRAPPER_ID}>
           {isEmpty ? (
             <div class="empty-data">
-              <div class="empty-data__text">
-                {kulEmptyLabel ||
-                  language.translate(KulLanguageGeneric.EMPTY_DATA)}
-              </div>
+              <div class="empty-data__text">{kulEmpty}</div>
             </div>
           ) : (
             <ul

@@ -18,7 +18,7 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulScrollOnHoverElement } from "src/managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations";
-import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
+import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
@@ -295,7 +295,7 @@ export class KulTabbar {
             {node.icon && (
               <kul-image
                 class="tab__icon"
-                kulColor={`var(${KulThemeColorValues.PRIMARY})`}
+                kulColor={`var(${KUL_THEME_COLORS.primary})`}
                 kulSizeX="24px"
                 kulSizeY="24px"
                 kulValue={node.icon}

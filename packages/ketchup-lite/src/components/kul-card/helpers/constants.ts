@@ -4,8 +4,12 @@ import {
   KulCardAdapterRefs,
   KulCardLayout,
   KulCardPropsInterface,
-  KulCardShapesIds,
 } from "../kul-card-declarations";
+
+export const IDS = {
+  clear: "clear",
+  theme: "theme",
+};
 
 //#region Props
 export const KUL_CARD_PROPS: (keyof KulCardPropsInterface)[] = [
@@ -29,7 +33,7 @@ export const DEFAULTS: () => {
         {
           htmlProps: {
             className: "kul-full-width kul-danger",
-            id: KulCardShapesIds.CLEAR,
+            id: IDS.clear,
           },
           kulIcon: "refresh",
           kulLabel: "Clear logs",
@@ -37,7 +41,7 @@ export const DEFAULTS: () => {
         {
           htmlProps: {
             className: "kul-full-width",
-            id: KulCardShapesIds.THEME,
+            id: IDS.theme,
           },
           kulData: theme.getThemesDataset(),
         },

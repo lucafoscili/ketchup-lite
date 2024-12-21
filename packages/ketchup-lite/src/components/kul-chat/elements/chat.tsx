@@ -6,7 +6,8 @@ import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 export const prepChat = (
   getAdapter: () => KulChatAdapter,
 ): KulChatAdapterJsx["chat"] => {
-  const { assignRef } = kulManagerSingleton;
+  const { assignRef, theme } = kulManagerSingleton;
+  const { bemClass } = theme;
 
   return {
     //#region Clear
@@ -30,6 +31,25 @@ export const prepChat = (
     },
     //#endregion
 
+    //#region Configuration
+    configuration: () => {
+      const { elements, handlers } = getAdapter();
+      const { button } = handlers.chat;
+      const { chat } = elements.refs;
+
+      return (
+        <kul-button
+          class={`${bemClass("chat", "config")} kul-full-width`}
+          kulIcon="wrench"
+          kulLabel="Configuration"
+          kulStyling="flat"
+          onKul-button-event={button}
+          ref={assignRef(chat, "configuration")}
+        ></kul-button>
+      );
+    },
+    //#endregion
+
     //#region Progressbar
     progressbar: () => {
       const { controller, elements } = getAdapter();
@@ -37,19 +57,12 @@ export const prepChat = (
       const { compInstance, currentTokens } = controller.get;
       const { kulContextWindow } = compInstance;
 
-      const progressbarClass = {
-        chat__request__input__progressbar: true,
-        ["kul-animated"]: true,
-        ["kul-striped"]: true,
-      };
-
       const value = currentTokens();
-      const className = { ...progressbarClass, "kul-danger": value > 90 };
       const title = `Estimated tokens used: ${value}/${kulContextWindow}`;
 
       return (
         <kul-progressbar
-          class={className}
+          class={`${bemClass("input", "progressbar")} kul-animated kul-striped`}
           kulCenteredLabel={true}
           kulIcon="data_usage"
           kulLabel="Context window"
@@ -98,7 +111,7 @@ export const prepChat = (
 
       return (
         <kul-button
-          class="chat__request__input__button kul-full-height"
+          class={`${bemClass("input", "button")} kul-full-height`}
           id={IDS.chat.settings}
           kulIcon="settings"
           kulStyling="flat"
@@ -129,8 +142,6 @@ export const prepChat = (
 
     //#region Stt
     stt: () => {
-      //const { controller, elements, handlers } = getAdapter();
-      //const { isSttActive } = controller.get;
       const { elements, handlers } = getAdapter();
       const { chat } = elements.refs;
       const { button } = handlers.chat;
@@ -140,7 +151,7 @@ export const prepChat = (
       return (
         <kul-button
           id={IDS.chat.stt}
-          class="chat__request__buttons__stt"
+          class={bemClass("commands", "stt")}
           kulIcon="keyboard_voice"
           //  kulShowSpinner={showSpinner}
           kulStyling="icon"
@@ -167,7 +178,7 @@ export const prepChat = (
 
       return (
         <kul-textfield
-          class="chat__request__input__textarea"
+          class={`${bemClass("input", "textarea")}`}
           id={IDS.chat.prompt}
           kulDisabled={Boolean(currentPrompt())}
           kulFullWidth={true}

@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const SNOW: KulThemeElement = {
   cssVariables: {
@@ -50,6 +50,6 @@ export const SNOW: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.inter, KUL_THEME_FONTS.firaCode],
+  font: [KUL_THEME_FONTFACE.inter, KUL_THEME_FONTFACE.firaCode],
   isDark: false,
 };

@@ -14,7 +14,7 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulThemeColorValues } from "src/managers/kul-theme/kul-theme-declarations";
+import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import { GenericObject } from "src/types/GenericTypes";
 import {
   CSS_VAR_PREFIX,
@@ -60,8 +60,8 @@ export class KulImage {
    *
    * @see KulThemeColorValues - For a list of available CSS variable names for color.
    */
-  @Prop({ mutable: true, reflect: true })
-  kulColor = `var(${KulThemeColorValues.ICON})`;
+  @Prop({ mutable: true, reflect: true }) kulColor =
+    `var(${KUL_THEME_COLORS.icon})`;
   /**
    * Controls the display of a loading indicator. When enabled, a spinner is shown until the image finishes loading. This property is not compatible with SVG images.
    * @default false
@@ -165,7 +165,7 @@ export class KulImage {
     const style = {
       ["--kul_image_background"]: kulColor
         ? kulColor
-        : `var(${KulThemeColorValues.ICON})`,
+        : `var(${KUL_THEME_COLORS.icon})`,
       ["--kul_image_mask"]: "",
     };
     const isThemeIcon = kulValue.indexOf(CSS_VAR_PREFIX) > -1;

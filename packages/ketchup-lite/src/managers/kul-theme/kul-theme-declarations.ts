@@ -13,28 +13,20 @@ export interface KulThemeElement {
 export type KulThemeBEMModifier = Record<string, boolean>;
 export type KulThemeChartColorKey = `--kul-chart-color-${number}`;
 export type KulThemeAllChartColorKeys = KulThemeChartColorKey[];
-export type KulThemeChartColorCSSVariables = {
+export type KulThemeChartColors = {
   [K in KulThemeAllChartColorKeys[number]]: string;
 };
-export interface KulThemeCSSVariables extends KulThemeChartColorCSSVariables {
+export interface KulThemeCSSVariables extends KulThemeColors, KulThemeFonts {}
+export interface KulThemeColors extends KulThemeChartColors {
   "--kul-background-color": string;
   "--kul-border-color": string;
-  "--kul-box-shadow": string;
-  "--kul-card-zindex": number;
   "--kul-danger-color": string;
   "--kul-disabled-background-color": string;
   "--kul-disabled-color": string;
   "--kul-drawer-background-color": string;
   "--kul-drawer-color": string;
-  "--kul-drawer-width": string;
-  "--kul-drawer-zindex": number;
-  "--kul-font-family": string;
-  "--kul-font-family-monospace": string;
-  "--kul-font-size": string;
   "--kul-header-background-color": string;
   "--kul-header-color": string;
-  "--kul-header-height": string;
-  "--kul-header-zindex": number;
   "--kul-icon-color": string;
   "--kul-info-color": string;
   "--kul-primary-color": string;
@@ -59,6 +51,17 @@ export interface KulThemeIcons {
   "--kul-key-icon": string;
   "--kul-search-icon": string;
   "--kul-warning-icon": string;
+}
+export interface KulThemeFonts {
+  "--kul-font-family": string;
+  "--kul-font-family-monospace": string;
+  "--kul-font-size": string;
+  "--kul-header-height": string;
+  "--kul-header-zindex": number;
+  "--kul-box-shadow": string;
+  "--kul-card-zindex": number;
+  "--kul-drawer-width": string;
+  "--kul-drawer-zindex": number;
 }
 export interface KulThemeColor {
   hexColor: string;

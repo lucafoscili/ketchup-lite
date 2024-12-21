@@ -91,12 +91,12 @@
 }
 
 #kul-component,
-.chip-set {
+.chip {
   height: 100%;
   width: 100%;
 }
 
-.chip-set {
+.chip {
   & {
     align-content: center;
     box-sizing: border-box;
@@ -197,13 +197,31 @@
   }
 }
 
-.node {
+.wrapper {
   & {
+    align-items: center;
     display: flex;
-    flex-direction: column;
   }
 
-  &__expand {
+  &--hidden-children {
+    .dropdown-icon {
+      transform: unset;
+    }
+  }
+
+  &__indent {
+    width: calc(
+      var(--kul_chip_margin) * var(--kul_chip_indent_offset) *
+        var(--kul_chip_indent_multiplier)
+    );
+  }
+
+  &__node {
+    & {
+      display: flex;
+      flex-direction: column;
+    }
+
     & {
       background-color: var(--kul_chip_text_color);
       cursor: pointer;
@@ -231,27 +249,7 @@
   }
 }
 
-.chip-wrapper {
-  & {
-    align-items: center;
-    display: flex;
-  }
-
-  &--hidden-children {
-    .dropdown-icon {
-      transform: unset;
-    }
-  }
-}
-
-.indent {
-  width: calc(
-    var(--kul_chip_margin) * var(--kul_chip_indent_offset) *
-      var(--kul_chip_indent_multiplier)
-  );
-}
-
-.chip {
+.item {
   & {
     align-items: center;
     background-color: var(--kul_chip_background_color);

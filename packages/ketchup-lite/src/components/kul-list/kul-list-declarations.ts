@@ -22,7 +22,7 @@ export interface KulListEventPayload
 //#region Props
 export interface KulListPropsInterface {
   kulData?: KulDataDataset;
-  kulEmptyLabel?: string;
+  kulEmpty?: string;
   kulEnableDeletions?: boolean;
   kulNavigation?: boolean;
   kulRipple?: boolean;

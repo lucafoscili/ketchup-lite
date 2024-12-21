@@ -21,13 +21,13 @@ import {
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { autoplay, navigation } from "./helpers/navigation";
 import { createAdapter } from "./kul-carousel-adapter";
 import {
   KulCarouselEvent,
   KulCarouselEventPayload,
+  KulCarouselPropsInterface,
 } from "./kul-carousel-declarations";
 
 @Component({
@@ -151,10 +151,10 @@ export class KulCarousel {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulCarouselPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulCarouselPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -215,6 +215,8 @@ export class KulCarousel {
     return !!this.shapes?.[this.kulShape];
   }
   #prepCarousel(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { elements } = this.#adapter;
     const { jsx } = elements;
     const { back, forward } = jsx;
@@ -224,15 +226,21 @@ export class KulCarousel {
       if (shapes?.length) {
         return (
           <Fragment>
-            <div class="carousel__track" role="region" aria-live="polite">
+            <div
+              class={bemClass("carousel", "track")}
+              role="region"
+              aria-live="polite"
+            >
               {this.#prepSlide()}
             </div>
-            <div class="carousel__controls">
+            <div class={bemClass("carousel", "controls")}>
               {back()}
               {forward()}
             </div>
-            <div class="carousel__indicators-wrapper">
-              <div class="carousel__indicators">{this.#prepIndicators()}</div>
+            <div class={bemClass("carousel", "indicators-wrapper")}>
+              <div class={bemClass("carousel", "indicators")}>
+                {this.#prepIndicators()}
+              </div>
             </div>
           </Fragment>
         );
@@ -240,8 +248,10 @@ export class KulCarousel {
     }
   }
   #prepIndicators(): VNode[] {
-    const { toSlide } = navigation;
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { currentIndex, kulShape } = this;
+    const { toSlide } = navigation;
 
     const totalSlides = this.#getTotalSlides();
     const maxIndicators = 9;
@@ -257,13 +267,9 @@ export class KulCarousel {
     const indicators = [];
 
     if (start > 0) {
-      const className = {
-        carousel__chevron: true,
-        "carousel__chevron--left": true,
-      };
       indicators.push(
         <span
-          class={className}
+          class={bemClass("carousel", "chevron", { left: true })}
           onClick={() => toSlide(this.#adapter, 0)}
           title={`Jump to the first slide (#${0})`}
         >
@@ -279,14 +285,12 @@ export class KulCarousel {
         const isFirst = actualIndex === start;
         const isLast = actualIndex === end - 1;
 
-        const className = {
-          carousel__indicator: true,
-          "carousel__indicator--active": isCurrent,
-          "carousel__indicator--small": (isFirst || isLast) && !isCurrent,
-        };
         indicators.push(
           <span
-            class={className}
+            class={bemClass("carousel", "indicator", {
+              active: isCurrent,
+              small: (isFirst || isLast) && !isCurrent,
+            })}
             onClick={() => toSlide(this.#adapter, actualIndex)}
             title={`#${index}`}
           />,
@@ -294,13 +298,9 @@ export class KulCarousel {
       });
 
     if (end < totalSlides) {
-      const className = {
-        carousel__chevron: true,
-        "carousel__chevron--right": true,
-      };
       indicators.push(
         <span
-          class={className}
+          class={bemClass("carousel", "chevron", { right: true })}
           onClick={() => toSlide(this.#adapter, totalSlides - 1)}
           title={`Jump to the last slide (#${totalSlides - 1})`}
         >
@@ -312,7 +312,9 @@ export class KulCarousel {
     return indicators;
   }
   #prepSlide(): VNode {
-    const { data } = kulManagerSingleton;
+    const { decorate } = kulManagerSingleton.data.cell.shapes;
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { currentIndex, kulShape } = this;
 
     const props: Partial<KulDataCell<KulDataShapes>>[] = this.shapes[
@@ -323,7 +325,7 @@ export class KulCarousel {
       },
     }));
 
-    const decoratedShapes = data.cell.shapes.decorate(
+    const decoratedShapes = decorate(
       kulShape,
       this.shapes[kulShape],
       async (e) => this.onKulEvent(e, "kul-event"),
@@ -331,7 +333,7 @@ export class KulCarousel {
     ).element;
 
     return (
-      <div class="carousel__slide" data-index={currentIndex}>
+      <div class={bemClass("carousel", "slide")} data-index={currentIndex}>
         <Fragment>{decoratedShapes[currentIndex]}</Fragment>
       </div>
     );
@@ -368,17 +370,18 @@ export class KulCarousel {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+
     const { kulStyle } = this;
 
     const { next, previous } = navigation;
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div
-            class="carousel"
+            class={bemClass("carousel")}
             onTouchEnd={(e) => (this.#touchEndX = e.touches[0].clientX)}
             onTouchMove={() => {
               const swipeDistance = this.#touchEndX - this.#touchStartX;

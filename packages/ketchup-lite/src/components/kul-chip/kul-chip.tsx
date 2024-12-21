@@ -17,12 +17,17 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
+import {
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+  RIPPLE_SURFACE_CLASS,
+} from "src/utils/constants";
 import {
   KulChipEvent,
   KulChipEventArguments,
   KulChipEventPayload,
+  KulChipPropsInterface,
   KulChipStyling,
 } from "./kul-chip-declarations";
 
@@ -158,13 +163,13 @@ export class KulChip {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulChipPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulChipPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulChipPropsInterface;
   }
   /**
    * Returns the selected nodes.
@@ -246,15 +251,16 @@ export class KulChip {
   #isSelected(node: KulDataNode) {
     return this.selectedNodes.has(node);
   }
-  #prepChip(node: KulDataNode, i: number) {
-    const className = {
-      chip: true,
-      "chip--only-icon": this.#hasIconOnly(node),
-      "chip--selected": this.#isSelected(node),
-    };
+  #prepItem(node: KulDataNode, i: number) {
+    const { bemClass } = kulManagerSingleton.theme;
+
     return (
       <div
-        class={className}
+        class={bemClass("item", null, {
+          "only-icon": this.#hasIconOnly(node),
+          selected: this.#isSelected(node),
+        })}
+        data-cy={KulDataCyAttributes.NODE}
         data-value={node.id}
         onClick={(e) => {
           this.onKulEvent(e, "click", { node });
@@ -263,12 +269,12 @@ export class KulChip {
         title={node.description ?? ""}
       >
         {this.#prepRipple(node)}
-        <span class="indent"></span>
+        <span class={bemClass("item", "indent")}></span>
         {this.#prepIcons(node)}
         <span
           role="button"
           tabindex={i}
-          class="chip__primary-action"
+          class={bemClass("item", "primary-action")}
           data-cy={KulDataCyAttributes.INPUT}
           onBlur={(e) => {
             this.onKulEvent(e, "blur", { node });
@@ -277,13 +283,15 @@ export class KulChip {
             this.onKulEvent(e, "focus", { node });
           }}
         >
-          <span class="chip__text">{node.value}</span>
+          <span class={bemClass("item", "text")}>{node.value}</span>
         </span>
         {this.#isInput() && this.#prepDeleteIcon(node)}
       </div>
     );
   }
-  #prepChipSet() {
+  #prepItemSet() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const elements: VNode[] = [];
 
     const nodeCount = this.kulData?.nodes?.length;
@@ -291,18 +299,23 @@ export class KulChip {
       this.#nodeItems = [];
       const node = this.kulData.nodes[i];
       this.#prepNode(node, 0);
-      elements.push(<div class="node">{this.#nodeItems}</div>);
+      elements.push(
+        <div class={bemClass("chip", "node")}>{this.#nodeItems}</div>,
+      );
     }
 
     return elements;
   }
   #prepDeleteIcon(node: KulDataNode) {
     const { get } = kulManagerSingleton.assets;
+    const { bemClass } = kulManagerSingleton.theme;
 
     const { style } = get(`./assets/svg/clear.svg`);
     return (
       <div
-        class="chip__icon chip__icon--trailing"
+        class={bemClass("item", "icon", {
+          trailing: true,
+        })}
         data-cy={KulDataCyAttributes.BUTTON}
         key={node.id + "_delete"}
         onClick={(e) => {
@@ -314,27 +327,30 @@ export class KulChip {
   }
   #prepIcons(node: KulDataNode) {
     const { get } = kulManagerSingleton.assets;
+    const { bemClass } = kulManagerSingleton.theme;
 
     const icons: VNode[] = [];
 
-    const className = {
-      chip__icon: true,
-      "chip__icon--leading": true,
-      "chip__icon--leading-hidden":
-        this.kulStyling === "filter" && this.#isSelected(node),
-    };
-
     if (node.icon) {
       const { style } = get(`./assets/svg/${node.icon}.svg`);
-      icons.push(<div class={className} style={style}></div>);
+      icons.push(
+        <div
+          class={bemClass("item", "icon", {
+            leading: true,
+            "eading-hidden":
+              this.kulStyling === "filter" && this.#isSelected(node),
+          })}
+          style={style}
+        ></div>,
+      );
     }
 
     if (this.#isFilter()) {
       icons.push(
-        <span class="chip__checkmark">
-          <svg class="chip__checkmark-svg" viewBox="-2 -3 30 30">
+        <span class={bemClass("item", "checkmark")}>
+          <svg class={bemClass("item", "checkmark-svg")} viewBox="-2 -3 30 30">
             <path
-              class="chip__checkmark-path"
+              class={bemClass("item", "checkmark-path")}
               fill="none"
               stroke="black"
               d="M1.73,12.91 8.1,19.28 22.79,4.59"
@@ -347,21 +363,25 @@ export class KulChip {
     return icons;
   }
   #prepNode(node: KulDataNode, indent: number) {
-    const className = {
-      "chip-wrapper": true,
-      "chip-wrapper--hidden-children":
-        this.#hasChildren(node) && !this.#showChildren(node),
-    };
+    const { bemClass } = kulManagerSingleton.theme;
+
     const indentStyle = {
       ["--kul_chip_indent_offset"]: indent.toString(),
     };
 
     this.#nodeItems.push(
-      <div class={className}>
-        <div class="indent" style={indentStyle}></div>
+      <div
+        class={bemClass("wrapper", null, {
+          "hidden-children":
+            this.#hasChildren(node) && !this.#showChildren(node),
+        })}
+      >
+        <div class={bemClass("wrapper", "indent")} style={indentStyle}></div>
         {this.#hasChildren(node) ? (
           <div
-            class={`node__expand ${this.#isExpanded(node) ? "node__expand--expanded" : ""}`}
+            class={bemClass("wrapper", "node", {
+              expanded: this.#isExpanded(node),
+            })}
             onClick={(e) => {
               this.onKulEvent(e, "click", {
                 expansion: true,
@@ -369,10 +389,16 @@ export class KulChip {
               });
             }}
           ></div>
-        ) : indent ? (
-          <div class={`node__expand node__expand--placeholder`}></div>
-        ) : null}
-        {this.#prepChip(node, indent)}
+        ) : (
+          indent && (
+            <div
+              class={bemClass("wrapper", "node", {
+                placeholder: true,
+              })}
+            ></div>
+          )
+        )}
+        {this.#prepItem(node, indent)}
       </div>,
     );
 
@@ -388,6 +414,8 @@ export class KulChip {
     if (this.kulRipple && this.#isClickable()) {
       return (
         <div
+          class={RIPPLE_SURFACE_CLASS}
+          data-cy={KulDataCyAttributes.RIPPLE}
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown", { node })}
           ref={(el) => {
             if (el && this.kulRipple) {
@@ -440,24 +468,25 @@ export class KulChip {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { kulStyle } = this;
 
     this.#nodeItems = [];
-    const className = {
-      "chip-set": true,
-      "chip-set--choice": this.#isChoice(),
-      "chip-set--filter": this.#isFilter(),
-      "chip-set--input": this.#isInput(),
-    };
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class={className} role="grid">
-            {this.#prepChipSet()}
+          <div
+            class={bemClass("chip", null, {
+              choice: this.#isChoice(),
+              filter: this.#isFilter(),
+              input: this.#isInput(),
+            })}
+            role="grid"
+          >
+            {this.#prepItemSet()}
           </div>
         </div>
       </Host>

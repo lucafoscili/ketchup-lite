@@ -1,5 +1,5 @@
 import { KulThemeElement } from "../kul-theme-declarations";
-import { KUL_THEME_FONTS } from "./contants";
+import { KUL_THEME_FONTFACE } from "./contants";
 
 export const FLAMINGO: KulThemeElement = {
   cssVariables: {
@@ -50,6 +50,6 @@ export const FLAMINGO: KulThemeElement = {
     "--kul-search-icon": "search",
     "--kul-warning-icon": "warning",
   },
-  font: [KUL_THEME_FONTS.mali],
+  font: [KUL_THEME_FONTFACE.mali],
   isDark: true,
 };
