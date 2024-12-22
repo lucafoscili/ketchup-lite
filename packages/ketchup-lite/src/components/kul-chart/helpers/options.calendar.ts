@@ -34,8 +34,8 @@ export const calendar = (getAdapter: () => KulChartAdapter) => {
     params: KulChartTooltipArguments<KulChartTooltipDataDictionary>,
   ) => {
     const { value } = params;
-    const date = value[0];
-    const dataValue = value[1];
+    const date = (value as string)[0];
+    const dataValue = (value as string)[1];
     return `
               <strong>Date:</strong> ${date}<br/>
               <strong>Value:</strong> ${dataValue}

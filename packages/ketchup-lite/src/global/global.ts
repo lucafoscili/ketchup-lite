@@ -7,13 +7,7 @@ const initKulManager = () => {
   if (isInitialized) return;
   isInitialized = true;
 
-  const KulManagerSymbol = Symbol("KulManager");
-
-  if (!globalThis[KulManagerSymbol]) {
-    globalThis[KulManagerSymbol] = new KulManager();
-  }
-
-  kulManagerSingleton = globalThis[KulManagerSymbol];
+  kulManagerSingleton = new KulManager();
 
   if (typeof document !== "undefined") {
     try {

@@ -63,7 +63,7 @@ export class KulUpload {
    * Initializes the component with these files.
    * @default null
    */
-  @Prop({ mutable: false }) kulValue = null;
+  @Prop({ mutable: false }) kulValue: File[] = null;
   //#endregion
 
   //#region Internal variables

@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_PYTHON = (Prism: Prism.Environment) => {
   (Prism.languages.python = {
     comment: { pattern: /(^|[^\\])#.*/, lookbehind: !0, greedy: !0 },

@@ -54,6 +54,8 @@ export const createGetters = (
           content: message,
         };
         return newMessage;
+      } else {
+        return null;
       }
     },
   };

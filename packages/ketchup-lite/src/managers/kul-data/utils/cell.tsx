@@ -137,8 +137,9 @@ export const cellGetShape = <T extends KulDataShapes>(
         } else {
           const prefixedProp =
             prefix + prop.charAt(0).toUpperCase() + prop.slice(1);
-          if (!shapeProps[prefixedProp]) {
-            shapeProps[prefixedProp] = cell[prop];
+          const k = prefixedProp as keyof Partial<KulDataCell<T>>;
+          if (!shapeProps[k]) {
+            shapeProps[k] = cell[prop];
           }
         }
         break;
@@ -151,7 +152,7 @@ export const cellGetShape = <T extends KulDataShapes>(
 //#region cellGetAllShapes
 export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
   if (!nodeExists(dataset)) {
-    return;
+    return null;
   }
 
   const shapes: KulDataShapesMap = {
@@ -240,7 +241,7 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
 //#endregion
 
 //#region cellStringify
-export const cellStringify = (value: KulDataCell<KulDataShapes>["value"]) => {
+export const cellStringify = (value: unknown) => {
   if (value === null || value === undefined) {
     return String(value).valueOf();
   } else if (value instanceof Date) {
@@ -290,7 +291,10 @@ const decorateSpreader = (
     }
   }
   for (const key in props) {
-    const prop = props[key];
+    const k = key as keyof (Partial<KulDataCell<KulDataShapes>> & {
+      htmlProps?: Record<string, any>;
+    });
+    const prop = props[k];
     toSpread[key] = prop;
   }
 

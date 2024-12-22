@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_MARKDOWN = (Prism: Prism.Environment) => {
   function e(reg: string) {
     return (

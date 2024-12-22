@@ -2,7 +2,10 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { CompareExample } from "./kul-showcase-compare-declarations";
+import {
+  CompareData,
+  CompareExample,
+} from "./kul-showcase-compare-declarations";
 import { COMPARE_FIXTURES } from "./kul-showcase-compare-fixtures";
 
 @Component({
@@ -34,7 +37,8 @@ export class KulShowcaseCompare {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: CompareExample = this.fixtures.examples[key];
+        const k = key as keyof CompareData;
+        const props: CompareExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

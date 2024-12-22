@@ -3,7 +3,10 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { PhotoframeExample } from "./kul-showcase-photoframe-declarations";
+import {
+  PhotoframeData,
+  PhotoframeExample,
+} from "./kul-showcase-photoframe-declarations";
 import { PHOTOFRAME_FIXTURES } from "./kul-showcase-photoframe-fixtures";
 
 @Component({
@@ -35,7 +38,8 @@ export class KulShowcasePhotoframe {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: PhotoframeExample = this.fixtures.examples[key];
+        const k = key as keyof PhotoframeData;
+        const props: PhotoframeExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

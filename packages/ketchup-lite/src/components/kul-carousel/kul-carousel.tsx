@@ -246,6 +246,8 @@ export class KulCarousel {
         );
       }
     }
+
+    return null;
   }
   #prepIndicators(): VNode[] {
     const { bemClass } = kulManagerSingleton.theme;

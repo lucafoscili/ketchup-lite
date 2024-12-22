@@ -2,7 +2,10 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { CarouselExample } from "./kul-showcase-carousel-declarations";
+import {
+  CarouselData,
+  CarouselExample,
+} from "./kul-showcase-carousel-declarations";
 import { CAROUSEL_FIXTURES } from "./kul-showcase-carousel-fixtures";
 
 @Component({
@@ -34,7 +37,8 @@ export class KulShowcaseCarousel {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: CarouselExample = this.fixtures.examples[key];
+        const k = key as keyof CarouselData;
+        const props: CarouselExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

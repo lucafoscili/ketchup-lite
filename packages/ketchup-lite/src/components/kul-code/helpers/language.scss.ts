@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_SCSS = (Prism: Prism.Environment) => {
   (Prism.languages.scss = Prism.languages.extend("css", {
     comment: {

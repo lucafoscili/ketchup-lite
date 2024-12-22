@@ -30,10 +30,10 @@ export class KulShowcase {
 
   //#region Props
   /**
-   * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+   * The scroll container, functional to the ScrollToTop floating button.
    * @default ""
    */
-  @Prop({ mutable: false }) kulScrollElement: HTMLElement = undefined;
+  @Prop({ mutable: false }) kulScrollElement: HTMLElement;
   /**
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""

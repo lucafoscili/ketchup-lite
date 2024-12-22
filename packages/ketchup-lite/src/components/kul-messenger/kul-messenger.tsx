@@ -34,8 +34,10 @@ import {
   KulMessengerEditingStatus,
   KulMessengerEvent,
   KulMessengerEventPayload,
+  KulMessengerFilters,
   KulMessengerHistory,
   KulMessengerImageTypes,
+  KulMessengerPanels,
   KulMessengerPropsInterface,
   KulMessengerUnionChildIds,
 } from "./kul-messenger-declarations";
@@ -279,8 +281,8 @@ export class KulMessenger {
     const { kulValue } = this;
 
     const currentCharacter = kulValue.currentCharacter;
-    const filters = kulValue.ui?.filters || {};
-    const panels = kulValue.ui?.panels || {};
+    const filters = kulValue.ui?.filters || CLEAN_UI().filters;
+    const panels = kulValue.ui?.panels || CLEAN_UI().panels;
 
     if (currentCharacter) {
       this.currentCharacter = byId(currentCharacter);
@@ -288,14 +290,16 @@ export class KulMessenger {
 
     for (const key in filters) {
       if (Object.prototype.hasOwnProperty.call(filters, key)) {
-        const filter = filters[key];
-        this.ui.filters[key] = filter;
+        const k = key as keyof KulMessengerFilters;
+        const filter = filters[k];
+        this.ui.filters[k] = filter;
       }
     }
     for (const key in panels) {
       if (Object.prototype.hasOwnProperty.call(panels, key)) {
-        const panel = panels[key];
-        this.ui.panels[key] = panel;
+        const k = key as keyof KulMessengerPanels;
+        const panel = panels[k];
+        this.ui.panels[k] = panel;
       }
     }
   }

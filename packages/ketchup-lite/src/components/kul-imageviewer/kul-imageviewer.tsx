@@ -62,7 +62,7 @@ export class KulImageviewer {
   /**
    * The history index of the image displayed in the preview.
    */
-  @State() historyIndex = null;
+  @State() historyIndex: number = null;
   /**
    * Reflects the status of the spinner.
    */
@@ -101,7 +101,7 @@ export class KulImageviewer {
         current: () => this.history[this.currentShape.index],
         currentSnapshot: () => {
           if (this.historyIndex === null) {
-            return;
+            return null;
           }
 
           const snapshot =
@@ -292,6 +292,8 @@ export class KulImageviewer {
         value: stringify(value),
       };
     }
+
+    return null;
   }
   #prepViewer(): VNode {
     const { bemClass } = kulManagerSingleton.theme;

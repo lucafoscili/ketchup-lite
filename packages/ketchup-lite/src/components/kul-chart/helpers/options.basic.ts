@@ -161,12 +161,16 @@ export const basic = (getAdapter: () => KulChartAdapter) => {
       min: Math.min(
         ...seriesOptions
           .filter((s) => s.type === "heatmap")
-          .flatMap((s) => s.data.map((d) => d[2])),
+          .flatMap((s) =>
+            s.data.map((d) => d[2 as keyof EChartsOption["visualMap"]]),
+          ),
       ),
       max: Math.max(
         ...seriesOptions
           .filter((s) => s.type === "heatmap")
-          .flatMap((s) => s.data.map((d) => d[2])),
+          .flatMap((s) =>
+            s.data.map((d) => d[2 as keyof EChartsOption["visualMap"]]),
+          ),
       ),
       calculable: true,
       orient: "vertical",

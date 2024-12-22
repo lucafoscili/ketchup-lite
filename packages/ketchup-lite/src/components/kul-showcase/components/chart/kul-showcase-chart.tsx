@@ -3,7 +3,7 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ChartExample } from "./kul-showcase-chart-declarations";
+import { ChartData, ChartExample } from "./kul-showcase-chart-declarations";
 import { CHART_FIXTURES } from "./kul-showcase-chart-fixtures";
 
 @Component({
@@ -35,7 +35,8 @@ export class KulShowcaseChart {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: ChartExample = this.fixtures.examples[key];
+        const k = key as keyof ChartData;
+        const props: ChartExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -514,7 +514,7 @@ export class KulButton {
     const { bemClass } = kulManagerSingleton.theme;
 
     if (!this.#isDropdown()) {
-      return;
+      return null;
     }
 
     const { kulDisabled, kulData } = this;

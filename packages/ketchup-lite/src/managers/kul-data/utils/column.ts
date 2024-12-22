@@ -15,8 +15,9 @@ export const columnFind = (
   for (let index = 0; index < columns.length; index++) {
     const column = columns[index];
     for (const key in filters) {
-      const filter = filters[key];
-      if (column[key] === filter) {
+      const k = key as keyof KulDataColumn;
+      const filter = filters[k];
+      if (column[k] === filter) {
         result.push(column);
       }
     }

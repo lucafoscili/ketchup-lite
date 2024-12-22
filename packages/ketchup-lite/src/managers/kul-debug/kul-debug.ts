@@ -96,6 +96,7 @@ export class KulDebug {
         case "will-render":
           comp.debugInfo.renderCount++;
           comp.debugInfo.renderStart = window.performance.now();
+          break;
         default:
           break;
       }
@@ -187,9 +188,10 @@ export class KulDebug {
       }
       for (const key in logsToPrint) {
         if (Object.prototype.hasOwnProperty.call(logsToPrint, key)) {
-          const logs: KulDebugLogToPrintEntry[] = logsToPrint[key];
+          const k = key as keyof KulDebugLogsToPrint;
+          const logs: KulDebugLogToPrintEntry[] = logsToPrint[k];
           console.groupCollapsed(
-            "%c  %c" + key + " logs " + "(" + logsToPrint[key].length + ")",
+            "%c  %c" + key + " logs " + "(" + logsToPrint[k].length + ")",
             "background-color: green; margin-right: 10px; border-radius: 50%",
             "background-color: transparent",
           );

@@ -87,10 +87,16 @@ export class KulManager {
           for (const pathEl of paths) {
             const pathElAsDynamicPos = pathEl as KulDynamicPositionElement;
             const { kulDynamicPosition } = pathElAsDynamicPos;
-            const { detach, originalPath } = kulDynamicPosition;
-            if (kulDynamicPosition && detach && originalPath.includes(obj.el)) {
-              found = true;
-              break;
+            if (kulDynamicPosition) {
+              const { detach, originalPath } = kulDynamicPosition;
+              if (
+                kulDynamicPosition &&
+                detach &&
+                originalPath.includes(obj.el)
+              ) {
+                found = true;
+                break;
+              }
             }
           }
         }
@@ -101,6 +107,8 @@ export class KulManager {
       });
     });
   };
+
+  //#region addClickCallback
   /**
    * Add a callback to handle clicks outside specified elements.
    * @param cb - The callback to execute when the click occurs.
@@ -116,6 +124,9 @@ export class KulManager {
       clickCallbacks.add(cb);
     }
   };
+  //#endregion
+
+  //#region assignRef
   /**
    * Assigns an element to the related refs' key.
    * @param {Record<string, any>} refs - The refs object.
@@ -124,6 +135,9 @@ export class KulManager {
   assignRef = (refs: Record<string, any>, key: string) => (el: any) => {
     if (el) refs[key] = el;
   };
+  //#endregion
+
+  //#region getProps
   /**
    * Retrieves component's prop values based on a list and option to include descriptions.
    * @param {KulComponent} comp - The component requesting prop values.
@@ -132,19 +146,23 @@ export class KulManager {
   getProps = <C extends KulComponentName>(
     comp: KulComponent<C>,
   ): KulComponentPropsFor<C> => {
-    const props = {};
+    const props: Partial<KulComponentPropsFor<C>> = {};
 
     for (const key in comp) {
       if (
         Object.prototype.hasOwnProperty.call(comp, key) &&
         key.startsWith("kul")
       ) {
-        props[key] = comp[key];
+        const k = key as keyof KulComponent<C> & `kul${string}`;
+        props[k] = comp[k];
       }
     }
 
     return props as KulComponentPropsFor<C>;
   };
+  //#endregion
+
+  //#region removeClickCallback
   /**
    * Removes a previously added click-callback from the stack.
    * @param cb - The callback to remove.
@@ -158,6 +176,9 @@ export class KulManager {
    * @param  compName - The component name to use for specific sanitization.
    * @returns The sanitized object.
    */
+  //#endregion
+
+  //#region sanitizeProps
   sanitizeProps<C extends KulComponentName>(
     props: GenericObject<any>,
     compName: C,
@@ -227,4 +248,5 @@ export class KulManager {
       return sanitized as P;
     }
   }
+  //#endregion
 }

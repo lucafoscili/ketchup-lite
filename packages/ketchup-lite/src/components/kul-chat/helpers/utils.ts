@@ -11,7 +11,7 @@ export const calcTokens = async (adapter: KulChatAdapter) => {
   const { kulContextWindow, kulSystem } = compInstance;
 
   if (!kulContextWindow) {
-    return;
+    return 0;
   }
 
   let count = kulSystem ? kulSystem.length / 4 : 0;

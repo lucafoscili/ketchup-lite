@@ -3,7 +3,10 @@ import { kulManagerSingleton } from "src/global/global";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ArticleExample } from "./kul-showcase-article-declarations";
+import {
+  ArticleData,
+  ArticleExample,
+} from "./kul-showcase-article-declarations";
 import { ARTICLE_FIXTURES } from "./kul-showcase-article-fixtures";
 
 @Component({
@@ -36,7 +39,8 @@ export class KulShowcaseArticle {
 
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: ArticleExample = this.fixtures.examples[key];
+        const k = key as keyof ArticleData;
+        const props: ArticleExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

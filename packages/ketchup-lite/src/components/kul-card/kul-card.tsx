@@ -20,6 +20,7 @@ import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarat
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { createAdapter } from "./kul-card-adapter";
 import {
+  KulCardAdapterJsx,
   KulCardEvent,
   KulCardEventPayload,
   KulCardLayout,
@@ -203,7 +204,8 @@ export class KulCard {
     }
 
     const { layouts } = this.#adapter.elements.jsx;
-    const layout = layouts[kulLayout.toLowerCase()];
+    const layout =
+      layouts[kulLayout.toLowerCase() as keyof KulCardAdapterJsx["layouts"]];
 
     const style = {
       "--kul_card_height": kulSizeY ? kulSizeY : "100%",

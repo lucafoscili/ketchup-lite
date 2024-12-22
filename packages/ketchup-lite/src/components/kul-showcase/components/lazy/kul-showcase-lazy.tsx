@@ -3,7 +3,7 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { LazyExample } from "./kul-showcase-lazy-declarations";
+import { LazyData, LazyExample } from "./kul-showcase-lazy-declarations";
 import { LAZY_FIXTURES } from "./kul-showcase-lazy-fixtures";
 
 @Component({
@@ -35,7 +35,8 @@ export class KulShowcaseLazy {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: LazyExample = this.fixtures.examples[key];
+        const k = key as keyof LazyData;
+        const props: LazyExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

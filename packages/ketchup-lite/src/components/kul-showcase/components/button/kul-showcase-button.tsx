@@ -5,7 +5,7 @@ import { KulButtonStyling } from "../../../kul-button/kul-button-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import { BUTTON_FIXTURES } from "./kul-showcase-button-fixtures";
-import { ButtonExample } from "./kul-showcase-button-declarations";
+import { ButtonData, ButtonExample } from "./kul-showcase-button-declarations";
 
 @Component({
   tag: "kul-showcase-button",
@@ -36,7 +36,9 @@ export class KulShowcaseButton {
     const elements: VNode[] = [];
     for (const k1 in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
-        const category: ButtonExample = this.fixtures.examples[k1];
+        const k = k1 as keyof ButtonData;
+        const category: Record<string, Partial<ButtonExample>> = this.fixtures
+          .examples[k];
         const group: VNode[] = [];
 
         for (const k2 in category) {

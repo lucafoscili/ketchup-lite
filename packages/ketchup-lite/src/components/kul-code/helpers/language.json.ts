@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_JSON = (Prism: Prism.Environment) => {
   (Prism.languages.json = {
     property: {

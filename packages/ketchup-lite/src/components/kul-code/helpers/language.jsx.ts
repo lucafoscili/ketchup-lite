@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_JSX = (Prism: Prism.Environment) => {
   var n = Prism.util.clone(Prism.languages.javascript),
     e = "(?:\\{<S>*\\.{3}(?:[^{}]|<BRACES>)*\\})";

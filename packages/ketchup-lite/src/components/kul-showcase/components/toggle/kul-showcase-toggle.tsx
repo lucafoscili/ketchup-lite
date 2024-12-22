@@ -3,7 +3,7 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ToggleExample } from "./kul-showcase-toggle-declarations";
+import { ToggleData, ToggleExample } from "./kul-showcase-toggle-declarations";
 import { TOGGLE_FIXTURES } from "./kul-showcase-toggle-fixtures";
 
 @Component({
@@ -35,7 +35,8 @@ export class KulShowcaseToggle {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: ToggleExample = this.fixtures.examples[key];
+        const k = key as keyof ToggleData;
+        const props: ToggleExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

@@ -235,7 +235,7 @@ export class KulTextfield {
   }
   #prepCounter(): VNode {
     if (!this.#maxLength) {
-      return;
+      return null;
     }
 
     const { bemClass } = kulManagerSingleton.theme;
@@ -248,7 +248,7 @@ export class KulTextfield {
   }
   #prepHelper(): VNode {
     if (!this.kulHelper) {
-      return;
+      return null;
     }
 
     const { bemClass } = kulManagerSingleton.theme;
@@ -268,7 +268,7 @@ export class KulTextfield {
   }
   #prepIcon(): VNode {
     if (!this.kulIcon) {
-      return;
+      return null;
     }
 
     const { bemClass } = kulManagerSingleton.theme;
@@ -320,7 +320,7 @@ export class KulTextfield {
   }
   #prepLabel(): VNode {
     if (this.kulFullWidth) {
-      return;
+      return null;
     }
 
     const { bemClass } = kulManagerSingleton.theme;

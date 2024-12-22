@@ -70,7 +70,7 @@ export const prepCustomizationHandlers = (
             timeframes: false,
           };
           Array.from(selectedNodes).forEach((n) => {
-            newFilters[n.id] = true;
+            newFilters[n.id as keyof KulMessengerFilters] = true;
           });
           set.ui.filters(newFilters);
           break;
@@ -78,7 +78,8 @@ export const prepCustomizationHandlers = (
           const nodes: string[] = [];
           for (const key in filters) {
             if (Object.prototype.hasOwnProperty.call(filters, key)) {
-              const option = filters[key];
+              const k = key as keyof KulMessengerFilters;
+              const option = filters[k];
               if (option) {
                 nodes.push(key);
               }

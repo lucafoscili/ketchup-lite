@@ -2,7 +2,10 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { AccordionExample } from "./kul-showcase-accordion-declarations";
+import {
+  AccordionData,
+  AccordionExample,
+} from "./kul-showcase-accordion-declarations";
 import { ACCORDION_FIXTURES } from "./kul-showcase-accordion-fixtures";
 
 @Component({
@@ -34,7 +37,8 @@ export class KulShowcaseAccordion {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: AccordionExample = this.fixtures.examples[key];
+        const k = key as keyof AccordionData;
+        const props: AccordionExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

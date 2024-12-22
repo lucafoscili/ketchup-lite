@@ -7,6 +7,7 @@ import {
   YAXisComponentOption,
 } from "echarts";
 import { kulManagerSingleton } from "src/global/global";
+import { KulThemeCSSVariables } from "src/managers/kul-theme/kul-theme-declarations";
 import { KulChartAdapter, KulChartAxesTypes } from "../kul-chart-declarations";
 
 //#region baseAxis
@@ -118,7 +119,7 @@ export const prepSeries = (
     colorArray.push(...kulColors.map((c) => getHexColor(c)));
   } else {
     let index = 1;
-    let colorVar = `--kul-chart-color-${index}`;
+    let colorVar = `--kul-chart-color-${index}` as keyof KulThemeCSSVariables;
     while (cssVars[colorVar]) {
       colorArray.push(getHexColor(cssVars[colorVar]));
       index++;

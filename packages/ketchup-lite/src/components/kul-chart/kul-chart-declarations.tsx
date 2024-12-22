@@ -118,7 +118,7 @@ export type KulChartTooltipDataDictionary = {
   name?: string;
   source?: string;
   target?: string;
-  value?: number;
+  value?: number | string[];
 };
 export type KulChartTooltipData =
   | KulChartTooltipDataDictionary

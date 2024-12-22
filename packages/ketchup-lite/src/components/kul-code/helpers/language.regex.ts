@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_REGEX = (Prism: Prism.Environment) => {
   var e = { pattern: /\\[\\(){}[\]^$+*?|.]/, alias: "escape" },
     n =

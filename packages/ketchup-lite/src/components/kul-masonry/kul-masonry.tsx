@@ -347,6 +347,8 @@ export class KulMasonry {
         );
       }
     }
+
+    return null;
   }
   //#endregion
 

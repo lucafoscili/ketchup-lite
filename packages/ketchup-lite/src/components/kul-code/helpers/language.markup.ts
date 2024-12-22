@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_MARKUP = (Prism: Prism.Environment) => {
   (Prism.languages.markup = {
     comment: { pattern: /<!--(?:(?!<!--)[\s\S])*?-->/, greedy: !0 },

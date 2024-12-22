@@ -136,7 +136,10 @@ export class KulChip {
         break;
       case "pointerdown":
         if (kulRipple && this.#isClickable()) {
-          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface[node.id]);
+          theme.ripple.trigger(
+            e as PointerEvent,
+            this.#rippleSurface[Number(node.id)],
+          );
         }
         break;
     }
@@ -419,7 +422,7 @@ export class KulChip {
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown", { node })}
           ref={(el) => {
             if (el && this.kulRipple) {
-              this.#rippleSurface[node.id] = el;
+              this.#rippleSurface[Number(node.id)] = el;
             }
           }}
         ></div>

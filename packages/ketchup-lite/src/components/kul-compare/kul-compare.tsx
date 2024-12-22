@@ -295,6 +295,8 @@ export class KulCompare {
         );
       }
     }
+
+    return null;
   }
   #updateOverlayWidth(event: InputEvent) {
     const sliderValue =

@@ -5,6 +5,7 @@ import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import {
   SpinnerBranch,
+  SpinnerData,
   SpinnerLeaf,
 } from "./kul-showcase-spinner-declarations";
 import { SPINNER_FIXTURES } from "./kul-showcase-spinner-fixtures";
@@ -38,7 +39,8 @@ export class KulShowcaseSpinner {
     const elements: VNode[] = [];
     for (const k1 in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
-        const type: SpinnerBranch = this.fixtures.examples[k1];
+        const k = k1 as keyof SpinnerData;
+        const type: SpinnerBranch = this.fixtures.examples[k];
 
         for (const k2 in type) {
           if (Object.prototype.hasOwnProperty.call(type, k2)) {

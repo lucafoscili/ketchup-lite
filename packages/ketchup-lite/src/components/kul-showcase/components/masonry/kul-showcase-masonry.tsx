@@ -2,7 +2,10 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { MasonryExample } from "./kul-showcase-masonry-declarations";
+import {
+  MasonryData,
+  MasonryExample,
+} from "./kul-showcase-masonry-declarations";
 import { MASONRY_FIXTURES } from "./kul-showcase-masonry-fixtures";
 
 @Component({
@@ -34,7 +37,8 @@ export class KulShowcaseMasonry {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: MasonryExample = this.fixtures.examples[key];
+        const k = key as keyof MasonryData;
+        const props: MasonryExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

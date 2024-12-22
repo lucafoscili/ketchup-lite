@@ -4,7 +4,7 @@ import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import { CODE_FIXTURES } from "./kul-showcase-code-fixtures";
-import { CodeExample } from "./kul-showcase-code-declarations";
+import { CodeData, CodeExample } from "./kul-showcase-code-declarations";
 
 @Component({
   tag: "kul-showcase-code",
@@ -35,7 +35,8 @@ export class KulShowcaseCode {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: CodeExample = this.fixtures.examples[key];
+        const k = key as keyof CodeData;
+        const props: CodeExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

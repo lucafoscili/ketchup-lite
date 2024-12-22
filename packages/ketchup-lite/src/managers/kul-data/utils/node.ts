@@ -55,8 +55,9 @@ export const nodeFilter = (
     const hasChildren = node.children?.length;
     let matches = false;
     for (const key in filters) {
-      const nodeValue = node[key];
-      const filterValue = filters[key];
+      const k = key as keyof KulDataNode;
+      const nodeValue = node[k];
+      const filterValue = filters[k];
       const nodeValueStr = cellStringify(nodeValue).toLowerCase();
       const filterValueStr = cellStringify(filterValue).toLowerCase();
 
@@ -277,7 +278,8 @@ export const nodeSetProperties = (
     const node = nodes[index];
     for (const key in properties) {
       if (!exclude.includes(node)) {
-        node[key] = properties[key];
+        (node[key as keyof KulDataNode] as any) =
+          properties[key as keyof KulDataNode];
         updated.push(node);
       }
     }

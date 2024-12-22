@@ -4,9 +4,9 @@ import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 export const CANVAS_EXAMPLES_KEYS = ["simple", "style"] as const;
 
 export interface CanvasExample extends KulCanvasPropsInterface {
-  ["data-description"]: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
-  className: string;
+  className?: string;
 }
 
 export type CanvasData = {

@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_CSS = (Prism: Prism.Environment) => {
   var e =
     /(?:"(?:\\(?:\r\n|[\s\S])|[^"\\\r\n])*"|'(?:\\(?:\r\n|[\s\S])|[^'\\\r\n])*')/;

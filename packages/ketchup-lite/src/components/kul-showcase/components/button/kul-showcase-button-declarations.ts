@@ -26,8 +26,8 @@ export const BUTTON_EXAMPLES_KEYS = [
 ] as const;
 
 export interface ButtonExample extends KulButtonPropsInterface {
-  className: string;
-  ["data-description"]: string;
+  className?: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 

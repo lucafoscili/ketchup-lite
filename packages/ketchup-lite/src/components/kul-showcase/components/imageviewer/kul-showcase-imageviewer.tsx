@@ -2,7 +2,10 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ImageviewerExample } from "./kul-showcase-imageviewer-declarations";
+import {
+  ImageviewerData,
+  ImageviewerExample,
+} from "./kul-showcase-imageviewer-declarations";
 import { IMAGEVIEWER_FIXTURES } from "./kul-showcase-imageviewer-fixtures";
 
 @Component({
@@ -34,7 +37,8 @@ export class KulShowcaseImageviewer {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: ImageviewerExample = this.fixtures.examples[key];
+        const k = key as keyof ImageviewerData;
+        const props: ImageviewerExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

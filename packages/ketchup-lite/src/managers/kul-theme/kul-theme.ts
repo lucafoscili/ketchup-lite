@@ -12,6 +12,7 @@ import {
   KulThemeBEMModifier,
   KulThemeCSSVariables,
   KulThemeHSLValues,
+  KulThemeIcons,
   KulThemeList,
   KulThemeRGBValues,
 } from "./kul-theme-declarations";
@@ -19,7 +20,7 @@ import {
 export class KulTheme {
   #KUL_MANAGER: KulManager;
   #MASTER_CUSTOM_STYLE = "MASTER";
-  cssVars: Partial<KulThemeCSSVariables>;
+  cssVars: Partial<Record<keyof KulThemeCSSVariables, string>>;
   isDarkTheme: boolean;
   list: KulThemeList;
   managedComponents: Set<KulComponent<KulComponentName>>;
@@ -45,15 +46,16 @@ export class KulTheme {
     let css = "";
 
     Object.entries(variables).forEach(([key, val]) => {
-      this.cssVars[key] = val;
+      const k = key as keyof KulThemeCSSVariables;
+      this.cssVars[k] = val;
       css += `${key}: ${val};`;
 
       if (key.includes("color")) {
         const { rgbValues, hue, saturation, lightness } = this.colorCheck(val);
-        const rgbKey = `${key}-rgb`;
-        const hKey = `${key}-h`;
-        const sKey = `${key}-s`;
-        const lKey = `${key}-l`;
+        const rgbKey = `${key}-rgb` as keyof KulThemeCSSVariables;
+        const hKey = `${key}-h` as keyof KulThemeCSSVariables;
+        const sKey = `${key}-s` as keyof KulThemeCSSVariables;
+        const lKey = `${key}-l` as keyof KulThemeCSSVariables;
 
         this.cssVars[rgbKey] = rgbValues;
         this.cssVars[hKey] = hue;
@@ -108,12 +110,13 @@ export class KulTheme {
 
     const icons = theme.icons;
     let css = "";
-    for (var key in icons) {
+    for (let key in icons) {
+      const k = key as keyof KulThemeIcons;
       if (icons.hasOwnProperty(key)) {
         const val = `url('${
-          get(`./assets/svg/${icons[key]}.svg`).path
+          get(`./assets/svg/${icons[k]}.svg`).path
         }') no-repeat center`;
-        this.cssVars[key] = val;
+        this.cssVars[key as keyof KulThemeCSSVariables] = val;
         css += key + ": " + val + ";";
       }
     }

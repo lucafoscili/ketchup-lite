@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_JAVASCRIPT = (Prism: Prism.Environment) => {
   (Prism.languages.javascript = Prism.languages.extend("clike", {
     "class-name": [

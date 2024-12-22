@@ -154,8 +154,9 @@ const fetch = (
   const { id } = defaultToCurrentCharacter(getAdapter(), character);
 
   if (!hasCharacters(adapter)) {
-    return;
+    return null;
   }
+
   const characters = kulData.nodes;
   const currentIdx = characters.findIndex((c) => c.id === id);
 

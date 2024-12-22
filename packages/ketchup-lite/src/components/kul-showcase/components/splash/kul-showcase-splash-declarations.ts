@@ -4,7 +4,7 @@ import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 export const SPLASH_EXAMPLES_KEYS = ["label", "style"] as const;
 
 export interface SplashExample extends KulSplashPropsInterface {
-  ["data-description"]: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 

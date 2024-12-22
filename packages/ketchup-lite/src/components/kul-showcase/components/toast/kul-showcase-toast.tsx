@@ -4,7 +4,7 @@ import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import { TOAST_FIXTURES } from "./kul-showcase-toast-fixtures";
-import { ToastExample } from "./kul-showcase-toast-declarations";
+import { ToastData, ToastExample } from "./kul-showcase-toast-declarations";
 
 @Component({
   tag: "kul-showcase-toast",
@@ -35,7 +35,8 @@ export class KulShowcaseToast {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: ToastExample = this.fixtures.examples[key];
+        const k = key as keyof ToastData;
+        const props: ToastExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

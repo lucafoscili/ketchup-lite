@@ -26,6 +26,7 @@ import {
   KulImageEventPayload,
   KulImagePropsInterface,
 } from "./kul-image-declarations";
+import { KulThemeIcons } from "src/managers/kul-theme/kul-theme-declarations";
 
 @Component({
   tag: "kul-image",
@@ -173,7 +174,9 @@ export class KulImage {
     const icon = error
       ? "broken_image"
       : isThemeIcon
-        ? theme.list[theme.name].icons[kulValue]
+        ? theme.list[theme.name as keyof KulThemeIcons].icons[
+            kulValue as keyof KulThemeIcons
+          ]
         : kulValue;
 
     const { mask } = assets.get(`./assets/svg/${icon}.svg`).style;

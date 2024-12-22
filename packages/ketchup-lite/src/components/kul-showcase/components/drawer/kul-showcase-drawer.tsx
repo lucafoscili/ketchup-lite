@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
-import { DrawerExample } from "./kul-showcase-drawer-declarations";
+import { DrawerData, DrawerExample } from "./kul-showcase-drawer-declarations";
 import { DRAWER_FIXTURES } from "./kul-showcase-drawer-fixtures";
 
 @Component({
@@ -27,7 +27,8 @@ export class KulShowcaseDrawer {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: DrawerExample = this.fixtures.examples[key];
+        const k = key as keyof DrawerData;
+        const props: DrawerExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">

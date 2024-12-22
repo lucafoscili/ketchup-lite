@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_TYPESCRIPT = (Prism: Prism.Environment) => {
   (Prism.languages.typescript = Prism.languages.extend("javascript", {
     "class-name": {

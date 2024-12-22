@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const KUL_CODE_TSX = (Prism: Prism.Environment) => {
   const a = Prism.util.clone(Prism.languages.typescript);
   (Prism.languages.tsx = Prism.languages.extend("jsx", a)),

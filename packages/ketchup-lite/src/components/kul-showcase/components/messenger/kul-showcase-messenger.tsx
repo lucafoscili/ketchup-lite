@@ -3,7 +3,10 @@ import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { MessengerExample } from "./kul-showcase-messenger-declarations";
+import {
+  MessengerData,
+  MessengerExample,
+} from "./kul-showcase-messenger-declarations";
 import { MESSENGER_FIXTURES } from "./kul-showcase-messenger-fixtures";
 
 @Component({
@@ -35,7 +38,8 @@ export class KulShowcaseMessenger {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: MessengerExample = this.fixtures.examples[key];
+        const k = key as keyof MessengerData;
+        const props: MessengerExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
