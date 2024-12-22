@@ -45,4 +45,14 @@
     top: 0;
     width: 100%;
   }
+
+  &__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__biography {
+    font-size: 0.8em;
+    overflow: auto;
+  }
 }

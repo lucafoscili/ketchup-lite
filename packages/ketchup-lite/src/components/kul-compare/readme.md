@@ -90,20 +90,20 @@ Type: `Promise<void>`
 
 ### Depends on
 
-- [kul-tree](../kul-tree)
 - [kul-button](../kul-button)
+- [kul-tree](../kul-tree)
 
 ### Graph
 ```mermaid
 graph TD;
-  kul-compare --> kul-tree
   kul-compare --> kul-button
-  kul-tree --> kul-textfield
+  kul-compare --> kul-tree
   kul-button --> kul-image
   kul-button --> kul-list
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
+  kul-tree --> kul-textfield
   kul-showcase-compare --> kul-compare
   style kul-compare fill:#f9f,stroke:#333,stroke-width:4px
 ```

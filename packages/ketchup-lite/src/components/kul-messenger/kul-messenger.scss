@@ -1,3 +1,11 @@
+@import "styles/character";
+@import "styles/chat";
+@import "styles/extra-content";
+@import "styles/form";
+@import "styles/list";
+@import "styles/options";
+@import "styles/roster";
+
 :host {
   /**
     * @prop --kul-messenger-active-options-name-padding: Sets the padding of active options' names.
@@ -145,16 +153,6 @@
       height: 100%;
     }
   }
-}
-
-&__label {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-&__biography {
-  font-size: 0.8em;
-  overflow: auto;
 }
 
 .covers {

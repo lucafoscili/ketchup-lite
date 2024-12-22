@@ -57,13 +57,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps() => Promise<GenericObject>`
+### `getProps() => Promise<KulListPropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulListPropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 

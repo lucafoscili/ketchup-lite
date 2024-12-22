@@ -1490,10 +1490,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulDrawerPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulDrawerPropsInterface>",
       },
       {
         name: "isOpened",
@@ -1586,10 +1586,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulHeaderPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulHeaderPropsInterface>",
       },
       {
         name: "refresh",
@@ -1655,10 +1655,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulImagePropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulImagePropsInterface>",
       },
       {
         name: "refresh",
@@ -1820,10 +1820,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulImageviewerPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulImageviewerPropsInterface>",
       },
       {
         name: "refresh",
@@ -2111,10 +2111,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulLazyPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulLazyPropsInterface>",
       },
       {
         name: "refresh",
@@ -2222,10 +2222,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulListPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulListPropsInterface>",
       },
       {
         name: "getSelected",
@@ -2371,10 +2371,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulMasonryPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulMasonryPropsInterface>",
       },
       {
         name: "getSelectedShape",
@@ -2574,10 +2574,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulMessengerPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulMessengerPropsInterface>",
       },
       {
         name: "refresh",
@@ -2704,10 +2704,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulPhotoframePropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulPhotoframePropsInterface>",
       },
       {
         name: "refresh",
@@ -2776,10 +2776,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulProgressbarPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulProgressbarPropsInterface>",
       },
       {
         name: "refresh",
@@ -3116,10 +3116,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulSliderPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulSliderPropsInterface>",
       },
       {
         name: "getValue",
@@ -3367,10 +3367,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulSpinnerPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulSpinnerPropsInterface>",
       },
       {
         name: "refresh",
@@ -3460,10 +3460,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulSplashPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulSplashPropsInterface>",
       },
       {
         name: "refresh",
@@ -3546,10 +3546,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulTabbarPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulTabbarPropsInterface>",
       },
       {
         name: "getValue",
@@ -3660,10 +3660,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulTextfieldPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulTextfieldPropsInterface>",
       },
       {
         name: "getValue",
@@ -3850,10 +3850,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulToastPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulToastPropsInterface>",
       },
       {
         name: "refresh",
@@ -3944,10 +3944,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulTogglePropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulTogglePropsInterface>",
       },
       {
         name: "getValue",
@@ -4064,10 +4064,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulTreePropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulTreePropsInterface>",
       },
       {
         name: "refresh",
@@ -4204,10 +4204,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulTypewriterPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulTypewriterPropsInterface>",
       },
       {
         name: "refresh",
@@ -4308,10 +4308,10 @@ export const KUL_DOC: KulShowcaseDoc = {
         name: "getProps",
         docs: "Used to retrieve component's properties and descriptions.",
         returns: {
-          type: "Promise<GenericObject<unknown>>",
+          type: "Promise<KulUploadPropsInterface>",
           docs: "Promise resolved with an object containing the component's properties.",
         },
-        signature: "() => Promise<GenericObject>",
+        signature: "() => Promise<KulUploadPropsInterface>",
       },
       {
         name: "getValue",
