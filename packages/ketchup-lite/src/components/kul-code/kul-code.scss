@@ -99,12 +99,6 @@
   display: grid;
   grid-template-rows: max-content 1fr;
 
-  &--body {
-    color: var(--kul_code_text_color);
-    padding: 1em;
-    white-space: pre-line;
-  }
-
   &__title {
     font-size: 0.85em;
     letter-spacing: 2px;
@@ -127,6 +121,12 @@
     top: 0;
     z-index: 1;
   }
+}
+
+.body {
+  color: var(--kul_code_text_color);
+  padding: 1em;
+  white-space: pre-line;
 }
 
 :not(pre) > code,

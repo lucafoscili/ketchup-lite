@@ -201,6 +201,7 @@ export class KulCode {
   //#region Lifecycle hooks
   componentWillLoad() {
     const { theme } = kulManagerSingleton;
+
     const {
       css,
       javascript,
@@ -295,7 +296,7 @@ export class KulCode {
             </div>
             {shouldPreserveSpace ? (
               <pre
-                class={bemClass("code", `language-${kulLanguage}`)}
+                class={bemClass(`language-${kulLanguage}`)}
                 key={this.value}
                 ref={(el) => {
                   if (el) {
@@ -307,9 +308,7 @@ export class KulCode {
               </pre>
             ) : (
               <div
-                class={bemClass("code", `language-${kulLanguage}`, {
-                  body: true,
-                })}
+                class={bemClass(`language-${kulLanguage} body`)}
                 key={this.value}
                 ref={(el) => {
                   if (el) {
