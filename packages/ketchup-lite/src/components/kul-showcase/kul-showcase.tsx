@@ -93,7 +93,8 @@ export class KulShowcase {
           <kul-button
             class="kul-full-height kul-full-width"
             kulIcon="home"
-            onClick={() => {
+            onClick={async () => {
+              this.#scrollToElement(type);
               this.currentState = {
                 ...this.currentState,
                 [type]: "",
