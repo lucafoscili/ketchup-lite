@@ -1,4 +1,5 @@
 import { FunctionalComponent, h } from "@stencil/core";
+import { kulManagerSingleton } from "src/global/global";
 import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { KulTreeNodeProps } from "../kul-tree-declarations";
 import { TreeNodeContent } from "./node-content";
@@ -7,6 +8,8 @@ import { TreeNodeContent } from "./node-content";
 export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
   props: KulTreeNodeProps,
 ) => {
+  const { bemClass } = kulManagerSingleton.theme;
+
   const { accordionLayout, depth, elements, events, expanded, node, selected } =
     props || {};
 
@@ -16,23 +19,21 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
     <TreeNodeContent type="placeholder"></TreeNodeContent>
   );
 
-  const className = {
-    node: true,
-    ["node--expanded"]: expanded ? true : false,
-    ["node--selected"]: selected ? true : false,
-  };
-
   if (accordionLayout) {
     return (
       <div
-        class={className}
+        class={bemClass("node", null, {
+          expanded,
+          selected,
+        })}
+        data-cy={KulDataCyAttributes.NODE}
         data-depth={depth.toString()}
         key={node.id}
         onClick={events.onClickExpand}
         onPointerDown={events.onPointerDown}
         title={node.description}
       >
-        <div class="node__content">
+        <div class={bemClass("node", "content")}>
           {elements.ripple}
           {icon}
           {elements.value}
@@ -51,9 +52,10 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
   } else {
     return (
       <div
-        class={`node ${expanded ? "node--expanded" : ""} ${
-          selected ? "node--selected" : ""
-        }`}
+        class={bemClass("node", null, {
+          expanded,
+          selected,
+        })}
         data-cy={KulDataCyAttributes.NODE}
         data-depth={depth.toString()}
         key={node.id}

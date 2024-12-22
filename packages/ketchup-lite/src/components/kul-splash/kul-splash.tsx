@@ -12,11 +12,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulSplashEvent,
   KulSplashEventPayload,
+  KulSplashPropsInterface,
   KulSplashStates,
 } from "./kul-splash-declarations";
 
@@ -85,10 +85,10 @@ export class KulSplash {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulSplashPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulSplashPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -139,21 +139,23 @@ export class KulSplash {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { kulLabel, kulStyle, state } = this;
     const isUnmounting = state === "unmounting";
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class={"modal" + (isUnmounting ? " active" : "")}>
-            <div class="wrapper">
-              <div class="widget">
+          <div class={bemClass("splash", null, { active: isUnmounting })}>
+            <div class={bemClass("splash", "content")}>
+              <div class={bemClass("splash", "widget")}>
                 <slot></slot>
               </div>
-              <div class="label">{isUnmounting ? "Ready!" : kulLabel}</div>
+              <div class={bemClass("splash", "label")}>
+                {isUnmounting ? "Ready!" : kulLabel}
+              </div>
             </div>
           </div>
         </div>

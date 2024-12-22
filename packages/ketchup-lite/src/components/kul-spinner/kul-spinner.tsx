@@ -13,12 +13,12 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { BAR_SPINNER_CONFIGS, SPINNER_CONFIGS } from "./helpers/constants";
 import {
   KulSpinnerEvent,
   KulSpinnerEventPayload,
+  KulSpinnerPropsInterface,
 } from "./kul-spinner-declarations";
 
 @Component({
@@ -146,13 +146,13 @@ export class KulSpinner {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulSpinnerPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulSpinnerPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulSpinnerPropsInterface;
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -239,7 +239,7 @@ export class KulSpinner {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { setKulStyle } = kulManagerSingleton.theme;
 
     const {
       bigWait,
@@ -277,7 +277,7 @@ export class KulSpinner {
 
     return (
       <Host style={elStyle}>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID} style={elStyle}>
           <div
             id="loading-wrapper-master"

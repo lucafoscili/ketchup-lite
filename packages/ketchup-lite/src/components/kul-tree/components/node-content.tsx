@@ -11,37 +11,46 @@ export const TreeNodeContent: FunctionalComponent<{
   onClickExpand?: (e: MouseEvent) => void;
 }> = ({ depth, expanded = false, node, onClickExpand, type }) => {
   const { get } = kulManagerSingleton.assets;
+  const { bemClass } = kulManagerSingleton.theme;
 
   switch (type) {
     case "dropdown":
       return (
         <div
-          class={`node__dropdown ${
-            expanded ? "node__dropdown--expanded" : ""
-          } `}
+          class={bemClass("node", "dropdown", {
+            expanded,
+          })}
         ></div>
       );
     case "expand":
       return (
         <div
-          class={`node__expand ${expanded ? "node__expand--expanded" : ""} `}
+          class={bemClass("node", "expand", {
+            expanded,
+          })}
           onClick={onClickExpand}
         ></div>
       );
     case "icon":
       const { style } = get(`./assets/svg/${node.icon}.svg`);
-      return <div class={"node__icon"} style={style}></div>;
+      return <div class={bemClass("node", "icon")} style={style}></div>;
     case "padding":
       return (
         <div
-          class="node__padding"
+          class={bemClass("node", "padding")}
           style={{
             ["--kul_tree_padding_multiplier"]: depth.toString(),
           }}
         ></div>
       );
     default:
-      return <div class={"node__expand node__expand--placeholder"}></div>;
+      return (
+        <div
+          class={bemClass("node", "expand", {
+            placeholder: true,
+          })}
+        ></div>
+      );
   }
 };
 //#endregion

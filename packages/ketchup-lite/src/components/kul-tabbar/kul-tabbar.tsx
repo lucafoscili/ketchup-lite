@@ -19,11 +19,12 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulScrollOnHoverElement } from "src/managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulTabbarEvent,
   KulTabbarEventPayload,
+  KulTabbarPropsInterface,
   KulTabbarState,
 } from "./kul-tabbar-declarations";
 
@@ -129,13 +130,13 @@ export class KulTabbar {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulTabbarPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulTabbarPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulTabbarPropsInterface;
   }
   /**
    * Returns the selected node and its index.
@@ -250,6 +251,7 @@ export class KulTabbar {
   }
   render() {
     const { data, theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = theme;
 
     const { kulData, kulRipple, kulStyle, value } = this;
 
@@ -264,15 +266,11 @@ export class KulTabbar {
     for (let i = 0; i < nodes.length; i++) {
       const node = nodes[i];
       const isActive = node === value?.node;
-      const tabClass = {
-        tab: true,
-        "tab--active": isActive ? true : false,
-      };
 
       elements.push(
         <button
           aria-selected={isActive ? true : false}
-          class={tabClass}
+          class={bemClass("tab", null, { active: isActive })}
           data-cy={KulDataCyAttributes.BUTTON}
           onClick={(e) => {
             this.onKulEvent(e, "click", i, node);
@@ -285,30 +283,40 @@ export class KulTabbar {
           title={node?.description ?? ""}
         >
           <div
+            data-cy={KulDataCyAttributes.RIPPLE}
             ref={(el) => {
               if (el && kulRipple) {
                 this.#rippleSurface.push(el);
               }
             }}
           ></div>
-          <span class="tab__content">
+          <span
+            class={bemClass("tab", "content")}
+            data-cy={KulDataCyAttributes.NODE}
+          >
             {node.icon && (
               <kul-image
-                class="tab__icon"
+                class={bemClass("tab", "icon")}
                 kulColor={`var(${KUL_THEME_COLORS.primary})`}
                 kulSizeX="24px"
                 kulSizeY="24px"
                 kulValue={node.icon}
               />
             )}
-            {node.value && <span class="tab__text-label">{node.value}</span>}
+            {node.value && (
+              <span class={bemClass("tab", "text-label")}>{node.value}</span>
+            )}
           </span>
           <span
-            class={`tab__indicator ${
-              isActive ? " tab__indicator--active" : ""
-            }`}
+            class={bemClass("tab", "indicator", {
+              active: isActive,
+            })}
           >
-            <span class="tab__indicator-content tab__indicator-content--underline"></span>
+            <span
+              class={bemClass("tab", "indicator-content", {
+                underline: true,
+              })}
+            ></span>
           </span>
         </button>,
       );
@@ -316,17 +324,19 @@ export class KulTabbar {
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="tabbar" role="tablist">
-            <div class="tabbar_scroller">
+          <div class={bemClass("tabbar")} role="tablist">
+            <div class={bemClass("tabbar", "scroller")}>
               <div
-                class="tabbar__scroll-area"
+                class={bemClass("tabbar", "scroll-area")}
                 ref={(el: HTMLElement) =>
                   (this.#scrollArea = el as KulScrollOnHoverElement)
                 }
               >
-                <div class="tabbar__scroll-content">{elements}</div>
+                <div class={bemClass("tabbar", "scroll-content")}>
+                  {elements}
+                </div>
               </div>
             </div>
           </div>

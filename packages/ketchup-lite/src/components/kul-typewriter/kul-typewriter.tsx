@@ -13,12 +13,12 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulTypewriterCursor,
   KulTypewriterEvent,
   KulTypewriterEventPayload,
+  KulTypewriterPropsInterface,
   KulTypewriterTag,
   KulTypewriterValue,
 } from "./kul-typewriter-declarations";
@@ -139,13 +139,13 @@ export class KulTypewriter {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulTypewriterPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulTypewriterPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulTypewriterPropsInterface;
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -229,6 +229,8 @@ export class KulTypewriter {
     this.#startTyping();
   }
   #prepText() {
+    const { bemClass } = kulManagerSingleton.theme;
+
     const { currentTextIndex, displayedText, isDeleting, kulCursor, kulTag } =
       this;
 
@@ -243,7 +245,9 @@ export class KulTypewriter {
     return (
       <TagName>
         <span>{displayedText || "\u00A0"}</span>
-        {shouldShowCursor ? <span class="cursor">|</span> : null}
+        {shouldShowCursor && (
+          <span class={bemClass("typewriter", "cursor")}>|</span>
+        )}
       </TagName>
     );
   }

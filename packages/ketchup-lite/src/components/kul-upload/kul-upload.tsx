@@ -12,11 +12,12 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulUploadEvent,
   KulUploadEventPayload,
+  KulUploadPropsInterface,
 } from "./kul-upload-declarations";
 
 @Component({
@@ -114,13 +115,13 @@ export class KulUpload {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulUploadPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulUploadPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulUploadPropsInterface;
   }
   /**
    * Returns the component's internal value.
@@ -244,28 +245,27 @@ export class KulUpload {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const { kulLabel, kulRipple, kulStyle, selectedFiles } = this;
 
     const hasSelectedFiles = !!selectedFiles?.length;
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div
-            class={`wrapper ${
-              this.selectedFiles && this.selectedFiles.length
-                ? "wrapper--with-info"
-                : ""
-            }`}
+            class={bemClass("upload", null, {
+              "with-info": Boolean(selectedFiles?.length),
+            })}
           >
             <div
-              class="file-upload"
+              class={bemClass("file-upload")}
               onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
             >
               <input
-                class="file-upload__input"
+                class={bemClass("file-upload", "input")}
+                data-cy={KulDataCyAttributes.INPUT}
                 id="upload-input"
                 multiple
                 onChange={() => this.#handleFileChange()}
@@ -275,7 +275,8 @@ export class KulUpload {
                 type="file"
               />
               <label
-                class="file-upload__label"
+                class={bemClass("file-upload", "label")}
+                data-cy={KulDataCyAttributes.RIPPLE}
                 htmlFor="upload-input"
                 ref={(el) => {
                   if (kulRipple) {
@@ -283,11 +284,11 @@ export class KulUpload {
                   }
                 }}
               >
-                <div class="file-upload__text">{kulLabel}</div>
+                <div class={bemClass("file-upload", "text")}>{kulLabel}</div>
               </label>
             </div>
-            <div class="file-info">
-              {hasSelectedFiles ? this.#prepFileInfo() : undefined}
+            <div class={bemClass("file-info")}>
+              {hasSelectedFiles && this.#prepFileInfo()}
             </div>
           </div>
         </div>

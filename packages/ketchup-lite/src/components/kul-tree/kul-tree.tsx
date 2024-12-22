@@ -17,7 +17,6 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
 import { TreeNode } from "./components/node";
@@ -26,6 +25,7 @@ import {
   KulTreeEventArguments,
   KulTreeEventPayload,
   KulTreeNodeProps,
+  KulTreePropsInterface,
 } from "./kul-tree-declarations";
 
 @Component({
@@ -166,10 +166,10 @@ export class KulTree {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulTreePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulTreePropsInterface> {
     const { getProps } = kulManagerSingleton;
 
     return getProps(this);
@@ -345,18 +345,18 @@ export class KulTree {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
-    const { kulData, kulFilter, kulStyle } = this;
+    const { kulData, kulEmpty, kulFilter, kulStyle } = this;
 
     const isEmpty = !!!kulData?.nodes?.length;
     this.#rippleSurface = {};
 
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="tree">
+          <div class={bemClass("tree")}>
             {kulFilter && (
               <kul-textfield
                 kulFullWidth={true}
@@ -372,8 +372,8 @@ export class KulTree {
               ></kul-textfield>
             )}
             {isEmpty ? (
-              <div class="empty-data">
-                <div class="empty-data__text">{this.kulEmpty}</div>
+              <div class={bemClass("empty-data")}>
+                <div class={bemClass("empty-data", "text")}>{kulEmpty}</div>
               </div>
             ) : (
               this.#prepTree()

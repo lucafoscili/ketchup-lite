@@ -12,10 +12,13 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
-import { KulToastEvent, KulToastEventPayload } from "./kul-toast-declarations";
+import {
+  KulToastEvent,
+  KulToastEventPayload,
+  KulToastPropsInterface,
+} from "./kul-toast-declarations";
 
 @Component({
   tag: "kul-toast",
@@ -108,13 +111,13 @@ export class KulToast {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulToastPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulToastPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulToastPropsInterface;
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -169,34 +172,38 @@ export class KulToast {
   }
 
   render() {
-    const { theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = theme;
 
     const { kulCloseIcon, kulIcon, kulMessage, kulStyle, kulTimer } = this;
 
-    const className = {
-      ["toast__accent"]: true,
-      ["toast__accent--temporary"]: !!kulTimer,
-    };
-
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="toast">
-            <div class={className}></div>
-            <div class="toast__message-wrapper">
+          <div class={bemClass("toast")}>
+            <div
+              class={bemClass("toast", "accent", { temporary: !!kulTimer })}
+            ></div>
+            <div class={bemClass("toast", "message-wrapper")}>
               {this.kulIcon && (
-                <div class="toast__icon">
+                <div class={bemClass("toast", "icon")}>
                   <kul-image {...kulIcon}></kul-image>
                 </div>
               )}
-              {kulMessage && <div class="toast__message">{kulMessage}</div>}
+              {kulMessage && (
+                <div class={bemClass("toast", "message")}>{kulMessage}</div>
+              )}
               {this.kulCloseIcon && (
                 <div
-                  class="toast__icon toast__icon--close"
+                  class={bemClass("toast", "icon", {
+                    close: true,
+                  })}
                   onClick={() => this.kulCloseCallback()}
                 >
-                  <kul-image {...kulCloseIcon}></kul-image>
+                  <kul-image
+                    {...sanitizeProps(kulCloseIcon, "KulImage")}
+                  ></kul-image>
                 </div>
               )}
             </div>

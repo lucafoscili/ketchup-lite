@@ -12,11 +12,12 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
+import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
   KulSliderEvent,
   KulSliderEventPayload,
+  KulSliderPropsInterface,
   KulSliderValue,
 } from "./kul-slider-declarations";
 
@@ -137,13 +138,13 @@ export class KulSlider {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulSliderPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(): Promise<GenericObject> {
+  async getProps(): Promise<KulSliderPropsInterface> {
     const { getProps } = kulManagerSingleton;
 
-    return getProps(this);
+    return getProps(this) as KulSliderPropsInterface;
   }
   /**
    * Used to retrieve the component's current state.
@@ -215,11 +216,12 @@ export class KulSlider {
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
     const {
       kulDisabled,
       kulLabel,
+      kulLeadingLabel,
       kulMax,
       kulMin,
       kulRipple,
@@ -228,30 +230,26 @@ export class KulSlider {
       value,
     } = this;
 
-    const className = {
-      slider: true,
-      "slider--disabled": this.kulDisabled,
-    };
-
-    const formClassName = {
-      "form-field": true,
-      "form-field--align-end": this.kulLeadingLabel,
-    };
-
     return (
       <Host>
-        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class={formClassName}>
+          <div
+            class={bemClass("form-field", null, {
+              "align-end": kulLeadingLabel,
+            })}
+          >
             <div
-              class={className}
+              class={bemClass("slider", null, {
+                disabled: kulDisabled,
+              })}
               style={{
                 "--kul_slider_value": `${((value.display - kulMin) / (kulMax - kulMin)) * 100}%`,
               }}
             >
               <input
                 type="range"
-                class="slider__native-control"
+                class={bemClass("slider", "native-control")}
                 data-cy={KulDataCyAttributes.INPUT}
                 min={kulMin}
                 max={kulMax}
@@ -279,10 +277,11 @@ export class KulSlider {
                   }
                 }}
               />
-              <div class="slider__track">
-                <div class="slider__thumb-underlay">
+              <div class={bemClass("slider", "track")}>
+                <div class={bemClass("slider", "thumb-underlay")}>
                   <div
-                    class="slider__thumb"
+                    class={bemClass("slider", "thumb")}
+                    data-cy={KulDataCyAttributes.RIPPLE}
                     ref={(el) => {
                       if (kulRipple) {
                         this.#rippleSurface = el;
@@ -291,9 +290,9 @@ export class KulSlider {
                   ></div>
                 </div>
               </div>
-              <span class="slider__value">{value.display}</span>
+              <span class={bemClass("slider", "value")}>{value.display}</span>
             </div>
-            <label class="form-field__label">{kulLabel}</label>
+            <label class={bemClass("forn-field", "label")}>{kulLabel}</label>
           </div>
         </div>
       </Host>
