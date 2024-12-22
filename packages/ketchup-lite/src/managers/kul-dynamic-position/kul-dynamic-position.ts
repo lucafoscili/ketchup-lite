@@ -1,5 +1,5 @@
+import type { KulManager } from "../kul-manager/kul-manager";
 import { KUL_DROPDOWN_CLASS_VISIBLE } from "src/utils/constants";
-import { KulManager } from "../kul-manager/kul-manager";
 import { KUL_DYNAMIC_POSITION } from "./helpers/constants";
 import {
   KulDynamicPositionAnchor,
@@ -23,25 +23,27 @@ export class KulDynamicPosition {
   }
 
   //#region Anchor is HTMLElement
-  anchorIsHTMLElement(anchor: KulDynamicPositionAnchor): anchor is HTMLElement {
+  anchorIsHTMLElement = (
+    anchor: KulDynamicPositionAnchor,
+  ): anchor is HTMLElement => {
     return (anchor as HTMLElement).tagName !== undefined;
-  }
+  };
   //#endregion
 
   //#region Start
-  start(el: KulDynamicPositionElement): void {
+  start = (el: KulDynamicPositionElement): void => {
     el.classList.add(KUL_DROPDOWN_CLASS_VISIBLE);
-  }
+  };
   //#endregion
 
   //#region Stop
-  stop(el: KulDynamicPositionElement): void {
+  stop = (el: KulDynamicPositionElement): void => {
     el.classList.remove(KUL_DROPDOWN_CLASS_VISIBLE);
-  }
+  };
   //#endregion
 
   //#region Run
-  run(el: KulDynamicPositionElement): void {
+  run = (el: KulDynamicPositionElement): void => {
     const { anchorIsHTMLElement, managedElements, run } =
       this.#KUL_MANAGER.dynamicPosition;
 
@@ -152,17 +154,17 @@ export class KulDynamicPosition {
       cancelAnimationFrame(el.kulDynamicPosition.rAF);
       return;
     }
-  }
+  };
   //#endregion
 
   //#region Register
-  register(
+  register = (
     el: KulDynamicPositionElement,
     anchorEl: KulDynamicPositionAnchor,
     margin?: number,
     placement?: KulDynamicPositionPlacement,
     detach?: boolean,
-  ): void {
+  ): void => {
     const { run } = this.#KUL_MANAGER.dynamicPosition;
 
     if (this.isRegistered(el)) {
@@ -212,31 +214,31 @@ export class KulDynamicPosition {
       attributeFilter: ["class"],
     });
     this.managedElements.add(el);
-  }
+  };
   //#endregion
 
   //#region Unregister
-  unregister(elements: KulDynamicPositionElement[]): void {
+  unregister = (elements: KulDynamicPositionElement[]): void => {
     if (this.managedElements) {
       for (let index = 0; index < elements.length; index++) {
         this.managedElements.delete(elements[index]);
       }
     }
-  }
+  };
   //#endregion
 
   //#region Change anchor
-  changeAnchor(
+  changeAnchor = (
     el: KulDynamicPositionElement,
     anchorEl: KulDynamicPositionAnchor,
-  ): void {
+  ): void => {
     el.kulDynamicPosition.anchor = anchorEl;
-  }
+  };
   //#endregion
 
   //#region Is registered
-  isRegistered(el: KulDynamicPositionElement): boolean {
+  isRegistered = (el: KulDynamicPositionElement): boolean => {
     return !this.managedElements ? false : this.managedElements.has(el);
-  }
+  };
   //#endregion
 }

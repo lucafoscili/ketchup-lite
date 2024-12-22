@@ -111,6 +111,7 @@ export class KulCanvas {
       compInstance: this,
       isCursorPreview: this.#isCursorPreview,
       isPainting: () => this.isPainting,
+      manager: kulManagerSingleton,
       points: () => this.points,
     },
     {

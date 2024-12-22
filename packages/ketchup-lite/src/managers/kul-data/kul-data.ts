@@ -1,5 +1,5 @@
+import type { KulManager } from "../kul-manager/kul-manager";
 import { KulComponentName } from "../../types/GenericTypes";
-import { KulManager } from "../kul-manager/kul-manager";
 import {
   KulDataCell,
   KulDataColumn,
@@ -32,6 +32,7 @@ import {
 } from "./utils/node";
 
 export class KulData {
+  #KUL_MANAGER: KulManager;
   #SHAPES_MAP: KulDataShapeComponentMap = {
     badge: "KulBadge",
     button: "KulButton",
@@ -47,7 +48,9 @@ export class KulData {
     upload: "KulUpload",
   };
 
-  constructor(_manager: KulManager) {}
+  constructor(kulManager: KulManager) {
+    this.#KUL_MANAGER = kulManager;
+  }
 
   //#region Cell
   cell = {
@@ -61,6 +64,7 @@ export class KulData {
         defaultCb?: S extends "text" ? never : KulDataShapeCallback<C, S>,
       ) =>
         cellDecorateShapes(
+          this.#KUL_MANAGER,
           this.#SHAPES_MAP[shape],
           shape,
           items,

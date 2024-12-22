@@ -3,20 +3,20 @@ import {
   KulCardAdapterHandlers,
 } from "src/components/kul-card/kul-card-declarations";
 import { KulListEventPayload } from "src/components/kul-list/kul-list-declarations";
-import { kulManagerSingleton } from "src/global/global";
 import { IDS } from "../helpers/constants";
 
 export const prepDebugHandlers = (
   getAdapter: () => KulCardAdapter,
 ): KulCardAdapterHandlers["layouts"]["debug"] => {
-  const { debug, theme } = kulManagerSingleton;
-
   return {
     //#region Button
     button: (e) => {
       const { eventType, id, originalEvent } = e.detail;
 
-      const { layouts } = getAdapter().handlers;
+      const { controller, handlers } = getAdapter();
+      const { manager } = controller.get;
+      const { layouts } = handlers;
+      const { debug, theme } = manager;
 
       switch (eventType) {
         case "click":
@@ -46,6 +46,10 @@ export const prepDebugHandlers = (
     code: (e) => {
       const { comp, eventType } = e.detail;
 
+      const { controller } = getAdapter();
+      const { manager } = controller.get;
+      const { debug } = manager;
+
       switch (eventType) {
         case "ready":
           debug.register(comp);
@@ -61,6 +65,10 @@ export const prepDebugHandlers = (
     list: (e) => {
       const { eventType, node } = e.detail;
 
+      const { controller } = getAdapter();
+      const { manager } = controller.get;
+      const { theme } = manager;
+
       switch (eventType) {
         case "click":
           theme.set(node.id);
@@ -74,6 +82,10 @@ export const prepDebugHandlers = (
       const { comp, eventType, value } = e.detail;
 
       const boolValue = value === "on" ? true : false;
+
+      const { controller } = getAdapter();
+      const { manager } = controller.get;
+      const { debug } = manager;
 
       switch (eventType) {
         case "change":

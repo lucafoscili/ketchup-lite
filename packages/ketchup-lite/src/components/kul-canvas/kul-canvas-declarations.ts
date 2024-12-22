@@ -1,12 +1,13 @@
 import { VNode } from "@stencil/core";
 import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
-  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
+  KulComponentAdapterSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
 import { KulCanvas } from "./kul-canvas";
@@ -26,22 +27,12 @@ export interface KulCanvasAdapter extends KulComponentAdapter<KulCanvas> {
 }
 export type KulCanvasAdapterInitializerGetters = Pick<
   KulCanvasAdapterControllerGetters,
-  "compInstance" | "isCursorPreview" | "isPainting" | "points"
+  "compInstance" | "isCursorPreview" | "isPainting" | "manager" | "points"
 >;
 export type KulCanvasAdapterInitializerSetters = Pick<
   KulCanvasAdapterControllerSetters,
   "isPainting" | "points"
 >;
-export interface KulCanvasAdapterJsx extends KulComponentAdapterJsx {
-  board: () => VNode;
-  image: () => VNode;
-  preview: () => VNode;
-}
-export interface KulCanvasAdapterRefs extends KulComponentAdapterRefs {
-  board: HTMLCanvasElement;
-  image: HTMLKulImageElement;
-  preview: HTMLCanvasElement;
-}
 export interface KulCanvasAdapterHandlers extends KulComponentAdapterHandlers {
   board: {
     endCapture: (e: PointerEvent) => void;
@@ -56,12 +47,23 @@ export interface KulCanvasAdapterControllerGetters
   compInstance: KulCanvas;
   isCursorPreview: () => boolean;
   isPainting: () => boolean;
+  manager: KulManager;
   points: () => KulCanvasPoints;
 }
 export interface KulCanvasAdapterControllerSetters
   extends KulComponentAdapterSetters {
   isPainting: (value: boolean) => void;
   points: (value: KulCanvasPoints) => void;
+}
+export interface KulCanvasAdapterJsx extends KulComponentAdapterJsx {
+  board: () => VNode;
+  image: () => VNode;
+  preview: () => VNode;
+}
+export interface KulCanvasAdapterRefs extends KulComponentAdapterRefs {
+  board: HTMLCanvasElement;
+  image: HTMLKulImageElement;
+  preview: HTMLCanvasElement;
 }
 export interface KulCanvasAdapterToolkitCtx {
   clear(type: KulCanvasType): void;

@@ -1,4 +1,4 @@
-import { KulManager } from "../kul-manager/kul-manager";
+import type { KulManager } from "../kul-manager/kul-manager";
 import {
   KulScrollOnHoverElement,
   KulScrollOnHoverPercentages,
@@ -32,7 +32,7 @@ export class KulScrollOnHover {
     this.#timeout = null;
   }
 
-  #initArrows() {
+  #initArrows = () => {
     this.#arrowsContainer = document.createElement("div");
     this.#leftArrows = [];
     this.#rightArrows = [];
@@ -65,13 +65,13 @@ export class KulScrollOnHover {
     this.container.setAttribute("kul-scroll-on-hover", "");
     this.container.appendChild(this.#arrowsContainer);
     document.body.appendChild(this.container);
-  }
-  register(
+  };
+  register = (
     el: KulScrollOnHoverElement,
     vertical?: boolean,
     percentages?: KulScrollOnHoverPercentages,
     step?: number,
-  ): void {
+  ): void => {
     if (!this.#arrowsContainer) {
       this.#initArrows();
     }
@@ -92,18 +92,18 @@ export class KulScrollOnHover {
     el.addEventListener("mousemove", this.#mousemoveEvent);
     el.addEventListener("mouseleave", this.#mouseleaveEvent);
     this.managedElements.add(el);
-  }
-  unregister(el: KulScrollOnHoverElement): void {
+  };
+  unregister = (el: KulScrollOnHoverElement): void => {
     el.removeEventListener("scroll", this.#scrollEvent);
     el.removeEventListener("mousemove", this.#mousemoveEvent);
     el.removeEventListener("mouseleave", this.#mouseleaveEvent);
     if (this.managedElements) {
       this.managedElements.delete(el);
     }
-  }
-  isRegistered(el: KulScrollOnHoverElement): boolean {
+  };
+  isRegistered = (el: KulScrollOnHoverElement): boolean => {
     return !this.managedElements ? false : this.managedElements.has(el);
-  }
+  };
   async start(event: MouseEvent): Promise<void> {
     const { run } = this.#KUL_MANAGER.scrollOnHover;
 
@@ -182,7 +182,7 @@ export class KulScrollOnHover {
       }
     }
   }
-  async stop(el: KulScrollOnHoverElement): Promise<void> {
+  stop = async (el: KulScrollOnHoverElement): Promise<void> => {
     el.scrollOnHover.active = false;
     cancelAnimationFrame(this.#rAF);
     clearTimeout(this.#timeout);
@@ -195,14 +195,14 @@ export class KulScrollOnHover {
       this.#rightArrows[i].classList.remove("kul-activated");
       this.#rightArrows[i].classList.remove("kul-animated");
     }
-  }
-  run(
+  };
+  run = (
     el: KulScrollOnHoverElement,
     maxScrollLeft: number,
     percForward: number,
     percBack: number,
     direction: ScrollOnHoverDirection,
-  ): void {
+  ): void => {
     const { run } = this.#KUL_MANAGER.scrollOnHover;
 
     if (!el.scrollOnHover.active) {
@@ -304,10 +304,10 @@ export class KulScrollOnHover {
     this.#rAF = requestAnimationFrame(function () {
       run(el, maxScrollLeft, percForward, percBack, direction);
     });
-  }
-  updateChildren(el: KulScrollOnHoverElement): void {
+  };
+  updateChildren = (el: KulScrollOnHoverElement): void => {
     for (let i = 0; i < el.scrollOnHover.children.length; i++) {
       el.scrollOnHover.children[i].scrollLeft = el.scrollLeft;
     }
-  }
+  };
 }

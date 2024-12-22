@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import {
   KulCanvasAdapter,
   KulCanvasAdapterJsx,
@@ -8,14 +7,13 @@ import {
 export const prepCanvasJsx = (
   getAdapter: () => KulCanvasAdapter,
 ): KulCanvasAdapterJsx => {
-  const { assignRef, sanitizeProps, theme } = kulManagerSingleton;
-  const { bemClass } = theme;
-
   return {
     //#region Board
     board: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
       const { refs } = elements;
+      const { assignRef, theme } = controller.get.manager;
+      const { bemClass } = theme;
       const { onPointerDown, onPointerMove, onPointerOut, onPointerUp } =
         handlers.board;
 
@@ -36,7 +34,9 @@ export const prepCanvasJsx = (
     image: () => {
       const { controller, elements } = getAdapter();
       const { refs } = elements;
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
+      const { assignRef, sanitizeProps, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-image
@@ -50,8 +50,10 @@ export const prepCanvasJsx = (
 
     //#region Preview
     preview: () => {
-      const { elements } = getAdapter();
+      const { controller, elements } = getAdapter();
+      const { assignRef, theme } = controller.get.manager;
       const { refs } = elements;
+      const { bemClass } = theme;
 
       return (
         <canvas

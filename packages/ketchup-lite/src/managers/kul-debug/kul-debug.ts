@@ -1,6 +1,6 @@
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import { KulCode } from "src/components/kul-code/kul-code";
 import { KulToggle } from "src/components/kul-toggle/kul-toggle";
-import { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponent,
   KulComponentName,
@@ -214,23 +214,23 @@ export class KulDebug {
   //#endregion
 
   //#region isEnabled
-  isEnabled(): boolean {
+  isEnabled = (): boolean => {
     return this.#IS_ENABLED;
-  }
+  };
   //#endregion
 
   //#region Register
-  register(comp: KulDebugManagedComponents) {
+  register = (comp: KulDebugManagedComponents) => {
     if (comp.rootElement.tagName.toLowerCase() === "kul-code") {
       this.#MANAGED_COMPONENTS.codes.add(comp as KulCode);
     } else {
       this.#MANAGED_COMPONENTS.togglees.add(comp as KulToggle);
     }
-  }
+  };
   //#endregion
 
   //#region Toggle
-  toggle(value?: boolean, dispatch = true) {
+  toggle = (value?: boolean, dispatch = true) => {
     if (value === false || value === true) {
       this.#IS_ENABLED = value;
     } else {
@@ -242,16 +242,16 @@ export class KulDebug {
     }
 
     return this.#IS_ENABLED;
-  }
+  };
   //#endregion
 
   //#region Unregister
-  unregister(comp: KulDebugManagedComponents) {
+  unregister = (comp: KulDebugManagedComponents) => {
     if (comp.rootElement.tagName.toLowerCase() === "kul-code") {
       this.#MANAGED_COMPONENTS.codes.delete(comp as KulCode);
     } else {
       this.#MANAGED_COMPONENTS.togglees.delete(comp as KulToggle);
     }
-  }
+  };
   //#endregion
 }

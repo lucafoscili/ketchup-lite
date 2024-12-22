@@ -1,16 +1,16 @@
 import { h, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { RIPPLE_SURFACE_CLASS } from "src/utils/constants";
 import { KulCardAdapter } from "../kul-card-declarations";
 
 //#region Material layout
 export const prepMaterial = (getAdapter: () => KulCardAdapter): VNode => {
-  const { bemClass } = kulManagerSingleton.theme;
-  const { decorate } = kulManagerSingleton.data.cell.shapes;
-
-  const { compInstance, defaults, shapes } = getAdapter().controller.get;
+  const { compInstance, defaults, manager, shapes } =
+    getAdapter().controller.get;
   const { material } = defaults;
+  const { data, theme } = manager;
+  const { decorate } = data.cell.shapes;
+  const { bemClass, ripple } = theme;
 
   const { button, image, text } = shapes();
 
@@ -42,42 +42,39 @@ export const prepMaterial = (getAdapter: () => KulCardAdapter): VNode => {
   //#endregion
 
   return (
-    <div class={bemClass("card", null, { "has-action": true, material: true })}>
+    <div class={bemClass("card-material", null, { "has-action": true })}>
       <div
         class={RIPPLE_SURFACE_CLASS}
         data-cy={KulDataCyAttributes.RIPPLE}
         onPointerDown={(e) => {
-          kulManagerSingleton.theme.ripple.trigger(
-            e as PointerEvent,
-            e.currentTarget as HTMLElement,
-          );
+          ripple.trigger(e as PointerEvent, e.currentTarget as HTMLElement);
         }}
       >
         {hasImage && (
-          <div class={bemClass("card", "section-1", { image: true })}>
+          <div
+            class={bemClass("card-material", "cover-section", { image: true })}
+          >
             {images.element[0]}
           </div>
         )}
-        <div class={bemClass("card", "section-2")}>
+        <div class={bemClass("card-material", "text-section")}>
           {title && (
-            <div class={bemClass("card", "sub-2", { title: true })}>
-              {title}
-            </div>
+            <div class={bemClass("text-content", "title")}>{title}</div>
           )}
           {subtitle && (
-            <div class={bemClass("card", "section-1", { subtitle: true })}>
-              {subtitle}
-            </div>
+            <div class={bemClass("text-content", "subtitle")}>{subtitle}</div>
           )}
           {description && (
-            <div class={bemClass("card", "section-1", { description: true })}>
+            <div class={bemClass("text-content", "description")}>
               {description}
             </div>
           )}
         </div>
       </div>
       {hasButton && (
-        <div class={bemClass("card", "section-3", { button: true })}>
+        <div
+          class={bemClass("card-material", "actions-section", { button: true })}
+        >
           {...buttons.element}
         </div>
       )}

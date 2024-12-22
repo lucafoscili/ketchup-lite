@@ -81,7 +81,11 @@ export class KulCard {
 
   //#region Internal variables
   #adapter = createAdapter(
-    { compInstance: this, shapes: () => this.shapes },
+    {
+      compInstance: this,
+      manager: kulManagerSingleton,
+      shapes: () => this.shapes,
+    },
     () => this.#adapter,
   );
   //#endregion

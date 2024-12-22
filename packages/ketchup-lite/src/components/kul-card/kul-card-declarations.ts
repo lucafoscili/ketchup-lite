@@ -4,6 +4,7 @@ import {
   KulDataShapeDefaults,
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
@@ -60,12 +61,13 @@ export interface KulCardAdapterHandlers extends KulComponentAdapterHandlers {
 }
 export type KulCardAdapterInitializerGetters = Pick<
   KulCardAdapterControllerGetters,
-  "compInstance" | "shapes"
+  "compInstance" | "manager" | "shapes"
 >;
 export interface KulCardAdapterControllerGetters
   extends KulComponentAdapterGetters<KulCard> {
   compInstance: KulCard;
   defaults: KulCardAdapterDefaults;
+  manager: KulManager;
   shapes: () => KulDataShapesMap;
 }
 export type KulCardAdapterDefaults = {

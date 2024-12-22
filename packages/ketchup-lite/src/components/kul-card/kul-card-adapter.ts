@@ -20,7 +20,7 @@ export const createAdapter = (
 ): KulCardAdapter => {
   return {
     controller: {
-      get: createGetters(getters),
+      get: createGetters(getters, getAdapter),
     },
     elements: {
       jsx: { layouts: createJsx(getAdapter) },
@@ -34,10 +34,11 @@ export const createAdapter = (
 //#region Controller
 export const createGetters = (
   getters: KulCardAdapterInitializerGetters,
+  getAdapter: () => KulCardAdapter,
 ): KulCardAdapterControllerGetters => {
   return {
     ...getters,
-    defaults: DEFAULTS(),
+    defaults: DEFAULTS(getAdapter),
   };
 };
 //#endregion

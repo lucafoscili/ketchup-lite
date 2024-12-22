@@ -6,7 +6,8 @@ import type {
   KulComponentName,
 } from "../../types/GenericTypes";
 import { RIPPLE_SURFACE_CLASS } from "../../utils/constants";
-import { KulManager } from "../kul-manager/kul-manager";
+import type { KulManager } from "../kul-manager/kul-manager";
+import { THEME_LIST } from "./helpers/theme";
 import {
   KulThemeBEMModifier,
   KulThemeCSSVariables,
@@ -28,7 +29,9 @@ export class KulTheme {
   constructor(kulManager: KulManager) {
     this.#KUL_MANAGER = kulManager;
     this.cssVars = {};
+    this.list = THEME_LIST;
     this.managedComponents = new Set();
+    this.name = "silver";
     this.styleTag = document.documentElement
       .querySelector("head")
       .appendChild(document.createElement("style"));
@@ -628,7 +631,7 @@ export class KulTheme {
   //#endregion
 
   //#region codeToHex
-  codeToHex(color: string): string {
+  codeToHex = (color: string): string => {
     const { logs } = this.#KUL_MANAGER.debug;
 
     const colorCodes: GenericMap = {
@@ -787,6 +790,6 @@ export class KulTheme {
       logs.new(this, "Could not decode color " + color + "!");
       return color;
     }
-  }
+  };
   //#endregion
 }

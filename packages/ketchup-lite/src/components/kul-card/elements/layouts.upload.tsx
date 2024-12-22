@@ -1,18 +1,18 @@
 import { h, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { KulCardAdapter } from "../kul-card-declarations";
 
 //#region Upload layout
 export const prepUpload = (getAdapter: () => KulCardAdapter): VNode => {
-  const { bemClass } = kulManagerSingleton.theme;
-  const decorator = kulManagerSingleton.data.cell.shapes.decorate;
-
-  const { compInstance, defaults, shapes } = getAdapter().controller.get;
+  const { compInstance, defaults, manager, shapes } =
+    getAdapter().controller.get;
+  const { data, theme } = manager;
+  const { decorate } = data.cell.shapes;
+  const { bemClass } = theme;
 
   const { button, upload } = shapes();
 
   //#region Button
-  const buttons = decorator(
+  const buttons = decorate(
     "button",
     button,
     async (e) => compInstance.onKulEvent(e, "kul-event"),
@@ -22,21 +22,21 @@ export const prepUpload = (getAdapter: () => KulCardAdapter): VNode => {
   //#endregion
 
   //#region Upload
-  const uploads = decorator("upload", upload, async (e) =>
+  const uploads = decorate("upload", upload, async (e) =>
     compInstance.onKulEvent(e, "kul-event"),
   );
   const hasUpload = Boolean(uploads?.element?.length);
   //#endregion
 
   return (
-    <div class={bemClass("card", null, { upload: true })}>
+    <div class={bemClass("card-upload", null, { upload: true })}>
       {hasUpload && (
-        <div class={bemClass("card", "section-1", { upload: true })}>
+        <div class={bemClass("card-upload", "section-1", { upload: true })}>
           {uploads.element[0]}
         </div>
       )}
       {hasButton && (
-        <div class={bemClass("card", "section-2", { button: true })}>
+        <div class={bemClass("card-upload", "section-2", { button: true })}>
           {buttons.element[0]}
         </div>
       )}

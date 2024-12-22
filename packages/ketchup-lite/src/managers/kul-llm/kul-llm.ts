@@ -1,4 +1,4 @@
-import { KulManager } from "../kul-manager/kul-manager";
+import type { KulManager } from "../kul-manager/kul-manager";
 import { KulLLMRequest } from "./kul-llm-declarations";
 
 export class KulLLM {
@@ -9,7 +9,7 @@ export class KulLLM {
   }
 
   //#region Fetch
-  async fetch(request: KulLLMRequest, url: string) {
+  fetch = async (request: KulLLMRequest, url: string) => {
     try {
       const response = await fetch(`${url}/v1/chat/completions`, {
         method: "POST",
@@ -27,20 +27,20 @@ export class KulLLM {
       console.error("Error calling LLM:", error);
       throw error;
     }
-  }
+  };
   //#endregion
 
   //#region Poll
-  async poll(url: string) {
+  poll = async (url: string) => {
     return fetch(url);
-  }
+  };
   //#endregion
 
   //#region SpeechToText
-  async speechToText(
+  speechToText = async (
     textarea: HTMLKulTextfieldElement,
     button: HTMLKulButtonElement,
-  ) {
+  ) => {
     const { debug } = this.#KUL_MANAGER;
 
     const speechConstructor =
@@ -81,6 +81,6 @@ export class KulLLM {
     } catch (err) {
       debug.logs.new(this, "Error: " + err, "error");
     }
-  }
+  };
   //#endregion
 }

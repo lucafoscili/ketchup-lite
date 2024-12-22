@@ -1,3 +1,4 @@
+import { getAssetPath, setAssetPath } from "src/index";
 import {
   GenericObject,
   KulComponent,
@@ -15,10 +16,13 @@ import { KulTheme } from "../kul-theme/kul-theme";
 import type {
   KulManagerClickCb,
   KulManagerComputedGetAssetPath,
-  KulManagerGetAssetPath,
   KulManagerSetAssetPath,
   KulManagerUtilities,
 } from "./kul-manager-declarations";
+
+if (process.env.NODE_ENV === "development") {
+  console.log("Loading kul-manager.ts");
+}
 
 export class KulManager {
   assets: { get: KulManagerComputedGetAssetPath; set: KulManagerSetAssetPath };
@@ -31,10 +35,7 @@ export class KulManager {
   utilities: KulManagerUtilities;
   theme: KulTheme;
 
-  constructor(
-    getAssetPath: KulManagerGetAssetPath,
-    setAssetPath: KulManagerSetAssetPath,
-  ) {
+  constructor() {
     this.assets = {
       get: (value) => {
         const path = getAssetPath(value);
@@ -62,9 +63,13 @@ export class KulManager {
     };
 
     this.#setupListeners();
+
+    if (process.env.NODE_ENV === "development") {
+      console.log("KulManager initialized.");
+    }
   }
 
-  #setupListeners() {
+  #setupListeners = () => {
     document.addEventListener("click", (e) => {
       const { utilities } = this;
       const { clickCallbacks } = utilities;
@@ -95,13 +100,13 @@ export class KulManager {
         }
       });
     });
-  }
+  };
   /**
    * Add a callback to handle clicks outside specified elements.
    * @param cb - The callback to execute when the click occurs.
    * @param async - Whether to defer execution of the callback.
    */
-  addClickCallback(cb: KulManagerClickCb, async?: boolean) {
+  addClickCallback = (cb: KulManagerClickCb, async?: boolean) => {
     const { utilities } = this;
     const { clickCallbacks } = utilities;
 
@@ -110,7 +115,7 @@ export class KulManager {
     } else {
       clickCallbacks.add(cb);
     }
-  }
+  };
   /**
    * Assigns an element to the related refs' key.
    * @param {Record<string, any>} refs - The refs object.
@@ -124,9 +129,9 @@ export class KulManager {
    * @param {KulComponent} comp - The component requesting prop values.
    * @returns {KulComponentPropsFor<C>} - An object with prop as keys and their related values.
    */
-  getProps<C extends KulComponentName>(
+  getProps = <C extends KulComponentName>(
     comp: KulComponent<C>,
-  ): KulComponentPropsFor<C> {
+  ): KulComponentPropsFor<C> => {
     const props = {};
 
     for (const key in comp) {
@@ -139,14 +144,14 @@ export class KulManager {
     }
 
     return props as KulComponentPropsFor<C>;
-  }
+  };
   /**
    * Removes a previously added click-callback from the stack.
    * @param cb - The callback to remove.
    */
-  removeClickCallback(cb: KulManagerClickCb) {
+  removeClickCallback = (cb: KulManagerClickCb) => {
     this.utilities.clickCallbacks.delete(cb);
-  }
+  };
   /**
    * Removes suspicious props from an object.
    * @param  props - The object to sanitize.

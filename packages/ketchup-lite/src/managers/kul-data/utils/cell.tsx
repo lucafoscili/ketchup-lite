@@ -1,5 +1,5 @@
 import { h, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   GenericObject,
   KulComponent,
@@ -25,6 +25,7 @@ export const cellDecorateShapes = <
   C extends KulComponentName,
   S extends KulDataShapes | "text",
 >(
+  kulManager: KulManager,
   component: C,
   shape: S,
   items: Partial<KulDataCell<S>>[],
@@ -32,6 +33,7 @@ export const cellDecorateShapes = <
   defaultProps?: Partial<KulDataCell<S>>[],
   defaultCb?: S extends "text" ? never : KulDataShapeCallback<C, S>,
 ) => {
+  const { sanitizeProps } = kulManager;
   const r: {
     element: VNode[];
     ref: Array<HTMLDivElement | KulComponentRootElement<C>>;
@@ -95,7 +97,7 @@ export const cellDecorateShapes = <
               }
             }}
             {...eventHandler}
-            {...toSpread}
+            {...sanitizeProps(toSpread, component)}
           ></TagName>,
         );
       }
@@ -262,8 +264,6 @@ const decorateSpreader = (
     htmlProps?: Record<string, any>;
   },
 ) => {
-  const { sanitizeProps } = kulManagerSingleton;
-
   const clean = () => {
     if (toSpread["value"] && !toSpread["kulValue"]) {
       toSpread["kulValue"] = toSpread["value"];
@@ -295,5 +295,4 @@ const decorateSpreader = (
   }
 
   clean();
-  sanitizeProps(toSpread);
 };

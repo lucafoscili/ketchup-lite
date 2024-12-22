@@ -1,16 +1,15 @@
 import { h, VNode } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { KulCardAdapter } from "../kul-card-declarations";
 
 export const prepDebug = (getAdapter: () => KulCardAdapter): VNode => {
-  const { bemClass } = kulManagerSingleton.theme;
-  const { decorate } = kulManagerSingleton.data.cell.shapes;
-
   const { controller, elements, handlers } = getAdapter();
   const { refs } = elements;
   const { layouts } = handlers;
-  const { compInstance, defaults, shapes } = controller.get;
+  const { compInstance, defaults, manager, shapes } = controller.get;
   const { debug } = defaults;
+  const { data, theme } = manager;
+  const { decorate } = data.cell.shapes;
+  const { bemClass } = theme;
 
   const { button, code, toggle } = shapes();
 
@@ -55,24 +54,24 @@ export const prepDebug = (getAdapter: () => KulCardAdapter): VNode => {
     hasToggle && (toggles.ref[0] as HTMLKulToggleElement);
 
   return (
-    <div class={bemClass("card", null, { debug: true })}>
+    <div class={bemClass("card-debug", null, { debug: true })}>
       {hasToggle && (
-        <div class={bemClass("card", "section-1", { toggle: true })}>
+        <div class={bemClass("card-debug", "section-1", { toggle: true })}>
           {toggles.element[0]}
         </div>
       )}
       {hasCode && (
-        <div class={bemClass("card", "section-2", { code: true })}>
+        <div class={bemClass("card-debug", "section-2", { code: true })}>
           {codes.element[0]}
         </div>
       )}
       {hasButton && (
-        <div class={bemClass("card", "section-3", { button: true })}>
+        <div class={bemClass("card-debug", "section-3", { button: true })}>
           {buttons.element[0]}
         </div>
       )}
       {hasButton2 && (
-        <div class={bemClass("card", "section-4", { button: true })}>
+        <div class={bemClass("card-debug", "section-4", { button: true })}>
           {buttons.element[1]}
         </div>
       )}

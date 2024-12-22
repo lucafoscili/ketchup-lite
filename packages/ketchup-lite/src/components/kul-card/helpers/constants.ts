@@ -1,6 +1,6 @@
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataShapeDefaults } from "src/managers/kul-data/kul-data-declarations";
 import {
+  KulCardAdapter,
   KulCardAdapterRefs,
   KulCardLayout,
   KulCardPropsInterface,
@@ -22,38 +22,44 @@ export const KUL_CARD_PROPS: (keyof KulCardPropsInterface)[] = [
 //#endregion
 
 //#region Defaults
-export const DEFAULTS: () => {
+export const DEFAULTS: (getAdapter: () => KulCardAdapter) => {
   [L in KulCardLayout]: KulDataShapeDefaults;
-} = () => {
-  const { debug, theme } = kulManagerSingleton;
-
+} = (getAdapter) => {
   return {
     debug: {
-      button: () => [
-        {
-          htmlProps: {
-            className: "kul-full-width kul-danger",
-            id: IDS.clear,
+      button: () => {
+        const { theme } = getAdapter().controller.get.manager;
+
+        return [
+          {
+            htmlProps: {
+              className: "kul-full-width kul-danger",
+              id: IDS.clear,
+            },
+            kulIcon: "refresh",
+            kulLabel: "Clear logs",
           },
-          kulIcon: "refresh",
-          kulLabel: "Clear logs",
-        },
-        {
-          htmlProps: {
-            className: "kul-full-width",
-            id: IDS.theme,
+          {
+            htmlProps: {
+              className: "kul-full-width",
+              id: IDS.theme,
+            },
+            kulData: theme.getThemesDataset(),
           },
-          kulData: theme.getThemesDataset(),
-        },
-      ],
+        ];
+      },
       code: () => [{ kulLanguage: "markdown" }],
-      toggle: () => [
-        {
-          kulLeadingLabel: true,
-          kulLabel: "Toggle debug",
-          kulValue: debug.isEnabled(),
-        },
-      ],
+      toggle: () => {
+        const { debug } = getAdapter().controller.get.manager;
+
+        return [
+          {
+            kulLeadingLabel: true,
+            kulLabel: "Toggle debug",
+            kulValue: debug.isEnabled(),
+          },
+        ];
+      },
     },
     keywords: {
       button: () => [
