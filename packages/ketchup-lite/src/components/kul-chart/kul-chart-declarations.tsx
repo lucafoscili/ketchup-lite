@@ -13,11 +13,12 @@ import {
   KulDataDataset,
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
-  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
+  KulComponentAdapterSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
 import { KulChart } from "./kul-chart";
@@ -68,6 +69,7 @@ export type KulChartAdapterInitializerGetters = Pick<
   KulChartAdapterControllerGetters,
   | "compInstance"
   | "columnById"
+  | "manager"
   | "mappedType"
   | "seriesColumn"
   | "seriesData"
@@ -82,6 +84,7 @@ export interface KulChartAdapterControllerGetters
   extends KulComponentAdapterGetters<KulChart> {
   compInstance: KulChart;
   columnById: (id: string) => KulDataColumn;
+  manager: KulManager;
   mappedType: (type: KulChartType) => SeriesOption["type"];
   options: KulChartAdapterOptions;
   seriesColumn: (seriesName: string) => KulDataColumn[];

@@ -6,7 +6,6 @@ import {
   XAXisComponentOption,
   YAXisComponentOption,
 } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
 import { KulThemeCSSVariables } from "src/managers/kul-theme/kul-theme-declarations";
 import { KulChartAdapter, KulChartAxesTypes } from "../kul-chart-declarations";
 
@@ -35,13 +34,6 @@ const baseAxis = (
 //#region applyOpacity
 export const applyOpacity = (color: string, opacity: string) =>
   `${color}${opacity}`;
-//#endregion
-
-//#region getHexColor
-export const getHexColor = (color: string) => {
-  const { theme } = kulManagerSingleton;
-  return theme.colorCheck(color).hexColor;
-};
 //#endregion
 
 //#region prepAxis
@@ -108,20 +100,19 @@ export const prepSeries = (
   getAdapter: () => KulChartAdapter,
   amount: number,
 ) => {
-  const { theme } = kulManagerSingleton;
-  const { cssVars, randomColor } = theme;
-
-  const { kulColors } = getAdapter().controller.get.compInstance;
+  const { compInstance, manager } = getAdapter().controller.get;
+  const { kulColors } = compInstance;
+  const { colorCheck, cssVars, randomColor } = manager.theme;
 
   const colorArray: string[] = [];
 
   if (kulColors?.length > 0) {
-    colorArray.push(...kulColors.map((c) => getHexColor(c)));
+    colorArray.push(...kulColors.map((c) => colorCheck(c).hexColor));
   } else {
     let index = 1;
     let colorVar = `--kul-chart-color-${index}` as keyof KulThemeCSSVariables;
     while (cssVars[colorVar]) {
-      colorArray.push(getHexColor(cssVars[colorVar]));
+      colorArray.push(colorCheck(cssVars[colorVar]).hexColor);
       index++;
       colorVar = `--kul-chart-color-${index}`;
     }

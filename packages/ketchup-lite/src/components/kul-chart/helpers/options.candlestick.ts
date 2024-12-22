@@ -1,14 +1,12 @@
 import { CandlestickSeriesOption, EChartsOption } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
 import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Candlestick
 export const candlestick = (getAdapter: () => KulChartAdapter) => {
-  const { stringify } = kulManagerSingleton.data.cell;
-
-  const { compInstance, style } = getAdapter().controller.get;
+  const { compInstance, manager, style } = getAdapter().controller.get;
   const { kulAxis, kulData } = compInstance;
   const { theme, tooltip } = style;
+  const { stringify } = manager.data.cell;
 
   const xAxisKey = kulAxis[0];
 

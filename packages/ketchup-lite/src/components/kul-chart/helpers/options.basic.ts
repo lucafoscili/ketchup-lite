@@ -9,17 +9,15 @@ import {
   XAXisComponentOption,
   YAXisComponentOption,
 } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
 import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Basic
 export const basic = (getAdapter: () => KulChartAdapter) => {
-  const { colorCheck } = kulManagerSingleton.theme;
-  const { sanitizeProps } = kulManagerSingleton;
-
-  const { mappedType, seriesData, style, xAxesData } =
+  const { manager, mappedType, seriesData, style, xAxesData } =
     getAdapter().controller.get;
   const { axis, legend, seriesColor, theme, tooltip } = style;
+  const { colorCheck } = manager.theme;
+  const { sanitizeProps } = manager;
 
   const xAxes: XAXisComponentOption[] = [];
   const yAxes: YAXisComponentOption[] = [];

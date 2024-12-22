@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src/global/global";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -16,12 +16,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCanvas"> =
   "KulCanvasEventPayload";
 const TAG_NAME: KulComponentTag<"KulCanvas"> = "kul-canvas";
 
-export const CANVAS_FIXTURES: () => {
+export const CANVAS_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: CanvasData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const documentation: KulArticleDataset = {
     nodes: [
       {

@@ -1,5 +1,4 @@
 import { EChartsOption, FunnelSeriesOption } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
@@ -8,11 +7,10 @@ import {
 
 //#region Funnel
 export const funnel = (getAdapter: () => KulChartAdapter) => {
-  const { stringify } = kulManagerSingleton.data.cell;
-
-  const { compInstance, style } = getAdapter().controller.get;
+  const { compInstance, manager, style } = getAdapter().controller.get;
   const { kulData, kulSeries } = compInstance;
   const { legend, seriesColor, theme, tooltip } = style;
+  const { stringify } = manager.data.cell;
 
   const data = kulSeries.map((seriesName) => {
     const totalValue = kulData.nodes.reduce((sum, node) => {

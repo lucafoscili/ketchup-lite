@@ -129,6 +129,7 @@ export class KulChart {
     {
       compInstance: this,
       columnById: (id: string) => this.#findColumn(this.kulData, { id })[0],
+      manager: kulManagerSingleton,
       mappedType: (type) => {
         switch (type) {
           case "area":

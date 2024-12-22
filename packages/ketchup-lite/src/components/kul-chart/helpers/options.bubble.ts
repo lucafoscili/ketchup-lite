@@ -1,5 +1,4 @@
 import { EChartsOption } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
@@ -8,12 +7,11 @@ import {
 
 //#region Bubble
 export const bubble = (getAdapter: () => KulChartAdapter) => {
-  const { stringify } = kulManagerSingleton.data.cell;
-
   const { get } = getAdapter().controller;
-  const { columnById, compInstance, style } = get;
+  const { columnById, compInstance, manager, style } = get;
   const { kulAxis, kulData, kulSeries } = compInstance;
   const { seriesColor, theme, tooltip } = style;
+  const { stringify } = manager.data.cell;
 
   const xAxisKey = kulAxis[0];
   const yAxisKey = kulAxis[1];

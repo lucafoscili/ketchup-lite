@@ -1,5 +1,5 @@
-import { kulManagerSingleton } from "src/global/global";
 import { KulCardLayout, KulDataDataset } from "src/components";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,12 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCard"> =
   "KulCardEventPayload";
 const TAG_NAME: KulComponentTag<"KulCard"> = "kul-card";
 
-export const CARD_FIXTURES: () => {
+export const CARD_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: CardData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const data: {
     [K in KulCardLayout]: () => KulDataDataset;
   } = {

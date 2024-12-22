@@ -1,14 +1,12 @@
 import { EChartsOption } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
 import { KulChartAdapter } from "../kul-chart-declarations";
 
 //#region Heatmap
 export const heatmap = (getAdapter: () => KulChartAdapter) => {
-  const { stringify } = kulManagerSingleton.data.cell;
-
-  const { compInstance, style } = getAdapter().controller.get;
+  const { compInstance, manager, style } = getAdapter().controller.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
   const { seriesColor, theme, tooltip } = style;
+  const { stringify } = manager.data.cell;
 
   const xAxisKey = kulAxis[0];
   const yAxisKey = kulSeries[0];

@@ -1,5 +1,4 @@
 import { EChartsOption, HeatmapSeriesOption } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
 import {
   KulChartAdapter,
   KulChartTooltipArguments,
@@ -8,11 +7,10 @@ import {
 
 //#region Calendar
 export const calendar = (getAdapter: () => KulChartAdapter) => {
-  const { stringify } = kulManagerSingleton.data.cell;
-
-  const { compInstance, style } = getAdapter().controller.get;
+  const { compInstance, manager, style } = getAdapter().controller.get;
   const { kulAxis, kulData, kulSeries } = compInstance;
   const { seriesColor, theme, tooltip } = style;
+  const { stringify } = manager.data.cell;
 
   const dateKey = kulAxis[0];
   const valueKey = kulSeries[0];
