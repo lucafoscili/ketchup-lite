@@ -99,9 +99,25 @@ export class KulCarousel {
         current: () => this.currentIndex,
       },
       interval: () => this.#interval,
+      manager: kulManagerSingleton,
       totalSlides: () => this.#getTotalSlides(),
     },
     {
+      index: {
+        current: (value) => (this.currentIndex = value),
+        next: () => {
+          this.currentIndex = navigation.calcNextIdx(
+            this.currentIndex,
+            this.#getTotalSlides(),
+          );
+        },
+        previous: () => {
+          this.currentIndex = navigation.calcPreviousIdx(
+            this.currentIndex,
+            this.#getTotalSlides(),
+          );
+        },
+      },
       interval: (value) => (this.#interval = value),
     },
     () => this.#adapter,
@@ -165,27 +181,27 @@ export class KulCarousel {
    */
   @Method()
   async goToSlide(index: number) {
-    const { toSlide } = navigation;
+    const { current } = this.#adapter.controller.set.index;
 
-    toSlide(this.#adapter, index);
+    current(index);
   }
   /**
    * Advances to the next slide, looping back to the start if at the end.
    */
   @Method()
   async nextSlide() {
-    const { next } = navigation;
+    const { next } = this.#adapter.controller.set.index;
 
-    next(this.#adapter);
+    next();
   }
   /**
    * Moves to the previous slide, looping to the last slide if at the beginning.
    */
   @Method()
   async prevSlide() {
-    const { previous } = navigation;
+    const { previous } = this.#adapter.controller.set.index;
 
-    previous(this.#adapter);
+    previous();
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -252,8 +268,8 @@ export class KulCarousel {
   #prepIndicators(): VNode[] {
     const { bemClass } = kulManagerSingleton.theme;
 
+    const { current } = this.#adapter.controller.set.index;
     const { currentIndex, kulShape } = this;
-    const { toSlide } = navigation;
 
     const totalSlides = this.#getTotalSlides();
     const maxIndicators = 9;
@@ -272,7 +288,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={bemClass("carousel", "chevron", { left: true })}
-          onClick={() => toSlide(this.#adapter, 0)}
+          onClick={() => current(0)}
           title={`Jump to the first slide (#${0})`}
         >
           «
@@ -293,7 +309,7 @@ export class KulCarousel {
               active: isCurrent,
               small: (isFirst || isLast) && !isCurrent,
             })}
-            onClick={() => toSlide(this.#adapter, actualIndex)}
+            onClick={() => current(actualIndex)}
             title={`#${index}`}
           />,
         );
@@ -303,7 +319,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={bemClass("carousel", "chevron", { right: true })}
-          onClick={() => toSlide(this.#adapter, totalSlides - 1)}
+          onClick={() => current(totalSlides - 1)}
           title={`Jump to the last slide (#${totalSlides - 1})`}
         >
           »
@@ -374,9 +390,8 @@ export class KulCarousel {
   render() {
     const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
+    const { next, previous } = this.#adapter.controller.set.index;
     const { kulStyle } = this;
-
-    const { next, previous } = navigation;
 
     return (
       <Host>
@@ -397,9 +412,9 @@ export class KulCarousel {
               ) {
                 this.#lastSwipeTime = currentTime;
                 if (swipeDistance > 0) {
-                  previous(this.#adapter);
+                  previous();
                 } else {
-                  next(this.#adapter);
+                  next();
                 }
               }
             }}

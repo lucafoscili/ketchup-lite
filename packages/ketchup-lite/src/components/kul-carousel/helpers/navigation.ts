@@ -13,7 +13,7 @@ export const autoplay = {
     if (shouldStart) {
       set.interval(
         setInterval(() => {
-          navigation.next(adapter);
+          set.index.next();
         }, kulInterval),
       );
     }
@@ -36,33 +36,14 @@ export const autoplay = {
 
 export const navigation = {
   //#region Next
-  next: (adapter: KulCarouselAdapter) => {
-    const { controller } = adapter;
-    const { get, set } = controller;
-    const { index, totalSlides } = get;
-    const { current } = index;
-
-    set.index.current((current() + 1) % totalSlides());
+  calcNextIdx: (current: number, totalSlides: number) => {
+    return (current + 1) % totalSlides;
   },
   //#endregion
 
   //#region Previous
-  previous: (adapter: KulCarouselAdapter) => {
-    const { controller } = adapter;
-    const { get, set } = controller;
-    const { index, totalSlides } = get;
-    const { current } = index;
-
-    set.index.current((current() - 1 + totalSlides()) % totalSlides());
-  },
-  //#endregion
-
-  //#region To slide
-  toSlide: (adapter: KulCarouselAdapter, value: number) => {
-    const { controller } = adapter;
-    const { set } = controller;
-
-    set.index.current(value);
+  calcPreviousIdx: (current: number, totalSlides: number) => {
+    return (current - 1 + totalSlides) % totalSlides;
   },
   //#endregion
 };

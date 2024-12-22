@@ -1,5 +1,4 @@
 import { IDS } from "../helpers/constants";
-import { navigation } from "../helpers/navigation";
 import {
   KulCarouselAdapter,
   KulCarouselAdapterHandlers,
@@ -8,20 +7,20 @@ import {
 export const prepSideButtonHandlers = (
   getAdapter: () => KulCarouselAdapter,
 ): KulCarouselAdapterHandlers => {
-  const { next, previous } = navigation;
-
   return {
     button: (e) => {
       const { eventType, id } = e.detail;
+
+      const { next, previous } = getAdapter().controller.set.index;
 
       switch (eventType) {
         case "click":
           switch (id) {
             case IDS.back:
-              previous(getAdapter());
+              previous();
               break;
             case IDS.forward:
-              next(getAdapter());
+              next();
               break;
           }
       }

@@ -1,15 +1,15 @@
 import { prepSideButtonsJsx } from "./elements/side-buttons";
 import { prepSideButtonHandlers } from "./handlers/side-buttons";
 import { REFS } from "./helpers/constants";
-import { autoplay, navigation } from "./helpers/navigation";
+import { autoplay } from "./helpers/navigation";
 import {
   KulCarouselAdapter,
   KulCarouselAdapterControllerGetters,
   KulCarouselAdapterControllerSetters,
-  KulCarouselAdapterJsx,
   KulCarouselAdapterHandlers,
   KulCarouselAdapterInitializerGetters,
   KulCarouselAdapterInitializerSetters,
+  KulCarouselAdapterJsx,
 } from "./kul-carousel-declarations";
 
 //#region Adapter
@@ -43,18 +43,12 @@ export const createSetters = (
   getAdapter: () => KulCarouselAdapter,
 ): KulCarouselAdapterControllerSetters => {
   const { start, stop } = autoplay;
-  const { next, previous, toSlide } = navigation;
 
   return {
     ...setters,
     autoplay: {
       start: () => start(getAdapter()),
       stop: () => stop(getAdapter()),
-    },
-    index: {
-      current: (value) => toSlide(getAdapter(), value),
-      next: () => next(getAdapter()),
-      previous: () => previous(getAdapter()),
     },
   };
 };

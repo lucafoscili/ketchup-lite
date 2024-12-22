@@ -3,13 +3,14 @@ import {
   KulDataDataset,
   KulDataShapes,
 } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
-  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
+  KulComponentAdapterSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
 import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
@@ -41,11 +42,11 @@ export interface KulCarouselAdapterHandlers
 }
 export type KulCarouselAdapterInitializerGetters = Pick<
   KulCarouselAdapterControllerGetters,
-  "compInstance" | "index" | "interval" | "totalSlides"
+  "compInstance" | "index" | "interval" | "manager" | "totalSlides"
 >;
 export type KulCarouselAdapterInitializerSetters = Pick<
   KulCarouselAdapterControllerSetters,
-  "interval"
+  "index" | "interval"
 >;
 export interface KulCarouselAdapterControllerGetters
   extends KulComponentAdapterGetters<KulCarousel> {
@@ -54,6 +55,7 @@ export interface KulCarouselAdapterControllerGetters
     current: () => number;
   };
   interval: () => NodeJS.Timeout;
+  manager: KulManager;
   totalSlides: () => number;
 }
 export interface KulCarouselAdapterControllerSetters

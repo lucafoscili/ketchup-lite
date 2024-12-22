@@ -1,5 +1,5 @@
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataDataset } from "src/components";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,12 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCarousel"> =
   "KulCarouselEventPayload";
 const TAG_NAME: KulComponentTag<"KulCarousel"> = "kul-carousel";
 
-export const CAROUSEL_FIXTURES: () => {
+export const CAROUSEL_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: CarouselData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const data: Partial<{
     [K in KulComponentName]: KulDataDataset;
   }> = {

@@ -4,18 +4,16 @@ import {
   KulCarouselAdapter,
   KulCarouselAdapterJsx,
 } from "../kul-carousel-declarations";
-import { kulManagerSingleton } from "src/global/global";
 
 //#endregion
 export const prepSideButtonsJsx = (
   getAdapter: () => KulCarouselAdapter,
 ): KulCarouselAdapterJsx => {
-  const { assignRef } = kulManagerSingleton;
-
   return {
     //#region Back
     back: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { assignRef } = controller.get.manager;
       const { refs } = elements;
       const { button } = handlers;
 
@@ -34,7 +32,8 @@ export const prepSideButtonsJsx = (
 
     //#region Forward
     forward: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { assignRef } = controller.get.manager;
       const { refs } = elements;
       const { button } = handlers;
 
