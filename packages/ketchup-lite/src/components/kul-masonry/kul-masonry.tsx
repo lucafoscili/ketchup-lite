@@ -104,6 +104,7 @@ export class KulMasonry {
       compInstance: this,
       isMasonry: () => this.#isMasonry(),
       isVertical: () => this.#isVertical(),
+      manager: kulManagerSingleton,
       shapes: () => this.shapes,
     },
     () => this.#adapter,

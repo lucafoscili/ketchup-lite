@@ -104,6 +104,7 @@ export class KulCompare {
     {
       compInstance: this,
       isOverlay: () => this.#isOverlay(),
+      manager: kulManagerSingleton,
       shapes: () => this.#getShapes(),
     },
     {

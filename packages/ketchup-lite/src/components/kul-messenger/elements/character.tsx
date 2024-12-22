@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
 import { MENU_DATASET } from "../helpers/constants";
 import { statusIconOptions } from "../helpers/utils";
@@ -11,16 +10,15 @@ import {
 export const prepCharacter = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterJsx["character"] => {
-  const { assignRef, theme } = kulManagerSingleton;
-  const { bemClass } = theme;
-
   return {
     //#region Avatar
     avatar: () => {
       const { controller, elements } = getAdapter();
+      const { image, manager } = controller.get;
       const { character } = elements.refs;
-      const { image } = controller.get;
       const { asCover } = image;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const { title, value } = asCover("avatars");
 
@@ -39,8 +37,11 @@ export const prepCharacter = (
     //#region Status icon
     statusIcon: () => {
       const { controller, elements } = getAdapter();
+      const { manager, status } = controller.get;
       const { character } = elements.refs;
-      const { connection } = controller.get.status;
+      const { connection } = status;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const { color, title } = statusIconOptions(connection());
 
@@ -61,9 +62,11 @@ export const prepCharacter = (
     //#region Save
     save: () => {
       const { controller, elements, handlers } = getAdapter();
+      const { manager, status } = controller.get;
       const { character } = elements.refs;
-      const { inProgress } = controller.get.status.save;
       const { button } = handlers.character;
+      const { inProgress } = status.save;
+      const { assignRef } = manager;
 
       const isSaving = inProgress();
 
@@ -99,6 +102,7 @@ export const prepCharacter = (
       const { controller, elements } = getAdapter();
       const { character } = elements.refs;
       const { biography } = controller.get.character;
+      const { assignRef } = controller.get.manager;
 
       return (
         <kul-code

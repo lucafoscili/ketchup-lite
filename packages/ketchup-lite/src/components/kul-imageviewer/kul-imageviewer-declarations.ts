@@ -1,12 +1,13 @@
 import { VNode } from "@stencil/core";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
-  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
+  KulComponentAdapterSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
 import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
@@ -81,7 +82,7 @@ export interface KulImageviewerAdapterHandlers
 }
 export type KulImageviewerAdapterInitializerGetters = Pick<
   KulImageviewerAdapterControllerGetters,
-  "compInstance" | "currentShape" | "history" | "spinnerStatus"
+  "compInstance" | "currentShape" | "history" | "manager" | "spinnerStatus"
 >;
 export type KulImageviewerAdapterInitializerSetters = Pick<
   KulImageviewerAdapterControllerSetters,
@@ -100,6 +101,7 @@ export interface KulImageviewerAdapterControllerGetters
     full: () => KulImageviewerHistory;
     index: () => number;
   };
+  manager: KulManager;
   spinnerStatus: () => boolean;
 }
 export interface KulImageviewerAdapterControllerSetters

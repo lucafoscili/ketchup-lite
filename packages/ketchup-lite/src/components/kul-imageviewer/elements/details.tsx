@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { IDS } from "../helpers/constants";
 import {
@@ -10,27 +9,16 @@ import {
 export const prepDetails = (
   getAdapter: () => KulImageviewerAdapter,
 ): KulImageviewerAdapterJsx["details"] => {
-  const { assignRef, theme } = kulManagerSingleton;
-  const { bemClass } = theme;
-
-  const className = {
-    canvas: bemClass("details-grid", "canvas"),
-    clearHistory: `${bemClass("details-grid", "clear-history")} kul-danger kul-full-width`,
-    deleteShape: `${bemClass("details-grid", "delete")} kul-danger kul-full-width`,
-    redo: `${bemClass("details-grid", "redo")} kul-full-width`,
-    save: `${bemClass("details-grid", "commit-changes")} kul-success kul-full-width`,
-    spinner: `${bemClass("details-grid", "spinner")}`,
-    tree: `${bemClass("details-grid", "tree")}`,
-    undo: `${bemClass("details-grid", "undo")} kul-full-width`,
-  };
-
   return {
     // #region Canvas
     canvas: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { currentSnapshot } = controller.get.history;
+      const { history, manager } = controller.get;
       const { details } = elements.refs;
       const { canvas } = handlers.details;
+      const { currentSnapshot } = history;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const snapshot = currentSnapshot();
       if (!snapshot) {
@@ -39,7 +27,7 @@ export const prepDetails = (
 
       return (
         <kul-canvas
-          class={className.canvas}
+          class={bemClass("details-grid", "canvas")}
           data-cy={KulDataCyAttributes.SHAPE}
           id={IDS.details.canvas}
           kulImageProps={{ kulValue: snapshot.value }}
@@ -53,16 +41,19 @@ export const prepDetails = (
     // #region Clear history
     clearHistory: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { current } = controller.get.history;
+      const { history, manager } = controller.get;
       const { details } = elements.refs;
       const { button } = handlers.details;
+      const { current } = history;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const hasHistory = !!(current()?.length > 1);
       const isDisabled = !hasHistory;
 
       return (
         <kul-button
-          class={className.clearHistory}
+          class={`${bemClass("details-grid", "clear-history")} kul-danger kul-full-width`}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.clearHistory}
           kulDisabled={isDisabled}
@@ -85,13 +76,16 @@ export const prepDetails = (
 
     // #region Delete shape
     deleteShape: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { details } = elements.refs;
       const { button } = handlers.details;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
-          class={className.deleteShape}
+          class={`${bemClass("details-grid", "delete")} kul-danger kul-full-width`}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.deleteShape}
           kulIcon="delete-empty"
@@ -113,9 +107,12 @@ export const prepDetails = (
     // #region Redo
     redo: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { current, index } = controller.get.history;
+      const { history, manager } = controller.get;
+      const { current, index } = history;
       const { details } = elements.refs;
       const { button } = handlers.details;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const currentHistory = current();
       const hasHistory = !!currentHistory?.length;
@@ -123,7 +120,7 @@ export const prepDetails = (
 
       return (
         <kul-button
-          class={className.redo}
+          class={`${bemClass("details-grid", "redo")} kul-full-width`}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.redo}
           kulDisabled={isDisabled}
@@ -140,16 +137,19 @@ export const prepDetails = (
     // #region Save
     save: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { current } = controller.get.history;
+      const { history, manager } = controller.get;
+      const { current } = history;
       const { details } = elements.refs;
       const { button } = handlers.details;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const hasHistory = !!(current()?.length > 1);
       const isDisabled = !hasHistory;
 
       return (
         <kul-button
-          class={className.save}
+          class={`${bemClass("details-grid", "commit-changes")} kul-success kul-full-width`}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.save}
           kulDisabled={isDisabled}
@@ -172,12 +172,14 @@ export const prepDetails = (
     // #region Spinner
     spinner: () => {
       const { controller, elements } = getAdapter();
-      const { spinnerStatus } = controller.get;
+      const { manager, spinnerStatus } = controller.get;
       const { details } = elements.refs;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-spinner
-          class={className.spinner}
+          class={`${bemClass("details-grid", "spinner")}`}
           id={IDS.details.spinner}
           kulActive={spinnerStatus()}
           kulDimensions="16px"
@@ -193,13 +195,15 @@ export const prepDetails = (
     // #region Tree
     tree: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
       const { details } = elements.refs;
       const { tree } = handlers.details;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-tree
-          class={className.tree}
+          class={`${bemClass("details-grid", "tree")}`}
           data-cy={KulDataCyAttributes.INPUT}
           id={IDS.details.tree}
           kulAccordionLayout={true}
@@ -215,16 +219,19 @@ export const prepDetails = (
     // #region Undo
     undo: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { current, index } = controller.get.history;
+      const { history, manager } = controller.get;
+      const { current, index } = history;
       const { details } = elements.refs;
       const { button } = handlers.details;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const hasHistory = !!current()?.length;
       const isDisabled = !(hasHistory && index() > 0);
 
       return (
         <kul-button
-          class={className.undo}
+          class={`${bemClass("details-grid", "undo")} kul-full-width`}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.details.undo}
           kulDisabled={isDisabled}

@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { IDS } from "../helpers/constants";
 import {
@@ -10,25 +9,19 @@ import {
 export const prepNavigation = (
   getAdapter: () => KulImageviewerAdapter,
 ): KulImageviewerAdapterJsx["navigation"] => {
-  const { assignRef, theme } = kulManagerSingleton;
-  const { bemClass } = theme;
-
-  const className = {
-    load: bemClass("navigation-grid", "button"),
-    masonry: `${bemClass("navigation-grid", "masonry")}`,
-    textfield: `${bemClass("navigation-grid", "textfield")}`,
-  };
-
   return {
     // #region Load
     load: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { navigation } = elements.refs;
       const { button } = handlers.navigation;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
-          class={className.load}
+          class={bemClass("navigation-grid", "button")}
           data-cy={KulDataCyAttributes.BUTTON}
           id={IDS.navigation.load}
           kulIcon="find_replace"
@@ -50,14 +43,16 @@ export const prepNavigation = (
     // #region Masonry
     masonry: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
       const { navigation } = elements.refs;
       const { masonry } = handlers.navigation;
       const { kulData } = compInstance;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-masonry
-          class={className.masonry}
+          class={`${bemClass("navigation-grid", "masonry")}`}
           id={IDS.navigation.masonry}
           kulData={kulData}
           kulSelectable={true}
@@ -70,13 +65,16 @@ export const prepNavigation = (
 
     // #region Textfield
     textfield: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { navigation } = elements.refs;
       const { textfield } = handlers.navigation;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-textfield
-          class={className.textfield}
+          class={`${bemClass("navigation-grid", "textfield")}`}
           id={IDS.navigation.textfield}
           kulIcon="folder"
           kulLabel="Directory"

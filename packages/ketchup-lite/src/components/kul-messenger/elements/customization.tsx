@@ -1,6 +1,4 @@
 import { h } from "@stencil/core";
-
-import { kulManagerSingleton } from "src/global/global";
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,
@@ -13,15 +11,14 @@ import {
 export const prepCustomization = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterJsx["customization"] => {
-  const { assignRef } = kulManagerSingleton;
-
   return {
     //#region Filters
     filters: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { character, image } = controller.get;
+      const { character, image, manager } = controller.get;
       const { customization } = elements.refs;
       const { chip } = handlers.customization;
+      const { assignRef } = manager;
 
       for (let index = 0; index < FILTER_DATASET.nodes.length; index++) {
         const filter = FILTER_DATASET.nodes[index] as KulMessengerBaseRootNode<
@@ -49,7 +46,8 @@ export const prepCustomization = (
     //#region List
     list: {
       edit: (type, node) => {
-        const { elements, handlers } = getAdapter();
+        const { controller, elements, handlers } = getAdapter();
+        const { assignRef } = controller.get.manager;
         const { customization } = elements.refs;
         const { button } = handlers.customization;
 
@@ -64,7 +62,8 @@ export const prepCustomization = (
         );
       },
       remove: (type, node) => {
-        const { elements, handlers } = getAdapter();
+        const { controller, elements, handlers } = getAdapter();
+        const { assignRef } = controller.get.manager;
         const { customization } = elements.refs;
         const { button } = handlers.customization;
 
@@ -89,13 +88,13 @@ const prepForms = (
 ): KulMessengerAdapterJsx["customization"]["form"] => {
   const formElements = IMAGE_TYPE_IDS.reduce(
     (acc, type) => {
-      const { assignRef, theme } = kulManagerSingleton;
-      const { bemClass } = theme;
-
       const { controller, elements, handlers } = getAdapter();
-      const { formStatusMap } = controller.get.compInstance;
+      const { compInstance, manager } = controller.get;
       const { form } = elements.refs.customization;
       const { button } = handlers.customization;
+      const { formStatusMap } = compInstance;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       acc[type] = {
         add: () => {

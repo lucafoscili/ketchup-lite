@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src/global/global";
+import type { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -16,12 +16,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulArticle"> =
   "KulArticleEventPayload";
 const TAG_NAME: KulComponentTag<"KulArticle"> = "kul-article";
 
-export const ARTICLE_FIXTURES: () => {
+export const ARTICLE_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: ArticleData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const kulData: KulArticleDataset = {
     nodes: [
       {

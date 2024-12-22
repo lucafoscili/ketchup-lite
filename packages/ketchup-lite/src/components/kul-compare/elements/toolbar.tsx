@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { ICONS, IDS } from "../helpers/constants";
 import { prepTreeDataset } from "../helpers/utils";
 import {
@@ -11,16 +10,14 @@ import {
 export const prepToolbarJsx = (
   getAdapter: () => KulCompareAdapter,
 ): KulCompareAdapterJsx => {
-  const { assignRef } = kulManagerSingleton;
-  const { bemClass } = kulManagerSingleton.theme;
-
   return {
     //#region Change view
     changeView: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { isOverlay } = controller.get;
+      const { isOverlay, manager } = controller.get;
       const { refs } = elements;
       const { button } = handlers;
+      const { assignRef } = manager;
 
       return (
         <kul-button
@@ -44,9 +41,10 @@ export const prepToolbarJsx = (
     //#region Left button
     leftButton: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { isOverlay } = controller.get;
+      const { isOverlay, manager } = controller.get;
       const { refs } = elements;
       const { button } = handlers;
+      const { assignRef } = manager;
 
       return (
         <kul-button
@@ -70,9 +68,11 @@ export const prepToolbarJsx = (
     //#region Left tree
     leftTree: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance, shapes } = controller.get;
+      const { compInstance, manager, shapes } = controller.get;
       const { refs } = elements;
       const { tree } = handlers;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-tree
@@ -89,9 +89,10 @@ export const prepToolbarJsx = (
     //#region Right button
     rightButton: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { isOverlay } = controller.get;
+      const { isOverlay, manager } = controller.get;
       const { refs } = elements;
       const { button } = handlers;
+      const { assignRef } = manager;
 
       return (
         <kul-button
@@ -115,9 +116,11 @@ export const prepToolbarJsx = (
     //#region Right tree
     rightTree: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance, shapes } = controller.get;
+      const { compInstance, manager, shapes } = controller.get;
       const { refs } = elements;
       const { tree } = handlers;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-tree

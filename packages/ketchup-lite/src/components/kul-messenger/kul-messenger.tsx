@@ -127,7 +127,10 @@ export class KulMessenger {
   //#endregion
 
   //#region Internal variables
-  #adapter = createAdapter({ compInstance: this }, () => this.#adapter);
+  #adapter = createAdapter(
+    { compInstance: this, manager: kulManagerSingleton },
+    () => this.#adapter,
+  );
   //#endregion
 
   //#region Events

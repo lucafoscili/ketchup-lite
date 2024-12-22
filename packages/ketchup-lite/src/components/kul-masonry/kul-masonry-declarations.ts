@@ -5,6 +5,7 @@ import {
   KulDataShapes,
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
@@ -42,13 +43,14 @@ export interface KulMasonryAdapterHandlers extends KulComponentAdapterHandlers {
 }
 export type KulMasonryAdapterInitializerGetters = Pick<
   KulMasonryAdapterGetters,
-  "compInstance" | "isMasonry" | "isVertical" | "shapes"
+  "compInstance" | "isMasonry" | "isVertical" | "manager" | "shapes"
 >;
 export interface KulMasonryAdapterGetters
   extends KulComponentAdapterGetters<KulMasonry> {
   compInstance: KulMasonry;
   isMasonry: () => boolean;
   isVertical: () => boolean;
+  manager: KulManager;
   shapes: () => KulDataShapesMap;
 }
 //#endregion

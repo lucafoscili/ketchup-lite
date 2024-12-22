@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,
@@ -9,12 +8,11 @@ import {
 export const prepOptions = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterJsx["options"] => {
-  const { assignRef } = kulManagerSingleton;
-
   return {
     //#region Back
     back: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { assignRef } = controller.get.manager;
       const { options } = elements.refs;
       const { button } = handlers.options;
 
@@ -33,7 +31,8 @@ export const prepOptions = (
 
     //#region Customization
     customize: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { assignRef } = controller.get.manager;
       const { options } = elements.refs;
       const { button } = handlers.options;
 

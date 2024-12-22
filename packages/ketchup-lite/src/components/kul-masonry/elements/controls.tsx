@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { ICONS, IDS, STYLING } from "../helpers/constants";
 import {
   KulMasonryAdapter,
@@ -9,15 +8,14 @@ import {
 export const prepControls = (
   getAdapter: () => KulMasonryAdapter,
 ): KulMasonryAdapterJsx => {
-  const { assignRef, theme } = kulManagerSingleton;
-  const { bemClass } = theme;
-
   return {
     //#region Add column
     addColumn: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
       const { refs } = elements;
       const { button } = handlers;
+      const { assignRef, theme } = controller.get.manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
@@ -36,9 +34,11 @@ export const prepControls = (
 
     //#region Remove column
     removeColumn: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
       const { refs } = elements;
       const { button } = handlers;
+      const { assignRef, theme } = controller.get.manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
@@ -59,8 +59,10 @@ export const prepControls = (
     changeView: () => {
       const { controller, elements, handlers } = getAdapter();
       const { refs } = elements;
-      const { isMasonry, isVertical } = controller.get;
+      const { isMasonry, isVertical, manager } = controller.get;
       const { button } = handlers;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button

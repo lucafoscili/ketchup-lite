@@ -12,6 +12,7 @@ import {
   KulDataDataset,
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
@@ -147,7 +148,7 @@ export interface KulMessengerAdapterHandlers
 }
 export type KulMessengerAdapterInitializerGetters = Pick<
   KulMessengerAdapterGetters,
-  "compInstance"
+  "compInstance" | "manager"
 >;
 export interface KulMessengerAdapterGetCharacter {
   biography: (character?: KulMessengerCharacterNode) => string;
@@ -197,6 +198,7 @@ export interface KulMessengerAdapterGetters
   config: () => KulMessengerConfig;
   history: () => KulMessengerHistory;
   image: KulMessengerAdapterGetImage;
+  manager: KulManager;
   status: {
     connection: () => KulChatStatus;
     formStatus: () => KulMessengerEditingStatus<KulMessengerImageTypes>;

@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { ICONS, IDS, NAV_DATASET } from "../helpers/constants";
 import { systemMessage } from "../helpers/utils";
 import {
@@ -10,15 +9,15 @@ import {
 export const prepChat = (
   getAdapter: () => KulMessengerAdapter,
 ): KulMessengerAdapterJsx["chat"] => {
-  const { assignRef, sanitizeProps } = kulManagerSingleton;
-
   return {
     //#region Chat
     chat: () => {
       const adapter = getAdapter();
       const { controller, elements, handlers } = adapter;
-      const { chat, current, history } = controller.get.character;
+      const { character, manager } = controller.get;
       const { refs } = elements;
+      const { chat, current, history } = character;
+      const { assignRef, sanitizeProps } = manager;
 
       const system = systemMessage(adapter);
 
@@ -38,9 +37,11 @@ export const prepChat = (
 
     //#region Left expander
     leftExpander: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { refs } = elements;
       const { button } = handlers.chat;
+      const { assignRef } = manager;
 
       return (
         <kul-button
@@ -58,9 +59,11 @@ export const prepChat = (
 
     //#region Right expander
     rightExpander: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { refs } = elements;
       const { button } = handlers.chat;
+      const { assignRef } = manager;
 
       return (
         <kul-button
@@ -78,9 +81,11 @@ export const prepChat = (
 
     //#region Tabbar
     tabbar: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { refs } = elements;
       const { tabbar } = handlers.chat;
+      const { assignRef } = manager;
 
       return (
         <kul-tabbar

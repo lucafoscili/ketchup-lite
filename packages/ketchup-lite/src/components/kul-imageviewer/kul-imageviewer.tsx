@@ -112,6 +112,7 @@ export class KulImageviewer {
         full: () => this.history,
         index: () => this.historyIndex,
       },
+      manager: kulManagerSingleton,
       spinnerStatus: () => this.isSpinnerActive,
     },
     {

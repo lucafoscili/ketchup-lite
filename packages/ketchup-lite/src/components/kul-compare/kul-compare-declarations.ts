@@ -6,6 +6,7 @@ import {
   KulDataShapes,
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
@@ -33,7 +34,7 @@ export interface KulCompareAdapter extends KulComponentAdapter<KulCompare> {
 }
 export type KulCompareAdapterInitializerGetters = Pick<
   KulCompareAdapterControllerGetters,
-  "compInstance" | "isOverlay" | "shapes"
+  "compInstance" | "isOverlay" | "manager" | "shapes"
 >;
 export type KulCompareAdapterInitializerSetters = Pick<
   KulCompareAdapterControllerSetters,
@@ -47,6 +48,7 @@ export interface KulCompareAdapterControllerGetters
   extends KulComponentAdapterGetters<KulCompare> {
   compInstance: KulCompare;
   defaults: KulCompareAdapterDefaults;
+  manager: KulManager;
   isOverlay: () => boolean;
   shapes: () => KulDataShapesMap[KulDataShapes];
 }

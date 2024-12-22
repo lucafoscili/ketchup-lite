@@ -1,4 +1,3 @@
-import { kulManagerSingleton } from "src/global/global";
 import { KulButton } from "src/components/kul-button/kul-button";
 import { KulMasonrySelectedShape } from "src/components/kul-masonry/kul-masonry-declarations";
 import {
@@ -37,10 +36,9 @@ export const clearSelection = async (adapter: KulImageviewerAdapter) => {
 
 //#region Delete shape
 export const deleteShape = async (adapter: KulImageviewerAdapter) => {
-  const { findNodeByCell, pop } = kulManagerSingleton.data.node;
-
-  const { compInstance, currentShape } = adapter.controller.get;
+  const { compInstance, currentShape, manager } = adapter.controller.get;
   const { kulData } = compInstance;
+  const { findNodeByCell, pop } = manager.data.node;
 
   await clearHistory(adapter, currentShape().shape.index);
 
@@ -55,10 +53,9 @@ export const deleteShape = async (adapter: KulImageviewerAdapter) => {
 
 //#region Find image
 export const findImage = (adapter: KulImageviewerAdapter) => {
-  const { getAll } = kulManagerSingleton.data.cell.shapes;
-
-  const { compInstance, currentShape } = adapter.controller.get;
+  const { compInstance, currentShape, manager } = adapter.controller.get;
   const { kulData } = compInstance;
+  const { getAll } = manager.data.cell.shapes;
 
   const s = currentShape();
   const cells = getAll(kulData, false);
