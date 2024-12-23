@@ -7,6 +7,7 @@ export const heatmap = (getAdapter: () => KulChartAdapter) => {
   const { kulAxis, kulData, kulSeries } = compInstance;
   const { seriesColor, theme, tooltip } = style;
   const { stringify } = manager.data.cell;
+  const { border, font, text } = theme();
 
   const xAxisKey = kulAxis[0];
   const yAxisKey = kulSeries[0];
@@ -45,16 +46,16 @@ export const heatmap = (getAdapter: () => KulChartAdapter) => {
       type: "category",
       data: xCategoriesArray,
       axisLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
     },
     yAxis: {
       type: "category",
       data: yCategoriesArray,
       axisLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
     },
     series: [
@@ -65,7 +66,7 @@ export const heatmap = (getAdapter: () => KulChartAdapter) => {
           show: false,
         },
         itemStyle: {
-          borderColor: theme.border,
+          borderColor: border,
           borderWidth: 1,
         },
         emphasis: {
@@ -89,8 +90,8 @@ export const heatmap = (getAdapter: () => KulChartAdapter) => {
       },
       text: ["High", "Low"],
       textStyle: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
     },
   };

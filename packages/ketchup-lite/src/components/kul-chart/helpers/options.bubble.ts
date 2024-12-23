@@ -10,8 +10,9 @@ export const bubble = (getAdapter: () => KulChartAdapter) => {
   const { get } = getAdapter().controller;
   const { columnById, compInstance, manager, style } = get;
   const { kulAxis, kulData, kulSeries } = compInstance;
-  const { seriesColor, theme, tooltip } = style;
+  const { axis, seriesColor, theme, tooltip } = style;
   const { stringify } = manager.data.cell;
+  const { font, text } = theme();
 
   const xAxisKey = kulAxis[0];
   const yAxisKey = kulAxis[1];
@@ -39,9 +40,9 @@ export const bubble = (getAdapter: () => KulChartAdapter) => {
     const sizeLabel = columnById(sizeKey)?.title || sizeKey;
 
     return `
-              ${xAxisLabel}: ${x}<br/>
-              ${yAxisLabel}: ${y}<br/>
-              ${sizeLabel}: ${size}
+              ${xAxisLabel}: <strong>${x}</strong><br/>
+              ${yAxisLabel}: <strong>${y}</strong><br/>
+              ${sizeLabel}: <strong>${size}</strong>
           `;
   };
 
@@ -50,20 +51,18 @@ export const bubble = (getAdapter: () => KulChartAdapter) => {
       name: columnById(xAxisKey)?.title || xAxisKey,
       nameLocation: "middle",
       nameGap: 25,
-      axisLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
-      },
+      axisLabel: axis("x").axisLabel,
     },
     yAxis: {
       name: columnById(yAxisKey)?.title || yAxisKey,
-      axisLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
-      },
+      axisLabel: axis("y").axisLabel,
     },
     series: [
       {
+        label: {
+          color: text,
+          fontFamily: font,
+        },
         type: "scatter",
         data,
         symbolSize: (val) => val[2],

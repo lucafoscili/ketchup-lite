@@ -11,6 +11,7 @@ export const sankey = (getAdapter: () => KulChartAdapter) => {
   const { kulAxis, kulData, kulSeries } = compInstance;
   const { seriesColor, theme, tooltip } = style;
   const { stringify } = manager.data.cell;
+  const { font, text } = theme();
 
   const sourceKey = kulAxis[0];
   const targetKey = kulSeries[0];
@@ -50,8 +51,8 @@ export const sankey = (getAdapter: () => KulChartAdapter) => {
         links: links,
         label: {
           show: true,
-          color: theme.text,
-          fontFamily: theme.font,
+          color: text,
+          fontFamily: font,
         },
         lineStyle: {
           color: "gradient",

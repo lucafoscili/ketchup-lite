@@ -9,13 +9,6 @@ import { pie } from "./helpers/options.pie";
 import { radar } from "./helpers/options.radar";
 import { sankey } from "./helpers/options.sankey";
 import {
-  prepAxis,
-  prepLabel,
-  prepLegend,
-  prepSeries,
-  prepTooltip,
-} from "./helpers/utils";
-import {
   KulChartAdapter,
   KulChartAdapterControllerGetters,
   KulChartAdapterControllerSetters,
@@ -57,21 +50,6 @@ export const createGetters = (
       pie: () => pie(getAdapter),
       radar: () => radar(getAdapter),
       sankey: () => sankey(getAdapter),
-    },
-    style: {
-      axis: (axisType) => prepAxis(getAdapter, axisType),
-      label: () => prepLabel(getAdapter),
-      legend: () => prepLegend(getAdapter),
-      seriesColor: (amount: number) => prepSeries(getAdapter, amount),
-      theme: {
-        background: null,
-        border: null,
-        danger: null,
-        font: null,
-        success: null,
-        text: null,
-      },
-      tooltip: (formatter) => prepTooltip(getAdapter, formatter),
     },
   };
 };

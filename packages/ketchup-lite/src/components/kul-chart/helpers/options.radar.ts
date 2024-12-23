@@ -9,6 +9,7 @@ export const radar = (getAdapter: () => KulChartAdapter) => {
   const { kulAxis, kulData, kulSeries } = compInstance;
   const { legend, seriesColor, theme, tooltip } = style;
   const { stringify } = manager.data.cell;
+  const { font, text } = theme();
 
   const indicator = kulSeries.map((seriesName) => {
     const max =
@@ -43,8 +44,8 @@ export const radar = (getAdapter: () => KulChartAdapter) => {
       indicator,
       shape: "circle",
       axisName: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
       splitArea: {
         show: true,

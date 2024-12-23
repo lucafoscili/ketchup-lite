@@ -11,6 +11,7 @@ export const funnel = (getAdapter: () => KulChartAdapter) => {
   const { kulData, kulSeries } = compInstance;
   const { legend, seriesColor, theme, tooltip } = style;
   const { stringify } = manager.data.cell;
+  const { border, font, text } = theme();
 
   const data = kulSeries.map((seriesName) => {
     const totalValue = kulData.nodes.reduce((sum, node) => {
@@ -48,11 +49,11 @@ export const funnel = (getAdapter: () => KulChartAdapter) => {
         label: {
           show: true,
           position: "inside",
-          color: theme.text,
-          fontFamily: theme.font,
+          color: text,
+          fontFamily: font,
         },
         itemStyle: {
-          borderColor: theme.border,
+          borderColor: border,
           borderWidth: 1,
         },
       } as FunnelSeriesOption,

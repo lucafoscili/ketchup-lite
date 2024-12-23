@@ -7,6 +7,7 @@ export const candlestick = (getAdapter: () => KulChartAdapter) => {
   const { kulAxis, kulData } = compInstance;
   const { theme, tooltip } = style;
   const { stringify } = manager.data.cell;
+  const { border, danger, font, success, text } = theme();
 
   const xAxisKey = kulAxis[0];
 
@@ -23,34 +24,34 @@ export const candlestick = (getAdapter: () => KulChartAdapter) => {
   );
 
   const options: EChartsOption = {
-    color: [theme.success, theme.danger],
+    color: [success, danger],
     xAxis: {
       type: "category",
       data: xAxisData,
       axisLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
       axisLine: {
         lineStyle: {
-          color: theme.border,
+          color: border,
         },
       },
     },
     yAxis: {
       type: "value",
       axisLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
       axisLine: {
         lineStyle: {
-          color: theme.border,
+          color: border,
         },
       },
       splitLine: {
         lineStyle: {
-          color: theme.border,
+          color: border,
         },
       },
     },
@@ -59,10 +60,10 @@ export const candlestick = (getAdapter: () => KulChartAdapter) => {
         type: "candlestick",
         data: data,
         itemStyle: {
-          color: theme.success,
-          color0: theme.danger,
-          borderColor: theme.success,
-          borderColor0: theme.danger,
+          color: success,
+          color0: danger,
+          borderColor: success,
+          borderColor0: danger,
         },
       } as CandlestickSeriesOption,
     ],

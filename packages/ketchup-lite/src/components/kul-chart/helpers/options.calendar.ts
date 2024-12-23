@@ -11,6 +11,7 @@ export const calendar = (getAdapter: () => KulChartAdapter) => {
   const { kulAxis, kulData, kulSeries } = compInstance;
   const { seriesColor, theme, tooltip } = style;
   const { stringify } = manager.data.cell;
+  const { background, border, font, text } = theme();
 
   const dateKey = kulAxis[0];
   const valueKey = kulSeries[0];
@@ -47,20 +48,20 @@ export const calendar = (getAdapter: () => KulChartAdapter) => {
       cellSize: ["auto", 24],
       itemStyle: {
         borderWidth: 1,
-        borderColor: theme.border,
-        color: theme.background,
+        borderColor: border,
+        color: background,
       },
       dayLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
       monthLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
       yearLabel: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
     },
     series: [
@@ -81,7 +82,7 @@ export const calendar = (getAdapter: () => KulChartAdapter) => {
       align: "auto",
       bottom: "bottom",
       inRange: {
-        color: [theme.background, colors[0]],
+        color: [background, colors[0]],
       },
       left: "center",
       max: Math.max(...data.map(([_, value]) => Number(value))),
@@ -89,8 +90,8 @@ export const calendar = (getAdapter: () => KulChartAdapter) => {
       orient: "horizontal",
       text: ["High", "Low"],
       textStyle: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
     },
   };

@@ -13,7 +13,7 @@ import { KulChartAdapter, KulChartAxesTypes } from "../kul-chart-declarations";
 const baseAxis = (
   getAdapter: () => KulChartAdapter,
 ): XAXisComponentOption | YAXisComponentOption => {
-  const { border, font, text } = getAdapter().controller.get.style.theme;
+  const { border, font, text } = getAdapter().controller.get.style.theme();
 
   return {
     axisLabel: {
@@ -51,7 +51,7 @@ export const prepAxis = (
 
 //#region prepLabel
 export const prepLabel = (getAdapter: () => KulChartAdapter) => {
-  const { font, text } = getAdapter().controller.get.style.theme;
+  const { font, text } = getAdapter().controller.get.style.theme();
 
   const label: EChartsOption = {
     show: true,
@@ -76,7 +76,7 @@ export const prepLabel = (getAdapter: () => KulChartAdapter) => {
 export const prepLegend = (getAdapter: () => KulChartAdapter) => {
   const { compInstance, seriesData, style } = getAdapter().controller.get;
   const { kulLegend } = compInstance;
-  const { theme } = style;
+  const { font, text } = style.theme();
 
   if (kulLegend === "hidden") {
     return null;
@@ -87,8 +87,8 @@ export const prepLegend = (getAdapter: () => KulChartAdapter) => {
     data,
     [kulLegend]: 0,
     textStyle: {
-      color: theme.text,
-      fontFamily: theme.font,
+      color: text,
+      fontFamily: font,
     },
   };
   return legend;
@@ -131,7 +131,7 @@ export const prepTooltip = (
   getAdapter: () => KulChartAdapter,
   formatter?: TooltipComponentFormatterCallback<any>,
 ) => {
-  const { background, font, text } = getAdapter().controller.get.style.theme;
+  const { background, font, text } = getAdapter().controller.get.style.theme();
 
   const tooltip: TooltipComponentOption = {
     backgroundColor: background,

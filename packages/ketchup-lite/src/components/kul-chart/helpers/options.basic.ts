@@ -17,7 +17,7 @@ export const basic = (getAdapter: () => KulChartAdapter) => {
     getAdapter().controller.get;
   const { axis, legend, seriesColor, theme, tooltip } = style;
   const { colorCheck } = manager.theme;
-  const { sanitizeProps } = manager;
+  const { border, font, text } = theme();
 
   const xAxes: XAXisComponentOption[] = [];
   const yAxes: YAXisComponentOption[] = [];
@@ -36,17 +36,17 @@ export const basic = (getAdapter: () => KulChartAdapter) => {
       position: xAxisPosition,
       offset: i * 30,
       axisLabel: {
-        ...sanitizeProps(axis("x")).axisLabel,
+        ...axis("x").axisLabel,
         interval: 0,
       },
-      ...sanitizeProps(axis("x")),
+      ...axis("x"),
     } as XAXisComponentOption);
 
     yAxes.push({
       type: "value",
       position: yAxisPosition,
       offset: i * 30,
-      ...sanitizeProps(axis("y")),
+      ...axis("y"),
     } as YAXisComponentOption);
   }
 
@@ -119,7 +119,7 @@ export const basic = (getAdapter: () => KulChartAdapter) => {
         xAxisIndex: 0,
         yAxisIndex: 0,
         itemStyle: {
-          borderColor: theme.border,
+          borderColor: border,
           borderWidth: 1,
         },
         emphasis: {
@@ -179,8 +179,8 @@ export const basic = (getAdapter: () => KulChartAdapter) => {
       },
       text: ["High", "Low"],
       textStyle: {
-        color: theme.text,
-        fontFamily: theme.font,
+        color: text,
+        fontFamily: font,
       },
     },
   };

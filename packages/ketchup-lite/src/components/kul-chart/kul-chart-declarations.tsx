@@ -48,7 +48,7 @@ export interface KulChartAdapterStyle {
   ) => XAXisComponentOption | YAXisComponentOption;
   label: () => EChartsOption;
   legend: () => LegendComponentOption;
-  theme: KulChartAdapterThemeStyle;
+  theme: () => KulChartAdapterThemeStyle;
   tooltip: (
     formatter?: TooltipComponentFormatterCallback<unknown>,
   ) => TooltipComponentOption;
@@ -73,7 +73,7 @@ export type KulChartAdapterInitializerGetters = Pick<
   | "mappedType"
   | "seriesColumn"
   | "seriesData"
-  | "theme"
+  | "style"
   | "xAxesData"
 >;
 export type KulChartAdapterInitializerSetters = Pick<

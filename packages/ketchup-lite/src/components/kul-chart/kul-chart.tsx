@@ -16,6 +16,13 @@ import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  prepAxis,
+  prepLabel,
+  prepLegend,
+  prepSeries,
+  prepTooltip,
+} from "./helpers/utils";
 import { createAdapter } from "./kul-chart-adapter";
 import {
   KulChartAdapterThemeStyle,
@@ -148,7 +155,15 @@ export class KulChart {
       seriesColumn: (series) =>
         this.#findColumn(this.kulData, { title: series }),
       seriesData: () => this.#seriesData,
-      theme: () => this.themeValues,
+      style: {
+        axis: (axisType) => prepAxis(() => this.#adapter, axisType),
+        label: () => prepLabel(() => this.#adapter),
+        legend: () => prepLegend(() => this.#adapter),
+        seriesColor: (amount: number) =>
+          prepSeries(() => this.#adapter, amount),
+        theme: () => this.themeValues,
+        tooltip: (formatter) => prepTooltip(() => this.#adapter, formatter),
+      },
       xAxesData: () => this.#axesData,
     },
     {
