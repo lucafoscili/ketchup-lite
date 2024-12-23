@@ -131,7 +131,6 @@ export class KulChip {
         const nodeIndex = kulData?.nodes?.indexOf(node);
         if (nodeIndex > -1) {
           kulData.nodes.splice(nodeIndex, 1);
-          refresh();
         }
         break;
       case "pointerdown":
@@ -340,7 +339,7 @@ export class KulChip {
         <div
           class={bemClass("item", "icon", {
             leading: true,
-            "eading-hidden":
+            "leading-hidden":
               this.kulStyling === "filter" && this.#isSelected(node),
           })}
           style={style}
@@ -392,15 +391,13 @@ export class KulChip {
               });
             }}
           ></div>
-        ) : (
-          indent && (
-            <div
-              class={bemClass("wrapper", "node", {
-                placeholder: true,
-              })}
-            ></div>
-          )
-        )}
+        ) : indent ? (
+          <div
+            class={bemClass("wrapper", "node", {
+              placeholder: true,
+            })}
+          ></div>
+        ) : null}
         {this.#prepItem(node, indent)}
       </div>,
     );

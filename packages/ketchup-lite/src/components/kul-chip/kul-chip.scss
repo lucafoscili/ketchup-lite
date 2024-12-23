@@ -115,7 +115,7 @@
   }
 
   &--choice {
-    .chip--selected {
+    .item--selected {
       background-color: var(--kul_chip_background_color);
       background-image: linear-gradient(
         to right,
@@ -128,31 +128,31 @@
   }
 
   &--filter {
-    .chip__icon--leading {
+    .item__icon--leading {
       opacity: 1;
       transition: opacity 75ms linear;
       transition-delay: -50ms;
 
-      & + .chip__checkmark {
+      & + .item__checkmark {
         & {
           opacity: 0;
           transition: opacity 75ms linear;
           transition-delay: 80ms;
         }
 
-        .chip__checkmark-svg {
+        .item__checkmark-svg {
           transition: width 0ms;
         }
       }
 
-      &.chip__icon--leading-hidden {
+      &.item__icon--leading-hidden {
         & {
           display: none;
           width: 0;
           opacity: 0;
         }
 
-        & + .chip__checkmark {
+        & + .item__checkmark {
           height: 20px;
           width: 20px;
           opacity: 1;
@@ -160,22 +160,22 @@
       }
     }
 
-    .chip--selected {
-      .chip__icon--leading {
+    .item--selected {
+      .item__icon--leading {
         opacity: 0;
       }
 
-      .chip__checkmark-path {
+      .item__checkmark-path {
         stroke-dashoffset: 0;
       }
 
-      .chip__checkmark {
+      .item__checkmark {
         & {
           margin-left: -4px;
           margin-right: 4px;
         }
 
-        .chip__checkmark-svg {
+        .item__checkmark-svg {
           height: 20px;
           width: 20px;
         }
@@ -184,8 +184,9 @@
   }
 
   &--input {
-    .#{$kul-icon-clear} {
+    .item__icon--trailing {
       & {
+        cursor: pointer;
         margin-left: 4px;
         margin-right: -4px;
       }
@@ -332,7 +333,7 @@
       outline: none;
     }
 
-    .chip__text {
+    .item__text {
       white-space: nowrap;
     }
   }
