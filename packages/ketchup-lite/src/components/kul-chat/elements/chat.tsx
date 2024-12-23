@@ -1,4 +1,5 @@
 import { h } from "@stencil/core";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { IDS } from "../helpers/constants";
 import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 
@@ -17,6 +18,7 @@ export const prepChat = (
       return (
         <kul-button
           id={IDS.chat.clear}
+          data-cy={CY_ATTRIBUTES.button}
           kulDisabled={Boolean(currentPrompt())}
           kulLabel="Clear"
           kulStyling={"flat"}
@@ -40,6 +42,7 @@ export const prepChat = (
       return (
         <kul-button
           class={`${bemClass("chat", "config")} kul-full-width`}
+          data-cy={CY_ATTRIBUTES.button}
           kulIcon="wrench"
           kulLabel="Configuration"
           kulStyling="flat"
@@ -89,6 +92,7 @@ export const prepChat = (
       return (
         <kul-button
           id={IDS.chat.send}
+          data-cy={CY_ATTRIBUTES.button}
           kulIcon="check"
           kulLabel="Send"
           kulShowSpinner={showSpinner}
@@ -118,6 +122,7 @@ export const prepChat = (
       return (
         <kul-button
           class={`${bemClass("input", "button")} kul-full-height`}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.chat.settings}
           kulIcon="settings"
           kulStyling="flat"
@@ -162,6 +167,7 @@ export const prepChat = (
         <kul-button
           id={IDS.chat.stt}
           class={bemClass("commands", "stt")}
+          data-cy={CY_ATTRIBUTES.button}
           kulIcon="keyboard_voice"
           //  kulShowSpinner={showSpinner}
           kulStyling="icon"
@@ -191,6 +197,7 @@ export const prepChat = (
       return (
         <kul-textfield
           class={`${bemClass("input", "textarea")}`}
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.chat.prompt}
           kulDisabled={Boolean(currentPrompt())}
           kulFullWidth={true}

@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SplashData, SplashExample } from "./kul-showcase-splash-declarations";
 import { SPLASH_FIXTURES } from "./kul-showcase-splash-fixtures";
 
@@ -74,7 +74,7 @@ export class KulShowcaseSplash {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

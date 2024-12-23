@@ -13,7 +13,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulProgressbarEvent,
   KulProgressbarEventPayload,
@@ -139,7 +143,13 @@ export class KulProgressbar {
     const { kulIcon } = this;
 
     const { style } = get(`./assets/svg/${kulIcon}.svg`);
-    return <div class={bemClass("progress-bar", "icon")} style={style}></div>;
+    return (
+      <div
+        class={bemClass("progress-bar", "icon")}
+        data-cy={CY_ATTRIBUTES.maskedSvg}
+        style={style}
+      ></div>
+    );
   }
   #prepLabel() {
     const { bemClass } = kulManagerSingleton.theme;

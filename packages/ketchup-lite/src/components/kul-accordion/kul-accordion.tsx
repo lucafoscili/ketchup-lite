@@ -17,8 +17,11 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulAccordionEvent,
   KulAccordionEventPayload,
@@ -198,7 +201,13 @@ export class KulAccordion {
     const { assets, theme } = kulManagerSingleton;
 
     const { style } = assets.get(`./assets/svg/${icon}.svg`);
-    return <div class={theme.bemClass("node", "icon")} style={style}></div>;
+    return (
+      <div
+        class={theme.bemClass("node", "icon")}
+        data-cy={CY_ATTRIBUTES.maskedSvg}
+        style={style}
+      ></div>
+    );
   }
   #prepAccordion(): VNode[] {
     const { bemClass } = kulManagerSingleton.theme;
@@ -223,7 +232,7 @@ export class KulAccordion {
       const isSelected = this.#isSelected(node);
 
       nodes.push(
-        <div class={bemClass("node")} data-cy={KulDataCyAttributes.NODE}>
+        <div class={bemClass("node")} data-cy={CY_ATTRIBUTES.node}>
           <div
             tabindex="1"
             title={node.description}
@@ -231,14 +240,14 @@ export class KulAccordion {
               expanded: !isExpandible && isSelected,
               selected: isExpandible && isExpanded,
             })}
-            data-cy={!isExpandible && KulDataCyAttributes.BUTTON}
+            data-cy={!isExpandible && CY_ATTRIBUTES.button}
             onClick={(e) => this.toggleNode(node.id, e)}
             onPointerDown={(e) => {
               this.onKulEvent(e, "pointerdown", node);
             }}
           >
             <div
-              data-cy={KulDataCyAttributes.RIPPLE}
+              data-cy={CY_ATTRIBUTES.ripple}
               ref={(el) => {
                 if (el && this.kulRipple) {
                   this.#rippleSurface[node.id] = el;
@@ -252,7 +261,7 @@ export class KulAccordion {
                 class={bemClass("node", "expand", {
                   expanded: isExpanded,
                 })}
-                data-cy={KulDataCyAttributes.DROPDOWN_BUTTON}
+                data-cy={CY_ATTRIBUTES.dropdownButton}
               ></div>
             )}
           </div>

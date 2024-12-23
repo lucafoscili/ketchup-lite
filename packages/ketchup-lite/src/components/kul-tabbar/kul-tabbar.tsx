@@ -19,8 +19,11 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulScrollOnHoverElement } from "src/managers/kul-scroll-on-hover/kul-scroll-on-hover-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulTabbarEvent,
   KulTabbarEventPayload,
@@ -271,7 +274,7 @@ export class KulTabbar {
         <button
           aria-selected={isActive ? true : false}
           class={bemClass("tab", null, { active: isActive })}
-          data-cy={KulDataCyAttributes.BUTTON}
+          data-cy={CY_ATTRIBUTES.button}
           onClick={(e) => {
             this.onKulEvent(e, "click", i, node);
           }}
@@ -283,17 +286,14 @@ export class KulTabbar {
           title={node?.description ?? ""}
         >
           <div
-            data-cy={KulDataCyAttributes.RIPPLE}
+            data-cy={CY_ATTRIBUTES.ripple}
             ref={(el) => {
               if (el && kulRipple) {
                 this.#rippleSurface.push(el);
               }
             }}
           ></div>
-          <span
-            class={bemClass("tab", "content")}
-            data-cy={KulDataCyAttributes.NODE}
-          >
+          <span class={bemClass("tab", "content")} data-cy={CY_ATTRIBUTES.node}>
             {node.icon && (
               <kul-image
                 class={bemClass("tab", "icon")}

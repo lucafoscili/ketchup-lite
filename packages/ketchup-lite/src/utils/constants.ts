@@ -32,11 +32,26 @@ import { KUL_TYPEWRITER_PROPS } from "src/components/kul-typewriter/helpers/cons
 import { KUL_UPLOAD_PROPS } from "src/components/kul-upload/helpers/constants";
 import { KulComponentName, KulComponentPropsMap } from "src/types/GenericTypes";
 
-export const CSS_VAR_PREFIX = "--kul";
-export const KUL_DROPDOWN_CLASS = "kul-dropdown-menu";
-export const KUL_DROPDOWN_CLASS_VISIBLE = "kul-dropdown-menu--visible";
-export const KUL_STYLE_ID = "kul-style";
-export const KUL_WRAPPER_ID = "kul-component";
+export const CSS_VAR_PREFIX = "--kul" as const;
+export const CY_ATTRIBUTES = {
+  button: "button",
+  canvas: "canvas",
+  check: "check",
+  dropdownButton: "dropdown-button",
+  dropdownMenu: "dropdown-menu",
+  icon: "icon",
+  image: "image",
+  input: "input",
+  maskedSvg: "masked-svg",
+  node: "node",
+  ripple: "ripple",
+  shape: "shape",
+  showcaseGridWrapper: "showcase-grid-wrapper",
+} as const;
+export const KUL_DROPDOWN_CLASS = "kul-dropdown-menu" as const;
+export const KUL_DROPDOWN_CLASS_VISIBLE = "kul-dropdown-menu--visible" as const;
+export const KUL_STYLE_ID = "kul-style" as const;
+export const KUL_WRAPPER_ID = "kul-component" as const;
 export const KUL_COMPONENT_PROPS: {
   [K in KulComponentName]: (keyof KulComponentPropsMap[K])[];
 } = {
@@ -72,5 +87,5 @@ export const KUL_COMPONENT_PROPS: {
   KulTree: KUL_TREE_PROPS,
   KulTypewriter: KUL_TYPEWRITER_PROPS,
   KulUpload: KUL_UPLOAD_PROPS,
-};
-export const RIPPLE_SURFACE_CLASS = "ripple-surface";
+} as const;
+export const RIPPLE_SURFACE_CLASS = "ripple-surface" as const;

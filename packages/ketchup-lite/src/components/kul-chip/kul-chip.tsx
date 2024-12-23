@@ -17,8 +17,8 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
 import {
+  CY_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
   RIPPLE_SURFACE_CLASS,
@@ -105,7 +105,7 @@ export class KulChip {
   ) {
     const { theme } = kulManagerSingleton;
 
-    const { expandedNodes, kulData, kulRipple, refresh, selectedNodes } = this;
+    const { expandedNodes, kulData, kulRipple, selectedNodes } = this;
 
     const { expansion, node } = args || {};
 
@@ -262,7 +262,7 @@ export class KulChip {
           "only-icon": this.#hasIconOnly(node),
           selected: this.#isSelected(node),
         })}
-        data-cy={KulDataCyAttributes.NODE}
+        data-cy={CY_ATTRIBUTES.node}
         data-value={node.id}
         onClick={(e) => {
           this.onKulEvent(e, "click", { node });
@@ -277,7 +277,7 @@ export class KulChip {
           role="button"
           tabindex={i}
           class={bemClass("item", "primary-action")}
-          data-cy={KulDataCyAttributes.INPUT}
+          data-cy={CY_ATTRIBUTES.input}
           onBlur={(e) => {
             this.onKulEvent(e, "blur", { node });
           }}
@@ -318,7 +318,7 @@ export class KulChip {
         class={bemClass("item", "icon", {
           trailing: true,
         })}
-        data-cy={KulDataCyAttributes.BUTTON}
+        data-cy={CY_ATTRIBUTES.button}
         key={node.id + "_delete"}
         onClick={(e) => {
           this.onKulEvent(e, "delete", { node });
@@ -342,6 +342,7 @@ export class KulChip {
             "leading-hidden":
               this.kulStyling === "filter" && this.#isSelected(node),
           })}
+          data-cy={CY_ATTRIBUTES.maskedSvg}
           style={style}
         ></div>,
       );
@@ -415,7 +416,7 @@ export class KulChip {
       return (
         <div
           class={RIPPLE_SURFACE_CLASS}
-          data-cy={KulDataCyAttributes.RIPPLE}
+          data-cy={CY_ATTRIBUTES.ripple}
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown", { node })}
           ref={(el) => {
             if (el && this.kulRipple) {

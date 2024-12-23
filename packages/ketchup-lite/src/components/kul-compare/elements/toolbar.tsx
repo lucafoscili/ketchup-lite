@@ -1,4 +1,5 @@
 import { h } from "@stencil/core";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { ICONS, IDS } from "../helpers/constants";
 import { prepTreeDataset } from "../helpers/utils";
 import {
@@ -21,6 +22,7 @@ export const prepToolbarJsx = (
 
       return (
         <kul-button
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.rightButton}
           kulIcon={ICONS.close}
           kulIconOff={ICONS.rightButton}
@@ -48,6 +50,7 @@ export const prepToolbarJsx = (
 
       return (
         <kul-button
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.leftButton}
           kulIcon={ICONS.close}
           kulIconOff={ICONS.leftButton}
@@ -96,6 +99,7 @@ export const prepToolbarJsx = (
 
       return (
         <kul-button
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.changeView}
           kulIcon={ICONS.changeView}
           kulIconOff={ICONS.changeViewOff}

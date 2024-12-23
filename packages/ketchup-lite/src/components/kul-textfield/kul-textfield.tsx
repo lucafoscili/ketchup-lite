@@ -13,8 +13,12 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { GenericObject, KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { GenericObject } from "src/types/GenericTypes";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulTextfieldEvent,
   KulTextfieldEventPayload,
@@ -291,7 +295,7 @@ export class KulTextfield {
       <input
         {...sanitizeProps(this.kulHtmlAttributes)}
         class={bemClass("textfield", "input")}
-        data-cy={KulDataCyAttributes.INPUT}
+        data-cy={CY_ATTRIBUTES.input}
         disabled={this.kulDisabled}
         onBlur={(e) => {
           this.onKulEvent(e, "blur");
@@ -347,7 +351,7 @@ export class KulTextfield {
       !this.#hasOutline && (
         <span
           class="textfield__line-ripple"
-          data-cy={KulDataCyAttributes.RIPPLE}
+          data-cy={CY_ATTRIBUTES.ripple}
         ></span>
       )
     );
@@ -361,7 +365,7 @@ export class KulTextfield {
         <textarea
           {...sanitizeProps(this.kulHtmlAttributes)}
           class={bemClass("textfield", "input")}
-          data-cy={KulDataCyAttributes.INPUT}
+          data-cy={CY_ATTRIBUTES.input}
           disabled={this.kulDisabled}
           id="input"
           onBlur={(e) => {

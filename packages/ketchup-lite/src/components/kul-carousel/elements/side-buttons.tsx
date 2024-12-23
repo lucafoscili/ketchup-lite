@@ -4,6 +4,7 @@ import {
   KulCarouselAdapter,
   KulCarouselAdapterJsx,
 } from "../kul-carousel-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 //#endregion
 export const prepSideButtonsJsx = (
@@ -20,6 +21,7 @@ export const prepSideButtonsJsx = (
       return (
         <kul-button
           class="kul-full-height"
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.back}
           kulIcon={ICONS.back}
           onKul-button-event={button}
@@ -40,6 +42,7 @@ export const prepSideButtonsJsx = (
       return (
         <kul-button
           class="kul-full-height"
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.forward}
           kulIcon={ICONS.forward}
           onKul-button-event={button}

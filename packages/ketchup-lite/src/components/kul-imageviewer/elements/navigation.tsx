@@ -1,5 +1,5 @@
 import { h } from "@stencil/core";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { IDS } from "../helpers/constants";
 import {
   KulImageviewerAdapter,
@@ -22,7 +22,7 @@ export const prepNavigation = (
       return (
         <kul-button
           class={bemClass("navigation-grid", "button")}
-          data-cy={KulDataCyAttributes.BUTTON}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.navigation.load}
           kulIcon="find_replace"
           kulLabel="Load"
@@ -75,6 +75,7 @@ export const prepNavigation = (
       return (
         <kul-textfield
           class={`${bemClass("navigation-grid", "textfield")}`}
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.navigation.textfield}
           kulIcon="folder"
           kulLabel="Directory"

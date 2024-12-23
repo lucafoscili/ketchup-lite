@@ -1,5 +1,4 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import {

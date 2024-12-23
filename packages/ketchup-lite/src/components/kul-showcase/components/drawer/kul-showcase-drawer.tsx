@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { DrawerData, DrawerExample } from "./kul-showcase-drawer-declarations";
 import { DRAWER_FIXTURES } from "./kul-showcase-drawer-fixtures";
 
@@ -55,7 +55,7 @@ export class KulShowcaseDrawer {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

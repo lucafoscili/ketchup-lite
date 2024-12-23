@@ -12,8 +12,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulSliderEvent,
   KulSliderEventPayload,
@@ -250,7 +253,7 @@ export class KulSlider {
               <input
                 type="range"
                 class={bemClass("slider", "native-control")}
-                data-cy={KulDataCyAttributes.INPUT}
+                data-cy={CY_ATTRIBUTES.input}
                 min={kulMin}
                 max={kulMax}
                 step={kulStep}
@@ -281,7 +284,7 @@ export class KulSlider {
                 <div class={bemClass("slider", "thumb-underlay")}>
                   <div
                     class={bemClass("slider", "thumb")}
-                    data-cy={KulDataCyAttributes.RIPPLE}
+                    data-cy={CY_ATTRIBUTES.ripple}
                     ref={(el) => {
                       if (kulRipple) {
                         this.#rippleSurface = el;

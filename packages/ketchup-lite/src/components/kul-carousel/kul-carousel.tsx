@@ -21,7 +21,11 @@ import {
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import { autoplay, navigation } from "./helpers/navigation";
 import { createAdapter } from "./kul-carousel-adapter";
 import {
@@ -288,6 +292,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={bemClass("carousel", "chevron", { left: true })}
+          data-cy={CY_ATTRIBUTES.button}
           onClick={() => current(0)}
           title={`Jump to the first slide (#${0})`}
         >
@@ -309,6 +314,7 @@ export class KulCarousel {
               active: isCurrent,
               small: (isFirst || isLast) && !isCurrent,
             })}
+            data-cy={CY_ATTRIBUTES.button}
             onClick={() => current(actualIndex)}
             title={`#${index}`}
           />,
@@ -319,6 +325,7 @@ export class KulCarousel {
       indicators.push(
         <span
           class={bemClass("carousel", "chevron", { right: true })}
+          data-cy={CY_ATTRIBUTES.button}
           onClick={() => current(totalSlides - 1)}
           title={`Jump to the last slide (#${totalSlides - 1})`}
         >

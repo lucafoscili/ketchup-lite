@@ -1,4 +1,5 @@
 import { h } from "@stencil/core";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import {
   KulCanvasAdapter,
   KulCanvasAdapterJsx,
@@ -20,6 +21,7 @@ export const prepCanvasJsx = (
       return (
         <canvas
           class={bemClass("canvas", "board")}
+          data-cy={CY_ATTRIBUTES.canvas}
           onPointerDown={onPointerDown}
           onPointerMove={onPointerMove}
           onPointerOut={onPointerOut}
@@ -41,6 +43,7 @@ export const prepCanvasJsx = (
       return (
         <kul-image
           class={`${bemClass("canvas", "image")} kul-fit`}
+          data-cy={CY_ATTRIBUTES.image}
           {...sanitizeProps(compInstance.kulImageProps, "KulImage")}
           ref={assignRef(refs, "image")}
         ></kul-image>
@@ -58,6 +61,7 @@ export const prepCanvasJsx = (
       return (
         <canvas
           class={bemClass("canvas", "cursor")}
+          data-cy={CY_ATTRIBUTES.canvas}
           ref={assignRef(refs, "preview")}
         ></canvas>
       );

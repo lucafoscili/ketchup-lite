@@ -1,8 +1,8 @@
 import { FunctionalComponent, h } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
 import { KulTreeNodeProps } from "../kul-tree-declarations";
 import { TreeNodeContent } from "./node-content";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 //#region Tree node
 export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
@@ -26,7 +26,7 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
           expanded,
           selected,
         })}
-        data-cy={KulDataCyAttributes.NODE}
+        data-cy={CY_ATTRIBUTES.node}
         data-depth={depth.toString()}
         key={node.id}
         onClick={events.onClickExpand}
@@ -56,7 +56,7 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
           expanded,
           selected,
         })}
-        data-cy={KulDataCyAttributes.NODE}
+        data-cy={CY_ATTRIBUTES.node}
         data-depth={depth.toString()}
         key={node.id}
         onClick={events.onClick}

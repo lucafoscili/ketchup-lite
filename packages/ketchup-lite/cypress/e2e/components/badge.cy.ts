@@ -1,8 +1,9 @@
+import { KulThemeCSSVariables } from "src/managers/kul-theme/kul-theme-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulImagePropsInterface } from "../../../src/components";
 import { KUL_BADGE_PROPS } from "../../../src/components/kul-badge/helpers/constants";
 import { KulBadgeEvent } from "../../../src/components/kul-badge/kul-badge-declarations";
 import { DynamicExampleManager } from "../../../src/components/kul-showcase/helpers/kul-showcase-dyn-sample";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 import { BADGE_EXAMPLES_KEYS } from "./../../../src/components/kul-showcase/components/badge/kul-showcase-badge-declarations";
 
 const badge = "badge";
@@ -39,16 +40,19 @@ describe("CSS Classes", () => {
         expect(stateColors).to.include(badgeClass);
 
         cy.window().then((win) => {
-          const cssVariable = `--${badgeClass}-color`;
+          const cssVariable =
+            `--${badgeClass}-color` as keyof KulThemeCSSVariables;
           const computedStyles = win.getComputedStyle(
             $badge[0].shadowRoot.querySelector(`div`),
           );
           const badgeColor = computedStyles.backgroundColor;
           cy.getKulManager().then((kulManager) => {
             debugger;
-            const themeName = kulManager.theme.name;
-            const themeColor =
-              kulManager.theme.list[themeName].cssVariables[cssVariable];
+            const themeName = kulManager.theme
+              .name as keyof KulThemeCSSVariables;
+            const themeColor = kulManager.theme.list[themeName].cssVariables[
+              cssVariable
+            ] as keyof KulThemeCSSVariables;
             const hexBadgeColor =
               kulManager.theme.colorCheck(themeColor).hexColor;
             const hexThemeColor =
@@ -103,11 +107,11 @@ describe("Events", () => {
     const eventType: KulBadgeEvent = "click";
     cy.checkEvent(badge, eventType);
     cy.get("@eventElement").click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
   it(`ready`, () => {
     cy.checkReadyEvent(badge);
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
   it(`unmount`, () => {
     cy.navigate(badge);
@@ -117,7 +121,7 @@ describe("Events", () => {
       const kulBadgeElement = $badge[0] as HTMLKulBadgeElement;
       kulBadgeElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
 //#endregion

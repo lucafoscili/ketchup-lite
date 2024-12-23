@@ -1,5 +1,6 @@
 import { h } from "@stencil/core";
 import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { MENU_DATASET } from "../helpers/constants";
 import { statusIconOptions } from "../helpers/utils";
 import {
@@ -26,6 +27,7 @@ export const prepCharacter = (
         <img
           alt={title || ""}
           class={bemClass("character", "image")}
+          data-cy={CY_ATTRIBUTES.image}
           ref={assignRef(character, "avatar")}
           src={value}
           title={title || ""}
@@ -48,6 +50,7 @@ export const prepCharacter = (
       return (
         <kul-image
           class={bemClass("character", "status")}
+          data-cy={CY_ATTRIBUTES.icon}
           kulColor={color}
           kulSizeX="16px"
           kulSizeY="16px"
@@ -79,6 +82,7 @@ export const prepCharacter = (
       return (
         <kul-button
           class={"kul-full-height"}
+          data-cy={CY_ATTRIBUTES.button}
           {...props}
           kulData={MENU_DATASET}
           kulStyling="flat"

@@ -1,4 +1,5 @@
 import { h } from "@stencil/core";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { ICONS, IDS, NAV_DATASET } from "../helpers/constants";
 import { systemMessage } from "../helpers/utils";
 import {
@@ -46,6 +47,7 @@ export const prepChat = (
       return (
         <kul-button
           class="kul-full-height"
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.chat.leftExpander}
           kulIcon={ICONS.chat.leftExpander}
           kulStyling="flat"
@@ -68,6 +70,7 @@ export const prepChat = (
       return (
         <kul-button
           class="kul-full-height"
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.chat.rightExpander}
           kulIcon={ICONS.chat.rightExpander}
           kulStyling="flat"

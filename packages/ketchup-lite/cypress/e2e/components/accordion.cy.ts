@@ -1,7 +1,7 @@
 import { KUL_ACCORDION_PROPS } from "src/components/kul-accordion/helpers/constants";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulAccordionEvent } from "../../../src/components/kul-accordion/kul-accordion-declarations";
 import { ACCORDION_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/accordion/kul-showcase-accordion-declarations";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
 const accordion = "accordion";
 const accordionTag = "kul-" + accordion;
@@ -26,21 +26,15 @@ describe("Events", () => {
     cy.navigate(accordion);
     const eventType: KulAccordionEvent = "click";
     cy.checkEvent(accordion, eventType);
-    cy.get("@eventElement")
-      .findCyElement(KulDataCyAttributes.BUTTON)
-      .first()
-      .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.get("@eventElement").findCyElement(CY_ATTRIBUTES.button).first().click();
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
   it(`pointerdown`, () => {
     cy.navigate(accordion);
     const eventType: KulAccordionEvent = "pointerdown";
     cy.checkEvent(accordion, eventType);
-    cy.get("@eventElement")
-      .findCyElement(KulDataCyAttributes.BUTTON)
-      .first()
-      .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.get("@eventElement").findCyElement(CY_ATTRIBUTES.button).first().click();
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
   it(`ready`, () => {
     cy.checkReadyEvent(accordion);
@@ -53,7 +47,7 @@ describe("Events", () => {
       const kulArticleElement = $article[0] as HTMLKulArticleElement;
       kulArticleElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
 //#endregion
@@ -75,7 +69,7 @@ describe("Methods", () => {
   it(`getSelectedNodes: asserts that the payload of the promise includes the selected node.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)
-      .findCyElement(KulDataCyAttributes.BUTTON)
+      .findCyElement(CY_ATTRIBUTES.button)
       .click();
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)
@@ -126,12 +120,12 @@ describe("Props", () => {
 
         cy.wrap($accordion[0])
           .shadow()
-          .find(`[data-cy='${KulDataCyAttributes.NODE}']`)
+          .find(`[data-cy='${CY_ATTRIBUTES.node}']`)
           .should("have.length.at.least", matchingIds.length)
           .then(() => {
             const expandIcons = shadowRoot.querySelectorAll(".node__expand");
             const buttons = shadowRoot.querySelectorAll(
-              `[data-cy='${KulDataCyAttributes.BUTTON}']`,
+              `[data-cy='${CY_ATTRIBUTES.button}']`,
             );
 
             expect(expandIcons.length).to.equal(matchingIds.length);
@@ -160,10 +154,7 @@ describe("e2e", () => {
       .find(`${accordionTag}#simple`)
       .should("exist")
       .within(() => {
-        cy.getCyElement(KulDataCyAttributes.NODE)
-          .first()
-          .should("exist")
-          .click();
+        cy.getCyElement(CY_ATTRIBUTES.node).first().should("exist").click();
 
         cy.get(".node__content").should("exist").and("not.be.empty");
       });
@@ -179,9 +170,7 @@ describe("e2e", () => {
         await toggleNode(id);
       })
       .within(() => {
-        cy.getCyElement(KulDataCyAttributes.NODE)
-          .first()
-          .click({ force: true });
+        cy.getCyElement(CY_ATTRIBUTES.node).first().click({ force: true });
         cy.get(".node__content").should("not.exist");
       });
   });

@@ -118,6 +118,10 @@
   width: max-content;
 }
 
+:host([kul-disabled]) {
+  pointer-events: none;
+}
+
 #kul-component {
   align-items: center;
   display: flex;

@@ -19,8 +19,8 @@ import {
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulManagerClickCb } from "src/managers/kul-manager/kul-manager-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
 import {
+  CY_ATTRIBUTES,
   KUL_DROPDOWN_CLASS,
   KUL_DROPDOWN_CLASS_VISIBLE,
   KUL_STYLE_ID,
@@ -72,7 +72,7 @@ export class KulButton {
    * Defaults at false. When set to true, the component is disabled.
    * @default false
    */
-  @Prop({ mutable: true }) kulDisabled = false;
+  @Prop({ mutable: true, reflect: true }) kulDisabled = false;
   /**
    * When set, the button will show this icon.
    * @default ""
@@ -332,6 +332,7 @@ export class KulButton {
           class={bemClass("button", "icon", {
             hidden: this.kulShowSpinner,
           })}
+          data-cy={CY_ATTRIBUTES.icon}
           {...image}
         />
       )
@@ -343,7 +344,7 @@ export class KulButton {
   #prepNode(node: KulDataNode): VNode {
     const { children, value } = node;
 
-    const currentNode = <div data-cy={KulDataCyAttributes.NODE}>{value}</div>;
+    const currentNode = <div data-cy={CY_ATTRIBUTES.node}>{value}</div>;
 
     const hasChildren = !!(Array.isArray(children) && children.length > 0);
     return hasChildren ? (
@@ -359,7 +360,7 @@ export class KulButton {
     return (
       this.kulRipple && (
         <div
-          data-cy={KulDataCyAttributes.RIPPLE}
+          data-cy={CY_ATTRIBUTES.ripple}
           ref={(el) => {
             if (el && this.kulRipple) {
               if (isDropdown) {
@@ -430,7 +431,7 @@ export class KulButton {
           ["no-label"]: !kulLabel || kulLabel === " ",
           "with-spinner": kulShowSpinner,
         })}
-        data-cy={KulDataCyAttributes.BUTTON}
+        data-cy={CY_ATTRIBUTES.button}
         disabled={kulDisabled}
         onBlur={(e) => this.onKulEvent(e, "blur")}
         onClick={(e) => this.onKulEvent(e, "click")}
@@ -489,7 +490,7 @@ export class KulButton {
           toggable: kulToggable,
           "with-spinner": kulShowSpinner,
         })}
-        data-cy={KulDataCyAttributes.BUTTON}
+        data-cy={CY_ATTRIBUTES.button}
         disabled={kulDisabled}
         onBlur={(e) => this.onKulEvent(e, "blur")}
         onClick={(e) => this.onKulEvent(e, "click")}
@@ -502,6 +503,7 @@ export class KulButton {
         {this.#prepRipple()}
         <kul-image
           class="icon-button__icon"
+          data-cy={CY_ATTRIBUTES.icon}
           {...image}
           kulValue={kulToggable && !isOn ? iconOff : kulIcon}
         />
@@ -533,7 +535,7 @@ export class KulButton {
           dropdown: true,
           [styling]: true,
         })}
-        data-cy={KulDataCyAttributes.DROPDOWN_BUTTON}
+        data-cy={CY_ATTRIBUTES.dropdownButton}
         disabled={kulDisabled}
         onClick={this.#listManager().toggle}
         onPointerDown={(e) => this.onKulEvent(e, "pointerdown", true)}
@@ -547,7 +549,7 @@ export class KulButton {
         <kul-image {...image} kulValue={"--kul-dropdown-icon"} />
         <kul-list
           class={bemClass(KUL_DROPDOWN_CLASS)}
-          data-cy={KulDataCyAttributes.DROPDOWN_MENU}
+          data-cy={CY_ATTRIBUTES.dropdownMenu}
           kulData={{ nodes: kulData.nodes[0].children }}
           onKul-list-event={eventHandler}
           ref={(el) => (this.#list = el)}

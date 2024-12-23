@@ -17,8 +17,8 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
 import {
+  CY_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
   RIPPLE_SURFACE_CLASS,
@@ -284,7 +284,7 @@ export class KulList {
     return (
       <div
         class="delete"
-        data-cy={KulDataCyAttributes.BUTTON}
+        data-cy={CY_ATTRIBUTES.button}
         onClick={(e) => {
           const index = this.kulData?.nodes?.indexOf(node);
           this.onKulEvent(e, "delete", node, index);
@@ -298,7 +298,13 @@ export class KulList {
     const { get } = kulManagerSingleton.assets;
 
     const { style } = get(`./assets/svg/${node.icon}.svg`);
-    return <div class="node__icon" style={style}></div>;
+    return (
+      <div
+        class="node__icon"
+        data-cy={CY_ATTRIBUTES.maskedSvg}
+        style={style}
+      ></div>
+    );
   }
   #prepNode(node: KulDataNode, index: number) {
     const { bemClass } = kulManagerSingleton.theme;
@@ -321,7 +327,7 @@ export class KulList {
             "has-description": !!node.description,
             selected: isSelected,
           })}
-          data-cy={KulDataCyAttributes.NODE}
+          data-cy={CY_ATTRIBUTES.node}
           data-index={index.toString()}
           onBlur={(e) => this.onKulEvent(e, "blur", node, index)}
           onClick={(e) => this.onKulEvent(e, "click", node, index)}
@@ -337,7 +343,7 @@ export class KulList {
         >
           <div
             class={RIPPLE_SURFACE_CLASS}
-            data-cy={KulDataCyAttributes.RIPPLE}
+            data-cy={CY_ATTRIBUTES.ripple}
             ref={(el) => {
               if (kulRipple && el) {
                 this.#rippleSurface.push(el);

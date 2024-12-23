@@ -21,8 +21,11 @@ import {
   KulDataShapesMap,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import { createAdapter } from "./kul-compare-adapter";
 import {
   KulCompareEvent,
@@ -268,7 +271,7 @@ export class KulCompare {
             >
               <input
                 class={bemClass("view", "input")}
-                data-cy={KulDataCyAttributes.INPUT}
+                data-cy={CY_ATTRIBUTES.input}
                 type="range"
                 min="0"
                 max="100"

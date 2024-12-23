@@ -7,6 +7,7 @@ import {
   KulMessengerImageRootIds,
   KulMessengerImageTypes,
 } from "../kul-messenger-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 export const prepCustomization = (
   getAdapter: () => KulMessengerAdapter,
@@ -101,6 +102,7 @@ const prepForms = (
           return (
             <kul-button
               class={`${bemClass("covers", "add")} kul-full-height kul-slim`}
+              data-cy={CY_ATTRIBUTES.button}
               kulIcon="plus"
               kulLabel="New"
               kulStyling="flat"
@@ -113,6 +115,7 @@ const prepForms = (
           return (
             <kul-button
               class={bemClass("form", "button")}
+              data-cy={CY_ATTRIBUTES.button}
               kulIcon="clear"
               kulLabel="Cancel"
               kulStyling="flat"
@@ -125,6 +128,7 @@ const prepForms = (
           return (
             <kul-button
               class={"messenger__customization__edit__button"}
+              data-cy={CY_ATTRIBUTES.button}
               kulIcon="check"
               kulLabel="Confirm"
               kulStyling="outlined"
@@ -136,6 +140,7 @@ const prepForms = (
         description: () => {
           return (
             <kul-textfield
+              data-cy={CY_ATTRIBUTES.input}
               kulFullWidth={true}
               kulIcon="format-float-left"
               kulLabel="Description"
@@ -149,6 +154,7 @@ const prepForms = (
 
           return (
             <kul-textfield
+              data-cy={CY_ATTRIBUTES.input}
               key={`id-edit-${id}`}
               kulDisabled={true}
               kulFullWidth={true}
@@ -163,6 +169,7 @@ const prepForms = (
         imageUrl: () => {
           return (
             <kul-textfield
+              data-cy={CY_ATTRIBUTES.input}
               kulFullWidth={true}
               kulIcon="image"
               kulLabel="Image URL"
@@ -174,6 +181,7 @@ const prepForms = (
         title: () => {
           return (
             <kul-textfield
+              data-cy={CY_ATTRIBUTES.input}
               kulFullWidth={true}
               kulIcon="title"
               kulLabel="Title"

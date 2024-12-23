@@ -1,4 +1,5 @@
 import { h } from "@stencil/core";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { IDS } from "../helpers/constants";
 import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 
@@ -17,6 +18,7 @@ export const prepSettings = (
       return (
         <kul-button
           class="kul-full-width"
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.options.back}
           kulIcon="arrow_back"
           kulLabel="Back"
@@ -37,6 +39,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.options.endpointUrl}
           kulIcon="http"
           kulLabel="Endpoint URL"
@@ -59,6 +62,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.options.maxTokens}
           kulHtmlAttributes={{
             min: 10,
@@ -86,6 +90,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.options.polling}
           kulHtmlAttributes={{
             min: 10,
@@ -112,6 +117,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.options.system}
           class="settings__system kul-full-height"
           kulLabel="System prompt"
@@ -135,6 +141,7 @@ export const prepSettings = (
 
       return (
         <kul-textfield
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.options.temperature}
           kulHtmlAttributes={{
             min: 0,

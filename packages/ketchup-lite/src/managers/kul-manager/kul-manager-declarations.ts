@@ -1,3 +1,5 @@
+import type { KulManager } from "./kul-manager";
+
 export interface KulManagerUtilities {
   clickCallbacks?: Set<KulManagerClickCb>;
 }
@@ -11,3 +13,7 @@ export type KulManagerComputedGetAssetPath = (value: string) => {
   path: string;
   style: { mask: string; webkitMask: string };
 };
+export type KulManagerEvent = CustomEvent<KulManagerEventPayload>;
+export interface KulManagerEventPayload {
+  kulManager: KulManager;
+}

@@ -1,5 +1,5 @@
 import { KUL_ARTICLE_PROPS } from "src/components/kul-article/helpers/constants";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import {
   KulArticleDataset,
   KulArticleEvent,
@@ -30,15 +30,15 @@ describe("Events", () => {
     const eventType: KulArticleEvent = "kul-event";
     cy.checkEvent(article, eventType);
     cy.get("@eventElement")
-      .findCyElement(KulDataCyAttributes.SHAPE)
+      .findCyElement(CY_ATTRIBUTES.shape)
       .first()
       .scrollIntoView()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
   it(`ready`, () => {
     cy.checkReadyEvent(article);
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
   it(`unmount`, () => {
     cy.navigate(article);
@@ -48,7 +48,7 @@ describe("Events", () => {
       const kulArticleElement = $article[0] as HTMLKulArticleElement;
       kulArticleElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
 //#endregion
@@ -122,18 +122,16 @@ describe("e2e", () => {
       const kulData = articleElement.kulData;
       const expectedSections = kulData.nodes[0]?.children || [];
 
-      if (expectedSections.length > 0) {
-        return cy
-          .wrap($article)
-          .shadow()
-          .find("section")
-          .should("have.length", expectedSections.length)
-          .each(($section, index) => {
-            const expectedValue = expectedSections[index]?.value || "";
+      return cy
+        .wrap($article)
+        .shadow()
+        .find("section")
+        .should("have.length", expectedSections.length)
+        .each(($section, index) => {
+          const expectedValue = expectedSections[index]?.value || "";
 
-            cy.wrap($section).find("h2").should("have.text", expectedValue);
-          });
-      }
+          cy.wrap($section).find("h2").should("have.text", expectedValue);
+        });
     });
   });
   it(`Should check whether all <${articleTag}> elements in the page have a number of <section> elements equal to the number of children of the first node of the kulData property and their content matches.`, () => {
@@ -144,25 +142,23 @@ describe("e2e", () => {
         const kulData: KulArticleDataset = articleElement.kulData;
         const expectedSectionCount = kulData.nodes[0]?.children?.length || 0;
 
-        if (expectedSectionCount > 0) {
-          return cy
-            .wrap($article)
-            .shadow()
-            .find("section")
-            .should("have.length", expectedSectionCount)
-            .each(($section, index) => {
-              const expectedValue =
-                kulData.nodes[0]?.children?.[index].value || "";
+        return cy
+          .wrap($article)
+          .shadow()
+          .find("section")
+          .should("have.length", expectedSectionCount)
+          .each(($section, index) => {
+            const expectedValue =
+              kulData.nodes[0]?.children?.[index].value || "";
 
-              return cy
-                .wrap($section)
-                .find("h2")
-                .invoke("text")
-                .then((h2Text) => {
-                  expect(h2Text).to.equal(expectedValue);
-                });
-            });
-        }
+            return cy
+              .wrap($section)
+              .find("h2")
+              .invoke("text")
+              .then((h2Text) => {
+                expect(h2Text).to.equal(expectedValue);
+              });
+          });
       });
   });
 });

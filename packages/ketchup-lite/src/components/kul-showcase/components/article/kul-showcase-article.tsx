@@ -1,6 +1,5 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import {
@@ -8,6 +7,7 @@ import {
   ArticleExample,
 } from "./kul-showcase-article-declarations";
 import { ARTICLE_FIXTURES } from "./kul-showcase-article-fixtures";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 @Component({
   tag: "kul-showcase-article",
@@ -90,7 +90,7 @@ export class KulShowcaseArticle {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

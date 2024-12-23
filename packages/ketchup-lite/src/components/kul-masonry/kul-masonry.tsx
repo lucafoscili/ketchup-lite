@@ -269,7 +269,7 @@ export class KulMasonry {
     }
     const columns: VNode[][] = Array.from(
       { length: columnCount },
-      () => [],
+      (): VNode[] => [],
       [],
     );
     const decoratedShapes = decorate(

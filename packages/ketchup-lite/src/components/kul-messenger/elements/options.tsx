@@ -4,6 +4,7 @@ import {
   KulMessengerAdapter,
   KulMessengerAdapterJsx,
 } from "../kul-messenger-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 export const prepOptions = (
   getAdapter: () => KulMessengerAdapter,
@@ -18,6 +19,7 @@ export const prepOptions = (
 
       return (
         <kul-button
+          data-cy={CY_ATTRIBUTES.button}
           class="kul-full-width"
           id={IDS.options.back}
           kulIcon="arrow_back"
@@ -39,6 +41,7 @@ export const prepOptions = (
       return (
         <kul-button
           class="kul-full-width"
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.options.customize}
           kulIcon="auto-fix"
           kulLabel="Customize"

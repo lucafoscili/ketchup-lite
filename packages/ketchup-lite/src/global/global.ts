@@ -1,3 +1,4 @@
+import { KulManagerEventPayload } from "src/managers/kul-manager/kul-manager-declarations";
 import { KulManager } from "../managers/kul-manager/kul-manager";
 
 let kulManagerSingleton: KulManager;
@@ -19,12 +20,10 @@ const initKulManager = () => {
           "KulManager instance created and defaults set. Dispatching readiness event...",
         );
       }
-
-      document.dispatchEvent(
-        new CustomEvent("kul-manager-ready", {
-          detail: { kulManager: kulManagerSingleton },
-        }),
-      );
+      const ev = new CustomEvent<KulManagerEventPayload>("kul-manager-ready", {
+        detail: { kulManager: kulManagerSingleton },
+      });
+      document.dispatchEvent(ev);
     } catch (error) {
       console.error("Error initializing KulManager defaults:", error);
     }

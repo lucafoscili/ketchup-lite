@@ -13,7 +13,11 @@ import {
 import Prism from "prismjs";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import { STATIC_LANGUAGES } from "./helpers/constants";
 import {
   KulCodeEvent,
@@ -280,6 +284,7 @@ export class KulCode {
               <span class={bemClass("code", "title")}>{kulLanguage}</span>
               <kul-button
                 class={"kul-slim kul-full-height"}
+                data-cy={CY_ATTRIBUTES.button}
                 kulIcon="content_copy"
                 kulLabel="Copy"
                 kulStyling="flat"

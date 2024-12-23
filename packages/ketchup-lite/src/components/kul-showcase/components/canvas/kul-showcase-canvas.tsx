@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
 import { kulManagerSingleton } from "src/global/global";
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import { CanvasData, CanvasExample } from "./kul-showcase-canvas-declarations";
@@ -87,7 +87,7 @@ export class KulShowcaseCanvas {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

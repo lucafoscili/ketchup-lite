@@ -4,6 +4,7 @@ import {
   KulMasonryAdapter,
   KulMasonryAdapterJsx,
 } from "../kul-masonry-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 export const prepControls = (
   getAdapter: () => KulMasonryAdapter,
@@ -20,6 +21,7 @@ export const prepControls = (
       return (
         <kul-button
           class={`${bemClass("grid", "add-column")} kul-slim`}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.addColumn}
           key={IDS.addColumn}
           kulIcon={ICONS.addColumn}
@@ -43,6 +45,7 @@ export const prepControls = (
       return (
         <kul-button
           class={`${bemClass("grid", "remove-column")} kul-slim`}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.removeColumn}
           key={IDS.removeColumn}
           kulIcon={ICONS.removeColumn}
@@ -67,6 +70,7 @@ export const prepControls = (
       return (
         <kul-button
           class={bemClass("grid", "change-view")}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.masonry}
           key={IDS.masonry}
           kulIcon={

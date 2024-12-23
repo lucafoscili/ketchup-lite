@@ -12,8 +12,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulToggleEvent,
   KulToggleEventPayload,
@@ -250,7 +253,7 @@ export class KulToggle {
               <div class={bemClass("toggle", "thumb-underlay")}>
                 <div class={bemClass("toggle", "thumb")}>
                   <div
-                    data-cy={KulDataCyAttributes.RIPPLE}
+                    data-cy={CY_ATTRIBUTES.ripple}
                     ref={(el) => {
                       if (kulRipple) {
                         this.#rippleSurface = el;
@@ -260,7 +263,7 @@ export class KulToggle {
                   <input
                     class={bemClass("toggle", "native-control")}
                     checked={this.#isOn()}
-                    data-cy={KulDataCyAttributes.INPUT}
+                    data-cy={CY_ATTRIBUTES.input}
                     disabled={kulDisabled}
                     onBlur={(e) => {
                       this.onKulEvent(e, "blur");

@@ -1,5 +1,5 @@
 import { h } from "@stencil/core";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { IDS } from "../helpers/constants";
 import {
   KulImageviewerAdapter,
@@ -28,7 +28,7 @@ export const prepDetails = (
       return (
         <kul-canvas
           class={bemClass("details-grid", "canvas")}
-          data-cy={KulDataCyAttributes.SHAPE}
+          data-cy={CY_ATTRIBUTES.shape}
           id={IDS.details.canvas}
           kulImageProps={{ kulValue: snapshot.value }}
           onKul-canvas-event={canvas}
@@ -54,7 +54,7 @@ export const prepDetails = (
       return (
         <kul-button
           class={`${bemClass("details-grid", "clear-history")} kul-danger kul-full-width`}
-          data-cy={KulDataCyAttributes.BUTTON}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.details.clearHistory}
           kulDisabled={isDisabled}
           kulIcon="layers_clear"
@@ -86,7 +86,7 @@ export const prepDetails = (
       return (
         <kul-button
           class={`${bemClass("details-grid", "delete")} kul-danger kul-full-width`}
-          data-cy={KulDataCyAttributes.BUTTON}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.details.deleteShape}
           kulIcon="delete-empty"
           kulLabel="Delete image"
@@ -121,7 +121,7 @@ export const prepDetails = (
       return (
         <kul-button
           class={`${bemClass("details-grid", "redo")} kul-full-width`}
-          data-cy={KulDataCyAttributes.BUTTON}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.details.redo}
           kulDisabled={isDisabled}
           kulIcon="redo"
@@ -150,7 +150,7 @@ export const prepDetails = (
       return (
         <kul-button
           class={`${bemClass("details-grid", "commit-changes")} kul-success kul-full-width`}
-          data-cy={KulDataCyAttributes.BUTTON}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.details.save}
           kulDisabled={isDisabled}
           kulIcon="save"
@@ -204,7 +204,7 @@ export const prepDetails = (
       return (
         <kul-tree
           class={`${bemClass("details-grid", "tree")}`}
-          data-cy={KulDataCyAttributes.INPUT}
+          data-cy={CY_ATTRIBUTES.input}
           id={IDS.details.tree}
           kulAccordionLayout={true}
           kulData={compInstance.kulValue}
@@ -232,7 +232,7 @@ export const prepDetails = (
       return (
         <kul-button
           class={`${bemClass("details-grid", "undo")} kul-full-width`}
-          data-cy={KulDataCyAttributes.BUTTON}
+          data-cy={CY_ATTRIBUTES.button}
           id={IDS.details.undo}
           kulDisabled={isDisabled}
           kulIcon="undo"

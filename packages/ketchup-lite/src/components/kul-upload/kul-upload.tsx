@@ -12,8 +12,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulUploadEvent,
   KulUploadEventPayload,
@@ -265,7 +268,7 @@ export class KulUpload {
             >
               <input
                 class={bemClass("file-upload", "input")}
-                data-cy={KulDataCyAttributes.INPUT}
+                data-cy={CY_ATTRIBUTES.input}
                 id="upload-input"
                 multiple
                 onChange={() => this.#handleFileChange()}
@@ -276,7 +279,7 @@ export class KulUpload {
               />
               <label
                 class={bemClass("file-upload", "label")}
-                data-cy={KulDataCyAttributes.RIPPLE}
+                data-cy={CY_ATTRIBUTES.ripple}
                 htmlFor="upload-input"
                 ref={(el) => {
                   if (kulRipple) {

@@ -14,8 +14,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulDataCyAttributes } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulArticleDataset,
   KulArticleEvent,
@@ -142,7 +145,7 @@ export class KulArticle {
       <Fragment>
         <article
           class={bemClass("article")}
-          data-cy={KulDataCyAttributes.NODE}
+          data-cy={CY_ATTRIBUTES.node}
           data-depth={depth.toString()}
           style={cssStyle}
         >
@@ -161,7 +164,7 @@ export class KulArticle {
       <Fragment>
         <section
           class={bemClass("section")}
-          data-cy={KulDataCyAttributes.NODE}
+          data-cy={CY_ATTRIBUTES.node}
           data-depth={depth.toString()}
           style={cssStyle}
         >
@@ -184,7 +187,7 @@ export class KulArticle {
         {value && <div>{value}</div>}
         <ComponentTag
           class={bemClass("content")}
-          data-cy={KulDataCyAttributes.NODE}
+          data-cy={CY_ATTRIBUTES.node}
           data-depth={depth.toString()}
           style={cssStyle}
         >
@@ -202,7 +205,7 @@ export class KulArticle {
       <Fragment>
         <p
           class={bemClass("paragraph")}
-          data-cy={KulDataCyAttributes.NODE}
+          data-cy={CY_ATTRIBUTES.node}
           data-depth={depth.toString()}
           style={cssStyle}
         >

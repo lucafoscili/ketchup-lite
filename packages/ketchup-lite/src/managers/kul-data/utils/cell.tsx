@@ -5,7 +5,6 @@ import {
   KulComponent,
   KulComponentName,
   KulComponentRootElement,
-  KulDataCyAttributes,
   KulEventPayload,
   KulEventType,
 } from "../../../types/GenericTypes";
@@ -19,6 +18,7 @@ import {
   KulDataShapesMap,
 } from "../kul-data-declarations";
 import { nodeExists } from "./node";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 //#region cellDecorateShapes
 export const cellDecorateShapes = <
@@ -89,7 +89,7 @@ export const cellDecorateShapes = <
         r.element.push(
           <TagName
             data-component={component}
-            data-cy={KulDataCyAttributes.SHAPE}
+            data-cy={CY_ATTRIBUTES.shape}
             id={`${shape}${index}`}
             ref={(el: KulComponentRootElement<C>) => {
               if (el) {

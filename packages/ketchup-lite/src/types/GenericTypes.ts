@@ -401,17 +401,6 @@ export type KulComponentTag<C extends KulComponentName> = KulComponentTagMap[C];
 export type ActualComponentClasses = {
   [K in KulComponentName]: KulComponentElementMap[K];
 }[KulComponentName];
-export enum KulDataCyAttributes {
-  BUTTON = "button",
-  CHECK = "check",
-  DROPDOWN_BUTTON = "dropdown-button",
-  DROPDOWN_MENU = "dropdown-menu",
-  INPUT = "input",
-  NODE = "node",
-  RIPPLE = "ripple",
-  SHAPE = "shape",
-  SHOWCASE_GRID_WRAPPER = "wrapper",
-}
 export type ComponentEventMap = {
   KulAccordion: KulAccordionEvent;
   KulArticle: KulArticleEvent;

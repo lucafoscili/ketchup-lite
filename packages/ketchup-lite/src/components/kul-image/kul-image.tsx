@@ -15,8 +15,10 @@ import {
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
+import { KulThemeIcons } from "src/managers/kul-theme/kul-theme-declarations";
 import {
   CSS_VAR_PREFIX,
+  CY_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -26,7 +28,6 @@ import {
   KulImageEventPayload,
   KulImagePropsInterface,
 } from "./kul-image-declarations";
-import { KulThemeIcons } from "src/managers/kul-theme/kul-theme-declarations";
 
 @Component({
   tag: "kul-image",
@@ -187,6 +188,7 @@ export class KulImage {
         class={bemClass("image", "icon", {
           [kulValue?.replace("--", "")]: isThemeIcon,
         })}
+        data-cy={CY_ATTRIBUTES.maskedSvg}
         style={style}
       ></div>
     );
@@ -194,6 +196,7 @@ export class KulImage {
   #createImage(): VNode {
     return (
       <img
+        data-cy={CY_ATTRIBUTES.image}
         onError={(e) => {
           this.error = true;
           this.onKulEvent(e, "error");

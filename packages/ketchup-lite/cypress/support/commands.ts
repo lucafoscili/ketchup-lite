@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 
-import { KulManager } from "../../src/managers/kul-manager/kul-manager";
+import { KulManagerEvent } from "src/managers/kul-manager/kul-manager-declarations";
+import type { KulManager } from "../../src/managers/kul-manager/kul-manager";
 import {
   KulComponent,
   KulComponentName,
-  KulDataCyAttributes,
   KulEventType,
   KulGenericComponent,
   KulGenericEvent,
@@ -13,8 +13,11 @@ import {
   KulGenericRootElement,
 } from "../../src/types/GenericTypes";
 import { DataCyAttributeTransformed } from "./selectors";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 export {};
+
+let kulManager: KulManager;
 
 declare global {
   namespace Cypress {
@@ -36,8 +39,8 @@ declare global {
       ): Chainable;
       checkRenderCountIncrease(component: string, attempts?: number): Chainable;
       checkRipple(component: string): Chainable;
-      findCyElement(dataCy: KulDataCyAttributes): Chainable;
-      getCyElement(dataCy: KulDataCyAttributes): Chainable;
+      findCyElement(dataCy: string): Chainable;
+      getCyElement(dataCy: string): Chainable;
       getKulManager(): Chainable<KulManager>;
       navigate(component: string): Chainable;
       waitForWebComponents(tags: string[]): Chainable;
@@ -117,7 +120,7 @@ Cypress.Commands.add(
           event.detail.eventType === eventType
         ) {
           const eventCheck = document.createElement("div");
-          eventCheck.dataset.cy = KulDataCyAttributes.CHECK;
+          eventCheck.dataset.cy = CY_ATTRIBUTES.check;
           document.body.appendChild(eventCheck);
         }
       };
@@ -183,7 +186,7 @@ Cypress.Commands.add(
         if (event.type === eventName && event.detail.eventType === eventType) {
           document.removeEventListener(eventName, checkEvent);
           const readyCheck = document.createElement("div");
-          readyCheck.dataset.cy = KulDataCyAttributes.CHECK;
+          readyCheck.dataset.cy = CY_ATTRIBUTES.check;
           document.body.appendChild(readyCheck);
         }
       };
@@ -193,7 +196,7 @@ Cypress.Commands.add(
         .find(`kul-${component}`)
         .first()
         .scrollIntoView();
-      cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+      cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
     });
   },
 );
@@ -202,7 +205,7 @@ Cypress.Commands.add(
 //#region checkRipple
 Cypress.Commands.add("checkRipple", (component) => {
   cy.get(component)
-    .findCyElement(KulDataCyAttributes.RIPPLE)
+    .findCyElement(CY_ATTRIBUTES.ripple)
     .should("exist")
     .then(($ripple) => {
       const initialChildCount = $ripple[0].children.length;
@@ -267,14 +270,14 @@ Cypress.Commands.add(
 Cypress.Commands.add(
   "findCyElement",
   { prevSubject: "element" },
-  (subject, dataCy: KulDataCyAttributes) => {
+  (subject, dataCy: string) => {
     cy.wrap(subject).find(transformEnumValue(dataCy) as unknown as string);
   },
 );
 //#endregion
 
 //#region getCyElement
-Cypress.Commands.add("getCyElement", (dataCy: KulDataCyAttributes) =>
+Cypress.Commands.add("getCyElement", (dataCy: string) =>
   cy.get(transformEnumValue(dataCy) as unknown as string),
 );
 //#endregion
@@ -282,7 +285,7 @@ Cypress.Commands.add("getCyElement", (dataCy: KulDataCyAttributes) =>
 //#region getKulManager
 Cypress.Commands.add("getKulManager", () => {
   cy.window().then(() => {
-    return ["kulManager"];
+    return kulManager;
   });
 });
 //#endregion
@@ -318,9 +321,7 @@ Cypress.Commands.add("waitForWebComponents", (components: string[]) => {
   });
 });
 
-function transformEnumValue(
-  key: KulDataCyAttributes,
-): DataCyAttributeTransformed {
+function transformEnumValue(key: string): DataCyAttributeTransformed {
   return `[data-cy="${key}"]` as unknown as DataCyAttributeTransformed;
 }
 
@@ -334,7 +335,7 @@ function visitManager() {
         .should("exist")
         .click();
       cy.get("@kulShowcase").find(`kul-showcase-${component}`).should("exist");
-      cy.getCyElement(KulDataCyAttributes.SHOWCASE_GRID_WRAPPER)
+      cy.getCyElement(CY_ATTRIBUTES.showcaseGridWrapper)
         .as("kulComponentShowcase")
         .then(() => cy.log("Alias @kulComponentShowcase created"));
     },
@@ -362,7 +363,16 @@ function visitManager() {
         });
     },
     visit: () => {
-      cy.visit("http://localhost:3333").reload();
+      cy.visit("http://localhost:3333", {
+        onBeforeLoad: (win) => {
+          win.document.addEventListener(
+            "kul-manager-ready",
+            (e: KulManagerEvent) => {
+              kulManager = e.detail.kulManager;
+            },
+          );
+        },
+      });
     },
   };
 }
