@@ -1,20 +1,18 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { IDS } from "../helpers/constants";
 import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 
 export const prepSettings = (
   getAdapter: () => KulChatAdapter,
 ): KulChatAdapterJsx["settings"] => {
-  const { assignRef, data } = kulManagerSingleton;
-  const { stringify } = data.cell;
-
   return {
     //#region Back
     back: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { settings } = elements.refs;
       const { button } = handlers.settings;
+      const { assignRef } = manager;
 
       return (
         <kul-button
@@ -32,9 +30,10 @@ export const prepSettings = (
     //#region Endpoint
     endpoint: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
       const { settings } = elements.refs;
       const { textfield } = handlers.settings;
+      const { assignRef } = manager;
 
       return (
         <kul-textfield
@@ -52,9 +51,11 @@ export const prepSettings = (
     //#region Max tokens
     maxTokens: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
       const { settings } = elements.refs;
       const { textfield } = handlers.settings;
+      const { assignRef, data } = manager;
+      const { stringify } = data.cell;
 
       return (
         <kul-textfield
@@ -77,9 +78,11 @@ export const prepSettings = (
     //#region Polling
     polling: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
       const { settings } = elements.refs;
       const { textfield } = handlers.settings;
+      const { assignRef, data } = manager;
+      const { stringify } = data.cell;
 
       return (
         <kul-textfield
@@ -102,9 +105,10 @@ export const prepSettings = (
     //#region System
     system: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
       const { settings } = elements.refs;
       const { textfield } = handlers.settings;
+      const { assignRef } = manager;
 
       return (
         <kul-textfield
@@ -123,9 +127,11 @@ export const prepSettings = (
     //#region Temperature
     temperature: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { compInstance } = controller.get;
+      const { compInstance, manager } = controller.get;
       const { settings } = elements.refs;
       const { textfield } = handlers.settings;
+      const { assignRef, data } = manager;
+      const { stringify } = data.cell;
 
       return (
         <kul-textfield

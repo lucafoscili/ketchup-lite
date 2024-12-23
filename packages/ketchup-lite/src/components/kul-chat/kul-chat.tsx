@@ -149,6 +149,7 @@ export class KulChat {
       currentPrompt: () => this.currentPrompt,
       currentTokens: () => this.currentTokens,
       history: () => this.history,
+      manager: kulManagerSingleton,
       status: () => this.status,
       toolbarMessage: () => this.toolbarMessage,
       view: () => this.view,

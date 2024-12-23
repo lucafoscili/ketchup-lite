@@ -1,21 +1,18 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { IDS } from "../helpers/constants";
 import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 
 export const prepChat = (
   getAdapter: () => KulChatAdapter,
 ): KulChatAdapterJsx["chat"] => {
-  const { assignRef, theme } = kulManagerSingleton;
-  const { bemClass } = theme;
-
   return {
     //#region Clear
     clear: () => {
       const { controller, elements, handlers } = getAdapter();
+      const { currentPrompt, manager } = controller.get;
       const { button } = handlers.chat;
       const { chat } = elements.refs;
-      const { currentPrompt } = controller.get;
+      const { assignRef } = manager;
 
       return (
         <kul-button
@@ -33,9 +30,12 @@ export const prepChat = (
 
     //#region Configuration
     configuration: () => {
-      const { elements, handlers } = getAdapter();
-      const { button } = handlers.chat;
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { chat } = elements.refs;
+      const { button } = handlers.chat;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
@@ -54,8 +54,10 @@ export const prepChat = (
     progressbar: () => {
       const { controller, elements } = getAdapter();
       const { chat } = elements.refs;
-      const { compInstance, currentTokens } = controller.get;
+      const { compInstance, currentTokens, manager } = controller.get;
       const { kulContextWindow } = compInstance;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       const value = currentTokens();
       const title = `Estimated tokens used: ${value}/${kulContextWindow}`;
@@ -77,9 +79,10 @@ export const prepChat = (
     //#region Send
     send: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { currentPrompt } = controller.get;
+      const { currentPrompt, manager } = controller.get;
       const { chat } = elements.refs;
       const { button } = handlers.chat;
+      const { assignRef } = manager;
 
       const showSpinner = Boolean(currentPrompt());
 
@@ -105,9 +108,12 @@ export const prepChat = (
 
     //#region Settings
     settings: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { chat } = elements.refs;
       const { button } = handlers.chat;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
@@ -125,8 +131,9 @@ export const prepChat = (
     //#region Spinner
     spinner: () => {
       const { controller, elements } = getAdapter();
-      const { currentPrompt } = controller.get;
+      const { currentPrompt, manager } = controller.get;
       const { chat } = elements.refs;
+      const { assignRef } = manager;
 
       const showSpinner = Boolean(currentPrompt());
 
@@ -142,9 +149,12 @@ export const prepChat = (
 
     //#region Stt
     stt: () => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { chat } = elements.refs;
       const { button } = handlers.chat;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       //const showSpinner = Boolean(currentPrompt());
 
@@ -173,8 +183,10 @@ export const prepChat = (
     //#region Textarea
     textarea: () => {
       const { controller, elements } = getAdapter();
-      const { currentPrompt } = controller.get;
+      const { currentPrompt, manager } = controller.get;
       const { chat } = elements.refs;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-textfield

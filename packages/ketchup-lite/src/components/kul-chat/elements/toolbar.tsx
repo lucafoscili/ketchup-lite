@@ -1,20 +1,19 @@
 import { h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { IDS } from "../helpers/constants";
 import { KulChatAdapter, KulChatAdapterJsx } from "../kul-chat-declarations";
 
 export const prepToolbar = (
   getAdapter: () => KulChatAdapter,
 ): KulChatAdapterJsx["toolbar"] => {
-  const { assignRef, theme } = kulManagerSingleton;
-  const { bemClass } = theme;
-
   return {
     //#region Copy content
     copyContent: (m) => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
@@ -31,9 +30,12 @@ export const prepToolbar = (
 
     //#region Delete message
     deleteMessage: (m) => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button
@@ -50,9 +52,12 @@ export const prepToolbar = (
 
     //#region Regenerate
     regenerate: (m) => {
-      const { elements, handlers } = getAdapter();
+      const { controller, elements, handlers } = getAdapter();
+      const { manager } = controller.get;
       const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
+      const { assignRef, theme } = manager;
+      const { bemClass } = theme;
 
       return (
         <kul-button

@@ -1,4 +1,3 @@
-import { kulManagerSingleton } from "src/global/global";
 import { KulChatAdapter } from "src/components/kul-chat/kul-chat-declarations";
 import {
   KulLLMChoiceMessage,
@@ -51,32 +50,38 @@ export const newRequest = (adapter: KulChatAdapter) => {
 
 //#region Submit
 export const submitPrompt = async (adapter: KulChatAdapter) => {
-  const { debug, llm } = kulManagerSingleton;
-
   const { get, set } = adapter.controller;
-  const { compInstance, history } = get;
+  const { compInstance, history, manager } = get;
   const { kulEndpointUrl } = compInstance;
+  const { debug, llm } = manager;
 
   const message = await get.newPrompt();
+
   requestAnimationFrame(() => {
     set.currentPrompt(message);
   });
-  const request = newRequest(adapter);
-  const h = history();
 
-  try {
-    const response = await llm.fetch(request, kulEndpointUrl);
-    const message = response.choices?.[0]?.message?.content;
-    const llmMessage: KulLLMChoiceMessage = {
-      role: "assistant",
-      content: message,
-    };
-    set.history(() => h.push(llmMessage));
-    set.currentPrompt(null);
-  } catch (error) {
-    debug.logs.new(compInstance, `Error calling LLM: ${error}`, "error");
-    set.history(() => h.pop());
+  if (message) {
+    const request = newRequest(adapter);
+    const h = history();
+
+    try {
+      const response = await llm.fetch(request, kulEndpointUrl);
+      const message = response.choices?.[0]?.message?.content;
+      const llmMessage: KulLLMChoiceMessage = {
+        role: "assistant",
+        content: message,
+      };
+      set.history(() => h.push(llmMessage));
+    } catch (error) {
+      debug.logs.new(compInstance, `Error calling LLM: ${error}`, "error");
+      set.history(() => h.pop());
+    }
   }
+
+  requestAnimationFrame(() => {
+    set.currentPrompt(null);
+  });
 };
 //#endregion
 

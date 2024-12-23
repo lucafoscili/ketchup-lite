@@ -1,12 +1,13 @@
 import { VNode } from "@stencil/core";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
   KulComponentAdapterGetters,
-  KulComponentAdapterSetters,
   KulComponentAdapterHandlers,
   KulComponentAdapterJsx,
   KulComponentAdapterRefs,
+  KulComponentAdapterSetters,
   KulEventPayload,
 } from "src/types/GenericTypes";
 import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
@@ -97,6 +98,7 @@ export type KulChatAdapterInitializerGetters = Pick<
   | "currentPrompt"
   | "currentTokens"
   | "history"
+  | "manager"
   | "status"
   | "toolbarMessage"
   | "view"
@@ -116,6 +118,7 @@ export interface KulChatAdapterControllerGetters
   currentPrompt: () => KulLLMChoiceMessage;
   currentTokens: () => number;
   history: () => KulChatHistory;
+  manager: KulManager;
   newPrompt: () => Promise<KulLLMChoiceMessage>;
   status: () => KulChatStatus;
   toolbarMessage: () => KulLLMChoiceMessage;

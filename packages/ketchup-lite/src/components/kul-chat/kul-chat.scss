@@ -73,25 +73,24 @@
 }
 
 .chat {
-  &--chat {
-    & {
-      backdrop-filter: blur(var(--kul_chat_blur_radius));
-      box-sizing: border-box;
-      display: grid;
-      height: 100%;
-      margin: auto;
-      padding: var(--kul_chat_padding);
-    }
+  display: grid;
 
-    &--bottom-textarea {
-      align-content: center;
-      grid-gap: var(--kul_chat_outer_grid_gap);
-      grid-template-areas:
-        "messages"
-        "spinner"
-        "request";
-      grid-template-rows: 1fr auto auto;
-    }
+  & {
+    backdrop-filter: blur(var(--kul_chat_blur_radius));
+    box-sizing: border-box;
+    height: 100%;
+    margin: auto;
+    padding: var(--kul_chat_padding);
+  }
+
+  &--bottom-textarea {
+    align-content: center;
+    grid-gap: var(--kul_chat_outer_grid_gap);
+    grid-template-areas:
+      "messages"
+      "spinner"
+      "request";
+    grid-template-rows: 1fr auto auto;
   }
 
   &--top-textarea {
