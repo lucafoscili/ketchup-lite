@@ -1,5 +1,5 @@
-import { KulDataCyAttributes } from '../../src/types/GenericTypes';
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 export type DataCyAttributeTransformed = {
-    [K in keyof typeof KulDataCyAttributes]: `[data-cy="${(typeof KulDataCyAttributes)[K]}"]`;
+  [K in keyof typeof CY_ATTRIBUTES]: `[data-cy="${(typeof CY_ATTRIBUTES)[K]}"]`;
 };

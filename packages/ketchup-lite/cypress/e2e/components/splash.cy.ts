@@ -1,18 +1,14 @@
-import {
-  KulSplashProps,
-  KulSplashPropsInterface,
-} from "../../../src/components/kul-splash/kul-splash-declarations";
+import { KUL_SPLASH_PROPS } from "src/components/kul-splash/helpers/constants";
 import { SPLASH_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/splash/kul-showcase-splash-declarations";
 
 const splash = "splash";
-const splashCapitalized = splash.charAt(0).toUpperCase() + splash.slice(1);
 const splashTag = "kul-" + splash;
 
+//#region Basic
 describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(splash).waitForWebComponents([splashTag]);
   });
-
   it(`Should check that all <${splashTag}> exist.`, () => {
     SPLASH_EXAMPLES_KEYS.forEach((key) => {
       const triggerId = `${key}-trigger`;
@@ -20,7 +16,6 @@ describe("Basic", () => {
       cy.get(`${splashTag}#${key}`).should("exist").click();
     });
   });
-
   it(`Should check that the number of <${splashTag}> elements matches the number of examples.`, () => {
     let counter = 0;
     SPLASH_EXAMPLES_KEYS.forEach((key) => {
@@ -32,12 +27,13 @@ describe("Basic", () => {
     expect(counter).equals(SPLASH_EXAMPLES_KEYS.length);
   });
 });
+//#endregion
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(splash);
   });
-
   it("getDebugInfo: check the structure of the returned object.", () => {
     cy.get("@kulComponentShowcase").get("#label-trigger").click();
     cy.get(splashTag).then(($splash) => {
@@ -51,7 +47,6 @@ describe("Methods", () => {
       });
     });
   });
-
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     let initialRenderCount: number;
 
@@ -92,42 +87,17 @@ describe("Methods", () => {
           });
       });
   });
-
-  it(`getProps: check keys against Kul${splashCapitalized}Props enum.`, () => {
-    cy.get("@kulComponentShowcase").get("#style-trigger").click();
-    cy.get(splashTag)
-      .first()
-      .then(($splash) => {
-        ($splash[0] as HTMLKulSplashElement).getProps().then((props) => {
-          const enumKeys = Object.keys(KulSplashProps);
-          expect(Object.keys(props)).to.deep.equal(enumKeys);
-        });
-      });
-  });
-
-  it(`getProps: check keys against Kul${splashCapitalized}PropsInterface.`, () => {
-    cy.get("@kulComponentShowcase").get("#label-trigger").click();
-    cy.get(splashTag)
-      .then(($splash) => {
-        const kulSplashElement = $splash[0] as HTMLKulSplashElement;
-        return kulSplashElement.getProps();
-      })
-      .then((props) => {
-        const dummy: KulSplashPropsInterface = {
-          kulLabel: null,
-          kulStyle: null,
-        };
-        const expectedKeys = Object.keys(dummy);
-        expect(Object.keys(props)).to.deep.equal(expectedKeys);
-      });
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(splashTag, KUL_SPLASH_PROPS);
   });
 });
+//#endregion
 
+//#region Props
 describe("Props", () => {
   beforeEach(() => {
     cy.navigate(splash);
   });
-
   it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.get("@kulComponentShowcase").get("#style-trigger").click();
     cy.get(`${splashTag}#style`)
@@ -136,7 +106,6 @@ describe("Props", () => {
       .eq(1)
       .should("not.be.empty");
   });
-
   it("kulLabel: should check that the label is different from the default (Loading...)", () => {
     cy.get("@kulComponentShowcase").get("#label-trigger").click();
     cy.get(`${splashTag}#label`)
@@ -145,3 +114,4 @@ describe("Props", () => {
       .should("not.have.text", "Loading...");
   });
 });
+//#endregion

@@ -1,22 +1,26 @@
 import { FunctionalComponent, h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulTreeNodeProps } from "../kul-tree-declarations";
 import { TreeNodeContent } from "./node-content";
-import { CY_ATTRIBUTES } from "src/utils/constants";
 
 //#region Tree node
 export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
   props: KulTreeNodeProps,
 ) => {
-  const { bemClass } = kulManagerSingleton.theme;
+  const { manager } = props;
+  const { bemClass } = manager.theme;
 
   const { accordionLayout, depth, elements, events, expanded, node, selected } =
     props || {};
 
   const icon = node.icon ? (
-    <TreeNodeContent node={node} type="icon"></TreeNodeContent>
+    <TreeNodeContent
+      manager={manager}
+      node={node}
+      type="icon"
+    ></TreeNodeContent>
   ) : (
-    <TreeNodeContent type="placeholder"></TreeNodeContent>
+    <TreeNodeContent manager={manager} type="placeholder"></TreeNodeContent>
   );
 
   if (accordionLayout) {
@@ -40,11 +44,15 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
           {node.children?.length ? (
             <TreeNodeContent
               expanded={expanded}
+              manager={manager}
               node={node}
               type="dropdown"
             ></TreeNodeContent>
           ) : (
-            <TreeNodeContent type="placeholder"></TreeNodeContent>
+            <TreeNodeContent
+              manager={manager}
+              type="placeholder"
+            ></TreeNodeContent>
           )}
         </div>
       </div>
@@ -65,16 +73,24 @@ export const TreeNode: FunctionalComponent<KulTreeNodeProps> = (
       >
         <div class="node__content">
           {elements.ripple}
-          <TreeNodeContent depth={depth} type="padding"></TreeNodeContent>
+          <TreeNodeContent
+            depth={depth}
+            manager={manager}
+            type="padding"
+          ></TreeNodeContent>
           {node.children?.length ? (
             <TreeNodeContent
               expanded={expanded}
+              manager={manager}
               node={node}
               onClickExpand={events.onClickExpand}
               type="expand"
             ></TreeNodeContent>
           ) : (
-            <TreeNodeContent type="placeholder"></TreeNodeContent>
+            <TreeNodeContent
+              manager={manager}
+              type="placeholder"
+            ></TreeNodeContent>
           )}
           {icon}
           {elements.value}

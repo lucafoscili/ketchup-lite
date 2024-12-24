@@ -1,5 +1,5 @@
 import { kulManagerSingleton } from "src/global/global";
-import { KulDataDataset } from "src/components";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,

@@ -3,6 +3,7 @@ import {
   KulDataDataset,
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Events
@@ -33,6 +34,7 @@ export interface KulTreeNodeProps {
     onPointerDown: (event: MouseEvent) => void;
   };
   expanded: boolean;
+  manager: KulManager;
   node: KulDataNode;
   selected: boolean;
 }

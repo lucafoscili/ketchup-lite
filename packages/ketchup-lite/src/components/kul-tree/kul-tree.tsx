@@ -285,6 +285,7 @@ export class KulTree {
         },
       },
       expanded: isExpanded,
+      manager: kulManagerSingleton,
       node,
       selected: isSelected,
     };

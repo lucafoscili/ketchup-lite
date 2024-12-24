@@ -1,72 +1,61 @@
-import {
-  KulCardEvent,
-  KulCardProps,
-  KulCardPropsInterface,
-} from "../../../src/components/kul-card/kul-card-declarations";
+import { KUL_CARD_PROPS } from "src/components/kul-card/helpers/constants";
+import { CY_ATTRIBUTES } from "src/utils/constants";
+import { KulCardEvent } from "../../../src/components/kul-card/kul-card-declarations";
 import { CARD_CATEGORIES_KEYS } from "../../../src/components/kul-showcase/components/card/kul-showcase-card-declarations";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
 const card = "card";
-const cardCapitalized = card.charAt(0).toUpperCase() + card.slice(1);
 const cardTag = "kul-" + card;
 
+//#region Basic
 describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(card).waitForWebComponents([cardTag]);
   });
-
   it(`Should select all <${cardTag}> elements matching the composed ID`, () => {
     cy.checkComponentExamplesByCategory(new Set(CARD_CATEGORIES_KEYS));
   });
-
   it(`Should check that all categories have at least 1 <${cardTag}>`, () => {
     cy.checkComponentExamplesByCategoryNumber(cardTag);
   });
 });
+//#endregion
 
+//#region Events
 describe("Events", () => {
   it(`click`, () => {
     cy.navigate(card);
     const eventType: KulCardEvent = "click";
     cy.checkEvent(card, eventType);
     cy.get("@eventElement").click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
-
   it(`contextmenu`, () => {
     cy.navigate(card);
     const eventType: KulCardEvent = "contextmenu";
     cy.checkEvent(card, eventType);
     cy.get("@eventElement").rightclick();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
-
   it(`kul-event`, () => {
     cy.navigate(card);
     const eventType: KulCardEvent = "kul-event";
     cy.checkEvent(card, eventType);
-    cy.get("@eventElement")
-      .findCyElement(KulDataCyAttributes.SHAPE)
-      .first()
-      .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.get("@eventElement").findCyElement(CY_ATTRIBUTES.shape).first().click();
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
-
   it(`pointerdown`, () => {
     cy.navigate(card);
     const eventType: KulCardEvent = "pointerdown";
     cy.checkEvent(card, eventType);
     cy.get(`${cardTag}#material-image`)
-      .findCyElement(KulDataCyAttributes.RIPPLE)
+      .findCyElement(CY_ATTRIBUTES.ripple)
       .first()
       .click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
-
   it(`ready`, () => {
     cy.checkReadyEvent(card);
   });
-
   it(`unmount`, () => {
     cy.navigate(card);
     const eventType: KulCardEvent = "unmount";
@@ -75,44 +64,35 @@ describe("Events", () => {
       const kulCardElement = $card[0] as HTMLKulCardElement;
       kulCardElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
+//#endregion
 
+//#region Methdos
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(card);
   });
-
   it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(cardTag);
   });
-
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(cardTag);
   });
-
-  it(`getProps: check keys against Kul${cardCapitalized}Props enum.`, () => {
-    cy.checkProps(cardTag, KulCardProps);
-  });
-
-  it(`getProps: check keys against Kul${cardCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(cardTag, {
-      kulData: null,
-      kulLayout: null,
-      kulSizeX: null,
-      kulSizeY: null,
-      kulStyle: null,
-    } as Required<KulCardPropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(cardTag, KUL_CARD_PROPS);
   });
 });
+//#endregion
 
+//#region Props
 describe("Props", () => {
   beforeEach(() => {
     cy.navigate(card);
   });
-
   it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });
+//#endregion

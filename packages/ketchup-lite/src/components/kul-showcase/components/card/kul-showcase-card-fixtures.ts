@@ -1,4 +1,5 @@
-import { KulCardLayout, KulDataDataset } from "src/components";
+import { KulCardLayout } from "src/components/kul-card/kul-card-declarations";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,

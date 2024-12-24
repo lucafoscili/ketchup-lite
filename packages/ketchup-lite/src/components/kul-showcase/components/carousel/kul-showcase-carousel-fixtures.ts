@@ -1,4 +1,4 @@
-import { KulDataDataset } from "src/components";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,

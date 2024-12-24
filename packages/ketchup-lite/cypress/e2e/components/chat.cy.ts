@@ -1,34 +1,30 @@
-import {
-  KulChatEvent,
-  KulChatProps,
-  KulChatPropsInterface,
-} from "../../../src/components/kul-chat/kul-chat-declarations";
+import { KUL_CHAT_PROPS } from "src/components/kul-chat/helpers/constants";
+import { CY_ATTRIBUTES } from "src/utils/constants";
+import { KulChatEvent } from "../../../src/components/kul-chat/kul-chat-declarations";
 import { CHAT_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/chat/kul-showcase-chat-declarations";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
 const chat = "chat";
-const chatCapitalized = chat.charAt(0).toUpperCase() + chat.slice(1);
 const chatTag = "kul-" + chat;
 
+//#region Basic
 describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(chat).waitForWebComponents([chatTag]);
   });
-
   it(`Should check that all <${chatTag}> exist.`, () => {
     cy.checkComponentExamples(chatTag, new Set(CHAT_EXAMPLES_KEYS));
   });
-
   it(`Should check that the number of <${chatTag}> elements matches the number of examples.`, () => {
     cy.checkComponentExamplesNumber(Array.from(CHAT_EXAMPLES_KEYS));
   });
 });
+//#endregion
 
+//#region Events
 describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(chat);
   });
-
   it(`unmount`, () => {
     cy.navigate(chat);
     const eventType: KulChatEvent = "unmount";
@@ -37,50 +33,35 @@ describe("Events", () => {
       const kulChatElement = $chat[0] as HTMLKulChatElement;
       kulChatElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
+//#endregion
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(chat);
   });
-
   it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(chatTag);
   });
-
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(chatTag);
   });
-
-  it(`getProps: check keys against Kul${chatCapitalized}Props enum.`, () => {
-    cy.checkProps(chatTag, KulChatProps);
-  });
-
-  it(`getProps: check keys against Kul${chatCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(chatTag, {
-      kulContextWindow: null,
-      kulEndpointUrl: null,
-      kulLayout: null,
-      kulMaxTokens: null,
-      kulPollingInterval: null,
-      kulSeed: null,
-      kulStyle: null,
-      kulSystem: null,
-      kulTemperature: null,
-      kulTypewriterProps: null,
-      kulValue: null,
-    } as Required<KulChatPropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(chatTag, KUL_CHAT_PROPS);
   });
 });
+//#endregion
 
+//#region Props
 describe("Props", () => {
   beforeEach(() => {
     cy.navigate(chat);
   });
-
   it("Should check for the presence of a <style> element with id kup-style.", () => {
     cy.checkKulStyle();
   });
 });
+//#endregion

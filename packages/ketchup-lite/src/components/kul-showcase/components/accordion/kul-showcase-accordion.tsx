@@ -6,6 +6,7 @@ import {
   AccordionExample,
 } from "./kul-showcase-accordion-declarations";
 import { ACCORDION_FIXTURES } from "./kul-showcase-accordion-fixtures";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 @Component({
   tag: "kul-showcase-accordion",
@@ -95,7 +96,11 @@ export class KulShowcaseAccordion {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div class="grid" data-cy="wrapper" part="grid">
+        <div
+          class="grid"
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
+          part="grid"
+        >
           {this.#prepExamples()}
         </div>
       </Fragment>

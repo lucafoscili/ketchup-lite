@@ -1,17 +1,18 @@
 import { FunctionalComponent, h } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataNode } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 
 //#region Tree node content
 export const TreeNodeContent: FunctionalComponent<{
   depth?: number;
   expanded?: boolean;
+  manager: KulManager;
   node?: KulDataNode;
   type: "dropdown" | "expand" | "icon" | "padding" | "placeholder";
   onClickExpand?: (e: MouseEvent) => void;
-}> = ({ depth, expanded = false, node, onClickExpand, type }) => {
-  const { get } = kulManagerSingleton.assets;
-  const { bemClass } = kulManagerSingleton.theme;
+}> = ({ depth, expanded = false, manager, node, onClickExpand, type }) => {
+  const { get } = manager.assets;
+  const { bemClass } = manager.theme;
 
   switch (type) {
     case "dropdown":

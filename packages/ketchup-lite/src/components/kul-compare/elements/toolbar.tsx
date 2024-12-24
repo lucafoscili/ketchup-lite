@@ -23,9 +23,9 @@ export const prepToolbarJsx = (
       return (
         <kul-button
           data-cy={CY_ATTRIBUTES.button}
-          id={IDS.rightButton}
-          kulIcon={ICONS.close}
-          kulIconOff={ICONS.rightButton}
+          id={IDS.changeView}
+          kulIcon={ICONS.changeView}
+          kulIconOff={ICONS.changeViewOff}
           kulStyling={"icon"}
           kulToggable={true}
           onKul-button-event={button}
@@ -100,9 +100,9 @@ export const prepToolbarJsx = (
       return (
         <kul-button
           data-cy={CY_ATTRIBUTES.button}
-          id={IDS.changeView}
-          kulIcon={ICONS.changeView}
-          kulIconOff={ICONS.changeViewOff}
+          id={IDS.rightButton}
+          kulIcon={ICONS.close}
+          kulIconOff={ICONS.rightButton}
           kulStyling={"icon"}
           kulToggable={true}
           onKul-button-event={button}

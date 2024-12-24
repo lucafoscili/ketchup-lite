@@ -1,4 +1,4 @@
-import { KulBadgePropsInterface, KulImagePropsInterface } from "src/components";
+import { KulBadgePropsInterface } from "src/components/kul-badge/kul-badge-declarations";
 import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
 import { KulCardPropsInterface } from "src/components/kul-card/kul-card-declarations";
 import { KulChartPropsInterface } from "src/components/kul-chart/kul-chart-declarations";
@@ -8,6 +8,7 @@ import {
 } from "src/components/kul-chat/kul-chat-declarations";
 import { KulChipPropsInterface } from "src/components/kul-chip/kul-chip-declarations";
 import { KulCodePropsInterface } from "src/components/kul-code/kul-code-declarations";
+import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
 import { KulTogglePropsInterface } from "src/components/kul-toggle/kul-toggle-declarations";
 import { KulUploadPropsInterface } from "src/components/kul-upload/kul-upload-declarations";
 import {

@@ -1,35 +1,30 @@
-import {
-  KulMessengerEvent,
-  KulMessengerProps,
-  KulMessengerPropsInterface,
-} from "../../../src/components/kul-messenger/kul-messenger-declarations";
+import { KUL_MESSENGER_PROPS } from "src/components/kul-messenger/helpers/constants";
+import { CY_ATTRIBUTES } from "src/utils/constants";
+import { KulMessengerEvent } from "../../../src/components/kul-messenger/kul-messenger-declarations";
 import { MESSENGER_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/messenger/kul-showcase-messenger-declarations";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
 const messenger = "messenger";
-const messengerCapitalized =
-  messenger.charAt(0).toUpperCase() + messenger.slice(1);
 const messengerTag = "kul-" + messenger;
 
+//#region Basic
 describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(messenger).waitForWebComponents([messengerTag]);
   });
-
   it(`Should check that all <${messengerTag}> exist.`, () => {
     cy.checkComponentExamples(messengerTag, new Set(MESSENGER_EXAMPLES_KEYS));
   });
-
   it(`Should check that the number of <${messengerTag}> elements matches the number of examples.`, () => {
     cy.checkComponentExamplesNumber(Array.from(MESSENGER_EXAMPLES_KEYS));
   });
 });
+//#endregion
 
+//#region Events
 describe("Events", () => {
   it(`ready`, () => {
     cy.checkReadyEvent(messenger);
   });
-
   it(`unmount`, () => {
     cy.navigate(messenger);
     const eventType: KulMessengerEvent = "unmount";
@@ -38,37 +33,29 @@ describe("Events", () => {
       const kulMessengerElement = $messenger[0] as HTMLKulMessengerElement;
       kulMessengerElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
+//#endregion
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(messenger);
   });
-
   it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(messengerTag);
   });
-
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(messengerTag);
   });
-
-  it(`getProps: check keys against Kul${messengerCapitalized}Props enum.`, () => {
-    cy.checkProps(messengerTag, KulMessengerProps);
-  });
-
-  it(`getProps: check keys against Kul${messengerCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(messengerTag, {
-      kulAutosave: null,
-      kulData: null,
-      kulStyle: null,
-      kulValue: null,
-    } as Required<KulMessengerPropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(messengerTag, KUL_MESSENGER_PROPS);
   });
 });
+//#endregion
 
+//#region Props
 describe("Props", () => {
   beforeEach(() => {
     cy.navigate(messenger);
@@ -78,3 +65,4 @@ describe("Props", () => {
     cy.checkKulStyle();
   });
 });
+//#endregion

@@ -1,6 +1,7 @@
 /// <reference types="cypress" />
 
 import { KulManagerEvent } from "src/managers/kul-manager/kul-manager-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import type { KulManager } from "../../src/managers/kul-manager/kul-manager";
 import {
   KulComponent,
@@ -13,7 +14,6 @@ import {
   KulGenericRootElement,
 } from "../../src/types/GenericTypes";
 import { DataCyAttributeTransformed } from "./selectors";
-import { CY_ATTRIBUTES } from "src/utils/constants";
 
 export {};
 

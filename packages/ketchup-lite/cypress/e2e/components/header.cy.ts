@@ -2,6 +2,7 @@ import { KulDebugLifecycleInfo } from "../../../src/managers/kul-debug/kul-debug
 
 const header = "header";
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(header);
@@ -12,7 +13,9 @@ describe("Methods", () => {
       const iframeDocument = $iframe.contents();
       iframeDocument.find(header).each(($el) => {
         cy.wrap($el).then(($el) => {
-          const kulHeaderElement: HTMLKulHeaderElement = $el[0];
+          const kulHeaderElement = ($el as unknown as JQuery<HTMLElement>).get(
+            0,
+          ) as HTMLKulHeaderElement;
           kulHeaderElement
             .getDebugInfo()
             .then((debugInfo: KulDebugLifecycleInfo) => {
@@ -35,3 +38,4 @@ describe("Methods", () => {
     });
   });
 });
+//#endregion

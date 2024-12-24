@@ -1,5 +1,5 @@
-import { kulManagerSingleton } from "src/global/global";
-import { KulDataDataset } from "src/components";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,12 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCompare"> =
   "KulCompareEventPayload";
 const TAG_NAME: KulComponentTag<"KulCompare"> = "kul-compare";
 
-export const COMPARE_FIXTURES: () => {
+export const COMPARE_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: CompareData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const kulData: Partial<{
     [K in KulComponentName]: KulDataDataset;
   }> = {

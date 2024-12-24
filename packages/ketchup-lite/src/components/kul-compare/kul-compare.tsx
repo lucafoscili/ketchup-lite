@@ -219,6 +219,23 @@ export class KulCompare {
   #isOverlay() {
     return !!(this.kulView === "overlay");
   }
+  #prepCompare(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    if (this.#hasShapes()) {
+      const shapes = this.shapes[this.kulShape];
+      if (shapes?.length > 1) {
+        return (
+          <div class={bemClass("compare", "grid")}>
+            {this.#prepView()}
+            {this.#prepToolbar()}
+          </div>
+        );
+      }
+    }
+
+    return null;
+  }
   #prepToolbar(): VNode {
     const { bemClass } = kulManagerSingleton.theme;
 
@@ -246,11 +263,24 @@ export class KulCompare {
       rightShape,
     } = this;
 
+    const leftShapes = left[kulShape]();
+    const leftSanitized: KulDataGenericCell[] = [];
+    for (let index = 0; index < leftShapes.length; index++) {
+      const s = leftShapes[index];
+      leftSanitized.push(sanitizeProps(s));
+    }
+    const rightShapes = right[kulShape]();
+    const rightSanitized: KulDataGenericCell[] = [];
+    for (let index = 0; index < rightShapes.length; index++) {
+      const s = rightShapes[index];
+      rightSanitized.push(sanitizeProps(s));
+    }
+
     const shapes = data.cell.shapes.decorate(
       kulShape,
       [leftShape, rightShape],
       async (e) => this.onKulEvent(e, "kul-event"),
-      [...sanitizeProps(left[kulShape]()), ...sanitizeProps(right[kulShape]())],
+      [...leftSanitized, ...rightSanitized],
     ).element;
 
     return (
@@ -283,23 +313,6 @@ export class KulCompare {
         </div>
       </Fragment>
     );
-  }
-  #prepCompare(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
-
-    if (this.#hasShapes()) {
-      const shapes = this.shapes[this.kulShape];
-      if (shapes?.length > 1) {
-        return (
-          <div class={bemClass("compare", "grid")}>
-            {this.#prepView()}
-            {this.#prepToolbar()}
-          </div>
-        );
-      }
-    }
-
-    return null;
   }
   #updateOverlayWidth(event: InputEvent) {
     const sliderValue =

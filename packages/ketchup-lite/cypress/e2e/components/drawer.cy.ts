@@ -2,6 +2,7 @@ import { KulDebugLifecycleInfo } from "../../../src/managers/kul-debug/kul-debug
 
 const drawer = "drawer";
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(drawer);
@@ -12,7 +13,9 @@ describe("Methods", () => {
       const iframeDocument = $iframe.contents();
       iframeDocument.find(drawer).each(($el) => {
         cy.wrap($el).then(($el) => {
-          const kulDrawerElement: HTMLKulDrawerElement = $el[0];
+          const kulDrawerElement = ($el as unknown as JQuery<HTMLElement>).get(
+            0,
+          ) as HTMLKulDrawerElement;
           kulDrawerElement
             .getDebugInfo()
             .then((debugInfo: KulDebugLifecycleInfo) => {
@@ -35,3 +38,4 @@ describe("Methods", () => {
     });
   });
 });
+//#endregion

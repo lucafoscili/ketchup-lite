@@ -1,4 +1,4 @@
-import { KulDataNode } from "src/components";
+import { KulDataNode } from "src/managers/kul-data/kul-data-declarations";
 import type {
   GenericMap,
   GenericObject,
