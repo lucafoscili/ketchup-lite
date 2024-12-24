@@ -64,10 +64,6 @@ export class KulChat {
    */
   @State() status: KulChatStatus = "connecting";
   /**
-   * Message currently hovered (to display toolbar)
-   */
-  @State() toolbarMessage: KulLLMChoiceMessage;
-  /**
    * State of the connection.
    */
   @State() view: KulChatView = "chat";
@@ -151,7 +147,6 @@ export class KulChat {
       history: () => this.history,
       manager: kulManagerSingleton,
       status: () => this.status,
-      toolbarMessage: () => this.toolbarMessage,
       view: () => this.view,
     },
     {
@@ -163,7 +158,6 @@ export class KulChat {
         this.onKulEvent(new CustomEvent("update"), "update");
       },
       status: (status) => (this.status = status),
-      toolbarMessage: (element) => (this.toolbarMessage = element),
       view: (view) => (this.view = view),
     },
     () => this.#adapter,
@@ -309,6 +303,7 @@ export class KulChat {
 
     const { clear, progressbar, send, settings, spinner, stt, textarea } =
       this.#adapter.elements.jsx.chat;
+    const { history, kulEmpty } = this;
 
     return (
       <Fragment>
@@ -325,14 +320,12 @@ export class KulChat {
           </div>
         </div>
         <div class={bemClass("messages")}>
-          {this.history?.length ? (
-            this.history.map((m) => (
+          {history?.length ? (
+            history.map((m) => (
               <div
                 class={bemClass("messages", "container", {
                   [m.role]: true,
                 })}
-                onPointerEnter={() => (this.toolbarMessage = m)}
-                onPointerLeave={() => (this.toolbarMessage = null)}
               >
                 <div
                   class={bemClass("messages", "content", {
@@ -345,7 +338,7 @@ export class KulChat {
               </div>
             ))
           ) : (
-            <div class={bemClass("messages", "empty")}>{this.kulEmpty}</div>
+            <div class={bemClass("messages", "empty")}>{kulEmpty}</div>
           )}
         </div>
         <div class={bemClass("chat", "spinner-bar")}>{spinner()}</div>
@@ -368,16 +361,11 @@ export class KulChat {
     );
   };
   #prepContent = (message: KulLLMChoiceMessage): VNode[] => {
-    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { theme } = kulManagerSingleton;
     const { bemClass } = theme;
 
-    const { kulTypewriterProps } = this;
-
-    const useTypewriter = !!(
-      message.role === "assistant" &&
-      typeof kulTypewriterProps === "object" &&
-      kulTypewriterProps !== null
-    );
+    const { messageBlock } = this.#adapter.elements.jsx.chat;
+    const { role } = message;
 
     const elements: VNode[] = [];
     const messageContent = message.content;
@@ -388,18 +376,8 @@ export class KulChat {
     let match: RegExpExecArray | null;
     while ((match = codeBlockRegex.exec(messageContent)) !== null) {
       if (match.index > lastIndex) {
-        const textPart = messageContent.slice(lastIndex, match.index);
-        elements.push(
-          useTypewriter ? (
-            <kul-typewriter
-              class={bemClass("messages", "paragraph")}
-              {...sanitizeProps(kulTypewriterProps, "KulTypewriter")}
-              kulValue={textPart}
-            ></kul-typewriter>
-          ) : (
-            <div class={bemClass("messages", "paragraph")}>{textPart}</div>
-          ),
-        );
+        const text = messageContent.slice(lastIndex, match.index);
+        elements.push(messageBlock(text, role));
       }
 
       const language = match[1] ? match[1].trim() : "text";
@@ -418,9 +396,7 @@ export class KulChat {
 
     if (lastIndex < messageContent.length) {
       const remainingText = messageContent.slice(lastIndex);
-      elements.push(
-        <div class={bemClass("messages", "paragraph")}>{remainingText}</div>,
-      );
+      elements.push(messageBlock(remainingText, role));
     }
 
     return elements;

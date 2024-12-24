@@ -1,5 +1,8 @@
 import { VNode } from "@stencil/core";
-import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
+import {
+  KulLLMChoiceMessage,
+  KulLLMRole,
+} from "src/managers/kul-llm/kul-llm-declarations";
 import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
   KulComponentAdapter,
@@ -31,6 +34,7 @@ export interface KulChatAdapterJsx extends KulComponentAdapterJsx {
   chat: {
     clear: () => VNode;
     configuration: () => VNode;
+    messageBlock: (text: string, role: KulLLMRole) => VNode;
     progressbar: () => VNode;
     send: () => VNode;
     settings: () => VNode;
@@ -100,17 +104,11 @@ export type KulChatAdapterInitializerGetters = Pick<
   | "history"
   | "manager"
   | "status"
-  | "toolbarMessage"
   | "view"
 >;
 export type KulChatAdapterInitializerSetters = Pick<
   KulChatAdapterControllerSetters,
-  | "currentPrompt"
-  | "currentTokens"
-  | "history"
-  | "status"
-  | "toolbarMessage"
-  | "view"
+  "currentPrompt" | "currentTokens" | "history" | "status" | "view"
 >;
 export interface KulChatAdapterControllerGetters
   extends KulComponentAdapterGetters<KulChat> {
@@ -121,7 +119,6 @@ export interface KulChatAdapterControllerGetters
   manager: KulManager;
   newPrompt: () => Promise<KulLLMChoiceMessage>;
   status: () => KulChatStatus;
-  toolbarMessage: () => KulLLMChoiceMessage;
   view: () => KulChatView;
 }
 export interface KulChatAdapterControllerSetters
@@ -130,7 +127,6 @@ export interface KulChatAdapterControllerSetters
   currentTokens: (value: number) => void;
   history: (cb: () => unknown) => void;
   status: (status: KulChatStatus) => void;
-  toolbarMessage: (message: KulLLMChoiceMessage) => void;
   view: (view: KulChatView) => void;
 }
 //#endregion

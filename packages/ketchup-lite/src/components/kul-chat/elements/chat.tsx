@@ -53,6 +53,32 @@ export const prepChat = (
     },
     //#endregion
 
+    //#region
+    messageBlock: (text, role) => {
+      const { controller } = getAdapter();
+      const { compInstance, manager } = controller.get;
+      const { kulTypewriterProps } = compInstance;
+      const { sanitizeProps, theme } = manager;
+      const { bemClass } = theme;
+
+      const useTypewriter = !!(
+        role === "assistant" &&
+        typeof kulTypewriterProps === "object" &&
+        kulTypewriterProps !== null
+      );
+
+      return useTypewriter ? (
+        <kul-typewriter
+          class={bemClass("messages", "paragraph")}
+          {...sanitizeProps(kulTypewriterProps, "KulTypewriter")}
+          kulValue={text}
+        ></kul-typewriter>
+      ) : (
+        <div class={bemClass("messages", "paragraph")}>{text}</div>
+      );
+    },
+    //#endregion
+
     //#region Progressbar
     progressbar: () => {
       const { controller, elements } = getAdapter();

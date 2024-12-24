@@ -55,15 +55,16 @@ export const submitPrompt = async (adapter: KulChatAdapter) => {
   const { kulEndpointUrl } = compInstance;
   const { debug, llm } = manager;
 
-  const message = await get.newPrompt();
+  const userMessage = await get.newPrompt();
 
   requestAnimationFrame(() => {
-    set.currentPrompt(message);
+    set.currentPrompt(userMessage);
   });
 
-  if (message) {
+  if (userMessage) {
     const request = newRequest(adapter);
     const h = history();
+    set.history(() => h.push(userMessage));
 
     try {
       const response = await llm.fetch(request, kulEndpointUrl);
@@ -75,12 +76,12 @@ export const submitPrompt = async (adapter: KulChatAdapter) => {
       set.history(() => h.push(llmMessage));
     } catch (error) {
       debug.logs.new(compInstance, `Error calling LLM: ${error}`, "error");
-      set.history(() => h.pop());
     }
   }
 
-  requestAnimationFrame(() => {
+  requestAnimationFrame(async () => {
     set.currentPrompt(null);
+    clearTextarea(adapter);
   });
 };
 //#endregion
@@ -89,8 +90,10 @@ export const submitPrompt = async (adapter: KulChatAdapter) => {
 export const clearTextarea = async (adapter: KulChatAdapter) => {
   const { textarea } = adapter.elements.refs.chat;
 
-  await textarea.setValue("");
-  await textarea.setFocus();
+  requestAnimationFrame(async () => {
+    await textarea.setValue("");
+    await textarea.setFocus();
+  });
 };
 //#endregion
 
