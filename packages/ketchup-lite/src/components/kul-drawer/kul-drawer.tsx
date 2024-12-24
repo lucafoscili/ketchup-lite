@@ -74,8 +74,12 @@ export class KulDrawer {
    */
   @Method()
   async close(): Promise<void> {
-    this.opened = false;
-    this.onKulEvent(new CustomEvent("close"), "close");
+    const cb = async () => {
+      this.opened = false;
+      this.onKulEvent(new CustomEvent("close"), "close");
+    };
+
+    requestAnimationFrame(cb);
   }
   /**
    * Fetches debug information of the component's current state.
@@ -108,8 +112,12 @@ export class KulDrawer {
    */
   @Method()
   async open(): Promise<void> {
-    this.opened = true;
-    this.onKulEvent(new CustomEvent("open"), "open");
+    const cb = async () => {
+      this.opened = true;
+      this.onKulEvent(new CustomEvent("open"), "open");
+    };
+
+    requestAnimationFrame(cb);
   }
   /**
    * This method is used to trigger a new render of the component.

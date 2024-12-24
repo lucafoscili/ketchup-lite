@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src/global/global";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,12 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulImage"> =
   "KulImageEventPayload";
 const TAG_NAME: KulComponentTag<"KulImage"> = "kul-image";
 
-export const IMAGE_FIXTURES: () => {
+export const IMAGE_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: ImageData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const image = get(`./assets/media/color_splash.jpg`).path;
   const documentation: KulArticleDataset = {
     nodes: [

@@ -1,5 +1,5 @@
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,12 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulMasonry"> =
   "KulMasonryEventPayload";
 const TAG_NAME: KulComponentTag<"KulMasonry"> = "kul-masonry";
 
-export const MASONRY_FIXTURES: () => {
+export const MASONRY_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: MasonryData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const data: Partial<{
     [K in KulComponentName]: () => KulDataDataset;
   }> = {

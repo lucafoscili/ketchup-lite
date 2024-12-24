@@ -341,7 +341,7 @@ export class KulChat {
                 >
                   {this.#prepContent(m)}
                 </div>
-                {m === this.toolbarMessage ? this.#prepToolbar(m) : null}
+                {this.#prepToolbar(m)}
               </div>
             ))
           ) : (
@@ -482,7 +482,7 @@ export class KulChat {
       this.#adapter.elements.jsx.toolbar;
 
     return (
-      <div class={bemClass("messages", "toolbar")}>
+      <div class={bemClass("toolbar")}>
         {deleteMessage(m)}
         {copyContent(m)}
         {m.role === "user" && regenerate(m)}

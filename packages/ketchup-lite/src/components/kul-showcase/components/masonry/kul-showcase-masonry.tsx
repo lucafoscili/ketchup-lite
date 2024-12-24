@@ -1,5 +1,5 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import {
@@ -23,7 +23,7 @@ export class KulShowcaseMasonry {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = MASONRY_FIXTURES();
+  @State() fixtures = MASONRY_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables

@@ -17,9 +17,10 @@ export const prepToolbar = (
 
       return (
         <kul-button
-          class={bemClass("toolbar", "button")}
+          class={`${bemClass("toolbar", "button")} kul-slim`}
           id={IDS.toolbar.copyContent}
           kulIcon="content_copy"
+          kulStyling="flat"
           onKul-button-event={(e) => button(e, m)}
           ref={assignRef(toolbar, "copyContent")}
           title="Copy text to clipboard."
@@ -39,9 +40,10 @@ export const prepToolbar = (
 
       return (
         <kul-button
-          class={`${bemClass("toolbar", "button")} kul-danger`}
+          class={`${bemClass("toolbar", "button")} kul-danger kul-slim`}
           id={IDS.toolbar.deleteMessage}
           kulIcon="delete"
+          kulStyling="flat"
           onKul-button-event={(e) => button(e, m)}
           ref={assignRef(toolbar, "deleteMessage")}
           title="Delete this message from the chat history."
@@ -61,9 +63,10 @@ export const prepToolbar = (
 
       return (
         <kul-button
-          class={bemClass("toolbar", "button")}
+          class={`${bemClass("toolbar", "button")} kul-slim`}
           id={IDS.toolbar.regenerate}
           kulIcon="refresh"
+          kulStyling="flat"
           onKul-button-event={(e) => button(e, m)}
           ref={assignRef(toolbar, "regenerate")}
           title="Regenerate the response to this request."

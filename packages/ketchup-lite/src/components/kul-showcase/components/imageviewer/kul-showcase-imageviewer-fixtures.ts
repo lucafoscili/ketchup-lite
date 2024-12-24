@@ -1,5 +1,5 @@
-import { kulManagerSingleton } from "src/global/global";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -18,12 +18,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulImageviewer"> =
   "KulImageviewerEventPayload";
 const TAG_NAME: KulComponentTag<"KulImageviewer"> = "kul-imageviewer";
 
-export const IMAGEVIEWER_FIXTURES: () => {
+export const IMAGEVIEWER_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: ImageviewerData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const data: { [index: string]: KulDataDataset } = {
     kulData: {
       nodes: [

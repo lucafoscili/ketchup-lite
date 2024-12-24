@@ -217,22 +217,22 @@ export class KulLazy {
     let className = kulComponentName;
     switch (kulComponentName) {
       case "kul-button":
-        resource = SVG.button;
+        resource = SVG().button;
         break;
       case "kul-card":
-        resource = SVG.card;
+        resource = SVG().card;
         break;
       case "kul-checkbox":
-        resource = SVG.checkbox;
+        resource = SVG().checkbox;
         break;
       case "kul-chart":
-        resource = SVG.chart;
+        resource = SVG().chart;
         break;
       case "kul-image":
-        resource = SVG.image;
+        resource = SVG().image;
         break;
       default:
-        resource = SVG.default;
+        resource = SVG().default;
         break;
     }
 

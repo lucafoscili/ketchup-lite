@@ -21,7 +21,7 @@ export const prepNavigation = (
 
       return (
         <kul-button
-          class={bemClass("navigation-grid", "button")}
+          class={`${bemClass("navigation-grid", "button")} kul-full-width`}
           data-cy={CY_ATTRIBUTES.button}
           id={IDS.navigation.load}
           kulIcon="find_replace"

@@ -196,6 +196,7 @@ export class KulManager {
       "class",
       "disabled",
       "href",
+      "htmlProps",
       "id",
       "max",
       "min",

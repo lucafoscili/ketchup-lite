@@ -170,7 +170,6 @@
       background-color: rgba(var(--kul-background-color-rgb), 0.125);
       border: 1px solid rgba(var(--kul-text-color-rgb), 0.5);
       border-radius: var(--kul_chat_border_radius);
-      display: flex;
       height: max-content;
       max-width: 80%;
       position: relative;
@@ -260,26 +259,16 @@
 }
 
 .toolbar {
-  & {
-    animation: fade-in-flex 0.25s ease-out;
-    border: 0;
-    border-bottom-right-radius: var(--kul_chat_border_radius);
-    border-top-right-radius: var(--kul_chat_border_radius);
-    border-top: 1px inset rgba(var(--kul-text-color-rgb), 0.225);
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    flex-flow: wrap-reverse;
-    height: 100%;
-    justify-content: end;
-    padding: 12px;
-    transition:
-      width 125ms ease,
-      opacity 125ms ease,
-      padding 125ms ease;
-  }
+  background-color: var(--kul-title-background-color);
+  border-bottom-left-radius: var(--kul_chat_border_radius);
+  border-bottom-right-radius: var(--kul_chat_border_radius);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  padding: 8px;
+  width: 100%;
 
   &__button {
-    margin: 4px;
+    margin: 0 2px;
   }
 }
