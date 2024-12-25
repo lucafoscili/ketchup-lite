@@ -87,7 +87,7 @@ export class KulChip {
 
   //#region Internal variables
   #nodeItems: VNode[] = [];
-  #rippleSurface: HTMLElement[] = [];
+  #rippleSurface: { [id: string]: HTMLElement } = {};
   //#endregion
 
   //#region Events
@@ -135,10 +135,7 @@ export class KulChip {
         break;
       case "pointerdown":
         if (kulRipple && this.#isClickable()) {
-          theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface[Number(node.id)],
-          );
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface[node.id]);
         }
         break;
     }
@@ -420,7 +417,7 @@ export class KulChip {
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown", { node })}
           ref={(el) => {
             if (el && this.kulRipple) {
-              this.#rippleSurface[Number(node.id)] = el;
+              this.#rippleSurface[node.id] = el;
             }
           }}
         ></div>
@@ -441,11 +438,15 @@ export class KulChip {
   componentDidLoad() {
     const { debug, theme } = kulManagerSingleton;
 
-    if (this.#rippleSurface?.length) {
-      this.#rippleSurface.forEach((el) => {
-        theme.ripple.setup(el);
-      });
+    if (Object.keys(this.#rippleSurface).length) {
+      for (const key in this.#rippleSurface) {
+        if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
+          const surface = this.#rippleSurface[key];
+          theme.ripple.setup(surface);
+        }
+      }
     }
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.info.update(this, "did-load");
   }
