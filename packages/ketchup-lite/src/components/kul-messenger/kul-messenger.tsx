@@ -236,7 +236,7 @@ export class KulMessenger {
   //#endregion
 
   //#region Private methods
-  #initialize() {
+  #initialize = () => {
     const { kulData, kulValue } = this;
 
     if (hasNodes(this.#adapter)) {
@@ -249,8 +249,8 @@ export class KulMessenger {
     if (kulValue) {
       this.#initConfig();
     }
-  }
-  #initCharacter(character: KulMessengerCharacterNode) {
+  };
+  #initCharacter = (character: KulMessengerCharacterNode) => {
     const { get } = this.#adapter.controller;
 
     const covers: KulMessengerCovers = {
@@ -275,8 +275,8 @@ export class KulMessenger {
     const history = chatCell?.kulValue || chatCell?.value || [];
     this.history[character.id] = JSON.stringify(history);
     Object.assign(this.covers, covers);
-  }
-  #initConfig() {
+  };
+  #initConfig = () => {
     const { byId } = this.#adapter.controller.get.character;
     const { kulValue } = this;
 
@@ -302,8 +302,8 @@ export class KulMessenger {
         this.ui.panels[k] = panel;
       }
     }
-  }
-  async #save() {
+  };
+  #save = async () => {
     const { covers, history, kulData } = this;
 
     for (let index = 0; index < kulData.nodes.length; index++) {
@@ -346,8 +346,8 @@ export class KulMessenger {
       saveCovers();
     }
     this.onKulEvent(new CustomEvent("save"), "save");
-  }
-  #prepCharacter() {
+  };
+  #prepCharacter = () => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { controller, elements } = this.#adapter;
@@ -374,8 +374,8 @@ export class KulMessenger {
         <div class={bemClass("character", "biography")}>{biography()}</div>
       </div>
     );
-  }
-  #prepChat() {
+  };
+  #prepChat = () => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { chat, leftExpander, rightExpander, tabbar } =
@@ -401,8 +401,8 @@ export class KulMessenger {
         </div>
       </div>
     );
-  }
-  #prepCovers(type: KulMessengerImageTypes, images: VNode[]) {
+  };
+  #prepCovers = (type: KulMessengerImageTypes, images: VNode[]) => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { add } = this.#adapter.elements.jsx.customization.form[type];
@@ -416,8 +416,8 @@ export class KulMessenger {
         <div class={bemClass("covers", "images")}>{images}</div>
       </Fragment>
     );
-  }
-  #prepExtraContext() {
+  };
+  #prepExtraContext = () => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { customization, options } = this.#adapter.elements.jsx;
@@ -445,7 +445,7 @@ export class KulMessenger {
           </Fragment>
         ) : (
           <Fragment>
-            <div class={bemClass("extra-context", "active")}>
+            <div class={bemClass("extra-context", "options")}>
               {this.#prepOptions()}
             </div>
             {customize()}
@@ -453,8 +453,8 @@ export class KulMessenger {
         )}
       </div>
     );
-  }
-  #prepForm(type: KulMessengerImageTypes) {
+  };
+  #prepForm = (type: KulMessengerImageTypes) => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { cancel, confirm, description, id, imageUrl, title } =
@@ -473,8 +473,8 @@ export class KulMessenger {
         </div>
       </div>
     );
-  }
-  #prepList() {
+  };
+  #prepList = () => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { controller, elements, handlers } = this.#adapter;
@@ -527,8 +527,8 @@ export class KulMessenger {
         );
       }
     });
-  }
-  #prepOptions() {
+  };
+  #prepOptions = () => {
     const { bemClass } = kulManagerSingleton.theme;
 
     return OPTION_TYPE_IDS.map((opt) => {
@@ -541,7 +541,7 @@ export class KulMessenger {
       const option = opt.slice(0, -1);
 
       return (
-        <div class={bemClass("options")}>
+        <div class={bemClass("options", "wrapper")}>
           {node ? (
             <Fragment>
               <img
@@ -590,8 +590,8 @@ export class KulMessenger {
         </div>
       );
     });
-  }
-  #prepRoster() {
+  };
+  #prepRoster = () => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { get, set } = this.#adapter.controller;
@@ -603,18 +603,18 @@ export class KulMessenger {
       const image = get.image.asCover("avatars", c);
       avatars.push(
         <div
-          class={bemClass("selection-grid", "portrait")}
+          class={bemClass("roster", "portrait")}
           onClick={() => {
             set.character.current(c);
           }}
         >
           <img
-            class={bemClass("selection-grid", "image")}
+            class={bemClass("roster", "image")}
             src={image.value}
             title={image.title || ""}
           />
-          <div class={bemClass("selection-grid", "name")}>
-            <div class={bemClass("selection-grid", "label")}>
+          <div class={bemClass("roster", "name")}>
+            <div class={bemClass("roster", "label")}>
               {get.character.name(c)}
             </div>
           </div>
@@ -629,7 +629,7 @@ export class KulMessenger {
         There are no characters in your roster!
       </div>
     );
-  }
+  };
   //#endregion
 
   //#region Lifecycle hooks

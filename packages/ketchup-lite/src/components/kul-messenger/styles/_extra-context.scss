@@ -1,12 +1,11 @@
 .extra-context {
   & {
     display: grid;
-    grid-template-rows: auto 1fr;
+    grid-template-rows: 1fr auto;
     overflow: auto;
-    padding: 16px 0;
   }
 
-  &__active {
+  &__options {
     display: grid;
     grid-template-columns: repeat(2, 50%);
     grid-template-rows: repeat(2, 50%);

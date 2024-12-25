@@ -9,16 +9,19 @@ export const prepToolbar = (
     //#region Copy content
     copyContent: (m) => {
       const { controller, elements, handlers } = getAdapter();
-      const { manager } = controller.get;
+      const { currentPrompt, manager } = controller.get;
       const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
       const { assignRef, theme } = manager;
       const { bemClass } = theme;
 
+      const isDisabled = Boolean(currentPrompt());
+
       return (
         <kul-button
           class={`${bemClass("toolbar", "button")} kul-slim`}
           id={IDS.toolbar.copyContent}
+          kulDisabled={isDisabled}
           kulIcon="content_copy"
           kulStyling="flat"
           onKul-button-event={(e) => button(e, m)}
@@ -32,16 +35,19 @@ export const prepToolbar = (
     //#region Delete message
     deleteMessage: (m) => {
       const { controller, elements, handlers } = getAdapter();
-      const { manager } = controller.get;
+      const { currentPrompt, manager } = controller.get;
       const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
       const { assignRef, theme } = manager;
       const { bemClass } = theme;
 
+      const isDisabled = Boolean(currentPrompt());
+
       return (
         <kul-button
           class={`${bemClass("toolbar", "button")} kul-danger kul-slim`}
           id={IDS.toolbar.deleteMessage}
+          kulDisabled={isDisabled}
           kulIcon="delete"
           kulStyling="flat"
           onKul-button-event={(e) => button(e, m)}
@@ -55,16 +61,19 @@ export const prepToolbar = (
     //#region Regenerate
     regenerate: (m) => {
       const { controller, elements, handlers } = getAdapter();
-      const { manager } = controller.get;
+      const { currentPrompt, manager } = controller.get;
       const { toolbar } = elements.refs;
       const { button } = handlers.toolbar;
       const { assignRef, theme } = manager;
       const { bemClass } = theme;
 
+      const isDisabled = Boolean(currentPrompt());
+
       return (
         <kul-button
           class={`${bemClass("toolbar", "button")} kul-slim`}
           id={IDS.toolbar.regenerate}
+          kulDisabled={isDisabled}
           kulIcon="refresh"
           kulStyling="flat"
           onKul-button-event={(e) => button(e, m)}

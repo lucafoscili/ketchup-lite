@@ -145,6 +145,12 @@ export class KulChat {
       currentPrompt: () => this.currentPrompt,
       currentTokens: () => this.currentTokens,
       history: () => this.history,
+      lastMessage: (role = "user") => {
+        return this.history
+          .slice()
+          .reverse()
+          .find((m) => m.role === role);
+      },
       manager: kulManagerSingleton,
       status: () => this.status,
       view: () => this.view,

@@ -1,4 +1,3 @@
-import { kulManagerSingleton } from "src/global/global";
 import { defaultToCurrentCharacter, hasCharacters } from "../helpers/utils";
 import {
   KulMessengerAdapter,
@@ -100,7 +99,8 @@ const getBiography = (
   getAdapter: () => KulMessengerAdapter,
   character: KulMessengerCharacterNode,
 ) => {
-  const { stringify } = kulManagerSingleton.data.cell;
+  const adapter = getAdapter();
+  const { stringify } = adapter.controller.get.manager.data.cell;
 
   const c = defaultToCurrentCharacter(getAdapter(), character);
 

@@ -102,6 +102,7 @@ export type KulChatAdapterInitializerGetters = Pick<
   | "currentPrompt"
   | "currentTokens"
   | "history"
+  | "lastMessage"
   | "manager"
   | "status"
   | "view"
@@ -116,6 +117,7 @@ export interface KulChatAdapterControllerGetters
   currentPrompt: () => KulLLMChoiceMessage;
   currentTokens: () => number;
   history: () => KulChatHistory;
+  lastMessage: (role?: KulLLMRole) => KulLLMChoiceMessage;
   manager: KulManager;
   newPrompt: () => Promise<KulLLMChoiceMessage>;
   status: () => KulChatStatus;

@@ -1,4 +1,5 @@
 import { h } from "@stencil/core";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { FILTER_DATASET, IMAGE_TYPE_IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,
@@ -7,7 +8,6 @@ import {
   KulMessengerImageRootIds,
   KulMessengerImageTypes,
 } from "../kul-messenger-declarations";
-import { CY_ATTRIBUTES } from "src/utils/constants";
 
 export const prepCustomization = (
   getAdapter: () => KulMessengerAdapter,
@@ -41,7 +41,7 @@ export const prepCustomization = (
     //#endregion
 
     //#region Form
-    form: prepForms(getAdapter),
+    form: { ...prepForms(getAdapter) },
     //#endregion
 
     //#region List
@@ -89,16 +89,15 @@ const prepForms = (
 ): KulMessengerAdapterJsx["customization"]["form"] => {
   const formElements = IMAGE_TYPE_IDS.reduce(
     (acc, type) => {
-      const { controller, elements, handlers } = getAdapter();
-      const { compInstance, manager } = controller.get;
-      const { form } = elements.refs.customization;
-      const { button } = handlers.customization;
-      const { formStatusMap } = compInstance;
-      const { assignRef, theme } = manager;
-      const { bemClass } = theme;
-
       acc[type] = {
         add: () => {
+          const { controller, elements, handlers } = getAdapter();
+          const { manager } = controller.get;
+          const { form } = elements.refs.customization;
+          const { button } = handlers.customization;
+          const { assignRef, theme } = manager;
+          const { bemClass } = theme;
+
           return (
             <kul-button
               class={`${bemClass("covers", "add")} kul-full-height kul-slim`}
@@ -112,6 +111,13 @@ const prepForms = (
           );
         },
         cancel: () => {
+          const { controller, elements, handlers } = getAdapter();
+          const { manager } = controller.get;
+          const { form } = elements.refs.customization;
+          const { button } = handlers.customization;
+          const { assignRef, theme } = manager;
+          const { bemClass } = theme;
+
           return (
             <kul-button
               class={bemClass("form", "button")}
@@ -125,6 +131,12 @@ const prepForms = (
           );
         },
         confirm: () => {
+          const { controller, elements, handlers } = getAdapter();
+          const { manager } = controller.get;
+          const { form } = elements.refs.customization;
+          const { button } = handlers.customization;
+          const { assignRef } = manager;
+
           return (
             <kul-button
               class={"messenger__customization__edit__button"}
@@ -138,6 +150,11 @@ const prepForms = (
           );
         },
         description: () => {
+          const { controller, elements } = getAdapter();
+          const { manager } = controller.get;
+          const { form } = elements.refs.customization;
+          const { assignRef } = manager;
+
           return (
             <kul-textfield
               data-cy={CY_ATTRIBUTES.input}
@@ -150,6 +167,12 @@ const prepForms = (
           );
         },
         id: () => {
+          const { controller, elements } = getAdapter();
+          const { compInstance, manager } = controller.get;
+          const { form } = elements.refs.customization;
+          const { formStatusMap } = compInstance;
+          const { assignRef } = manager;
+
           const id = formStatusMap[type];
 
           return (
@@ -167,6 +190,11 @@ const prepForms = (
           );
         },
         imageUrl: () => {
+          const { controller, elements } = getAdapter();
+          const { manager } = controller.get;
+          const { form } = elements.refs.customization;
+          const { assignRef } = manager;
+
           return (
             <kul-textfield
               data-cy={CY_ATTRIBUTES.input}
@@ -179,6 +207,11 @@ const prepForms = (
           );
         },
         title: () => {
+          const { controller, elements } = getAdapter();
+          const { manager } = controller.get;
+          const { form } = elements.refs.customization;
+          const { assignRef } = manager;
+
           return (
             <kul-textfield
               data-cy={CY_ATTRIBUTES.input}

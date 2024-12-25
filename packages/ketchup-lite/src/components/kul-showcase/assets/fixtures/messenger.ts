@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src/global/global";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulMessengerAvatarNode,
   KulMessengerDataset,
@@ -43,13 +43,14 @@ Freya is one of the most prominent goddesses in Norse mythology, associated with
 Freya embodies the complex nature of feminine power in Norse mythology, combining attributes of love, war, and fertility. Her enduring presence in Norse literature and cultural heritage testifies to her significance as a multifaceted goddess.
 `;
 
-export const FREYA_AVATARS: () => KulMessengerAvatarNode[] = () => [
+export const FREYA_AVATARS = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerAvatarNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get("./assets/media/avatar_freya.png")
-          .path,
+        value: get("./assets/media/avatar_freya.png").path,
       },
     },
     description: "Freya dressed for war",
@@ -60,9 +61,7 @@ export const FREYA_AVATARS: () => KulMessengerAvatarNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/avatar_freya_2.png",
-        ).path,
+        value: get("./assets/media/avatar_freya_2.png").path,
       },
     },
     description: "Freya during a ceremony",
@@ -71,14 +70,14 @@ export const FREYA_AVATARS: () => KulMessengerAvatarNode[] = () => [
   },
 ];
 
-export const FREYA_LOCATIONS: () => KulMessengerLocationNode[] = () => [
+export const FREYA_LOCATIONS = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerLocationNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/location_lake.png",
-        ).path,
+        value: get("./assets/media/location_lake.png").path,
       },
     },
     description: "Lake at night, the sky feats a beautiful aurora borealis.",
@@ -89,9 +88,7 @@ export const FREYA_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/location_armory.png",
-        ).path,
+        value: get("./assets/media/location_armory.png").path,
       },
     },
     description: "Armory of Asgard.",
@@ -100,14 +97,14 @@ export const FREYA_LOCATIONS: () => KulMessengerLocationNode[] = () => [
   },
 ];
 
-export const FREYA_OUTFITS: () => KulMessengerOutfitNode[] = () => [
+export const FREYA_OUTFITS = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerOutfitNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/outfit_armor_2.png",
-        ).path,
+        value: get("./assets/media/outfit_armor_2.png").path,
       },
     },
     description: "Regal armor made of gold and engraved.",
@@ -118,8 +115,7 @@ export const FREYA_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get("./assets/media/outfit_dress.png")
-          .path,
+        value: get("./assets/media/outfit_dress.png").path,
       },
     },
     description: "Elegant summer dress fit for a goddess",
@@ -128,14 +124,14 @@ export const FREYA_OUTFITS: () => KulMessengerOutfitNode[] = () => [
   },
 ];
 
-export const FREYA_STYLES: () => KulMessengerStyleNode[] = () => [
+export const FREYA_STYLES = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerStyleNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/style_photorealistic.png",
-        ).path,
+        value: get("./assets/media/style_photorealistic.png").path,
       },
     },
     description: "Photorealistic image.",
@@ -146,8 +142,7 @@ export const FREYA_STYLES: () => KulMessengerStyleNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get("./assets/media/style_anime.png")
-          .path,
+        value: get("./assets/media/style_anime.png").path,
       },
     },
     description: "Anime styled image.",
@@ -196,13 +191,14 @@ Thor is one of the most iconic figures in Norse mythology, known as the god of t
 As one of the most prominent gods in Norse mythology, Thor remains a significant cultural figure, inspiring artistic works and appearing in modern popular culture. His association with thunder and strength has made him a lasting symbol in Germanic cultures.
 `;
 
-export const THOR_AVATARS: () => KulMessengerAvatarNode[] = () => [
+export const THOR_AVATARS = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerAvatarNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get("./assets/media/avatar_thor.png")
-          .path,
+        value: get("./assets/media/avatar_thor.png").path,
       },
     },
     description: "Thor with Mjollnir",
@@ -213,9 +209,7 @@ export const THOR_AVATARS: () => KulMessengerAvatarNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/avatar_thor_2.png",
-        ).path,
+        value: get("./assets/media/avatar_thor_2.png").path,
       },
     },
     description: "Thor in the land of fire",
@@ -224,14 +218,14 @@ export const THOR_AVATARS: () => KulMessengerAvatarNode[] = () => [
   },
 ];
 
-export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
+export const THOR_LOCATIONS = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerLocationNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/location_asgard_halls.png",
-        ).path,
+        value: get("./assets/media/location_asgard_halls.png").path,
       },
     },
     description: "The halls of the Palace of Asgard",
@@ -242,9 +236,7 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/location_bifrost_bridge.png",
-        ).path,
+        value: get("./assets/media/location_bifrost_bridge.png").path,
       },
     },
     description: "The portal to other realms.",
@@ -255,9 +247,7 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/location_forest.png",
-        ).path,
+        value: get("./assets/media/location_forest.png").path,
       },
     },
     description: "A misteryous forest on Earth.",
@@ -268,9 +258,7 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/location_armory.png",
-        ).path,
+        value: get("./assets/media/location_armory.png").path,
       },
     },
     description: "Armory of Asgard.",
@@ -279,13 +267,14 @@ export const THOR_LOCATIONS: () => KulMessengerLocationNode[] = () => [
   },
 ];
 
-export const THOR_OUTFITS: () => KulMessengerOutfitNode[] = () => [
+export const THOR_OUTFITS = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerOutfitNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get("./assets/media/outfit_armor.png")
-          .path,
+        value: get("./assets/media/outfit_armor.png").path,
       },
     },
     description: "Regal armor made of gold and engraved.",
@@ -296,9 +285,7 @@ export const THOR_OUTFITS: () => KulMessengerOutfitNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/outfit_armor_3.png",
-        ).path,
+        value: get("./assets/media/outfit_armor_3.png").path,
       },
     },
     description: "Armor made of steel.",
@@ -307,13 +294,14 @@ export const THOR_OUTFITS: () => KulMessengerOutfitNode[] = () => [
   },
 ];
 
-export const THOR_STYLES: () => KulMessengerStyleNode[] = () => [
+export const THOR_STYLES = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerStyleNode[] => [
   {
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get("./assets/media/style_comic.png")
-          .path,
+        value: get("./assets/media/style_comic.png").path,
       },
     },
     description: "Comic image.",
@@ -324,9 +312,7 @@ export const THOR_STYLES: () => KulMessengerStyleNode[] = () => [
     cells: {
       kulImage: {
         shape: "image",
-        value: kulManagerSingleton.assets.get(
-          "./assets/media/style_painting.png",
-        ).path,
+        value: get("./assets/media/style_painting.png").path,
       },
     },
     description: "Painting styled image.",
@@ -335,29 +321,31 @@ export const THOR_STYLES: () => KulMessengerStyleNode[] = () => [
   },
 ];
 
-export const MESSENGER_KULDATA: () => KulMessengerDataset = () => ({
+export const MESSENGER_KULDATA = (
+  get: KulManagerComputedGetAssetPath,
+): KulMessengerDataset => ({
   nodes: [
     {
       children: [
         {
-          children: THOR_AVATARS(),
+          children: THOR_AVATARS(get),
           id: "avatars",
           value: 0,
         },
         { id: "biography", value: THOR_BIO },
         { id: "chat", value: "" },
         {
-          children: THOR_LOCATIONS(),
+          children: THOR_LOCATIONS(get),
           id: "locations",
           value: 0,
         },
         {
-          children: THOR_OUTFITS(),
+          children: THOR_OUTFITS(get),
           id: "outfits",
           value: 0,
         },
         {
-          children: THOR_STYLES(),
+          children: THOR_STYLES(get),
           id: "styles",
           value: 0,
         },
@@ -373,24 +361,24 @@ export const MESSENGER_KULDATA: () => KulMessengerDataset = () => ({
     {
       children: [
         {
-          children: FREYA_AVATARS(),
+          children: FREYA_AVATARS(get),
           id: "avatars",
           value: 1,
         },
         { id: "biography", value: FREYA_BIO },
         { id: "chat", value: "" },
         {
-          children: FREYA_LOCATIONS(),
+          children: FREYA_LOCATIONS(get),
           id: "locations",
           value: 0,
         },
         {
-          children: FREYA_OUTFITS(),
+          children: FREYA_OUTFITS(get),
           id: "outfits",
           value: 0,
         },
         {
-          children: FREYA_STYLES(),
+          children: FREYA_STYLES(get),
           id: "styles",
           value: 0,
         },
