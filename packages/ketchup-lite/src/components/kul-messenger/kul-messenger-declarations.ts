@@ -56,10 +56,16 @@ export interface KulMessengerAdapterJsx extends KulComponentAdapterJsx {
         add: () => VNode;
         cancel: () => VNode;
         confirm: () => VNode;
-        id: () => VNode;
-        title: () => VNode;
-        imageUrl: () => VNode;
-        description: () => VNode;
+        id: (id: KulMessengerUnionChildIds) => VNode;
+        title: (
+          node?: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+        ) => VNode;
+        imageUrl: (
+          node?: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+        ) => VNode;
+        description: (
+          node?: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+        ) => VNode;
       };
     };
     list: {

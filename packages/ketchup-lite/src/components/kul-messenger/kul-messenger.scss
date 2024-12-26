@@ -1,5 +1,6 @@
 @import "styles/character";
 @import "styles/chat";
+@import "styles/covers";
 @import "styles/extra-context";
 @import "styles/form";
 @import "styles/list";
@@ -129,63 +130,5 @@
 
   &:has(.character--collapsed):has(.extra-context--collapsed) {
     grid-template-columns: 0 1fr 0;
-  }
-
-  .extra-content {
-    display: grid;
-    grid-template-rows: 1fr auto;
-    height: 100%;
-    overflow: auto;
-    transition: height var(--kul_messenger_transition);
-
-    &--collapsed {
-      overflow: hidden;
-      width: 0;
-    }
-
-    &--customization {
-      grid-template-rows: 1fr auto;
-    }
-
-    &__list {
-      display: grid;
-      grid-template-rows: auto 1fr;
-      height: 100%;
-    }
-  }
-}
-
-.covers {
-  &__title {
-    align-items: center;
-    background: var(--kul-title-background-color);
-    color: var(--kul-title-color);
-    display: flex;
-    justify-content: space-between;
-    letter-spacing: var(--kul_messenger_letter_spacing);
-    overflow: hidden;
-    position: sticky;
-    text-align: center;
-    text-overflow: ellipsis;
-    text-transform: uppercase;
-    top: -1px;
-    z-index: 1;
-  }
-
-  &__label {
-    overflow: hidden;
-    padding: var(--kul_messenger_customization_title_padding);
-    text-overflow: ellipsis;
-  }
-
-  &__add {
-    --kul-button-border-radius: 0;
-  }
-
-  &__images {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    overflow: auto;
-    width: 100%;
   }
 }

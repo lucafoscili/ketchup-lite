@@ -16,7 +16,6 @@ export const prepCustomizationHandlers = (
 
       const adapter = getAdapter();
       const { get, set } = adapter.controller;
-      const { title } = adapter.elements.refs.customization.form[type];
       const { compInstance } = get;
 
       if (eventType === "click") {
@@ -28,10 +27,12 @@ export const prepCustomizationHandlers = (
             set.ui.setFormState(false, type);
             break;
           case "confirm": {
+            const { title } = adapter.elements.refs.customization.form[type];
+
             const value = await title.getValue();
             title.classList.remove("kul-danger");
             if (value) {
-              createNode(adapter, type);
+              await createNode(adapter, type);
               set.ui.setFormState(false, type);
             } else {
               title.classList.add("kul-danger");
@@ -70,7 +71,8 @@ export const prepCustomizationHandlers = (
             timeframes: false,
           };
           Array.from(selectedNodes).forEach((n) => {
-            newFilters[n.id as keyof KulMessengerFilters] = true;
+            const id = n.id as keyof KulMessengerFilters;
+            newFilters[id] = true;
           });
           set.ui.filters(newFilters);
           break;

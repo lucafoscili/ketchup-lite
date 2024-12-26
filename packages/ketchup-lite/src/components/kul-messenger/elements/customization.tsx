@@ -4,9 +4,7 @@ import { FILTER_DATASET, IMAGE_TYPE_IDS } from "../helpers/constants";
 import {
   KulMessengerAdapter,
   KulMessengerAdapterJsx,
-  KulMessengerBaseRootNode,
-  KulMessengerImageRootIds,
-  KulMessengerImageTypes,
+  KulMessengerUnionChildIds,
 } from "../kul-messenger-declarations";
 
 export const prepCustomization = (
@@ -16,17 +14,10 @@ export const prepCustomization = (
     //#region Filters
     filters: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { character, image, manager } = controller.get;
+      const { character, manager } = controller.get;
       const { customization } = elements.refs;
       const { chip } = handlers.customization;
       const { assignRef } = manager;
-
-      for (let index = 0; index < FILTER_DATASET.nodes.length; index++) {
-        const filter = FILTER_DATASET.nodes[index] as KulMessengerBaseRootNode<
-          KulMessengerImageRootIds<KulMessengerImageTypes>
-        >;
-        filter.icon = image.asCover(filter.id, null).value;
-      }
 
       return (
         <kul-chip
@@ -41,7 +32,7 @@ export const prepCustomization = (
     //#endregion
 
     //#region Form
-    form: { ...prepForms(getAdapter) },
+    form: prepForms(getAdapter),
     //#endregion
 
     //#region List
@@ -91,7 +82,8 @@ const prepForms = (
     (acc, type) => {
       acc[type] = {
         add: () => {
-          const { controller, elements, handlers } = getAdapter();
+          const adapter = getAdapter();
+          const { controller, elements, handlers } = adapter;
           const { manager } = controller.get;
           const { form } = elements.refs.customization;
           const { button } = handlers.customization;
@@ -106,12 +98,13 @@ const prepForms = (
               kulLabel="New"
               kulStyling="flat"
               onKul-button-event={(e) => button(e, type, "add", null)}
-              ref={assignRef(form, "add")}
+              ref={assignRef(form[type], "add")}
             ></kul-button>
           );
         },
         cancel: () => {
-          const { controller, elements, handlers } = getAdapter();
+          const adapter = getAdapter();
+          const { controller, elements, handlers } = adapter;
           const { manager } = controller.get;
           const { form } = elements.refs.customization;
           const { button } = handlers.customization;
@@ -126,31 +119,34 @@ const prepForms = (
               kulLabel="Cancel"
               kulStyling="flat"
               onKul-button-event={(e) => button(e, type, "cancel", null)}
-              ref={assignRef(form, "cancel")}
+              ref={assignRef(form[type], "cancel")}
             ></kul-button>
           );
         },
         confirm: () => {
-          const { controller, elements, handlers } = getAdapter();
+          const adapter = getAdapter();
+          const { controller, elements, handlers } = adapter;
           const { manager } = controller.get;
           const { form } = elements.refs.customization;
           const { button } = handlers.customization;
-          const { assignRef } = manager;
+          const { assignRef, theme } = manager;
+          const { bemClass } = theme;
 
           return (
             <kul-button
-              class={"messenger__customization__edit__button"}
+              class={bemClass("form", "button")}
               data-cy={CY_ATTRIBUTES.button}
               kulIcon="check"
               kulLabel="Confirm"
               kulStyling="outlined"
               onKul-button-event={(e) => button(e, type, "confirm", null)}
-              ref={assignRef(form, "confirm")}
+              ref={assignRef(form[type], "confirm")}
             ></kul-button>
           );
         },
-        description: () => {
-          const { controller, elements } = getAdapter();
+        description: (node?) => {
+          const adapter = getAdapter();
+          const { controller, elements } = adapter;
           const { manager } = controller.get;
           const { form } = elements.refs.customization;
           const { assignRef } = manager;
@@ -161,19 +157,18 @@ const prepForms = (
               kulFullWidth={true}
               kulIcon="format-float-left"
               kulLabel="Description"
-              ref={assignRef(form, "description")}
+              kulValue={node && node.description}
+              ref={assignRef(form[type], "description")}
               title="A more accurate description to give extra context to the LLM."
             ></kul-textfield>
           );
         },
-        id: () => {
-          const { controller, elements } = getAdapter();
-          const { compInstance, manager } = controller.get;
+        id: (id: KulMessengerUnionChildIds) => {
+          const adapter = getAdapter();
+          const { controller, elements } = adapter;
+          const { manager } = controller.get;
           const { form } = elements.refs.customization;
-          const { formStatusMap } = compInstance;
           const { assignRef } = manager;
-
-          const id = formStatusMap[type];
 
           return (
             <kul-textfield
@@ -184,13 +179,14 @@ const prepForms = (
               kulIcon="key-variant"
               kulLabel="ID"
               kulValue={id}
-              ref={assignRef(form, "id")}
+              ref={assignRef(form[type], "id")}
               title="The cover image displayed in the selection panel."
             ></kul-textfield>
           );
         },
-        imageUrl: () => {
-          const { controller, elements } = getAdapter();
+        imageUrl: (node?) => {
+          const adapter = getAdapter();
+          const { controller, elements } = adapter;
           const { manager } = controller.get;
           const { form } = elements.refs.customization;
           const { assignRef } = manager;
@@ -201,13 +197,15 @@ const prepForms = (
               kulFullWidth={true}
               kulIcon="image"
               kulLabel="Image URL"
-              ref={assignRef(form, "image")}
+              kulValue={node && node.cells.kulImage.value}
+              ref={assignRef(form[type], "imageUrl")}
               title="The cover image displayed in the selection panel."
             ></kul-textfield>
           );
         },
-        title: () => {
-          const { controller, elements } = getAdapter();
+        title: (node?) => {
+          const adapter = getAdapter();
+          const { controller, elements } = adapter;
           const { manager } = controller.get;
           const { form } = elements.refs.customization;
           const { assignRef } = manager;
@@ -218,7 +216,8 @@ const prepForms = (
               kulFullWidth={true}
               kulIcon="title"
               kulLabel="Title"
-              ref={assignRef(form, "title")}
+              kulValue={node && node.value}
+              ref={assignRef(form[type], "title")}
               title="The overall theme of this option."
             ></kul-textfield>
           );

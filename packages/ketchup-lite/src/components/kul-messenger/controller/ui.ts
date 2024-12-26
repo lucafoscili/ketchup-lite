@@ -57,30 +57,19 @@ const setFormState = async <T extends KulMessengerUnionChildIds>(
   node?: KulMessengerBaseChildNode<T>,
 ) => {
   const adapter = getAdapter();
-  const { controller, elements } = adapter;
+  const { controller } = adapter;
   const { compInstance, image } = controller.get;
-  const { form } = elements.refs.customization;
   const { formStatusMap, ui } = compInstance;
 
   ui.form[type] = value;
-  formStatusMap[type] = node?.id ?? image.newId(type);
 
-  if (!node) {
-    compInstance.refresh();
+  if (!value) {
+    formStatusMap[type] = null;
   } else {
-    await compInstance.refresh();
-    requestAnimationFrame(() => {
-      const { description, imageUrl, title } = form[type];
-      const hasImage = node?.cells?.kulImage?.value;
-
-      description.setValue(node.description);
-      title.setValue(node.value);
-
-      if (hasImage) {
-        imageUrl.setValue(node.cells.kulImage.value);
-      }
-    });
+    formStatusMap[type] = node?.id ?? image.newId(type);
   }
+
+  await compInstance.refresh();
 };
 const setPanel = (
   getAdapter: () => KulMessengerAdapter,

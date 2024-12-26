@@ -2,7 +2,18 @@
   & {
     display: grid;
     grid-template-rows: 1fr auto;
+    height: 100%;
     overflow: auto;
+    transition: height var(--kul_messenger_transition);
+  }
+
+  &--collapsed {
+    overflow: hidden;
+    width: 0;
+  }
+
+  &--customization {
+    grid-template-rows: auto 1fr auto;
   }
 
   &__options {

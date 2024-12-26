@@ -177,6 +177,7 @@ export class KulMessenger {
     const idx = rootNode.children.indexOf(node);
     if (idx > -1) {
       delete rootNode.children[idx];
+      this.refresh();
     }
   }
   /**
@@ -347,7 +348,7 @@ export class KulMessenger {
     }
     this.onKulEvent(new CustomEvent("save"), "save");
   };
-  #prepCharacter = () => {
+  #prepCharacter = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { controller, elements } = this.#adapter;
@@ -375,7 +376,7 @@ export class KulMessenger {
       </div>
     );
   };
-  #prepChat = () => {
+  #prepChat = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { chat, leftExpander, rightExpander, tabbar } =
@@ -402,7 +403,7 @@ export class KulMessenger {
       </div>
     );
   };
-  #prepCovers = (type: KulMessengerImageTypes, images: VNode[]) => {
+  #prepCovers = (type: KulMessengerImageTypes, images: VNode[]): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { add } = this.#adapter.elements.jsx.customization.form[type];
@@ -410,14 +411,16 @@ export class KulMessenger {
     return (
       <Fragment>
         <div class={bemClass("covers")}>
-          <div class={bemClass("covers", "label")}>{type}</div>
-          {add()}
+          <div class={bemClass("covers", "title")}>
+            <div class={bemClass("covers", "label")}>{type}</div>
+            {add()}
+          </div>
+          <div class={bemClass("covers", "images")}>{images}</div>
         </div>
-        <div class={bemClass("covers", "images")}>{images}</div>
       </Fragment>
     );
   };
-  #prepExtraContext = () => {
+  #prepExtraContext = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { customization, options } = this.#adapter.elements.jsx;
@@ -435,11 +438,9 @@ export class KulMessenger {
       >
         {customizationView ? (
           <Fragment>
-            <div class={bemClass("extra-context")}>
-              {filters()}
-              <div class={bemClass("extra-context", "list")}>
-                {this.#prepList()}
-              </div>
+            {filters()}
+            <div class={bemClass("extra-context", "list")}>
+              {this.#prepList()}
             </div>
             {back()}
           </Fragment>
@@ -454,19 +455,23 @@ export class KulMessenger {
       </div>
     );
   };
-  #prepForm = (type: KulMessengerImageTypes) => {
+  #prepForm = (type: KulMessengerImageTypes): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { cancel, confirm, description, id, imageUrl, title } =
       this.#adapter.elements.jsx.customization.form[type];
 
+    const nodeId = this.formStatusMap[type];
+    const rootNode = this.#adapter.controller.get.image.byType(type);
+    const node = rootNode.find((n) => (n.id = nodeId));
+
     return (
       <div class={bemClass("form")}>
         <div class={bemClass("form", "label")}>Create {type}</div>
-        {id()}
-        {title()}
-        {description()}
-        {imageUrl()}
+        {id(nodeId)}
+        {title(node)}
+        {description(node)}
+        {imageUrl(node)}
         <div class={bemClass("form", "confirm")}>
           {cancel()}
           {confirm()}
@@ -474,7 +479,7 @@ export class KulMessenger {
       </div>
     );
   };
-  #prepList = () => {
+  #prepList = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { controller, elements, handlers } = this.#adapter;
@@ -484,51 +489,56 @@ export class KulMessenger {
     const { formStatusMap, hoveredCustomizationOption, ui } = this;
     const { filters } = ui;
 
-    IMAGE_TYPE_IDS.map((type) => {
-      if (filters[type]) {
-        const isFormActive = formStatusMap[type];
-        const activeIndex = coverIndex(type);
-        const images: VNode[] = byType(type).map((node, j) => (
-          <div
-            class={bemClass("list", null, {
-              selected: activeIndex === j,
-            })}
-            onClick={(e) => image(e, node, j)}
-            onPointerEnter={() => {
-              if (activeIndex !== j) {
-                this.hoveredCustomizationOption = node;
-              }
-            }}
-            onPointerLeave={() => (this.hoveredCustomizationOption = null)}
-          >
-            <img
-              alt={title(node)}
-              class={bemClass("list", "image")}
-              src={node.cells.kulImage.value}
-              title={title(node)}
-            />
-            {hoveredCustomizationOption === node && (
+    return (
+      <Fragment>
+        {IMAGE_TYPE_IDS.map((type) => {
+          if (filters[type]) {
+            const isFormActive = formStatusMap[type];
+            const activeIndex = coverIndex(type);
+            const images: VNode[] = byType(type).map((node, j) => (
               <div
-                class={bemClass("list", "actions")}
-                onClick={(e) => e.stopPropagation()}
+                class={bemClass("list", null, {
+                  selected: activeIndex === j,
+                })}
+                onClick={(e) => image(e, node, j)}
+                onPointerEnter={() => {
+                  if (activeIndex !== j) {
+                    this.hoveredCustomizationOption = node;
+                  }
+                }}
+                onPointerLeave={() => (this.hoveredCustomizationOption = null)}
               >
-                {edit(type, node)}
-                {remove(type, node)}
+                <img
+                  alt={title(node)}
+                  class={bemClass("list", "image")}
+                  src={node.cells.kulImage.value}
+                  title={title(node)}
+                />
+                {hoveredCustomizationOption === node && (
+                  <div
+                    class={bemClass("list", "actions")}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {edit(type, node)}
+                    {remove(type, node)}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ));
-        return (
-          <div class={bemClass("list", "section")}>
-            {isFormActive
-              ? this.#prepForm(type)
-              : this.#prepCovers(type, images)}
-          </div>
-        );
-      }
-    });
+            ));
+            return (
+              <Fragment>
+                {isFormActive
+                  ? this.#prepForm(type)
+                  : this.#prepCovers(type, images)}
+              </Fragment>
+            );
+          }
+          return null;
+        })}
+      </Fragment>
+    );
   };
-  #prepOptions = () => {
+  #prepOptions = (): VNode[] => {
     const { bemClass } = kulManagerSingleton.theme;
 
     return OPTION_TYPE_IDS.map((opt) => {
@@ -591,7 +601,7 @@ export class KulMessenger {
       );
     });
   };
-  #prepRoster = () => {
+  #prepRoster = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { get, set } = this.#adapter.controller;
