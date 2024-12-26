@@ -7,10 +7,11 @@
 
 ## Properties
 
-| Property           | Attribute   | Description                                                                                                   | Type          | Default     |
-| ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------- | ------------- | ----------- |
-| `kulScrollElement` | --          | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `HTMLElement` | `undefined` |
-| `kulStyle`         | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`      | `""`        |
+| Property           | Attribute   | Description                                                                                                   | Type                                                            | Default     |
+| ------------------ | ----------- | ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | ----------- |
+| `kulScrollElement` | --          | The scroll container, functional to the ScrollToTop floating button.                                          | `HTMLElement`                                                   | `undefined` |
+| `kulStyle`         | `kul-style` | Customizes the style of the component. This property allows you to apply a custom CSS style to the component. | `string`                                                        | `""`        |
+| `kulValue`         | --          | Sets the initial value of the views.                                                                          | `{ Components: string; Framework: string; Utilities: string; }` | `null`      |
 
 
 ## Dependencies
@@ -139,10 +140,10 @@ graph TD;
   kul-showcase-chat --> kul-article
   kul-showcase-chat --> kul-chat
   kul-chat --> kul-spinner
-  kul-chat --> kul-typewriter
   kul-chat --> kul-code
   kul-chat --> kul-image
   kul-chat --> kul-button
+  kul-chat --> kul-typewriter
   kul-chat --> kul-progressbar
   kul-chat --> kul-textfield
   kul-code --> kul-button

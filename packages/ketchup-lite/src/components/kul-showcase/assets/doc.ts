@@ -2880,13 +2880,18 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [
       {
         name: "kulScrollElement",
-        docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
+        docs: "The scroll container, functional to the ScrollToTop floating button.",
         type: "HTMLElement",
       },
       {
         name: "kulStyle",
         docs: "Customizes the style of the component. This property allows you to apply a custom CSS style to the component.",
         type: "string",
+      },
+      {
+        name: "kulValue",
+        docs: "Sets the initial value of the views.",
+        type: "{ Components: string; Framework: string; Utilities: string; }",
       },
     ],
     styles: [],
@@ -4360,7 +4365,7 @@ export const KUL_DOC: KulShowcaseDoc = {
       {
         name: "kulValue",
         docs: "Initializes the component with these files.",
-        type: "any",
+        type: "File[]",
       },
     ],
     styles: [

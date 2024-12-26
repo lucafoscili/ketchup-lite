@@ -44,10 +44,10 @@ graph TD;
   kul-button --> kul-list
   kul-code --> kul-button
   kul-chat --> kul-spinner
-  kul-chat --> kul-typewriter
   kul-chat --> kul-code
   kul-chat --> kul-image
   kul-chat --> kul-button
+  kul-chat --> kul-typewriter
   kul-chat --> kul-progressbar
   kul-chat --> kul-textfield
   kul-tabbar --> kul-image

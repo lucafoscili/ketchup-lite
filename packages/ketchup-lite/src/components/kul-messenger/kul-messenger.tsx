@@ -563,7 +563,10 @@ export class KulMessenger {
                 class={bemClass("options", "blocker", {
                   active: !isEnabled,
                 })}
-                onClick={() => (ui.options[opt] = !isEnabled)}
+                onClick={() => {
+                  ui.options[opt] = !isEnabled;
+                  this.refresh();
+                }}
               >
                 <kul-image
                   kulValue={`${isEnabled ? "touch_app" : "block"}`}

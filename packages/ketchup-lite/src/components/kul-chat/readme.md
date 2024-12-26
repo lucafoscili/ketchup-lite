@@ -143,10 +143,10 @@ Type: `Promise<void>`
 ### Depends on
 
 - [kul-spinner](../kul-spinner)
-- [kul-typewriter](../kul-typewriter)
 - [kul-code](../kul-code)
 - [kul-image](../kul-image)
 - [kul-button](../kul-button)
+- [kul-typewriter](../kul-typewriter)
 - [kul-progressbar](../kul-progressbar)
 - [kul-textfield](../kul-textfield)
 
@@ -154,10 +154,10 @@ Type: `Promise<void>`
 ```mermaid
 graph TD;
   kul-chat --> kul-spinner
-  kul-chat --> kul-typewriter
   kul-chat --> kul-code
   kul-chat --> kul-image
   kul-chat --> kul-button
+  kul-chat --> kul-typewriter
   kul-chat --> kul-progressbar
   kul-chat --> kul-textfield
   kul-code --> kul-button
