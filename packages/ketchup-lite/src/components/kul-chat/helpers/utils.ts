@@ -97,7 +97,7 @@ export const newRequest = (adapter: KulChatAdapter) => {
 //#endregion
 
 //#region Regenerate
-export const regenerateMessage = (
+export const regenerateMessage = async (
   adapter: KulChatAdapter,
   m: KulLLMChoiceMessage,
 ) => {
@@ -108,7 +108,7 @@ export const regenerateMessage = (
   if (index !== -1) {
     set.history(() => h.slice(0, index + 1));
   }
-  apiCall(adapter);
+  await apiCall(adapter);
   resetPrompt(adapter);
 };
 //#endregion
@@ -138,7 +138,7 @@ export const submitPrompt = async (adapter: KulChatAdapter) => {
   if (userMessage) {
     const h = history();
     set.history(() => h.push(userMessage));
-    apiCall(adapter);
+    await apiCall(adapter);
   }
 
   resetPrompt(adapter);
