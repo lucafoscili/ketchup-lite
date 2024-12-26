@@ -39,17 +39,22 @@ export const prepChat = (
     //#region Left expander
     leftExpander: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { manager } = controller.get;
+      const { config, manager } = controller.get;
       const { refs } = elements;
       const { button } = handlers.chat;
       const { assignRef } = manager;
+
+      const { isLeftCollapsed } = config().ui.panels;
+      const icon = isLeftCollapsed
+        ? ICONS.chat.rightExpander
+        : ICONS.chat.leftExpander;
 
       return (
         <kul-button
           class="kul-full-height"
           data-cy={CY_ATTRIBUTES.button}
           id={IDS.chat.leftExpander}
-          kulIcon={ICONS.chat.leftExpander}
+          kulIcon={icon}
           kulStyling="flat"
           onKul-button-event={button}
           ref={assignRef(refs.chat, "leftExpander")}
@@ -62,17 +67,22 @@ export const prepChat = (
     //#region Right expander
     rightExpander: () => {
       const { controller, elements, handlers } = getAdapter();
-      const { manager } = controller.get;
+      const { config, manager } = controller.get;
       const { refs } = elements;
       const { button } = handlers.chat;
       const { assignRef } = manager;
+
+      const { isRightCollapsed } = config().ui.panels;
+      const icon = isRightCollapsed
+        ? ICONS.chat.leftExpander
+        : ICONS.chat.rightExpander;
 
       return (
         <kul-button
           class="kul-full-height"
           data-cy={CY_ATTRIBUTES.button}
           id={IDS.chat.rightExpander}
-          kulIcon={ICONS.chat.rightExpander}
+          kulIcon={icon}
           kulStyling="flat"
           onKul-button-event={button}
           ref={assignRef(refs.chat, "rightExpander")}
