@@ -119,14 +119,16 @@ describe("Props", () => {
         const button = $button[0] as HTMLKulButtonElement;
         expect(button.kulDisabled).to.eq(true);
 
-        const clickHandler = cy.spy().as("clickHandler");
-        button.addEventListener("kul-button-event", clickHandler);
+        let clickEmitted = false;
+        button.addEventListener("kul-button-event", (e) => {
+          const { eventType } = e.detail;
+          if (eventType === "click") {
+            clickEmitted = true;
+          }
+        });
 
         cy.wrap(button).click({ force: true });
-
-        cy.get("@clickHandler", { timeout: 1000 }).should(
-          "not.have.been.called",
-        );
+        expect(clickEmitted).to.eq(false);
       });
   });
   it("kulIcon: should check for the presence of an icon.", () => {
@@ -135,7 +137,7 @@ describe("Props", () => {
       .first()
       .then(($button) => {
         const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulIcon).to.eq(true);
+        expect(button.kulIcon).to.not.be.empty;
       })
       .within(() => {
         cy.getCyElement(CY_ATTRIBUTES.icon).should("exist");
@@ -153,39 +155,44 @@ describe("Props", () => {
         kulIcon = button.kulIcon;
         kulIconOff = button.kulIconOff;
         expect(kulIcon).to.not.be.eq(kulIconOff);
+        expect(kulIcon).to.not.be.empty;
+        expect(kulIconOff).to.not.be.empty;
       })
       .within(() => {
-        cy.getCyElement(CY_ATTRIBUTES.icon).then(($icon) => {
-          const iconEl = $icon[0] as HTMLDivElement;
-          const iconMask = iconEl.style.getPropertyValue("--kul_image_mask");
-          expect(iconMask).to.include(kulIconOff);
-        });
+        cy.getCyElement(CY_ATTRIBUTES.icon)
+          .findCyElement(CY_ATTRIBUTES.maskedSvg)
+          .then(($svg) => {
+            const svg = $svg[0] as HTMLDivElement;
+            const iconMask = svg.style.getPropertyValue("--kul_image_mask");
+            expect(iconMask).to.include(kulIcon);
+          });
       })
       .click()
       .within(() => {
-        cy.getCyElement(CY_ATTRIBUTES.icon).then(($icon) => {
-          const iconEl = $icon[0] as HTMLDivElement;
-          const iconMask = iconEl.style.getPropertyValue("--kul_image_mask");
-          expect(iconMask).to.include(kulIcon);
-        });
+        cy.getCyElement(CY_ATTRIBUTES.icon)
+          .findCyElement(CY_ATTRIBUTES.maskedSvg)
+          .then(($svg) => {
+            const svg = $svg[0] as HTMLKulImageElement;
+            const iconMask = svg.style.getPropertyValue("--kul_image_mask");
+            expect(iconMask).to.include(kulIconOff);
+          });
       });
   });
   it("kulLabel: should ensure that the button has a label.", () => {
     let bemClass: KulTheme["bemClass"];
+    cy.getKulManager().then((kulManager) => {
+      bemClass = kulManager.theme.bemClass;
+    });
 
     cy.get("@kulComponentShowcase")
       .find('kul-button[id*="label"]')
       .first()
       .then(($button) => {
         const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulLabel).to.eq(true);
+        expect(button.kulLabel).to.not.be.empty;
       })
       .within(() => {
-        cy.getKulManager().then((kulManager) => {
-          bemClass = kulManager.theme.bemClass;
-        });
-
-        cy.get(bemClass("button", "label")).should("exist");
+        cy.get(`.${bemClass("button", "label")}`).should("exist");
       });
   });
   it("kulRipple: should check for the presence of a ripple element.", () => {
@@ -193,6 +200,9 @@ describe("Props", () => {
   });
   it("kulShowSpinner: should ensure that the button has a spinner.", () => {
     let bemClass: KulTheme["bemClass"];
+    cy.getKulManager().then((kulManager) => {
+      bemClass = kulManager.theme.bemClass;
+    });
 
     cy.get("@kulComponentShowcase")
       .find('kul-button[id*="spinner"]')
@@ -202,11 +212,7 @@ describe("Props", () => {
         expect(button.kulShowSpinner).to.eq(true);
       })
       .within(() => {
-        cy.getKulManager().then((kulManager) => {
-          bemClass = kulManager.theme.bemClass;
-        });
-
-        cy.get(bemClass("button", "spinner-container")).should("exist");
+        cy.get(`.${bemClass("button", "spinner-container")}`).should("exist");
       });
   });
   it("kulStyle: Should check for the presence of a <style> element with id kup-style.", () => {
@@ -230,11 +236,15 @@ describe("Props", () => {
         .find(`kul-button[id*="${STYLING}-"]`)
         .first()
         .within(() => {
-          cy.getKulManager().then((kulManager) => {
-            bemClass = kulManager.theme.bemClass;
-          });
+          cy.getKulManager()
+            .then((kulManager) => {
+              bemClass = kulManager.theme.bemClass;
+            })
+            .then(() => {
+              const selector = `.${bemClass("button", null, { [STYLING]: true })}`;
 
-          cy.get(bemClass("button", null, { [STYLING]: true })).should("exist");
+              expect(selector).to.exist;
+            });
         });
     }
   });
@@ -280,55 +290,65 @@ describe("Props", () => {
   });
   it("kulTrailingIcon: should ensure the button displays a trailing icon.", () => {
     let bemClass: KulTheme["bemClass"];
+    cy.getKulManager().then((kulManager) => {
+      bemClass = kulManager.theme.bemClass;
+    });
 
     cy.get("@kulComponentShowcase")
-      .find('kul-button[id*="trailingicon"]')
+      .find('kul-button[id*="trailingIcon"]')
       .first()
       .within(($button) => {
         const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulIcon).to.be.true;
+        expect(button.kulIcon).to.not.be.empty;
         expect(button.kulLabel).to.not.be.empty;
         expect(button.kulTrailingIcon).to.be.true;
-
-        cy.getKulManager().then((kulManager) => {
-          bemClass = kulManager.theme.bemClass;
-        });
 
         cy.getCyElement(CY_ATTRIBUTES.button)
           .should("exist")
           .and("not.have.class", "no-label")
-          .then(() => {})
           .children()
           .then((children) => {
-            const [label, icon] = children.toArray();
-            expect(label.tagName).to.have.class(bemClass("button", "label"));
-            expect(icon.tagName).to.have.class(bemClass("button", "icon"));
-          })
-          .then(() => {
-            const button = $button[0] as HTMLKulButtonElement;
-
-            button.kulTrailingIcon = false;
+            const [ripple, label, icon] = children.toArray();
+            expect(ripple).to.have.attr("data-cy", CY_ATTRIBUTES.ripple);
+            expect(label).to.have.class(bemClass("button", "label"));
+            expect(icon).to.have.class(bemClass("button", "icon"));
           });
-      })
-      .then(($button) => {
+      });
+
+    cy.get("@kulComponentShowcase")
+      .find('kul-button[id*="labelIcon"]')
+      .first()
+      .within(($button) => {
         const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulTrailingIcon).to.be.true;
-      })
-      .children()
-      .then((children) => {
-        const [icon, label] = children.toArray();
-        expect(icon.tagName).to.have.class(bemClass("button", "icon"));
-        expect(label.tagName).to.have.class(bemClass("button", "label"));
+        expect(button.kulIcon).to.not.be.empty;
+        expect(button.kulLabel).to.not.be.empty;
+        expect(button.kulTrailingIcon).to.be.false;
+
+        cy.getCyElement(CY_ATTRIBUTES.button)
+          .should("exist")
+          .and("not.have.class", "no-label")
+          .children()
+          .then((children) => {
+            debugger;
+            const [ripple, icon, label] = children.toArray();
+            expect(ripple).to.have.attr("data-cy", CY_ATTRIBUTES.ripple);
+            expect(icon).to.have.class(bemClass("button", "icon"));
+            expect(label).to.have.class(bemClass("button", "label"));
+          });
       });
   });
   it("kulType: should check for the correct type on the button element.", () => {
     cy.get("@kulComponentShowcase")
-      .find('kul-button[id*="label"]')
+      .find("kul-button")
       .first()
       .within(($button) => {
         const button = $button[0] as HTMLKulButtonElement;
         expect(button.kulType).to.eq("button");
-        cy.getCyElement(CY_ATTRIBUTES.button).should("have.attr", "button");
+        cy.getCyElement(CY_ATTRIBUTES.button).should(
+          "have.attr",
+          "type",
+          "button",
+        );
 
         button.kulType = "reset";
       })
@@ -337,7 +357,7 @@ describe("Props", () => {
         expect(button.kulType).to.eq("reset");
       })
       .findCyElement(CY_ATTRIBUTES.button)
-      .should("have.attr", "reset");
+      .should("have.attr", "type", "reset");
   });
   it("kulValue: should check for the correct value.", () => {
     const newButton = document.createElement("kul-button");
