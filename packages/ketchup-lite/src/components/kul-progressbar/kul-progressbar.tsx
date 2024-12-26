@@ -187,24 +187,24 @@ export class KulProgressbar {
       <div class={bemClass("progress-bar")}>
         {this.#prepLabel()}
         <div
-          class={bemClass("progress-bar", "pie", {
+          class={bemClass("pie", null, {
             "half-empty": this.kulValue <= 50,
             "half-full": this.kulValue > 50,
             "has-value": Boolean(this.kulValue),
           })}
         >
           <div
-            class={bemClass("progress-bar", "half-circle", {
+            class={bemClass("pie", "half-circle", {
               left: true,
             })}
           ></div>
           <div
-            class={bemClass("progress-bar", "half-circle", {
+            class={bemClass("pie", "half-circle", {
               right: true,
             })}
           ></div>
         </div>
-        <div class={bemClass("progress-bar", "track")}></div>
+        <div class={bemClass("pie", "track")}></div>
       </div>
     );
   }

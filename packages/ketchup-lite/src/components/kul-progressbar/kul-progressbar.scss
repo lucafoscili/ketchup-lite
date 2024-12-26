@@ -162,50 +162,6 @@
       clear: both;
     }
 
-    &__pie {
-      height: 1em;
-      width: 1em;
-      clip: rect(0, 1em, 1em, 0.5em);
-      left: 0;
-      position: absolute;
-      top: 0;
-
-      &--has-value {
-        & .half-circle {
-          border-color: var(--kul_progressbar_primary_color);
-          &.left-side {
-            transform: var(--kul_progressbar_transform);
-            transition: transform 0.2s ease;
-          }
-        }
-      }
-
-      &--half-empty {
-        & .right-side {
-          display: none;
-        }
-      }
-
-      &--half-full {
-        clip: rect(auto, auto, auto, auto);
-
-        & .right-side {
-          transform: rotate(180deg);
-        }
-      }
-    }
-
-    &__half-circle {
-      height: 1em;
-      width: 1em;
-      border: 0.1em solid var(--kul_progressbar_track_color);
-      border-radius: 50%;
-      clip: rect(0, 0.5em, 1em, 0);
-      left: 0;
-      position: absolute;
-      top: 0;
-    }
-
     &__icon {
       height: 0.75em;
       margin: 0 0.15em;
@@ -219,13 +175,6 @@
       font-size: 0.25em;
     }
 
-    &__track {
-      height: 1em;
-      width: 1em;
-      border: 0.1em solid var(--kul_progressbar_track_color);
-      border-radius: 50%;
-    }
-
     &__um {
       color: var(--kul_progressbar_text_color);
       font-size: 0.75em;
@@ -237,6 +186,68 @@
   *:before,
   *:after {
     box-sizing: border-box;
+  }
+}
+
+.pie {
+  & {
+    height: 1em;
+    width: 1em;
+    clip: rect(0, 1em, 1em, 0.5em);
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  &--half-empty {
+    &__half-circle {
+      &--right {
+        display: none;
+      }
+    }
+  }
+
+  &--half-full {
+    & {
+      clip: rect(auto, auto, auto, auto);
+    }
+
+    .pie__half-circle {
+      &--right {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &--has-value {
+    .pie__half-circle {
+      & {
+        border-color: var(--kul_progressbar_primary_color);
+      }
+
+      &--left {
+        transform: var(--kul_progressbar_transform);
+        transition: transform 0.2s ease;
+      }
+    }
+  }
+
+  &__half-circle {
+    height: 1em;
+    width: 1em;
+    border: 0.1em solid var(--kul_progressbar_track_color);
+    border-radius: 50%;
+    clip: rect(0, 0.5em, 1em, 0);
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  &__track {
+    height: 1em;
+    width: 1em;
+    border: 0.1em solid var(--kul_progressbar_track_color);
+    border-radius: 50%;
   }
 }
 
@@ -259,11 +270,11 @@
       animation: running-stripes 2s linear infinite;
       background-image: linear-gradient(
         -45deg,
-        rgba(var(--kul_progressbar_text_color_rgb), 0.125) 25%,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.225) 25%,
         transparent 25%,
         transparent 50%,
-        rgba(var(--kul_progressbar_text_color_rgb), 0.125) 50%,
-        rgba(var(--kul_progressbar_text_color_rgb), 0.125) 75%,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.225) 50%,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.225) 75%,
         transparent 75%,
         transparent
       );
@@ -295,11 +306,9 @@
       }
     }
 
-    .progress-bar {
-      & {
-        &__half-circle {
-          border-width: 0.05em;
-        }
+    .pie {
+      &__half-circle {
+        border-width: 0.05em;
       }
 
       &__track {
