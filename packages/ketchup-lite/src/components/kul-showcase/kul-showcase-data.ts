@@ -465,34 +465,6 @@ export const KUL_DOC: KulArticleDataset = {
         },
         {
           id: DOC_IDS.section,
-          value: "Why Choose Ketchup Lite?",
-          children: [
-            {
-              id: DOC_IDS.paragraph,
-              value: "",
-              children: [
-                {
-                  id: DOC_IDS.contentWrapper,
-                  value:
-                    "Ketchup Lite provides a unique blend of performance and flexibility. Designed to be framework-agnostic, it easily adapts to various project needs, ensuring your applications remain lightweight and scalable.",
-                },
-              ],
-            },
-            {
-              id: DOC_IDS.paragraph,
-              value: "",
-              children: [
-                {
-                  id: DOC_IDS.contentWrapper,
-                  value:
-                    "Whether you're building with React, Vue, Angular, or vanilla JavaScript, Ketchup Lite's components integrate smoothly with your stack of choice.",
-                },
-              ],
-            },
-          ],
-        },
-        {
-          id: DOC_IDS.section,
           value: "Getting Started",
           children: [
             {

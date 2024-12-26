@@ -32,6 +32,10 @@ export type KulShowcaseDynamicExampleType =
 export type KulShowcaseTitle = "Components" | "Framework" | "Utilities";
 //#endregion
 
+//#region States
+export type KulShowcaseViews = { [K in KulShowcaseTitle]: string };
+//#endregion
+
 //#region Props
 export interface KulShowcasePropsInterface {
   kulStyle: string;
