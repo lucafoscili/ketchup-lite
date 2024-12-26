@@ -21,6 +21,7 @@ import {
 import {
   KulPhotoframeEvent,
   KulPhotoframeEventPayload,
+  KulPhotoframeOrientation,
   KulPhotoframePropsInterface,
 } from "./kul-photoframe-declarations";
 
@@ -41,10 +42,20 @@ export class KulPhotoframe {
    */
   @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
+   * Sets the orientation of the image, when it exists.
+   * @default false
+   */
+  @State() imageOrientation: KulPhotoframeOrientation = "";
+  /**
    * A boolean that flags when the component enters the viewport for the first time to trigger a new render.
    * @default false
    */
   @State() isInViewport = false;
+  /**
+   * A boolean signaling when the actual image is loaded.
+   * @default false
+   */
+  @State() isReady = false;
   //#endregion
 
   //#region Props
@@ -67,15 +78,12 @@ export class KulPhotoframe {
    * Html attributes of the picture after the component enters the viewport.
    * @default null
    */
-  @Prop() kulValue: GenericObject = null;
+  @Prop({ mutable: false }) kulValue: GenericObject = null;
   //#endregion
 
   //#region Internal variables
   #intObserver: IntersectionObserver;
-  #placeholderEl: HTMLImageElement;
-  #renderValue = false;
-  #valueEl: HTMLImageElement;
-  #wrapperEl: HTMLElement;
+  #placeholder: HTMLImageElement;
   //#endregion
 
   //#region Events
@@ -91,6 +99,19 @@ export class KulPhotoframe {
     eventType: KulPhotoframeEvent,
     isPlaceholder = false,
   ) {
+    switch (eventType) {
+      case "load":
+        if (isPlaceholder) {
+          if (this.#isLandscape(this.#placeholder)) {
+            this.imageOrientation = "landscape";
+          } else {
+            this.imageOrientation = "portrait";
+          }
+        } else {
+          this.isReady = true;
+        }
+    }
+
     this.kulEvent.emit({
       comp: this,
       id: this.rootElement.id,
@@ -141,19 +162,23 @@ export class KulPhotoframe {
   //#endregion
 
   //#region Private methods
-  #setObserver(): void {
-    const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          this.isInViewport = true;
-          this.#intObserver.unobserve(this.rootElement);
-        }
-      });
-    };
-    const options: IntersectionObserverInit = {
-      threshold: this.kulThreshold,
-    };
-    this.#intObserver = new IntersectionObserver(callback, options);
+  #isLandscape(image: HTMLImageElement) {
+    return Boolean(image.naturalWidth > image.naturalHeight);
+  }
+  #setObserver() {
+    this.#intObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.isInViewport = true;
+            this.#intObserver.unobserve(this.rootElement);
+          }
+        });
+      },
+      {
+        threshold: this.kulThreshold,
+      },
+    );
   }
   //#endregion
 
@@ -167,6 +192,7 @@ export class KulPhotoframe {
   componentDidLoad() {
     const { info } = kulManagerSingleton.debug;
 
+    this.#intObserver.observe(this.rootElement);
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
@@ -181,53 +207,46 @@ export class KulPhotoframe {
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { bemClass, setKulStyle } = theme;
 
-    const { isInViewport, kulPlaceholder, kulStyle, kulValue } = this;
+    const { isInViewport, isReady, kulPlaceholder, kulStyle, kulValue } = this;
 
-    if (isInViewport && !this.#renderValue) {
-      this.#renderValue = true;
-    }
+    const replace = Boolean(isInViewport && isReady);
 
     return (
       <Host>
         {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div
+          class={bemClass("photoframe", null, {
+            [this.imageOrientation]: this.imageOrientation && true,
+          })}
           id={KUL_WRAPPER_ID}
-          ref={(el) => {
-            this.#wrapperEl = el;
-          }}
         >
           <img
-            {...kulPlaceholder}
-            class={bemClass("photoframe", "placeholder")}
+            class={bemClass("photoframe", "placeholder", {
+              loaded: Boolean(this.imageOrientation),
+              "fade-out": replace,
+            })}
             data-cy={CY_ATTRIBUTES.image}
-            ref={(el) => (this.#placeholderEl = el)}
+            ref={(el) => {
+              if (el) this.#placeholder = el;
+            }}
             onLoad={(e) => {
-              if (
-                this.#placeholderEl.naturalWidth >
-                this.#placeholderEl.naturalHeight
-              ) {
-                this.#wrapperEl.classList.add("horizontal");
-              } else {
-                this.#wrapperEl.classList.add("vertical");
-              }
-              this.#intObserver.observe(this.rootElement);
-              this.#placeholderEl.classList.add("placeholder--loaded");
               this.onKulEvent(e, "load", true);
             }}
+            {...sanitizeProps(kulPlaceholder)}
           ></img>
-          {this.#renderValue && (
+          {isInViewport && (
             <img
-              {...kulValue}
-              class={bemClass("photoframe", "value")}
+              class={bemClass("photoframe", "image", {
+                "fade-in": replace,
+              })}
               data-cy={CY_ATTRIBUTES.image}
-              ref={(el) => (this.#valueEl = el)}
               onLoad={(e) => {
-                this.#placeholderEl.classList.add("placeholder--fade-out");
-                this.#valueEl.classList.add("value--fade-in");
                 this.onKulEvent(e, "load");
               }}
+              {...sanitizeProps(kulValue)}
             ></img>
           )}
         </div>

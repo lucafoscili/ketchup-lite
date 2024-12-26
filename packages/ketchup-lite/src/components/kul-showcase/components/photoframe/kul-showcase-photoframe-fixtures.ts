@@ -1,4 +1,4 @@
-import { kulManagerSingleton } from "src/global/global";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,12 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulPhotoframe"> =
   "KulPhotoframeEventPayload";
 const TAG_NAME: KulComponentTag<"KulPhotoframe"> = "kul-photoframe";
 
-export const PHOTOFRAME_FIXTURES: () => {
+export const PHOTOFRAME_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: PhotoframeData;
-} = () => {
-  const { get } = kulManagerSingleton.assets;
-
+} = (get) => {
   const documentation: KulArticleDataset = {
     nodes: [
       {

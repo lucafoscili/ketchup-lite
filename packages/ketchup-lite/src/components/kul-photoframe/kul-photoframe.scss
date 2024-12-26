@@ -31,19 +31,32 @@ img {
   max-width: 100%;
 }
 
-.horizontal {
-  img {
-    width: 100%;
-  }
-}
-
-.vertical {
-  img {
-    height: 100%;
-  }
-}
-
 .photoframe {
+  &--landscape {
+    img {
+      width: 100%;
+    }
+  }
+
+  &--portrait {
+    img {
+      height: 100%;
+    }
+  }
+
+  &__image {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+
+    &--fade-in {
+      display: block;
+      position: relative;
+    }
+  }
+
   &__placeholder {
     display: none;
     transition: opacity var(--kul_photoframe_fade_out_time) ease-out;
@@ -57,19 +70,6 @@ img {
     &--fade-out {
       opacity: 0;
       position: absolute;
-    }
-  }
-
-  &__value {
-    display: none;
-    left: 0;
-    position: absolute;
-    top: 0;
-    z-index: 0;
-
-    &--fade-in {
-      display: block;
-      position: relative;
     }
   }
 }

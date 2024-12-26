@@ -8,6 +8,10 @@ export interface KulPhotoframeEventPayload
 }
 //#endregion
 
+//#region States
+export type KulPhotoframeOrientation = "" | "landscape" | "portrait";
+//#endregion
+
 //#region Props
 export interface KulPhotoframePropsInterface {
   kulPlaceholder?: GenericObject;
