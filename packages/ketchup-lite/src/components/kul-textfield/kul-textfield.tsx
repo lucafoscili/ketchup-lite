@@ -312,7 +312,7 @@ export class KulTextfield {
         onInput={(e) => {
           this.onKulEvent(e, "input");
         }}
-        placeholder={this.kulFullWidth && this.kulLabel}
+        placeholder={(this.kulFullWidth && this.kulLabel) || ""}
         ref={(el) => {
           if (el) {
             this.#input = el;
