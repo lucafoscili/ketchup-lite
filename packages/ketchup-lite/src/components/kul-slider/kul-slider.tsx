@@ -295,7 +295,7 @@ export class KulSlider {
               </div>
               <span class={bemClass("slider", "value")}>{value.display}</span>
             </div>
-            <label class={bemClass("forn-field", "label")}>{kulLabel}</label>
+            <label class={bemClass("form-field", "label")}>{kulLabel}</label>
           </div>
         </div>
       </Host>
