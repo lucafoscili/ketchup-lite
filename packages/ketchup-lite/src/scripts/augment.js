@@ -1,8 +1,26 @@
-// scripts/append-declarations.js
+/**
+ * This script appends missing declarations to Stencil's final index.d.ts.
+ *
+ * Why do we need this?
+ * --------------------
+ * Stencil’s automatic type generation can sometimes omit or tree-shake
+ * symbols (like `kulManagerReady` and `kulManagerSingleton`) if it believes
+ * they're “internal” or otherwise unused by the public component API. Even if
+ * they're properly exported in your code, they might not appear in the
+ * generated .d.ts.
+ *
+ * By running this script after the build, we forcibly add the missing
+ * type definitions so consumers of our library can import them without
+ * hitting TS errors or needing @ts-ignore hacks.
+ *
+ * It's not elegant, but it's a reliable fallback when other options
+ * (like "declaration": true in tsconfig, re-exports in index.ts, or
+ * direct usage in components) don't resolve the omission.
+ */
+
 const fs = require("fs");
 const path = require("path");
 
-// Adjust to wherever Stencil places the final index.d.ts
 const DECLARATION_FILE = path.join(
   __dirname,
   "..",
@@ -12,13 +30,11 @@ const DECLARATION_FILE = path.join(
   "index.d.ts",
 );
 
-// The text you want to append
-// (You might need to tweak the relative import path to KulManager.)
 const FIX_DECLARATION = `
 
 // 🚨 Hack: Manually appending these missing declarations.
-export declare const kulManagerReady: Promise<import('./managers/kul-manager/kul-manager').KulManager>;
-export declare const kulManagerSingleton: import('./managers/kul-manager/kul-manager').KulManager;
+export declare const kulManagerReady: Promise<import('../types/managers/kul-manager/kul-manager').KulManager>;
+export declare const kulManagerSingleton: import('../types/managers/kul-manager/kul-manager').KulManager;
 `;
 
 function appendDeclarations() {
@@ -30,7 +46,6 @@ function appendDeclarations() {
     process.exit(1);
   }
 
-  // Append your missing type exports
   const updated = original + FIX_DECLARATION;
 
   try {
