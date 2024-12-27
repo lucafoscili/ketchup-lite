@@ -1,15 +1,25 @@
+import { KulManager } from "src/managers/kul-manager/kul-manager";
 import { KulManagerEventPayload } from "src/managers/kul-manager/kul-manager-declarations";
-import { KulManager } from "../managers/kul-manager/kul-manager";
+import { KulManagerSymbol } from "./symbol";
 
-let kulManagerSingleton: KulManager;
+export let kulManagerSingleton: KulManager | null = null;
+
 let isInitialized = false;
 
-const initKulManager = async () => {
+let resolveManager: (mgr: KulManager) => void;
+export const kulManagerReady = new Promise<KulManager>((resolve) => {
+  resolveManager = resolve;
+});
+
+async function initKulManager() {
   if (isInitialized) return;
   isInitialized = true;
 
   if (typeof document !== "undefined") {
-    kulManagerSingleton = new KulManager();
+    const manager = new KulManager();
+    kulManagerSingleton = manager;
+
+    (window as any)[KulManagerSymbol] = manager;
 
     try {
       if (process.env.NODE_ENV === "development") {
@@ -17,18 +27,21 @@ const initKulManager = async () => {
           "KulManager instance created and defaults set. Dispatching readiness event...",
         );
       }
+
       const ev = new CustomEvent<KulManagerEventPayload>("kul-manager-ready", {
-        detail: { kulManager: kulManagerSingleton },
+        detail: { kulManager: manager },
       });
-      requestAnimationFrame(async () => document.dispatchEvent(ev));
+
+      requestAnimationFrame(() => {
+        document.dispatchEvent(ev);
+        resolveManager(manager);
+      });
     } catch (error) {
       console.error("Error initializing KulManager defaults:", error);
     }
   }
-};
-
-export default async function () {
-  initKulManager();
 }
 
-export { kulManagerSingleton };
+export default async function () {
+  await initKulManager();
+}
