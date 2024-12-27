@@ -67,6 +67,17 @@
 
   <body>
     <script>
+      const managerCb = (e) => {
+        const { theme } = e.detail.kulManager;
+        requestAnimationFrame(async () => {
+          console.log("Setting default theme...");
+          theme.set();
+        });
+        document.removeEventListener("kul-manager-ready", managerCb);
+        console.log("KulManager ready.");
+      };
+      document.addEventListener("kul-manager-ready", managerCb);
+
       console.log("Initializing index page...");
       const readyCb = (e) => {
         const { comp, eventType } = e.detail;
