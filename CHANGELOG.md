@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-rc.2](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.1...3.0.0-rc.2) (2024-12-27)
+
+### Features
+
+- added support for canvas, photoframe and typewriter shapes ([0e9c5c0](https://github.com/lucafoscili/ketchup-lite/commit/0e9c5c072ee80cec65e732c40a4980c2b7d28e31))
+- **photoframe:** added overlay prop ([a9427cd](https://github.com/lucafoscili/ketchup-lite/commit/a9427cd099d7386ff7c70e2976c8556a4bf60bc0))
+
 # [3.0.0-rc.1](https://github.com/lucafoscili/ketchup-lite/compare/2.6.0-rc.5...3.0.0-rc.1) (2024-12-27)
 
 **Note:** Version bump only for package ketchup-lite-root
