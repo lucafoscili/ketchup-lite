@@ -1,63 +1,67 @@
-import { GenericObject } from "../../types/GenericTypes";
+import { GenericMap } from "src/types/GenericTypes";
 
-export interface KulThemeJSON {
+export interface KulThemeList {
   [index: string]: KulThemeElement;
 }
 export interface KulThemeElement {
   cssVariables: KulThemeCSSVariables;
+  customStyles?: GenericMap;
+  font?: string[];
   icons: KulThemeIcons;
   isDark: boolean;
-  font?: KulThemeFonts[];
-  customStyles?: GenericObject;
 }
+export type KulThemeBEMModifier = Record<string, boolean>;
 export type KulThemeChartColorKey = `--kul-chart-color-${number}`;
 export type KulThemeAllChartColorKeys = KulThemeChartColorKey[];
-export type KulThemeChartColorCSSVariables = {
+export type KulThemeChartColors = {
   [K in KulThemeAllChartColorKeys[number]]: string;
 };
-export interface KulThemeCSSVariables extends KulThemeChartColorCSSVariables {
-  [KulThemeColorValues.PRIMARY]: string;
-  [KulThemeColorValues.SECONDARY]: string;
-  [KulThemeColorValues.BACKGROUND]: string;
-  [KulThemeColorValues.NAV_BAR_BACKGROUND]: string;
-  [KulThemeColorValues.NAV_BAR]: string;
-  [KulThemeColorValues.DRAWER]: string;
-  [KulThemeColorValues.DRAWER_BACKGROUND]: string;
-  "--kul-header-height": string;
-  "--kul-drawer-width": string;
-  "--kul-font-family": string;
-  "--kul-font-size": string;
-  [KulThemeColorValues.TEXT]: string;
-  [KulThemeColorValues.TEXT_ON_PRIMARY]: string;
-  [KulThemeColorValues.DISABLED_BACKGROUND]: string;
-  [KulThemeColorValues.DISABLED]: string;
-  [KulThemeColorValues.TITLE_BACKGROUND]: string;
-  [KulThemeColorValues.TITLE]: string;
-  [KulThemeColorValues.ICON]: string;
-  [KulThemeColorValues.BORDER]: string;
-  "--kul-box-shadow": string;
-  [KulThemeColorValues.INFO]: string;
-  [KulThemeColorValues.SUCCESS]: string;
-  [KulThemeColorValues.WARNING]: string;
-  [KulThemeColorValues.DANGER]: string;
-  [KulThemeColorValues.SPINNER]: string;
-  "--kul-font-family-monospace": string;
-  [KulThemeColorValues.TEXT_ON_SECONDARY]: string;
-  "--kul-card-zindex": number;
-  "--kul-drawer-zindex": number;
-  "--kul-header-zindex": number;
+export interface KulThemeCSSVariables extends KulThemeColors, KulThemeFonts {}
+export interface KulThemeColors extends KulThemeChartColors {
+  "--kul-background-color": string;
+  "--kul-border-color": string;
+  "--kul-danger-color": string;
+  "--kul-disabled-background-color": string;
+  "--kul-disabled-color": string;
+  "--kul-drawer-background-color": string;
+  "--kul-drawer-color": string;
+  "--kul-header-background-color": string;
+  "--kul-header-color": string;
+  "--kul-icon-color": string;
+  "--kul-info-color": string;
+  "--kul-primary-color": string;
+  "--kul-secondary-color": string;
+  "--kul-spinner-color": string;
+  "--kul-success-color": string;
+  "--kul-text-color": string;
+  "--kul-text-on-primary-color": string;
+  "--kul-text-on-secondary-color": string;
+  "--kul-title-background-color": string;
+  "--kul-title-color": string;
+  "--kul-warning-color": string;
 }
 export interface KulThemeIcons {
-  [KulThemeIconValues.ASCENDING]: string;
-  [KulThemeIconValues.CLEAR]: string;
-  [KulThemeIconValues.COLLAPSED]: string;
-  [KulThemeIconValues.DESCENDING]: string;
-  [KulThemeIconValues.DROPDOWN]: string;
-  [KulThemeIconValues.EXPANDED]: string;
-  [KulThemeIconValues.KEY]: string;
-  [KulThemeIconValues.FILTER_REMOVE]: string;
-  [KulThemeIconValues.SEARCH]: string;
-  [KulThemeIconValues.WARNING]: string;
+  "--kul-ascending-icon": string;
+  "--kul-clear-icon": string;
+  "--kul-collapsed-icon": string;
+  "--kul-descending-icon": string;
+  "--kul-dropdown-icon": string;
+  "--kul-expanded-icon": string;
+  "--kul-filter-remove-icon": string;
+  "--kul-key-icon": string;
+  "--kul-search-icon": string;
+  "--kul-warning-icon": string;
+}
+export interface KulThemeFonts {
+  "--kul-font-family": string;
+  "--kul-font-family-monospace": string;
+  "--kul-font-size": string;
+  "--kul-header-height": string;
+  "--kul-header-zindex": number;
+  "--kul-box-shadow": string;
+  "--kul-card-zindex": number;
+  "--kul-drawer-width": string;
+  "--kul-drawer-zindex": number;
 }
 export interface KulThemeColor {
   hexColor: string;
@@ -78,64 +82,4 @@ export interface KulThemeHSLValues {
   h: number;
   s: number;
   l: number;
-}
-export enum KulThemeColorValues {
-  PRIMARY = "--kul-primary-color",
-  SECONDARY = "--kul-secondary-color",
-  BACKGROUND = "--kul-background-color",
-  NAV_BAR = "--kul-header-color",
-  NAV_BAR_BACKGROUND = "--kul-header-background-color",
-  DRAWER = "--kul-drawer-color",
-  DRAWER_BACKGROUND = "--kul-drawer-background-color",
-  TEXT = "--kul-text-color",
-  TEXT_ON_PRIMARY = "--kul-text-on-primary-color",
-  TEXT_ON_SECONDARY = "--kul-text-on-secondary-color",
-  DISABLED_BACKGROUND = "--kul-disabled-background-color",
-  DISABLED = "--kul-disabled-color",
-  HOVER_BACKGROUND = "--kul-hover-background-color",
-  HOVER = "--kul-hover-color",
-  TITLE_BACKGROUND = "--kul-title-background-color",
-  TITLE = "--kul-title-color",
-  ICON = "--kul-icon-color",
-  BORDER = "--kul-border-color",
-  INFO = "--kul-info-color",
-  SUCCESS = "--kul-success-color",
-  WARNING = "--kul-warning-color",
-  DANGER = "--kul-danger-color",
-  SPINNER = "--kul-spinner-color",
-  CHART_1 = "--kul-chart-color-1",
-  CHART_2 = "--kul-chart-color-2",
-  CHART_3 = "--kul-chart-color-3",
-  CHART_4 = "--kul-chart-color-4",
-}
-export enum KulThemeFonts {
-  ABEL = "Abel",
-  BLINKER = "Blinker",
-  CRIMSON_TEXT = "CrimsonText",
-  FIRA_CODE = "FiraCode",
-  IBM_PLEX = "IBMPlexSans",
-  INTER = "Inter",
-  LATO = "Lato",
-  MALI = "Mali",
-  OPEN_SANS = "Open_Sans",
-  OSWALD = "Oswald",
-  PUBLIC_SANS = "PublicSans",
-  RAJDHANI = "Rajdhani",
-  UBUNTU = "Ubuntu",
-}
-export enum KulThemeIconValues {
-  ASCENDING = "--kul-ascending-icon",
-  CLEAR = "--kul-clear-icon",
-  COLLAPSED = "--kul-collapsed-icon",
-  DESCENDING = "--kul-descending-icon",
-  DROPDOWN = "--kul-dropdown-icon",
-  EXPANDED = "--kul-expanded-icon",
-  FILTER_REMOVE = "--kul-filter-remove-icon",
-  KEY = "--kul-key-icon",
-  SEARCH = "--kul-search-icon",
-  WARNING = "--kul-warning-icon",
-}
-export enum KulThemeAttribute {
-  DARK = "kul-dark-theme",
-  LIGHT = "kul-light-theme",
 }

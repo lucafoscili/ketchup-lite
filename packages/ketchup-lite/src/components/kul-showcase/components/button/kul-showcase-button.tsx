@@ -1,11 +1,11 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulButtonStyling } from "../../../kul-button/kul-button-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import { BUTTON_FIXTURES } from "./kul-showcase-button-fixtures";
-import { ButtonExample } from "./kul-showcase-button-declarations";
+import { ButtonData, ButtonExample } from "./kul-showcase-button-declarations";
 
 @Component({
   tag: "kul-showcase-button",
@@ -36,7 +36,9 @@ export class KulShowcaseButton {
     const elements: VNode[] = [];
     for (const k1 in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
-        const category: ButtonExample = this.fixtures.examples[k1];
+        const k = k1 as keyof ButtonData;
+        const category: Record<string, Partial<ButtonExample>> = this.fixtures
+          .examples[k];
         const group: VNode[] = [];
 
         for (const k2 in category) {
@@ -116,7 +118,7 @@ export class KulShowcaseButton {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}>
+        <div data-cy={CY_ATTRIBUTES.showcaseGridWrapper}>
           {this.#prepExamples()}
         </div>
       </Fragment>

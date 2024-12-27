@@ -1,14 +1,9 @@
-import {
-  KulCarouselEvent,
-  KulCarouselProps,
-  KulCarouselPropsInterface,
-} from "../../../src/components/kul-carousel/kul-carousel-declarations";
+import { KUL_CAROUSEL_PROPS } from "src/components/kul-carousel/helpers/constants";
+import { CY_ATTRIBUTES } from "src/utils/constants";
+import { KulCarouselEvent } from "../../../src/components/kul-carousel/kul-carousel-declarations";
 import { CAROUSEL_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/carousel/kul-showcase-carousel-declarations";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
 
 const carousel = "carousel";
-const carouselCapitalized =
-  carousel.charAt(0).toUpperCase() + carousel.slice(1);
 const carouselTag = "kul-" + carousel;
 
 describe("Basic", () => {
@@ -31,11 +26,11 @@ describe("Events", () => {
     const eventType: KulCarouselEvent = "kul-event";
     cy.checkEvent(carousel, eventType);
     cy.get("@eventElement")
-      .findCyElement(KulDataCyAttributes.SHAPE)
+      .findCyElement(CY_ATTRIBUTES.shape)
       .first()
       .scrollIntoView()
       .trigger("click", { force: true, x: 100, y: 100 });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 
   it(`ready`, () => {
@@ -50,7 +45,7 @@ describe("Events", () => {
       const kulCarouselElement = $carousel[0] as HTMLKulCarouselElement;
       kulCarouselElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
 
@@ -66,19 +61,8 @@ describe("Methods", () => {
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(carouselTag);
   });
-
-  it(`getProps: check keys against Kul${carouselCapitalized}Props enum.`, () => {
-    cy.checkProps(carouselTag, KulCarouselProps);
-  });
-
-  it(`getProps: check keys against Kul${carouselCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(carouselTag, {
-      kulAutoPlay: null,
-      kulData: null,
-      kulInterval: null,
-      kulShape: null,
-      kulStyle: null,
-    } as Required<KulCarouselPropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(carouselTag, KUL_CAROUSEL_PROPS);
   });
 });
 
@@ -87,7 +71,7 @@ describe("Props", () => {
     cy.navigate(carousel);
   });
 
-  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
+  it("kulStyle: should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
 });

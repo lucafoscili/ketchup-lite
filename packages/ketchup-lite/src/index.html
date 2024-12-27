@@ -68,12 +68,19 @@
   <body>
     <script>
       console.log("Initializing index page...");
+      const readyCb = (e) => {
+        const { comp, eventType } = e.detail;
+        switch (eventType) {
+          case "ready":
+            console.log("App ready!");
+            comp.unmount();
+            document.querySelector("kul-showcase").hidden = false;
+            break;
+        }
+        document.removeEventListener("kul-splash-event", readyCb);
+      };
 
-      document.addEventListener("kul-manager-ready", () => {
-        console.log("KulManager ready!");
-        document.querySelector("kul-splash").unmount();
-        document.querySelector("kul-showcase").hidden = false;
-      });
+      document.addEventListener("kul-splash-event", readyCb);
     </script>
     <kul-splash id="splash" aria-label="Loading application">
       <kul-spinner

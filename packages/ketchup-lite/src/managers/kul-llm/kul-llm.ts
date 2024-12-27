@@ -1,8 +1,15 @@
-import { kulManagerInstance } from "../kul-manager/kul-manager";
+import type { KulManager } from "../kul-manager/kul-manager";
 import { KulLLMRequest } from "./kul-llm-declarations";
 
 export class KulLLM {
-  async fetch(request: KulLLMRequest, url: string) {
+  #KUL_MANAGER: KulManager;
+
+  constructor(kulManager: KulManager) {
+    this.#KUL_MANAGER = kulManager;
+  }
+
+  //#region Fetch
+  fetch = async (request: KulLLMRequest, url: string) => {
     try {
       const response = await fetch(`${url}/v1/chat/completions`, {
         method: "POST",
@@ -20,17 +27,21 @@ export class KulLLM {
       console.error("Error calling LLM:", error);
       throw error;
     }
-  }
+  };
+  //#endregion
 
-  async poll(url: string) {
+  //#region Poll
+  poll = async (url: string) => {
     return fetch(url);
-  }
+  };
+  //#endregion
 
-  async speechToText(
+  //#region SpeechToText
+  speechToText = async (
     textarea: HTMLKulTextfieldElement,
     button: HTMLKulButtonElement,
-  ) {
-    const kulManager = kulManagerInstance();
+  ) => {
+    const { debug } = this.#KUL_MANAGER;
 
     const speechConstructor =
       window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -39,7 +50,6 @@ export class KulLLM {
       return;
     }
     const recognition = new speechConstructor();
-    recognition.lang = kulManager.language.getBCP47();
     recognition.interimResults = true;
     recognition.maxAlternatives = 1;
 
@@ -48,7 +58,7 @@ export class KulLLM {
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join("");
-      kulManager.debug.logs.new(this, "STT response: " + transcript);
+      debug.logs.new(this, "STT response: " + transcript);
       textarea.setValue(transcript);
       const isFinal = event.results[event.results.length - 1].isFinal;
       if (isFinal) {
@@ -69,7 +79,8 @@ export class KulLLM {
     try {
       recognition.start();
     } catch (err) {
-      kulManager.debug.logs.new(this, "Error: " + err, "error");
+      debug.logs.new(this, "Error: " + err, "error");
     }
-  }
+  };
+  //#endregion
 }

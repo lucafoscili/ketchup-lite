@@ -1,37 +1,33 @@
-import { KUL_WRAPPER_ID } from "../../../src/variables/GenericVariables";
-import {
-  KulBadgeEvent,
-  KulBadgeProps,
-  KulBadgePropsInterface,
-} from "../../../src/components/kul-badge/kul-badge-declarations";
-import { BADGE_EXAMPLES_KEYS } from "./../../../src/components/kul-showcase/components/badge/kul-showcase-badge-declarations";
-import { DynamicExampleManager } from "../../../src/components/kul-showcase/helpers/kul-showcase-dyn-sample";
+import { KulThemeCSSVariables } from "src/managers/kul-theme/kul-theme-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulImagePropsInterface } from "../../../src/components";
-import { KulDataCyAttributes } from "../../../src/types/GenericTypes";
+import { KUL_BADGE_PROPS } from "../../../src/components/kul-badge/helpers/constants";
+import { KulBadgeEvent } from "../../../src/components/kul-badge/kul-badge-declarations";
+import { DynamicExampleManager } from "../../../src/components/kul-showcase/helpers/kul-showcase-dyn-sample";
+import { BADGE_EXAMPLES_KEYS } from "./../../../src/components/kul-showcase/components/badge/kul-showcase-badge-declarations";
 
 const badge = "badge";
-const badgeCapitalized = badge.charAt(0).toUpperCase() + badge.slice(1);
 const badgeTag = "kul-" + badge;
 
+//#region Basic
 describe("Basic", () => {
   beforeEach(() => {
     cy.navigate(badge).waitForWebComponents([badgeTag]);
   });
-
   it(`Should check that all <${badgeTag}> exist.`, () => {
     cy.checkComponentExamples(badgeTag, new Set(BADGE_EXAMPLES_KEYS));
   });
-
   it(`Should check that the number of <${badgeTag}> elements matches the number of examples.`, () => {
     cy.checkComponentExamplesNumber(Array.from(BADGE_EXAMPLES_KEYS));
   });
 });
+//#endregion
 
+//#region CSS Classes
 describe("CSS Classes", () => {
   beforeEach(() => {
     cy.navigate(badge);
   });
-
   it(`colors: Should check that the <${badgeTag}> with status colors has a correct state class and the matching status color.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${badgeTag}#colors`)
@@ -44,15 +40,19 @@ describe("CSS Classes", () => {
         expect(stateColors).to.include(badgeClass);
 
         cy.window().then((win) => {
-          const cssVariable = `--${badgeClass}-color`;
+          const cssVariable =
+            `--${badgeClass}-color` as keyof KulThemeCSSVariables;
           const computedStyles = win.getComputedStyle(
-            $badge[0].shadowRoot.querySelector("#" + KUL_WRAPPER_ID),
+            $badge[0].shadowRoot.querySelector(`div`),
           );
           const badgeColor = computedStyles.backgroundColor;
           cy.getKulManager().then((kulManager) => {
-            const themeName = kulManager.theme.name;
-            const themeColor =
-              kulManager.theme.list[themeName].cssVariables[cssVariable];
+            debugger;
+            const themeName = kulManager.theme
+              .name as keyof KulThemeCSSVariables;
+            const themeColor = kulManager.theme.list[themeName].cssVariables[
+              cssVariable
+            ] as keyof KulThemeCSSVariables;
             const hexBadgeColor =
               kulManager.theme.colorCheck(themeColor).hexColor;
             const hexThemeColor =
@@ -62,7 +62,6 @@ describe("CSS Classes", () => {
         });
       });
   });
-
   it(`position: should check that the <${badgeTag}> with a position class matches the relevant coordinates.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${badgeTag}#position`)
@@ -99,21 +98,21 @@ describe("CSS Classes", () => {
       });
   });
 });
+//#endregion
 
+//#region Events
 describe("Events", () => {
   it(`click`, () => {
     cy.navigate(badge);
     const eventType: KulBadgeEvent = "click";
     cy.checkEvent(badge, eventType);
     cy.get("@eventElement").click();
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
-
   it(`ready`, () => {
     cy.checkReadyEvent(badge);
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
-
   it(`unmount`, () => {
     cy.navigate(badge);
     const eventType: KulBadgeEvent = "unmount";
@@ -122,41 +121,33 @@ describe("Events", () => {
       const kulBadgeElement = $badge[0] as HTMLKulBadgeElement;
       kulBadgeElement.unmount();
     });
-    cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+    cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
 });
+//#endregion
 
+//#region Methods
 describe("Methods", () => {
   beforeEach(() => {
     cy.navigate(badge);
   });
-
   it("getDebugInfo: check the structure of the returned object.", () => {
     cy.checkDebugInfo(badgeTag);
   });
-
   it("getDebugInfo, refresh: check that renderCount has increased after refreshing.", () => {
     cy.checkRenderCountIncrease(badgeTag);
   });
-
-  it(`getProps: check keys against Kul${badgeCapitalized}Props enum.`, () => {
-    cy.checkProps(badgeTag, KulBadgeProps);
-  });
-
-  it(`getProps: check keys against Kul${badgeCapitalized}PropsInterface.`, () => {
-    cy.checkPropsInterface(badgeTag, {
-      kulImageProps: null,
-      kulLabel: null,
-      kulStyle: null,
-    } as Required<KulBadgePropsInterface>);
+  it(`getProps: check keys against props array.`, () => {
+    cy.checkProps(badgeTag, KUL_BADGE_PROPS);
   });
 });
+//#endregion
 
+//#region Props
 describe("Props", () => {
   beforeEach(() => {
     cy.navigate(badge);
   });
-
   it(`kulImageProps: should check for the presence of the correct <kul-image>, as an icon, inside <${badgeTag}>.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${badgeTag}#icon`)
@@ -172,7 +163,6 @@ describe("Props", () => {
           .should("exist");
       });
   });
-
   it(`kulImageProps: should check for the presence of the correct <kul-image, as an image, inside <${badgeTag}>.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${badgeTag}#image`)
@@ -188,7 +178,6 @@ describe("Props", () => {
           .should("exist");
       });
   });
-
   it(`kulLabel: Should check that the #kul-component inside the empty <${badgeTag}> is actually empty.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${badgeTag}#empty`)
@@ -196,7 +185,6 @@ describe("Props", () => {
       .find("#kul-component")
       .should("be.empty");
   });
-
   it(`kulLabel: should check that the #kul-component inside the <${badgeTag}> is not empty.`, () => {
     cy.get("@kulComponentShowcase")
       .find(`${badgeTag}#label`)
@@ -204,8 +192,8 @@ describe("Props", () => {
       .find("#kul-component")
       .should("not.be.empty");
   });
-
   it("kulStyle: Should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
 });
+//#endregion

@@ -11,29 +11,22 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
+import {
+  KulDataDataset,
+  KulDataNode,
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
+import { TreeNode } from "./components/node";
 import {
   KulTreeEvent,
   KulTreeEventArguments,
   KulTreeEventPayload,
-  KulTreeProps,
+  KulTreeNodeProps,
+  KulTreePropsInterface,
 } from "./kul-tree-declarations";
-import { TreeNode } from "./node/kul-tree-node";
-import { KulTreeNodeProps } from "./node/kul-tree-node-declarations";
-import {
-  KulDataDataset,
-  KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import {
-  KulLanguageGeneric,
-  KulLanguageSearch,
-} from "../../managers/kul-language/kul-language-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
 
 @Component({
   tag: "kul-tree",
@@ -46,20 +39,11 @@ export class KulTree {
    */
   @Element() rootElement: HTMLKulTreeElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Set of expanded nodes.
    */
@@ -72,11 +56,9 @@ export class KulTree {
    * Selected node.
    */
   @State() selectedNode: KulDataNode = null;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * When enabled, the first level of depth will create an accordion-style appearance for nodes.
    * @default false
@@ -93,6 +75,11 @@ export class KulTree {
    */
   @Prop({ mutable: true }) kulFilter = true;
   /**
+   * Empty text displayed when there is no data.
+   * @default "Empty data."
+   */
+  @Prop({ mutable: true }) kulEmpty = "Empty data.";
+  /**
    * Sets the initial expanded nodes based on the specified depth.
    * If the property is not provided, all nodes in the tree will be expanded.
    * @default null
@@ -102,7 +89,7 @@ export class KulTree {
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * When true, nodes can be selected.
    * @default null
@@ -112,24 +99,16 @@ export class KulTree {
    * Enables customization of the component's style.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #filterTimeout: ReturnType<typeof setTimeout>;
   #filterValue = "";
-  #kulManager = kulManagerInstance();
   #rippleSurface: { [id: string]: HTMLElement } = {};
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-tree-event",
     composed: true,
@@ -137,13 +116,15 @@ export class KulTree {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulTreeEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulTreeEvent,
     args?: KulTreeEventArguments,
   ) {
+    const { theme } = kulManagerSingleton;
+
     const { expansion, node } = args || {};
+
     switch (eventType) {
       case "click":
         if (expansion && node.children?.length) {
@@ -159,13 +140,11 @@ export class KulTree {
         break;
       case "pointerdown":
         if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface[node.id],
-          );
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface[node.id]);
         }
         break;
     }
+
     this.kulEvent.emit({
       comp: this,
       eventType,
@@ -174,11 +153,9 @@ export class KulTree {
       node,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -188,13 +165,14 @@ export class KulTree {
     return this.debugInfo;
   }
   /**
-   * Retrieves the properties of the component, with optional descriptions.
-   * @param {boolean} descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
-   * @returns {Promise<GenericObject>} A promise that resolves to an object where each key is a property name, optionally with its description.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<KulTreePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulTreeProps, descriptions);
+  async getProps(): Promise<KulTreePropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Triggers a re-render of the component to reflect any state changes.
@@ -214,40 +192,44 @@ export class KulTree {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #filter(e: CustomEvent<KulTextfieldEventPayload>) {
+    const { filter } = kulManagerSingleton.data.node;
+
     clearTimeout(this.#filterTimeout);
     this.#filterTimeout = setTimeout(() => {
       this.#filterValue = e.detail.inputValue?.toLowerCase();
+
       if (!this.#filterValue) {
         this.hiddenNodes = new Set();
       } else {
-        const filter = this.#kulManager.data.node.filter(
+        const { ancestorNodes, remainingNodes } = filter(
           this.kulData,
           { value: this.#filterValue },
           true,
         );
-        this.hiddenNodes = new Set(filter.remainingNodes);
-        if (filter.ancestorNodes) {
-          filter.ancestorNodes.forEach((ancestor) => {
+
+        this.hiddenNodes = new Set(remainingNodes);
+
+        if (ancestorNodes) {
+          ancestorNodes.forEach((ancestor) => {
             this.hiddenNodes.delete(ancestor);
           });
         }
       }
     }, 300);
   }
-
   #prepTree(): VNode[] {
     const elements: VNode[] = [];
+
     const nodes = this.kulData.nodes;
     for (let index = 0; index < nodes.length; index++) {
       const node = nodes[index];
       this.#recursive(elements, node, 0);
     }
+
     return elements.length ? (
       elements
     ) : this.#filterValue ? (
@@ -261,8 +243,9 @@ export class KulTree {
       </div>
     ) : undefined;
   }
-
   #recursive(elements: VNode[], node: KulDataNode, depth: number) {
+    const { stringify } = kulManagerSingleton.data.cell;
+
     if (!this.debugInfo.endTime) {
       if (
         this.kulInitialExpansionDepth === null ||
@@ -288,11 +271,7 @@ export class KulTree {
             }}
           ></div>
         ),
-        value: (
-          <div class="node__value">
-            {this.#kulManager.data.cell.stringify(node.value)}
-          </div>
-        ),
+        value: <div class="node__value">{stringify(node.value)}</div>,
       },
       events: {
         onClick: (e) => {
@@ -306,6 +285,7 @@ export class KulTree {
         },
       },
       expanded: isExpanded,
+      manager: kulManagerSingleton,
       node,
       selected: isSelected,
     };
@@ -319,7 +299,6 @@ export class KulTree {
       }
     }
   }
-
   #setExpansion(node: KulDataNode) {
     if (this.expandedNodes.has(node)) {
       this.expandedNodes.delete(node);
@@ -333,57 +312,57 @@ export class KulTree {
       });
     }
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
         if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
           const surface = this.#rippleSurface[key];
-          this.#kulManager.theme.ripple.setup(surface);
+          theme.ripple.setup(surface);
         }
       }
     }
 
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    debug.info.update(this, "did-render");
   }
-
   render() {
-    const isEmpty = !!!this.kulData?.nodes?.length;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+
+    const { kulData, kulEmpty, kulFilter, kulStyle } = this;
+
+    const isEmpty = !!!kulData?.nodes?.length;
     this.#rippleSurface = {};
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="tree">
-            {this.kulFilter ? (
+          <div class={bemClass("tree")}>
+            {kulFilter && (
               <kul-textfield
-                kulIcon="magnify"
                 kulFullWidth={true}
-                kulLabel={this.#kulManager.language.translate(
-                  KulLanguageSearch.SEARCH,
-                )}
+                kulIcon="magnify"
+                kulLabel={"Search..."}
                 kulStyling="flat"
                 onKul-textfield-event={(e) => {
                   this.onKulEvent(e, "kul-event");
@@ -392,14 +371,10 @@ export class KulTree {
                   }
                 }}
               ></kul-textfield>
-            ) : undefined}
+            )}
             {isEmpty ? (
-              <div class="empty-data">
-                <div class="empty-data__text">
-                  {this.#kulManager.language.translate(
-                    KulLanguageGeneric.EMPTY_DATA,
-                  )}
-                </div>
+              <div class={bemClass("empty-data")}>
+                <div class={bemClass("empty-data", "text")}>{kulEmpty}</div>
               </div>
             ) : (
               this.#prepTree()
@@ -409,8 +384,10 @@ export class KulTree {
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

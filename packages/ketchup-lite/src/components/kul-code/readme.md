@@ -18,9 +18,9 @@
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-code-event` | Describes event emitted. | `CustomEvent<KulCodeEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-code-event` |             | `CustomEvent<KulCodeEventPayload>` |
 
 
 ## Methods
@@ -35,21 +35,15 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulCodePropsInterface>`
 
-Retrieves the properties of the component, with optional descriptions.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                          |
-| -------------- | --------- | ------------------------------------------------------------------------------------ |
-| `descriptions` | `boolean` | - If true, returns properties with descriptions; otherwise, returns properties only. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulCodePropsInterface>`
 
-A promise that resolves to an object where each key is a property name, optionally with its description.
+Promise resolved with an object containing the component's properties.
 
 ### `refresh() => Promise<void>`
 

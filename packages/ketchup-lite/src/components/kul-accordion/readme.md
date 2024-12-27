@@ -16,9 +16,9 @@
 
 ## Events
 
-| Event                 | Description              | Type                                    |
-| --------------------- | ------------------------ | --------------------------------------- |
-| `kul-accordion-event` | Describes event emitted. | `CustomEvent<KulAccordionEventPayload>` |
+| Event                 | Description | Type                                    |
+| --------------------- | ----------- | --------------------------------------- |
+| `kul-accordion-event` |             | `CustomEvent<KulAccordionEventPayload>` |
 
 
 ## Methods
@@ -33,19 +33,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulAccordionPropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
-#### Parameters
-
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `descriptions` | `boolean` | - When true, includes descriptions for each property. |
-
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulAccordionPropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 
@@ -71,7 +65,7 @@ Type: `Promise<void>`
 
 ### `toggleNode(id: string, e?: Event) => Promise<void>`
 
-This method activates or deactivates an node.
+This method activates or deactivates a node.
 
 #### Parameters
 

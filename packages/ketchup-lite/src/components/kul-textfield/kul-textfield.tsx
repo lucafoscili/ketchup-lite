@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Method,
@@ -12,20 +11,22 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { GenericObject } from "src/types/GenericTypes";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import {
   KulTextfieldEvent,
   KulTextfieldEventPayload,
   KulTextfieldHelper,
-  KulTextfieldProps,
+  KulTextfieldPropsInterface,
   KulTextfieldStatus,
   KulTextfieldStyling,
 } from "./kul-textfield-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   tag: "kul-textfield",
@@ -38,20 +39,11 @@ export class KulTextfield {
    */
   @Element() rootElement: HTMLKulTextfieldElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * UI Status of the text field.
    */
@@ -60,86 +52,75 @@ export class KulTextfield {
    * Value of the text field.
    */
   @State() value = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Enables or disables the text field to prevent user interaction.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulDisabled = false;
+  @Prop({ mutable: true }) kulDisabled = false;
   /**
    * Applies a full-width styling to the text field, making it occupy all available horizontal space.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulFullWidth = false;
+  @Prop({ mutable: true }) kulFullWidth = false;
   /**
    * Specifies helper text to display alongside the text field.
    * Helper text can provide additional context or instructions to the user.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulHelper: KulTextfieldHelper = null;
+  @Prop({ mutable: true }) kulHelper: KulTextfieldHelper = null;
   /**
    * Allows customization of the input or textarea element through additional HTML attributes.
    * This can include attributes like 'readonly', 'placeholder', etc., to further customize the behavior or appearance of the input.
    * @default {}
    */
-  @Prop({ mutable: true, reflect: true }) kulHtmlAttributes: GenericObject = {};
+  @Prop({ mutable: true }) kulHtmlAttributes: GenericObject = {};
   /**
    * Defines the icon to be displayed within the text field.
    * Icons can indicate actions such as search, clear, or provide visual cues related to the input's purpose.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulIcon = "";
+  @Prop({ mutable: true }) kulIcon = "";
   /**
    * Assigns a label to the text field, improving accessibility and providing context to the user about what kind of input is expected.
    * Labels are especially important for screen readers and users navigating with keyboard-only controls.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = "";
+  @Prop({ mutable: true }) kulLabel = "";
   /**
    * Accepts custom CSS styles to apply directly to the text field component.
    * This allows for fine-grained control over the appearance of the component beyond predefined styling options.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Determines the overall styling theme of the text field, affecting its shape and border.
    * Options include 'default', 'outlined', or 'textarea', each offering a distinct visual presentation.
    * @default "raised"
    */
-  @Prop({ mutable: true, reflect: true }) kulStyling: KulTextfieldStyling =
-    "raised";
+  @Prop({ mutable: true }) kulStyling: KulTextfieldStyling = "raised";
   /**
    * Controls whether the icon should appear after the text input, typically used for action buttons like clear or search.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulTrailingIcon = false;
+  @Prop({ mutable: true }) kulTrailingIcon = false;
   /**
    * Initializes the text field with a default value when the component is first rendered.
    * This can be used to pre-fill forms or set a starting point for user input.
    * @default ""
    */
   @Prop({ mutable: false }) kulValue = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #hasOutline: boolean;
   #input: HTMLInputElement | HTMLTextAreaElement;
-  #kulManager = kulManagerInstance();
   #maxLength: number;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-textfield-event",
     composed: true,
@@ -147,10 +128,10 @@ export class KulTextfield {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulTextfieldEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulTextfieldEvent) {
     const target = e.target as HTMLInputElement;
     const inputValue = target?.value;
+
     switch (eventType) {
       case "blur":
         this.status.delete("focused");
@@ -161,6 +142,7 @@ export class KulTextfield {
         this.status = new Set(this.status);
         break;
     }
+
     this.kulEvent.emit({
       comp: this,
       eventType,
@@ -170,11 +152,9 @@ export class KulTextfield {
       value: this.value,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -184,13 +164,14 @@ export class KulTextfield {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<KulTextfieldPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulTextfieldProps, descriptions);
+  async getProps(): Promise<KulTextfieldPropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this) as KulTextfieldPropsInterface;
   }
   /**
    * Used to retrieve the component's current state.
@@ -241,11 +222,9 @@ export class KulTextfield {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #updateState(
     value: string,
     e: CustomEvent<unknown> | Event = new CustomEvent("change"),
@@ -255,59 +234,68 @@ export class KulTextfield {
       this.onKulEvent(e, "change");
     }
   }
-
   #outlineCheck() {
     return this.kulStyling === "outlined" || this.kulStyling === "textarea";
   }
-
-  #prepCounter() {
+  #prepCounter(): VNode {
     if (!this.#maxLength) {
-      return;
+      return null;
     }
 
+    const { bemClass } = kulManagerSingleton.theme;
+
     return (
-      <div class="textfield__character-counter">
+      <div class={bemClass("textfield", "character-counter")}>
         '0 / ' + {this.#maxLength.toString()}
       </div>
     );
   }
-
-  #prepHelper() {
+  #prepHelper(): VNode {
     if (!this.kulHelper) {
-      return;
+      return null;
     }
 
-    const classList: Record<string, boolean> = {
-      "textfield__helper-text": true,
-      "textfield__helper-text--persistent": !this.kulHelper.showWhenFocused,
-    };
+    const { bemClass } = kulManagerSingleton.theme;
+
     return (
-      <div class="textfield__helper-line">
-        <div class={classList}>{this.kulHelper.value}</div>
-        {this.kulStyling !== "textarea" ? this.#prepCounter() : undefined}
+      <div class={bemClass("textfield", "helper-line")}>
+        <div
+          class={bemClass("textfield", "helper-text", {
+            persistent: !this.kulHelper.showWhenFocused,
+          })}
+        >
+          {this.kulHelper.value}
+        </div>
+        {this.kulStyling !== "textarea" && this.#prepCounter()}
       </div>
     );
   }
-
-  #prepIcon() {
+  #prepIcon(): VNode {
     if (!this.kulIcon) {
-      return;
+      return null;
     }
 
-    const path = getAssetPath(`./assets/svg/${this.kulIcon}.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
-    return <div class="textfield__icon" onClick={() => {}} style={style}></div>;
-  }
+    const { bemClass } = kulManagerSingleton.theme;
+    const { get } = kulManagerSingleton.assets;
 
-  #prepInput() {
+    const { style } = get(`./assets/svg/${this.kulIcon}.svg`);
+    return (
+      <div
+        class={bemClass("textfield", "icon")}
+        onClick={() => {}}
+        style={style}
+      ></div>
+    );
+  }
+  #prepInput(): VNode {
+    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { bemClass } = theme;
+
     return (
       <input
-        {...this.kulHtmlAttributes}
-        class="textfield__input"
-        data-cy={KulDataCyAttributes.INPUT}
+        {...sanitizeProps(this.kulHtmlAttributes)}
+        class={bemClass("textfield", "input")}
+        data-cy={CY_ATTRIBUTES.input}
         disabled={this.kulDisabled}
         onBlur={(e) => {
           this.onKulEvent(e, "blur");
@@ -324,7 +312,7 @@ export class KulTextfield {
         onInput={(e) => {
           this.onKulEvent(e, "input");
         }}
-        placeholder={this.kulFullWidth ? this.kulLabel : undefined}
+        placeholder={(this.kulFullWidth && this.kulLabel) || ""}
         ref={(el) => {
           if (el) {
             this.#input = el;
@@ -334,41 +322,50 @@ export class KulTextfield {
       ></input>
     );
   }
-
-  #prepLabel() {
+  #prepLabel(): VNode {
     if (this.kulFullWidth) {
-      return;
+      return null;
     }
 
+    const { bemClass } = kulManagerSingleton.theme;
+
     const labelEl: VNode = (
-      <label class="textfield__label" htmlFor="input">
+      <label class={bemClass("textfield", "label")} htmlFor="input">
         {this.kulLabel}
       </label>
     );
     if (this.#hasOutline) {
       return (
-        <div class="textfield__notched-outline">
-          <div class="textfield__notched-outline__leading"></div>
-          <div class="textfield__notched-outline__notch">{labelEl}</div>
-          <div class="textfield__notched-outline__trailing"></div>
+        <div class={bemClass("notched-outline")}>
+          <div class={bemClass("notched-outline", "leading")}></div>
+          <div class={bemClass("notched-outline", "notch")}>{labelEl}</div>
+          <div class={bemClass("notched-outline", "trailing")}></div>
         </div>
       );
     }
 
     return labelEl;
   }
-
-  #prepRipple() {
-    return !this.#hasOutline && <span class="textfield__line-ripple"></span>;
-  }
-
-  #prepTextArea() {
+  #prepRipple(): VNode {
     return (
-      <span class="textfield__resizer">
+      !this.#hasOutline && (
+        <span
+          class="textfield__line-ripple"
+          data-cy={CY_ATTRIBUTES.ripple}
+        ></span>
+      )
+    );
+  }
+  #prepTextArea(): VNode {
+    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { bemClass } = theme;
+
+    return (
+      <span class={bemClass("textfield", "resizer")}>
         <textarea
-          {...this.kulHtmlAttributes}
-          class="textfield__input"
-          data-cy={KulDataCyAttributes.INPUT}
+          {...sanitizeProps(this.kulHtmlAttributes)}
+          class={bemClass("textfield", "input")}
+          data-cy={CY_ATTRIBUTES.input}
           disabled={this.kulDisabled}
           id="input"
           onBlur={(e) => {
@@ -396,7 +393,6 @@ export class KulTextfield {
       </span>
     );
   }
-
   #updateStatus() {
     const propertiesToUpdateStatus: {
       prop: string;
@@ -419,49 +415,54 @@ export class KulTextfield {
       }
     });
   }
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
+  //#endregion
 
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
     if (this.kulValue) {
       this.status.add("filled");
       this.value = this.kulValue;
     }
   }
-
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    info.update(this, "did-load");
+  }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "will-render");
     this.#hasOutline = this.#outlineCheck();
     this.#maxLength = this.kulHtmlAttributes?.maxLength as number;
     this.#updateStatus();
   }
-
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
-    const classList = ["textfield", "textfield--" + this.kulStyling];
-    this.status.forEach((status) => {
-      classList.push(`textfield--${status}`);
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+
+    const { kulFullWidth, kulStyle, kulStyling, status } = this;
+
+    const isTextarea = kulStyling === "textarea";
+    const modifiers = { [kulStyling]: true };
+    status.forEach((status) => {
+      modifiers[status] = true;
     });
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class={classList.join(" ")}>
-            {this.kulStyling === "textarea"
+          <div class={bemClass("textfield", null, modifiers)}>
+            {isTextarea
               ? [
                   this.#prepCounter(),
                   this.#prepIcon(),
@@ -473,16 +474,18 @@ export class KulTextfield {
                   this.#prepInput(),
                   this.#prepLabel(),
                   this.#prepRipple(),
-                  this.kulFullWidth ? undefined : this.#prepHelper(),
+                  !kulFullWidth && this.#prepHelper(),
                 ]}
           </div>
-          {this.kulFullWidth ? this.#prepHelper() : undefined}
+          {kulFullWidth && this.#prepHelper()}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

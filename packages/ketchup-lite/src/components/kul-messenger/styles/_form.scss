@@ -1,0 +1,25 @@
+.form {
+  &__label {
+    background: var(--kul-title-background-color);
+    color: var(--kul-title-color);
+    display: flex;
+    justify-content: center;
+    letter-spacing: var(--kul_messenger_letter_spacing);
+    overflow: hidden;
+    padding: var(--kul_messenger_customization_title_padding);
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    top: -1px;
+    z-index: 1;
+  }
+
+  &__confirm {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__button {
+    margin: 0 4px;
+    padding: 16px 0;
+  }
+}

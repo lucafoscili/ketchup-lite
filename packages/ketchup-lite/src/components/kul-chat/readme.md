@@ -10,6 +10,7 @@
 | Property             | Attribute              | Description                                                                                                                        | Type                                  | Default                                                                                 |
 | -------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- | --------------------------------------------------------------------------------------- |
 | `kulContextWindow`   | `kul-context-window`   | How many tokens the context window can handle, used to calculate the occupied space.                                               | `number`                              | `8192`                                                                                  |
+| `kulEmpty`           | `kul-empty`            | Empty text displayed when there is no data.                                                                                        | `string`                              | `"Your chat history is empty!"`                                                         |
 | `kulEndpointUrl`     | `kul-endpoint-url`     | Enables customization of the component's style.                                                                                    | `string`                              | `"http://localhost:5001"`                                                               |
 | `kulLayout`          | `kul-layout`           | Sets the layout of the chat.                                                                                                       | `"bottom-textarea" \| "top-textarea"` | `"top-textarea"`                                                                        |
 | `kulMaxTokens`       | `kul-max-tokens`       | The maximum amount of tokens allowed in the LLM's answer.                                                                          | `number`                              | `250`                                                                                   |
@@ -24,9 +25,9 @@
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-chat-event` | Describes event emitted. | `CustomEvent<KulChatEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-chat-event` |             | `CustomEvent<KulChatEventPayload>` |
 
 
 ## Methods
@@ -61,21 +62,15 @@ Type: `Promise<string>`
 
 The last message of the history.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulChatPropsInterface>`
 
-Retrieves the properties of the component, with optional descriptions.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                          |
-| -------------- | --------- | ------------------------------------------------------------------------------------ |
-| `descriptions` | `boolean` | - If true, returns properties with descriptions; otherwise, returns properties only. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulChatPropsInterface>`
 
-A promise that resolves to an object where each key is a property name, optionally with its description.
+Promise resolved with an object containing the component's properties.
 
 ### `refresh() => Promise<void>`
 
@@ -148,29 +143,29 @@ Type: `Promise<void>`
 ### Depends on
 
 - [kul-spinner](../kul-spinner)
+- [kul-code](../kul-code)
 - [kul-image](../kul-image)
 - [kul-button](../kul-button)
-- [kul-textfield](../kul-textfield)
-- [kul-progressbar](../kul-progressbar)
 - [kul-typewriter](../kul-typewriter)
-- [kul-code](../kul-code)
+- [kul-progressbar](../kul-progressbar)
+- [kul-textfield](../kul-textfield)
 
 ### Graph
 ```mermaid
 graph TD;
   kul-chat --> kul-spinner
+  kul-chat --> kul-code
   kul-chat --> kul-image
   kul-chat --> kul-button
-  kul-chat --> kul-textfield
-  kul-chat --> kul-progressbar
   kul-chat --> kul-typewriter
-  kul-chat --> kul-code
+  kul-chat --> kul-progressbar
+  kul-chat --> kul-textfield
+  kul-code --> kul-button
+  kul-button --> kul-image
+  kul-button --> kul-list
   kul-image --> kul-spinner
   kul-image --> kul-badge
   kul-badge --> kul-image
-  kul-button --> kul-image
-  kul-button --> kul-list
-  kul-code --> kul-button
   kul-messenger --> kul-chat
   kul-showcase-chat --> kul-chat
   style kul-chat fill:#f9f,stroke:#333,stroke-width:4px

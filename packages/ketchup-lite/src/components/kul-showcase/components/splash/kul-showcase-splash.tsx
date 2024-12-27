@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
-import { SplashExample } from "./kul-showcase-splash-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
+import { SplashData, SplashExample } from "./kul-showcase-splash-declarations";
 import { SPLASH_FIXTURES } from "./kul-showcase-splash-fixtures";
 
 @Component({
@@ -27,7 +27,8 @@ export class KulShowcaseSplash {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: SplashExample = this.fixtures.examples[key];
+        const k = key as keyof SplashData;
+        const props: SplashExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -73,7 +74,7 @@ export class KulShowcaseSplash {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

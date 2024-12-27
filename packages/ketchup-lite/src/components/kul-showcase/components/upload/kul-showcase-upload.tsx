@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { UploadExample } from "./kul-showcase-upload-declarations";
+import { UploadData, UploadExample } from "./kul-showcase-upload-declarations";
 import { UPLOAD_FIXTURES } from "./kul-showcase-upload-fixtures";
 
 @Component({
@@ -35,7 +35,8 @@ export class KulShowcaseUpload {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: UploadExample = this.fixtures.examples[key];
+        const k = key as keyof UploadData;
+        const props: UploadExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -85,7 +86,7 @@ export class KulShowcaseUpload {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

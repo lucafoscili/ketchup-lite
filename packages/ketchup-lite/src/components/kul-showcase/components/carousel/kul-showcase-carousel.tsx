@@ -1,8 +1,12 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { CarouselExample } from "./kul-showcase-carousel-declarations";
+import {
+  CarouselData,
+  CarouselExample,
+} from "./kul-showcase-carousel-declarations";
 import { CAROUSEL_FIXTURES } from "./kul-showcase-carousel-fixtures";
 
 @Component({
@@ -20,7 +24,7 @@ export class KulShowcaseCarousel {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = CAROUSEL_FIXTURES();
+  @State() fixtures = CAROUSEL_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables
@@ -34,7 +38,8 @@ export class KulShowcaseCarousel {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: CarouselExample = this.fixtures.examples[key];
+        const k = key as keyof CarouselData;
+        const props: CarouselExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -82,7 +87,11 @@ export class KulShowcaseCarousel {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div class="grid" data-cy="wrapper" part="grid">
+        <div
+          class="grid"
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
+          part="grid"
+        >
           {this.#prepExamples()}
         </div>
       </Fragment>

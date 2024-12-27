@@ -7,22 +7,22 @@
 
 ## Properties
 
-| Property             | Attribute              | Description                                                           | Type             | Default |
-| -------------------- | ---------------------- | --------------------------------------------------------------------- | ---------------- | ------- |
-| `kulData`            | --                     | The data of the list.                                                 | `KulDataDataset` | `null`  |
-| `kulEmptyLabel`      | `kul-empty-label`      | Text displayed when the list is empty.                                | `string`         | `""`    |
-| `kulEnableDeletions` | `kul-enable-deletions` | Defines whether items can be removed from the list or not.            | `boolean`        | `false` |
-| `kulNavigation`      | `kul-navigation`       | When true, enables items' navigation through arrow keys.              | `boolean`        | `true`  |
-| `kulRipple`          | `kul-ripple`           | When set to true, the pointerdown event will trigger a ripple effect. | `boolean`        | `true`  |
-| `kulSelectable`      | `kul-selectable`       | Defines whether items are selectable or not.                          | `boolean`        | `true`  |
-| `kulStyle`           | `kul-style`            | Custom style of the component.                                        | `string`         | `""`    |
+| Property             | Attribute              | Description                                                           | Type             | Default         |
+| -------------------- | ---------------------- | --------------------------------------------------------------------- | ---------------- | --------------- |
+| `kulData`            | --                     | The data of the list.                                                 | `KulDataDataset` | `null`          |
+| `kulEmpty`           | `kul-empty`            | Empty text displayed when there is no data.                           | `string`         | `"Empty data."` |
+| `kulEnableDeletions` | `kul-enable-deletions` | Defines whether items can be removed from the list or not.            | `boolean`        | `false`         |
+| `kulNavigation`      | `kul-navigation`       | When true, enables items' navigation through arrow keys.              | `boolean`        | `true`          |
+| `kulRipple`          | `kul-ripple`           | When set to true, the pointerdown event will trigger a ripple effect. | `boolean`        | `true`          |
+| `kulSelectable`      | `kul-selectable`       | Defines whether items are selectable or not.                          | `boolean`        | `true`          |
+| `kulStyle`           | `kul-style`            | Custom style of the component.                                        | `string`         | `""`            |
 
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-list-event` | Describes event emitted. | `CustomEvent<KulListEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-list-event` |             | `CustomEvent<KulListEventPayload>` |
 
 
 ## Methods
@@ -57,21 +57,15 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulListPropsInterface>`
 
-Used to retrieve component's props values.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
-| `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulListPropsInterface>`
 
-List of props as object, each key will be a prop.
+Promise resolved with an object containing the component's properties.
 
 ### `getSelected() => Promise<KulDataNode>`
 

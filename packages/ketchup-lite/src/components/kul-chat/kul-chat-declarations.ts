@@ -1,66 +1,135 @@
-import { KulLLMChoiceMessage } from "../../managers/kul-llm/kul-llm-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulEventPayload } from "../../types/GenericTypes";
+import { VNode } from "@stencil/core";
+import {
+  KulLLMChoiceMessage,
+  KulLLMRole,
+} from "src/managers/kul-llm/kul-llm-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterGetters,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterJsx,
+  KulComponentAdapterRefs,
+  KulComponentAdapterSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
+import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
 import { KulTypewriterPropsInterface } from "../kul-typewriter/kul-typewriter-declarations";
+import { KulChat } from "./kul-chat";
 
 //#region Adapter
-export interface KulChatAdapter {
-  actions: {
-    delete: (message: KulLLMChoiceMessage) => void;
-    disableInteractivity: (shouldDisable: boolean) => void;
-    regenerate: (message: KulLLMChoiceMessage) => void;
-    send: () => void;
-    stt: () => void;
-    updateTokenCount: () => Promise<void>;
+export interface KulChatAdapter extends KulComponentAdapter<KulChat> {
+  controller: {
+    get: KulChatAdapterControllerGetters;
+    set: KulChatAdapterControllerSetters;
   };
-  components: {
-    buttons: {
-      clear: HTMLKulButtonElement;
-      send: HTMLKulButtonElement;
-      settings: HTMLKulButtonElement;
-      stt: HTMLKulButtonElement;
-    };
+  elements: {
+    jsx: KulChatAdapterJsx;
+    refs: KulChatAdapterRefs;
+  };
+  handlers: KulChatAdapterHandlers;
+}
+export interface KulChatAdapterJsx extends KulComponentAdapterJsx {
+  chat: {
+    clear: () => VNode;
+    configuration: () => VNode;
+    messageBlock: (text: string, role: KulLLMRole) => VNode;
+    progressbar: () => VNode;
+    send: () => VNode;
+    settings: () => VNode;
+    spinner: () => VNode;
+    stt: () => VNode;
+    textarea: () => VNode;
+  };
+  settings: {
+    back: () => VNode;
+    endpoint: () => VNode;
+    maxTokens: () => VNode;
+    polling: () => VNode;
+    system: () => VNode;
+    temperature: () => VNode;
+  };
+  toolbar: {
+    deleteMessage: (m: KulLLMChoiceMessage) => VNode;
+    copyContent: (m: KulLLMChoiceMessage) => VNode;
+    regenerate: (m: KulLLMChoiceMessage) => VNode;
+  };
+}
+export interface KulChatAdapterRefs extends KulComponentAdapterRefs {
+  chat: {
+    clear: HTMLKulButtonElement;
+    configuration: HTMLKulButtonElement;
     progressbar: HTMLKulProgressbarElement;
+    send: HTMLKulButtonElement;
+    settings: HTMLKulButtonElement;
     spinner: HTMLKulSpinnerElement;
-    textareas: {
-      prompt: HTMLKulTextfieldElement;
-      system: HTMLKulTextfieldElement;
-    };
+    stt: HTMLKulButtonElement;
+    textarea: HTMLKulTextfieldElement;
   };
-  emit: { event: (eventType: KulChatEvent, e?: Event) => void };
-  get: {
-    history: () => KulChatHistory;
-    manager: () => KulManager;
-    props: {
-      contextWindow: () => number;
-      endpointUrl: () => string;
-      maxTokens: () => number;
-      pollingInterval: () => number;
-      system: () => string;
-      temperature: () => number;
-      typewriterProps: () => KulTypewriterPropsInterface;
-    };
-    status: {
-      connection: (status: KulChatStatus) => void;
-      toolbarMessage: () => KulLLMChoiceMessage;
-      view: () => KulChatView;
-    };
+  settings: {
+    back: HTMLKulButtonElement;
+    endpoint: HTMLKulTextfieldElement;
+    maxTokens: HTMLKulTextfieldElement;
+    polling: HTMLKulTextfieldElement;
+    system: HTMLKulTextfieldElement;
+    temperature: HTMLKulTextfieldElement;
   };
-  set: {
-    props: {
-      contextWindow: (value: number) => void;
-      endpointUrl: (value: string) => void;
-      maxTokens: (value: number) => void;
-      pollingInterval: (value: number) => void;
-      system: (value: string) => void;
-      temperature: (value: number) => void;
-    };
-    status: {
-      connection: (status: KulChatStatus) => void;
-      toolbarMessage: (message: KulLLMChoiceMessage) => void;
-      view: (view: KulChatView) => void;
-    };
+  toolbar: {
+    deleteMessage: HTMLKulButtonElement;
+    copyContent: HTMLKulButtonElement;
+    regenerate: HTMLKulButtonElement;
   };
+}
+export interface KulChatAdapterHandlers extends KulComponentAdapterHandlers {
+  chat: {
+    button: (e: CustomEvent<KulButtonEventPayload>) => void;
+  };
+  settings: {
+    button: (e: CustomEvent<KulButtonEventPayload>) => void;
+    textfield: (e: CustomEvent<KulTextfieldEventPayload>) => void;
+  };
+  toolbar: {
+    button: (
+      e: CustomEvent<KulButtonEventPayload>,
+      m: KulLLMChoiceMessage,
+    ) => void;
+  };
+}
+export type KulChatAdapterInitializerGetters = Pick<
+  KulChatAdapterControllerGetters,
+  | "compInstance"
+  | "currentPrompt"
+  | "currentTokens"
+  | "history"
+  | "lastMessage"
+  | "manager"
+  | "status"
+  | "view"
+>;
+export type KulChatAdapterInitializerSetters = Pick<
+  KulChatAdapterControllerSetters,
+  "currentPrompt" | "currentTokens" | "history" | "status" | "view"
+>;
+export interface KulChatAdapterControllerGetters
+  extends KulComponentAdapterGetters<KulChat> {
+  compInstance: KulChat;
+  currentPrompt: () => KulLLMChoiceMessage;
+  currentTokens: () => number;
+  history: () => KulChatHistory;
+  lastMessage: (role?: KulLLMRole) => KulLLMChoiceMessage;
+  manager: KulManager;
+  newPrompt: () => Promise<KulLLMChoiceMessage>;
+  status: () => KulChatStatus;
+  view: () => KulChatView;
+}
+export interface KulChatAdapterControllerSetters
+  extends KulComponentAdapterSetters {
+  currentPrompt: (value: KulLLMChoiceMessage) => void;
+  currentTokens: (value: number) => void;
+  history: (cb: () => unknown) => void;
+  status: (status: KulChatStatus) => void;
+  view: (view: KulChatView) => void;
 }
 //#endregion
 
@@ -85,21 +154,9 @@ export type KulChatView = "chat" | "settings";
 //#endregion
 
 //#region Props
-export enum KulChatProps {
-  kulContextWindow = "How many tokens the context window can handle, used to calculate the occupied space.",
-  kulEndpointUrl = "URL of the endpoint where the LLM is hosted.",
-  kulLayout = "Sets the layout of the chat.",
-  kulMaxTokens = "Maximum number of tokens allowed in the LLM's answer.",
-  kulPollingInterval = "How often the component checks whether the LLM endpoint is online or not.",
-  kulSeed = "Seed value for the LLM's answer generation.",
-  kulStyle = "Custom style of the component.",
-  kulSystem = "System message for the LLM.",
-  kulTemperature = "Sets the creative boundaries of the LLM.",
-  kulTypewriterProps = "Sets the props of the assistant typewriter component. Set this prop to false to replace the typewriter with a simple text element.",
-  kulValue = "Initial history of the chat.",
-}
 export interface KulChatPropsInterface {
   kulContextWindow?: number;
+  kulEmpty?: string;
   kulEndpointUrl?: string;
   kulLayout?: KulChatLayout;
   kulMaxTokens?: number;

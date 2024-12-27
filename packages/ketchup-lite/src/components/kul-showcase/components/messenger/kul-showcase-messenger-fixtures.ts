@@ -1,3 +1,4 @@
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -16,10 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulMessenger"> =
   "KulMessengerEventPayload";
 const TAG_NAME: KulComponentTag<"KulMessenger"> = "kul-messenger";
 
-export const MESSENGER_FIXTURES: () => {
+export const MESSENGER_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: MessengerData;
-} = () => {
+} = (get) => {
   const documentation: KulArticleDataset = {
     nodes: [
       {
@@ -68,12 +69,12 @@ export const MESSENGER_FIXTURES: () => {
     examples: {
       simple: {
         ["data-description"]: "Simple messenger component",
-        kulData: MESSENGER_KULDATA(),
+        kulData: MESSENGER_KULDATA(get),
       },
       style: {
         ["data-description"]: "Messenger with custom style",
         ["data-dynamic"]: "custom",
-        kulData: MESSENGER_KULDATA(),
+        kulData: MESSENGER_KULDATA(get),
       },
     },
   };

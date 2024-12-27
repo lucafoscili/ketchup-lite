@@ -1,0 +1,40 @@
+.covers {
+  & {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100%;
+  }
+
+  &__title {
+    align-items: center;
+    background: var(--kul-title-background-color);
+    color: var(--kul-title-color);
+    display: flex;
+    justify-content: space-between;
+    letter-spacing: var(--kul_messenger_letter_spacing);
+    overflow: hidden;
+    position: sticky;
+    text-align: center;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    top: -1px;
+    z-index: 1;
+  }
+
+  &__label {
+    overflow: hidden;
+    padding: var(--kul_messenger_customization_title_padding);
+    text-overflow: ellipsis;
+  }
+
+  &__add {
+    --kul-button-border-radius: 0;
+  }
+
+  &__images {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow: auto;
+    width: 100%;
+  }
+}

@@ -26,9 +26,9 @@
 
 ## Events
 
-| Event              | Description                                                                      | Type                                 |
-| ------------------ | -------------------------------------------------------------------------------- | ------------------------------------ |
-| `kul-button-event` | Describes event emitted for various button interactions like click, focus, blur. | `CustomEvent<KulButtonEventPayload>` |
+| Event              | Description | Type                                 |
+| ------------------ | ----------- | ------------------------------------ |
+| `kul-button-event` |             | `CustomEvent<KulButtonEventPayload>` |
 
 
 ## Methods
@@ -43,19 +43,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulButtonPropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
-#### Parameters
-
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `descriptions` | `boolean` | - When true, includes descriptions for each property. |
-
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulButtonPropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 
@@ -87,7 +81,7 @@ Sets the component's state.
 
 | Name    | Type            | Description                                 |
 | ------- | --------------- | ------------------------------------------- |
-| `value` | `"off" \| "on"` | - The new state to be set on the component. |
+| `value` | `"on" \| "off"` | - The new state to be set on the component. |
 
 #### Returns
 

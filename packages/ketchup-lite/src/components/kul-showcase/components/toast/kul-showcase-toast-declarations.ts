@@ -4,7 +4,7 @@ import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 export const TOAST_EXAMPLES_KEYS = ["icon", "style"] as const;
 
 export interface ToastExample extends KulToastPropsInterface {
-  ["data-description"]: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 

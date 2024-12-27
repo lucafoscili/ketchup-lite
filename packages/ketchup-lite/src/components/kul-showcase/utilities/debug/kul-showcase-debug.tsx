@@ -1,13 +1,11 @@
 import { Component, Element, Fragment, State, h } from "@stencil/core";
 
 import { DEBUG_DOC } from "./kul-showcase-debug-data";
-import {
-  GenericObject,
-  KulDataCyAttributes,
-} from "../../../../types/GenericTypes";
-import { KUL_WRAPPER_ID } from "../../../../variables/GenericVariables";
+import { GenericObject } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES, KUL_WRAPPER_ID } from "../../../../utils/constants";
 import { KulButtonEventPayload } from "../../../kul-button/kul-button-declarations";
 import { KulListEventPayload } from "../../../kul-list/kul-list-declarations";
+import { kulManagerSingleton } from "src/global/global";
 
 @Component({
   tag: "kul-showcase-debug",
@@ -44,6 +42,8 @@ export class KulShowcaseDebug {
 
   //#region Private methods
   #prepComponent() {
+    const { sanitizeProps } = kulManagerSingleton;
+
     const ComponentTag = this.currentComponent
       ? "kul-" + this.currentComponent
       : undefined;
@@ -52,7 +52,7 @@ export class KulShowcaseDebug {
         <ComponentTag
           class={`component--${ComponentTag}`}
           key={`${Date.now()}-${Math.random()}`}
-          {...this.currentProps}
+          {...sanitizeProps(this.currentProps)}
         ></ComponentTag>
       </div>
     ) : (
@@ -121,7 +121,7 @@ export class KulShowcaseDebug {
           ></kul-article>
           <div
             class="grid"
-            data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+            data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
             part="grid"
           >
             {[this.#prepTextarea(), this.#prepComponent()]}

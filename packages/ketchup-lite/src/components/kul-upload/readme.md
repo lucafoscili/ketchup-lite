@@ -12,14 +12,14 @@
 | `kulLabel`  | `kul-label`  | Sets the button's label.                                              | `string`  | `"Upload files..."` |
 | `kulRipple` | `kul-ripple` | When set to true, the pointerdown event will trigger a ripple effect. | `boolean` | `true`              |
 | `kulStyle`  | `kul-style`  | Enables customization of the component's style.                       | `string`  | `""`                |
-| `kulValue`  | `kul-value`  | Initializes the component with these files.                           | `any`     | `null`              |
+| `kulValue`  | --           | Initializes the component with these files.                           | `File[]`  | `null`              |
 
 
 ## Events
 
-| Event              | Description              | Type                                 |
-| ------------------ | ------------------------ | ------------------------------------ |
-| `kul-upload-event` | Describes event emitted. | `CustomEvent<KulUploadEventPayload>` |
+| Event              | Description | Type                                 |
+| ------------------ | ----------- | ------------------------------------ |
+| `kul-upload-event` |             | `CustomEvent<KulUploadEventPayload>` |
 
 
 ## Methods
@@ -34,21 +34,15 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulUploadPropsInterface>`
 
-Retrieves the properties of the component, with optional descriptions.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                          |
-| -------------- | --------- | ------------------------------------------------------------------------------------ |
-| `descriptions` | `boolean` | - If true, returns properties with descriptions; otherwise, returns properties only. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulUploadPropsInterface>`
 
-A promise that resolves to an object where each key is a property name, optionally with its description.
+Promise resolved with an object containing the component's properties.
 
 ### `getValue() => Promise<File[]>`
 

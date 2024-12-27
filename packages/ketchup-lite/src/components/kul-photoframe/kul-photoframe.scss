@@ -1,2 +1,87 @@
-@import "styles/kup-photoframe-main.scss";
-@import "styles/kup-photoframe-classes.scss";
+:host {
+  /**
+   * @prop --kul-photoframe-border: Sets the border of the component.
+   * Defaults to 1px inset var(--kul-border-color).
+   */
+  --kul_photoframe_border: var(
+    --kul-photoframe-border,
+    1px inset var(--kul-border-color)
+  );
+  /**
+    * @prop --kul-photoframe-fade-out-time: Sets the time of the placeholder's fade out transition.
+    * Defaults to 2000ms.
+    */
+  --kul_photoframe_fade_out_time: var(--kul-photoframe-fade-out-time, 2000ms);
+
+  border: var(--kul_photoframe_border);
+  display: block;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+#kul-component {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.photoframe {
+  &--landscape {
+    img {
+      width: 100%;
+    }
+  }
+
+  &--portrait {
+    img {
+      height: 100%;
+    }
+  }
+
+  &__image {
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    z-index: 0;
+
+    &--fade-in {
+      display: block;
+      position: relative;
+    }
+  }
+
+  &__placeholder {
+    display: none;
+    transition: opacity var(--kul_photoframe_fade_out_time) ease-out;
+    will-change: opacity;
+    z-index: 1;
+
+    &--loaded {
+      display: block;
+    }
+
+    &--fade-out {
+      opacity: 0;
+      position: absolute;
+    }
+  }
+}
+
+/*-------------------------------------------------*/
+/*        C o m p o n e n t   C l a s s e s        */
+/*-------------------------------------------------*/
+
+:host(.#{$kul-class-fit}) {
+  img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+}

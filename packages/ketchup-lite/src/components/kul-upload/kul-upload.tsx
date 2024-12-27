@@ -10,17 +10,18 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
-  KulUploadEventPayload,
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
+import {
   KulUploadEvent,
-  KulUploadProps,
+  KulUploadEventPayload,
+  KulUploadPropsInterface,
 } from "./kul-upload-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
 
 @Component({
   tag: "kul-upload",
@@ -33,66 +34,47 @@ export class KulUpload {
    */
   @Element() rootElement: HTMLKulUploadElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    *State holding the selected files
    * @default []
    */
   @State() selectedFiles: File[] = [];
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Sets the button's label.
    * @default "Upload files..."
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = "Upload files...";
+  @Prop({ mutable: true }) kulLabel = "Upload files...";
   /**
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Enables customization of the component's style.
    * @default "" - No custom style applied by default.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Initializes the component with these files.
    * @default null
    */
-  @Prop({ mutable: false }) kulValue = null;
+  @Prop({ mutable: false }) kulValue: File[] = null;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #input: HTMLInputElement;
-  #kulManager = kulManagerInstance();
   #rippleSurface: HTMLElement;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-upload-event",
     composed: true,
@@ -100,8 +82,9 @@ export class KulUpload {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulUploadEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulUploadEvent, file?: File) {
+    const { theme } = kulManagerSingleton;
+
     switch (eventType) {
       case "delete":
         this.selectedFiles = this.selectedFiles.filter((f) => f !== file);
@@ -109,13 +92,11 @@ export class KulUpload {
 
       case "pointerdown":
         if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface,
-          );
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface);
         }
         break;
     }
+
     this.kulEvent.emit({
       comp: this,
       eventType,
@@ -124,11 +105,9 @@ export class KulUpload {
       selectedFiles: this.selectedFiles,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Retrieves the debug information reflecting the current state of the component.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
@@ -138,13 +117,14 @@ export class KulUpload {
     return this.debugInfo;
   }
   /**
-   * Retrieves the properties of the component, with optional descriptions.
-   * @param {boolean} descriptions - If true, returns properties with descriptions; otherwise, returns properties only.
-   * @returns {Promise<GenericObject>} A promise that resolves to an object where each key is a property name, optionally with its description.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<KulUploadPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulUploadProps, descriptions);
+  async getProps(): Promise<KulUploadPropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this) as KulUploadPropsInterface;
   }
   /**
    * Returns the component's internal value.
@@ -171,11 +151,9 @@ export class KulUpload {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #formatFileSize(size: number): string {
     const units = ["Bytes", "KB", "MB", "GB", "TB"];
     let unitIndex = 0;
@@ -193,7 +171,6 @@ export class KulUpload {
 
     return `${size.toFixed(2)} ${units[unitIndex]}`;
   }
-
   #handleFileChange() {
     if (this.#input.files) {
       this.selectedFiles = Array.from(this.#input.files);
@@ -202,7 +179,6 @@ export class KulUpload {
     }
     this.onKulEvent(new CustomEvent("upload"), "upload");
   }
-
   #prepFileInfo() {
     return this.selectedFiles.map((file, index) => (
       <div class="file-info__item" key={index}>
@@ -239,57 +215,60 @@ export class KulUpload {
       </div>
     ));
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
+
     if (Array.isArray(this.kulValue)) {
       this.selectedFiles = this.kulValue;
     }
   }
-
   componentDidLoad() {
-    this.onKulEvent(new CustomEvent("ready"), "ready");
+    const { debug, theme } = kulManagerSingleton;
+
     if (this.#rippleSurface) {
-      this.#kulManager.theme.ripple.setup(this.#rippleSurface);
+      theme.ripple.setup(this.#rippleSurface);
     }
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
-  }
 
+    this.onKulEvent(new CustomEvent("ready"), "ready");
+    debug.info.update(this, "did-load");
+  }
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
-    const hasSelectedFiles = this.selectedFiles && this.selectedFiles.length;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+
+    const { kulLabel, kulRipple, kulStyle, selectedFiles } = this;
+
+    const hasSelectedFiles = !!selectedFiles?.length;
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           <div
-            class={`wrapper ${
-              this.selectedFiles && this.selectedFiles.length
-                ? "wrapper--with-info"
-                : ""
-            }`}
+            class={bemClass("upload", null, {
+              "with-info": Boolean(selectedFiles?.length),
+            })}
           >
             <div
-              class="file-upload"
+              class={bemClass("file-upload")}
               onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
             >
               <input
-                class="file-upload__input"
+                class={bemClass("file-upload", "input")}
+                data-cy={CY_ATTRIBUTES.input}
                 id="upload-input"
                 multiple
                 onChange={() => this.#handleFileChange()}
@@ -299,27 +278,30 @@ export class KulUpload {
                 type="file"
               />
               <label
-                class="file-upload__label"
+                class={bemClass("file-upload", "label")}
+                data-cy={CY_ATTRIBUTES.ripple}
                 htmlFor="upload-input"
                 ref={(el) => {
-                  if (this.kulRipple) {
+                  if (kulRipple) {
                     this.#rippleSurface = el;
                   }
                 }}
               >
-                <div class="file-upload__text">{this.kulLabel}</div>
+                <div class={bemClass("file-upload", "text")}>{kulLabel}</div>
               </label>
             </div>
-            <div class="file-info">
-              {hasSelectedFiles ? this.#prepFileInfo() : undefined}
+            <div class={bemClass("file-info")}>
+              {hasSelectedFiles && this.#prepFileInfo()}
             </div>
           </div>
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

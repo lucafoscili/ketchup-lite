@@ -1,7 +1,15 @@
-import { Component, Element, h, Host, Prop, State, VNode } from "@stencil/core";
-
-import { KulDataDataset } from "src/components";
-import { kulManagerInstance } from "src/managers/kul-manager/kul-manager";
+import {
+  Component,
+  Element,
+  h,
+  Host,
+  Prop,
+  State,
+  VNode,
+  Watch,
+} from "@stencil/core";
+import { kulManagerSingleton } from "src/global/global";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
 import {
   KUL_DOC,
@@ -9,7 +17,10 @@ import {
   KUL_SHOWCASE_FRAMEWORK,
   KUL_SHOWCASE_UTILITIES,
 } from "./kul-showcase-data";
-import { KulShowcaseTitle } from "./kul-showcase-declarations";
+import {
+  KulShowcaseTitle,
+  KulShowcaseViews,
+} from "./kul-showcase-declarations";
 
 @Component({
   assetsDirs: ["assets/media"],
@@ -21,7 +32,7 @@ export class KulShowcase {
   @Element() rootElement: HTMLKulShowcaseElement;
 
   //#region States
-  @State() currentState: { [K in KulShowcaseTitle]: string } = {
+  @State() currentState: KulShowcaseViews = {
     Components: "",
     Framework: "",
     Utilities: "",
@@ -31,15 +42,20 @@ export class KulShowcase {
 
   //#region Props
   /**
-   * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
+   * The scroll container, functional to the ScrollToTop floating button.
    * @default ""
    */
-  @Prop({ mutable: false }) kulScrollElement: HTMLElement = undefined;
+  @Prop({ mutable: false }) kulScrollElement: HTMLElement;
   /**
    * Customizes the style of the component. This property allows you to apply a custom CSS style to the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
+  /**
+   * Sets the initial value of the views.
+   * @default null
+   */
+  @Prop({ mutable: false }) kulValue: KulShowcaseViews = null;
   //#endregion
 
   //#region Internal variables
@@ -53,7 +69,27 @@ export class KulShowcase {
     Framework: null,
     Utilities: null,
   };
-  #kulManager = kulManagerInstance();
+  //#endregion
+
+  //#region Watchers
+  @Watch("currentState")
+  handleCurrentStateChange(newValue: KulShowcaseViews) {
+    const params = new URLSearchParams();
+
+    if (newValue.Components) {
+      params.set("Components", newValue.Components);
+    }
+    if (newValue.Framework) {
+      params.set("Framework", newValue.Framework);
+    }
+    if (newValue.Utilities) {
+      params.set("Utilities", newValue.Utilities);
+    }
+
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+
+    window.history.replaceState({}, "", newUrl);
+  }
   //#endregion
 
   //#region Private methods
@@ -86,12 +122,17 @@ export class KulShowcase {
           }
         }}
       >
-        <kul-typewriter kulTag="h2" kulValue={current || type}></kul-typewriter>
+        <kul-typewriter
+          kulStyle="h2 { margin: 0; padding: 8px 0; text-transform: capitalize; }"
+          kulTag="h2"
+          kulValue={current || type}
+        ></kul-typewriter>
         <div class={`navigation ${current ? "active" : ""}`}>
           <kul-button
             class="kul-full-height kul-full-width"
             kulIcon="home"
-            onClick={() => {
+            onClick={async () => {
+              this.#scrollToElement(type);
               this.currentState = {
                 ...this.currentState,
                 [type]: "",
@@ -209,6 +250,8 @@ export class KulShowcase {
     return <div>No state available for type: {type}</div>;
   }
   #cards(type: KulShowcaseTitle): VNode[] {
+    const { stringify } = kulManagerSingleton.data.cell;
+
     const dataset =
       type === "Components"
         ? KUL_SHOWCASE_COMPONENTS
@@ -226,7 +269,7 @@ export class KulShowcase {
                 value: node.icon,
               },
               text1: {
-                value: this.#kulManager.data.cell.stringify(node.value),
+                value: stringify(node.value),
               },
               text2: { value: "" },
               text3: { value: node.description },
@@ -296,7 +339,40 @@ export class KulShowcase {
     } else {
       window.addEventListener("scroll", this.#handleScroll);
     }
+
+    if (this.kulValue) {
+      this.currentState = this.kulValue;
+    } else {
+      const searchParams = new URLSearchParams(window.location.search);
+
+      searchParams.forEach((value, key) => {
+        const keyLower = key.toLowerCase();
+        const valueLower = value.toLowerCase();
+
+        switch (keyLower) {
+          case "components":
+            this.currentState = {
+              ...this.currentState,
+              Components: valueLower,
+            };
+            break;
+          case "framework":
+            this.currentState = {
+              ...this.currentState,
+              Framework: valueLower,
+            };
+            break;
+          case "utilities":
+            this.currentState = {
+              ...this.currentState,
+              Utilities: valueLower,
+            };
+            break;
+        }
+      });
+    }
   }
+
   render() {
     return (
       <Host>

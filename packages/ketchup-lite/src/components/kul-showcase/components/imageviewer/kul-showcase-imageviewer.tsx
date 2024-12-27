@@ -1,9 +1,13 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ImageviewerExample } from "./kul-showcase-imageviewer-declarations";
+import {
+  ImageviewerData,
+  ImageviewerExample,
+} from "./kul-showcase-imageviewer-declarations";
 import { IMAGEVIEWER_FIXTURES } from "./kul-showcase-imageviewer-fixtures";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 @Component({
   tag: "kul-showcase-imageviewer",
@@ -20,7 +24,7 @@ export class KulShowcaseImageviewer {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = IMAGEVIEWER_FIXTURES();
+  @State() fixtures = IMAGEVIEWER_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables
@@ -34,7 +38,8 @@ export class KulShowcaseImageviewer {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: ImageviewerExample = this.fixtures.examples[key];
+        const k = key as keyof ImageviewerData;
+        const props: ImageviewerExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -82,7 +87,11 @@ export class KulShowcaseImageviewer {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div class="grid" data-cy="wrapper" part="grid">
+        <div
+          class="grid"
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
+          part="grid"
+        >
           {this.#prepExamples()}
         </div>
       </Fragment>

@@ -8,82 +8,99 @@ import {
   XAXisComponentOption,
   YAXisComponentOption,
 } from "echarts";
-
-import { KulChart } from "./kul-chart";
 import {
-  KulDataCell,
   KulDataColumn,
   KulDataDataset,
   KulDataNode,
-  KulDataShapes,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulEventPayload } from "../../types/GenericTypes";
+} from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterGetters,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
+import { KulChart } from "./kul-chart";
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
-export interface KulChartAdapter {
-  actions: {
-    mapType: (type: KulChartType) => SeriesOption["type"];
-    onClick: (e: ECElementEvent) => boolean | void;
-    stringify: (str: KulDataCell<KulDataShapes>["value"]) => string;
+//#region Adapter
+export interface KulChartAdapter extends KulComponentAdapter<KulChart> {
+  controller: {
+    get: KulChartAdapterControllerGetters;
+    set: KulChartAdapterControllerSetters;
   };
-  emit: {
-    event: (
-      eventType: KulChartEvent,
-      data?: KulChartEventData,
-      e?: Event,
-    ) => void;
-  };
-  get: KulChartAdapterGetters;
+  handlers: KulChartAdapterHandlers;
 }
-export interface KulChartAdapterDesign {
-  applyOpacity: (color: string, opacity: string) => string;
+export interface KulChartAdapterHandlers extends KulComponentAdapterHandlers {
+  onClick: (e: ECElementEvent) => boolean | void;
+}
+export interface KulChartAdapterThemeStyle {
+  background: string;
+  border: string;
+  danger: string;
+  font: string;
+  success: string;
+  text: string;
+}
+export interface KulChartAdapterStyle {
   axis: (
-    adapter: KulChartAdapter,
-    axisType: "x" | "y",
+    axisType: KulChartAxesTypes,
   ) => XAXisComponentOption | YAXisComponentOption;
-  colors: (adapter: KulChartAdapter, count: number) => string[];
-  label: (adapter: KulChartAdapter) => EChartsOption;
-  legend: (adapter: KulChartAdapter) => LegendComponentOption;
-  theme: {
-    backgroundColor: string;
-    border: string;
-    dangerColor: string;
-    font: string;
-    successColor: string;
-    textColor: string;
-  };
+  label: () => EChartsOption;
+  legend: () => LegendComponentOption;
+  theme: () => KulChartAdapterThemeStyle;
   tooltip: (
-    adapter: KulChartAdapter,
     formatter?: TooltipComponentFormatterCallback<unknown>,
   ) => TooltipComponentOption;
-}
-export interface KulChartAdapterGetters {
-  chart: () => KulChart;
-  columnById: (id: string) => KulDataColumn;
-  design: KulChartAdapterDesign;
-  manager: () => KulManager;
-  options: KulChartAdapterOptions;
-  seriesColumn: (seriesName: string) => KulDataColumn[];
-  xAxesData: () => { id: string; data: string[] }[];
-  seriesData: () => KulChartSeriesData[];
+  seriesColor: (amount: number) => string[];
 }
 export interface KulChartAdapterOptions {
-  bubble: (adapter: KulChartAdapter) => EChartsOption;
-  calendar: (adapter: KulChartAdapter) => EChartsOption;
-  candlestick: (adapter: KulChartAdapter) => EChartsOption;
-  default: (adapter: KulChartAdapter) => EChartsOption;
-  funnel: (adapter: KulChartAdapter) => EChartsOption;
-  heatmap: (adapter: KulChartAdapter) => EChartsOption;
-  pie: (adapter: KulChartAdapter) => EChartsOption;
-  radar: (adapter: KulChartAdapter) => EChartsOption;
-  sankey: (adapter: KulChartAdapter) => EChartsOption;
+  basic: () => EChartsOption;
+  bubble: () => EChartsOption;
+  calendar: () => EChartsOption;
+  candlestick: () => EChartsOption;
+  funnel: () => EChartsOption;
+  heatmap: () => EChartsOption;
+  pie: () => EChartsOption;
+  radar: () => EChartsOption;
+  sankey: () => EChartsOption;
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+export type KulChartAdapterInitializerGetters = Pick<
+  KulChartAdapterControllerGetters,
+  | "compInstance"
+  | "columnById"
+  | "manager"
+  | "mappedType"
+  | "seriesColumn"
+  | "seriesData"
+  | "style"
+  | "xAxesData"
+>;
+export type KulChartAdapterInitializerSetters = Pick<
+  KulChartAdapterControllerSetters,
+  "style"
+>;
+export interface KulChartAdapterControllerGetters
+  extends KulComponentAdapterGetters<KulChart> {
+  compInstance: KulChart;
+  columnById: (id: string) => KulDataColumn;
+  manager: KulManager;
+  mappedType: (type: KulChartType) => SeriesOption["type"];
+  options: KulChartAdapterOptions;
+  seriesColumn: (seriesName: string) => KulDataColumn[];
+  seriesData: () => KulChartSeriesData[];
+  style: KulChartAdapterStyle;
+  xAxesData: () => { id: string; data: string[] }[];
+}
+export interface KulChartAdapterControllerSetters
+  extends KulComponentAdapterSetters {
+  style: {
+    theme: () => void;
+  };
+}
+//#endregion
+
+//#region Events
 export type KulChartEvent = "click" | "ready" | "unmount";
 export interface KulChartEventPayload
   extends KulEventPayload<"KulChart", KulChartEvent> {
@@ -95,22 +112,54 @@ export interface KulChartEventData {
   x: number | string;
   y: number | string;
 }
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
-export enum KulChartProps {
-  kulAxis = "Sets the axis of the chart.",
-  kulColors = "Overrides theme's colors.",
-  kulData = "The actual data of the chart.",
-  kulLegend = "Sets the position of the legend. Supported values: bottom, left, right, top. Keep in mind that legend types are tied to chart types, some combinations might not work.",
-  kulSeries = "The data series to be displayed. They must be of the same type.",
-  kulSizeX = "The width of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).",
-  kulSizeY = "The height of the chart, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).",
-  kulStyle = "Custom style of the component.",
-  kulTypes = "The type of the chart. Supported formats: Line, Pie, Map, Scatter.",
-  kulXAxis = "Customization options for the x Axis.",
-  kulYAxis = "Customization options for the y Axis.",
+//#endregion
+
+//#region Internal usage
+export type KulChartAxesTypes = "x" | "y";
+export type KulChartTooltipDataArray = number[];
+export type KulChartTooltipDataDictionary = {
+  name?: string;
+  source?: string;
+  target?: string;
+  value?: number | string[];
+};
+export type KulChartTooltipData =
+  | KulChartTooltipDataDictionary
+  | KulChartTooltipDataArray;
+export interface KulChartTooltipArguments<D extends KulChartTooltipData> {
+  data: D;
+  dataType: string;
+  name: string;
+  percent: number;
+  seriesName: string;
+  source: D extends {
+    name?: string;
+    source?: string;
+    target?: string;
+    value?: number;
+  }
+    ? string
+    : undefined;
+  target: D extends {
+    name?: string;
+    source?: string;
+    target?: string;
+    value?: number;
+  }
+    ? string
+    : undefined;
+  value: D extends {
+    name?: string;
+    source?: string;
+    target?: string;
+    value?: number;
+  }
+    ? number
+    : undefined;
 }
+//#endregion
+
+//#region Props
 export interface KulChartPropsInterface {
   kulAxis?: KulChartAxis;
   kulColors?: string[];
@@ -155,44 +204,4 @@ export interface KulChartSeriesData {
   axisIndex: number;
   type: KulChartType;
 }
-export type KulChartTooltipDataArray = number[];
-export type KulChartTooltipDataDictionary = {
-  name?: string;
-  source?: string;
-  target?: string;
-  value?: number;
-};
-export type KulChartTooltipData =
-  | KulChartTooltipDataDictionary
-  | KulChartTooltipDataArray;
-export interface KulChartTooltipArguments<D extends KulChartTooltipData> {
-  data: D;
-  dataType: string;
-  name: string;
-  percent: number;
-  seriesName: string;
-  source: D extends {
-    name?: string;
-    source?: string;
-    target?: string;
-    value?: number;
-  }
-    ? string
-    : undefined;
-  target: D extends {
-    name?: string;
-    source?: string;
-    target?: string;
-    value?: number;
-  }
-    ? string
-    : undefined;
-  value: D extends {
-    name?: string;
-    source?: string;
-    target?: string;
-    value?: number;
-  }
-    ? number
-    : undefined;
-}
+//#endregion

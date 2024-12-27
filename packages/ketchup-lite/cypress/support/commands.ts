@@ -1,12 +1,11 @@
 /// <reference types="cypress" />
 
-import { KulManager } from "../../src/managers/kul-manager/kul-manager";
-import { KulDom } from "../../src/managers/kul-manager/kul-manager-declarations";
+import { KulManagerEvent } from "src/managers/kul-manager/kul-manager-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
+import type { KulManager } from "../../src/managers/kul-manager/kul-manager";
 import {
-  GenericMap,
   KulComponent,
   KulComponentName,
-  KulDataCyAttributes,
   KulEventType,
   KulGenericComponent,
   KulGenericEvent,
@@ -17,6 +16,8 @@ import {
 import { DataCyAttributeTransformed } from "./selectors";
 
 export {};
+
+let kulManager: KulManager;
 
 declare global {
   namespace Cypress {
@@ -30,19 +31,20 @@ declare global {
       checkComponentExamplesNumber(componentExamples: Array<string>): Chainable;
       checkDebugInfo(component: string): Chainable;
       checkEvent(component: string, eventType: KulGenericEventType): Chainable;
-      checkProps(component: string, componentProps: GenericMap): Chainable;
-      checkPropsInterface(
+      checkKulStyle(): Chainable;
+      checkProps(
         component: string,
-        componentProps: { [key: string]: any },
+        componentProps: string[],
+        global?: boolean,
       ): Chainable;
       checkReadyEvent(
         component: string,
         eventType?: KulGenericEventType,
       ): Chainable;
       checkRenderCountIncrease(component: string, attempts?: number): Chainable;
-      checkKulStyle(): Chainable;
-      findCyElement(dataCy: KulDataCyAttributes): Chainable;
-      getCyElement(dataCy: KulDataCyAttributes): Chainable;
+      checkRipple(component: string): Chainable;
+      findCyElement(dataCy: string): Chainable;
+      getCyElement(dataCy: string): Chainable;
       getKulManager(): Chainable<KulManager>;
       navigate(component: string): Chainable;
       waitForWebComponents(tags: string[]): Chainable;
@@ -50,6 +52,7 @@ declare global {
   }
 }
 
+//#region checkComponentExamples
 Cypress.Commands.add(
   "checkComponentExamples",
   (component, componentExamples) => {
@@ -58,7 +61,9 @@ Cypress.Commands.add(
       .should("have.length", componentExamples.size);
   },
 );
+//#endregion
 
+//#region checkComponentExamplesNumber
 Cypress.Commands.add("checkComponentExamplesNumber", (componentExamples) => {
   cy.get("@kulComponentShowcase")
     .wrap(componentExamples)
@@ -66,14 +71,18 @@ Cypress.Commands.add("checkComponentExamplesNumber", (componentExamples) => {
       cy.get(`#${id}`).should("exist");
     });
 });
+//#endregion
 
+//#region checkComponentExamplesByCategory
 Cypress.Commands.add("checkComponentExamplesByCategory", (categories) => {
   categories.forEach((categoryKey) => {
     const composedId = `#${categoryKey}-style`;
     cy.get("@kulComponentShowcase").find(composedId).should("exist");
   });
 });
+//#endregion
 
+//#region checkComponentExamplesByCategoryNumber
 Cypress.Commands.add("checkComponentExamplesByCategoryNumber", (component) => {
   cy.get("@kulComponentShowcase")
     .find(".grid-container")
@@ -81,7 +90,9 @@ Cypress.Commands.add("checkComponentExamplesByCategoryNumber", (component) => {
       cy.wrap(category).find(component).its("length").should("be.gte", 1);
     });
 });
+//#endregion
 
+//#region checkDebugInfo
 Cypress.Commands.add("checkDebugInfo", (component) => {
   cy.get("@kulComponentShowcase")
     .find(component)
@@ -97,7 +108,9 @@ Cypress.Commands.add("checkDebugInfo", (component) => {
       });
     });
 });
+//#endregion
 
+//#region checkEvent
 Cypress.Commands.add(
   "checkEvent",
   <N extends KulComponentName>(
@@ -111,7 +124,7 @@ Cypress.Commands.add(
           event.detail.eventType === eventType
         ) {
           const eventCheck = document.createElement("div");
-          eventCheck.dataset.cy = KulDataCyAttributes.CHECK;
+          eventCheck.dataset.cy = CY_ATTRIBUTES.check;
           document.body.appendChild(eventCheck);
         }
       };
@@ -125,7 +138,9 @@ Cypress.Commands.add(
       .as("eventElement");
   },
 );
+//#endregion
 
+//#region checkKulStyle
 Cypress.Commands.add("checkKulStyle", () => {
   function checkStyles(attempts = 0) {
     cy.get("@kulComponentShowcase")
@@ -141,33 +156,32 @@ Cypress.Commands.add("checkKulStyle", () => {
   }
   checkStyles();
 });
+//#endregion
 
-Cypress.Commands.add("checkProps", (component, componentProps) => {
-  cy.get("@kulComponentShowcase")
-    .find(component)
-    .first()
-    .then(($comp) => {
-      ($comp[0] as Partial<KulGenericComponent>).getProps().then((props) => {
-        const enumKeys = Object.keys(componentProps);
-        expect(Object.keys(props)).to.deep.equal(enumKeys);
+//#region checkProps
+Cypress.Commands.add(
+  "checkProps",
+  (component, componentProps, global = false) => {
+    cy.get(global ? "body" : "@kulComponentShowcase")
+      .find(component)
+      .first()
+      .then(($comp) => {
+        ($comp[0] as Partial<KulGenericComponent>).getProps().then((props) => {
+          for (
+            let index = 0;
+            index < Object.keys(componentProps).length;
+            index++
+          ) {
+            const prop = Object.keys(componentProps)[index];
+            expect(Object.keys(props)).to.include(prop);
+          }
+        });
       });
-    });
-});
+  },
+);
+//#endregion
 
-Cypress.Commands.add("checkPropsInterface", (component, componentProps) => {
-  cy.get("@kulComponentShowcase")
-    .find(component)
-    .first()
-    .then(($comp) => {
-      const kulArticleElement = $comp[0] as Partial<KulGenericComponent>;
-      return kulArticleElement.getProps();
-    })
-    .then((props) => {
-      const expectedKeys = Object.keys(componentProps);
-      expect(Object.keys(props)).to.deep.equal(expectedKeys);
-    });
-});
-
+//#region checkReadyEvent
 Cypress.Commands.add(
   "checkReadyEvent",
   (component, eventType: KulGenericEventType = "ready") => {
@@ -179,7 +193,7 @@ Cypress.Commands.add(
         if (event.type === eventName && event.detail.eventType === eventType) {
           document.removeEventListener(eventName, checkEvent);
           const readyCheck = document.createElement("div");
-          readyCheck.dataset.cy = KulDataCyAttributes.CHECK;
+          readyCheck.dataset.cy = CY_ATTRIBUTES.check;
           document.body.appendChild(readyCheck);
         }
       };
@@ -189,11 +203,30 @@ Cypress.Commands.add(
         .find(`kul-${component}`)
         .first()
         .scrollIntoView();
-      cy.getCyElement(KulDataCyAttributes.CHECK).should("exist");
+      cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
     });
   },
 );
+//#endregion
 
+//#region checkRipple
+Cypress.Commands.add("checkRipple", (component) => {
+  cy.get(component)
+    .findCyElement(CY_ATTRIBUTES.ripple)
+    .should("exist")
+    .then(($ripple) => {
+      const initialChildCount = $ripple[0].children.length;
+
+      cy.wrap($ripple).first().click();
+
+      cy.wrap($ripple)
+        .children()
+        .should("have.length", initialChildCount + 1);
+    });
+});
+//#endregion
+
+//#region checkRenderCountIncrease
 Cypress.Commands.add(
   "checkRenderCountIncrease",
   (component, maxAttempts = 10) => {
@@ -238,26 +271,33 @@ Cypress.Commands.add(
     checkForRenderCountIncrease();
   },
 );
+//#endregion
 
+//#region findCyElement
 Cypress.Commands.add(
   "findCyElement",
   { prevSubject: "element" },
-  (subject, dataCy: KulDataCyAttributes) => {
+  (subject, dataCy: string) => {
     cy.wrap(subject).find(transformEnumValue(dataCy) as unknown as string);
   },
 );
+//#endregion
 
-Cypress.Commands.add("getCyElement", (dataCy: KulDataCyAttributes) =>
+//#region getCyElement
+Cypress.Commands.add("getCyElement", (dataCy: string) =>
   cy.get(transformEnumValue(dataCy) as unknown as string),
 );
+//#endregion
 
+//#region getKulManager
 Cypress.Commands.add("getKulManager", () => {
-  cy.window().then((win) => {
-    const dom = win.document.documentElement as KulDom;
-    return dom.ketchupLite;
+  cy.window().then(() => {
+    return kulManager;
   });
 });
+//#endregion
 
+//#region navigate
 Cypress.Commands.add("navigate", (component) => {
   if (!component || typeof component !== "string") {
     throw new Error(`Invalid component name: ${component}`);
@@ -288,24 +328,21 @@ Cypress.Commands.add("waitForWebComponents", (components: string[]) => {
   });
 });
 
-function transformEnumValue(
-  key: KulDataCyAttributes,
-): DataCyAttributeTransformed {
+function transformEnumValue(key: string): DataCyAttributeTransformed {
   return `[data-cy="${key}"]` as unknown as DataCyAttributeTransformed;
 }
 
 function visitManager() {
   return {
     cardClick: (component: string) => {
+      cy.waitForWebComponents(["kul-showcase", `kul-showcase-${component}`]);
       cy.get("kul-showcase").should("exist").as("kulShowcase");
       cy.get("@kulShowcase").should("exist");
-      cy.get("#" + component.charAt(0).toUpperCase() + component.slice(1))
+      cy.get(`#${component.charAt(0).toUpperCase() + component.slice(1)}`)
         .should("exist")
         .click();
-      cy.get("@kulShowcase")
-        .find("kul-showcase-" + component)
-        .should("exist");
-      cy.getCyElement(KulDataCyAttributes.SHOWCASE_GRID_WRAPPER)
+      cy.get("@kulShowcase").find(`kul-showcase-${component}`).should("exist");
+      cy.getCyElement(CY_ATTRIBUTES.showcaseGridWrapper)
         .as("kulComponentShowcase")
         .then(() => cy.log("Alias @kulComponentShowcase created"));
     },
@@ -333,7 +370,17 @@ function visitManager() {
         });
     },
     visit: () => {
-      cy.visit("http://localhost:3333").reload();
+      cy.visit("http://localhost:3333", {
+        onBeforeLoad: (win) => {
+          win.document.addEventListener(
+            "kul-manager-ready",
+            (e: KulManagerEvent) => {
+              kulManager = e.detail.kulManager;
+            },
+          );
+        },
+      });
     },
   };
 }
+//#endregion

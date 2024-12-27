@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { BadgeExample } from "./kul-showcase-badge-declarations";
+import { BadgeData, BadgeExample } from "./kul-showcase-badge-declarations";
 import { BADGE_FIXTURES } from "./kul-showcase-badge-fixtures";
 
 @Component({
@@ -35,7 +35,8 @@ export class KulShowcaseBadge {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: BadgeExample = this.fixtures.examples[key];
+        const k = key as keyof BadgeData;
+        const props: BadgeExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -94,7 +95,7 @@ export class KulShowcaseBadge {
         <kul-article kulData={this.fixtures.documentation}></kul-article>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

@@ -9,9 +9,9 @@ export const SLIDER_EXAMPLES_KEYS = [
 ] as const;
 
 export interface SliderExample extends KulSliderPropsInterface {
-  ["data-description"]: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
-  className: string;
+  className?: string;
 }
 
 export type SliderData = {

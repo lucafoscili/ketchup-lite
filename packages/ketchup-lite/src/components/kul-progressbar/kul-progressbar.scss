@@ -1,2 +1,344 @@
-@import "styles/kul-progressbar-main.scss";
-@import "styles/kul-progressbar-classes.scss";
+:host {
+  & {
+    display: block;
+    font-family: var(--kul_progressbar_font_family);
+    font-size: var(--kul_progressbar_font_size);
+    width: var(--kul_progressbar_width);
+  }
+  /**
+   * @prop --kul-progressbar-border-radius: Sets border radius of the component.
+   * Defaults to 4px.
+   */
+  --kul_progressbar_border_radius: var(--kul-progressbar-border-radius, 4px);
+  /**
+    * @prop --kul-progressbar-font-family: Sets font family of the component.
+    * Defaults to the value of --kul-font-family.
+    */
+  --kul_progressbar_font_family: var(
+    --kul-progressbar-font-family,
+    var(--kul-font-family)
+  );
+  /**
+    * @prop --kul-progressbar-font-size: Sets font size of the component.
+    * Defaults to the value of --kul-font-size.
+    */
+  --kul_progressbar_font_size: var(
+    --kul-progressbar-font-size,
+    var(--kul-font-size)
+  );
+  /**
+    * @prop --kul-progressbar-height: Sets height of the component.
+    * Defaults to 1.25em.
+    */
+  --kul_progressbar_height: var(--kul-progressbar-height, 2.5em);
+  /**
+    * @prop --kul-progressbar-primary-color: Sets primary color of the component.
+    * Defaults to the value of --kul-primary-color.
+    */
+  --kul_progressbar_primary_color: var(
+    --kul-progressbar-primary-color,
+    var(--kul-primary-color)
+  );
+  /**
+    * @prop --kul-progressbar-text-color: Sets text color of the component.
+    * Defaults to the value of --kul-text-color.
+    */
+  --kul_progressbar_text_color: var(
+    --kul-progressbar-text-color,
+    var(--kul-text-color)
+  );
+  /**
+    * @prop --kul-progressbar-text-color-rgb: Sets text color RGB values of the component (used for shaders).
+    * Defaults to the value of --kul-text-color-rgb.
+    */
+  --kul_progressbar_text_color_rgb: var(
+    --kul-progressbar-text-color-rgb,
+    var(--kul-text-color-rgb)
+  );
+
+  /**
+    * @prop --kul-progressbar-text-on-primary-color: Sets text on primary color of the component.
+    * Defaults to the value of --kul-text-on-primary-color.
+    */
+  --kul_progressbar_text_on_primary_color: var(
+    --kul-progressbar-text-on-primary-color,
+    var(--kul-text-on-primary-color)
+  );
+  /**
+    * @prop --kul-progressbar-track-color: Sets track color of the progress bar (empty section).
+    * Defaults to the value of --kul-disabled-background-color.
+    */
+  --kul_progressbar_track_color: var(
+    --kul-progressbar-track-color,
+    var(--kul-disabled-background-color)
+  );
+  /**
+    * @prop --kul-progressbar-width: Sets width of the component.
+    * Defaults to 100%.
+    */
+  --kul_progressbar_width: var(--kul-progressbar-width, 100%);
+}
+
+.progress-bar {
+  & {
+    background: var(--kul_progressbar_track_color);
+    border-radius: var(--kul_progressbar_border_radius);
+    height: var(--kul_progressbar_height);
+    overflow: hidden;
+    width: var(--kul_progressbar_width);
+  }
+
+  &__icon {
+    background: var(--kul_progressbar_text_color);
+    height: 1.5em;
+    margin: 0 0.25em;
+    width: 1.5em;
+  }
+
+  &__label {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    min-width: max-content;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  &__mu {
+    font-size: calc(var(--kul_progressbar_font_size) * 0.75);
+  }
+
+  &__percentage {
+    background: var(--kul_progressbar_primary_color);
+    border-radius: var(--kul_progressbar_border_radius);
+    box-sizing: border-box;
+    color: var(--kul_progressbar_text_color);
+    height: var(--kul_progressbar_height);
+    padding: 0.5em 0;
+    position: relative;
+    text-align: center;
+    transition: width 0.2s ease;
+    width: var(--kul_progressbar_percentage_width);
+  }
+}
+
+:host([kul-centered-label]) {
+  .progress-bar {
+    & {
+      position: relative;
+    }
+
+    &__percentage {
+      position: static;
+    }
+  }
+}
+
+:host([kul-is-radial]) {
+  & {
+    box-sizing: border-box;
+    margin: auto;
+    padding: 1.25em 0px;
+  }
+
+  #kul-component {
+    display: flex;
+    font-size: 10em;
+    margin: auto;
+  }
+
+  .progress-bar {
+    background: none;
+    height: 1em;
+    margin: auto;
+    overflow: visible;
+    position: relative;
+    width: 1em;
+
+    &:nth-child(3n + 1) {
+      clear: both;
+    }
+
+    &__icon {
+      height: 0.75em;
+      margin: 0 0.15em;
+      width: 0.75em;
+    }
+
+    &__label {
+      color: var(--kul_progressbar_text_color);
+      cursor: default;
+      display: flex;
+      font-size: 0.25em;
+    }
+
+    &__um {
+      color: var(--kul_progressbar_text_color);
+      font-size: 0.75em;
+      padding-bottom: 0.75em;
+    }
+  }
+
+  *,
+  *:before,
+  *:after {
+    box-sizing: border-box;
+  }
+}
+
+.pie {
+  & {
+    height: 1em;
+    width: 1em;
+    clip: rect(0, 1em, 1em, 0.5em);
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  &--half-empty {
+    &__half-circle {
+      &--right {
+        display: none;
+      }
+    }
+  }
+
+  &--half-full {
+    & {
+      clip: rect(auto, auto, auto, auto);
+    }
+
+    .pie__half-circle {
+      &--right {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &--has-value {
+    .pie__half-circle {
+      & {
+        border-color: var(--kul_progressbar_primary_color);
+      }
+
+      &--left {
+        transform: var(--kul_progressbar_transform);
+        transition: transform 0.2s ease;
+      }
+    }
+  }
+
+  &__half-circle {
+    height: 1em;
+    width: 1em;
+    border: 0.1em solid var(--kul_progressbar_track_color);
+    border-radius: 50%;
+    clip: rect(0, 0.5em, 1em, 0);
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+
+  &__track {
+    height: 1em;
+    width: 1em;
+    border: 0.1em solid var(--kul_progressbar_track_color);
+    border-radius: 50%;
+  }
+}
+
+@keyframes running-stripes {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 3em 3em;
+  }
+}
+
+/*-------------------------------------------------*/
+/*        C o m p o n e n t   C l a s s e s        */
+/*-------------------------------------------------*/
+
+:host(.#{$kul-class-animated}) {
+  .progress-bar {
+    &__percentage {
+      animation: running-stripes 2s linear infinite;
+      background-image: linear-gradient(
+        -45deg,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.225) 25%,
+        transparent 25%,
+        transparent 50%,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.225) 50%,
+        rgba(var(--kul_progressbar_text_color_rgb), 0.225) 75%,
+        transparent 75%,
+        transparent
+      );
+      background-size: 3em 3em;
+    }
+  }
+}
+
+:host(.#{$kul-class-padded}) {
+  .progress-bar {
+    padding: 0.5em;
+    width: calc(100% - 1em);
+  }
+}
+
+:host(.#{$kul-class-slim}) {
+  #kul-component {
+    .progress-bar {
+      & {
+        --kul_progressbar_height: calc(
+          var(--kul-progressbar-height, 2.5em) * 0.5
+        );
+        border-radius: 9px;
+      }
+
+      &__percentage {
+        border-radius: 9px;
+        padding: 0;
+      }
+    }
+
+    .pie {
+      &__half-circle {
+        border-width: 0.05em;
+      }
+
+      &__track {
+        border-width: 0.05em;
+      }
+    }
+  }
+}
+
+:host(.#{$kul-class-danger}) {
+  --kul-progressbar-primary-color: var(--kul-danger-color);
+  --kul-progressbar-text-on-primary-color: white;
+}
+
+:host(.#{$kul-class-info}) {
+  --kul-progressbar-primary-color: var(--kul-info-color);
+  --kul-progressbar-text-on-primary-color: white;
+}
+
+:host(.#{$kul-class-secondary}) {
+  --kul-progressbar-primary-color: var(--kul-secondary-color);
+  --kul-progressbar-text-on-primary-color: var(--kul-text-on-secondary-color);
+}
+
+:host(.#{$kul-class-success}) {
+  --kul-progressbar-primary-color: var(--kul-success-color);
+  --kul-progressbar-text-on-primary-color: white;
+}
+
+:host(.#{$kul-class-warning}) {
+  --kul-progressbar-primary-color: var(--kul-warning-color);
+  --kul-progressbar-text-on-primary-color: white;
+}

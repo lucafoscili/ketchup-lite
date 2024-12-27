@@ -1,64 +1,85 @@
 import { VNode } from "@stencil/core";
-
-import { KulCarousel } from "./kul-carousel";
 import {
   KulDataDataset,
   KulDataShapes,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulEventPayload } from "../../types/GenericTypes";
+} from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
+import {
+  KulComponentAdapter,
+  KulComponentAdapterGetters,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterJsx,
+  KulComponentAdapterRefs,
+  KulComponentAdapterSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
+import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { KulCarousel } from "./kul-carousel";
 
-/*-------------------------------------------------*/
-/*                  A d a p t e r                  */
-/*-------------------------------------------------*/
-export interface KulCarouselAdapter {
-  actions: KulCarouselAdapterActions;
-  components: KulCarouselAdapterComponents;
-  get: KulCarouselAdapterGetters;
-  set: KulCarouselAdapterSetters;
-}
-export interface KulCarouselAdapterActions {
-  autoplay: {
-    start: (adapter: KulCarouselAdapter) => void;
-    stop: (adapter: KulCarouselAdapter) => void;
+//#region Adapter
+export interface KulCarouselAdapter extends KulComponentAdapter<KulCarousel> {
+  controller: {
+    get: KulCarouselAdapterControllerGetters;
+    set: KulCarouselAdapterControllerSetters;
   };
-  next: (adapter: KulCarouselAdapter) => void;
-  previous: (adapter: KulCarouselAdapter) => void;
-  toSlide: (adapter: KulCarouselAdapter, value: number) => void;
+  elements: {
+    jsx: KulCarouselAdapterJsx;
+    refs: KulCarouselAdapterRefs;
+  };
+  handlers: KulCarouselAdapterHandlers;
 }
-export interface KulCarouselAdapterComponents {
-  back: (adapter: KulCarouselAdapter) => VNode;
-  forward: (adapter: KulCarouselAdapter) => VNode;
+export interface KulCarouselAdapterJsx extends KulComponentAdapterJsx {
+  back: () => VNode;
+  forward: () => VNode;
 }
-export interface KulCarouselAdapterGetters {
-  carousel: () => KulCarousel;
+export interface KulCarouselAdapterRefs extends KulComponentAdapterRefs {
+  back: HTMLKulButtonElement;
+  forward: HTMLKulButtonElement;
+}
+export interface KulCarouselAdapterHandlers
+  extends KulComponentAdapterHandlers {
+  button: (e: CustomEvent<KulButtonEventPayload>) => void;
+}
+export type KulCarouselAdapterInitializerGetters = Pick<
+  KulCarouselAdapterControllerGetters,
+  "compInstance" | "index" | "interval" | "manager" | "totalSlides"
+>;
+export type KulCarouselAdapterInitializerSetters = Pick<
+  KulCarouselAdapterControllerSetters,
+  "index" | "interval"
+>;
+export interface KulCarouselAdapterControllerGetters
+  extends KulComponentAdapterGetters<KulCarousel> {
+  compInstance: KulCarousel;
+  index: {
+    current: () => number;
+  };
   interval: () => NodeJS.Timeout;
-  manager: () => KulManager;
-  state: {
-    currentIndex: () => number;
-  };
+  manager: KulManager;
   totalSlides: () => number;
 }
-export interface KulCarouselAdapterSetters {
+export interface KulCarouselAdapterControllerSetters
+  extends KulComponentAdapterSetters {
+  autoplay: {
+    start: () => void;
+    stop: () => void;
+  };
+  index: {
+    current: (value: number) => void;
+    next: () => void;
+    previous: () => void;
+  };
   interval: (value: NodeJS.Timeout) => void;
-  state: { currentIndex: (value: number) => void };
 }
-/*-------------------------------------------------*/
-/*                   E v e n t s                   */
-/*-------------------------------------------------*/
+//#endregion
+
+//#region Events
 export type KulCarouselEvent = "kul-event" | "ready" | "unmount";
 export interface KulCarouselEventPayload
   extends KulEventPayload<"KulCarousel", KulCarouselEvent> {}
-/*-------------------------------------------------*/
-/*                    P r o p s                    */
-/*-------------------------------------------------*/
-export enum KulCarouselProps {
-  kulAutoPlay = "Enable or disable autoplay for the carousel.",
-  kulData = "Actual data to carousel.",
-  kulInterval = "Interval in milliseconds for autoplay.",
-  kulShape = "Sets the type of shapes to compare.",
-  kulStyle = "Sets a custom CSS style for the component.",
-}
+//#endregion
+
+//#region Props
 export interface KulCarouselPropsInterface {
   kulAutoPlay?: boolean;
   kulData?: KulDataDataset;
@@ -66,3 +87,4 @@ export interface KulCarouselPropsInterface {
   kulShape?: KulDataShapes;
   kulStyle?: string;
 }
+//#endregion

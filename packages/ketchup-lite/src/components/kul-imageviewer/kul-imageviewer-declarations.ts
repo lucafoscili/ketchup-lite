@@ -1,93 +1,118 @@
 import { VNode } from "@stencil/core";
-
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
 import {
-  KulDataCell,
-  KulDataDataset,
-  KulDataGenericCell,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulManager } from "../../managers/kul-manager/kul-manager";
-import { KulEventPayload } from "../../types/GenericTypes";
-import { KulMasonrySelectedShape } from "../kul-masonry/kul-masonry-declarations";
+  KulComponentAdapter,
+  KulComponentAdapterGetters,
+  KulComponentAdapterHandlers,
+  KulComponentAdapterJsx,
+  KulComponentAdapterRefs,
+  KulComponentAdapterSetters,
+  KulEventPayload,
+} from "src/types/GenericTypes";
+import { KulButtonEventPayload } from "../kul-button/kul-button-declarations";
+import { KulCanvasEventPayload } from "../kul-canvas/kul-canvas-declarations";
+import {
+  KulMasonryEventPayload,
+  KulMasonrySelectedShape,
+} from "../kul-masonry/kul-masonry-declarations";
+import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
+import { KulTreeEventPayload } from "../kul-tree/kul-tree-declarations";
 import { KulImageviewer } from "./kul-imageviewer";
 
 //#region Adapter
-export interface KulImageviewerAdapter {
-  actions: KulImageviewerAdapterActions;
-  components: KulImageviewerAdapterComponents;
-  get: KulImageviewerAdapterGetters;
-  set: KulImageviewerAdapterSetters;
+export interface KulImageviewerAdapter
+  extends KulComponentAdapter<KulImageviewer> {
+  controller: {
+    get: KulImageviewerAdapterControllerGetters;
+    set: KulImageviewerAdapterControllerSetters;
+  };
+  elements: {
+    jsx: KulImageviewerAdapterJsx;
+    refs: KulImageviewerAdapterRefs;
+  };
+  handlers: KulImageviewerAdapterHandlers;
 }
-export interface KulImageviewerAdapterActions {
-  clearHistory: (
-    adapter: KulImageviewerAdapter,
-    index?: number,
-  ) => Promise<void>;
-  clearSelection: (adapter: KulImageviewerAdapter) => Promise<void>;
-  delete: (adapter: KulImageviewerAdapter) => Promise<void>;
-  findImage: (adapter: KulImageviewerAdapter) => Partial<KulDataCell<"image">>;
-  load: (adapter: KulImageviewerAdapter) => Promise<void>;
-  redo: (adapter: KulImageviewerAdapter) => Promise<void>;
-  save: (adapter: KulImageviewerAdapter) => Promise<void>;
-  undo: (adapter: KulImageviewerAdapter) => Promise<void>;
-  updateValue: (shape: KulDataGenericCell, value: string) => void;
-}
-export interface KulImageviewerAdapterComponents {
-  jsx: KulImageviewerAdapterJsx;
-  refs: KulImageviewerAdapterRefs;
-}
-export interface KulImageviewerAdapterJsx {
-  canvas: (adapter: KulImageviewerAdapter) => VNode;
-  clearHistory: (adapter: KulImageviewerAdapter) => VNode;
-  delete: (adapter: KulImageviewerAdapter) => VNode;
-  load: (adapter: KulImageviewerAdapter) => VNode;
-  masonry: (adapter: KulImageviewerAdapter) => VNode;
-  redo: (adapter: KulImageviewerAdapter) => VNode;
-  save: (adapter: KulImageviewerAdapter) => VNode;
-  spinner: (adapter: KulImageviewerAdapter) => VNode;
-  textfield: (adapter: KulImageviewerAdapter) => VNode;
-  tree: (adapter: KulImageviewerAdapter) => VNode;
-  undo: (adapter: KulImageviewerAdapter) => VNode;
-}
-export interface KulImageviewerAdapterRefs {
-  canvas: HTMLKulCanvasElement;
-  clearHistory: HTMLKulButtonElement;
-  delete: HTMLKulButtonElement;
-  load: HTMLKulButtonElement;
-  masonry: HTMLKulMasonryElement;
-  redo: HTMLKulButtonElement;
-  save: HTMLKulButtonElement;
-  spinner: HTMLKulSpinnerElement;
-  textfield: HTMLKulTextfieldElement;
-  tree: HTMLKulTreeElement;
-  undo: HTMLKulButtonElement;
-}
-export interface KulImageviewerAdapterGetters {
-  imageviewer: () => KulImageviewer;
-  manager: () => KulManager;
-  state: {
-    currentShape: () => { shape: KulMasonrySelectedShape; value: string };
-    history: {
-      current: () => KulMasonrySelectedShape[];
-      currentSnapshot: () => {
-        shape: KulMasonrySelectedShape;
-        value: string;
-      };
-      full: () => KulImageviewerHistory;
-      index: () => number;
-    };
-    spinnerStatus: () => boolean;
+export interface KulImageviewerAdapterJsx extends KulComponentAdapterJsx {
+  details: {
+    canvas: () => VNode;
+    clearHistory: () => VNode;
+    deleteShape: () => VNode;
+    redo: () => VNode;
+    save: () => VNode;
+    spinner: () => VNode;
+    tree: () => VNode;
+    undo: () => VNode;
+  };
+  navigation: {
+    load: () => VNode;
+    masonry: () => VNode;
+    textfield: () => VNode;
   };
 }
-export interface KulImageviewerAdapterSetters {
-  state: {
-    currentShape: (node: KulMasonrySelectedShape) => void;
-    history: {
-      clear: (index?: number) => void;
-      index: (index: number) => void;
-      new: (shape: KulMasonrySelectedShape, isSnapshot?: boolean) => void;
-    };
-    spinnerStatus: (active: boolean) => void;
+export interface KulImageviewerAdapterRefs extends KulComponentAdapterRefs {
+  details: {
+    canvas: HTMLKulCanvasElement;
+    clearHistory: HTMLKulButtonElement;
+    deleteShape: HTMLKulButtonElement;
+    redo: HTMLKulButtonElement;
+    save: HTMLKulButtonElement;
+    spinner: HTMLKulSpinnerElement;
+    tree: HTMLKulTreeElement;
+    undo: HTMLKulButtonElement;
   };
+  navigation: {
+    load: HTMLKulButtonElement;
+    masonry: HTMLKulMasonryElement;
+    textfield: HTMLKulTextfieldElement;
+  };
+}
+export interface KulImageviewerAdapterHandlers
+  extends KulComponentAdapterHandlers {
+  details: {
+    button: (e: CustomEvent<KulButtonEventPayload>) => Promise<void>;
+    canvas: (e: CustomEvent<KulCanvasEventPayload>) => void;
+    tree: (e: CustomEvent<KulTreeEventPayload>) => void;
+  };
+  navigation: {
+    button: (e: CustomEvent<KulButtonEventPayload>) => Promise<void>;
+    masonry: (e: CustomEvent<KulMasonryEventPayload>) => void;
+    textfield: (e: CustomEvent<KulTextfieldEventPayload>) => void;
+  };
+}
+export type KulImageviewerAdapterInitializerGetters = Pick<
+  KulImageviewerAdapterControllerGetters,
+  "compInstance" | "currentShape" | "history" | "manager" | "spinnerStatus"
+>;
+export type KulImageviewerAdapterInitializerSetters = Pick<
+  KulImageviewerAdapterControllerSetters,
+  "currentShape" | "history"
+>;
+export interface KulImageviewerAdapterControllerGetters
+  extends KulComponentAdapterGetters<KulImageviewer> {
+  compInstance: KulImageviewer;
+  currentShape: () => { shape: KulMasonrySelectedShape; value: string };
+  history: {
+    current: () => KulMasonrySelectedShape[];
+    currentSnapshot: () => {
+      shape: KulMasonrySelectedShape;
+      value: string;
+    };
+    full: () => KulImageviewerHistory;
+    index: () => number;
+  };
+  manager: KulManager;
+  spinnerStatus: () => boolean;
+}
+export interface KulImageviewerAdapterControllerSetters
+  extends KulComponentAdapterSetters {
+  currentShape: (node: KulMasonrySelectedShape) => void;
+  history: {
+    index: (index: number) => void;
+    new: (shape: KulMasonrySelectedShape, isSnapshot?: boolean) => void;
+    pop: (index?: number) => void;
+  };
+  spinnerStatus: (active: boolean) => void;
 }
 //#endregion
 
@@ -104,12 +129,6 @@ export type KulImageviewerHistory = {
 //#endregion
 
 //#region Props
-export enum KulImageviewerProps {
-  kulData = "Actual data of the image viewer.",
-  kulLoadCallback = "Callback invoked when the load button is clicked.",
-  kulStyle = "Sets a custom CSS style for the component.",
-  kulValue = "Configuration parameters of the detail view.",
-}
 export interface KulImageviewerPropsInterface {
   kulData?: KulDataDataset;
   kulLoadCallback?: KulImageviewerLoadCallback;

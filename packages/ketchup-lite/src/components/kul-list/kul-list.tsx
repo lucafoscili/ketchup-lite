@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Listen,
@@ -12,22 +11,23 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
-import {
-  KulListEvent,
-  KulListEventPayload,
-  KulListProps,
-} from "./kul-list-declarations";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { KulLanguageGeneric } from "../../managers/kul-language/kul-language-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { GenericObject, KulDataCyAttributes } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import {
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+  RIPPLE_SURFACE_CLASS,
+} from "src/utils/constants";
+import {
+  KulListEvent,
+  KulListEventPayload,
+  KulListPropsInterface,
+} from "./kul-list-declarations";
 
 @Component({
   tag: "kul-list",
@@ -40,20 +40,11 @@ export class KulList {
    */
   @Element() rootElement: HTMLKulListElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The focused list item.
    * @default undefined
@@ -64,62 +55,52 @@ export class KulList {
    * @default undefined
    */
   @State() selected: number;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The data of the list.
    * @default []
    */
   @Prop({ mutable: true }) kulData: KulDataDataset = null;
   /**
-   * Text displayed when the list is empty.
-   * @default ""
+   * Empty text displayed when there is no data.
+   * @default "Empty data."
    */
-  @Prop() kulEmptyLabel = "";
+  @Prop({ mutable: true }) kulEmpty = "Empty data.";
   /**
    * Defines whether items can be removed from the list or not.
    * @default false
    */
-  @Prop() kulEnableDeletions = false;
+  @Prop({ mutable: true }) kulEnableDeletions = false;
   /**
    * When true, enables items' navigation through arrow keys.
    * @default true
    */
-  @Prop() kulNavigation = true;
+  @Prop({ mutable: true }) kulNavigation = true;
   /**
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Defines whether items are selectable or not.
    * @default true
    */
-  @Prop() kulSelectable = true;
+  @Prop({ mutable: true }) kulSelectable = true;
   /**
    * Custom style of the component.
    * @default ""
    */
   @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
+  //#region Internal variables
   #listItems: HTMLDivElement[] = [];
   #rippleSurface: HTMLElement[] = [];
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-list-event",
     composed: true,
@@ -127,13 +108,14 @@ export class KulList {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulListEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulListEvent,
     node?: KulDataNode,
     index = 0,
   ) {
+    const { theme } = kulManagerSingleton;
+
     switch (eventType) {
       case "blur":
         this.focused = null;
@@ -153,10 +135,7 @@ export class KulList {
         break;
       case "pointerdown":
         if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface[index],
-          );
+          theme.ripple.trigger(e as PointerEvent, this.#rippleSurface[index]);
         }
         break;
     }
@@ -169,14 +148,14 @@ export class KulList {
       node,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                L i s t e n e r s                */
-  /*-------------------------------------------------*/
-
+  //#region Listeners
   @Listen("keydown")
   listenKeydown(e: KeyboardEvent) {
-    if (this.kulNavigation) {
+    const { focused, kulNavigation } = this;
+
+    if (kulNavigation) {
       switch (e.key) {
         case "ArrowDown":
           e.preventDefault();
@@ -191,27 +170,20 @@ export class KulList {
         case "Enter":
           e.preventDefault();
           e.stopPropagation();
-          this.#handleSelection(this.focused);
+          this.#handleSelection(focused);
           break;
       }
     }
   }
-
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
   /**
    * Focuses the next element of the list.
    */
   @Method()
   async focusNext(): Promise<void> {
-    if (
-      isNaN(this.focused) ||
-      this.focused === null ||
-      this.focused === undefined
-    ) {
-      this.focused = this.selected;
+    const { focused, selected } = this;
+
+    if (isNaN(focused) || focused === null || focused === undefined) {
+      this.focused = selected;
     } else {
       this.focused++;
     }
@@ -225,12 +197,10 @@ export class KulList {
    */
   @Method()
   async focusPrevious(): Promise<void> {
-    if (
-      isNaN(this.focused) ||
-      this.focused === null ||
-      this.focused === undefined
-    ) {
-      this.focused = this.selected;
+    const { focused, selected } = this;
+
+    if (isNaN(focused) || focused === null || focused === undefined) {
+      this.focused = selected;
     } else {
       this.focused--;
     }
@@ -248,13 +218,14 @@ export class KulList {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<KulListPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulListProps, descriptions);
+  async getProps(): Promise<KulListPropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Returns the selected node.
@@ -293,11 +264,9 @@ export class KulList {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #handleSelection(index: number): void {
     if (
       this.kulSelectable &&
@@ -308,17 +277,14 @@ export class KulList {
       this.selected = index;
     }
   }
-
   #prepDeleteIcon(node: KulDataNode) {
-    const path = getAssetPath(`./assets/svg/clear.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
+    const { get } = kulManagerSingleton.assets;
+
+    const { style } = get(`./assets/svg/clear.svg`);
     return (
       <div
         class="delete"
-        data-cy={KulDataCyAttributes.BUTTON}
+        data-cy={CY_ATTRIBUTES.button}
         onClick={(e) => {
           const index = this.kulData?.nodes?.indexOf(node);
           this.onKulEvent(e, "delete", node, index);
@@ -328,35 +294,40 @@ export class KulList {
       </div>
     );
   }
-
   #prepIcon(node: KulDataNode) {
-    const path = getAssetPath(`./assets/svg/${node.icon}.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
-    return <div class="node__icon" style={style}></div>;
-  }
+    const { get } = kulManagerSingleton.assets;
 
-  #prepNode(node: KulDataNode, index: number) {
-    const isFocused =
-      this.focused === this.kulData.nodes.findIndex((n) => n.id === node.id);
-    const isSelected =
-      this.selected === this.kulData.nodes.findIndex((n) => n.id === node.id);
-    const className = {
-      node: true,
-      "node--focused": isFocused,
-      "node--has-description": !!node.description,
-      "node--selected": isSelected,
-    };
+    const { style } = get(`./assets/svg/${node.icon}.svg`);
     return (
-      <li class="list-item">
+      <div
+        class="node__icon"
+        data-cy={CY_ATTRIBUTES.maskedSvg}
+        style={style}
+      ></div>
+    );
+  }
+  #prepNode(node: KulDataNode, index: number) {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { focused, kulData, kulRipple, selected } = this;
+
+    const isFocused =
+      focused === kulData.nodes.findIndex((n) => n.id === node.id);
+    const isSelected =
+      selected === kulData.nodes.findIndex((n) => n.id === node.id);
+
+    return (
+      <li class={bemClass("list-item")}>
         {this.kulEnableDeletions ? this.#prepDeleteIcon(node) : null}
         <div
           aria-selected={isSelected}
           aria-checked={isSelected}
-          class={className}
-          data-cy={KulDataCyAttributes.NODE}
+          class={bemClass("node", null, {
+            focused: isFocused,
+            "has-description": !!node.description,
+            selected: isSelected,
+          })}
+          data-cy={CY_ATTRIBUTES.node}
           data-index={index.toString()}
           onBlur={(e) => this.onKulEvent(e, "blur", node, index)}
           onClick={(e) => this.onKulEvent(e, "click", node, index)}
@@ -371,14 +342,16 @@ export class KulList {
           tabindex={isSelected ? "0" : "-1"}
         >
           <div
+            class={RIPPLE_SURFACE_CLASS}
+            data-cy={CY_ATTRIBUTES.ripple}
             ref={(el) => {
-              if (this.kulRipple && el) {
+              if (kulRipple && el) {
                 this.#rippleSurface.push(el);
               }
             }}
           ></div>
-          {node.icon ? this.#prepIcon(node) : null}
-          <span class="node__text">
+          {node.icon && this.#prepIcon(node)}
+          <span class={bemClass("node", "text")}>
             {this.#prepTitle(node)}
             {this.#prepSubtitle(node)}
           </span>
@@ -386,80 +359,84 @@ export class KulList {
       </li>
     );
   }
-
   #prepSubtitle(node: KulDataNode) {
-    return node.description ? (
-      <div class="node__subtitle">{node.description}</div>
-    ) : undefined;
-  }
+    const { bemClass } = kulManagerSingleton.theme;
 
+    return (
+      node.description && (
+        <div class={bemClass("node", "subtitle")}>{node.description}</div>
+      )
+    );
+  }
   #prepTitle(node: KulDataNode) {
-    return String(node.value).valueOf() ? (
-      <div class="node__title">{String(node.value).valueOf()}</div>
-    ) : undefined;
+    const { bemClass } = kulManagerSingleton.theme;
+
+    return (
+      String(node.value).valueOf() && (
+        <div class={bemClass("node", "title")}>
+          {String(node.value).valueOf()}
+        </div>
+      )
+    );
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (this.#rippleSurface?.length) {
       this.#rippleSurface.forEach((el) => {
-        this.#kulManager.theme.ripple.setup(el);
+        theme.ripple.setup(el);
       });
     }
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.info.update(this, "did-load");
   }
 
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "will-render");
   }
 
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "did-render");
   }
 
   render() {
-    const isEmpty = !!!this.kulData?.nodes?.length;
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+
+    const { kulData, kulEmpty, kulSelectable, kulStyle } = this;
+
+    const isEmpty = !!!kulData?.nodes?.length;
     this.#listItems = [];
-    const className = {
-      list: true,
-      "list--empty": isEmpty,
-      "list--selectable": this.kulSelectable,
-    };
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           {isEmpty ? (
-            <div class="empty-data">
-              <div class="empty-data__text">
-                {this.kulEmptyLabel ||
-                  this.#kulManager.language.translate(
-                    KulLanguageGeneric.EMPTY_DATA,
-                  )}
-              </div>
+            <div class={bemClass("empty-data")}>
+              <div class={bemClass("empty-data", "text")}>{kulEmpty}</div>
             </div>
           ) : (
             <ul
               aria-multiselectable={"false"}
-              class={className}
+              class={bemClass("list", null, {
+                empty: isEmpty,
+                selectable: kulSelectable,
+              })}
               role={"listbox"}
             >
-              {this.kulData.nodes.map((item, index) =>
-                this.#prepNode(item, index),
-              )}
+              {kulData.nodes.map((item, index) => this.#prepNode(item, index))}
             </ul>
           )}
         </div>
@@ -468,6 +445,8 @@ export class KulList {
   }
 
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
 }

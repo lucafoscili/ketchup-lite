@@ -1,10 +1,11 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 import {
   SpinnerBranch,
+  SpinnerData,
   SpinnerLeaf,
 } from "./kul-showcase-spinner-declarations";
 import { SPINNER_FIXTURES } from "./kul-showcase-spinner-fixtures";
@@ -38,7 +39,8 @@ export class KulShowcaseSpinner {
     const elements: VNode[] = [];
     for (const k1 in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
-        const type: SpinnerBranch = this.fixtures.examples[k1];
+        const k = k1 as keyof SpinnerData;
+        const type: SpinnerBranch = this.fixtures.examples[k];
 
         for (const k2 in type) {
           if (Object.prototype.hasOwnProperty.call(type, k2)) {
@@ -109,7 +111,7 @@ export class KulShowcaseSpinner {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}>
+        <div data-cy={CY_ATTRIBUTES.showcaseGridWrapper}>
           {this.#prepExamples()}
         </div>
       </Fragment>

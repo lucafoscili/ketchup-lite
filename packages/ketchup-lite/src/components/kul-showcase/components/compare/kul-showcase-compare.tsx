@@ -1,8 +1,12 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { CompareExample } from "./kul-showcase-compare-declarations";
+import {
+  CompareData,
+  CompareExample,
+} from "./kul-showcase-compare-declarations";
 import { COMPARE_FIXTURES } from "./kul-showcase-compare-fixtures";
 
 @Component({
@@ -20,7 +24,7 @@ export class KulShowcaseCompare {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = COMPARE_FIXTURES();
+  @State() fixtures = COMPARE_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables
@@ -34,7 +38,8 @@ export class KulShowcaseCompare {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: CompareExample = this.fixtures.examples[key];
+        const k = key as keyof CompareData;
+        const props: CompareExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -82,7 +87,11 @@ export class KulShowcaseCompare {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div class="grid" data-cy="wrapper" part="grid">
+        <div
+          class="grid"
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
+          part="grid"
+        >
           {this.#prepExamples()}
         </div>
       </Fragment>

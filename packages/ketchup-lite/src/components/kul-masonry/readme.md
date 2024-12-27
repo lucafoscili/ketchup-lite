@@ -19,9 +19,9 @@
 
 ## Events
 
-| Event               | Description              | Type                                  |
-| ------------------- | ------------------------ | ------------------------------------- |
-| `kul-masonry-event` | Describes event emitted. | `CustomEvent<KulMasonryEventPayload>` |
+| Event               | Description | Type                                  |
+| ------------------- | ----------- | ------------------------------------- |
+| `kul-masonry-event` |             | `CustomEvent<KulMasonryEventPayload>` |
 
 
 ## Methods
@@ -36,19 +36,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulMasonryPropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
-#### Parameters
-
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `descriptions` | `boolean` | - When true, includes descriptions for each property. |
-
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulMasonryPropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 

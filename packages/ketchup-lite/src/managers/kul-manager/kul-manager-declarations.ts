@@ -1,12 +1,5 @@
-import type { KulDatesLocales } from "../kul-dates/kul-dates-declarations";
-import type { KulLanguageJSON } from "../kul-language/kul-language-declarations";
-import type { KulThemeJSON } from "../kul-theme/kul-theme-declarations";
 import type { KulManager } from "./kul-manager";
 
-export interface KulDom extends HTMLHtmlElement {
-  ketchupLite: KulManager;
-  ketchupLiteInit: KulManagerInitialization;
-}
 export interface KulManagerUtilities {
   clickCallbacks?: Set<KulManagerClickCb>;
 }
@@ -14,31 +7,13 @@ export interface KulManagerClickCb {
   cb: () => unknown;
   el?: HTMLElement;
 }
-export interface KulManagerInitialization {
-  assetsPath?: string;
-  autoSetLocalization?: boolean;
-  dates?: KulManagerDatesSettings;
-  debug?: KulManagerDebugSettings;
-  language?: KulManagerLanguageSettings;
-  scrollOnHover?: KulManagerScrollOnHoverSettings;
-  theme?: KulManagerThemeSettings;
-}
-export interface KulManagerDatesSettings {
-  locale?: KulDatesLocales;
-}
-export interface KulManagerDebugSettings {
-  active?: boolean;
-  logLimit?: number;
-}
-export interface KulManagerLanguageSettings {
-  list?: KulLanguageJSON;
-  name?: string;
-}
-export interface KulManagerScrollOnHoverSettings {
-  delay?: number;
-  step?: number;
-}
-export interface KulManagerThemeSettings {
-  list?: KulThemeJSON;
-  name?: string;
+export type KulManagerGetAssetPath = (value: string) => string;
+export type KulManagerSetAssetPath = (value: string) => void;
+export type KulManagerComputedGetAssetPath = (value: string) => {
+  path: string;
+  style: { mask: string; webkitMask: string };
+};
+export type KulManagerEvent = CustomEvent<KulManagerEventPayload>;
+export interface KulManagerEventPayload {
+  kulManager: KulManager;
 }

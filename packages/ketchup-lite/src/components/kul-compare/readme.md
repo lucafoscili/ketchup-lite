@@ -17,9 +17,9 @@
 
 ## Events
 
-| Event               | Description              | Type                                  |
-| ------------------- | ------------------------ | ------------------------------------- |
-| `kul-compare-event` | Describes event emitted. | `CustomEvent<KulCompareEventPayload>` |
+| Event               | Description | Type                                  |
+| ------------------- | ----------- | ------------------------------------- |
+| `kul-compare-event` |             | `CustomEvent<KulCompareEventPayload>` |
 
 
 ## Methods
@@ -34,19 +34,13 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulComparePropsInterface>`
 
 Used to retrieve component's properties and descriptions.
 
-#### Parameters
-
-| Name           | Type      | Description                                           |
-| -------------- | --------- | ----------------------------------------------------- |
-| `descriptions` | `boolean` | - When true, includes descriptions for each property. |
-
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulComparePropsInterface>`
 
 Promise resolved with an object containing the component's properties.
 

@@ -1,8 +1,10 @@
+import { VNode } from "@stencil/core";
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulEventPayload } from "../../types/GenericTypes";
+} from "src/managers/kul-data/kul-data-declarations";
+import type { KulManager } from "src/managers/kul-manager/kul-manager";
+import { KulEventPayload } from "src/types/GenericTypes";
 
 //#region Events
 export type KulTreeEvent =
@@ -21,19 +23,29 @@ export interface KulTreeEventArguments {
 }
 //#endregion
 
-//#region Props
-export enum KulTreeProps {
-  kulAccordionLayout = "When enabled, the first level of depth will create an accordion-style appearance for nodes.",
-  kulData = "Actual data of the tree.",
-  kulFilter = "When true, displays a text field which enables filtering the dataset of the tree.",
-  kulInitialExpansionDepth = "Sets the initial expanded nodes based on the specified depth. If the property is not provided, all nodes in the tree will be expanded.",
-  kulRipple = "When set to true, the pointerdown event will trigger a ripple effect.",
-  kulSelectable = "When true, nodes can be selected.",
-  kulStyle = "Custom style of the component.",
+//#region Internal usage
+export interface KulTreeNodeProps {
+  accordionLayout: boolean;
+  depth: number;
+  elements: { ripple: VNode; value: VNode };
+  events: {
+    onClick: (event: MouseEvent) => void;
+    onClickExpand: (event: MouseEvent) => void;
+    onPointerDown: (event: MouseEvent) => void;
+  };
+  expanded: boolean;
+  manager: KulManager;
+  node: KulDataNode;
+  selected: boolean;
 }
+
+//#endregion
+
+//#region Props
 export interface KulTreePropsInterface {
   kulAccordionLayout?: boolean;
   kulData?: KulDataDataset;
+  kulEmpty?: string;
   kulFilter?: boolean;
   kulInitialExpansionDepth?: number;
   kulRipple?: boolean;

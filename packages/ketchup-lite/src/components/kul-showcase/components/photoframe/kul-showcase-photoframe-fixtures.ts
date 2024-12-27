@@ -1,5 +1,4 @@
-import { getAssetPath } from "@stencil/core";
-
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -18,10 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulPhotoframe"> =
   "KulPhotoframeEventPayload";
 const TAG_NAME: KulComponentTag<"KulPhotoframe"> = "kul-photoframe";
 
-export const PHOTOFRAME_FIXTURES: () => {
+export const PHOTOFRAME_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: PhotoframeData;
-} = () => {
+} = (get) => {
   const documentation: KulArticleDataset = {
     nodes: [
       {
@@ -63,8 +62,8 @@ export const PHOTOFRAME_FIXTURES: () => {
       },
     ],
   };
-  const placeholder = getAssetPath(`./assets/media/blur_color_splash.jpg`);
-  const value = getAssetPath(`./assets/media/color_splash.jpg`);
+  const placeholder = get(`./assets/media/blur_color_splash.jpg`).path;
+  const value = get(`./assets/media/color_splash.jpg`).path;
 
   return {
     documentation,

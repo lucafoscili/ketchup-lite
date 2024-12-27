@@ -1,8 +1,12 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { MasonryExample } from "./kul-showcase-masonry-declarations";
+import {
+  MasonryData,
+  MasonryExample,
+} from "./kul-showcase-masonry-declarations";
 import { MASONRY_FIXTURES } from "./kul-showcase-masonry-fixtures";
 
 @Component({
@@ -20,7 +24,7 @@ export class KulShowcaseMasonry {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = MASONRY_FIXTURES();
+  @State() fixtures = MASONRY_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables
@@ -34,7 +38,8 @@ export class KulShowcaseMasonry {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: MasonryExample = this.fixtures.examples[key];
+        const k = key as keyof MasonryData;
+        const props: MasonryExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -82,7 +87,11 @@ export class KulShowcaseMasonry {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div class="grid" data-cy="wrapper" part="grid">
+        <div
+          class="grid"
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
+          part="grid"
+        >
           {this.#prepExamples()}
         </div>
       </Fragment>

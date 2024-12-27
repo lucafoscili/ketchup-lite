@@ -14,9 +14,4 @@ export interface KulScrollOnHoverPercentages {
   back: number;
   forward: number;
 }
-export enum ScrollOnHoverDirection {
-  BOTTOM = "bottom",
-  LEFT = "left",
-  RIGHT = "right",
-  TOP = "top",
-}
+export type ScrollOnHoverDirection = "bottom" | "left" | "right" | "top";

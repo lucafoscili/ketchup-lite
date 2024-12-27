@@ -9,9 +9,9 @@ export const TOGGLE_EXAMPLES_KEYS = [
 ] as const;
 
 export interface ToggleExample extends KulTogglePropsInterface {
-  ["data-description"]: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
-  className: string;
+  className?: string;
 }
 
 export type ToggleData = {

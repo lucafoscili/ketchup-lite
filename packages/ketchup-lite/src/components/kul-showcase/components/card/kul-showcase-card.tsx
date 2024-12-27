@@ -1,10 +1,11 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { kulManagerSingleton } from "src/global/global";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulCardLayout } from "../../../kul-card/kul-card-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { CardExample } from "./kul-showcase-card-declarations";
+import { CardData, CardExample } from "./kul-showcase-card-declarations";
 import { CARD_FIXTURES } from "./kul-showcase-card-fixtures";
 
 @Component({
@@ -22,7 +23,7 @@ export class KulShowcaseCard {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = CARD_FIXTURES();
+  @State() fixtures = CARD_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables
@@ -36,7 +37,9 @@ export class KulShowcaseCard {
     const elements: VNode[] = [];
     for (const k1 in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
-        const layout: CardExample = this.fixtures.examples[k1];
+        const k = k1 as keyof CardData;
+        const layout: { [key: string]: Partial<CardExample> } =
+          this.fixtures.examples[k];
         const layoutWrapper: VNode[] = [];
 
         for (const k2 in layout) {
@@ -102,7 +105,7 @@ export class KulShowcaseCard {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}>
+        <div data-cy={CY_ATTRIBUTES.showcaseGridWrapper}>
           {this.#prepExamples()}
         </div>
       </Fragment>

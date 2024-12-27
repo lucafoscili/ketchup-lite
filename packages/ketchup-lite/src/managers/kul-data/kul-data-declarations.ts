@@ -1,29 +1,28 @@
-import { HTMLStencilElement } from "@stencil/core/internal";
-import { KulBadgePropsInterface } from "../../components/kul-badge/kul-badge-declarations";
-import { KulButtonPropsInterface } from "../../components/kul-button/kul-button-declarations";
+import { KulBadgePropsInterface } from "src/components/kul-badge/kul-badge-declarations";
+import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
+import { KulCardPropsInterface } from "src/components/kul-card/kul-card-declarations";
+import { KulChartPropsInterface } from "src/components/kul-chart/kul-chart-declarations";
 import {
   KulChatHistory,
   KulChatPropsInterface,
-} from "../../components/kul-chat/kul-chat-declarations";
-import { KulCodePropsInterface } from "../../components/kul-code/kul-code-declarations";
-import { KulImagePropsInterface } from "../../components/kul-image/kul-image-declarations";
-import { KulTogglePropsInterface } from "../../components/kul-toggle/kul-toggle-declarations";
+} from "src/components/kul-chat/kul-chat-declarations";
+import { KulChipPropsInterface } from "src/components/kul-chip/kul-chip-declarations";
+import { KulCodePropsInterface } from "src/components/kul-code/kul-code-declarations";
+import { KulImagePropsInterface } from "src/components/kul-image/kul-image-declarations";
+import { KulTogglePropsInterface } from "src/components/kul-toggle/kul-toggle-declarations";
+import { KulUploadPropsInterface } from "src/components/kul-upload/kul-upload-declarations";
 import {
   GenericMap,
   KulComponent,
   KulComponentName,
   KulEventPayload,
   KulEventType,
-} from "../../types/GenericTypes";
-import { KulChartPropsInterface } from "../../components/kul-chart/kul-chart-declarations";
-import { KulChipPropsInterface } from "../../components/kul-chip/kul-chip-declarations";
-import { KulUploadPropsInterface } from "../../components/kul-upload/kul-upload-declarations";
-import { KulCardPropsInterface } from "../../components/kul-card/kul-card-declarations";
+} from "src/types/GenericTypes";
 
 export interface KulDataBaseCell {
   value: string;
   shape?: KulDataShapes;
-  htmlProps?: Partial<HTMLStencilElement>;
+  htmlProps?: Partial<HTMLElement>;
 }
 export type KulDataCell<T extends KulDataShapes> = T extends "badge"
   ? Partial<KulBadgePropsInterface> & {

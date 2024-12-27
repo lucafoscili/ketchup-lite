@@ -7,22 +7,23 @@
 
 ## Properties
 
-| Property                   | Attribute                     | Description                                                                                                                            | Type             | Default     |
-| -------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | ----------- |
-| `kulAccordionLayout`       | `kul-accordion-layout`        | When enabled, the first level of depth will create an accordion-style appearance for nodes.                                            | `boolean`        | `true`      |
-| `kulData`                  | --                            | The actual data of the tree.                                                                                                           | `KulDataDataset` | `null`      |
-| `kulFilter`                | `kul-filter`                  | When true, displays a text field which enables filtering the dataset of the tree.                                                      | `boolean`        | `true`      |
-| `kulInitialExpansionDepth` | `kul-initial-expansion-depth` | Sets the initial expanded nodes based on the specified depth. If the property is not provided, all nodes in the tree will be expanded. | `number`         | `undefined` |
-| `kulRipple`                | `kul-ripple`                  | When set to true, the pointerdown event will trigger a ripple effect.                                                                  | `boolean`        | `true`      |
-| `kulSelectable`            | `kul-selectable`              | When true, nodes can be selected.                                                                                                      | `boolean`        | `true`      |
-| `kulStyle`                 | `kul-style`                   | Enables customization of the component's style.                                                                                        | `string`         | `""`        |
+| Property                   | Attribute                     | Description                                                                                                                            | Type             | Default         |
+| -------------------------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | ---------------- | --------------- |
+| `kulAccordionLayout`       | `kul-accordion-layout`        | When enabled, the first level of depth will create an accordion-style appearance for nodes.                                            | `boolean`        | `true`          |
+| `kulData`                  | --                            | The actual data of the tree.                                                                                                           | `KulDataDataset` | `null`          |
+| `kulEmpty`                 | `kul-empty`                   | Empty text displayed when there is no data.                                                                                            | `string`         | `"Empty data."` |
+| `kulFilter`                | `kul-filter`                  | When true, displays a text field which enables filtering the dataset of the tree.                                                      | `boolean`        | `true`          |
+| `kulInitialExpansionDepth` | `kul-initial-expansion-depth` | Sets the initial expanded nodes based on the specified depth. If the property is not provided, all nodes in the tree will be expanded. | `number`         | `undefined`     |
+| `kulRipple`                | `kul-ripple`                  | When set to true, the pointerdown event will trigger a ripple effect.                                                                  | `boolean`        | `true`          |
+| `kulSelectable`            | `kul-selectable`              | When true, nodes can be selected.                                                                                                      | `boolean`        | `true`          |
+| `kulStyle`                 | `kul-style`                   | Enables customization of the component's style.                                                                                        | `string`         | `""`            |
 
 
 ## Events
 
-| Event            | Description              | Type                               |
-| ---------------- | ------------------------ | ---------------------------------- |
-| `kul-tree-event` | Describes event emitted. | `CustomEvent<KulTreeEventPayload>` |
+| Event            | Description | Type                               |
+| ---------------- | ----------- | ---------------------------------- |
+| `kul-tree-event` |             | `CustomEvent<KulTreeEventPayload>` |
 
 
 ## Methods
@@ -37,21 +38,15 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves to a KulDebugLifecycleInfo object containing debug information.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulTreePropsInterface>`
 
-Retrieves the properties of the component, with optional descriptions.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                          |
-| -------------- | --------- | ------------------------------------------------------------------------------------ |
-| `descriptions` | `boolean` | - If true, returns properties with descriptions; otherwise, returns properties only. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulTreePropsInterface>`
 
-A promise that resolves to an object where each key is a property name, optionally with its description.
+Promise resolved with an object containing the component's properties.
 
 ### `refresh() => Promise<void>`
 

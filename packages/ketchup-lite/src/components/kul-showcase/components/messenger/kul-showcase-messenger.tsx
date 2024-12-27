@@ -1,9 +1,12 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { kulManagerSingleton } from "src/global/global";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { MessengerExample } from "./kul-showcase-messenger-declarations";
+import {
+  MessengerData,
+  MessengerExample,
+} from "./kul-showcase-messenger-declarations";
 import { MESSENGER_FIXTURES } from "./kul-showcase-messenger-fixtures";
 
 @Component({
@@ -21,7 +24,7 @@ export class KulShowcaseMessenger {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = MESSENGER_FIXTURES();
+  @State() fixtures = MESSENGER_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables
@@ -35,7 +38,8 @@ export class KulShowcaseMessenger {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: MessengerExample = this.fixtures.examples[key];
+        const k = key as keyof MessengerData;
+        const props: MessengerExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -85,7 +89,7 @@ export class KulShowcaseMessenger {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

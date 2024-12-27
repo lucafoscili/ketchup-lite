@@ -1,10 +1,12 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulTextfieldStyling } from "../../../kul-textfield/kul-textfield-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { TextfieldExample } from "./kul-showcase-textfield-declarations";
+import {
+  TextfieldData,
+  TextfieldExample,
+} from "./kul-showcase-textfield-declarations";
 import { TEXTFIELD_FIXTURES } from "./kul-showcase-textfield-fixtures";
 
 @Component({
@@ -36,7 +38,9 @@ export class KulShowcaseTextfield {
     const elements: VNode[] = [];
     for (const k1 in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, k1)) {
-        const category: TextfieldExample = this.fixtures.examples[k1];
+        const k = k1 as keyof TextfieldData;
+        const category: { [key: string]: Partial<TextfieldExample> } =
+          this.fixtures.examples[k];
         const group: VNode[] = [];
 
         for (const k2 in category) {
@@ -108,7 +112,7 @@ export class KulShowcaseTextfield {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}>
+        <div data-cy={CY_ATTRIBUTES.showcaseGridWrapper}>
           {this.#prepExamples()}
         </div>
       </Fragment>

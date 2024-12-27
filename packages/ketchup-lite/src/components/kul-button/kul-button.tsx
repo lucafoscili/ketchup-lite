@@ -12,35 +12,30 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
-import {
-  KulButtonEventPayload,
-  KulButtonEvent,
-  KulButtonProps,
-  KulButtonState,
-  KulButtonStyling,
-} from "./kul-button-declarations";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { KulDynamicPositionPlacement } from "../../managers/kul-dynamic-position/kul-dynamic-position-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { KulManagerClickCb } from "../../managers/kul-manager/kul-manager-declarations";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KulManagerClickCb } from "src/managers/kul-manager/kul-manager-declarations";
 import {
-  KulDataCyAttributes,
-  type GenericObject,
-} from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import {
+  CY_ATTRIBUTES,
   KUL_DROPDOWN_CLASS,
   KUL_DROPDOWN_CLASS_VISIBLE,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
-} from "../../variables/GenericVariables";
+} from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import { KulListEventPayload } from "../kul-list/kul-list-declarations";
+import {
+  KulButtonEvent,
+  KulButtonEventPayload,
+  KulButtonPropsInterface,
+  KulButtonState,
+  KulButtonStyling,
+  KulButtonType,
+} from "./kul-button-declarations";
 
 @Component({
   tag: "kul-button",
@@ -53,20 +48,11 @@ export class KulButton {
    */
   @Element() rootElement: HTMLKulButtonElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The value of the component ("on" or "off").
    * @default ""
@@ -74,11 +60,9 @@ export class KulButton {
    * @see KulButtonState - For a list of possible states.
    */
   @State() value: KulButtonState = "off";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Actual data of the button, used to render dropdown buttons.
    * @default null
@@ -93,32 +77,32 @@ export class KulButton {
    * When set, the button will show this icon.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulIcon = "";
+  @Prop({ mutable: true }) kulIcon = "";
   /**
    * When set, the icon button off state will show this icon. Otherwise, an outlined version of the icon prop will be displayed.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulIconOff = "";
+  @Prop({ mutable: true }) kulIconOff = "";
   /**
    * When set, the button will show this text.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulLabel = "";
+  @Prop({ mutable: true }) kulLabel = "";
   /**
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * When set to true, the button show a spinner received in slot.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulShowSpinner = false;
+  @Prop({ mutable: true }) kulShowSpinner = false;
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
   /**
    * Defines the style of the button. This property controls the visual appearance of the button.
    *
@@ -126,51 +110,39 @@ export class KulButton {
    *
    * @see KulButtonStyling - For a list of available styles.
    */
-  @Prop({ mutable: true, reflect: true }) kulStyling: KulButtonStyling =
-    "raised";
+  @Prop({ mutable: true }) kulStyling: KulButtonStyling = "raised";
   /**
    * When set to true, the icon button will be toggable on/off.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulToggable = false;
+  @Prop({ mutable: true }) kulToggable = false;
   /**
    * When set, the icon will be shown after the text.
    * @default false
    */
-  @Prop({ mutable: true, reflect: true }) kulTrailingIcon = false;
+  @Prop({ mutable: true }) kulTrailingIcon = false;
   /**
    * Sets the type of the button.
    * @default "button"
    */
-  @Prop({ mutable: true, reflect: true }) kulType:
-    | "button"
-    | "reset"
-    | "submit" = "button";
+  @Prop({ mutable: true }) kulType: KulButtonType = "button";
   /**
    * When set to true, the icon button state will be on.
    * @default false
    */
   @Prop({ mutable: false }) kulValue = false;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
+  //#region Internal variables
   #clickCb: KulManagerClickCb;
   #dropdown: HTMLButtonElement;
   #dropdownRippleSurface: HTMLDivElement;
   #list: HTMLKulListElement;
-  #kulManager = kulManagerInstance();
   #rippleSurface: HTMLDivElement;
   #timeout: NodeJS.Timeout;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted for various button interactions like click, focus, blur.
-   */
+  //#region Events
   @Event({
     eventName: "kul-button-event",
     composed: true,
@@ -178,19 +150,20 @@ export class KulButton {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulButtonEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulButtonEvent,
     isDropdown = false,
   ) {
+    const { theme } = kulManagerSingleton;
+
     switch (eventType) {
       case "click":
         this.#updateState(this.#isOn() ? "off" : "on");
         break;
       case "pointerdown":
         if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
+          theme.ripple.trigger(
             e as PointerEvent,
             isDropdown ? this.#dropdownRippleSurface : this.#rippleSurface,
           );
@@ -204,13 +177,12 @@ export class KulButton {
       id: this.rootElement.id,
       originalEvent: e,
       value: this.value,
+      valueAsBoolean: this.value === "on" ? true : false,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -221,12 +193,13 @@ export class KulButton {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @param {boolean} descriptions - When true, includes descriptions for each property.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulButtonPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulButtonProps, descriptions);
+  async getProps(): Promise<KulButtonPropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this) as KulButtonPropsInterface;
   }
   /**
    * Used to retrieve the component's current state.
@@ -293,36 +266,28 @@ export class KulButton {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
+  //#region Private methods
   #listManager() {
+    const { addClickCallback, dynamicPosition, removeClickCallback } =
+      kulManagerSingleton;
+
     return {
       close: () => {
-        this.#kulManager.dynamicPosition.stop(this.#list);
-        this.#kulManager.removeClickCallback(this.#clickCb);
+        dynamicPosition.stop(this.#list);
+        removeClickCallback(this.#clickCb);
       },
       isOpened: () => {
         return this.#list.classList.contains(KUL_DROPDOWN_CLASS_VISIBLE);
       },
       open: () => {
-        if (this.#kulManager.dynamicPosition.isRegistered(this.#list)) {
-          this.#kulManager.dynamicPosition.changeAnchor(
-            this.#list,
-            this.#dropdown,
-          );
+        if (dynamicPosition.isRegistered(this.#list)) {
+          dynamicPosition.changeAnchor(this.#list, this.#dropdown);
         } else {
-          this.#kulManager.dynamicPosition.register(
-            this.#list,
-            this.#dropdown,
-            0,
-            KulDynamicPositionPlacement.AUTO,
-            true,
-          );
+          dynamicPosition.register(this.#list, this.#dropdown, 0, "", true);
         }
-        this.#kulManager.dynamicPosition.start(this.#list);
+        dynamicPosition.start(this.#list);
         if (!this.#clickCb) {
           this.#clickCb = {
             cb: () => {
@@ -331,7 +296,7 @@ export class KulButton {
             el: this.#list,
           };
         }
-        this.#kulManager.addClickCallback(this.#clickCb, true);
+        addClickCallback(this.#clickCb, true);
       },
       toggle: () => {
         if (this.#listManager().isOpened()) {
@@ -342,131 +307,141 @@ export class KulButton {
       },
     };
   }
-
   #isDropdown() {
     return this.kulData?.nodes?.[0]?.children?.length;
   }
-
   #isOn() {
     return this.value === "on" ? true : false;
   }
-
   #updateState(value: KulButtonState) {
-    if (
-      this.kulToggable &&
-      !this.kulDisabled &&
-      (value === "off" || value === "on")
-    ) {
+    const { kulDisabled, kulToggable } = this;
+
+    const isOff = value === "off";
+    const isOn = value === "on";
+
+    if (kulToggable && !kulDisabled && (isOff || isOn)) {
       this.value = value;
     }
   }
+  #prepIcon(image: KulImagePropsInterface): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
 
-  #prepIcon(image: KulImagePropsInterface) {
-    return this.kulIcon ? (
-      <kul-image
-        class={`button__icon kul-icon ${this.kulShowSpinner ? "button__icon--hidden" : ""}`}
-        {...image}
-      />
-    ) : undefined;
+    return (
+      this.kulIcon && (
+        <kul-image
+          class={bemClass("button", "icon", {
+            hidden: this.kulShowSpinner,
+          })}
+          data-cy={CY_ATTRIBUTES.icon}
+          {...image}
+        />
+      )
+    );
   }
-
-  #prepLabel(className: { [className: string]: boolean }) {
+  #prepLabel(className: string): VNode {
     return <span class={className}>{this.kulLabel}</span>;
   }
-
   #prepNode(node: KulDataNode): VNode {
-    const currentNode = <div>{node.value}</div>;
+    const { children, value } = node;
 
-    if (Array.isArray(node.children) && node.children.length > 0) {
-      const childrenNodes = node.children.map((childNode) =>
-        this.#prepNode(childNode),
-      );
-      return (
-        <Fragment>
-          {currentNode}
-          {childrenNodes}
-        </Fragment>
-      );
-    } else {
-      return currentNode;
-    }
+    const currentNode = <div data-cy={CY_ATTRIBUTES.node}>{value}</div>;
+
+    const hasChildren = !!(Array.isArray(children) && children.length > 0);
+    return hasChildren ? (
+      <Fragment>
+        {currentNode}
+        {children.map((c) => this.#prepNode(c))}
+      </Fragment>
+    ) : (
+      currentNode
+    );
   }
-
-  #prepRipple(isDropdown = false) {
-    return this.kulRipple ? (
-      <div
-        ref={(el) => {
-          if (el && this.kulRipple) {
-            if (isDropdown) {
-              this.#dropdownRippleSurface = el;
-            } else {
-              this.#rippleSurface = el;
+  #prepRipple(isDropdown = false): VNode {
+    return (
+      this.kulRipple && (
+        <div
+          data-cy={CY_ATTRIBUTES.ripple}
+          ref={(el) => {
+            if (el && this.kulRipple) {
+              if (isDropdown) {
+                this.#dropdownRippleSurface = el;
+              } else {
+                this.#rippleSurface = el;
+              }
             }
-          }
-        }}
-      ></div>
-    ) : undefined;
+          }}
+        ></div>
+      )
+    );
   }
+  #prepSpinner(): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
 
-  #prepSpinner() {
-    return this.kulShowSpinner ? (
-      <div class="button__spinner-container">
-        <slot name="spinner"></slot>
-      </div>
-    ) : undefined;
+    return (
+      this.kulShowSpinner && (
+        <div class={bemClass("button", "spinner-container")}>
+          <slot name="spinner"></slot>
+        </div>
+      )
+    );
   }
-
   #normalizedStyling() {
     return this.kulStyling
       ? (this.kulStyling.toLowerCase() as KulButtonStyling)
       : "raised";
   }
-
   #renderButton(): VNode[] {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const {
+      kulDisabled,
+      kulIcon,
+      kulLabel,
+      kulShowSpinner,
+      kulTrailingIcon,
+      kulType,
+      rootElement,
+    } = this;
+
     const buttonStyling = this.#normalizedStyling();
 
     const image: KulImagePropsInterface = {
-      kulColor: this.kulDisabled
+      kulColor: kulDisabled
         ? `var(--kul_button_disabled_color)`
         : `var(--kul_button_primary_color)`,
-      kulValue: this.kulIcon,
+      kulValue: kulIcon,
       kulSizeX: buttonStyling === "floating" ? "1.75em" : "1.475em",
       kulSizeY: buttonStyling === "floating" ? "1.75em" : "1.475em",
     };
 
-    const className: Record<string, boolean> = {
-      button: true,
-      "button--disabled": this.kulDisabled ? true : false,
-      [`button--${buttonStyling}`]: true,
-      "button--no-label":
-        !this.kulLabel || this.kulLabel === " " ? true : false,
-      "button--with-spinner": this.kulShowSpinner,
-    };
+    const labelClassName = bemClass("button", "label", {
+      hidden: kulShowSpinner && !kulDisabled,
+    });
 
-    const labelClassName: Record<string, boolean> = {
-      button__label: true,
-      "content--hidden":
-        this.kulShowSpinner && !this.kulDisabled ? true : false,
-    };
-
-    const styleSpinnerContainer: Record<string, string> = {
+    const style: Record<string, string> = {
       "--kul_button_spinner_height": image.kulSizeY,
     };
 
     return [
       <button
-        aria-label={this.rootElement.title}
-        class={className}
-        disabled={this.kulDisabled}
+        aria-label={rootElement.title}
+        class={bemClass("button", null, {
+          disabled: kulDisabled,
+          [buttonStyling]: true,
+          ["no-label"]: !kulLabel || kulLabel === " ",
+          "with-spinner": kulShowSpinner,
+        })}
+        data-cy={CY_ATTRIBUTES.button}
+        disabled={kulDisabled}
         onBlur={(e) => this.onKulEvent(e, "blur")}
         onClick={(e) => this.onKulEvent(e, "click")}
         onFocus={(e) => this.onKulEvent(e, "focus")}
         onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
-        style={styleSpinnerContainer}
-        type={this.kulType ? this.kulType : "button"}
+        style={style}
+        type={kulType ? kulType : "button"}
       >
         {this.#prepRipple()}
-        {this.kulTrailingIcon
+        {kulTrailingIcon
           ? [this.#prepLabel(labelClassName), this.#prepIcon(image)]
           : [this.#prepIcon(image), this.#prepLabel(labelClassName)]}
         {this.#prepSpinner()}
@@ -474,72 +449,77 @@ export class KulButton {
       this.#renderDropdown(image, buttonStyling),
     ];
   }
-
   #renderIconButton(): VNode[] {
-    const isLarge = this.rootElement.classList.contains("large");
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const {
+      kulDisabled,
+      kulIcon,
+      kulIconOff,
+      kulShowSpinner,
+      kulToggable,
+      kulType,
+      rootElement,
+      value,
+    } = this;
+
+    const isLarge = rootElement.classList.contains("large");
     const isOn = this.#isOn();
 
     const image: KulImagePropsInterface = {
-      kulColor: this.kulDisabled
+      kulColor: kulDisabled
         ? `var(--kul_button_disabled_color)`
         : `var(--kul_button_primary_color)`,
       kulSizeX: isLarge ? "calc(1.75em * 1.5)" : "1.75em",
       kulSizeY: isLarge ? "calc(1.75em * 1.5)" : "1.75em",
     };
 
-    const className: Record<string, boolean> = {
-      "icon-button": true,
-      "button--disabled": this.kulDisabled ? true : false,
-      "icon-button--on": this.kulToggable && isOn ? true : false,
-      toggable: this.kulToggable ? true : false,
-      "icon-button--with-spinner": this.kulShowSpinner ? true : false,
-    };
-
-    const styleSpinnerContainer: Record<string, string> = {
+    const styleSpinnerContainer = {
       "--kul_button_spinner_height": image.kulSizeY,
       "--kul_button_spinner_width": image.kulSizeX,
     };
 
-    const iconOff: string = this.kulIconOff
-      ? this.kulIconOff
-      : this.kulIcon + "_border";
+    const iconOff = kulIconOff ? kulIconOff : kulIcon + "_border";
 
     return [
       <button
-        aria-label={this.rootElement.title}
-        class={className}
-        disabled={this.kulDisabled}
+        aria-label={rootElement.title}
+        class={bemClass("icon-button", null, {
+          disabled: kulDisabled,
+          on: kulToggable && isOn,
+          toggable: kulToggable,
+          "with-spinner": kulShowSpinner,
+        })}
+        data-cy={CY_ATTRIBUTES.button}
+        disabled={kulDisabled}
         onBlur={(e) => this.onKulEvent(e, "blur")}
         onClick={(e) => this.onKulEvent(e, "click")}
         onFocus={(e) => this.onKulEvent(e, "focus")}
         onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
         style={styleSpinnerContainer}
-        value={this.value}
-        type={this.kulType ? this.kulType : "button"}
+        value={value}
+        type={kulType ? kulType : "button"}
       >
         {this.#prepRipple()}
         <kul-image
           class="icon-button__icon"
+          data-cy={CY_ATTRIBUTES.icon}
           {...image}
-          kulValue={this.kulToggable && !isOn ? iconOff : this.kulIcon}
+          kulValue={kulToggable && !isOn ? iconOff : kulIcon}
         />
         {this.#prepSpinner()}
       </button>,
       this.#renderDropdown(image, "icon"),
     ];
   }
+  #renderDropdown(image: KulImagePropsInterface, styling: string): VNode {
+    const { bemClass } = kulManagerSingleton.theme;
 
-  #renderDropdown(image: KulImagePropsInterface, styling: string) {
     if (!this.#isDropdown()) {
-      return;
+      return null;
     }
 
-    const className: Record<string, boolean> = {
-      button: true,
-      [`button--${styling}`]: true,
-      ["button--dropdown"]: true,
-      "button--disabled": this.kulDisabled ? true : false,
-    };
+    const { kulDisabled, kulData } = this;
 
     const eventHandler = (e: CustomEvent<KulListEventPayload>) => {
       if (e.detail.eventType === "click") {
@@ -550,12 +530,14 @@ export class KulButton {
 
     return (
       <button
-        class={className}
-        data-cy={KulDataCyAttributes.DROPDOWN_BUTTON}
-        disabled={this.kulDisabled}
-        onClick={() => {
-          this.#listManager().toggle();
-        }}
+        class={bemClass("button", null, {
+          disabled: kulDisabled,
+          dropdown: true,
+          [styling]: true,
+        })}
+        data-cy={CY_ATTRIBUTES.dropdownButton}
+        disabled={kulDisabled}
+        onClick={this.#listManager().toggle}
         onPointerDown={(e) => this.onKulEvent(e, "pointerdown", true)}
         ref={(el) => {
           if (el) {
@@ -566,20 +548,21 @@ export class KulButton {
         {this.#prepRipple(true)}
         <kul-image {...image} kulValue={"--kul-dropdown-icon"} />
         <kul-list
-          class={KUL_DROPDOWN_CLASS}
-          data-cy={KulDataCyAttributes.DROPDOWN_MENU}
-          kulData={{ nodes: this.kulData.nodes[0].children }}
+          class={bemClass(KUL_DROPDOWN_CLASS)}
+          data-cy={CY_ATTRIBUTES.dropdownMenu}
+          kulData={{ nodes: kulData.nodes[0].children }}
           onKul-list-event={eventHandler}
           ref={(el) => (this.#list = el)}
         ></kul-list>
       </button>
     );
   }
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
+  //#endregion
 
+  //#region Lifecycle hooks
   componentWillLoad() {
+    const { data, theme } = kulManagerSingleton;
+
     if (this.kulValue) {
       this.value = "on";
     }
@@ -589,65 +572,68 @@ export class KulButton {
         this.kulIcon = firstNode.icon;
       }
       if (!this.kulLabel) {
-        this.kulLabel = this.#kulManager.data.cell.stringify(firstNode.value);
+        this.kulLabel = data.cell.stringify(firstNode.value);
       }
     }
 
-    this.#kulManager.theme.register(this);
+    theme.register(this);
   }
-
   componentDidLoad() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (this.#rippleSurface) {
-      this.#kulManager.theme.ripple.setup(this.#rippleSurface);
+      theme.ripple.setup(this.#rippleSurface);
     }
     if (this.#dropdownRippleSurface) {
-      this.#kulManager.theme.ripple.setup(this.#dropdownRippleSurface);
+      theme.ripple.setup(this.#dropdownRippleSurface);
     }
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    debug.info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    const { info } = kulManagerSingleton.debug;
+
+    info.update(this, "did-render");
   }
-
   render() {
-    const buttonStyling = this.#normalizedStyling();
+    const { debug, theme } = kulManagerSingleton;
+    const { kulData, kulIcon, kulLabel, kulStyle } = this;
 
-    const isIconButton: boolean = !!(
-      buttonStyling === "icon" ||
-      (buttonStyling === "raised" &&
-        this.kulIcon &&
-        (this.kulLabel === null || this.kulLabel === undefined))
+    const styling = this.#normalizedStyling();
+
+    const isIconButton = !!(
+      styling === "icon" ||
+      (styling === "raised" &&
+        kulIcon &&
+        (kulLabel === null || kulLabel === undefined))
     );
 
-    if (!this.kulLabel && !this.kulIcon && !this.kulData) {
-      this.#kulManager.debug.logs.new(this, "Empty button.", "informational");
+    if (!kulLabel && !kulIcon && !kulData) {
+      debug.logs.new(this, "Empty button.", "informational");
       return;
     }
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           {isIconButton ? this.#renderIconButton() : this.#renderButton()}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
+    const { dynamicPosition, theme } = kulManagerSingleton;
+
     if (this.#list) {
-      this.#kulManager.dynamicPosition.unregister([this.#list]);
+      dynamicPosition.unregister([this.#list]);
     }
-    this.#kulManager.theme.unregister(this);
+    theme.unregister(this);
   }
+  //#endregion
 }

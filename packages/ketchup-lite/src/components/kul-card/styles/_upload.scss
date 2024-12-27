@@ -1,0 +1,12 @@
+.card-upload {
+  & {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    width: 100%;
+  }
+
+  &__section-1 {
+    overflow: hidden;
+  }
+}

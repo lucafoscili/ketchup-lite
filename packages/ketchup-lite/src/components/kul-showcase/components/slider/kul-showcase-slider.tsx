@@ -1,9 +1,9 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { SliderExample } from "./kul-showcase-slider-declarations";
+import { SliderData, SliderExample } from "./kul-showcase-slider-declarations";
 import { SLIDER_FIXTURES } from "./kul-showcase-slider-fixtures";
 
 @Component({
@@ -35,7 +35,8 @@ export class KulShowcaseSlider {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: SliderExample = this.fixtures.examples[key];
+        const k = key as keyof SliderData;
+        const props: SliderExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -90,7 +91,7 @@ export class KulShowcaseSlider {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

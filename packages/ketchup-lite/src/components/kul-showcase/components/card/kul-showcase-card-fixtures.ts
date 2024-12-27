@@ -1,5 +1,6 @@
-import { getAssetPath } from "@stencil/core";
-import { KulCardLayout, KulDataDataset } from "src/components";
+import { KulCardLayout } from "src/components/kul-card/kul-card-declarations";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,10 +18,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulCard"> =
   "KulCardEventPayload";
 const TAG_NAME: KulComponentTag<"KulCard"> = "kul-card";
 
-export const CARD_FIXTURES: () => {
+export const CARD_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: CardData;
-} = () => {
+} = (get) => {
   const data: {
     [K in KulCardLayout]: () => KulDataDataset;
   } = {
@@ -186,7 +187,7 @@ export const CARD_FIXTURES: () => {
               3: { value: "Description" },
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/color_splash.jpg`),
+                value: get(`./assets/media/color_splash.jpg`).path,
               },
             },
             id: "material",

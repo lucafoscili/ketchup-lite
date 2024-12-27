@@ -1,5 +1,5 @@
-import { getAssetPath } from "@stencil/core";
-import { KulDataDataset } from "src/components";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -18,10 +18,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulImageviewer"> =
   "KulImageviewerEventPayload";
 const TAG_NAME: KulComponentTag<"KulImageviewer"> = "kul-imageviewer";
 
-export const IMAGEVIEWER_FIXTURES: () => {
+export const IMAGEVIEWER_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: ImageviewerData;
-} = () => {
+} = (get) => {
   const data: { [index: string]: KulDataDataset } = {
     kulData: {
       nodes: [
@@ -29,7 +29,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+              value: get(`./assets/media/avatar_thor_2.png`).path,
             },
           },
           id: "image_0",
@@ -39,7 +39,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/location_forest.png`),
+              value: get(`./assets/media/location_forest.png`).path,
             },
           },
           id: "image_1",
@@ -49,7 +49,7 @@ export const IMAGEVIEWER_FIXTURES: () => {
           cells: {
             kulImage: {
               shape: "image",
-              value: getAssetPath(`./assets/media/avatar_freya.png`),
+              value: get(`./assets/media/avatar_freya.png`).path,
             },
           },
           id: "image_2",

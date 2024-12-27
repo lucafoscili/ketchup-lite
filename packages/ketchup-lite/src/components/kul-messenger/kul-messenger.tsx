@@ -4,49 +4,43 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
+  Fragment,
   h,
   Host,
   Method,
   Prop,
   State,
+  VNode,
 } from "@stencil/core";
-
-import { getters } from "./helpers/kul-messenger-getters";
-import { setters } from "./helpers/kul-messenger-setters";
+import { kulManagerSingleton } from "src/global/global";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
+import { CLEAN_UI, IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from "./helpers/constants";
 import {
-  CLEAN_COMPONENTS,
-  CLEAN_UI_JSON,
-  IMAGE_TYPE_IDS,
-} from "./kul-messenger-constants";
+  assignPropsToChatCell,
+  extractPropsFromChatCell,
+  hasNodes,
+} from "./helpers/utils";
+import { createAdapter } from "./kul-messenger-adapter";
 import {
-  KulMessengerProps,
-  KulMessengerEvent,
-  KulMessengerAdapter,
-  KulMessengerCharacterNode,
-  KulMessengerDataset,
-  KulMessengerHistory,
-  KulMessengerCovers,
-  KulMessengerConfig,
-  KulMessengerEventPayload,
-  KulMessengerUI,
-  KulMessengerChat,
-  KulMessengerEditingStatus,
   KulMessengerBaseChildNode,
+  KulMessengerCharacterNode,
+  KulMessengerChat,
   KulMessengerChildIds,
+  KulMessengerConfig,
+  KulMessengerCovers,
+  KulMessengerDataset,
+  KulMessengerEditingStatus,
+  KulMessengerEvent,
+  KulMessengerEventPayload,
+  KulMessengerFilters,
+  KulMessengerHistory,
   KulMessengerImageTypes,
+  KulMessengerPanels,
+  KulMessengerPropsInterface,
   KulMessengerUnionChildIds,
 } from "./kul-messenger-declarations";
-import { prepCenter } from "./layout/kul-messenger-center";
-import { prepLeft } from "./layout/kul-messenger-left";
-import { prepRight } from "./layout/kul-messenger-right";
-import { prepGrid } from "./selection-grid/kul-messenger-selection-grid";
-import { KulDataCell } from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import type { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
 
 @Component({
   tag: "kul-messenger",
@@ -59,20 +53,11 @@ export class KulMessenger {
    */
   @Element() rootElement: HTMLKulMessengerElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Map of chat components with their characters.
    */
@@ -90,10 +75,10 @@ export class KulMessenger {
    */
   @State() currentCharacter: KulMessengerCharacterNode;
   /**
-   * Node representing the current active character.
+   * Maps an active form with the id of its related node.
    */
   @State()
-  editingStatus: KulMessengerEditingStatus<KulMessengerImageTypes> =
+  formStatusMap: KulMessengerEditingStatus<KulMessengerImageTypes> =
     IMAGE_TYPE_IDS.reduce((acc, type) => {
       acc[type] = null;
       return acc;
@@ -117,12 +102,10 @@ export class KulMessenger {
   /**
    * State of options' filters.
    */
-  @State() ui: KulMessengerUI = CLEAN_UI_JSON;
+  @State() ui = CLEAN_UI();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Automatically saves the dataset when a chat updates.
    * @default true
@@ -143,20 +126,16 @@ export class KulMessenger {
    * @default ""
    */
   @Prop() kulValue: KulMessengerConfig = null;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
+  //#region Internal variables
+  #adapter = createAdapter(
+    { compInstance: this, manager: kulManagerSingleton },
+    () => this.#adapter,
+  );
+  //#endregion
 
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-messenger-event",
     composed: true,
@@ -164,25 +143,43 @@ export class KulMessenger {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulMessengerEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulMessengerEvent) {
+    const { currentCharacter, rootElement, ui } = this;
+
     const config: KulMessengerConfig = {
-      currentCharacter: this.currentCharacter?.id,
-      ui: this.ui,
+      currentCharacter: currentCharacter?.id,
+      ui,
     };
     this.kulEvent.emit({
       comp: this,
-      id: this.rootElement.id,
+      id: rootElement.id,
       originalEvent: e,
       eventType,
       config,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
+  //#region Public methods
+  /**
+   * Deletes the options identified by the node and type.
+   * @param {KulMessengerBaseChildNode<KulMessengerUnionChildIds>} node - The node to delete.
+   * @param {KulMessengerImageTypes} type - The type of the node.
+   */
+  @Method()
+  async deleteOption(
+    node: KulMessengerBaseChildNode<KulMessengerUnionChildIds>,
+    type: KulMessengerImageTypes,
+  ): Promise<void> {
+    const { root } = this.#adapter.controller.get.image;
 
+    const rootNode = root(type);
+    const idx = rootNode.children.indexOf(node);
+    if (idx > -1) {
+      delete rootNode.children[idx];
+      this.refresh();
+    }
+  }
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -192,13 +189,14 @@ export class KulMessenger {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<KulMessengerPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulMessengerProps, descriptions);
+  async getProps(): Promise<KulMessengerPropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this) as KulMessengerPropsInterface;
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -214,10 +212,16 @@ export class KulMessenger {
   async reset(): Promise<void> {
     this.covers = {};
     this.currentCharacter = null;
-    this.ui = CLEAN_UI_JSON;
     this.history = {};
 
-    this.#initStates();
+    this.#initialize();
+  }
+  /**
+   * Saves the current status of the messenger.
+   */
+  @Method()
+  async save(): Promise<void> {
+    this.#save();
   }
   /**
    * Initiates the unmount sequence, which removes the component from the DOM after a delay.
@@ -230,101 +234,89 @@ export class KulMessenger {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
+  //#region Private methods
+  #initialize = () => {
+    const { kulData, kulValue } = this;
 
-  #adapter: KulMessengerAdapter = {
-    actions: {
-      delete: {
-        option: (node, type) => {
-          const root = this.#adapter.get.image.root(type);
-          const idx = root.children.indexOf(node);
-          if (idx !== -1) {
-            delete root.children[idx];
-          }
-          this.refresh();
-        },
-      },
-      save: async () => this.#save(),
-    },
-    components: { ...CLEAN_COMPONENTS, messenger: this },
-    get: null,
-    set: null,
+    if (hasNodes(this.#adapter)) {
+      for (let index = 0; index < kulData.nodes.length; index++) {
+        const character = kulData.nodes[index];
+        this.#initCharacter(character);
+      }
+    }
+
+    if (kulValue) {
+      this.#initConfig();
+    }
   };
+  #initCharacter = (character: KulMessengerCharacterNode) => {
+    const { get } = this.#adapter.controller;
 
-  #hasCharacters() {
-    const nodes = this.kulData?.nodes || [];
-    return !!nodes.length;
-  }
+    const covers: KulMessengerCovers = {
+      [character.id]: IMAGE_TYPE_IDS.reduce(
+        (acc, type) => {
+          acc[type] =
+            Number(get.image.root(type, character).value).valueOf() || 0;
+          return acc;
+        },
+        {} as KulMessengerCovers[typeof character.id],
+      ),
+    };
 
-  #hasNodes() {
-    return !!this.kulData?.nodes?.length;
-  }
+    const chat = character.children?.find((n) => n.id === "chat");
+    this.chat[character.id] = {};
 
-  #initStates() {
-    if (this.#hasNodes()) {
-      const imageRootGetter = this.#adapter.get.image.root;
-      for (let index = 0; index < this.kulData.nodes.length; index++) {
-        const character = this.kulData.nodes[index];
-        const covers: KulMessengerCovers = {
-          [character.id]: IMAGE_TYPE_IDS.reduce(
-            (acc, type) => {
-              acc[type] =
-                Number(imageRootGetter(type, character).value).valueOf() || 0;
-              return acc;
-            },
-            {} as KulMessengerCovers[typeof character.id],
-          ),
-        };
-        const chat = character.children?.find((n) => n.id === "chat");
-        this.chat[character.id] = {};
-        const chatCell = chat?.cells?.kulChat as KulDataCell<"chat">;
-        if (chatCell) {
-          const characterChat = this.chat[character.id];
-          characterChat.kulEndpointUrl = chatCell.kulEndpointUrl;
-          characterChat.kulMaxTokens = chatCell.kulMaxTokens;
-          characterChat.kulPollingInterval = chatCell.kulPollingInterval;
-          characterChat.kulTemperature = chatCell.kulTemperature;
-        }
-        const history = chatCell?.kulValue || chatCell?.value || [];
-        this.history[character.id] = JSON.stringify(history);
-        Object.assign(this.covers, covers);
+    const chatCell = chat?.cells?.kulChat;
+    if (chatCell) {
+      extractPropsFromChatCell(chatCell, this.chat[character.id]);
+    }
+
+    const history = chatCell?.kulValue || chatCell?.value || [];
+    this.history[character.id] = JSON.stringify(history);
+    Object.assign(this.covers, covers);
+  };
+  #initConfig = () => {
+    const { byId } = this.#adapter.controller.get.character;
+    const { kulValue } = this;
+
+    const currentCharacter = kulValue.currentCharacter;
+    const filters = kulValue.ui?.filters || CLEAN_UI().filters;
+    const panels = kulValue.ui?.panels || CLEAN_UI().panels;
+
+    if (currentCharacter) {
+      this.currentCharacter = byId(currentCharacter);
+    }
+
+    for (const key in filters) {
+      if (Object.prototype.hasOwnProperty.call(filters, key)) {
+        const k = key as keyof KulMessengerFilters;
+        const filter = filters[k];
+        this.ui.filters[k] = filter;
       }
     }
-    if (this.kulValue) {
-      const currentCharacter = this.kulValue.currentCharacter;
-      const filters = this.kulValue.ui?.filters || {};
-      const panels = this.kulValue.ui?.panels || {};
-      if (currentCharacter) {
-        this.currentCharacter =
-          this.#adapter.get.character.byId(currentCharacter);
-      }
-      for (const key in filters) {
-        if (Object.prototype.hasOwnProperty.call(filters, key)) {
-          const filter = filters[key];
-          this.ui.filters[key] = filter;
-        }
-      }
-      for (const key in panels) {
-        if (Object.prototype.hasOwnProperty.call(panels, key)) {
-          const panel = panels[key];
-          this.ui.panels[key] = panel;
-        }
+    for (const key in panels) {
+      if (Object.prototype.hasOwnProperty.call(panels, key)) {
+        const k = key as keyof KulMessengerPanels;
+        const panel = panels[k];
+        this.ui.panels[k] = panel;
       }
     }
-  }
+  };
+  #save = async () => {
+    const { covers, history, kulData } = this;
 
-  async #save() {
-    for (let index = 0; index < this.kulData.nodes.length; index++) {
-      const character = this.kulData.nodes[index];
+    for (let index = 0; index < kulData.nodes.length; index++) {
+      const character = kulData.nodes[index];
       const id = character.id;
       const chatNode = character.children.find((n) => n.id === "chat");
-      const chatComp = this.#adapter.get.character.chat(character);
+
+      const { chat } = this.#adapter.controller.get.character;
+
       const saveChat = () => {
-        if (this.history[id] && chatNode) {
-          const historyJson = JSON.parse(this.history[id]);
+        if (history[id] && chatNode) {
+          const historyJson = JSON.parse(history[id]);
           try {
             chatNode.cells.kulChat.value = historyJson;
           } catch (error) {
@@ -335,19 +327,18 @@ export class KulMessenger {
               },
             };
           }
-          const chatCell = chatNode.cells.kulChat as KulDataCell<"chat">;
-          chatCell.kulEndpointUrl = chatComp.kulEndpointUrl;
-          chatCell.kulMaxTokens = chatComp.kulMaxTokens;
-          chatCell.kulPollingInterval = chatComp.kulPollingInterval;
-          chatCell.kulSystem = chatComp.kulSystem;
-          chatCell.kulTemperature = chatComp.kulTemperature;
+
+          const chatCell = chatNode.cells.kulChat;
+          assignPropsToChatCell(chatCell, chat(character));
         }
       };
+
       const saveCovers = () => {
         IMAGE_TYPE_IDS.forEach((type) => {
-          const root = this.#adapter.get.image.root(type);
-          if (this.covers[id] && root) {
-            root.value = this.covers[id][type];
+          const root = this.#adapter.controller.get.image.root(type);
+
+          if (covers[id] && root) {
+            root.value = covers[id][type];
           }
         });
       };
@@ -356,64 +347,357 @@ export class KulMessenger {
       saveCovers();
     }
     this.onKulEvent(new CustomEvent("save"), "save");
-  }
+  };
+  #prepCharacter = (): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
+    const { controller, elements } = this.#adapter;
+    const { name } = controller.get.character;
+    const { avatar, biography, save, statusIcon } = elements.jsx.character;
+    const { isLeftCollapsed } = this.ui.panels;
 
-  componentWillLoad() {
-    this.#kulManager.theme.register(this);
-    this.#adapter.get = getters(
-      this.#adapter,
-      this.#kulManager,
-      this.#hasCharacters(),
+    return (
+      <div
+        class={bemClass("character", null, {
+          collapsed: isLeftCollapsed,
+        })}
+      >
+        <div class={bemClass("character", "avatar")}>
+          {avatar()}
+          <div class={bemClass("character", "name-wrapper")}>
+            <div class={bemClass("character", "name")}>
+              {statusIcon()}
+              <div class={bemClass("character", "label")}>{name()}</div>
+            </div>
+            {save()}
+          </div>
+        </div>
+        <div class={bemClass("character", "biography")}>{biography()}</div>
+      </div>
     );
-    this.#adapter.set = setters(this.#adapter, this.#hasCharacters());
-    this.#initStates();
-  }
+  };
+  #prepChat = (): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
 
+    const { chat, leftExpander, rightExpander, tabbar } =
+      this.#adapter.elements.jsx.chat;
+
+    return (
+      <div class={bemClass("chat")}>
+        <div
+          class={bemClass("chat", "expander", {
+            left: true,
+          })}
+        >
+          {leftExpander()}
+        </div>
+        <div class={bemClass("chat", "navigation")}>{tabbar()}</div>
+        <div class={bemClass("chat", "chat")}>{chat()}</div>
+        <div
+          class={bemClass("chat", "expander", {
+            right: true,
+          })}
+        >
+          {rightExpander()}
+        </div>
+      </div>
+    );
+  };
+  #prepCovers = (type: KulMessengerImageTypes, images: VNode[]): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { add } = this.#adapter.elements.jsx.customization.form[type];
+
+    return (
+      <Fragment>
+        <div class={bemClass("covers")}>
+          <div class={bemClass("covers", "title")}>
+            <div class={bemClass("covers", "label")}>{type}</div>
+            {add()}
+          </div>
+          <div class={bemClass("covers", "images")}>{images}</div>
+        </div>
+      </Fragment>
+    );
+  };
+  #prepExtraContext = (): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { customization, options } = this.#adapter.elements.jsx;
+    const { back, customize } = options;
+    const { filters } = customization;
+    const { customizationView } = this.ui;
+    const { isRightCollapsed } = this.ui.panels;
+
+    return (
+      <div
+        class={bemClass("extra-context", null, {
+          collapsed: isRightCollapsed,
+          customization: customizationView,
+        })}
+      >
+        {customizationView ? (
+          <Fragment>
+            {filters()}
+            <div class={bemClass("extra-context", "list")}>
+              {this.#prepList()}
+            </div>
+            {back()}
+          </Fragment>
+        ) : (
+          <Fragment>
+            <div class={bemClass("extra-context", "options")}>
+              {this.#prepOptions()}
+            </div>
+            {customize()}
+          </Fragment>
+        )}
+      </div>
+    );
+  };
+  #prepForm = (type: KulMessengerImageTypes): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { cancel, confirm, description, id, imageUrl, title } =
+      this.#adapter.elements.jsx.customization.form[type];
+
+    const nodeId = this.formStatusMap[type];
+    const rootNode = this.#adapter.controller.get.image.byType(type);
+    const node = rootNode.find((n) => (n.id = nodeId));
+
+    return (
+      <div class={bemClass("form")}>
+        <div class={bemClass("form", "label")}>Create {type}</div>
+        {id(nodeId)}
+        {title(node)}
+        {description(node)}
+        {imageUrl(node)}
+        <div class={bemClass("form", "confirm")}>
+          {cancel()}
+          {confirm()}
+        </div>
+      </div>
+    );
+  };
+  #prepList = (): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { controller, elements, handlers } = this.#adapter;
+    const { byType, coverIndex, title } = controller.get.image;
+    const { edit, remove } = elements.jsx.customization.list;
+    const { image } = handlers.customization;
+    const { formStatusMap, hoveredCustomizationOption, ui } = this;
+    const { filters } = ui;
+
+    return (
+      <Fragment>
+        {IMAGE_TYPE_IDS.map((type) => {
+          if (filters[type]) {
+            const isFormActive = formStatusMap[type];
+            const activeIndex = coverIndex(type);
+            const images: VNode[] = byType(type).map((node, j) => (
+              <div
+                class={bemClass("list", null, {
+                  selected: activeIndex === j,
+                })}
+                onClick={(e) => image(e, node, j)}
+                onPointerEnter={() => {
+                  if (activeIndex !== j) {
+                    this.hoveredCustomizationOption = node;
+                  }
+                }}
+                onPointerLeave={() => (this.hoveredCustomizationOption = null)}
+              >
+                <img
+                  alt={title(node)}
+                  class={bemClass("list", "image")}
+                  src={node.cells.kulImage.value}
+                  title={title(node)}
+                />
+                {hoveredCustomizationOption === node && (
+                  <div
+                    class={bemClass("list", "actions")}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    {edit(type, node)}
+                    {remove(type, node)}
+                  </div>
+                )}
+              </div>
+            ));
+            return (
+              <Fragment>
+                {isFormActive
+                  ? this.#prepForm(type)
+                  : this.#prepCovers(type, images)}
+              </Fragment>
+            );
+          }
+          return null;
+        })}
+      </Fragment>
+    );
+  };
+  #prepOptions = (): VNode[] => {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    return OPTION_TYPE_IDS.map((opt) => {
+      const { image } = this.#adapter.controller.get;
+      const { asCover } = image;
+      const { ui } = this;
+
+      const { value, node, title } = asCover(opt);
+      const isEnabled = ui.options[opt];
+      const option = opt.slice(0, -1);
+
+      return (
+        <div class={bemClass("options", "wrapper")}>
+          {node ? (
+            <Fragment>
+              <img
+                class={bemClass("options", "cover")}
+                alt={title}
+                src={value}
+              ></img>
+              <div
+                class={bemClass("options", "blocker", {
+                  active: !isEnabled,
+                })}
+                onClick={() => {
+                  ui.options[opt] = !isEnabled;
+                  this.refresh();
+                }}
+              >
+                <kul-image
+                  kulValue={`${isEnabled ? "touch_app" : "block"}`}
+                ></kul-image>
+                <div class={bemClass("options", "blocker-label")}>
+                  {isEnabled ? "Click to disable" : "Click to enable"}
+                </div>
+              </div>
+            </Fragment>
+          ) : (
+            <kul-image
+              class={bemClass("options", "placeholder")}
+              kulValue={value}
+              title={`No ${option} selected.`}
+            ></kul-image>
+          )}
+          <div class={bemClass("options", "name")}>
+            <div
+              class={bemClass("options", "label")}
+              title={`Active ${option}.`}
+            >
+              {option}
+            </div>
+            {title && (
+              <kul-image
+                class={bemClass("options", "info")}
+                kulSizeX="16px"
+                kulSizeY="16px"
+                kulValue="information-variant"
+                title={title}
+              ></kul-image>
+            )}
+          </div>
+        </div>
+      );
+    });
+  };
+  #prepRoster = (): VNode => {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { get, set } = this.#adapter.controller;
+
+    const avatars: VNode[] = [];
+
+    const characters = get.character.list();
+    characters.forEach((c) => {
+      const image = get.image.asCover("avatars", c);
+      avatars.push(
+        <div
+          class={bemClass("roster", "portrait")}
+          onClick={() => {
+            set.character.current(c);
+          }}
+        >
+          <img
+            class={bemClass("roster", "image")}
+            src={image.value}
+            title={image.title || ""}
+          />
+          <div class={bemClass("roster", "name")}>
+            <div class={bemClass("roster", "label")}>
+              {get.character.name(c)}
+            </div>
+          </div>
+        </div>,
+      );
+    });
+
+    return avatars?.length ? (
+      avatars
+    ) : (
+      <div class={bemClass("empty-dataset")}>
+        There are no characters in your roster!
+      </div>
+    );
+  };
+  //#endregion
+
+  //#region Lifecycle hooks
+  componentWillLoad() {
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
+    this.#initialize();
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
-    if (!this.#hasNodes()) {
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+
+    if (!hasNodes(this.#adapter)) {
       return;
     }
 
+    const { kulStyle } = this;
+
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
           {this.currentCharacter ? (
-            <div class="messenger">
-              {prepLeft(this.#adapter)}
-              {prepCenter(this.#adapter)}
-              {prepRight(this.#adapter)}
+            <div class={bemClass("messenger")}>
+              {this.#prepCharacter()}
+              {this.#prepChat()}
+              {this.#prepExtraContext()}
             </div>
           ) : (
-            <div class="selection-grid">{prepGrid(this.#adapter)}</div>
+            <div class={bemClass("roster")}>{this.#prepRoster()}</div>
           )}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

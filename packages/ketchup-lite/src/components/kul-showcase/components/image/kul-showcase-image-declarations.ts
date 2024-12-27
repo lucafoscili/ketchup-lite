@@ -11,9 +11,9 @@ export const IMAGE_EXAMPLES_KEYS = [
 ] as const;
 
 export interface ImageExample extends KulImagePropsInterface {
-  ["data-description"]: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
-  className: string;
+  className?: string;
 }
 
 export type ImageData = {

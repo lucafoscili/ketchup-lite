@@ -18,9 +18,9 @@
 
 ## Events
 
-| Event                | Description              | Type                                   |
-| -------------------- | ------------------------ | -------------------------------------- |
-| `kul-carousel-event` | Describes event emitted. | `CustomEvent<KulCarouselEventPayload>` |
+| Event                | Description | Type                                   |
+| -------------------- | ----------- | -------------------------------------- |
+| `kul-carousel-event` |             | `CustomEvent<KulCarouselEventPayload>` |
 
 
 ## Methods
@@ -35,21 +35,15 @@ Type: `Promise<KulDebugLifecycleInfo>`
 
 A promise that resolves with the debug information object.
 
-### `getProps(descriptions?: boolean) => Promise<GenericObject>`
+### `getProps() => Promise<KulCarouselPropsInterface>`
 
-Used to retrieve component's props values.
-
-#### Parameters
-
-| Name           | Type      | Description                                                                            |
-| -------------- | --------- | -------------------------------------------------------------------------------------- |
-| `descriptions` | `boolean` | - When provided and true, the result will be the list of props with their description. |
+Used to retrieve component's properties and descriptions.
 
 #### Returns
 
-Type: `Promise<GenericObject<unknown>>`
+Type: `Promise<KulCarouselPropsInterface>`
 
-List of props as object, each key will be a prop.
+Promise resolved with an object containing the component's properties.
 
 ### `goToSlide(index: number) => Promise<void>`
 

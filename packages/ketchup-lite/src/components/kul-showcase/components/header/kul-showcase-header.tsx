@@ -1,7 +1,7 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
-import { HeaderExample } from "./kul-showcase-header-declarations";
+import { CY_ATTRIBUTES } from "src/utils/constants";
+import { HeaderData, HeaderExample } from "./kul-showcase-header-declarations";
 import { HEADER_FIXTURES } from "./kul-showcase-header-fixtures";
 
 @Component({
@@ -27,7 +27,8 @@ export class KulShowcaseHeader {
     const elements: VNode[] = [];
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: HeaderExample = this.fixtures.examples[key];
+        const k = key as keyof HeaderData;
+        const props: HeaderExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -54,7 +55,7 @@ export class KulShowcaseHeader {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

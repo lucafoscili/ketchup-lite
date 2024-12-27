@@ -9,25 +9,23 @@ import {
   Method,
   Prop,
   State,
+  Watch,
 } from "@stencil/core";
-
-import { LAYOUT_HUB } from "./helpers/kul-card-layout-hub";
-import {
-  KulCardProps,
-  KulCardEvent,
-  KulCardEventPayload,
-  KulCardAdapter,
-  KulCardLayout,
-} from "./kul-card-declarations";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataDataset,
   KulDataShapesMap,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import type { GenericMap, GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { createAdapter } from "./kul-card-adapter";
+import {
+  KulCardAdapterJsx,
+  KulCardEvent,
+  KulCardEventPayload,
+  KulCardLayout,
+  KulCardPropsInterface,
+} from "./kul-card-declarations";
 
 @Component({
   tag: "kul-card",
@@ -40,20 +38,11 @@ export class KulCard {
    */
   @Element() rootElement: HTMLKulCardElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * The shapes of the component.
    * @default ""
@@ -61,11 +50,9 @@ export class KulCard {
    * @see KulDataShapesMap - For a list of possible shapes.
    */
   @State() shapes: KulDataShapesMap;
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The actual data of the card.
    * @default null
@@ -75,36 +62,36 @@ export class KulCard {
    * Sets the layout.
    * @default "material"
    */
-  @Prop({ mutable: true, reflect: true }) kulLayout: KulCardLayout = "material";
+  @Prop({ mutable: true }) kulLayout: KulCardLayout = "material";
   /**
    * The width of the card, defaults to 100%. Accepts any valid CSS format (px, %, vw, etc.).
    * @default "100%"
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeX = "100%";
+  @Prop({ mutable: true }) kulSizeX = "100%";
   /**
    * The height of the card, defaults to 100%. Accepts any valid CSS format (px, %, vh, etc.).
    * @default "100%"
    */
-  @Prop({ mutable: true, reflect: true }) kulSizeY = "100%";
+  @Prop({ mutable: true }) kulSizeY = "100%";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
+  //#region Internal variables
+  #adapter = createAdapter(
+    {
+      compInstance: this,
+      manager: kulManagerSingleton,
+      shapes: () => this.shapes,
+    },
+    () => this.#adapter,
+  );
+  //#endregion
 
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Triggered when an event is fired.
-   */
+  //#region Events
   @Event({
     eventName: "kul-card-event",
     composed: true,
@@ -112,7 +99,6 @@ export class KulCard {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulCardEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulCardEvent): void {
     this.kulEvent.emit({
       comp: this,
@@ -121,11 +107,22 @@ export class KulCard {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
+  //#region Watchers
+  @Watch("kulData")
+  async updateShapes() {
+    const { data, debug } = kulManagerSingleton;
 
+    try {
+      this.shapes = data.cell.shapes.getAll(this.kulData);
+    } catch (error) {
+      debug.logs.new(this, "Error updating shapes: " + error, "error");
+    }
+  }
+  //#endregion
+
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -135,13 +132,14 @@ export class KulCard {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<KulCardPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulCardProps, descriptions);
+  async getProps(): Promise<KulCardPropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this) as KulCardPropsInterface;
   }
   /**
    * Used to retrieve component's shapes.
@@ -169,76 +167,69 @@ export class KulCard {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
-  #adapter: KulCardAdapter = {
-    actions: {
-      dispatchEvent: async (e) => {
-        this.onKulEvent(e, "kul-event");
-      },
-    },
-    get: { card: () => this, shapes: () => this.shapes },
-  };
-
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.language.register(this);
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+
+    this.updateShapes();
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
+  componentWillUpdate() {
+    const { info } = kulManagerSingleton.debug;
 
-  componentWillRender() {
-    if (this.kulData) {
-      this.shapes = this.#kulManager.data.cell.shapes.getAll(this.kulData);
-    }
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
+    info.update(this, "will-render");
   }
-
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
-    if (!this.kulData && this.rootElement.children.length < 1) {
+    const { theme } = kulManagerSingleton;
+
+    const { kulData, kulLayout, kulSizeX, kulSizeY, kulStyle, rootElement } =
+      this;
+
+    if (!kulData && rootElement.children.length < 1) {
       return;
     }
 
-    const style: GenericMap = {
-      "--kul_card_height": this.kulSizeY ? this.kulSizeY : "100%",
-      "--kul_card_width": this.kulSizeX ? this.kulSizeX : "100%",
+    const { layouts } = this.#adapter.elements.jsx;
+    const layout =
+      layouts[kulLayout.toLowerCase() as keyof KulCardAdapterJsx["layouts"]];
+
+    const style = {
+      "--kul_card_height": kulSizeY ? kulSizeY : "100%",
+      "--kul_card_width": kulSizeX ? kulSizeX : "100%",
     };
 
     return (
       <Host style={style}>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div
           id={KUL_WRAPPER_ID}
           onClick={(e) => this.onKulEvent(e, "click")}
           onContextMenu={(e) => this.onKulEvent(e, "contextmenu")}
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown")}
         >
-          {LAYOUT_HUB[this.kulLayout.toLowerCase()](this.#adapter)}
+          {layout()}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.language.unregister(this);
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

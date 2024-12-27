@@ -10,19 +10,16 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-
+import { kulManagerSingleton } from "src/global/global";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
+import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
+import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 import {
   KulBadgeEvent,
   KulBadgeEventPayload,
-  KulBadgeProps,
+  KulBadgePropsInterface,
 } from "./kul-badge-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
-import { KulThemeColorValues } from "../../managers/kul-theme/kul-theme-declarations";
-import { GenericObject } from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
-import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
 
 @Component({
   tag: "kul-badge",
@@ -35,25 +32,14 @@ export class KulBadge {
    */
   @Element() rootElement: HTMLKulBadgeElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * The props of the image displayed inside the badge.
    * @default null
@@ -63,26 +49,15 @@ export class KulBadge {
    * The text displayed inside the badge.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: false }) kulLabel = "";
+  @Prop({ mutable: true }) kulLabel = "";
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
-
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-badge-event",
     composed: true,
@@ -90,7 +65,6 @@ export class KulBadge {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulBadgeEventPayload>;
-
   onKulEvent(e: Event | CustomEvent, eventType: KulBadgeEvent) {
     this.kulEvent.emit({
       comp: this,
@@ -99,11 +73,9 @@ export class KulBadge {
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -113,13 +85,14 @@ export class KulBadge {
     return this.debugInfo;
   }
   /**
-   * Used to retrieve component's props values.
-   * @param {boolean} descriptions - When provided and true, the result will be the list of props with their description.
-   * @returns {Promise<GenericObject>} List of props as object, each key will be a prop.
+   * Used to retrieve component's properties and descriptions.
+   * @returns {Promise<KulBadgePropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulBadgeProps, descriptions);
+  async getProps(): Promise<KulBadgePropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * This method is used to trigger a new render of the component.
@@ -139,53 +112,58 @@ export class KulBadge {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "did-render");
+  }
   render() {
+    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { kulImageProps, kulLabel, kulStyle } = this;
+
     let imageEl: HTMLElement = null;
-    if (!this.kulLabel && this.kulImageProps) {
-      if (!this.kulImageProps.kulColor) {
-        this.kulImageProps.kulColor = `var(${KulThemeColorValues.TEXT_ON_PRIMARY})`;
+    if (!kulLabel && kulImageProps) {
+      if (!kulImageProps?.kulColor) {
+        kulImageProps.kulColor = `var(${KUL_THEME_COLORS.textOnPrimary})`;
       }
-      imageEl = <kul-image {...this.kulImageProps}></kul-image>;
+      imageEl = (
+        <kul-image {...sanitizeProps(kulImageProps, "KulImage")}></kul-image>
+      );
     }
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{theme.setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID} onClick={(e) => this.onKulEvent(e, "click")}>
-          {this.kulLabel}
+          {kulLabel}
           {imageEl}
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

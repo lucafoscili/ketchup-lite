@@ -1,10 +1,13 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
-
-import { KulDataCyAttributes } from "../../../../types/GenericTypes";
+import { kulManagerSingleton } from "src/global/global";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
-import { ArticleExample } from "./kul-showcase-article-declarations";
+import {
+  ArticleData,
+  ArticleExample,
+} from "./kul-showcase-article-declarations";
 import { ARTICLE_FIXTURES } from "./kul-showcase-article-fixtures";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 @Component({
   tag: "kul-showcase-article",
@@ -21,7 +24,7 @@ export class KulShowcaseArticle {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = ARTICLE_FIXTURES();
+  @State() fixtures = ARTICLE_FIXTURES(kulManagerSingleton.assets.get);
   //#endregion
 
   //#region Internal variables
@@ -36,7 +39,8 @@ export class KulShowcaseArticle {
 
     for (const key in this.fixtures.examples) {
       if (Object.prototype.hasOwnProperty.call(this.fixtures.examples, key)) {
-        const props: ArticleExample = this.fixtures.examples[key];
+        const k = key as keyof ArticleData;
+        const props: ArticleExample = this.fixtures.examples[k];
         elements.push(
           <div class="example" part="example">
             <div class="description" part="description">
@@ -86,7 +90,7 @@ export class KulShowcaseArticle {
         </div>
         <div
           class="grid"
-          data-cy={KulDataCyAttributes.SHOWCASE_GRID_WRAPPER}
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
           part="grid"
         >
           {this.#prepExamples()}

@@ -1,5 +1,5 @@
-import { getAssetPath } from "@stencil/core";
-import { KulDataDataset } from "src/components";
+import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
+import { KulManagerComputedGetAssetPath } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   KulComponentEventName,
   KulComponentEventPayloadName,
@@ -17,10 +17,10 @@ const PAYLOAD_NAME: KulComponentEventPayloadName<"KulMasonry"> =
   "KulMasonryEventPayload";
 const TAG_NAME: KulComponentTag<"KulMasonry"> = "kul-masonry";
 
-export const MASONRY_FIXTURES: () => {
+export const MASONRY_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   documentation: KulArticleDataset;
   examples: MasonryData;
-} = () => {
+} = (get) => {
   const data: Partial<{
     [K in KulComponentName]: () => KulDataDataset;
   }> = {
@@ -31,7 +31,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+                value: get(`./assets/media/avatar_thor_2.png`).path,
               },
             },
             id: "image_0",
@@ -41,7 +41,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/location_forest.png`),
+                value: get(`./assets/media/location_forest.png`).path,
               },
             },
             id: "image_1",
@@ -51,7 +51,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_freya.png`),
+                value: get(`./assets/media/avatar_freya.png`).path,
               },
             },
             id: "image_2",
@@ -61,7 +61,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+                value: get(`./assets/media/avatar_thor_2.png`).path,
               },
             },
             id: "image_3",
@@ -71,7 +71,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+                value: get(`./assets/media/avatar_thor_2.png`).path,
               },
             },
             id: "image_4",
@@ -81,7 +81,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_freya_2.png`),
+                value: get(`./assets/media/avatar_freya_2.png`).path,
               },
             },
             id: "image_5",
@@ -91,7 +91,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+                value: get(`./assets/media/avatar_thor_2.png`).path,
               },
             },
             id: "image_6",
@@ -101,7 +101,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_thor_2.png`),
+                value: get(`./assets/media/avatar_thor_2.png`).path,
               },
             },
             id: "image_7",
@@ -111,7 +111,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/outfit_armor_2.png`),
+                value: get(`./assets/media/outfit_armor_2.png`).path,
               },
             },
             id: "image_8",
@@ -121,7 +121,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/outfit_armor_3.png`),
+                value: get(`./assets/media/outfit_armor_3.png`).path,
               },
             },
             id: "image_9",
@@ -131,7 +131,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/location_lake.png`),
+                value: get(`./assets/media/location_lake.png`).path,
               },
             },
             id: "image_10",
@@ -141,7 +141,7 @@ export const MASONRY_FIXTURES: () => {
             cells: {
               kulImage: {
                 shape: "image",
-                value: getAssetPath(`./assets/media/avatar_freya_2.png`),
+                value: get(`./assets/media/avatar_freya_2.png`).path,
               },
             },
             id: "image_11",

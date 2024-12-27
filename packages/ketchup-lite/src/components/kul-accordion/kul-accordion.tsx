@@ -4,7 +4,6 @@ import {
   Event,
   EventEmitter,
   forceUpdate,
-  getAssetPath,
   h,
   Host,
   Method,
@@ -12,24 +11,22 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-
-import {
-  KulAccordionEvent,
-  KulAccordionEventPayload,
-  KulAccordionProps,
-} from "./kul-accordion-declarations";
+import { kulManagerSingleton } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
-} from "../../managers/kul-data/kul-data-declarations";
-import { KulDebugLifecycleInfo } from "../../managers/kul-debug/kul-debug-declarations";
-import { kulManagerInstance } from "../../managers/kul-manager/kul-manager";
+} from "src/managers/kul-data/kul-data-declarations";
+import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
-  KulDataCyAttributes,
-  type GenericObject,
-} from "../../types/GenericTypes";
-import { getProps } from "../../utils/componentUtils";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "../../variables/GenericVariables";
+  CY_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
+import {
+  KulAccordionEvent,
+  KulAccordionEventPayload,
+  KulAccordionPropsInterface,
+} from "./kul-accordion-declarations";
 
 @Component({
   tag: "kul-accordion",
@@ -42,20 +39,11 @@ export class KulAccordion {
    */
   @Element() rootElement: HTMLKulAccordionElement;
 
-  /*-------------------------------------------------*/
-  /*                   S t a t e s                   */
-  /*-------------------------------------------------*/
-
+  //#region States
   /**
    * Debug information.
    */
-  @State() debugInfo: KulDebugLifecycleInfo = {
-    endTime: 0,
-    renderCount: 0,
-    renderEnd: 0,
-    renderStart: 0,
-    startTime: performance.now(),
-  };
+  @State() debugInfo = kulManagerSingleton.debug.info.create();
   /**
    * Set of expanded nodes.
    */
@@ -64,11 +52,9 @@ export class KulAccordion {
    * Selected nodes.
    */
   @State() selectedNodes: Set<KulDataNode> = new Set();
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                    P r o p s                    */
-  /*-------------------------------------------------*/
-
+  //#region Props
   /**
    * Actual data of the accordion.
    * @default null
@@ -78,28 +64,20 @@ export class KulAccordion {
    * When set to true, the pointerdown event will trigger a ripple effect.
    * @default true
    */
-  @Prop({ mutable: true, reflect: true }) kulRipple = true;
+  @Prop({ mutable: true }) kulRipple = true;
   /**
    * Custom style of the component.
    * @default ""
    */
-  @Prop({ mutable: true, reflect: true }) kulStyle = "";
+  @Prop({ mutable: true }) kulStyle = "";
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*       I n t e r n a l   V a r i a b l e s       */
-  /*-------------------------------------------------*/
-
-  #kulManager = kulManagerInstance();
+  //#region Internal variables
   #rippleSurface: { [id: string]: HTMLElement } = {};
   #slotsNames: string[] = [];
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*                   E v e n t s                   */
-  /*-------------------------------------------------*/
-
-  /**
-   * Describes event emitted.
-   */
+  //#region Events
   @Event({
     eventName: "kul-accordion-event",
     composed: true,
@@ -107,19 +85,19 @@ export class KulAccordion {
     bubbles: true,
   })
   kulEvent: EventEmitter<KulAccordionEventPayload>;
-
   onKulEvent(
     e: Event | CustomEvent,
     eventType: KulAccordionEvent,
     node?: KulDataNode,
   ) {
+    const { ripple } = kulManagerSingleton.theme;
+
+    const { kulRipple, rootElement } = this;
+
     switch (eventType) {
       case "pointerdown":
-        if (this.kulRipple) {
-          this.#kulManager.theme.ripple.trigger(
-            e as PointerEvent,
-            this.#rippleSurface[node.id],
-          );
+        if (kulRipple) {
+          ripple.trigger(e as PointerEvent, this.#rippleSurface[node.id]);
         }
         break;
     }
@@ -127,15 +105,13 @@ export class KulAccordion {
     this.kulEvent.emit({
       comp: this,
       eventType,
-      id: this.rootElement.id,
+      id: rootElement.id,
       originalEvent: e,
     });
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P u b l i c   M e t h o d s           */
-  /*-------------------------------------------------*/
-
+  //#region Public methods
   /**
    * Fetches debug information of the component's current state.
    * @returns {Promise<KulDebugLifecycleInfo>} A promise that resolves with the debug information object.
@@ -146,12 +122,13 @@ export class KulAccordion {
   }
   /**
    * Used to retrieve component's properties and descriptions.
-   * @param {boolean} descriptions - When true, includes descriptions for each property.
-   * @returns {Promise<GenericObject>} Promise resolved with an object containing the component's properties.
+   * @returns {Promise<KulAccordionPropsInterface>} Promise resolved with an object containing the component's properties.
    */
   @Method()
-  async getProps(descriptions?: boolean): Promise<GenericObject> {
-    return getProps(this, KulAccordionProps, descriptions);
+  async getProps(): Promise<KulAccordionPropsInterface> {
+    const { getProps } = kulManagerSingleton;
+
+    return getProps(this);
   }
   /**
    * Returns the selected nodes.
@@ -169,7 +146,7 @@ export class KulAccordion {
     forceUpdate(this);
   }
   /**
-   * This method activates or deactivates an node.
+   * This method activates or deactivates a node.
    * @param {string} id - Id of the node.
    */
   @Method()
@@ -178,6 +155,7 @@ export class KulAccordion {
     if (!node) {
       return;
     }
+
     if (this.#isExpandible(node)) {
       if (this.#isExpanded(node)) {
         this.expandedNodes.delete(node);
@@ -193,6 +171,7 @@ export class KulAccordion {
     if (!this.#isExpandible(node)) {
       this.onKulEvent(e || new CustomEvent("click"), "click");
     }
+
     this.refresh();
   }
   /**
@@ -206,36 +185,38 @@ export class KulAccordion {
       this.rootElement.remove();
     }, ms);
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*           P r i v a t e   M e t h o d s         */
-  /*-------------------------------------------------*/
-
-  #isExpanded(node: KulDataNode): boolean {
+  //#region Private methods
+  #isExpanded(node: KulDataNode) {
     return this.expandedNodes.has(node);
   }
-
-  #isExpandible(node: KulDataNode): boolean {
+  #isExpandible(node: KulDataNode) {
     return this.#slotsNames.includes(node.id);
   }
-
-  #isSelected(node: KulDataNode): boolean {
+  #isSelected(node: KulDataNode) {
     return this.selectedNodes.has(node);
   }
+  #prepIcon(icon: string): VNode {
+    const { assets, theme } = kulManagerSingleton;
 
-  #prepIcon(icon: string) {
-    const path = getAssetPath(`./assets/svg/${icon}.svg`);
-    const style = {
-      mask: `url('${path}') no-repeat center`,
-      webkitMask: `url('${path}') no-repeat center`,
-    };
-    return <div class={"node__icon"} style={style}></div>;
+    const { style } = assets.get(`./assets/svg/${icon}.svg`);
+    return (
+      <div
+        class={theme.bemClass("node", "icon")}
+        data-cy={CY_ATTRIBUTES.maskedSvg}
+        style={style}
+      ></div>
+    );
   }
-
   #prepAccordion(): VNode[] {
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { kulData, rootElement } = this;
+
     const nodes: VNode[] = [];
     const slots: Array<HTMLElement> = Array.prototype.slice.call(
-      this.rootElement.children,
+      rootElement.children,
       0,
     );
     this.#slotsNames = [];
@@ -244,33 +225,29 @@ export class KulAccordion {
       this.#slotsNames.push(slot.slot);
     }
 
-    for (let i = 0; i < this.kulData.nodes.length; i++) {
-      const node = this.kulData.nodes[i];
+    for (let i = 0; i < kulData.nodes.length; i++) {
+      const node = kulData.nodes[i];
       const isExpanded = this.#isExpanded(node);
       const isExpandible = this.#isExpandible(node);
       const isSelected = this.#isSelected(node);
-      const headerClassName = {
-        node__header: true,
-        "node__header--selected": !isExpandible && isSelected ? true : false,
-        "node__header--expanded": isExpandible && isExpanded ? true : false,
-      };
-      const contentClassname: { [className: string]: boolean } = {
-        node__content: true,
-        "node__content--selected": isSelected ? true : false,
-      };
+
       nodes.push(
-        <div class="node">
+        <div class={bemClass("node")} data-cy={CY_ATTRIBUTES.node}>
           <div
             tabindex="1"
             title={node.description}
-            class={headerClassName}
-            data-cy={isExpandible ? undefined : KulDataCyAttributes.BUTTON}
+            class={bemClass("node", "header", {
+              expanded: !isExpandible && isSelected,
+              selected: isExpandible && isExpanded,
+            })}
+            data-cy={!isExpandible && CY_ATTRIBUTES.button}
             onClick={(e) => this.toggleNode(node.id, e)}
             onPointerDown={(e) => {
               this.onKulEvent(e, "pointerdown", node);
             }}
           >
             <div
+              data-cy={CY_ATTRIBUTES.ripple}
               ref={(el) => {
                 if (el && this.kulRipple) {
                   this.#rippleSurface[node.id] = el;
@@ -278,73 +255,81 @@ export class KulAccordion {
               }}
             ></div>
             {node.icon ? this.#prepIcon(node.icon) : null}
-            <span class="node__text">{node.value}</span>
-            {isExpandible ? (
+            <span class={bemClass("node", "text")}>{node.value}</span>
+            {isExpandible && (
               <div
-                class={`node__expand ${
-                  isExpanded ? "node__expand--expanded" : ""
-                } `}
+                class={bemClass("node", "expand", {
+                  expanded: isExpanded,
+                })}
+                data-cy={CY_ATTRIBUTES.dropdownButton}
               ></div>
-            ) : null}
+            )}
           </div>
-          {isExpanded ? (
-            <div class={contentClassname}>
+          {isExpanded && (
+            <div
+              class={bemClass("node", "content", {
+                selected: isSelected,
+              })}
+            >
               <slot name={node.id}></slot>
             </div>
-          ) : null}
+          )}
         </div>,
       );
     }
     return nodes;
   }
+  //#endregion
 
-  /*-------------------------------------------------*/
-  /*          L i f e c y c l e   H o o k s          */
-  /*-------------------------------------------------*/
-
+  //#region Lifecycle hooks
   componentWillLoad() {
-    this.#kulManager.theme.register(this);
-  }
+    const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
   componentDidLoad() {
+    const { info } = kulManagerSingleton.debug;
+
     this.onKulEvent(new CustomEvent("ready"), "ready");
-    this.#kulManager.debug.updateDebugInfo(this, "did-load");
+    info.update(this, "did-load");
   }
-
   componentWillRender() {
-    this.#kulManager.debug.updateDebugInfo(this, "will-render");
-  }
+    const { info } = kulManagerSingleton.debug;
 
+    info.update(this, "will-render");
+  }
   componentDidRender() {
+    const { debug, theme } = kulManagerSingleton;
+
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
         if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
           const surface = this.#rippleSurface[key];
-          this.#kulManager.theme.ripple.setup(surface);
+          theme.ripple.setup(surface);
         }
       }
     }
-    this.#kulManager.debug.updateDebugInfo(this, "did-render");
+    debug.info.update(this, "did-render");
   }
-
   render() {
+    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { kulStyle } = this;
+
     this.#rippleSurface = {};
 
     return (
       <Host>
-        {this.kulStyle ? (
-          <style id={KUL_STYLE_ID}>
-            {this.#kulManager.theme.setKulStyle(this)}
-          </style>
-        ) : undefined}
+        {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
         <div id={KUL_WRAPPER_ID}>
-          <div class="accordion">{this.#prepAccordion()}</div>
+          <div class={bemClass("accordion")}>{this.#prepAccordion()}</div>
         </div>
       </Host>
     );
   }
-
   disconnectedCallback() {
-    this.#kulManager.theme.unregister(this);
+    const { theme } = kulManagerSingleton;
+
+    theme.unregister(this);
   }
+  //#endregion
 }

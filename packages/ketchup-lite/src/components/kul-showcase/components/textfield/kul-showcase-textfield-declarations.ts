@@ -31,8 +31,8 @@ export const TEXTFIELD_EXAMPLES_KEYS = [
 ] as const;
 
 export interface TextfieldExample extends KulTextfieldPropsInterface {
-  className: string;
-  ["data-description"]: string;
+  className?: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 

@@ -14,8 +14,8 @@ export const CARD_CATEGORIES_KEYS: KulCardLayout[] = [
 export const CARD_EXAMPLES_KEYS = ["image", "style"] as const;
 
 export interface CardExample extends KulCardPropsInterface {
-  className: string;
-  ["data-description"]: string;
+  className?: string;
+  ["data-description"]?: string;
   ["data-dynamic"]?: KulShowcaseDynamicExampleType;
 }
 

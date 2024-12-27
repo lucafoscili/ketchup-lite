@@ -1,5 +1,134 @@
-@import "./styles/kul-messenger-main.scss";
-@import "./styles/kul-messenger-customization.scss";
-@import "./styles/kul-messenger-options.scss";
-@import "./styles/kul-messenger-selection-grid.scss";
-@import "./styles/kul-messenger-classes.scss";
+@import "styles/character";
+@import "styles/chat";
+@import "styles/covers";
+@import "styles/extra-context";
+@import "styles/form";
+@import "styles/list";
+@import "styles/options";
+@import "styles/roster";
+
+:host {
+  /**
+    * @prop --kul-messenger-active-options-name-padding: Sets the padding of active options' names.
+    * Defaults to 4px.
+    */
+  --kul_messenger_active_options_name_padding: var(
+    --kul-messenger-active-options-name-padding,
+    4px
+  );
+  /**
+    * @prop --kul-messenger-avatar-name-padding: Sets the padding of the avatar's name.
+    * Defaults to 12px.
+    */
+  --kul_messenger_avatar_name_padding: var(
+    --kul-messenger-avatar-name-padding,
+    12px
+  );
+  /**
+    * @prop --kul-messenger-backdrop-filter: Sets the backdrop filter.
+    * Defaults to 5px.
+    */
+  --kul_messenger_backdrop_filter: var(
+    --kul-messenger-backdrop-filter,
+    blur(5px)
+  );
+  /**
+    * @prop --kul-messenger-background-color: Sets the background color.
+    * Defaults to var(--kul-background-color).
+    */
+  --kul_messenger_background_color: var(
+    --kul-messenger-background-color,
+    rgba(var(--kul-background-color-rgb), 0.375)
+  );
+  /**
+    * @prop --kul-messenger-font-size: Sets the font size of the component.
+    * Defaults to var(--kul-font-size).
+    */
+  --kul_messenger_font_size: var(
+    --kul-messenger-font-size,
+    var(--kul-font-size)
+  );
+  /**
+    * @prop --kul-messenger-name-background-color: Sets the color of text.
+    * Defaults to rgba(var(--kul-title-background-color-rgb), 0.75).
+    */
+  --kul_messenger_name_background_color: var(
+    --kul-messenger-name-background-color,
+    rgba(var(--kul-title-background-color-rgb), 0.75)
+  );
+  /**
+     * @prop --kul-messenger-letter-spacing: Sets the letter spacing.
+     * Defaults to 5px.
+     */
+  --kul_messenger_letter_spacing: var(--kul-messenger-letter-spacing, 5px);
+  /**
+     * @prop --kul-messenger-name-height: Sets the height of the character's name.
+     * Defaults to 50px.
+     */
+  --kul_messenger_name_height: var(--kul-messenger-avatar-height, 50px);
+  /**
+     * @prop --kul-messenger-nav-box-shadow: Sets the box shadow of the messenger's navigation bar.
+     * Defaults to 0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375).
+     */
+  --kul_messenger_nav_box_shadow: var(
+    --kul-messenger-nav-box-shadow,
+    0px 1px 7px 3px rgba(var(--kul-text-color-rgb), 0.375)
+  );
+  /**
+     * @prop --kul-messenger-customization-title-padding: Sets the padding of customization panel titles.
+     * Defaults to 8px 12px.
+     */
+  --kul_messenger_customization_title_padding: var(
+    --kul-messenger-customization-title-padding,
+    8px 12px
+  );
+  /**
+    * @prop --kul-messenger-text-color: Sets the color of text.
+    * Defaults to var(--kul-text-color).
+    */
+  --kul_messenger_text_color: var(
+    --kul-messenger-text-color,
+    var(--kul-text-color)
+  );
+  /**
+     * @prop --kul-messenger-transition: Sets the transition effect.
+     * Defaults to 125ms ease-out.
+     */
+  --kul_messenger_transition: var(--kul-messenger-transition, 125ms ease-out);
+
+  box-sizing: border-box;
+  background-color: var(--kul_messenger_background_color);
+  color: var(--kul_messenger_text_color);
+  display: block;
+  font-family: var(--kul-font-family);
+  font-size: var(--kul-font-size);
+  height: 100%;
+  width: 100%;
+}
+
+#kul-component {
+  height: 100%;
+  width: 100%;
+}
+
+.messenger {
+  & {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    height: 100%;
+    position: relative;
+    width: 100%;
+  }
+
+  &:has(.character--collapsed) {
+    grid-template-columns: 0 4fr 1fr;
+  }
+
+  &:has(.extra-context--collapsed) {
+    grid-template-columns: 1fr 4fr 0;
+  }
+
+  &:has(.character--collapsed):has(.extra-context--collapsed) {
+    grid-template-columns: 0 1fr 0;
+  }
+}
