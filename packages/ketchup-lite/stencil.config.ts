@@ -62,7 +62,6 @@ export const config: Config = {
     {
       type: "dist-custom-elements",
       externalRuntime: false,
-      generateTypeDeclarations: true,
       includeGlobalScripts: true,
     },
     {
@@ -87,6 +86,7 @@ export const config: Config = {
       hydrateModule: "ketchup-lite-hydrate",
     }),
   ],
+  hydratedFlag: { selector: "attribute" },
   plugins: [
     sass({
       includePaths: ["./node_modules", "./src/style"],

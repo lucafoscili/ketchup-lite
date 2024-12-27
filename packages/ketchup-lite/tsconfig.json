@@ -3,7 +3,7 @@
     "allowSyntheticDefaultImports": true,
     "allowUnreachableCode": false,
     "baseUrl": "./",
-    "declaration": false,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "jsx": "react",
@@ -25,5 +25,5 @@
     "types": ["cypress", "node", "prismjs"]
   },
   "exclude": ["node_modules"],
-  "include": ["src"]
+  "include": ["src", "src/index.ts"]
 }
