@@ -1,6 +1,6 @@
 {
   "name": "ketchup-lite",
-  "version": "2.6.0-rc.2",
+  "version": "2.6.0-rc.5",
   "description": "Ketchup Lite - Web components library",
   "main": "./dist/index.cjs.js",
   "module": "dist/index.js",
