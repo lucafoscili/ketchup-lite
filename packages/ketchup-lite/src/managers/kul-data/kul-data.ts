@@ -36,6 +36,7 @@ export class KulData {
   #SHAPES_MAP: KulDataShapeComponentMap = {
     badge: "KulBadge",
     button: "KulButton",
+    canvas: "KulCanvas",
     card: "KulCard",
     chart: "KulChart",
     chat: "KulChat",
@@ -43,8 +44,10 @@ export class KulData {
     code: "KulCode",
     image: "KulImage",
     number: "KulTextfield",
-    toggle: "KulToggle",
+    photoframe: "KulPhotoframe",
     text: "KulTextfield",
+    toggle: "KulToggle",
+    typewriter: "KulTypewriter",
     upload: "KulUpload",
   };
 

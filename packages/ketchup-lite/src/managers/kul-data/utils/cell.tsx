@@ -1,5 +1,6 @@
 import { h, VNode } from "@stencil/core";
 import type { KulManager } from "src/managers/kul-manager/kul-manager";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import {
   GenericObject,
   KulComponent,
@@ -18,7 +19,6 @@ import {
   KulDataShapesMap,
 } from "../kul-data-declarations";
 import { nodeExists } from "./node";
-import { CY_ATTRIBUTES } from "src/utils/constants";
 
 //#region cellDecorateShapes
 export const cellDecorateShapes = <
@@ -158,6 +158,7 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
   const shapes: KulDataShapesMap = {
     badge: [],
     button: [],
+    canvas: [],
     card: [],
     chart: [],
     chat: [],
@@ -165,8 +166,10 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
     code: [],
     image: [],
     number: [],
-    toggle: [],
+    photoframe: [],
     text: [],
+    toggle: [],
+    typewriter: [],
     upload: [],
   };
   const nodes = dataset.nodes;
@@ -187,6 +190,9 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
           case "button":
             shapes.button.push(extracted as KulDataCell<"button">);
             break;
+          case "canvas":
+            shapes.canvas.push(extracted as KulDataCell<"canvas">);
+            break;
           case "card":
             shapes.card.push(extracted as KulDataCell<"card">);
             break;
@@ -205,8 +211,14 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
           case "image":
             shapes.image.push(extracted as KulDataCell<"image">);
             break;
+          case "photoframe":
+            shapes.photoframe.push(extracted as KulDataCell<"photoframe">);
+            break;
           case "toggle":
             shapes.toggle.push(extracted as KulDataCell<"toggle">);
+            break;
+          case "typewriter":
+            shapes.typewriter.push(extracted as KulDataCell<"typewriter">);
             break;
           case "number":
             shapes.number.push(cell as KulDataCell<"number">);
