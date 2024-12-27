@@ -8,9 +8,9 @@ const initKulManager = () => {
   if (isInitialized) return;
   isInitialized = true;
 
-  kulManagerSingleton = new KulManager();
-
   if (typeof document !== "undefined") {
+    kulManagerSingleton = new KulManager();
+
     try {
       const { theme } = kulManagerSingleton;
       requestAnimationFrame(async () => theme.set());
