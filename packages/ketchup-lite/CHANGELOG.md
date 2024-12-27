@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [2.6.0-rc.0](https://github.com/lucafoscili/ketchup-lite/compare/2.5.0...2.6.0-rc.0) (2024-12-27)
+
+### Bug Fixes
+
+- **canvas:** lower opacity strokes don't stack during the same stroke ([94d27a7](https://github.com/lucafoscili/ketchup-lite/commit/94d27a7a77996f59d12cedf2f13652d98cc0eafc))
+- **card:** correctly retrieved layout ([833169e](https://github.com/lucafoscili/ketchup-lite/commit/833169e539b00fe81a531a2cb8970819af4d652b))
+- **card:** improved adapter management ([f5b3b9e](https://github.com/lucafoscili/ketchup-lite/commit/f5b3b9e96d8077fc1b35af57bf135c84a549fb0c))
+- **card:** removed singleton from helper modules ([bf7932b](https://github.com/lucafoscili/ketchup-lite/commit/bf7932bff731791b7613c8b0a7a5a0769dcf217b))
+- **card:** wrong boolean assignment ([b33706c](https://github.com/lucafoscili/ketchup-lite/commit/b33706cb5f3b927e4095406aefe7bde02cc30d24))
+- **carousel:** adjusted navigation ([2ba7973](https://github.com/lucafoscili/ketchup-lite/commit/2ba79732c7bdb23b593b7873b715bc3ad15dddd4))
+- **carousel:** improved adapter management ([92f0b04](https://github.com/lucafoscili/ketchup-lite/commit/92f0b049eb02179ef23f7a5774c3d33d36491572))
+- **chart:** fixed colors ([cea9f0a](https://github.com/lucafoscili/ketchup-lite/commit/cea9f0addfdaa6351fe7bc352e39f21cee84e39c))
+- **chat:** fixed layout ([e73a324](https://github.com/lucafoscili/ketchup-lite/commit/e73a324325b174f19ae0cf308ac53e41733109a4))
+- **chat:** prompting resets after awaiting api call ([0f0ff8e](https://github.com/lucafoscili/ketchup-lite/commit/0f0ff8ef3b5bce52dacedf8b3060b99016ec1f1f))
+- **chat:** toolbar positioning ([3830145](https://github.com/lucafoscili/ketchup-lite/commit/3830145fa2ec383e52c6913e7c8887cb8da6522b))
+- **chat:** typewriter and autoclear textarea ([29b61bf](https://github.com/lucafoscili/ketchup-lite/commit/29b61bf3b147da2b631fddf2d857db0392742038))
+- **chip:** fixed ripple animation ([8b2088e](https://github.com/lucafoscili/ketchup-lite/commit/8b2088ec1160d851c4c59f642284f7fcadc3c69a))
+- **chip:** fixed scss ([1455044](https://github.com/lucafoscili/ketchup-lite/commit/145504456f30dce8f66c835d2d154911a5890abf))
+- **ci:** accordion ([c6a4337](https://github.com/lucafoscili/ketchup-lite/commit/c6a4337f601dbe65e3050fae4760996dc93723ea))
+- **ci:** article ([8b29ba8](https://github.com/lucafoscili/ketchup-lite/commit/8b29ba88724b09a3eb6b97079cabee240c52af13))
+- **ci:** updated commands ([9f9e641](https://github.com/lucafoscili/ketchup-lite/commit/9f9e6413b1674c06fd6a6afd1e1d13c3cc849dc1))
+- **code:** fixed Prism highlighting ([3ef7e56](https://github.com/lucafoscili/ketchup-lite/commit/3ef7e56c4b7ec0fa474b68c7f35a133d5b89f63f))
+- **kulmanager:** initialization correctly awaits for the ready event ([316f795](https://github.com/lucafoscili/ketchup-lite/commit/316f795dca48ff9cbb285c22e3dd9d7c2bcff0e5))
+- **lazy:** fixed kul-event from subcomponent ([ebe0183](https://github.com/lucafoscili/ketchup-lite/commit/ebe01839b5a5dc4a63e4f66963bb328b846f417b))
+- **messenger:** fixed expanders ([9e27aef](https://github.com/lucafoscili/ketchup-lite/commit/9e27aef407511a31966cc6482069a2b07d1b7d00))
+- **messenger:** fixed form behavior ([4e129f1](https://github.com/lucafoscili/ketchup-lite/commit/4e129f1b10bb314e57f9d267c2ba147653baf61e))
+- **messenger:** fixed style and private class management ([e8b7589](https://github.com/lucafoscili/ketchup-lite/commit/e8b7589398b71b9f1b0be24b54de20b65606f9d5))
+- **progressbar:** fixed BEM structure ([df237a6](https://github.com/lucafoscili/ketchup-lite/commit/df237a6111872b446377990d0e7704bf50368878))
+- **showcase:** home button clicks scroll to top ([6c80582](https://github.com/lucafoscili/ketchup-lite/commit/6c805824993d1ac439a5eeb4a31c64d2b588d906))
+- **singleton:** removed from several helpers/fixtures ([fe1a02c](https://github.com/lucafoscili/ketchup-lite/commit/fe1a02c951d105a0fa3c930183fb519ecbf944bc))
+- **slider:** typo ([e75d137](https://github.com/lucafoscili/ketchup-lite/commit/e75d1376ce3bc50fa59f45754894e84162ff3835))
+- **textfield:** fixed placeholder ([8fe2a79](https://github.com/lucafoscili/ketchup-lite/commit/8fe2a7952195bcc42608891de5ecba52d3428540))
+
+### Features
+
+- **manager:** added computed assetpath ([54f48a7](https://github.com/lucafoscili/ketchup-lite/commit/54f48a749b1f71032ba8e3448d48a6af1c484bcf))
+- **manager:** improved asset path management ([b6d5b34](https://github.com/lucafoscili/ketchup-lite/commit/b6d5b348a0f6661937fdb4375b6783ec1a0b7f4c))
+- **showcase:** QParams managements to initialize correctly the views ([3f0aa9a](https://github.com/lucafoscili/ketchup-lite/commit/3f0aa9a59efe124bf62945459252350a4c198d4a))
+- **theme:** added BEM class contructor ([a8a0493](https://github.com/lucafoscili/ketchup-lite/commit/a8a04939c129c0a610ebfe2293996a8f5dbba8a6))
+
 # [2.5.0](https://github.com/lucafoscili/ketchup-lite/compare/2.5.0-rc.0...2.5.0) (2024-12-08)
 
 **Note:** Version bump only for package ketchup-lite
