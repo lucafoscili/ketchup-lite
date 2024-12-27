@@ -4,7 +4,7 @@ import { KulManager } from "../managers/kul-manager/kul-manager";
 let kulManagerSingleton: KulManager;
 let isInitialized = false;
 
-const initKulManager = () => {
+const initKulManager = async () => {
   if (isInitialized) return;
   isInitialized = true;
 
@@ -20,14 +20,14 @@ const initKulManager = () => {
       const ev = new CustomEvent<KulManagerEventPayload>("kul-manager-ready", {
         detail: { kulManager: kulManagerSingleton },
       });
-      document.dispatchEvent(ev);
+      requestAnimationFrame(async () => document.dispatchEvent(ev));
     } catch (error) {
       console.error("Error initializing KulManager defaults:", error);
     }
   }
 };
 
-export default function () {
+export default async function () {
   initKulManager();
 }
 
