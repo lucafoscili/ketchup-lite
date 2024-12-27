@@ -22,7 +22,7 @@
     "dist/"
   ],
   "scripts": {
-    "build": "yarn clean && npx stencil build --docs && yarn hydrate",
+    "build": "yarn clean && npx stencil build --docs && node ./src/scripts/augment.js && yarn hydrate",
     "clean": "node -e \"require('fs').rmSync('./dist', { recursive: true, force: true })\"",
     "dev": "yarn clean && npx stencil build --dev --watch --serve",
     "doc": "npx stencil doc",
