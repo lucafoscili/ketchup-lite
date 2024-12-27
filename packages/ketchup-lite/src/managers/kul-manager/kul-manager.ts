@@ -1,4 +1,4 @@
-import { getAssetPath, setAssetPath } from "src/index";
+import { getAssetPath } from "src/index";
 import {
   GenericObject,
   KulComponent,
@@ -16,7 +16,6 @@ import { KulTheme } from "../kul-theme/kul-theme";
 import type {
   KulManagerClickCb,
   KulManagerComputedGetAssetPath,
-  KulManagerSetAssetPath,
   KulManagerUtilities,
 } from "./kul-manager-declarations";
 
@@ -25,7 +24,7 @@ if (process.env.NODE_ENV === "development") {
 }
 
 export class KulManager {
-  assets: { get: KulManagerComputedGetAssetPath; set: KulManagerSetAssetPath };
+  assets: { get: KulManagerComputedGetAssetPath };
   data: KulData;
   debug: KulDebug;
   dynamicPosition: KulDynamicPosition;
@@ -49,7 +48,6 @@ export class KulManager {
           style,
         };
       },
-      set: setAssetPath,
     };
 
     this.data = new KulData(this);
