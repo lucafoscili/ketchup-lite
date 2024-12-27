@@ -1,5 +1,6 @@
 import { h, VNode } from "@stencil/core";
 import type { KulManager } from "src/managers/kul-manager/kul-manager";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 import {
   GenericObject,
   KulComponent,
@@ -18,7 +19,6 @@ import {
   KulDataShapesMap,
 } from "../kul-data-declarations";
 import { nodeExists } from "./node";
-import { CY_ATTRIBUTES } from "src/utils/constants";
 
 //#region cellDecorateShapes
 export const cellDecorateShapes = <
@@ -33,17 +33,23 @@ export const cellDecorateShapes = <
   defaultProps?: Partial<KulDataCell<S>>[],
   defaultCb?: S extends "text" ? never : KulDataShapeCallback<C, S>,
 ) => {
-  const { sanitizeProps } = kulManager;
+  const { data, sanitizeProps } = kulManager;
+  const { stringify } = data.cell;
+
   const r: {
     element: VNode[];
     ref: Array<HTMLDivElement | KulComponentRootElement<C>>;
   } = { element: [], ref: [] };
 
   switch (shape) {
+    case "slot":
+      for (let index = 0; items && index < items.length; index++) {
+        r.element.push(<slot name={stringify(items[index].value)}></slot>);
+      }
+      return r;
     case "number":
     case "text":
       for (let index = 0; items && index < items.length; index++) {
-        const props = items[index].value;
         r.element.push(
           <div
             id={`${shape}${index}`}
@@ -53,12 +59,11 @@ export const cellDecorateShapes = <
               }
             }}
           >
-            {props}
+            {items[index].value}
           </div>,
         );
       }
       return r;
-
     default:
       for (let index = 0; items && index < items.length; index++) {
         const props = items[index];
@@ -158,6 +163,7 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
   const shapes: KulDataShapesMap = {
     badge: [],
     button: [],
+    canvas: [],
     card: [],
     chart: [],
     chat: [],
@@ -165,8 +171,11 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
     code: [],
     image: [],
     number: [],
-    toggle: [],
+    photoframe: [],
+    slot: [],
     text: [],
+    toggle: [],
+    typewriter: [],
     upload: [],
   };
   const nodes = dataset.nodes;
@@ -187,6 +196,9 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
           case "button":
             shapes.button.push(extracted as KulDataCell<"button">);
             break;
+          case "canvas":
+            shapes.canvas.push(extracted as KulDataCell<"canvas">);
+            break;
           case "card":
             shapes.card.push(extracted as KulDataCell<"card">);
             break;
@@ -205,14 +217,23 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
           case "image":
             shapes.image.push(extracted as KulDataCell<"image">);
             break;
+          case "photoframe":
+            shapes.photoframe.push(extracted as KulDataCell<"photoframe">);
+            break;
           case "toggle":
             shapes.toggle.push(extracted as KulDataCell<"toggle">);
+            break;
+          case "typewriter":
+            shapes.typewriter.push(extracted as KulDataCell<"typewriter">);
             break;
           case "number":
             shapes.number.push(cell as KulDataCell<"number">);
             break;
           case "upload":
             shapes.upload.push(extracted as KulDataCell<"upload">);
+            break;
+          case "slot":
+            shapes.slot.push(cell);
             break;
           case "text":
           default:

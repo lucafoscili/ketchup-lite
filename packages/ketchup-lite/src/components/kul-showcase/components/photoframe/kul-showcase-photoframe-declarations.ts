@@ -1,7 +1,7 @@
 import { KulPhotoframePropsInterface } from "../../../kul-photoframe/kul-photoframe-declarations";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
 
-export const PHOTOFRAME_EXAMPLES_KEYS = ["simple", "style"] as const;
+export const PHOTOFRAME_EXAMPLES_KEYS = ["overlay", "simple", "style"] as const;
 
 export interface PhotoframeExample extends KulPhotoframePropsInterface {
   ["data-description"]: string;

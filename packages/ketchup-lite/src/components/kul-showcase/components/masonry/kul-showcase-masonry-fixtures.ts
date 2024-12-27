@@ -24,6 +24,111 @@ export const MASONRY_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   const data: Partial<{
     [K in KulComponentName]: () => KulDataDataset;
   }> = {
+    KulCode: () => {
+      return {
+        nodes: [
+          {
+            cells: {
+              kulCode: {
+                kulLanguage: "jsx",
+                kulValue: `<div>
+      <h1>Hello, JSX!</h1>
+      <button onClick={() => alert('Clicked!')}>Click me</button>
+    </div>`,
+                shape: "code",
+                value: `<div>
+      <h1>Hello, JSX!</h1>
+      <button onClick={() => alert('Clicked!')}>Click me</button>
+    </div>`,
+              },
+            },
+            id: "0",
+          },
+          {
+            cells: {
+              kulCode: {
+                kulLanguage: "markdown",
+                kulValue: `# Markdown Example
+    
+    - **Bold** text
+    - _Italic_ text
+    - [Link to Google](https://google.com)`,
+                shape: "code",
+                value: `# Markdown Example
+    
+    - **Bold** text
+    - _Italic_ text
+    - [Link to Google](https://google.com)`,
+              },
+            },
+            id: "1",
+          },
+          {
+            cells: {
+              kulCode: {
+                kulLanguage: "typescript",
+                kulValue: `type User = {
+      id: number;
+      name: string;
+    };
+    
+    const getUser = (id: number): User => ({
+      id,
+      name: "John Doe",
+    });`,
+                shape: "code",
+                value: `type User = {
+      id: number;
+      name: string;
+    };
+    
+    const getUser = (id: number): User => ({
+      id,
+      name: "John Doe",
+    });`,
+              },
+            },
+            id: "2",
+          },
+          {
+            cells: {
+              kulCode: {
+                kulLanguage: "javascript",
+                kulValue: `function greet(name) {
+      console.log(\`Hello, \${name}!\`);
+    }
+    
+    greet("World");`,
+                shape: "code",
+                value: `function greet(name) {
+      console.log(\`Hello, \${name}!\`);
+    }
+    
+    greet("World");`,
+              },
+            },
+            id: "3",
+          },
+          {
+            cells: {
+              kulCode: {
+                kulLanguage: "python",
+                kulValue: `def greet(name):
+        print(f"Hello, {name}!")
+    
+    greet("World")`,
+                shape: "code",
+                value: `def greet(name):
+        print(f"Hello, {name}!")
+    
+    greet("World")`,
+              },
+            },
+            id: "4",
+          },
+        ],
+      };
+    },
     KulImage: () => {
       return {
         nodes: [
@@ -150,6 +255,66 @@ export const MASONRY_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
         ],
       };
     },
+    KulPhotoframe: () => {
+      return {
+        nodes: [
+          {
+            cells: {
+              kulPhotoframe: {
+                kulPlaceholder: {
+                  alt: null,
+                  src: get(`./assets/media/blur_color_splash.jpg`).path,
+                },
+                kulValue: {
+                  alt: null,
+                  src: get(`./assets/media/color_splash.jpg`).path,
+                },
+                shape: "photoframe",
+                value: "",
+              },
+            },
+            id: "0",
+            value: "0",
+          },
+          {
+            cells: {
+              kulPhotoframe: {
+                kulPlaceholder: {
+                  alt: null,
+                  src: get(`./assets/media/blur_color_splash.jpg`).path,
+                },
+                kulValue: {
+                  alt: null,
+                  src: get(`./assets/media/color_splash.jpg`).path,
+                },
+                shape: "photoframe",
+                value: "",
+              },
+            },
+            id: "1",
+            value: "1",
+          },
+          {
+            cells: {
+              kulPhotoframe: {
+                kulPlaceholder: {
+                  alt: null,
+                  src: get(`./assets/media/blur_color_splash.jpg`).path,
+                },
+                kulValue: {
+                  alt: null,
+                  src: get(`./assets/media/color_splash.jpg`).path,
+                },
+                shape: "photoframe",
+                value: "",
+              },
+            },
+            id: "2",
+            value: "2",
+          },
+        ],
+      };
+    },
   };
   const documentation: KulArticleDataset = {
     nodes: [
@@ -214,14 +379,48 @@ export const MASONRY_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   return {
     documentation,
     examples: {
+      simple: {
+        ["data-description"]: "Simple masonry with photoframes",
+        kulData: data.KulPhotoframe(),
+        kulShape: "photoframe",
+      },
       selectable: {
-        ["data-description"]: "Selectable masonry",
+        ["data-description"]: "Selectable masonry of images",
         kulData: data.KulImage(),
         kulSelectable: true,
       },
-      simple: {
-        ["data-description"]: "Simple masonry",
-        kulData: data.KulImage(),
+      code: {
+        ["data-description"]: "Masonry with code shapes",
+        kulView: "vertical",
+        kulData: data.KulCode(),
+        kulShape: "code",
+      },
+      slot: {
+        ["data-description"]: "Masonry composed of slots",
+        kulColumns: 2,
+        kulData: {
+          nodes: [
+            {
+              cells: {
+                kulSlot: {
+                  shape: "slot",
+                  value: "slot-0",
+                },
+              },
+              id: "0",
+            },
+            {
+              cells: {
+                kulSlot: {
+                  shape: "slot",
+                  value: "slot-1",
+                },
+              },
+              id: "1",
+            },
+          ],
+        },
+        kulShape: "slot",
       },
       style: {
         ["data-description"]: "Masonry with custom style",
