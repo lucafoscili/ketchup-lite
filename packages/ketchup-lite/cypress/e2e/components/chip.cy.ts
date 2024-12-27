@@ -95,7 +95,7 @@ describe("Props", () => {
   beforeEach(() => {
     cy.navigate(chip);
   });
-  it("Should check for the presence of a <style> element with id kup-style.", () => {
+  it("Should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
 });

@@ -67,7 +67,7 @@ describe("Props", () => {
   beforeEach(() => {
     cy.navigate(canvas);
   });
-  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
+  it("kulStyle: should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
 });

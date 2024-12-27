@@ -65,7 +65,7 @@ describe("Props", () => {
     cy.navigate(progressbar);
   });
 
-  it("Should check for the presence of a <style> element with id kup-style.", () => {
+  it("Should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
 });

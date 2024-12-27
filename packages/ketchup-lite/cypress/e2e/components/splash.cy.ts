@@ -1,4 +1,5 @@
 import { KUL_SPLASH_PROPS } from "src/components/kul-splash/helpers/constants";
+import type { KulTheme } from "src/managers/kul-theme/kul-theme";
 import { SPLASH_EXAMPLES_KEYS } from "../../../src/components/kul-showcase/components/splash/kul-showcase-splash-declarations";
 
 const splash = "splash";
@@ -85,10 +86,14 @@ describe("Methods", () => {
                 );
               });
           });
+        `${splashTag}#style`;
       });
   });
   it(`getProps: check keys against props array.`, () => {
-    cy.checkProps(splashTag, KUL_SPLASH_PROPS);
+    cy.get("@kulComponentShowcase").get("#style-trigger").click();
+    cy.get(`${splashTag}#style`)
+      .should("exist")
+      .checkProps(splashTag, KUL_SPLASH_PROPS, true);
   });
 });
 //#endregion
@@ -98,7 +103,7 @@ describe("Props", () => {
   beforeEach(() => {
     cy.navigate(splash);
   });
-  it("Should check for the presence of a <style> element with id kup-style.", () => {
+  it("Should check for the presence of a <style> element with id kul-style.", () => {
     cy.get("@kulComponentShowcase").get("#style-trigger").click();
     cy.get(`${splashTag}#style`)
       .shadow()
@@ -107,11 +112,26 @@ describe("Props", () => {
       .should("not.be.empty");
   });
   it("kulLabel: should check that the label is different from the default (Loading...)", () => {
+    let bemClass: KulTheme["bemClass"];
+
     cy.get("@kulComponentShowcase").get("#label-trigger").click();
     cy.get(`${splashTag}#label`)
       .shadow()
-      .find(".label")
-      .should("not.have.text", "Loading...");
+      .within(($splash) => {
+        cy.getKulManager()
+          .then((kulManager) => {
+            bemClass = kulManager.theme.bemClass;
+          })
+          .then(() => {
+            const splash = $splash[0] as HTMLKulSplashElement;
+            const selector = `.${bemClass("splash", "label")}`;
+
+            expect(splash).to.exist;
+            cy.wrap(splash)
+              .find(selector)
+              .should("not.have.text", "Loading...");
+          });
+      });
   });
 });
 //#endregion

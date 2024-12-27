@@ -215,7 +215,7 @@ describe("Props", () => {
         cy.get(`.${bemClass("button", "spinner-container")}`).should("exist");
       });
   });
-  it("kulStyle: Should check for the presence of a <style> element with id kup-style.", () => {
+  it("kulStyle: Should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
   it("kulStyling: should check for the existence of a button for each styling.", () => {

@@ -32,7 +32,11 @@ declare global {
       checkDebugInfo(component: string): Chainable;
       checkEvent(component: string, eventType: KulGenericEventType): Chainable;
       checkKulStyle(): Chainable;
-      checkProps(component: string, componentProps: string[]): Chainable;
+      checkProps(
+        component: string,
+        componentProps: string[],
+        global?: boolean,
+      ): Chainable;
       checkReadyEvent(
         component: string,
         eventType?: KulGenericEventType,
@@ -155,23 +159,26 @@ Cypress.Commands.add("checkKulStyle", () => {
 //#endregion
 
 //#region checkProps
-Cypress.Commands.add("checkProps", (component, componentProps) => {
-  cy.get("@kulComponentShowcase")
-    .find(component)
-    .first()
-    .then(($comp) => {
-      ($comp[0] as Partial<KulGenericComponent>).getProps().then((props) => {
-        for (
-          let index = 0;
-          index < Object.keys(componentProps).length;
-          index++
-        ) {
-          const prop = Object.keys(componentProps)[index];
-          expect(Object.keys(props)).to.include(prop);
-        }
+Cypress.Commands.add(
+  "checkProps",
+  (component, componentProps, global = false) => {
+    cy.get(global ? "body" : "@kulComponentShowcase")
+      .find(component)
+      .first()
+      .then(($comp) => {
+        ($comp[0] as Partial<KulGenericComponent>).getProps().then((props) => {
+          for (
+            let index = 0;
+            index < Object.keys(componentProps).length;
+            index++
+          ) {
+            const prop = Object.keys(componentProps)[index];
+            expect(Object.keys(props)).to.include(prop);
+          }
+        });
       });
-    });
-});
+  },
+);
 //#endregion
 
 //#region checkReadyEvent

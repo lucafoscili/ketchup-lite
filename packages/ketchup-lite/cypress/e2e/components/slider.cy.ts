@@ -99,7 +99,7 @@ describe("Props", () => {
   beforeEach(() => {
     cy.navigate(sliderComponent);
   });
-  it("kulStyle: hould check for the presence of a <style> element with id kup-style.", () => {
+  it("kulStyle: hould check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
 });

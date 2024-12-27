@@ -138,7 +138,7 @@ describe("Props", () => {
   it("kulRipple: should check for the presence of a ripple element.", () => {
     cy.checkRipple(`${accordionTag}`);
   });
-  it("kulStyle: should check for the presence of a <style> element with id kup-style.", () => {
+  it("kulStyle: should check for the presence of a <style> element with id kul-style.", () => {
     cy.checkKulStyle();
   });
 });
