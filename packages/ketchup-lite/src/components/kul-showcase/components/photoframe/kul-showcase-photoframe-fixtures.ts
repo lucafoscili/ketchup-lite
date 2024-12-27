@@ -68,6 +68,23 @@ export const PHOTOFRAME_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
   return {
     documentation,
     examples: {
+      overlay: {
+        ["data-description"]: "Simple photoframe",
+        kulOverlay: {
+          description: "Description",
+          hideOnClick: true,
+          icon: "eye-off",
+          title: "Title",
+        },
+        kulPlaceholder: {
+          alt: null,
+          src: placeholder,
+        },
+        kulValue: {
+          alt: null,
+          src: value,
+        },
+      },
       simple: {
         ["data-description"]: "Simple photoframe",
         kulPlaceholder: {

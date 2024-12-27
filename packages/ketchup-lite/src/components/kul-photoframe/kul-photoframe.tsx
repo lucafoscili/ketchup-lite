@@ -9,6 +9,7 @@ import {
   Method,
   Prop,
   State,
+  VNode,
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
@@ -22,6 +23,7 @@ import {
   KulPhotoframeEvent,
   KulPhotoframeEventPayload,
   KulPhotoframeOrientation,
+  KulPhotoframeOverlay,
   KulPhotoframePropsInterface,
 } from "./kul-photoframe-declarations";
 
@@ -59,6 +61,11 @@ export class KulPhotoframe {
   //#endregion
 
   //#region Props
+  /**
+   * When not empty, this text will be overlayed on the photo - blocking the view.
+   * @default null
+   */
+  @Prop({ mutable: true }) kulOverlay: KulPhotoframeOverlay = null;
   /**
    * Html attributes of the picture before the component enters the viewport.
    * @default null
@@ -165,6 +172,48 @@ export class KulPhotoframe {
   #isLandscape(image: HTMLImageElement) {
     return Boolean(image.naturalWidth > image.naturalHeight);
   }
+  #prepOverlay = (): VNode => {
+    const { kulOverlay } = this;
+
+    if (!kulOverlay || typeof kulOverlay !== "object") {
+      return null;
+    }
+
+    const { bemClass } = kulManagerSingleton.theme;
+
+    const { description, hideOnClick, icon, title } = kulOverlay;
+
+    return (
+      <div
+        class={bemClass("overlay", null, {
+          "is-clickable": hideOnClick,
+        })}
+        onClick={
+          hideOnClick
+            ? (e) => {
+                this.onKulEvent(e, "overlay");
+                this.kulOverlay = null;
+              }
+            : undefined
+        }
+      >
+        <div class={bemClass("overlay", "content")}>
+          {icon && (
+            <kul-image
+              class={bemClass("overlay", "icon")}
+              kulSizeX="3em"
+              kulSizeY="3em"
+              kulValue={icon}
+            ></kul-image>
+          )}
+          {title && <div class={bemClass("overlay", "title")}>{title}</div>}
+          {description && (
+            <div class={bemClass("overlay", "description")}>{description}</div>
+          )}
+        </div>
+      </div>
+    );
+  };
   #setObserver() {
     this.#intObserver = new IntersectionObserver(
       (entries) => {
@@ -223,6 +272,7 @@ export class KulPhotoframe {
           })}
           id={KUL_WRAPPER_ID}
         >
+          {this.#prepOverlay()}
           <img
             class={bemClass("photoframe", "placeholder", {
               loaded: Boolean(this.imageOrientation),

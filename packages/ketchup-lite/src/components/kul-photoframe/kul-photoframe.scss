@@ -74,6 +74,53 @@ img {
   }
 }
 
+.overlay {
+  & {
+    background: var(--kul-background-color);
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: calc(var(--kul-header-zindex) - 1);
+  }
+
+  &--is-clickable {
+    & {
+      cursor: pointer;
+    }
+
+    &:hover {
+      .overlay__content {
+        transform: scale(1.5);
+      }
+    }
+  }
+
+  &__description,
+  &__title {
+    color: var(--kul-text-color);
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 2em;
+  }
+
+  &__content {
+    color: var(--kul-text-color);
+    margin: auto;
+    overflow: hidden;
+    transition: transform 250ms ease-in;
+  }
+
+  &__icon {
+    margin: auto;
+  }
+}
+
 /*-------------------------------------------------*/
 /*        C o m p o n e n t   C l a s s e s        */
 /*-------------------------------------------------*/
