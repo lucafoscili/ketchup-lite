@@ -94,30 +94,35 @@ export type KulDataCell<T extends KulDataShapes> = T extends "badge"
                           value: string;
                           htmlProps?: Partial<HTMLKulPhotoframeElement>;
                         }
-                      : T extends "toggle"
-                        ? Partial<KulTogglePropsInterface> & {
-                            shape: "toggle";
-                            value: boolean;
-                            htmlProps?: Partial<HTMLKulToggleElement>;
+                      : T extends "slot"
+                        ? {
+                            shape: "slot";
+                            value: string;
                           }
-                        : T extends "upload"
-                          ? Partial<KulUploadPropsInterface> & {
-                              shape: "upload";
-                              value: string;
-                              htmlProps?: Partial<HTMLKulUploadElement>;
+                        : T extends "toggle"
+                          ? Partial<KulTogglePropsInterface> & {
+                              shape: "toggle";
+                              value: boolean;
+                              htmlProps?: Partial<HTMLKulToggleElement>;
                             }
-                          : T extends "typewriter"
-                            ? Partial<KulTypewriterPropsInterface> & {
-                                shape: "typewriter";
+                          : T extends "upload"
+                            ? Partial<KulUploadPropsInterface> & {
+                                shape: "upload";
                                 value: string;
-                                htmlProps?: Partial<HTMLKulTypewriterElement>;
+                                htmlProps?: Partial<HTMLKulUploadElement>;
                               }
-                            : T extends "text"
-                              ? {
-                                  shape?: "text";
+                            : T extends "typewriter"
+                              ? Partial<KulTypewriterPropsInterface> & {
+                                  shape: "typewriter";
                                   value: string;
+                                  htmlProps?: Partial<HTMLKulTypewriterElement>;
                                 }
-                              : KulDataBaseCell;
+                              : T extends "text"
+                                ? {
+                                    shape?: "text";
+                                    value: string;
+                                  }
+                                : KulDataBaseCell;
 export type KulCellNameToShape = {
   kulBadge: "badge";
   kulButton: "button";
@@ -130,6 +135,7 @@ export type KulCellNameToShape = {
   kulImage: "image";
   kulNumber: "number";
   kulPhotoframe: "photoframe";
+  kulSlot: "slot";
   kulText: "text";
   kulToggle: "toggle";
   kulTypewriter: "typewriter";
@@ -147,10 +153,11 @@ export interface KulDataCellContainer {
   kulChip?: KulDataCellFromName<"kulChip">;
   kulCode?: KulDataCellFromName<"kulCode">;
   kulImage?: KulDataCellFromName<"kulImage">;
-  kulPhotoframe?: KulDataCellFromName<"kulPhotoframe">;
-  kulToggle?: KulDataCellFromName<"kulToggle">;
   kulNumber?: KulDataCellFromName<"kulNumber">;
+  kulPhotoframe?: KulDataCellFromName<"kulPhotoframe">;
+  kulSlot?: KulDataCellFromName<"kulSlot">;
   kulText?: KulDataCellFromName<"kulText">;
+  kulToggle?: KulDataCellFromName<"kulToggle">;
   kulUpload?: KulDataCellFromName<"kulUpload">;
 }
 export interface KulDataCellContainer {
@@ -191,6 +198,7 @@ export type KulDataShapes =
   | "image"
   | "number"
   | "photoframe"
+  | "slot"
   | "toggle"
   | "text"
   | "typewriter"

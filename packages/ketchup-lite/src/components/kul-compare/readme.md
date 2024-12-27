@@ -7,12 +7,12 @@
 
 ## Properties
 
-| Property   | Attribute   | Description                                                                          | Type                                                                                                                              | Default     |
-| ---------- | ----------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `kulData`  | --          | Actual data of the compare.                                                          | `KulDataDataset`                                                                                                                  | `null`      |
-| `kulShape` | `kul-shape` | Sets the type of shapes to compare.                                                  | `"badge" \| "button" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "text" \| "toggle" \| "upload"` | `"image"`   |
-| `kulStyle` | `kul-style` | Custom style of the component.                                                       | `string`                                                                                                                          | `""`        |
-| `kulView`  | `kul-view`  | Sets the type of view, either styled as a before-after or a side-by-side comparison. | `"overlay" \| "split"`                                                                                                            | `"overlay"` |
+| Property   | Attribute   | Description                                                                          | Type                                                                                                                                                                                    | Default     |
+| ---------- | ----------- | ------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `kulData`  | --          | Actual data of the compare.                                                          | `KulDataDataset`                                                                                                                                                                        | `null`      |
+| `kulShape` | `kul-shape` | Sets the type of shapes to compare.                                                  | `"badge" \| "button" \| "canvas" \| "card" \| "chart" \| "chat" \| "chip" \| "code" \| "image" \| "number" \| "photoframe" \| "slot" \| "text" \| "toggle" \| "typewriter" \| "upload"` | `"image"`   |
+| `kulStyle` | `kul-style` | Custom style of the component.                                                       | `string`                                                                                                                                                                                | `""`        |
+| `kulView`  | `kul-view`  | Sets the type of view, either styled as a before-after or a side-by-side comparison. | `"overlay" \| "split"`                                                                                                                                                                  | `"overlay"` |
 
 
 ## Events

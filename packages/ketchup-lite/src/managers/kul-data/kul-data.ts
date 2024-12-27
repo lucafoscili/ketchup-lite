@@ -45,6 +45,7 @@ export class KulData {
     image: "KulImage",
     number: "KulTextfield",
     photoframe: "KulPhotoframe",
+    slot: "KulTextfield",
     text: "KulTextfield",
     toggle: "KulToggle",
     typewriter: "KulTypewriter",

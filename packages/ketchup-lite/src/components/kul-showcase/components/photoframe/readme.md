@@ -29,6 +29,10 @@
 graph TD;
   kul-showcase-photoframe --> kul-article
   kul-showcase-photoframe --> kul-photoframe
+  kul-photoframe --> kul-image
+  kul-image --> kul-spinner
+  kul-image --> kul-badge
+  kul-badge --> kul-image
   kul-showcase --> kul-showcase-photoframe
   style kul-showcase-photoframe fill:#f9f,stroke:#333,stroke-width:4px
 ```

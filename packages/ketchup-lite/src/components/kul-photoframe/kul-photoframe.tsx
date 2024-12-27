@@ -241,7 +241,7 @@ export class KulPhotoframe {
   componentDidLoad() {
     const { info } = kulManagerSingleton.debug;
 
-    this.#intObserver.observe(this.rootElement);
+    this.#intObserver?.observe(this.rootElement);
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }

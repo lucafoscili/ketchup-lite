@@ -395,6 +395,33 @@ export const MASONRY_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
         kulData: data.KulCode(),
         kulShape: "code",
       },
+      slot: {
+        ["data-description"]: "Masonry composed of slots",
+        kulColumns: 2,
+        kulData: {
+          nodes: [
+            {
+              cells: {
+                kulSlot: {
+                  shape: "slot",
+                  value: "slot-0",
+                },
+              },
+              id: "0",
+            },
+            {
+              cells: {
+                kulSlot: {
+                  shape: "slot",
+                  value: "slot-1",
+                },
+              },
+              id: "1",
+            },
+          ],
+        },
+        kulShape: "slot",
+      },
       style: {
         ["data-description"]: "Masonry with custom style",
         ["data-dynamic"]: "custom",

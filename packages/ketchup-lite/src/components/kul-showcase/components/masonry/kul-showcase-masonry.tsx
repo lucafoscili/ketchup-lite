@@ -55,7 +55,10 @@ export class KulShowcaseMasonry {
                   }
                 }}
                 {...props}
-              ></kul-masonry>
+              >
+                <div slot="slot-0">Slot #1</div>
+                <div slot="slot-1">Slot #2</div>
+              </kul-masonry>
             </div>
           </div>,
         );

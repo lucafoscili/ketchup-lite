@@ -33,17 +33,23 @@ export const cellDecorateShapes = <
   defaultProps?: Partial<KulDataCell<S>>[],
   defaultCb?: S extends "text" ? never : KulDataShapeCallback<C, S>,
 ) => {
-  const { sanitizeProps } = kulManager;
+  const { data, sanitizeProps } = kulManager;
+  const { stringify } = data.cell;
+
   const r: {
     element: VNode[];
     ref: Array<HTMLDivElement | KulComponentRootElement<C>>;
   } = { element: [], ref: [] };
 
   switch (shape) {
+    case "slot":
+      for (let index = 0; items && index < items.length; index++) {
+        r.element.push(<slot name={stringify(items[index].value)}></slot>);
+      }
+      return r;
     case "number":
     case "text":
       for (let index = 0; items && index < items.length; index++) {
-        const props = items[index].value;
         r.element.push(
           <div
             id={`${shape}${index}`}
@@ -53,12 +59,11 @@ export const cellDecorateShapes = <
               }
             }}
           >
-            {props}
+            {items[index].value}
           </div>,
         );
       }
       return r;
-
     default:
       for (let index = 0; items && index < items.length; index++) {
         const props = items[index];
@@ -167,6 +172,7 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
     image: [],
     number: [],
     photoframe: [],
+    slot: [],
     text: [],
     toggle: [],
     typewriter: [],
@@ -225,6 +231,9 @@ export const cellGetAllShapes = (dataset: KulDataDataset, deepCopy = true) => {
             break;
           case "upload":
             shapes.upload.push(extracted as KulDataCell<"upload">);
+            break;
+          case "slot":
+            shapes.slot.push(cell);
             break;
           case "text":
           default:

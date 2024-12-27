@@ -5,6 +5,7 @@ export const MASONRY_EXAMPLES_KEYS = [
   "selectable",
   "simple",
   "code",
+  "slot",
   "style",
 ] as const;
 
