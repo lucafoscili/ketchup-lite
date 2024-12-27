@@ -12,7 +12,11 @@ import {
 } from "@stencil/core";
 import { kulManagerSingleton } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulComponentName, KulComponentPropsFor } from "src/types/GenericTypes";
+import {
+  KulComponentName,
+  KulComponentPropsFor,
+  KulGenericEvent,
+} from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { SVG } from "./elements/svg";
 import {
@@ -171,10 +175,6 @@ export class KulLazy {
   //#region Lifecycle hooks
   componentWillLoad() {
     const { theme } = kulManagerSingleton;
-
-    this.rootElement.addEventListener(`${this.kulComponentName}-event`, (e) => {
-      this.onKulEvent(e, "kul-event");
-    });
     theme.register(this);
     this.#setObserver();
   }
@@ -241,12 +241,19 @@ export class KulLazy {
       (kulRenderMode === "props" && kulComponentProps) ||
       (kulRenderMode === "both" && kulComponentProps && isInViewport)
     ) {
+      const parts = kulComponentName.split("-").reverse();
+      const evDispatcher = {
+        [`onKul-${parts[0]}-event`]: (e: KulGenericEvent) => {
+          this.onKulEvent(e, "kul-event");
+        },
+      };
       const Tag = kulComponentName;
       content = (
         <Tag
           {...sanitizeProps(
             kulComponentProps as KulComponentPropsFor<KulComponentName>,
           )}
+          {...evDispatcher}
           ref={(el: HTMLElement) => (this.#lazyComponent = el)}
         ></Tag>
       );

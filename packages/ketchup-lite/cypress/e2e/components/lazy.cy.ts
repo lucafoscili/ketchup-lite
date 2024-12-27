@@ -26,6 +26,11 @@ describe("Events", () => {
     cy.navigate(lazy);
     const eventType: KulLazyEvent = "kul-event";
     cy.checkEvent(lazy, eventType);
+    cy.get("@kulComponentShowcase")
+      .should("exist")
+      .within(() => {
+        cy.get("kul-lazy").last().should("exist").scrollIntoView().click();
+      });
     cy.getCyElement(CY_ATTRIBUTES.check).should("exist");
   });
   it(`load`, () => {

@@ -7,6 +7,7 @@ import {
   ImageviewerExample,
 } from "./kul-showcase-imageviewer-declarations";
 import { IMAGEVIEWER_FIXTURES } from "./kul-showcase-imageviewer-fixtures";
+import { CY_ATTRIBUTES } from "src/utils/constants";
 
 @Component({
   tag: "kul-showcase-imageviewer",
@@ -86,7 +87,11 @@ export class KulShowcaseImageviewer {
         <div class="examples-title" part="examples-title">
           Examples
         </div>
-        <div class="grid" data-cy="wrapper" part="grid">
+        <div
+          class="grid"
+          data-cy={CY_ATTRIBUTES.showcaseGridWrapper}
+          part="grid"
+        >
           {this.#prepExamples()}
         </div>
       </Fragment>
