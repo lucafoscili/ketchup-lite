@@ -12,9 +12,6 @@ const initKulManager = () => {
     kulManagerSingleton = new KulManager();
 
     try {
-      const { theme } = kulManagerSingleton;
-      requestAnimationFrame(async () => theme.set());
-
       if (process.env.NODE_ENV === "development") {
         console.debug(
           "KulManager instance created and defaults set. Dispatching readiness event...",
