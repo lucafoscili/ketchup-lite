@@ -349,11 +349,10 @@ describe("Props", () => {
           "type",
           "button",
         );
-
-        button.kulType = "reset";
       })
       .then(($button) => {
         const button = $button[0] as HTMLKulButtonElement;
+        button.kulType = "reset";
         expect(button.kulType).to.eq("reset");
       })
       .findCyElement(CY_ATTRIBUTES.button)

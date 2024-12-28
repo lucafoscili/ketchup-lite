@@ -51,7 +51,7 @@ export const prepControls = (
           kulIcon={ICONS.removeColumn}
           kulStyling={STYLING}
           onKul-button-event={button}
-          ref={assignRef(refs, "removeColumns")}
+          ref={assignRef(refs, "removeColumn")}
           title="Click to remove a column from the masonry."
         ></kul-button>
       );

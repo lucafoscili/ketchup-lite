@@ -26,8 +26,10 @@ import {
   KulGenericEventPayload,
 } from "src/types/GenericTypes";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import { COLUMNS_CSS_VAR, DEFAULT_COLUMNS } from "./helpers/constants";
 import { createAdapter } from "./kul-masonry-adapter";
 import {
+  KulMasonryColumns,
   KulMasonryEvent,
   KulMasonryEventPayload,
   KulMasonryPropsInterface,
@@ -63,14 +65,20 @@ export class KulMasonry {
    * @see KulDataShapesMap - For a list of possible shapes.
    */
   @State() shapes: KulDataShapesMap = {};
+  /**
+   * Tracks and reacts to the viewport's width.
+   * @default undefined
+   */
+  @State() viewportWidth: number;
   //#endregion
 
   //#region Props
   /**
    * Number of columns of the masonry, doesn't affect sequential views.
-   * @default 3
+   * Can be set with a number or an array of numbers that identify each breakpoint.
+   * @default [640, 768, 1024, 1920, 2560]
    */
-  @Prop({ mutable: true }) kulColumns = 3;
+  @Prop({ mutable: true }) kulColumns: KulMasonryColumns = [...DEFAULT_COLUMNS];
   /**
    * Actual data of the masonry.
    * @default null
@@ -99,9 +107,12 @@ export class KulMasonry {
   //#endregion
 
   //#region Internal variables
+  #currentColumns: number;
+  #timeout: NodeJS.Timeout;
   #adapter = createAdapter(
     {
       compInstance: this,
+      currentColumns: () => this.#currentColumns,
       isMasonry: () => this.#isMasonry(),
       isVertical: () => this.#isVertical(),
       manager: kulManagerSingleton,
@@ -160,6 +171,22 @@ export class KulMasonry {
   //#endregion
 
   //#region Watchers
+  @Watch("kulColumns")
+  validateColumns() {
+    const { debug } = kulManagerSingleton;
+
+    if (
+      Array.isArray(this.kulColumns) &&
+      !this.#validateBreakpoints(this.kulColumns)
+    ) {
+      debug.logs.new(
+        this,
+        "Invalid breakpoints in kulColumns: must be sorted in ascending order.",
+        "warning",
+      );
+      this.kulColumns = [...DEFAULT_COLUMNS];
+    }
+  }
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
@@ -248,7 +275,50 @@ export class KulMasonry {
   //#endregion
 
   //#region Private methods
-  #divideShapesIntoColumns(columnCount: number): VNode[][] {
+  #hasShapes = () => {
+    return !!this.shapes?.[this.kulShape];
+  };
+  #isMasonry = () => {
+    return this.kulView === "masonry";
+  };
+  #isVertical = () => {
+    return this.kulView === "vertical";
+  };
+  #debounce = (cb: () => void, wait: number) => {
+    return () => {
+      clearTimeout(this.#timeout);
+      this.#timeout = setTimeout(cb, wait);
+    };
+  };
+  #validateBreakpoints = (breakpoints: number[]) => {
+    return breakpoints.every((val, i, arr) => i === 0 || arr[i - 1] < val);
+  };
+  #calculateColumnCount() {
+    const { kulColumns, viewportWidth, shapes, kulShape } = this;
+
+    if (typeof kulColumns === "number") {
+      return Math.min(kulColumns, shapes[kulShape]?.length || 0);
+    }
+
+    if (Array.isArray(kulColumns)) {
+      const breakpoints = kulColumns;
+
+      let columnCount = 1;
+
+      for (let i = 0; i < breakpoints.length; i++) {
+        if (viewportWidth >= breakpoints[i]) {
+          columnCount = i + 1;
+        } else {
+          break;
+        }
+      }
+
+      return Math.min(columnCount, shapes[kulShape]?.length || 0);
+    }
+
+    return 1;
+  }
+  #divideShapesIntoColumns = (): VNode[][] => {
     const { decorate } = kulManagerSingleton.data.cell.shapes;
 
     const { kulShape, selectedShape, shapes } = this;
@@ -268,7 +338,7 @@ export class KulMasonry {
       };
     }
     const columns: VNode[][] = Array.from(
-      { length: columnCount },
+      { length: this.#currentColumns },
       (): VNode[] => [],
       [],
     );
@@ -281,21 +351,15 @@ export class KulMasonry {
 
     decoratedShapes.element.forEach((element: VNode, index: number) => {
       element.$attrs$["data-index"] = index.toString();
-      columns[index % columnCount].push(element);
+      columns[index % this.#currentColumns].push(element);
     });
 
     return columns;
-  }
-  #hasShapes() {
-    return !!this.shapes?.[this.kulShape];
-  }
-  #isMasonry() {
-    return this.kulView === "masonry";
-  }
-  #isVertical() {
-    return this.kulView === "vertical";
-  }
-  #prepChangeView(): VNode {
+  };
+  #handleResize = this.#debounce(() => {
+    this.viewportWidth = window.innerWidth;
+  }, 200);
+  #prepChangeView = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { addColumn, changeView, removeColumn } = this.#adapter.elements.jsx;
@@ -311,22 +375,20 @@ export class KulMasonry {
         {changeView()}
       </div>
     );
-  }
-  #prepView(): VNode[] {
+  };
+  #prepView = (): VNode[] => {
     const { bemClass } = kulManagerSingleton.theme;
 
-    const columnCount = this.#isMasonry() ? this.kulColumns : 1;
-    const columns = this.#divideShapesIntoColumns(columnCount);
-
-    return columns.map((column, colIndex) => (
-      <div key={colIndex} class={bemClass("grid", "column")}>
+    const nodes = this.#divideShapesIntoColumns();
+    return nodes.map((column, index) => (
+      <div key={index} class={bemClass("grid", "column")}>
         {column.map((element) => (
           <Fragment>{element}</Fragment>
         ))}
       </div>
     ));
-  }
-  #prepMasonry(): VNode {
+  };
+  #prepMasonry = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
 
     const { kulShape, kulView, shapes } = this;
@@ -349,14 +411,18 @@ export class KulMasonry {
     }
 
     return null;
-  }
+  };
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
+    this.viewportWidth = window.innerWidth;
+    window.addEventListener("resize", this.#handleResize);
     theme.register(this);
+  }
+  componentWillLoad() {
     this.updateShapes();
   }
   componentDidLoad() {
@@ -368,6 +434,7 @@ export class KulMasonry {
   componentWillRender() {
     const { info } = kulManagerSingleton.debug;
 
+    this.#currentColumns = this.#isMasonry() ? this.#calculateColumnCount() : 1;
     info.update(this, "will-render");
   }
   componentDidRender() {
@@ -381,13 +448,13 @@ export class KulMasonry {
     const { kulStyle } = this;
 
     const style = {
-      ["--kul_masonry_columns"]: this.kulColumns?.toString() || "4",
+      [COLUMNS_CSS_VAR]: String(this.#currentColumns),
     };
 
     return (
-      <Host>
+      <Host style={style}>
         {kulStyle && <style id={KUL_STYLE_ID}>{setKulStyle(this)}</style>}
-        <div id={KUL_WRAPPER_ID} style={style}>
+        <div id={KUL_WRAPPER_ID}>
           <div class={bemClass("masonry")}>{this.#prepMasonry()}</div>
         </div>
       </Host>
@@ -397,6 +464,7 @@ export class KulMasonry {
     const { theme } = kulManagerSingleton;
 
     theme.unregister(this);
+    window.removeEventListener("resize", this.#handleResize);
   }
   //#endregion
 }
