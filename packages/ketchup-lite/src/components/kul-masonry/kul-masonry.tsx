@@ -313,7 +313,7 @@ export class KulMasonry {
         }
       }
 
-      return Math.min(columnCount, shapes[kulShape]?.length || 0);
+      return Math.min(columnCount, shapes?.[kulShape]?.length || 0);
     }
 
     return 1;
