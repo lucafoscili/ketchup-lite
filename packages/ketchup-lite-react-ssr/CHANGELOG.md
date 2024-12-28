@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-rc.3](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.2...3.0.0-rc.3) (2024-12-28)
+
+**Note:** Version bump only for package ketchup-lite-react-ssr
+
 # [3.0.0-rc.2](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.1...3.0.0-rc.2) (2024-12-27)
 
 **Note:** Version bump only for package ketchup-lite-react-ssr

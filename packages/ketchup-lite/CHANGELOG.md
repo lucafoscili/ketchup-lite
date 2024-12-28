@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-rc.3](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.2...3.0.0-rc.3) (2024-12-28)
+
+### Features
+
+- **masonry:** managed responsive columns ([c6e1f06](https://github.com/lucafoscili/ketchup-lite/commit/c6e1f06abd9efecba8b6af328814bfb0eb345f9a))
+
 # [3.0.0-rc.2](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.1...3.0.0-rc.2) (2024-12-27)
 
 ### Features
