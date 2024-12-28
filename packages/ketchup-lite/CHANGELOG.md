@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-rc.4](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.3...3.0.0-rc.4) (2024-12-28)
+
+### Bug Fixes
+
+- **list:** added title ([6eb6ecd](https://github.com/lucafoscili/ketchup-lite/commit/6eb6ecde0d90b5438d689d79bd3a175f0c494c2c))
+- **list:** correctly displays ellipsis when overflowing ([5a10722](https://github.com/lucafoscili/ketchup-lite/commit/5a107223d5d49939f95cdb0fd04f540b5c676dfc))
+- **masonry:** safe shapes check ([0465f39](https://github.com/lucafoscili/ketchup-lite/commit/0465f39a09ad064d35cbeffefb88dbfd627dabd3))
+
 # [3.0.0-rc.3](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.2...3.0.0-rc.3) (2024-12-28)
 
 ### Features
