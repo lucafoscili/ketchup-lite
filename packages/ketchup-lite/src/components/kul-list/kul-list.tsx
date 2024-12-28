@@ -307,6 +307,7 @@ export class KulList {
     );
   }
   #prepNode(node: KulDataNode, index: number) {
+    const { stringify } = kulManagerSingleton.data.cell;
     const { bemClass } = kulManagerSingleton.theme;
 
     const { focused, kulData, kulRipple, selected } = this;
@@ -340,6 +341,7 @@ export class KulList {
           }}
           role={"option"}
           tabindex={isSelected ? "0" : "-1"}
+          title={stringify(node.value) || stringify(node.description)}
         >
           <div
             class={RIPPLE_SURFACE_CLASS}
