@@ -43,11 +43,17 @@ export interface KulMasonryAdapterHandlers extends KulComponentAdapterHandlers {
 }
 export type KulMasonryAdapterInitializerGetters = Pick<
   KulMasonryAdapterGetters,
-  "compInstance" | "isMasonry" | "isVertical" | "manager" | "shapes"
+  | "compInstance"
+  | "currentColumns"
+  | "isMasonry"
+  | "isVertical"
+  | "manager"
+  | "shapes"
 >;
 export interface KulMasonryAdapterGetters
   extends KulComponentAdapterGetters<KulMasonry> {
   compInstance: KulMasonry;
+  currentColumns: () => number;
   isMasonry: () => boolean;
   isVertical: () => boolean;
   manager: KulManager;
@@ -79,5 +85,6 @@ export interface KulMasonryPropsInterface {
   kulStyle?: string;
   kulView?: KulMasonryView;
 }
+export type KulMasonryColumns = number[] | number;
 export type KulMasonryView = "horizontal" | "masonry" | "vertical";
 //#endregion

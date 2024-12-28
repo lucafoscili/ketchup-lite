@@ -4,6 +4,11 @@ import {
   KulMasonryPropsInterface,
 } from "../kul-masonry-declarations";
 
+//#region Columns related
+export const COLUMNS_CSS_VAR = "--kul_masonry_columns";
+export const DEFAULT_COLUMNS = [640, 768, 1024, 1920, 2560];
+//#endregion
+
 //#region Props
 export const KUL_MASONRY_PROPS: (keyof KulMasonryPropsInterface)[] = [
   "kulColumns",
