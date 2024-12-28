@@ -249,6 +249,10 @@
       width: 1.5em;
     }
   }
+
+  &__text {
+    overflow: hidden;
+  }
 }
 
 .empty-data {
