@@ -212,20 +212,9 @@ Begin your performance...
 
 //#region updateDataset
 export const updateDataset = (adapter: KulMessengerAdapter) => {
-  const { controller, elements } = adapter;
+  const { controller } = adapter;
   const { compInstance } = controller.get;
-  const { save } = elements.refs.character;
 
-  compInstance.save().then(() => {
-    requestAnimationFrame(() => {
-      save.kulIcon = "check";
-      save.kulLabel = "Saved!";
-      save.kulShowSpinner = false;
-    });
-
-    setTimeout(() => {
-      requestAnimationFrame(() => (compInstance.saveInProgress = false));
-    }, 1000);
-  });
+  compInstance.save();
 };
 //#endregion
