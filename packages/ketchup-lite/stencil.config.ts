@@ -61,6 +61,7 @@ export const config: Config = {
     {
       type: "dist-custom-elements",
       externalRuntime: false,
+      generateTypeDeclarations: true,
       includeGlobalScripts: true,
     },
     {

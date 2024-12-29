@@ -37,7 +37,7 @@ Clears the specified canvas.
 
 | Name   | Type                   | Description               |
 | ------ | ---------------------- | ------------------------- |
-| `type` | `"board" \| "preview"` | - The type of the canvas. |
+| `type` | `"preview" \| "board"` | - The type of the canvas. |
 
 #### Returns
 
@@ -53,7 +53,7 @@ Returns the canvas HTML element.
 
 | Name   | Type                   | Description               |
 | ------ | ---------------------- | ------------------------- |
-| `type` | `"board" \| "preview"` | - The type of the canvas. |
+| `type` | `"preview" \| "board"` | - The type of the canvas. |
 
 #### Returns
 
