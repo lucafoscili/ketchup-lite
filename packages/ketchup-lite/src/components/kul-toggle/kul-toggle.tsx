@@ -193,14 +193,15 @@ export class KulToggle {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
+  componentWillLoad() {
     if (this.kulValue) {
       this.value = "on";
     }
-
-    theme.register(this);
   }
   componentDidLoad() {
     const { debug, theme } = kulManagerSingleton;

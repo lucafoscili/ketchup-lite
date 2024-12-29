@@ -7,7 +7,7 @@
   "es2015": "dist/esm/index.mjs",
   "es2017": "dist/esm/index.mjs",
   "unpkg": "dist/ketchup-lite/ketchup-lite.esm.js",
-  "typings": "dist/types/components.d.ts",
+  "typings": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "dependencies": {

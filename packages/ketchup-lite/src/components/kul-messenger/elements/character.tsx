@@ -1,5 +1,4 @@
 import { h } from "@stencil/core";
-import { KulButtonPropsInterface } from "src/components/kul-button/kul-button-declarations";
 import { CY_ATTRIBUTES } from "src/utils/constants";
 import { MENU_DATASET } from "../helpers/constants";
 import { statusIconOptions } from "../helpers/utils";
@@ -73,18 +72,14 @@ export const prepCharacter = (
 
       const isSaving = inProgress();
 
-      const props: KulButtonPropsInterface = {
-        kulIcon: isSaving ? "" : "save",
-        kulLabel: isSaving ? "Saving..." : "Save",
-        kulShowSpinner: isSaving,
-      };
-
       return (
         <kul-button
           class={"kul-full-height"}
           data-cy={CY_ATTRIBUTES.button}
-          {...props}
           kulData={MENU_DATASET}
+          kulIcon={"save"}
+          kulLabel={"Save"}
+          kulShowSpinner={isSaving}
           kulStyling="flat"
           onKul-button-event={button}
           ref={assignRef(character, "save")}

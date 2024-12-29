@@ -72,7 +72,7 @@ export class KulShowcaseCard {
             <div class="grid-title" part="grid-title">
               {k1} layout
             </div>
-            <div class="grid" part="grid">
+            <div class="subgrid" part="subgrid">
               {layoutWrapper}
             </div>
           </div>,

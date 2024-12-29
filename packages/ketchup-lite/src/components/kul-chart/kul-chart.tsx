@@ -389,11 +389,12 @@ export class KulChart {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
-
+  }
+  componentWillLoad() {
     if (typeof this.kulAxis === "string") {
       this.kulAxis = [this.kulAxis];
     }

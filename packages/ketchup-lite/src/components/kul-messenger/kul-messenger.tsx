@@ -176,7 +176,7 @@ export class KulMessenger {
     const rootNode = root(type);
     const idx = rootNode.children.indexOf(node);
     if (idx > -1) {
-      delete rootNode.children[idx];
+      rootNode.children.splice(idx, 1);
       this.refresh();
     }
   }
@@ -305,14 +305,18 @@ export class KulMessenger {
     }
   };
   #save = async () => {
+    const { get, set } = this.#adapter.controller;
+    const { save } = this.#adapter.elements.refs.character;
     const { covers, history, kulData } = this;
+
+    requestAnimationFrame(() => set.status.save.inProgress(true));
 
     for (let index = 0; index < kulData.nodes.length; index++) {
       const character = kulData.nodes[index];
       const id = character.id;
       const chatNode = character.children.find((n) => n.id === "chat");
 
-      const { chat } = this.#adapter.controller.get.character;
+      const { chat } = get.character;
 
       const saveChat = () => {
         if (history[id] && chatNode) {
@@ -347,6 +351,17 @@ export class KulMessenger {
       saveCovers();
     }
     this.onKulEvent(new CustomEvent("save"), "save");
+
+    requestAnimationFrame(async () => {
+      setTimeout(
+        () =>
+          requestAnimationFrame(async () => {
+            set.status.save.inProgress(false);
+            save.setMessage("Saved!", "check");
+          }),
+        800,
+      );
+    });
   };
   #prepCharacter = (): VNode => {
     const { bemClass } = kulManagerSingleton.theme;
@@ -462,8 +477,8 @@ export class KulMessenger {
       this.#adapter.elements.jsx.customization.form[type];
 
     const nodeId = this.formStatusMap[type];
-    const rootNode = this.#adapter.controller.get.image.byType(type);
-    const node = rootNode.find((n) => (n.id = nodeId));
+    const rootChildren = this.#adapter.controller.get.image.byType(type);
+    const node = rootChildren.find((n) => n.id === nodeId);
 
     return (
       <div class={bemClass("form")}>
@@ -645,11 +660,13 @@ export class KulMessenger {
   };
   //#endregion
 
-  //#region Lifecycle hooks
-  componentWillLoad() {
+  //#region Lifecycle
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
+  }
+  componentWillLoad() {
     this.#initialize();
   }
   componentDidLoad() {

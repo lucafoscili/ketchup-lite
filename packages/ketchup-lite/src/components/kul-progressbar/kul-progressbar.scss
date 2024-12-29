@@ -1,10 +1,4 @@
 :host {
-  & {
-    display: block;
-    font-family: var(--kul_progressbar_font_family);
-    font-size: var(--kul_progressbar_font_size);
-    width: var(--kul_progressbar_width);
-  }
   /**
    * @prop --kul-progressbar-border-radius: Sets border radius of the component.
    * Defaults to 4px.
@@ -77,6 +71,11 @@
     * Defaults to 100%.
     */
   --kul_progressbar_width: var(--kul-progressbar-width, 100%);
+
+  display: block;
+  font-family: var(--kul_progressbar_font_family);
+  font-size: var(--kul_progressbar_font_size);
+  width: var(--kul_progressbar_width);
 }
 
 .progress-bar {
@@ -89,7 +88,7 @@
   }
 
   &__icon {
-    background: var(--kul_progressbar_text_color);
+    background-color: var(--kul_progressbar_text_on_primary_color);
     height: 1.5em;
     margin: 0 0.25em;
     width: 1.5em;
@@ -97,6 +96,7 @@
 
   &__label {
     align-items: center;
+    color: var(--kul_progressbar_text_on_primary_color);
     display: flex;
     height: 100%;
     justify-content: center;
@@ -115,7 +115,7 @@
     background: var(--kul_progressbar_primary_color);
     border-radius: var(--kul_progressbar_border_radius);
     box-sizing: border-box;
-    color: var(--kul_progressbar_text_color);
+    color: var(--kul_progressbar_text_on_primary_color);
     height: var(--kul_progressbar_height);
     padding: 0.5em 0;
     position: relative;
@@ -163,6 +163,7 @@
     }
 
     &__icon {
+      background-color: var(--kul_progressbar_text_color);
       height: 0.75em;
       margin: 0 0.15em;
       width: 0.75em;

@@ -221,7 +221,7 @@ export class KulImage {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
@@ -232,7 +232,6 @@ export class KulImage {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
-
   componentWillRender() {
     const { info } = kulManagerSingleton.debug;
 

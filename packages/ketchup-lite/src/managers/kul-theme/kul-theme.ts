@@ -7,6 +7,7 @@ import type {
 } from "../../types/GenericTypes";
 import { RIPPLE_SURFACE_CLASS } from "../../utils/constants";
 import type { KulManager } from "../kul-manager/kul-manager";
+import { KUL_THEME_ATTRIBUTE } from "./helpers/contants";
 import { THEME_LIST } from "./helpers/theme";
 import {
   KulThemeBEMModifier,
@@ -176,11 +177,11 @@ export class KulTheme {
     const dom = document.documentElement;
     dom.setAttribute("kul-theme", this.name);
     if (this.isDarkTheme) {
-      dom.removeAttribute("light");
-      dom.setAttribute("dark", "");
+      dom.removeAttribute(KUL_THEME_ATTRIBUTE.light);
+      dom.setAttribute(KUL_THEME_ATTRIBUTE.dark, "");
     } else {
-      dom.removeAttribute("dark");
-      dom.setAttribute("light", "");
+      dom.removeAttribute(KUL_THEME_ATTRIBUTE.dark);
+      dom.setAttribute(KUL_THEME_ATTRIBUTE.light, "");
     }
     document.dispatchEvent(new CustomEvent("kul-theme-change"));
   };

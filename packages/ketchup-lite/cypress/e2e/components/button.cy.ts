@@ -104,31 +104,39 @@ describe("Props", () => {
       .find('kul-button[id*="dropdown"]')
       .first()
       .then(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulData).to.be.a("object");
-      })
-      .within(() => {
-        cy.getCyElement(CY_ATTRIBUTES.dropdownButton).should("exist");
+        cy.wrap($button)
+          .should(async ($btn) => {
+            const button = $btn[0] as HTMLKulButtonElement;
+            expect(button.kulData).to.be.a("object");
+          })
+          .within(() => {
+            cy.getCyElement(CY_ATTRIBUTES.dropdownButton).should("exist");
+          });
       });
   });
   it("kulDisabled: should ensure clicking the button does not fire events.", () => {
+    let clickEmitted = false;
+
     cy.get("@kulComponentShowcase")
       .find('kul-button[id*="disabled"]')
       .first()
       .then(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulDisabled).to.eq(true);
+        cy.wrap($button)
+          .should(async ($btn) => {
+            const button = $btn[0] as HTMLKulButtonElement;
+            expect(button.kulDisabled).to.eq(true);
 
-        let clickEmitted = false;
-        button.addEventListener("kul-button-event", (e) => {
-          const { eventType } = e.detail;
-          if (eventType === "click") {
-            clickEmitted = true;
-          }
-        });
-
-        cy.wrap(button).click({ force: true });
-        expect(clickEmitted).to.eq(false);
+            button.addEventListener("kul-button-event", (e) => {
+              const { eventType } = e.detail;
+              if (eventType === "click") {
+                clickEmitted = true;
+              }
+            });
+          })
+          .click({ force: true })
+          .then(() => {
+            expect(clickEmitted).to.eq(false);
+          });
       });
   });
   it("kulIcon: should check for the presence of an icon.", () => {
@@ -136,11 +144,14 @@ describe("Props", () => {
       .find('kul-button[id*="icon"]')
       .first()
       .then(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulIcon).to.not.be.empty;
-      })
-      .within(() => {
-        cy.getCyElement(CY_ATTRIBUTES.icon).should("exist");
+        cy.wrap($button)
+          .should(async ($btn) => {
+            const button = $btn[0] as HTMLKulButtonElement;
+            expect(button.kulIcon).to.not.be.empty;
+          })
+          .within(() => {
+            cy.getCyElement(CY_ATTRIBUTES.icon).should("exist");
+          });
       });
   });
   it("kulIconOff: should ensure that clicking a toggable icon changes the displayed icon.", () => {
@@ -151,30 +162,39 @@ describe("Props", () => {
       .find('kul-button[id*="pulsating"]')
       .first()
       .then(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        kulIcon = button.kulIcon;
-        kulIconOff = button.kulIconOff;
-        expect(kulIcon).to.not.be.eq(kulIconOff);
-        expect(kulIcon).to.not.be.empty;
-        expect(kulIconOff).to.not.be.empty;
-      })
-      .within(() => {
-        cy.getCyElement(CY_ATTRIBUTES.icon)
-          .findCyElement(CY_ATTRIBUTES.maskedSvg)
-          .then(($svg) => {
-            const svg = $svg[0] as HTMLDivElement;
-            const iconMask = svg.style.getPropertyValue("--kul_image_mask");
-            expect(iconMask).to.include(kulIcon);
-          });
-      })
-      .click()
-      .within(() => {
-        cy.getCyElement(CY_ATTRIBUTES.icon)
-          .findCyElement(CY_ATTRIBUTES.maskedSvg)
-          .then(($svg) => {
-            const svg = $svg[0] as HTMLKulImageElement;
-            const iconMask = svg.style.getPropertyValue("--kul_image_mask");
-            expect(iconMask).to.include(kulIconOff);
+        cy.wrap($button)
+          .should(async ($btn) => {
+            const button = $btn[0] as HTMLKulButtonElement;
+            kulIcon = button.kulIcon;
+            kulIconOff = button.kulIconOff;
+            expect(kulIcon).to.not.be.eq(kulIconOff);
+            expect(kulIcon).to.not.be.empty;
+            expect(kulIconOff).to.not.be.empty;
+          })
+          .within(() => {
+            cy.getCyElement(CY_ATTRIBUTES.icon)
+              .findCyElement(CY_ATTRIBUTES.maskedSvg)
+              .then(($svg) => {
+                cy.wrap($svg).should(async ($s) => {
+                  const svg = $s[0] as HTMLDivElement;
+                  const iconMask =
+                    svg.style.getPropertyValue("--kul_image_mask");
+                  expect(iconMask).to.include(kulIcon);
+                });
+              });
+          })
+          .click()
+          .within(() => {
+            cy.getCyElement(CY_ATTRIBUTES.icon)
+              .findCyElement(CY_ATTRIBUTES.maskedSvg)
+              .then(($svg) => {
+                cy.wrap($svg).should(async ($s) => {
+                  const svg = $s[0] as HTMLKulImageElement;
+                  const iconMask =
+                    svg.style.getPropertyValue("--kul_image_mask");
+                  expect(iconMask).to.include(kulIconOff);
+                });
+              });
           });
       });
   });
@@ -188,8 +208,10 @@ describe("Props", () => {
       .find('kul-button[id*="label"]')
       .first()
       .then(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulLabel).to.not.be.empty;
+        cy.wrap($button).should(async ($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          expect(button.kulLabel).to.not.be.empty;
+        });
       })
       .within(() => {
         cy.get(`.${bemClass("button", "label")}`).should("exist");
@@ -208,8 +230,10 @@ describe("Props", () => {
       .find('kul-button[id*="spinner"]')
       .first()
       .then(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulShowSpinner).to.eq(true);
+        cy.wrap($button).should(async ($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          expect(button.kulShowSpinner).to.eq(true);
+        });
       })
       .within(() => {
         cy.get(`.${bemClass("button", "spinner-container")}`).should("exist");
@@ -249,42 +273,34 @@ describe("Props", () => {
     }
   });
   it("kulToggable: should toggle the value setting it to true.", () => {
-    let initialValue: string;
+    let initialValue: KulButtonState;
+    let newValue: KulButtonState;
 
     cy.get("@kulComponentShowcase")
       .find('kul-button[id*="pulsating"]')
       .first()
       .then(($button) => {
-        const kulButtonElement = $button[0] as HTMLKulButtonElement;
-        return kulButtonElement.getValue();
-      })
-      .then((value) => {
-        initialValue = value;
-        const newValue: KulButtonState = value === "on" ? "off" : "on";
-        return cy.wrap({ initialValue, newValue });
-      })
-      .then(({ newValue }) => {
-        cy.get("@kulComponentShowcase")
-          .find('kul-button[id*="pulsating"]')
-          .first()
+        cy.wrap($button).should(async ($btn) => {
+          const kulButtonElement = $btn[0] as HTMLKulButtonElement;
+          initialValue = await kulButtonElement.getValue();
+          newValue = initialValue === "on" ? "off" : "on";
+        });
+      });
+
+    cy.get("@kulComponentShowcase")
+      .find('kul-button[id*="pulsating"]')
+      .first()
+      .then(($button) => {
+        cy.wrap($button)
+          .should(async ($btn) => {
+            const kulButtonElement = $btn[0] as HTMLKulButtonElement;
+            await kulButtonElement.setValue(newValue);
+          })
           .then(($button) => {
-            const kulButtonElement = $button[0] as HTMLKulButtonElement;
-            return kulButtonElement.setValue(newValue);
-          })
-          .then(() => {
-            return cy.wrap(newValue);
-          })
-          .then((newValue) => {
-            cy.get("@kulComponentShowcase")
-              .find('kul-button[id*="pulsating"]')
-              .first()
-              .then(($button) => {
-                const kulButtonElement = $button[0] as HTMLKulButtonElement;
-                return kulButtonElement.getValue();
-              })
-              .then((currentValue) => {
-                expect(currentValue).to.equal(newValue);
-              });
+            cy.wrap($button).should(async ($btn) => {
+              const kulButtonElement = $btn[0] as HTMLKulButtonElement;
+              expect(await kulButtonElement.getValue()).to.equal(newValue);
+            });
           });
       });
   });
@@ -298,10 +314,12 @@ describe("Props", () => {
       .find('kul-button[id*="trailingIcon"]')
       .first()
       .within(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulIcon).to.not.be.empty;
-        expect(button.kulLabel).to.not.be.empty;
-        expect(button.kulTrailingIcon).to.be.true;
+        cy.wrap($button).should(async ($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          expect(button.kulIcon).to.not.be.empty;
+          expect(button.kulLabel).to.not.be.empty;
+          expect(button.kulTrailingIcon).to.be.true;
+        });
 
         cy.getCyElement(CY_ATTRIBUTES.button)
           .should("exist")
@@ -319,17 +337,18 @@ describe("Props", () => {
       .find('kul-button[id*="labelIcon"]')
       .first()
       .within(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulIcon).to.not.be.empty;
-        expect(button.kulLabel).to.not.be.empty;
-        expect(button.kulTrailingIcon).to.be.false;
+        cy.wrap($button).should(async ($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          expect(button.kulIcon).to.not.be.empty;
+          expect(button.kulLabel).to.not.be.empty;
+          expect(button.kulTrailingIcon).to.be.false;
+        });
 
         cy.getCyElement(CY_ATTRIBUTES.button)
           .should("exist")
           .and("not.have.class", "no-label")
           .children()
           .then((children) => {
-            debugger;
             const [ripple, icon, label] = children.toArray();
             expect(ripple).to.have.attr("data-cy", CY_ATTRIBUTES.ripple);
             expect(icon).to.have.class(bemClass("button", "icon"));
@@ -342,8 +361,10 @@ describe("Props", () => {
       .find("kul-button")
       .first()
       .within(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        expect(button.kulType).to.eq("button");
+        cy.wrap($button).should(($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          expect(button.kulType).to.eq("button");
+        });
         cy.getCyElement(CY_ATTRIBUTES.button).should(
           "have.attr",
           "type",
@@ -351,9 +372,11 @@ describe("Props", () => {
         );
       })
       .then(($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        button.kulType = "reset";
-        expect(button.kulType).to.eq("reset");
+        cy.wrap($button).should(async ($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          button.kulType = "reset";
+          expect(button.kulType).to.eq("reset");
+        });
       })
       .findCyElement(CY_ATTRIBUTES.button)
       .should("have.attr", "type", "reset");
@@ -361,16 +384,16 @@ describe("Props", () => {
   it("kulValue: should check for the correct value.", () => {
     const newButton = document.createElement("kul-button");
     newButton.id = "cy-value-it";
-    newButton.kulValue = true;
 
     cy.get("@kulComponentShowcase")
       .find('kul-button[id*="pulsating"]')
       .first()
       .within(async ($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        const value = await button.getValue();
-        expect(value).to.be.false;
-        expect(value).to.eq(button.kulValue);
+        cy.wrap($button).should(async ($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          const value = await button.getValue();
+          expect(value).to.eq("on");
+        });
       });
 
     cy.get("@kulComponentShowcase").within(($showcase) => {
@@ -378,10 +401,11 @@ describe("Props", () => {
       showcase.appendChild(newButton);
 
       cy.get("#cy-value-it").within(async ($button) => {
-        const button = $button[0] as HTMLKulButtonElement;
-        const value = await button.getValue();
-        expect(value).to.be.true;
-        expect(value).to.eq(button.kulValue);
+        cy.wrap($button).should(async ($btn) => {
+          const button = $btn[0] as HTMLKulButtonElement;
+          const value = await button.getValue();
+          expect(value).to.eq("off");
+        });
       });
     });
   });

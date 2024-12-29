@@ -195,8 +195,13 @@ export class KulTabbar {
   //#endregion
 
   //#region Lifecycle hooks
+  connectedCallback() {
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
+  }
   componentWillLoad() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug } = kulManagerSingleton;
 
     const { kulData, kulValue } = this;
 
@@ -223,8 +228,6 @@ export class KulTabbar {
         "warning",
       );
     }
-
-    theme.register(this);
   }
   componentDidLoad() {
     const { debug, scrollOnHover } = kulManagerSingleton;

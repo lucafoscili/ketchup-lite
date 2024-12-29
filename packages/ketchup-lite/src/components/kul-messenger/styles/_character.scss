@@ -22,6 +22,7 @@
   }
 
   &__name {
+    color: var(--kul-title-color);
     display: flex;
   }
 
@@ -30,6 +31,12 @@
   }
 
   &__name-wrapper {
+    --kul-button-primary-color: var(--kul-title-color);
+    --kul-button-primary-color-rgb: var(--kul-title-color-rgb);
+    --kul-button-primary-color-h: var(--kul-title-color-h);
+    --kul-button-primary-color-l: var(--kul-title-color-l);
+    --kul-button-primary-color-s: var(--kul-title-color-s);
+
     align-items: center;
     background-color: var(--kul_messenger_name_background_color);
     backdrop-filter: var(--kul_messenger_backdrop_filter);

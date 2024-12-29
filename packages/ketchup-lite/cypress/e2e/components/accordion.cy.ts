@@ -103,35 +103,42 @@ describe("Props", () => {
     cy.navigate(accordion);
   });
   it("kulData: should check that for each node whose `id` matches a slot name, the accordion is expandable.", () => {
+    let ids: string[];
+    let matchingIds: string[];
+    let shadowRoot: ShadowRoot;
+
     cy.get("@kulComponentShowcase")
       .find(`${accordionTag}#simple`)
       .should("exist")
       .then(($accordion) => {
-        const { kulData } = $accordion[0] as HTMLKulAccordionElement;
-        const ids = kulData.nodes.map((node) => node.id);
+        cy.wrap($accordion)
+          .should(async ($acc) => {
+            const { kulData } = $acc[0] as HTMLKulAccordionElement;
+            ids = kulData.nodes.map((node) => node.id);
 
-        const shadowRoot = $accordion[0].shadowRoot;
-        expect(shadowRoot).to.exist;
+            shadowRoot = $accordion[0].shadowRoot;
+            expect(shadowRoot).to.exist;
 
-        const slots = Array.from($accordion[0].querySelectorAll("slot")).map(
-          (slot) => slot.slot,
-        );
-        const matchingIds = ids.filter((id) => slots.includes(id));
+            const slots = Array.from(
+              $accordion[0].querySelectorAll("slot"),
+            ).map((slot) => slot.slot);
+            matchingIds = ids.filter((id) => slots.includes(id));
+          })
+          .within(() => {
+            cy.getCyElement(CY_ATTRIBUTES.node)
+              .should("have.length.at.least", matchingIds.length)
+              .then(() => {
+                const expandIcons =
+                  shadowRoot.querySelectorAll(".node__expand");
+                const buttons = shadowRoot.querySelectorAll(
+                  `[data-cy='${CY_ATTRIBUTES.button}']`,
+                );
 
-        cy.wrap($accordion[0])
-          .shadow()
-          .find(`[data-cy='${CY_ATTRIBUTES.node}']`)
-          .should("have.length.at.least", matchingIds.length)
-          .then(() => {
-            const expandIcons = shadowRoot.querySelectorAll(".node__expand");
-            const buttons = shadowRoot.querySelectorAll(
-              `[data-cy='${CY_ATTRIBUTES.button}']`,
-            );
+                expect(expandIcons.length).to.equal(matchingIds.length);
 
-            expect(expandIcons.length).to.equal(matchingIds.length);
-
-            const nonMatchingCount = ids.length - matchingIds.length;
-            expect(buttons.length).to.equal(nonMatchingCount);
+                const nonMatchingCount = ids.length - matchingIds.length;
+                expect(buttons.length).to.equal(nonMatchingCount);
+              });
           });
       });
   });

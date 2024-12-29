@@ -9,10 +9,8 @@ export const config: Config = {
         "kul-showcase",
         "kul-showcase-debug",
         "kul-showcase-kuldata",
-        "kul-showcase-kuldates",
         "kul-showcase-kuldebug",
         "kul-showcase-kuldynamicposition",
-        "kul-showcase-kullanguage",
         "kul-showcase-kulllm",
         "kul-showcase-kulmanager",
         "kul-showcase-kulscrollonhover",
@@ -56,8 +54,9 @@ export const config: Config = {
   namespace: "ketchup-lite",
   outputTargets: [
     {
-      type: "dist",
       esmLoaderPath: "./loader",
+      type: "dist",
+      typesDir: "./types",
     },
     {
       type: "dist-custom-elements",
@@ -93,5 +92,4 @@ export const config: Config = {
       injectGlobalPaths: ["src/style/global.scss"],
     }),
   ],
-  sourceMap: true,
 };
