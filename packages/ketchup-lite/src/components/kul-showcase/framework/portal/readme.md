@@ -18,9 +18,9 @@
 ### Graph
 ```mermaid
 graph TD;
-  kul-showcase-kuldynamicposition --> kul-article
-  kul-showcase --> kul-showcase-kuldynamicposition
-  style kul-showcase-kuldynamicposition fill:#f9f,stroke:#333,stroke-width:4px
+  kul-showcase-kulportal --> kul-article
+  kul-showcase --> kul-showcase-kulportal
+  style kul-showcase-kulportal fill:#f9f,stroke:#333,stroke-width:4px
 ```
 
 ----------------------------------------------

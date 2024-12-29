@@ -2434,6 +2434,11 @@ export const KUL_DOC: KulShowcaseDoc = {
     ],
     props: [
       {
+        name: "kulActions",
+        docs: "When true displays floating buttons to customize the view.",
+        type: "boolean",
+      },
+      {
         name: "kulColumns",
         docs: "Number of columns of the masonry, doesn't affect sequential views.\r\nCan be set with a number or an array of numbers that identify each breakpoint.",
         type: "number | number[]",
@@ -3006,17 +3011,17 @@ export const KUL_DOC: KulShowcaseDoc = {
     props: [],
     styles: [],
   },
-  "kul-showcase-kuldynamicposition": {
-    methods: [],
-    props: [],
-    styles: [],
-  },
   "kul-showcase-kulllm": {
     methods: [],
     props: [],
     styles: [],
   },
   "kul-showcase-kulmanager": {
+    methods: [],
+    props: [],
+    styles: [],
+  },
+  "kul-showcase-kulportal": {
     methods: [],
     props: [],
     styles: [],
