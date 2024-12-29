@@ -50,6 +50,7 @@
     var(--kul-border-color)
   );
 
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul_toggle_font_family);
   font-size: var(--kul_toggle_font_size);

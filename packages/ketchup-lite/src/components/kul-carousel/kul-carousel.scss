@@ -1,4 +1,5 @@
 :host {
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul-font-family, sans-serif);
   height: 100%;

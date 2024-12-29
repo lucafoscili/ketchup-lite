@@ -113,6 +113,7 @@
     */
   --kul_spinner_color: var(--kul_button_primary_color);
 
+  @include kul-scrollbar;
   display: block;
   font-size: var(--kul_button_font_size);
   width: max-content;

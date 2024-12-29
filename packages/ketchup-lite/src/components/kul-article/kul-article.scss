@@ -99,6 +99,7 @@
      */
   --kul_article_padding: var(--kul-article-padding, 40px);
 
+  @include kul-scrollbar;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   background-color: rgba(var(--kul-background-color-rgb), 0.375);

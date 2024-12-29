@@ -392,6 +392,7 @@
     tree
   );
 
+  @include kul-scrollbar;
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   display: var(--kul_imageviewer_display);

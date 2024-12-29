@@ -72,6 +72,7 @@
     */
   --kul_progressbar_width: var(--kul-progressbar-width, 100%);
 
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul_progressbar_font_family);
   font-size: var(--kul_progressbar_font_size);

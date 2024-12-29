@@ -37,6 +37,7 @@
     var(--kul-font-family)
   );
 
+  @include kul-scrollbar;
   align-items: center;
   display: inline-flex;
   color: var(--kul-typewriter-text-color);

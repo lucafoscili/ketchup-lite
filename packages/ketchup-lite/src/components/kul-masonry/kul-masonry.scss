@@ -159,6 +159,7 @@
        */
   --kul_masonry_actions_z_index: var(--kul-masonry-actions-z-index, 99);
 
+  @include kul-scrollbar;
   display: block;
   height: 100%;
   width: 100%;

@@ -111,6 +111,7 @@
    */
   --kul_accordion_transition: var(--kul-accordion-transition, 80ms);
 
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul_accordion_font_family);
   font-size: var(--kul_accordion_font_size);

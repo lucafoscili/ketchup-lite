@@ -91,6 +91,7 @@
    */
   --kul_tree_text_color: var(--kul-tree-text-color, var(--kul-text-color));
 
+  @include kul-scrollbar;
   display: block;
   height: 100%;
   width: 100%;

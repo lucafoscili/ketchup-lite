@@ -41,6 +41,7 @@
     var(--kul-text-on-primary-color)
   );
 
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul_badge_font_family);
   font-size: var(--kul_badge_font_size);

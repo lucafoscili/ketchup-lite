@@ -218,6 +218,7 @@
        */
   --kul_slider_value_font_weight: var(--kul-slider-value-font-weight, 500);
 
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul_slider_font_family);
   font-size: var(--kul_slider_font_size);

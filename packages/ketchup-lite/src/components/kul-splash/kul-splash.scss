@@ -51,6 +51,8 @@
     * Defaults to 150px.
     */
   --kul_splash_widget_width: var(--kul-splash-widget-width, 150px);
+
+  @include kul-scrollbar;
 }
 
 .splash {

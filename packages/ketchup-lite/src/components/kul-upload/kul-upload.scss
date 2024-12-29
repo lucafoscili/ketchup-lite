@@ -59,6 +59,7 @@
      */
   --kul_upload_padding: var(--kul-upload-backdrop-filter, 1em);
 
+  @include kul-scrollbar;
   display: block;
   height: 100%;
   width: 100%;

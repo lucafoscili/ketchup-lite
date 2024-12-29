@@ -82,6 +82,7 @@
     var(--kul-chart-color-5)
   );
 
+  @include kul-scrollbar;
   display: block;
   height: 100%;
   width: 100%;
