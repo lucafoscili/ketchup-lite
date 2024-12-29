@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-rc.10](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.9...3.0.0-rc.10) (2024-12-29)
+
+### Bug Fixes
+
+- **portal:** fixed clickCb ([3264539](https://github.com/lucafoscili/ketchup-lite/commit/32645396f5ad41798b7e98a3daf0c06ecb2159eb))
+
+### Features
+
+- **masonry:** actions are visible by default ([f51a26c](https://github.com/lucafoscili/ketchup-lite/commit/f51a26c1ec2704581923f7e5427c0d537f6c5c29))
+
 # [3.0.0-rc.9](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.8...3.0.0-rc.9) (2024-12-29)
 
 **Note:** Version bump only for package ketchup-lite-root
