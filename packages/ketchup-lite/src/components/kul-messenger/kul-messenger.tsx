@@ -176,7 +176,7 @@ export class KulMessenger {
     const rootNode = root(type);
     const idx = rootNode.children.indexOf(node);
     if (idx > -1) {
-      delete rootNode.children[idx];
+      rootNode.children.splice(idx, 1);
       this.refresh();
     }
   }
@@ -477,8 +477,8 @@ export class KulMessenger {
       this.#adapter.elements.jsx.customization.form[type];
 
     const nodeId = this.formStatusMap[type];
-    const rootNode = this.#adapter.controller.get.image.byType(type);
-    const node = rootNode.find((n) => (n.id = nodeId));
+    const rootChildren = this.#adapter.controller.get.image.byType(type);
+    const node = rootChildren.find((n) => n.id === nodeId);
 
     return (
       <div class={bemClass("form")}>

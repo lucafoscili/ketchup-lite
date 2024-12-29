@@ -46,7 +46,7 @@ export const prepCustomizationHandlers = (
             compInstance.deleteOption(node, type);
             break;
           case "edit":
-            set.ui.setFormState(true, type);
+            set.ui.setFormState(true, type, node);
             break;
         }
       }
