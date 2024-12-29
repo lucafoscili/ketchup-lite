@@ -6,7 +6,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
   nodes: [
     {
       id: DOC_IDS.root,
-      value: "KulDynamicPosition",
+      value: "KulPortal",
       children: [
         {
           id: DOC_IDS.section,
@@ -17,7 +17,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
                 {
                   id: DOC_IDS.content,
                   tagName: "strong",
-                  value: "KulDynamicPosition",
+                  value: "KulPortal",
                 },
                 {
                   id: DOC_IDS.content,
@@ -33,7 +33,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
                 {
                   id: DOC_IDS.content,
                   value:
-                    "KulDynamicPosition allows elements to be anchored relative to other elements or coordinates, providing a flexible way to handle dropdowns, tooltips, popovers, and more.",
+                    "KulPortal allows elements to be anchored relative to other elements or coordinates, providing a flexible way to handle dropdowns, tooltips, popovers, and more.",
                 },
               ],
               id: DOC_IDS.paragraph,
@@ -45,28 +45,28 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
           id: DOC_IDS.section,
           value: "Basic Types",
           children: [
-            PARAGRAPH_FACTORY.asBulletListEntry("KulDynamicPositionAnchor", [
+            PARAGRAPH_FACTORY.asBulletListEntry("KulPortalAnchor", [
               {
                 title: "HTMLElement",
                 description:
                   ": The HTML element to which another element is anchored.",
               },
               {
-                title: "KulDynamicPositionCoordinates",
+                title: "KulPortalCoordinates",
                 description:
                   ": Specific coordinates (x, y) to anchor an element.",
               },
             ]),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry("KulDynamicPositionElement", [
+            PARAGRAPH_FACTORY.asBulletListEntry("KulPortalElement", [
               {
-                title: "kulDynamicPosition",
+                title: "KulPortal",
                 description:
                   ": An optional property that includes details about anchor, placement, margin, and other positioning settings for the element.",
               },
             ]),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry("KulDynamicPositionPlacement", [
+            PARAGRAPH_FACTORY.asBulletListEntry("KulPortalPlacement", [
               {
                 title: "AUTO",
                 description:
@@ -99,13 +99,19 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
               "Registers an element for dynamic positioning based on an anchor and other settings.",
               [
                 {
-                  name: "el",
-                  type: "KulDynamicPositionElement",
+                  name: "element",
+                  type: "HTMLElement",
                   description: "The element to be positioned.",
                 },
                 {
-                  name: "anchorEl",
-                  type: "KulDynamicPositionAnchor",
+                  name: "parent",
+                  type: "HTMLElement",
+                  description:
+                    "The original parent of the element to be positioned.",
+                },
+                {
+                  name: "anchor",
+                  type: "KulPortalAnchor",
                   description:
                     "The anchor element or coordinates for positioning.",
                 },
@@ -117,14 +123,8 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
                 },
                 {
                   name: "placement?",
-                  type: "KulDynamicPositionPlacement",
+                  type: "KulPortalPlacement",
                   description: "Optional placement setting for the element.",
-                },
-                {
-                  name: "detach?",
-                  type: "boolean",
-                  description:
-                    "Whether to detach the element from its original parent and place it in a dynamic container.",
                 },
               ],
             ),
@@ -135,12 +135,12 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
               [
                 {
                   name: "el",
-                  type: "KulDynamicPositionElement",
+                  type: "KulPortalElement",
                   description: "The element whose anchor needs to be changed.",
                 },
                 {
                   name: "anchorEl",
-                  type: "KulDynamicPositionAnchor",
+                  type: "KulPortalAnchor",
                   description: "The new anchor element or coordinates.",
                 },
               ],
@@ -152,7 +152,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
               [
                 {
                   name: "elements",
-                  type: "KulDynamicPositionElement[]",
+                  type: "KulPortalElement[]",
                   description: "The elements to be unregistered.",
                 },
               ],
@@ -164,7 +164,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
               [
                 {
                   name: "el",
-                  type: "KulDynamicPositionElement",
+                  type: "KulPortalElement",
                   description: "The element to check.",
                 },
               ],
@@ -176,7 +176,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
               [
                 {
                   name: "el",
-                  type: "KulDynamicPositionElement",
+                  type: "KulPortalElement",
                   description: "The element to start positioning.",
                 },
               ],
@@ -188,7 +188,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
               [
                 {
                   name: "el",
-                  type: "KulDynamicPositionElement",
+                  type: "KulPortalElement",
                   description: "The element to stop positioning.",
                 },
               ],
@@ -211,7 +211,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
                     kulCode: {
                       shape: "code",
                       value:
-                        "const kulDynamicPosition = new KulDynamicPosition();\nconst element = document.querySelector('#myElement');\nconst anchor = document.querySelector('#anchorElement');\nkulDynamicPosition.register(element, anchor, 10, 'BOTTOM_LEFT', true);",
+                        "const KulPortal = new KulPortal();\nconst element = document.querySelector('#myElement');\nconst anchor = document.querySelector('#anchorElement');\nKulPortal.register(element, anchor, 10, 'BOTTOM_LEFT', true);",
                     },
                   },
                   id: DOC_IDS.content,
@@ -232,7 +232,7 @@ export const DYNAMIC_POSITION_DATA: KulArticleDataset = {
                     kulCode: {
                       shape: "code",
                       value:
-                        "const newAnchor = document.querySelector('#newAnchor');\nkulDynamicPosition.changeAnchor(element, newAnchor);",
+                        "const newAnchor = document.querySelector('#newAnchor');\nKulPortal.changeAnchor(element, newAnchor);",
                     },
                   },
                   id: DOC_IDS.content,

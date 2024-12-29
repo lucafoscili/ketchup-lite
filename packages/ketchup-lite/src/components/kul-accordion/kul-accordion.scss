@@ -111,9 +111,18 @@
    */
   --kul_accordion_transition: var(--kul-accordion-transition, 80ms);
 
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul_accordion_font_family);
   font-size: var(--kul_accordion_font_size);
+}
+
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
 }
 
 .accordion {
@@ -238,7 +247,7 @@
   }
 
   &__content {
-    animation: fade-in-block 0.25s ease-out;
+    @include kul-fade-in(block);
   }
 }
 

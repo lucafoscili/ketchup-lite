@@ -17,7 +17,12 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import { KulTextfieldEventPayload } from "../kul-textfield/kul-textfield-declarations";
 import { TreeNode } from "./components/node";
 import {
@@ -264,6 +269,8 @@ export class KulTree {
       elements: {
         ripple: (
           <div
+            data-cy={CY_ATTRIBUTES.ripple}
+            data-kul={KUL_ATTRIBUTES.rippleSurface}
             ref={(el) => {
               if (el && this.kulRipple) {
                 this.#rippleSurface[node.id] = el;
@@ -332,16 +339,7 @@ export class KulTree {
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug, theme } = kulManager;
-
-    if (Object.keys(this.#rippleSurface).length) {
-      for (const key in this.#rippleSurface) {
-        if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
-          const surface = this.#rippleSurface[key];
-          theme.ripple.setup(surface);
-        }
-      }
-    }
+    const { debug } = kulManager;
 
     debug.info.update(this, "did-render");
   }
@@ -360,6 +358,7 @@ export class KulTree {
           <div class={bemClass("tree")}>
             {kulFilter && (
               <kul-textfield
+                class={bemClass("tree", "filter")}
                 kulFullWidth={true}
                 kulIcon="magnify"
                 kulLabel={"Search..."}

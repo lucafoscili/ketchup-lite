@@ -11,6 +11,7 @@ export const DEFAULT_COLUMNS = [640, 768, 1024, 1920, 2560];
 
 //#region Props
 export const KUL_MASONRY_PROPS: (keyof KulMasonryPropsInterface)[] = [
+  "kulActions",
   "kulColumns",
   "kulData",
   "kulSelectable",

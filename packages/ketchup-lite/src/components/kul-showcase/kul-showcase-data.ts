@@ -322,12 +322,6 @@ export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
       value: "KulDebug",
     },
     {
-      description: "Takes care of displaying elements dynamically.",
-      icon: "location_searching",
-      id: "KulDynamicPosition",
-      value: "KulDynamicPosition",
-    },
-    {
       description: "Utility to connect with Open-AI compatible endpoints.",
       icon: "language",
       id: "KulLlm",
@@ -338,6 +332,12 @@ export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
       icon: "settings",
       id: "KulManager",
       value: "KulManager",
+    },
+    {
+      description: "Takes care of displaying elements dynamically.",
+      icon: "location_searching",
+      id: "KulPortal",
+      value: "KulPortal",
     },
     {
       description:

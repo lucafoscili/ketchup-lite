@@ -55,7 +55,7 @@
 - [kul-showcase-upload](./components/upload)
 - [kul-showcase-kuldata](./framework/data)
 - [kul-showcase-kuldebug](./framework/debug)
-- [kul-showcase-kuldynamicposition](./framework/dynamicposition)
+- [kul-showcase-kulportal](./framework/portal)
 - [kul-showcase-kulllm](./framework/llm)
 - [kul-showcase-kulmanager](./framework/manager)
 - [kul-showcase-kulscrollonhover](./framework/scroll-on-hover)
@@ -103,7 +103,7 @@ graph TD;
   kul-showcase --> kul-showcase-upload
   kul-showcase --> kul-showcase-kuldata
   kul-showcase --> kul-showcase-kuldebug
-  kul-showcase --> kul-showcase-kuldynamicposition
+  kul-showcase --> kul-showcase-kulportal
   kul-showcase --> kul-showcase-kulllm
   kul-showcase --> kul-showcase-kulmanager
   kul-showcase --> kul-showcase-kulscrollonhover
@@ -214,7 +214,7 @@ graph TD;
   kul-upload --> kul-button
   kul-showcase-kuldata --> kul-article
   kul-showcase-kuldebug --> kul-article
-  kul-showcase-kuldynamicposition --> kul-article
+  kul-showcase-kulportal --> kul-article
   kul-showcase-kulllm --> kul-article
   kul-showcase-kulmanager --> kul-article
   kul-showcase-kulscrollonhover --> kul-article

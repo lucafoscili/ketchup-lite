@@ -1,16 +1,4 @@
 :host {
-  & {
-    -webkit-backdrop-filter: var(--kul_list_backdrop_filter);
-    backdrop-filter: var(--kul_list_backdrop_filter);
-    background-color: var(--kul_list_background_color);
-    display: block;
-    font-family: var(--kul_chip_font_family);
-    font-size: var(--kul_chip_font_size);
-    height: 100%;
-    outline: none;
-    width: 100%;
-  }
-
   /**
      * @prop --kul-chip-background-color: Sets background color of the component.
      * Defaults to the value of --kul-background-color.
@@ -88,6 +76,25 @@
     --kul-chip-text_color_rgb,
     var(--kul-text-color-rgb)
   );
+
+  @include kul-scrollbar;
+  -webkit-backdrop-filter: var(--kul_list_backdrop_filter);
+  backdrop-filter: var(--kul_list_backdrop_filter);
+  background-color: var(--kul_list_background_color);
+  display: block;
+  font-family: var(--kul_chip_font_family);
+  font-size: var(--kul_chip_font_size);
+  height: 100%;
+  outline: none;
+  width: 100%;
+}
+
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
 }
 
 #kul-component,

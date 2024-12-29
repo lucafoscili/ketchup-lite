@@ -386,6 +386,7 @@ export const MASONRY_FIXTURES: (get: KulManagerComputedGetAssetPath) => {
       },
       selectable: {
         ["data-description"]: "Selectable masonry of images",
+        kulActions: true,
         kulData: data.KulImage(),
         kulSelectable: true,
       },

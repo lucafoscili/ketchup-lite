@@ -10,6 +10,7 @@
  */
   --kul_card_backdrop: var(--kul-card-backdrop, rgba(0, 0, 0, 0.32));
 
+  @include kul-scrollbar;
   display: block;
   font-size: var(--kul-font-size);
   height: var(--kul_card_height);

@@ -25,7 +25,11 @@ import {
   KulGenericEvent,
   KulGenericEventPayload,
 } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  KUL_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import { COLUMNS_CSS_VAR, DEFAULT_COLUMNS } from "./helpers/constants";
 import { createAdapter } from "./kul-masonry-adapter";
 import {
@@ -73,6 +77,11 @@ export class KulMasonry {
   //#endregion
 
   //#region Props
+  /**
+   * When true displays floating buttons to customize the view.
+   * @default ""
+   */
+  @Prop({ mutable: true }) kulActions = false;
   /**
    * Number of columns of the masonry, doesn't affect sequential views.
    * Can be set with a number or an array of numbers that identify each breakpoint.
@@ -359,13 +368,13 @@ export class KulMasonry {
   #handleResize = this.#debounce(() => {
     this.viewportWidth = window.innerWidth;
   }, 200);
-  #prepChangeView = (): VNode => {
+  #prepActions = (): VNode => {
     const { bemClass } = kulManager.theme;
 
     const { addColumn, changeView, removeColumn } = this.#adapter.elements.jsx;
 
     return (
-      <div class={bemClass("grid", "actions")}>
+      <div class={bemClass("grid", "actions")} data-kul={KUL_ATTRIBUTES.fadeIn}>
         {this.#isMasonry() && (
           <div class={bemClass("grid", "sub")}>
             {addColumn()}
@@ -391,7 +400,7 @@ export class KulMasonry {
   #prepMasonry = (): VNode => {
     const { bemClass } = kulManager.theme;
 
-    const { kulShape, kulView, shapes } = this;
+    const { kulActions, kulShape, kulView, shapes } = this;
 
     if (this.#hasShapes()) {
       if (shapes[kulShape]?.length) {
@@ -404,7 +413,7 @@ export class KulMasonry {
             >
               {this.#prepView()}
             </div>
-            {this.#prepChangeView()}
+            {kulActions && this.#prepActions()}
           </Fragment>
         );
       }

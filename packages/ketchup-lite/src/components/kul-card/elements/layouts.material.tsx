@@ -1,5 +1,5 @@
 import { h, VNode } from "@stencil/core";
-import { CY_ATTRIBUTES, RIPPLE_SURFACE_CLASS } from "src/utils/constants";
+import { CY_ATTRIBUTES, KUL_ATTRIBUTES } from "src/utils/constants";
 import { KulCardAdapter } from "../kul-card-declarations";
 
 //#region Material layout
@@ -43,8 +43,8 @@ export const prepMaterial = (getAdapter: () => KulCardAdapter): VNode => {
   return (
     <div class={bemClass("card-material", null, { "has-action": true })}>
       <div
-        class={RIPPLE_SURFACE_CLASS}
         data-cy={CY_ATTRIBUTES.ripple}
+        data-kul={KUL_ATTRIBUTES.rippleSurface}
         onPointerDown={(e) => {
           ripple.trigger(e as PointerEvent, e.currentTarget as HTMLElement);
         }}

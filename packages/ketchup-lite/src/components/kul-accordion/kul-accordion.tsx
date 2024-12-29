@@ -19,6 +19,7 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -248,6 +249,7 @@ export class KulAccordion {
           >
             <div
               data-cy={CY_ATTRIBUTES.ripple}
+              data-kul={KUL_ATTRIBUTES.rippleSurface}
               ref={(el) => {
                 if (el && this.kulRipple) {
                   this.#rippleSurface[node.id] = el;
@@ -270,6 +272,7 @@ export class KulAccordion {
               class={bemClass("node", "content", {
                 selected: isSelected,
               })}
+              data-kul={KUL_ATTRIBUTES.fadeIn}
             >
               <slot name={node.id}></slot>
             </div>
@@ -299,16 +302,8 @@ export class KulAccordion {
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug, theme } = kulManager;
+    const { debug } = kulManager;
 
-    if (Object.keys(this.#rippleSurface).length) {
-      for (const key in this.#rippleSurface) {
-        if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
-          const surface = this.#rippleSurface[key];
-          theme.ripple.setup(surface);
-        }
-      }
-    }
     debug.info.update(this, "did-render");
   }
   render() {

@@ -14,6 +14,7 @@ import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -229,11 +230,7 @@ export class KulUpload {
     }
   }
   componentDidLoad() {
-    const { debug, theme } = kulManager;
-
-    if (this.#rippleSurface) {
-      theme.ripple.setup(this.#rippleSurface);
-    }
+    const { debug } = kulManager;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.info.update(this, "did-load");
@@ -281,6 +278,7 @@ export class KulUpload {
               <label
                 class={bemClass("file-upload", "label")}
                 data-cy={CY_ATTRIBUTES.ripple}
+                data-kul={KUL_ATTRIBUTES.rippleSurface}
                 htmlFor="upload-input"
                 ref={(el) => {
                   if (kulRipple) {

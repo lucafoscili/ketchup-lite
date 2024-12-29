@@ -49,9 +49,18 @@
    */
   --kul_tabbar_tab_padding: var(--kul-tabbar-tab-padding, 0 24px);
 
+  @include kul-scrollbar;
   display: block;
   font-size: var(--kul_tabbar_font_size);
   width: 100%;
+}
+
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
 }
 
 .tabbar {

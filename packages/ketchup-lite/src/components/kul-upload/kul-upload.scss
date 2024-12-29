@@ -59,9 +59,18 @@
      */
   --kul_upload_padding: var(--kul-upload-backdrop-filter, 1em);
 
+  @include kul-scrollbar;
   display: block;
   height: 100%;
   width: 100%;
+}
+
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
 }
 
 #kul-component {

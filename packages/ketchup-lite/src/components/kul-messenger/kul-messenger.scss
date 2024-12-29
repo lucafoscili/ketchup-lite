@@ -96,6 +96,7 @@
      */
   --kul_messenger_transition: var(--kul-messenger-transition, 125ms ease-out);
 
+  @include kul-scrollbar;
   box-sizing: border-box;
   background-color: var(--kul_messenger_background_color);
   color: var(--kul_messenger_text_color);

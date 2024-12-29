@@ -1,4 +1,5 @@
 :host {
+  @include kul-scrollbar;
   color: var(--kul-text-color);
   display: block;
   font-family: var(--kul-font-family);
@@ -123,6 +124,7 @@ p {
 }
 
 ::part(grid) {
+  @include kul-scrollbar;
   display: grid;
   grid-template-columns: var(--template-columns);
   padding: var(--padding, 12px 0);

@@ -13,6 +13,7 @@
     */
   --kul_photoframe_fade_out_time: var(--kul-photoframe-fade-out-time, 2000ms);
 
+  @include kul-scrollbar;
   border: var(--kul_photoframe_border);
   box-sizing: border-box;
   display: block;

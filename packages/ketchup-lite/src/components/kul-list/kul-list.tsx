@@ -19,9 +19,9 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
-  RIPPLE_SURFACE_CLASS,
 } from "src/utils/constants";
 import {
   KulListEvent,
@@ -344,8 +344,8 @@ export class KulList {
           title={stringify(node.value) || stringify(node.description)}
         >
           <div
-            class={RIPPLE_SURFACE_CLASS}
             data-cy={CY_ATTRIBUTES.ripple}
+            data-kul={KUL_ATTRIBUTES.rippleSurface}
             ref={(el) => {
               if (kulRipple && el) {
                 this.#rippleSurface.push(el);
@@ -390,13 +390,8 @@ export class KulList {
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug, theme } = kulManager;
+    const { debug } = kulManager;
 
-    if (this.#rippleSurface?.length) {
-      this.#rippleSurface.forEach((el) => {
-        theme.ripple.setup(el);
-      });
-    }
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.info.update(this, "did-load");
   }

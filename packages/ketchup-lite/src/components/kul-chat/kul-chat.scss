@@ -60,6 +60,7 @@
        */
   --kul_chat_title_font_size: var(--kul-chat-title-font-size, 2em);
 
+  @include kul-scrollbar;
   color: var(--kul-text-color);
   display: block;
   height: 100%;

@@ -5,7 +5,6 @@ import type {
   KulComponent,
   KulComponentName,
 } from "../../types/GenericTypes";
-import { RIPPLE_SURFACE_CLASS } from "../../utils/constants";
 import type { KulManager } from "../kul-manager/kul-manager";
 import { KUL_THEME_ATTRIBUTE } from "./helpers/contants";
 import { THEME_LIST } from "./helpers/theme";
@@ -246,10 +245,6 @@ export class KulTheme {
 
   //#region ripple
   ripple = {
-    setup: (el: HTMLElement) => {
-      el.classList.add(RIPPLE_SURFACE_CLASS);
-      el.dataset.cy = "ripple";
-    },
     trigger: (e: PointerEvent, el: HTMLElement) => {
       const rect = el.getBoundingClientRect();
       const parent = el.parentElement;
@@ -261,7 +256,7 @@ export class KulTheme {
 
       el.style.borderRadius = parentComputedStyle.borderRadius;
 
-      ripple.classList.add("ripple");
+      ripple.dataset.kul = "ripple";
       ripple.style.width = `${rect.width}px`;
       ripple.style.height = `${rect.height}px`;
       ripple.style.background = parentComputedStyle.color;
@@ -271,9 +266,13 @@ export class KulTheme {
 
       el.appendChild(ripple);
 
-      setTimeout(() => {
-        ripple.remove();
-      }, 500);
+      setTimeout(
+        () =>
+          requestAnimationFrame(async () => {
+            ripple.remove();
+          }),
+        500,
+      );
     },
   };
   //#endregion

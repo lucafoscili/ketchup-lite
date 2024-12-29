@@ -50,9 +50,18 @@
     var(--kul-border-color)
   );
 
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul_toggle_font_family);
   font-size: var(--kul_toggle_font_size);
+}
+
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
 }
 
 .form-field {

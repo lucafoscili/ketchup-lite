@@ -218,10 +218,8 @@ export class KulShowcase {
           return <kul-showcase-kuldata></kul-showcase-kuldata>;
         case "kuldebug":
           return <kul-showcase-kuldebug></kul-showcase-kuldebug>;
-        case "kuldynamicposition":
-          return (
-            <kul-showcase-kuldynamicposition></kul-showcase-kuldynamicposition>
-          );
+        case "kulportal":
+          return <kul-showcase-kulportal></kul-showcase-kulportal>;
         case "kulllm":
           return <kul-showcase-kulllm></kul-showcase-kulllm>;
         case "kulmanager":

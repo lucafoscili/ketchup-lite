@@ -1,6 +1,7 @@
 :host {
   --template-columns: 1fr;
 
+  @include kul-scrollbar;
   display: block;
   height: 100%;
   width: 100%;

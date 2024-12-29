@@ -78,6 +78,7 @@ export type KulMasonrySelectedShape = {
 
 //#region Props
 export interface KulMasonryPropsInterface {
+  kulActions?: boolean;
   kulColumns?: number;
   kulData?: KulDataDataset;
   kulSelectable?: boolean;

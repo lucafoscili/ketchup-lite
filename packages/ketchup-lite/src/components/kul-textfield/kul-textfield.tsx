@@ -16,6 +16,7 @@ import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarat
 import { GenericObject } from "src/types/GenericTypes";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -352,6 +353,7 @@ export class KulTextfield {
         <span
           class="textfield__line-ripple"
           data-cy={CY_ATTRIBUTES.ripple}
+          data-kul={KUL_ATTRIBUTES.rippleSurface}
         ></span>
       )
     );

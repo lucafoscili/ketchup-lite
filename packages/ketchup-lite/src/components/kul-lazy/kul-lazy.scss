@@ -33,6 +33,7 @@
     */
   --kul_lazy_width: var(--kul-lazy-width, 100%);
 
+  @include kul-scrollbar;
   display: block;
   height: var(--kul_lazy_height);
   width: var(--kul_lazy_width);

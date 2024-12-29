@@ -1,4 +1,5 @@
 :host {
+  @include kul-scrollbar;
   display: block;
   font-family: var(--kul-font-family, sans-serif);
   height: 100%;
@@ -7,6 +8,10 @@
   overflow: hidden;
   position: relative;
   width: 100%;
+}
+
+[data-kul="fade-in"] {
+  @include kul-fade-in(block);
 }
 
 #kul-component {

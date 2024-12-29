@@ -30,6 +30,7 @@
       */
   --kul_header_width: var(--kul-header-width, 100%);
 
+  @include kul-scrollbar;
   box-sizing: border-box;
   font-size: var(--kul-font-size);
   left: 0;

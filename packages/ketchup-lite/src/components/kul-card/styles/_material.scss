@@ -17,6 +17,23 @@
     width: 100%;
   }
 
+  [data-kul="ripple"] {
+    @include kul-ripple;
+  }
+
+  [data-kul="ripple-surface"] {
+    & {
+      @include kul-ripple-surface;
+      cursor: pointer;
+      height: 100%;
+      transition: background-color 175ms ease-in-out;
+    }
+
+    &:hover {
+      background-color: rgba(var(--kul-primary-color-rgb), 0.075);
+    }
+  }
+
   kul-button {
     margin-right: 0;
   }
@@ -32,18 +49,6 @@
 
     .section-2 .sub-2.description {
       padding-bottom: 0;
-    }
-  }
-
-  .ripple-surface {
-    & {
-      cursor: pointer;
-      height: 100%;
-      transition: background-color 175ms ease-in-out;
-    }
-
-    &:hover {
-      background-color: rgba(var(--kul-primary-color-rgb), 0.075);
     }
   }
 

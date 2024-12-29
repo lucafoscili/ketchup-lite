@@ -14,6 +14,7 @@ import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -204,11 +205,7 @@ export class KulToggle {
     }
   }
   componentDidLoad() {
-    const { debug, theme } = kulManager;
-
-    if (this.#rippleSurface) {
-      theme.ripple.setup(this.#rippleSurface);
-    }
+    const { debug } = kulManager;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.info.update(this, "did-load");
@@ -255,6 +252,7 @@ export class KulToggle {
                 <div class={bemClass("toggle", "thumb")}>
                   <div
                     data-cy={CY_ATTRIBUTES.ripple}
+                    data-kul={KUL_ATTRIBUTES.rippleSurface}
                     ref={(el) => {
                       if (kulRipple) {
                         this.#rippleSurface = el;

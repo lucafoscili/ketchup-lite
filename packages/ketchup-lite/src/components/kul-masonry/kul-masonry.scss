@@ -159,6 +159,7 @@
        */
   --kul_masonry_actions_z_index: var(--kul-masonry-actions-z-index, 99);
 
+  @include kul-scrollbar;
   display: block;
   height: 100%;
   width: 100%;
@@ -260,7 +261,7 @@
   }
 
   &__actions {
-    animation: fade-in-grid 125ms ease-in;
+    @include kul-fade-in(grid);
     bottom: var(--kul_masonry_button_bottom);
     display: grid;
     grid-auto-flow: row;

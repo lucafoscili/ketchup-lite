@@ -56,6 +56,7 @@
     */
   --kul_image_width: var(--kul-image-width, 100%);
 
+  @include kul-scrollbar;
   display: block;
   height: var(--kul_image_height);
   margin: var(--kul_image_margin);

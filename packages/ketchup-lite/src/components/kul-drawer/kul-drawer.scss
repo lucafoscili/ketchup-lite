@@ -33,6 +33,7 @@
     */
   --kul_drawer_transition: var(--kul-drawer-transition, 250ms);
 
+  @include kul-scrollbar;
   box-shadow: var(--kul_drawer_box_shadow);
   display: block;
   font-size: var(--kul-font-size);
