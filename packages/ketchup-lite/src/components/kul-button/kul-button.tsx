@@ -223,6 +223,7 @@ export class KulButton {
    * @param {number} timeout - Time in ms to wait before restoring previous values.
    * @returns {Promise<void>}
    */
+  @Method()
   async setMessage(
     label: string = "Copied!",
     icon: string = "check",
@@ -560,8 +561,13 @@ export class KulButton {
   //#endregion
 
   //#region Lifecycle hooks
+  connectedCallback() {
+    const { theme } = kulManagerSingleton;
+
+    theme.register(this);
+  }
   componentWillLoad() {
-    const { data, theme } = kulManagerSingleton;
+    const { data } = kulManagerSingleton;
 
     if (this.kulValue) {
       this.value = "on";
@@ -575,8 +581,6 @@ export class KulButton {
         this.kulLabel = data.cell.stringify(firstNode.value);
       }
     }
-
-    theme.register(this);
   }
   componentDidLoad() {
     const { debug, theme } = kulManagerSingleton;
