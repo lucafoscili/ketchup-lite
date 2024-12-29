@@ -152,12 +152,12 @@
        * @prop --kul-masonry-selected-z-index: Sets the z-index of selected items.
        * Defaults to 1.
        */
-  --kul_masonry_selected_z_index: var(--kul-masonry-selected-z-index, 1);
+  --kul_masonry_selected_z_index: var(--kul-masonry-selected-z-index, 98);
   /**
        * @prop --kul-masonry-actions-z-index: Sets the z-index of action elements.
        * Defaults to 2.
        */
-  --kul_masonry_actions_z_index: var(--kul-masonry-actions-z-index, 2);
+  --kul_masonry_actions_z_index: var(--kul-masonry-actions-z-index, 99);
 
   display: block;
   height: 100%;
