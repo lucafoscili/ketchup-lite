@@ -362,6 +362,10 @@
       visibility: hidden;
     }
   }
+
+  &__list {
+    @include kul-portal;
+  }
 }
 
 .icon-button {

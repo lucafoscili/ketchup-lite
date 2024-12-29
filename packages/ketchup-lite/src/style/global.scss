@@ -1,3 +1,17 @@
+.kul-portal {
+  & [data-kul="portal"] {
+    display: block;
+    height: max-content;
+    max-height: 45dvh;
+    max-width: 45dvw;
+    min-height: max-content;
+    min-width: max-content;
+    position: fixed;
+    width: max-content;
+    z-index: calc(var(--kul-header-zindex) - 1);
+  }
+}
+
 ::-webkit-scrollbar {
   width: 9px;
 }

@@ -266,9 +266,13 @@ export class KulTheme {
 
       el.appendChild(ripple);
 
-      setTimeout(async () => {
-        ripple.remove();
-      }, 50000);
+      setTimeout(
+        () =>
+          requestAnimationFrame(async () => {
+            ripple.remove();
+          }),
+        500,
+      );
     },
   };
   //#endregion

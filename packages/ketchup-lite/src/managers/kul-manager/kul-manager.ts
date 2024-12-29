@@ -70,15 +70,31 @@ export class KulManager {
 
   #setupListeners = () => {
     document.addEventListener("click", (e) => {
-      const { utilities } = this;
+      const { utilities, portal } = this;
       const { clickCallbacks } = utilities;
 
       const paths = e.composedPath() as HTMLElement[];
+
       clickCallbacks.forEach(({ cb, element }) => {
-        if (element?.isConnected || paths.includes(element)) {
+        if (!element?.isConnected) {
+          cb();
           return;
         }
-        cb();
+
+        if (paths.includes(element)) {
+          return;
+        }
+
+        const portalState = portal.getState(element);
+        if (portalState) {
+          const { parent } = portalState;
+
+          if (!paths.includes(parent)) {
+            cb();
+          }
+        } else {
+          cb();
+        }
       });
     });
   };

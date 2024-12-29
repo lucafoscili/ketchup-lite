@@ -120,12 +120,31 @@ export class KulPortal {
     requestAnimationFrame(() => this.#run(element));
   };
 
+  //#region close
+  close = (element: HTMLElement) => {
+    this.#clean(element);
+    this.#resetStyle(element);
+  };
+  //#endregion
+
+  //#region getState
+  getState = (element: HTMLElement) => {
+    return this.#STATE.get(element);
+  };
+  //#endregion
+
+  //#region isInPortal
+  isInPortal = (element: HTMLElement) => {
+    return this.#STATE.has(element);
+  };
+  //#endregion
+
   //#region open
   open = (
     element: HTMLElement,
     parent: HTMLElement,
     anchor: KulPortalAnchor,
-    margin: number = 0,
+    margin = 0,
     placement: KulPortalPlacement = "auto",
   ) => {
     let state = this.#STATE.get(element);
@@ -163,19 +182,6 @@ export class KulPortal {
     }
 
     this.#run(element);
-  };
-  //#endregion
-
-  //#region close
-  close = (element: HTMLElement) => {
-    this.#clean(element);
-    this.#resetStyle(element);
-  };
-  //#endregion
-
-  //#region isInPortal
-  isInPortal = (element: HTMLElement) => {
-    return this.#STATE.has(element);
   };
   //#endregion
 }
