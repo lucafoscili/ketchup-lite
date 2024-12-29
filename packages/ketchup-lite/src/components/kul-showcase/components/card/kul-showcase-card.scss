@@ -7,3 +7,14 @@
 kul-card {
   margin: auto;
 }
+
+.subgrid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+  .subgrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
