@@ -247,7 +247,7 @@
   }
 
   &__content {
-    animation: kul-fade-in-block 0.25s ease-out;
+    @include kul-fade-in(block);
   }
 }
 

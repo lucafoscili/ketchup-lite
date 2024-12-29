@@ -49,6 +49,7 @@ export const CY_ATTRIBUTES = {
   showcaseGridWrapper: "showcase-grid-wrapper",
 } as const;
 export const KUL_ATTRIBUTES = {
+  fadeIn: "fade-in",
   portal: "portal",
   ripple: "ripple",
   rippleSurface: "ripple-surface",

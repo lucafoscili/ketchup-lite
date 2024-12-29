@@ -96,6 +96,7 @@ export const cellDecorateShapes = <
             data-component={component}
             data-cy={CY_ATTRIBUTES.shape}
             id={`${shape}${index}`}
+            key={`${shape}${index}`}
             ref={(el: KulComponentRootElement<C>) => {
               if (el) {
                 r.ref.push(el);

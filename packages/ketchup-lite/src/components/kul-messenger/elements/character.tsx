@@ -1,5 +1,5 @@
 import { h } from "@stencil/core";
-import { CY_ATTRIBUTES } from "src/utils/constants";
+import { CY_ATTRIBUTES, KUL_ATTRIBUTES } from "src/utils/constants";
 import { MENU_DATASET } from "../helpers/constants";
 import { statusIconOptions } from "../helpers/utils";
 import {
@@ -27,6 +27,7 @@ export const prepCharacter = (
           alt={title || ""}
           class={bemClass("character", "image")}
           data-cy={CY_ATTRIBUTES.image}
+          data-kul={KUL_ATTRIBUTES.fadeIn}
           ref={assignRef(character, "avatar")}
           src={value}
           title={title || ""}

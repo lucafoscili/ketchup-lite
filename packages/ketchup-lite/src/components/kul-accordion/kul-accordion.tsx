@@ -272,6 +272,7 @@ export class KulAccordion {
               class={bemClass("node", "content", {
                 selected: isSelected,
               })}
+              data-kul={KUL_ATTRIBUTES.fadeIn}
             >
               <slot name={node.id}></slot>
             </div>

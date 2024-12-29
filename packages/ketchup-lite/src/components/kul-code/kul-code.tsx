@@ -15,6 +15,7 @@ import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -275,6 +276,7 @@ export class KulCode {
       kulLanguage.toLowerCase() === "";
     const shouldPreserveSpace =
       kulPreserveSpaces || (isPreserveSpaceMissing && !isLikelyTextual);
+    const TagName = shouldPreserveSpace ? "pre" : "div";
 
     return (
       <Host>
@@ -300,31 +302,18 @@ export class KulCode {
                 }}
               ></kul-button>
             </div>
-            {shouldPreserveSpace ? (
-              <pre
-                class={bemClass(`language-${kulLanguage}`)}
-                key={this.value}
-                ref={(el) => {
-                  if (el) {
-                    this.#el = el;
-                  }
-                }}
-              >
-                <code>{this.value}</code>
-              </pre>
-            ) : (
-              <div
-                class={bemClass(`language-${kulLanguage} body`)}
-                key={this.value}
-                ref={(el) => {
-                  if (el) {
-                    this.#el = el;
-                  }
-                }}
-              >
-                {this.value}
-              </div>
-            )}
+            <TagName
+              class={`language-${kulLanguage} ${shouldPreserveSpace ? "" : "body"}`}
+              data-kul={KUL_ATTRIBUTES.fadeIn}
+              key={this.value}
+              ref={(el) => {
+                if (el) {
+                  this.#el = el;
+                }
+              }}
+            >
+              {shouldPreserveSpace ? <code>{this.value}</code> : this.value}
+            </TagName>
           </div>
         </div>
       </Host>

@@ -10,6 +10,10 @@
   width: 100%;
 }
 
+[data-kul="fade-in"] {
+  @include kul-fade-in(block);
+}
+
 #kul-component {
   height: 100%;
   width: 100%;

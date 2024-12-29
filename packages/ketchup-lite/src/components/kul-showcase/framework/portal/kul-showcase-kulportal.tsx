@@ -1,18 +1,18 @@
 import { Component, Element, Fragment, h } from "@stencil/core";
 
-import { DYNAMIC_POSITION_DATA } from "./kul-showcase-kuldynamicposition-data";
+import { DYNAMIC_POSITION_DATA } from "./kul-showcase-kulportal-data";
 import { KUL_WRAPPER_ID } from "../../../../utils/constants";
 
 @Component({
-  tag: "kul-showcase-kuldynamicposition",
-  styleUrl: "kul-showcase-kuldynamicposition.scss",
+  tag: "kul-showcase-kulportal",
+  styleUrl: "kul-showcase-kulportal.scss",
   shadow: true,
 })
-export class KulShowcaseKuldynamicposition {
+export class KulShowcaseKulportal {
   /**
-   * References the root HTML element of the component (<kul-showcase-kuldynamicposition>).
+   * References the root HTML element of the component (<kul-showcase-kulportal>).
    */
-  @Element() rootElement: HTMLKulShowcaseKuldynamicpositionElement;
+  @Element() rootElement: HTMLKulShowcaseKulportalElement;
 
   //#region Lifecycle hooks
   render() {

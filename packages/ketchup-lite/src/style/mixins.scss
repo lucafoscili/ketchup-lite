@@ -30,16 +30,18 @@
 @mixin kul-fade-in($display: block) {
   @keyframes kul-fade-in-#{$display} {
     0% {
-      display: none;
-    }
-    1% {
-      display: $display;
+      visibility: hidden;
       opacity: 0;
     }
     100% {
-      display: $display;
+      visibility: visible;
       opacity: 1;
     }
+  }
+
+  &[data-kul="fade-in"] {
+    display: $display;
+    animation: kul-fade-in-#{$display} 0.25s ease-out forwards;
   }
 }
 

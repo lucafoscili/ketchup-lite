@@ -14,7 +14,11 @@ import {
 } from "@stencil/core";
 import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  KUL_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
 import { CLEAN_UI, IMAGE_TYPE_IDS, OPTION_TYPE_IDS } from "./helpers/constants";
 import {
@@ -526,6 +530,7 @@ export class KulMessenger {
                 <img
                   alt={title(node)}
                   class={bemClass("list", "image")}
+                  data-kul={KUL_ATTRIBUTES.fadeIn}
                   src={node.cells.kulImage.value}
                   title={title(node)}
                 />
@@ -570,8 +575,9 @@ export class KulMessenger {
           {node ? (
             <Fragment>
               <img
-                class={bemClass("options", "cover")}
                 alt={title}
+                class={bemClass("options", "cover")}
+                data-kul={KUL_ATTRIBUTES.fadeIn}
                 src={value}
               ></img>
               <div

@@ -23,6 +23,7 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -347,6 +348,9 @@ export class KulCarousel {
     ].map(() => ({
       htmlProps: {
         className: "kul-fit",
+        dataset: {
+          kul: KUL_ATTRIBUTES.fadeIn,
+        },
       },
     }));
 

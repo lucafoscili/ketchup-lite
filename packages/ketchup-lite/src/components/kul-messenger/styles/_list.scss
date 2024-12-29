@@ -46,7 +46,7 @@
   }
 
   &__image {
-    animation: kul-fade-in-block 250ms ease-in;
+    @include kul-fade-in(block);
     cursor: pointer;
     display: block;
     height: 100%;

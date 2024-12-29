@@ -25,7 +25,11 @@ import {
   KulGenericEvent,
   KulGenericEventPayload,
 } from "src/types/GenericTypes";
-import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
+import {
+  KUL_ATTRIBUTES,
+  KUL_STYLE_ID,
+  KUL_WRAPPER_ID,
+} from "src/utils/constants";
 import { COLUMNS_CSS_VAR, DEFAULT_COLUMNS } from "./helpers/constants";
 import { createAdapter } from "./kul-masonry-adapter";
 import {
@@ -370,7 +374,7 @@ export class KulMasonry {
     const { addColumn, changeView, removeColumn } = this.#adapter.elements.jsx;
 
     return (
-      <div class={bemClass("grid", "actions")}>
+      <div class={bemClass("grid", "actions")} data-kul={KUL_ATTRIBUTES.fadeIn}>
         {this.#isMasonry() && (
           <div class={bemClass("grid", "sub")}>
             {addColumn()}
