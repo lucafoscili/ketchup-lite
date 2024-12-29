@@ -96,6 +96,14 @@
   width: 100%;
 }
 
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
+}
+
 #kul-component {
   height: 100%;
   width: 100%;
@@ -135,10 +143,19 @@
 }
 
 .tree {
-  -webkit-backdrop-filter: var(--kul_tree_backdrop_filter);
-  backdrop-filter: var(--kul_tree_backdrop_filter);
-  color: var(--kul_tree_text_color);
-  padding: var(--kul_tree_padding);
+  & {
+    -webkit-backdrop-filter: var(--kul_tree_backdrop_filter);
+    backdrop-filter: var(--kul_tree_backdrop_filter);
+    color: var(--kul_tree_text_color);
+    padding: var(--kul_tree_padding);
+  }
+
+  &__filter {
+    background-color: var(--kul-background-color);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
 }
 
 .node {

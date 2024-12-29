@@ -21,6 +21,7 @@ import { KulScrollOnHoverElement } from "src/managers/kul-scroll-on-hover/kul-sc
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -240,13 +241,7 @@ export class KulTabbar {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug, theme } = kulManager;
-
-    if (this.#rippleSurface?.length) {
-      this.#rippleSurface.forEach((el) => {
-        theme.ripple.setup(el);
-      });
-    }
+    const { debug } = kulManager;
 
     debug.info.update(this, "will-render");
   }
@@ -290,6 +285,7 @@ export class KulTabbar {
         >
           <div
             data-cy={CY_ATTRIBUTES.ripple}
+            data-kul={KUL_ATTRIBUTES.rippleSurface}
             ref={(el) => {
               if (el && kulRipple) {
                 this.#rippleSurface.push(el);

@@ -260,7 +260,7 @@
   }
 
   &__actions {
-    animation: fade-in-grid 125ms ease-in;
+    animation: kul-fade-in-grid 125ms ease-in;
     bottom: var(--kul_masonry_button_bottom);
     display: grid;
     grid-auto-flow: row;

@@ -116,6 +116,14 @@
   font-size: var(--kul_accordion_font_size);
 }
 
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
+}
+
 .accordion {
   -webkit-backdrop-filter: var(--kul_accordion_backdrop_filter);
   backdrop-filter: var(--kul_accordion_backdrop_filter);
@@ -238,7 +246,7 @@
   }
 
   &__content {
-    animation: fade-in-block 0.25s ease-out;
+    animation: kul-fade-in-block 0.25s ease-out;
   }
 }
 

@@ -86,11 +86,12 @@ export const config: Config = {
       hydrateModule: "ketchup-lite-hydrate",
     }),
   ],
-  hydratedFlag: { selector: "attribute" },
+  globalStyle: "src/style/global.scss",
+  hydratedFlag: { name: "kul-hydrated", selector: "attribute" },
   plugins: [
     sass({
       includePaths: ["./node_modules", "./src/style"],
-      injectGlobalPaths: ["src/style/global.scss"],
+      injectGlobalPaths: ["src/style/mixins.scss", "src/style/variables.scss"],
     }),
   ],
 };

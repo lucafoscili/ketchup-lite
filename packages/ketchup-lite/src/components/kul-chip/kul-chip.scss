@@ -90,6 +90,14 @@
   );
 }
 
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
+}
+
 #kul-component,
 .chip {
   height: 100%;

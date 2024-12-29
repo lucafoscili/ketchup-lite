@@ -1,10 +1,10 @@
-import type { KulManager } from "../kul-manager/kul-manager";
 import { KulCode } from "../../components/kul-code/kul-code";
 import { KulToggle } from "../../components/kul-toggle/kul-toggle";
 import { KulGenericComponent } from "../../types/GenericTypes";
 import { KulData } from "../kul-data/kul-data";
-import { KulDynamicPosition } from "../kul-dynamic-position/kul-dynamic-position";
 import { KulLLM } from "../kul-llm/kul-llm";
+import type { KulManager } from "../kul-manager/kul-manager";
+import { KulPortal } from "../kul-portal/kul-portal";
 import { KulScrollOnHover } from "../kul-scroll-on-hover/kul-scroll-on-hover";
 import { KulTheme } from "../kul-theme/kul-theme";
 import { KulDebug } from "./kul-debug";
@@ -44,9 +44,9 @@ export type KulDebugLogClass =
   | KulGenericComponent
   | KulData
   | KulDebug
-  | KulDynamicPosition
   | KulLLM
   | KulManager
+  | KulPortal
   | KulScrollOnHover
   | KulTheme;
 export type KulDebugLogsToPrint = {

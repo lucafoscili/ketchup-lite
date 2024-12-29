@@ -55,6 +55,14 @@
   font-size: var(--kul_toggle_font_size);
 }
 
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
+}
+
 .form-field {
   font-size: 0.875em;
   line-height: 2em;

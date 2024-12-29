@@ -1,0 +1,60 @@
+@mixin kul-ripple {
+  @keyframes kul-ripple {
+    to {
+      opacity: 0;
+      transform: scale(4);
+    }
+  }
+
+  &[data-kul="ripple"] {
+    animation: kul-ripple 0.675s ease-out;
+    border-radius: 50%;
+    pointer-events: none;
+    position: absolute;
+    transform: scale(0);
+  }
+}
+
+@mixin kul-ripple-surface {
+  &[data-kul="ripple-surface"] {
+    cursor: pointer;
+    height: 100%;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+}
+
+@mixin kul-fade-in($display: block) {
+  @keyframes kul-fade-in-#{$display} {
+    0% {
+      display: none;
+    }
+    1% {
+      display: $display;
+      opacity: 0;
+    }
+    100% {
+      display: $display;
+      opacity: 1;
+    }
+  }
+}
+
+@mixin kul-scrollbar {
+  ::-webkit-scrollbar {
+    width: 9px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--kul-primary-color);
+    -webkit-transition: background-color 0.2s ease-in-out;
+    transition: background-color 0.2s ease-in-out;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: var(--kul-background-color);
+  }
+}

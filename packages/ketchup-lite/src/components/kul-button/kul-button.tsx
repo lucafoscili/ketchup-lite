@@ -18,11 +18,9 @@ import {
   KulDataNode,
 } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
-import { KulManagerClickCb } from "src/managers/kul-manager/kul-manager-declarations";
 import {
   CY_ATTRIBUTES,
-  KUL_DROPDOWN_CLASS,
-  KUL_DROPDOWN_CLASS_VISIBLE,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
 } from "src/utils/constants";
@@ -134,7 +132,6 @@ export class KulButton {
   //#endregion
 
   //#region Internal variables
-  #clickCb: KulManagerClickCb;
   #dropdown: HTMLButtonElement;
   #dropdownRippleSurface: HTMLDivElement;
   #list: HTMLKulListElement;
@@ -271,36 +268,19 @@ export class KulButton {
 
   //#region Private methods
   #listManager() {
-    const { addClickCallback, dynamicPosition, removeClickCallback } =
-      kulManager;
+    const { close, isInPortal, open } = kulManager.portal;
 
     return {
       close: () => {
-        dynamicPosition.stop(this.#list);
-        removeClickCallback(this.#clickCb);
-      },
-      isOpened: () => {
-        return this.#list.classList.contains(KUL_DROPDOWN_CLASS_VISIBLE);
+        //alert("Close");
+        close(this.#list);
       },
       open: () => {
-        if (dynamicPosition.isRegistered(this.#list)) {
-          dynamicPosition.changeAnchor(this.#list, this.#dropdown);
-        } else {
-          dynamicPosition.register(this.#list, this.#dropdown, 0, "", true);
-        }
-        dynamicPosition.start(this.#list);
-        if (!this.#clickCb) {
-          this.#clickCb = {
-            cb: () => {
-              this.#listManager().close();
-            },
-            el: this.#list,
-          };
-        }
-        addClickCallback(this.#clickCb, true);
+        //alert("Open");
+        open(this.#list, this.#dropdown, this.#dropdown);
       },
       toggle: () => {
-        if (this.#listManager().isOpened()) {
+        if (isInPortal(this.#list)) {
           this.#listManager().close();
         } else {
           this.#listManager().open();
@@ -362,6 +342,7 @@ export class KulButton {
       this.kulRipple && (
         <div
           data-cy={CY_ATTRIBUTES.ripple}
+          data-kul={KUL_ATTRIBUTES.rippleSurface}
           ref={(el) => {
             if (el && this.kulRipple) {
               if (isDropdown) {
@@ -549,8 +530,11 @@ export class KulButton {
         {this.#prepRipple(true)}
         <kul-image {...image} kulValue={"--kul-dropdown-icon"} />
         <kul-list
-          class={bemClass(KUL_DROPDOWN_CLASS)}
+          class={bemClass("button", "list", {
+            dropdown: true,
+          })}
           data-cy={CY_ATTRIBUTES.dropdownMenu}
+          data-kul={KUL_ATTRIBUTES.portal}
           kulData={{ nodes: kulData.nodes[0].children }}
           onKul-list-event={eventHandler}
           ref={(el) => (this.#list = el)}
@@ -583,14 +567,8 @@ export class KulButton {
     }
   }
   componentDidLoad() {
-    const { debug, theme } = kulManager;
+    const { debug } = kulManager;
 
-    if (this.#rippleSurface) {
-      theme.ripple.setup(this.#rippleSurface);
-    }
-    if (this.#dropdownRippleSurface) {
-      theme.ripple.setup(this.#dropdownRippleSurface);
-    }
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.info.update(this, "did-load");
   }
@@ -632,10 +610,10 @@ export class KulButton {
     );
   }
   disconnectedCallback() {
-    const { dynamicPosition, theme } = kulManager;
+    const { portal, theme } = kulManager;
 
-    if (this.#list) {
-      dynamicPosition.unregister([this.#list]);
+    if (this.#list && portal.isInPortal(this.#list)) {
+      portal.close(this.#list);
     }
     theme.unregister(this);
   }

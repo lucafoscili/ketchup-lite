@@ -118,6 +118,14 @@
   width: max-content;
 }
 
+[data-kul="ripple"] {
+  @include kul-ripple;
+}
+
+[data-kul="ripple-surface"] {
+  @include kul-ripple-surface;
+}
+
 :host([kul-disabled]) {
   pointer-events: none;
 }

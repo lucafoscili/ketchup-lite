@@ -19,9 +19,9 @@ import {
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
+  KUL_ATTRIBUTES,
   KUL_STYLE_ID,
   KUL_WRAPPER_ID,
-  RIPPLE_SURFACE_CLASS,
 } from "src/utils/constants";
 import {
   KulChipEvent,
@@ -412,8 +412,8 @@ export class KulChip {
     if (this.kulRipple && this.#isClickable()) {
       return (
         <div
-          class={RIPPLE_SURFACE_CLASS}
           data-cy={CY_ATTRIBUTES.ripple}
+          data-kul={KUL_ATTRIBUTES.rippleSurface}
           onPointerDown={(e) => this.onKulEvent(e, "pointerdown", { node })}
           ref={(el) => {
             if (el && this.kulRipple) {
@@ -436,16 +436,7 @@ export class KulChip {
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug, theme } = kulManager;
-
-    if (Object.keys(this.#rippleSurface).length) {
-      for (const key in this.#rippleSurface) {
-        if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
-          const surface = this.#rippleSurface[key];
-          theme.ripple.setup(surface);
-        }
-      }
-    }
+    const { debug } = kulManager;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.info.update(this, "did-load");
@@ -456,16 +447,7 @@ export class KulChip {
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug, theme } = kulManager;
-
-    if (Object.keys(this.#rippleSurface).length) {
-      for (const key in this.#rippleSurface) {
-        if (Object.prototype.hasOwnProperty.call(this.#rippleSurface, key)) {
-          const surface = this.#rippleSurface[key];
-          theme.ripple.setup(surface);
-        }
-      }
-    }
+    const { debug } = kulManager;
 
     debug.info.update(this, "did-render");
   }

@@ -48,8 +48,11 @@ export const CY_ATTRIBUTES = {
   shape: "shape",
   showcaseGridWrapper: "showcase-grid-wrapper",
 } as const;
-export const KUL_DROPDOWN_CLASS = "kul-dropdown-menu" as const;
-export const KUL_DROPDOWN_CLASS_VISIBLE = "kul-dropdown-menu--visible" as const;
+export const KUL_ATTRIBUTES = {
+  portal: "portal",
+  ripple: "ripple",
+  rippleSurface: "ripple-surface",
+} as const;
 export const KUL_STYLE_ID = "kul-style" as const;
 export const KUL_WRAPPER_ID = "kul-component" as const;
 export const KUL_COMPONENT_PROPS: {
@@ -88,4 +91,3 @@ export const KUL_COMPONENT_PROPS: {
   KulTypewriter: KUL_TYPEWRITER_PROPS,
   KulUpload: KUL_UPLOAD_PROPS,
 } as const;
-export const RIPPLE_SURFACE_CLASS = "ripple-surface" as const;
