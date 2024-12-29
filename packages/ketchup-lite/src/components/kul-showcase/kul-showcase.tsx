@@ -216,16 +216,12 @@ export class KulShowcase {
         //#region Framework
         case "kuldata":
           return <kul-showcase-kuldata></kul-showcase-kuldata>;
-        case "kuldates":
-          return <kul-showcase-kuldates></kul-showcase-kuldates>;
         case "kuldebug":
           return <kul-showcase-kuldebug></kul-showcase-kuldebug>;
         case "kuldynamicposition":
           return (
             <kul-showcase-kuldynamicposition></kul-showcase-kuldynamicposition>
           );
-        case "kullanguage":
-          return <kul-showcase-kullanguage></kul-showcase-kullanguage>;
         case "kulllm":
           return <kul-showcase-kulllm></kul-showcase-kulllm>;
         case "kulmanager":

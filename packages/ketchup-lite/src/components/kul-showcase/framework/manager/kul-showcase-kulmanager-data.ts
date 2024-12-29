@@ -128,14 +128,6 @@ export const MANAGER_DATA: KulArticleDataset = {
               ": when true, the library automatically configures KulLanguage and KulMath locales to align with KulDates.",
             ),
             DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry("dates", [
-              {
-                title: "locale (string)",
-                description:
-                  ": sets the locale for time and date-related functionalities within the library.",
-              },
-            ]),
-            DOC_NODES.hiddenSeparator,
             PARAGRAPH_FACTORY.asBulletListEntry("debug", [
               {
                 title: "active (boolean)",
@@ -150,18 +142,6 @@ export const MANAGER_DATA: KulArticleDataset = {
                 title: "logLimit (number)",
                 description:
                   ": sets the maximum number of debug logs to retain.",
-              },
-            ]),
-            DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asBulletListEntry("language", [
-              {
-                title: "list (JSON)",
-                description: ": provides a custom list of languages.",
-              },
-              {
-                title: "name (string)",
-                description:
-                  ": specifies the current language used by the library.",
               },
             ]),
             DOC_NODES.hiddenSeparator,
@@ -231,19 +211,6 @@ export const MANAGER_DATA: KulArticleDataset = {
                   name: "cb",
                   type: "KulManagerClickCb",
                   description: "The callback to remove from the set.",
-                },
-              ],
-            ),
-            DOC_NODES.hiddenSeparator,
-            PARAGRAPH_FACTORY.asListEntry(
-              "setLibraryLocalization",
-              "Sets both locale and language library-wide.",
-              [
-                {
-                  name: "locale",
-                  type: "KulDatesLocales",
-                  description:
-                    "The locale to set (must be supported by the library).",
                 },
               ],
             ),

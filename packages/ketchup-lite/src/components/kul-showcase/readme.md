@@ -54,10 +54,8 @@
 - [kul-showcase-typewriter](./components/typewriter)
 - [kul-showcase-upload](./components/upload)
 - [kul-showcase-kuldata](./framework/data)
-- [kul-showcase-kuldates](./framework/dates)
 - [kul-showcase-kuldebug](./framework/debug)
 - [kul-showcase-kuldynamicposition](./framework/dynamicposition)
-- [kul-showcase-kullanguage](./framework/language)
 - [kul-showcase-kulllm](./framework/llm)
 - [kul-showcase-kulmanager](./framework/manager)
 - [kul-showcase-kulscrollonhover](./framework/scroll-on-hover)
@@ -104,10 +102,8 @@ graph TD;
   kul-showcase --> kul-showcase-typewriter
   kul-showcase --> kul-showcase-upload
   kul-showcase --> kul-showcase-kuldata
-  kul-showcase --> kul-showcase-kuldates
   kul-showcase --> kul-showcase-kuldebug
   kul-showcase --> kul-showcase-kuldynamicposition
-  kul-showcase --> kul-showcase-kullanguage
   kul-showcase --> kul-showcase-kulllm
   kul-showcase --> kul-showcase-kulmanager
   kul-showcase --> kul-showcase-kulscrollonhover
@@ -217,10 +213,8 @@ graph TD;
   kul-upload --> kul-image
   kul-upload --> kul-button
   kul-showcase-kuldata --> kul-article
-  kul-showcase-kuldates --> kul-article
   kul-showcase-kuldebug --> kul-article
   kul-showcase-kuldynamicposition --> kul-article
-  kul-showcase-kullanguage --> kul-article
   kul-showcase-kulllm --> kul-article
   kul-showcase-kulmanager --> kul-article
   kul-showcase-kulscrollonhover --> kul-article

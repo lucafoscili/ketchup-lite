@@ -114,10 +114,8 @@ Type: `Promise<void>`
  - [kul-showcase-image](../kul-showcase/components/image)
  - [kul-showcase-imageviewer](../kul-showcase/components/imageviewer)
  - [kul-showcase-kuldata](../kul-showcase/framework/data)
- - [kul-showcase-kuldates](../kul-showcase/framework/dates)
  - [kul-showcase-kuldebug](../kul-showcase/framework/debug)
  - [kul-showcase-kuldynamicposition](../kul-showcase/framework/dynamicposition)
- - [kul-showcase-kullanguage](../kul-showcase/framework/language)
  - [kul-showcase-kulllm](../kul-showcase/framework/llm)
  - [kul-showcase-kulmanager](../kul-showcase/framework/manager)
  - [kul-showcase-kulscrollonhover](../kul-showcase/framework/scroll-on-hover)
@@ -161,10 +159,8 @@ graph TD;
   kul-showcase-image --> kul-article
   kul-showcase-imageviewer --> kul-article
   kul-showcase-kuldata --> kul-article
-  kul-showcase-kuldates --> kul-article
   kul-showcase-kuldebug --> kul-article
   kul-showcase-kuldynamicposition --> kul-article
-  kul-showcase-kullanguage --> kul-article
   kul-showcase-kulllm --> kul-article
   kul-showcase-kulmanager --> kul-article
   kul-showcase-kulscrollonhover --> kul-article
