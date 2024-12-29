@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0-rc.5](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.4...3.0.0-rc.5) (2024-12-29)
+
+### Bug Fixes
+
+- **progressbar:** fixed colors ([2b64056](https://github.com/lucafoscili/ketchup-lite/commit/2b640563201045799214d162321d0ee6e05ba18e))
+- **theme:** fixed light/dark attrs ([5923b6a](https://github.com/lucafoscili/ketchup-lite/commit/5923b6a71a78fa70f96b53d92fabcb55e00cd0b9))
+
 # [3.0.0-rc.4](https://github.com/lucafoscili/ketchup-lite/compare/3.0.0-rc.3...3.0.0-rc.4) (2024-12-28)
 
 ### Bug Fixes

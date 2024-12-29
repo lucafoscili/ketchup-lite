@@ -1,6 +1,6 @@
 {
   "name": "ketchup-lite-react",
-  "version": "3.0.0-rc.4",
+  "version": "3.0.0-rc.5",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/types/index.d.ts",
@@ -22,7 +22,7 @@
   "dependencies": {
     "@stencil/core": "^4",
     "@stencil/react-output-target": "^0",
-    "ketchup-lite": "^3.0.0-rc.4",
+    "ketchup-lite": "^3.0.0-rc.5",
     "react": "^18",
     "react-dom": "^18"
   },
