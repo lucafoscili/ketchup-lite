@@ -316,12 +316,6 @@ export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
       value: "KulData",
     },
     {
-      description: "Date and time management.",
-      icon: "calendar",
-      id: "KulDates",
-      value: "KulDates",
-    },
-    {
       description: "Utility useful for debugging and for code observability.",
       icon: "developer_mode",
       id: "KulDebug",
@@ -332,12 +326,6 @@ export const KUL_SHOWCASE_FRAMEWORK: KulDataDataset = {
       icon: "location_searching",
       id: "KulDynamicPosition",
       value: "KulDynamicPosition",
-    },
-    {
-      description: "JSON-based utility to handle translations.",
-      icon: "g_translate",
-      id: "KulLanguage",
-      value: "KulLanguage",
     },
     {
       description: "Utility to connect with Open-AI compatible endpoints.",
