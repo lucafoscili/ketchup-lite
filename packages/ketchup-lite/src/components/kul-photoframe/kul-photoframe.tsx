@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
 import {
@@ -42,7 +42,7 @@ export class KulPhotoframe {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Sets the orientation of the image, when it exists.
    * @default false
@@ -144,7 +144,7 @@ export class KulPhotoframe {
    */
   @Method()
   async getProps(): Promise<KulPhotoframePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulPhotoframePropsInterface;
   }
@@ -179,7 +179,7 @@ export class KulPhotoframe {
       return null;
     }
 
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { description, hideOnClick, icon, title } = kulOverlay;
 
@@ -233,30 +233,30 @@ export class KulPhotoframe {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
     this.#setObserver();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.#intObserver?.observe(this.rootElement);
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManager;
     const { bemClass, setKulStyle } = theme;
 
     const { isInViewport, isReady, kulPlaceholder, kulStyle, kulValue } = this;
@@ -304,7 +304,7 @@ export class KulPhotoframe {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
     this.#intObserver?.unobserve(this.rootElement);

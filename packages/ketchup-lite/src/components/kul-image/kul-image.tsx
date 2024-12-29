@@ -12,7 +12,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import { KulThemeIcons } from "src/managers/kul-theme/kul-theme-declarations";
@@ -45,7 +45,7 @@ export class KulImage {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The selected element.
    * @default false
@@ -133,7 +133,7 @@ export class KulImage {
    */
   @Method()
   async getProps(): Promise<KulImagePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulImagePropsInterface;
   }
@@ -159,7 +159,7 @@ export class KulImage {
 
   //#region Private methods
   #createIcon(): VNode {
-    const { assets, theme } = kulManagerSingleton;
+    const { assets, theme } = kulManager;
     const { bemClass } = theme;
 
     const { error, kulColor, kulValue } = this;
@@ -222,28 +222,28 @@ export class KulImage {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { debug, sanitizeProps, theme } = kulManagerSingleton;
+    const { debug, sanitizeProps, theme } = kulManager;
     const { bemClass, setKulStyle } = theme;
 
     const {
@@ -298,7 +298,7 @@ export class KulImage {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

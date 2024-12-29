@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
@@ -46,7 +46,7 @@ export class KulTabbar {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The node currently selected.
    */
@@ -95,7 +95,7 @@ export class KulTabbar {
     index = 0,
     node?: KulDataNode,
   ) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     switch (eventType) {
       case "click":
@@ -137,7 +137,7 @@ export class KulTabbar {
    */
   @Method()
   async getProps(): Promise<KulTabbarPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulTabbarPropsInterface;
   }
@@ -196,12 +196,12 @@ export class KulTabbar {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentWillLoad() {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     const { kulData, kulValue } = this;
 
@@ -230,7 +230,7 @@ export class KulTabbar {
     }
   }
   componentDidLoad() {
-    const { debug, scrollOnHover } = kulManagerSingleton;
+    const { debug, scrollOnHover } = kulManager;
 
     if (this.#scrollArea) {
       scrollOnHover.register(this.#scrollArea);
@@ -240,7 +240,7 @@ export class KulTabbar {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (this.#rippleSurface?.length) {
       this.#rippleSurface.forEach((el) => {
@@ -251,12 +251,12 @@ export class KulTabbar {
     debug.info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { data, theme } = kulManagerSingleton;
+    const { data, theme } = kulManager;
     const { bemClass, setKulStyle } = theme;
 
     const { kulData, kulRipple, kulStyle, value } = this;
@@ -348,7 +348,7 @@ export class KulTabbar {
     );
   }
   disconnectedCallback() {
-    const { scrollOnHover, theme } = kulManagerSingleton;
+    const { scrollOnHover, theme } = kulManager;
 
     if (this.#scrollArea) {
       scrollOnHover.unregister(this.#scrollArea);

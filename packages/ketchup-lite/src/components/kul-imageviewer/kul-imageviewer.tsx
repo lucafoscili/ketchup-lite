@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataCell,
   KulDataDataset,
@@ -50,7 +50,7 @@ export class KulImageviewer {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Currently selected image.
    */
@@ -112,7 +112,7 @@ export class KulImageviewer {
         full: () => this.history,
         index: () => this.historyIndex,
       },
-      manager: kulManagerSingleton,
+      manager: kulManager,
       spinnerStatus: () => this.isSpinnerActive,
     },
     {
@@ -238,7 +238,7 @@ export class KulImageviewer {
    */
   @Method()
   async getProps(): Promise<KulImageviewerPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulImageviewerPropsInterface;
   }
@@ -279,7 +279,7 @@ export class KulImageviewer {
 
   //#region Private methods
   #getSelectedShapeValue(selectedShape: KulMasonrySelectedShape) {
-    const { data } = kulManagerSingleton;
+    const { data } = kulManager;
     const { cell } = data;
     const { stringify } = cell;
 
@@ -296,7 +296,7 @@ export class KulImageviewer {
     return null;
   }
   #prepViewer(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const {
       canvas,
@@ -330,7 +330,7 @@ export class KulImageviewer {
     );
   }
   #prepImageviewer(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { currentShape } = this.#adapter.controller.get;
 
@@ -346,7 +346,7 @@ export class KulImageviewer {
     );
   }
   #prepExplorer(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { load, masonry, textfield } = this.#adapter.elements.jsx.navigation;
 
@@ -362,28 +362,28 @@ export class KulImageviewer {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
     const { kulStyle } = this;
 
     return (
@@ -396,7 +396,7 @@ export class KulImageviewer {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

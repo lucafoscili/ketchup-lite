@@ -13,7 +13,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataGenericCell,
@@ -49,7 +49,7 @@ export class KulCompare {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The shapes of the component.
    * @default {}
@@ -107,7 +107,7 @@ export class KulCompare {
     {
       compInstance: this,
       isOverlay: () => this.#isOverlay(),
-      manager: kulManagerSingleton,
+      manager: kulManager,
       shapes: () => this.#getShapes(),
     },
     {
@@ -157,7 +157,7 @@ export class KulCompare {
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
-    const { data, debug } = kulManagerSingleton;
+    const { data, debug } = kulManager;
 
     try {
       this.shapes = data.cell.shapes.getAll(this.kulData);
@@ -185,7 +185,7 @@ export class KulCompare {
    */
   @Method()
   async getProps(): Promise<KulComparePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulComparePropsInterface;
   }
@@ -220,7 +220,7 @@ export class KulCompare {
     return !!(this.kulView === "overlay");
   }
   #prepCompare(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     if (this.#hasShapes()) {
       const shapes = this.shapes[this.kulShape];
@@ -237,7 +237,7 @@ export class KulCompare {
     return null;
   }
   #prepToolbar(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { changeView, leftButton, rightButton } = this.#adapter.elements.jsx;
     return (
@@ -249,7 +249,7 @@ export class KulCompare {
     );
   }
   #prepView(): VNode {
-    const { data, sanitizeProps, theme } = kulManagerSingleton;
+    const { data, sanitizeProps, theme } = kulManager;
     const { bemClass } = theme;
 
     const { left, right } = this.#adapter.controller.get.defaults;
@@ -326,7 +326,7 @@ export class KulCompare {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -334,23 +334,23 @@ export class KulCompare {
     this.updateShapes();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { kulStyle } = this;
 
@@ -364,7 +364,7 @@ export class KulCompare {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

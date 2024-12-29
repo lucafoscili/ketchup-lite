@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { CY_ATTRIBUTES } from "src/utils/constants";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
 import { KulShowcaseDynamicExampleType } from "../../kul-showcase-declarations";
@@ -25,7 +25,7 @@ export class KulShowcasePhotoframe {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = PHOTOFRAME_FIXTURES(kulManagerSingleton.assets.get);
+  @State() fixtures = PHOTOFRAME_FIXTURES(kulManager.assets.get);
   //#endregion
 
   //#region Internal variables

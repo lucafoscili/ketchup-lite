@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
@@ -46,7 +46,7 @@ export class KulChip {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Set of expanded nodes.
    */
@@ -103,7 +103,7 @@ export class KulChip {
     eventType: KulChipEvent,
     args?: KulChipEventArguments,
   ) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     const { expandedNodes, kulData, kulRipple, selectedNodes } = this;
 
@@ -166,7 +166,7 @@ export class KulChip {
    */
   @Method()
   async getProps(): Promise<KulChipPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulChipPropsInterface;
   }
@@ -251,7 +251,7 @@ export class KulChip {
     return this.selectedNodes.has(node);
   }
   #prepItem(node: KulDataNode, i: number) {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       <div
@@ -289,7 +289,7 @@ export class KulChip {
     );
   }
   #prepItemSet() {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const elements: VNode[] = [];
 
@@ -306,8 +306,8 @@ export class KulChip {
     return elements;
   }
   #prepDeleteIcon(node: KulDataNode) {
-    const { get } = kulManagerSingleton.assets;
-    const { bemClass } = kulManagerSingleton.theme;
+    const { get } = kulManager.assets;
+    const { bemClass } = kulManager.theme;
 
     const { style } = get(`./assets/svg/clear.svg`);
     return (
@@ -325,8 +325,8 @@ export class KulChip {
     );
   }
   #prepIcons(node: KulDataNode) {
-    const { get } = kulManagerSingleton.assets;
-    const { bemClass } = kulManagerSingleton.theme;
+    const { get } = kulManager.assets;
+    const { bemClass } = kulManager.theme;
 
     const icons: VNode[] = [];
 
@@ -363,7 +363,7 @@ export class KulChip {
     return icons;
   }
   #prepNode(node: KulDataNode, indent: number) {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const indentStyle = {
       ["--kul_chip_indent_offset"]: indent.toString(),
@@ -431,12 +431,12 @@ export class KulChip {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
@@ -451,12 +451,12 @@ export class KulChip {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
@@ -470,7 +470,7 @@ export class KulChip {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { kulStyle } = this;
 
@@ -495,7 +495,7 @@ export class KulChip {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

@@ -11,7 +11,7 @@ import {
   State,
 } from "@stencil/core";
 import Prism from "prismjs";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
@@ -41,7 +41,7 @@ export class KulCode {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Value.
    */
@@ -113,7 +113,7 @@ export class KulCode {
    */
   @Method()
   async getProps(): Promise<KulCodePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulCodePropsInterface;
   }
@@ -139,7 +139,7 @@ export class KulCode {
 
   //#region Private methods
   #format(value: string) {
-    const { stringify } = kulManagerSingleton.data.cell;
+    const { stringify } = kulManager.data.cell;
 
     if (typeof value === "string" && /^[\{\}]\s*$/i.test(value)) {
       return value.trim();
@@ -151,7 +151,7 @@ export class KulCode {
     }
   }
   async #highlightCode(): Promise<void> {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     try {
       if (!Prism.languages[this.kulLanguage]) {
@@ -183,7 +183,7 @@ export class KulCode {
     );
   }
   async #loadLanguage() {
-    const { get } = kulManagerSingleton.assets;
+    const { get } = kulManager.assets;
 
     try {
       const { path } = get(`./assets/prism/prism-${this.kulLanguage}.min.js`);
@@ -204,7 +204,7 @@ export class KulCode {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -238,7 +238,7 @@ export class KulCode {
     this.#updateValue();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
@@ -247,12 +247,12 @@ export class KulCode {
     this.value = this.#format(this.kulValue);
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     if (this.#el) {
       this.#highlightCode();
@@ -261,7 +261,7 @@ export class KulCode {
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
     const { kulLanguage, kulPreserveSpaces, kulStyle, kulValue } = this;
 
     const isPreserveSpaceMissing = !!(
@@ -331,7 +331,7 @@ export class KulCode {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

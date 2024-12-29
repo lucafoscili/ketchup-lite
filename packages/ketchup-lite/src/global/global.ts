@@ -2,7 +2,7 @@ import { KulManager } from "src/managers/kul-manager/kul-manager";
 import { KulManagerEventPayload } from "src/managers/kul-manager/kul-manager-declarations";
 import { KulManagerSymbol } from "./symbol";
 
-export let kulManagerSingleton: KulManager | null = null;
+export let kulManager: KulManager | null = null;
 
 let isInitialized = false;
 
@@ -17,7 +17,7 @@ async function initKulManager() {
 
   if (typeof document !== "undefined") {
     const manager = new KulManager();
-    kulManagerSingleton = manager;
+    kulManager = manager;
 
     (window as any)[KulManagerSymbol] = manager;
 

@@ -10,7 +10,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
@@ -38,7 +38,7 @@ export class KulUpload {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    *State holding the selected files
    * @default []
@@ -83,7 +83,7 @@ export class KulUpload {
   })
   kulEvent: EventEmitter<KulUploadEventPayload>;
   onKulEvent(e: Event | CustomEvent, eventType: KulUploadEvent, file?: File) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     switch (eventType) {
       case "delete":
@@ -122,7 +122,7 @@ export class KulUpload {
    */
   @Method()
   async getProps(): Promise<KulUploadPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulUploadPropsInterface;
   }
@@ -219,7 +219,7 @@ export class KulUpload {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -229,7 +229,7 @@ export class KulUpload {
     }
   }
   componentDidLoad() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (this.#rippleSurface) {
       theme.ripple.setup(this.#rippleSurface);
@@ -239,17 +239,17 @@ export class KulUpload {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { kulLabel, kulRipple, kulStyle, selectedFiles } = this;
 
@@ -300,7 +300,7 @@ export class KulUpload {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

@@ -10,7 +10,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
@@ -36,7 +36,7 @@ export class KulSlider {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The value of the component.
    */
@@ -105,7 +105,7 @@ export class KulSlider {
   })
   kulEvent: EventEmitter<KulSliderEventPayload>;
   onKulEvent(e: Event | CustomEvent, eventType: KulSliderEvent) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     switch (eventType) {
       case "change":
@@ -145,7 +145,7 @@ export class KulSlider {
    */
   @Method()
   async getProps(): Promise<KulSliderPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulSliderPropsInterface;
   }
@@ -188,7 +188,7 @@ export class KulSlider {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -200,7 +200,7 @@ export class KulSlider {
     }
   }
   componentDidLoad() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (this.#rippleSurface) {
       theme.ripple.setup(this.#rippleSurface);
@@ -210,17 +210,17 @@ export class KulSlider {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const {
       kulDisabled,
@@ -303,7 +303,7 @@ export class KulSlider {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

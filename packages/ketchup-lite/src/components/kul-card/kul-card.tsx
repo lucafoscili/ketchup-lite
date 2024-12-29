@@ -11,7 +11,7 @@ import {
   State,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataShapesMap,
@@ -42,7 +42,7 @@ export class KulCard {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The shapes of the component.
    * @default ""
@@ -84,7 +84,7 @@ export class KulCard {
   #adapter = createAdapter(
     {
       compInstance: this,
-      manager: kulManagerSingleton,
+      manager: kulManager,
       shapes: () => this.shapes,
     },
     () => this.#adapter,
@@ -112,7 +112,7 @@ export class KulCard {
   //#region Watchers
   @Watch("kulData")
   async updateShapes() {
-    const { data, debug } = kulManagerSingleton;
+    const { data, debug } = kulManager;
 
     try {
       this.shapes = data.cell.shapes.getAll(this.kulData);
@@ -137,7 +137,7 @@ export class KulCard {
    */
   @Method()
   async getProps(): Promise<KulCardPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulCardPropsInterface;
   }
@@ -171,7 +171,7 @@ export class KulCard {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -179,23 +179,23 @@ export class KulCard {
     this.updateShapes();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillUpdate() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     const { kulData, kulLayout, kulSizeX, kulSizeY, kulStyle, rootElement } =
       this;
@@ -228,7 +228,7 @@ export class KulCard {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

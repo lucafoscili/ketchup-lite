@@ -13,7 +13,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataCell,
   KulDataDataset,
@@ -52,7 +52,7 @@ export class KulMasonry {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The selected element.
    * @default {}
@@ -115,7 +115,7 @@ export class KulMasonry {
       currentColumns: () => this.#currentColumns,
       isMasonry: () => this.#isMasonry(),
       isVertical: () => this.#isVertical(),
-      manager: kulManagerSingleton,
+      manager: kulManager,
       shapes: () => this.shapes,
     },
     () => this.#adapter,
@@ -173,7 +173,7 @@ export class KulMasonry {
   //#region Watchers
   @Watch("kulColumns")
   validateColumns() {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     if (
       Array.isArray(this.kulColumns) &&
@@ -190,7 +190,7 @@ export class KulMasonry {
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
-    const { data, debug } = kulManagerSingleton;
+    const { data, debug } = kulManager;
 
     try {
       this.shapes = data.cell.shapes.getAll(this.kulData);
@@ -215,7 +215,7 @@ export class KulMasonry {
    */
   @Method()
   async getProps(): Promise<KulMasonryPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulMasonryPropsInterface;
   }
@@ -246,7 +246,7 @@ export class KulMasonry {
    */
   @Method()
   async setSelectedShape(index: number): Promise<void> {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     const shape = this.shapes?.[this.kulShape]?.[index];
     if (shape) {
@@ -319,7 +319,7 @@ export class KulMasonry {
     return 1;
   }
   #divideShapesIntoColumns = (): VNode[][] => {
-    const { decorate } = kulManagerSingleton.data.cell.shapes;
+    const { decorate } = kulManager.data.cell.shapes;
 
     const { kulShape, selectedShape, shapes } = this;
 
@@ -360,7 +360,7 @@ export class KulMasonry {
     this.viewportWidth = window.innerWidth;
   }, 200);
   #prepChangeView = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { addColumn, changeView, removeColumn } = this.#adapter.elements.jsx;
 
@@ -377,7 +377,7 @@ export class KulMasonry {
     );
   };
   #prepView = (): VNode[] => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const nodes = this.#divideShapesIntoColumns();
     return nodes.map((column, index) => (
@@ -389,7 +389,7 @@ export class KulMasonry {
     ));
   };
   #prepMasonry = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { kulShape, kulView, shapes } = this;
 
@@ -416,7 +416,7 @@ export class KulMasonry {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     this.viewportWidth = window.innerWidth;
     window.addEventListener("resize", this.#handleResize);
@@ -426,24 +426,24 @@ export class KulMasonry {
     this.updateShapes();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.#currentColumns = this.#isMasonry() ? this.#calculateColumnCount() : 1;
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { kulStyle } = this;
 
@@ -461,7 +461,7 @@ export class KulMasonry {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
     window.removeEventListener("resize", this.#handleResize);

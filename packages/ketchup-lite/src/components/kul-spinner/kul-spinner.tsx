@@ -11,7 +11,7 @@ import {
   State,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { BAR_SPINNER_CONFIGS, SPINNER_CONFIGS } from "./helpers/constants";
@@ -40,7 +40,7 @@ export class KulSpinner {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Progress percentage for the progress bar.
    */
@@ -150,7 +150,7 @@ export class KulSpinner {
    */
   @Method()
   async getProps(): Promise<KulSpinnerPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulSpinnerPropsInterface;
   }
@@ -197,12 +197,12 @@ export class KulSpinner {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     const { kulBarVariant, kulTimeout } = this;
 
@@ -214,7 +214,7 @@ export class KulSpinner {
     }
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
@@ -224,7 +224,7 @@ export class KulSpinner {
     }
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     const root = this.rootElement.shadowRoot;
 
@@ -239,7 +239,7 @@ export class KulSpinner {
     info.update(this, "did-render");
   }
   render() {
-    const { setKulStyle } = kulManagerSingleton.theme;
+    const { setKulStyle } = kulManager.theme;
 
     const {
       bigWait,
@@ -295,7 +295,7 @@ export class KulSpinner {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
     cancelAnimationFrame(this.#progressAnimationFrame);

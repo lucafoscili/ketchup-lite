@@ -8,7 +8,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulCardEventPayload } from "../kul-card/kul-card-declarations";
 import {
@@ -250,7 +250,7 @@ export class KulShowcase {
     return <div>No state available for type: {type}</div>;
   }
   #cards(type: KulShowcaseTitle): VNode[] {
-    const { stringify } = kulManagerSingleton.data.cell;
+    const { stringify } = kulManager.data.cell;
 
     const dataset =
       type === "Components"

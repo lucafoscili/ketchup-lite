@@ -13,7 +13,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataCell,
   KulDataDataset,
@@ -49,7 +49,7 @@ export class KulCarousel {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Tracks the current index of the displayed item.
    * @default 0
@@ -103,7 +103,7 @@ export class KulCarousel {
         current: () => this.currentIndex,
       },
       interval: () => this.#interval,
-      manager: kulManagerSingleton,
+      manager: kulManager,
       totalSlides: () => this.#getTotalSlides(),
     },
     {
@@ -150,7 +150,7 @@ export class KulCarousel {
   @Watch("kulData")
   @Watch("kulShape")
   async updateShapes() {
-    const { data, debug } = kulManagerSingleton;
+    const { data, debug } = kulManager;
 
     try {
       this.shapes = data.cell.shapes.getAll(this.kulData);
@@ -175,7 +175,7 @@ export class KulCarousel {
    */
   @Method()
   async getProps(): Promise<KulCarouselPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -235,7 +235,7 @@ export class KulCarousel {
     return !!this.shapes?.[this.kulShape];
   }
   #prepCarousel(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { elements } = this.#adapter;
     const { jsx } = elements;
@@ -270,7 +270,7 @@ export class KulCarousel {
     return null;
   }
   #prepIndicators(): VNode[] {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { current } = this.#adapter.controller.set.index;
     const { currentIndex, kulShape } = this;
@@ -337,8 +337,8 @@ export class KulCarousel {
     return indicators;
   }
   #prepSlide(): VNode {
-    const { decorate } = kulManagerSingleton.data.cell.shapes;
-    const { bemClass } = kulManagerSingleton.theme;
+    const { decorate } = kulManager.data.cell.shapes;
+    const { bemClass } = kulManager.theme;
 
     const { currentIndex, kulShape } = this;
 
@@ -367,7 +367,7 @@ export class KulCarousel {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -381,23 +381,23 @@ export class KulCarousel {
     }
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { next, previous } = this.#adapter.controller.set.index;
     const { kulStyle } = this;
@@ -437,7 +437,7 @@ export class KulCarousel {
   }
 
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
     const { stop } = autoplay;
 
     theme.unregister(this);

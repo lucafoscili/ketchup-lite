@@ -10,7 +10,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
@@ -40,7 +40,7 @@ export class KulCanvas {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Indicates whether the user is currently painting.
    * @default false
@@ -111,7 +111,7 @@ export class KulCanvas {
       compInstance: this,
       isCursorPreview: this.#isCursorPreview,
       isPainting: () => this.isPainting,
-      manager: kulManagerSingleton,
+      manager: kulManager,
       points: () => this.points,
     },
     {
@@ -192,7 +192,7 @@ export class KulCanvas {
    */
   @Method()
   async getProps(): Promise<KulCanvasPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulCanvasPropsInterface;
   }
@@ -284,12 +284,12 @@ export class KulCanvas {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.resizeCanvas();
 
@@ -305,17 +305,17 @@ export class KulCanvas {
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { board, image, preview } = this.#adapter.elements.jsx;
     const { kulStyle } = this;
@@ -343,7 +343,7 @@ export class KulCanvas {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
 

@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
@@ -43,7 +43,7 @@ export class KulAccordion {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Set of expanded nodes.
    */
@@ -90,7 +90,7 @@ export class KulAccordion {
     eventType: KulAccordionEvent,
     node?: KulDataNode,
   ) {
-    const { ripple } = kulManagerSingleton.theme;
+    const { ripple } = kulManager.theme;
 
     const { kulRipple, rootElement } = this;
 
@@ -126,7 +126,7 @@ export class KulAccordion {
    */
   @Method()
   async getProps(): Promise<KulAccordionPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -198,7 +198,7 @@ export class KulAccordion {
     return this.selectedNodes.has(node);
   }
   #prepIcon(icon: string): VNode {
-    const { assets, theme } = kulManagerSingleton;
+    const { assets, theme } = kulManager;
 
     const { style } = assets.get(`./assets/svg/${icon}.svg`);
     return (
@@ -210,7 +210,7 @@ export class KulAccordion {
     );
   }
   #prepAccordion(): VNode[] {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { kulData, rootElement } = this;
 
@@ -283,23 +283,23 @@ export class KulAccordion {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
@@ -312,7 +312,7 @@ export class KulAccordion {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
     const { kulStyle } = this;
 
     this.#rippleSurface = {};
@@ -327,7 +327,7 @@ export class KulAccordion {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

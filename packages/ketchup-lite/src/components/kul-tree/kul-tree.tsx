@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
@@ -43,7 +43,7 @@ export class KulTree {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Set of expanded nodes.
    */
@@ -121,7 +121,7 @@ export class KulTree {
     eventType: KulTreeEvent,
     args?: KulTreeEventArguments,
   ) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     const { expansion, node } = args || {};
 
@@ -170,7 +170,7 @@ export class KulTree {
    */
   @Method()
   async getProps(): Promise<KulTreePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -196,7 +196,7 @@ export class KulTree {
 
   //#region Private methods
   #filter(e: CustomEvent<KulTextfieldEventPayload>) {
-    const { filter } = kulManagerSingleton.data.node;
+    const { filter } = kulManager.data.node;
 
     clearTimeout(this.#filterTimeout);
     this.#filterTimeout = setTimeout(() => {
@@ -244,7 +244,7 @@ export class KulTree {
     ) : undefined;
   }
   #recursive(elements: VNode[], node: KulDataNode, depth: number) {
-    const { stringify } = kulManagerSingleton.data.cell;
+    const { stringify } = kulManager.data.cell;
 
     if (!this.debugInfo.endTime) {
       if (
@@ -285,7 +285,7 @@ export class KulTree {
         },
       },
       expanded: isExpanded,
-      manager: kulManagerSingleton,
+      manager: kulManager,
       node,
       selected: isSelected,
     };
@@ -316,23 +316,23 @@ export class KulTree {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (Object.keys(this.#rippleSurface).length) {
       for (const key in this.#rippleSurface) {
@@ -346,7 +346,7 @@ export class KulTree {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { kulData, kulEmpty, kulFilter, kulStyle } = this;
 
@@ -385,7 +385,7 @@ export class KulTree {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

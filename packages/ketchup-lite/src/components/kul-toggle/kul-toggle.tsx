@@ -10,7 +10,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
@@ -39,7 +39,7 @@ export class KulToggle {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The value of the component ("on" or "off").
    * @default ""
@@ -95,7 +95,7 @@ export class KulToggle {
   })
   kulEvent: EventEmitter<KulToggleEventPayload>;
   onKulEvent(e: Event | CustomEvent, eventType: KulToggleEvent) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     const { kulRipple, value } = this;
 
@@ -133,7 +133,7 @@ export class KulToggle {
    */
   @Method()
   async getProps(): Promise<KulTogglePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulTogglePropsInterface;
   }
@@ -194,7 +194,7 @@ export class KulToggle {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -204,7 +204,7 @@ export class KulToggle {
     }
   }
   componentDidLoad() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (this.#rippleSurface) {
       theme.ripple.setup(this.#rippleSurface);
@@ -214,17 +214,17 @@ export class KulToggle {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const {
       kulDisabled,
@@ -299,7 +299,7 @@ export class KulToggle {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }
