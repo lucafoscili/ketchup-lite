@@ -8,8 +8,7 @@ import {
 import { KUL_COMPONENT_PROPS } from "src/utils/constants";
 import { KulData } from "../kul-data/kul-data";
 import { KulDebug } from "../kul-debug/kul-debug";
-import { KulDynamicPosition } from "../kul-dynamic-position/kul-dynamic-position";
-import { KulDynamicPositionElement } from "../kul-dynamic-position/kul-dynamic-position-declarations";
+import { KulPortal } from "../kul-portal/kul-portal";
 import { KulLLM } from "../kul-llm/kul-llm";
 import { KulScrollOnHover } from "../kul-scroll-on-hover/kul-scroll-on-hover";
 import { KulTheme } from "../kul-theme/kul-theme";
@@ -28,7 +27,7 @@ export class KulManager {
   assets: { get: KulManagerComputedGetAssetPath; set: KulManagerSetAssetPath };
   data: KulData;
   debug: KulDebug;
-  dynamicPosition: KulDynamicPosition;
+  portal: KulPortal;
   llm: KulLLM;
   resize: ResizeObserver;
   scrollOnHover: KulScrollOnHover;
@@ -54,7 +53,7 @@ export class KulManager {
 
     this.data = new KulData(this);
     this.debug = new KulDebug(this);
-    this.dynamicPosition = new KulDynamicPosition(this);
+    this.portal = new KulPortal(this);
     this.llm = new KulLLM(this);
     this.scrollOnHover = new KulScrollOnHover(this);
     this.theme = new KulTheme(this);
@@ -75,35 +74,11 @@ export class KulManager {
       const { clickCallbacks } = utilities;
 
       const paths = e.composedPath() as HTMLElement[];
-      clickCallbacks.forEach((obj) => {
-        if (!obj || !obj.el?.isConnected || paths.includes(obj.el)) {
+      clickCallbacks.forEach(({ cb, element }) => {
+        if (element?.isConnected || paths.includes(element)) {
           return;
         }
-
-        const elAsDynamicPos = obj.el as KulDynamicPositionElement;
-        let found = false;
-
-        if (elAsDynamicPos.kulDynamicPosition?.detach) {
-          for (const pathEl of paths) {
-            const pathElAsDynamicPos = pathEl as KulDynamicPositionElement;
-            const { kulDynamicPosition } = pathElAsDynamicPos;
-            if (kulDynamicPosition) {
-              const { detach, originalPath } = kulDynamicPosition;
-              if (
-                kulDynamicPosition &&
-                detach &&
-                originalPath.includes(obj.el)
-              ) {
-                found = true;
-                break;
-              }
-            }
-          }
-        }
-
-        if (!found) {
-          obj.cb();
-        }
+        cb();
       });
     });
   };
@@ -119,7 +94,7 @@ export class KulManager {
     const { clickCallbacks } = utilities;
 
     if (async) {
-      setTimeout(() => clickCallbacks.add(cb), 0);
+      requestAnimationFrame(async () => clickCallbacks.add(cb));
     } else {
       clickCallbacks.add(cb);
     }

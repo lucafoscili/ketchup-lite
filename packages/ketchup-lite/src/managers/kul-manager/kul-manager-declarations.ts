@@ -5,7 +5,7 @@ export interface KulManagerUtilities {
 }
 export interface KulManagerClickCb {
   cb: () => unknown;
-  el?: HTMLElement;
+  element?: HTMLElement;
 }
 export type KulManagerGetAssetPath = (value: string) => string;
 export type KulManagerSetAssetPath = (value: string) => void;
