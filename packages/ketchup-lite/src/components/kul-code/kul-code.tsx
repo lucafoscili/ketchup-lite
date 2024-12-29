@@ -203,9 +203,12 @@ export class KulCode {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
+  componentWillLoad() {
     const {
       css,
       javascript,
@@ -219,8 +222,6 @@ export class KulCode {
       tsx,
       typescript,
     } = STATIC_LANGUAGES;
-
-    theme.register(this);
 
     css(Prism);
     javascript(Prism);

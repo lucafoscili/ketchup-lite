@@ -366,11 +366,13 @@ export class KulCarousel {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
-    const { start } = autoplay;
 
     theme.register(this);
+  }
+  componentWillLoad() {
+    const { start } = autoplay;
 
     this.updateShapes();
 

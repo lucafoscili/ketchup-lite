@@ -218,11 +218,12 @@ export class KulUpload {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
-
+  }
+  componentWillLoad() {
     if (Array.isArray(this.kulValue)) {
       this.selectedFiles = this.kulValue;
     }

@@ -418,10 +418,12 @@ export class KulTextfield {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
+  }
+  componentWillLoad() {
     if (this.kulValue) {
       this.status.add("filled");
       this.value = this.kulValue;

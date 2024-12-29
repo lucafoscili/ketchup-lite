@@ -325,11 +325,12 @@ export class KulCompare {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
-
+  }
+  componentWillLoad() {
     this.updateShapes();
   }
   componentDidLoad() {

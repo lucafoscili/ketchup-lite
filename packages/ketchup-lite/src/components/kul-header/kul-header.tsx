@@ -103,31 +103,27 @@ export class KulHeader {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
   }
-
   componentDidLoad() {
     const { info } = kulManagerSingleton.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
-
   componentWillRender() {
     const { info } = kulManagerSingleton.debug;
 
     info.update(this, "will-render");
   }
-
   componentDidRender() {
     const { info } = kulManagerSingleton.debug;
 
     info.update(this, "did-render");
   }
-
   render() {
     const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
@@ -146,7 +142,6 @@ export class KulHeader {
       </Host>
     );
   }
-
   disconnectedCallback() {
     const { theme } = kulManagerSingleton;
 

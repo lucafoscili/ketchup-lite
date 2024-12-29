@@ -333,13 +333,14 @@ export class KulShowcase {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     if (this.kulScrollElement) {
       this.kulScrollElement.addEventListener("scroll", this.#handleScroll);
     } else {
       window.addEventListener("scroll", this.#handleScroll);
     }
-
+  }
+  componentWillLoad() {
     if (this.kulValue) {
       this.currentState = this.kulValue;
     } else {

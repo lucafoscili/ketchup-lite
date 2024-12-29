@@ -384,7 +384,7 @@ export class KulList {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
     theme.register(this);
@@ -400,19 +400,16 @@ export class KulList {
     this.onKulEvent(new CustomEvent("ready"), "ready");
     debug.info.update(this, "did-load");
   }
-
   componentWillRender() {
     const { info } = kulManagerSingleton.debug;
 
     info.update(this, "will-render");
   }
-
   componentDidRender() {
     const { info } = kulManagerSingleton.debug;
 
     info.update(this, "did-render");
   }
-
   render() {
     const { bemClass, setKulStyle } = kulManagerSingleton.theme;
 
@@ -445,7 +442,6 @@ export class KulList {
       </Host>
     );
   }
-
   disconnectedCallback() {
     const { theme } = kulManagerSingleton;
 

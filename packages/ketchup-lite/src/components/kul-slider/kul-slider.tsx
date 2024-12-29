@@ -187,16 +187,17 @@ export class KulSlider {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
+  connectedCallback() {
     const { theme } = kulManagerSingleton;
 
+    theme.register(this);
+  }
+  componentWillLoad() {
     const { kulValue } = this;
 
     if (kulValue) {
       this.setValue(kulValue);
     }
-
-    theme.register(this);
   }
   componentDidLoad() {
     const { debug, theme } = kulManagerSingleton;

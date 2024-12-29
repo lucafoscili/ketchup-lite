@@ -474,10 +474,13 @@ export class KulChat {
   //#endregion
 
   //#region Lifecycle hooks
-  componentWillLoad() {
-    const { debug, theme } = kulManagerSingleton;
+  connectedCallback() {
+    const { theme } = kulManagerSingleton;
 
     theme.register(this);
+  }
+  componentWillLoad() {
+    const { debug } = kulManagerSingleton;
 
     const { set } = this.#adapter.controller;
 
