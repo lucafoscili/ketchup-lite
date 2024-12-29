@@ -12,7 +12,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
@@ -52,7 +52,7 @@ export class KulButton {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The value of the component ("on" or "off").
    * @default ""
@@ -155,7 +155,7 @@ export class KulButton {
     eventType: KulButtonEvent,
     isDropdown = false,
   ) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     switch (eventType) {
       case "click":
@@ -197,7 +197,7 @@ export class KulButton {
    */
   @Method()
   async getProps(): Promise<KulButtonPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulButtonPropsInterface;
   }
@@ -272,7 +272,7 @@ export class KulButton {
   //#region Private methods
   #listManager() {
     const { addClickCallback, dynamicPosition, removeClickCallback } =
-      kulManagerSingleton;
+      kulManager;
 
     return {
       close: () => {
@@ -325,7 +325,7 @@ export class KulButton {
     }
   }
   #prepIcon(image: KulImagePropsInterface): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       this.kulIcon && (
@@ -376,7 +376,7 @@ export class KulButton {
     );
   }
   #prepSpinner(): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       this.kulShowSpinner && (
@@ -392,7 +392,7 @@ export class KulButton {
       : "raised";
   }
   #renderButton(): VNode[] {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const {
       kulDisabled,
@@ -451,7 +451,7 @@ export class KulButton {
     ];
   }
   #renderIconButton(): VNode[] {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const {
       kulDisabled,
@@ -514,7 +514,7 @@ export class KulButton {
     ];
   }
   #renderDropdown(image: KulImagePropsInterface, styling: string): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     if (!this.#isDropdown()) {
       return null;
@@ -562,12 +562,12 @@ export class KulButton {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentWillLoad() {
-    const { data } = kulManagerSingleton;
+    const { data } = kulManager;
 
     if (this.kulValue) {
       this.value = "on";
@@ -583,7 +583,7 @@ export class KulButton {
     }
   }
   componentDidLoad() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (this.#rippleSurface) {
       theme.ripple.setup(this.#rippleSurface);
@@ -595,17 +595,17 @@ export class KulButton {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
     const { kulData, kulIcon, kulLabel, kulStyle } = this;
 
     const styling = this.#normalizedStyling();
@@ -632,7 +632,7 @@ export class KulButton {
     );
   }
   disconnectedCallback() {
-    const { dynamicPosition, theme } = kulManagerSingleton;
+    const { dynamicPosition, theme } = kulManager;
 
     if (this.#list) {
       dynamicPosition.unregister([this.#list]);

@@ -10,7 +10,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   KulComponentName,
@@ -41,7 +41,7 @@ export class KulLazy {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Sets whether the lazy entered the viewport or not.
    */
@@ -124,7 +124,7 @@ export class KulLazy {
    */
   @Method()
   async getProps(): Promise<KulLazyPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -150,7 +150,7 @@ export class KulLazy {
 
   //#region Private methods
   #setObserver(): void {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     const callback: IntersectionObserverCallback = (entries) => {
       entries.forEach((entry) => {
@@ -174,25 +174,25 @@ export class KulLazy {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
     this.#setObserver();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.#intObserver.observe(this.rootElement);
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     if (this.#lazyComponent && !this.#lazyComponentLoaded) {
       this.#lazyComponentLoaded = true;
@@ -201,7 +201,7 @@ export class KulLazy {
     info.update(this, "did-render");
   }
   render() {
-    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManager;
     const { setKulStyle } = theme;
 
     const {
@@ -272,7 +272,7 @@ export class KulLazy {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
     this.#intObserver?.unobserve(this.rootElement);

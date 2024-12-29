@@ -11,7 +11,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import {
   KulDataDataset,
   KulDataNode,
@@ -44,7 +44,7 @@ export class KulList {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The focused list item.
    * @default undefined
@@ -114,7 +114,7 @@ export class KulList {
     node?: KulDataNode,
     index = 0,
   ) {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     switch (eventType) {
       case "blur":
@@ -223,7 +223,7 @@ export class KulList {
    */
   @Method()
   async getProps(): Promise<KulListPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -278,7 +278,7 @@ export class KulList {
     }
   }
   #prepDeleteIcon(node: KulDataNode) {
-    const { get } = kulManagerSingleton.assets;
+    const { get } = kulManager.assets;
 
     const { style } = get(`./assets/svg/clear.svg`);
     return (
@@ -295,7 +295,7 @@ export class KulList {
     );
   }
   #prepIcon(node: KulDataNode) {
-    const { get } = kulManagerSingleton.assets;
+    const { get } = kulManager.assets;
 
     const { style } = get(`./assets/svg/${node.icon}.svg`);
     return (
@@ -307,8 +307,8 @@ export class KulList {
     );
   }
   #prepNode(node: KulDataNode, index: number) {
-    const { stringify } = kulManagerSingleton.data.cell;
-    const { bemClass } = kulManagerSingleton.theme;
+    const { stringify } = kulManager.data.cell;
+    const { bemClass } = kulManager.theme;
 
     const { focused, kulData, kulRipple, selected } = this;
 
@@ -362,7 +362,7 @@ export class KulList {
     );
   }
   #prepSubtitle(node: KulDataNode) {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       node.description && (
@@ -371,7 +371,7 @@ export class KulList {
     );
   }
   #prepTitle(node: KulDataNode) {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       String(node.value).valueOf() && (
@@ -385,12 +385,12 @@ export class KulList {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { debug, theme } = kulManagerSingleton;
+    const { debug, theme } = kulManager;
 
     if (this.#rippleSurface?.length) {
       this.#rippleSurface.forEach((el) => {
@@ -401,17 +401,17 @@ export class KulList {
     debug.info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { kulData, kulEmpty, kulSelectable, kulStyle } = this;
 
@@ -443,7 +443,7 @@ export class KulList {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

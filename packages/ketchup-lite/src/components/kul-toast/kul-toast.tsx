@@ -10,7 +10,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulImagePropsInterface } from "../kul-image/kul-image-declarations";
@@ -35,7 +35,7 @@ export class KulToast {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   //#endregion
 
   //#region Props
@@ -115,7 +115,7 @@ export class KulToast {
    */
   @Method()
   async getProps(): Promise<KulToastPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulToastPropsInterface;
   }
@@ -141,23 +141,23 @@ export class KulToast {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     const { kulTimer } = this;
 
@@ -168,7 +168,7 @@ export class KulToast {
     info.update(this, "did-render");
   }
   render() {
-    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManager;
     const { bemClass, setKulStyle } = theme;
 
     const { kulCloseIcon, kulIcon, kulMessage, kulStyle, kulTimer } = this;
@@ -209,7 +209,7 @@ export class KulToast {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

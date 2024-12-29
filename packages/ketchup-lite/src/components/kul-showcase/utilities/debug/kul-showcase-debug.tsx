@@ -5,7 +5,7 @@ import { GenericObject } from "../../../../types/GenericTypes";
 import { CY_ATTRIBUTES, KUL_WRAPPER_ID } from "../../../../utils/constants";
 import { KulButtonEventPayload } from "../../../kul-button/kul-button-declarations";
 import { KulListEventPayload } from "../../../kul-list/kul-list-declarations";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 
 @Component({
   tag: "kul-showcase-debug",
@@ -42,7 +42,7 @@ export class KulShowcaseDebug {
 
   //#region Private methods
   #prepComponent() {
-    const { sanitizeProps } = kulManagerSingleton;
+    const { sanitizeProps } = kulManager;
 
     const ComponentTag = this.currentComponent
       ? "kul-" + this.currentComponent

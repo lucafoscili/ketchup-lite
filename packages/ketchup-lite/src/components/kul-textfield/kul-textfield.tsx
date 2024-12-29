@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { GenericObject } from "src/types/GenericTypes";
 import {
@@ -43,7 +43,7 @@ export class KulTextfield {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * UI Status of the text field.
    */
@@ -169,7 +169,7 @@ export class KulTextfield {
    */
   @Method()
   async getProps(): Promise<KulTextfieldPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulTextfieldPropsInterface;
   }
@@ -242,7 +242,7 @@ export class KulTextfield {
       return null;
     }
 
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       <div class={bemClass("textfield", "character-counter")}>
@@ -255,7 +255,7 @@ export class KulTextfield {
       return null;
     }
 
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       <div class={bemClass("textfield", "helper-line")}>
@@ -275,8 +275,8 @@ export class KulTextfield {
       return null;
     }
 
-    const { bemClass } = kulManagerSingleton.theme;
-    const { get } = kulManagerSingleton.assets;
+    const { bemClass } = kulManager.theme;
+    const { get } = kulManager.assets;
 
     const { style } = get(`./assets/svg/${this.kulIcon}.svg`);
     return (
@@ -288,7 +288,7 @@ export class KulTextfield {
     );
   }
   #prepInput(): VNode {
-    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManager;
     const { bemClass } = theme;
 
     return (
@@ -327,7 +327,7 @@ export class KulTextfield {
       return null;
     }
 
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const labelEl: VNode = (
       <label class={bemClass("textfield", "label")} htmlFor="input">
@@ -357,7 +357,7 @@ export class KulTextfield {
     );
   }
   #prepTextArea(): VNode {
-    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManager;
     const { bemClass } = theme;
 
     return (
@@ -419,7 +419,7 @@ export class KulTextfield {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -430,13 +430,13 @@ export class KulTextfield {
     }
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
     this.#hasOutline = this.#outlineCheck();
@@ -444,12 +444,12 @@ export class KulTextfield {
     this.#updateStatus();
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     const { kulFullWidth, kulStyle, kulStyling, status } = this;
 
@@ -485,7 +485,7 @@ export class KulTextfield {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

@@ -12,7 +12,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import { KulChatStatus } from "../kul-chat/kul-chat-declarations";
@@ -57,7 +57,7 @@ export class KulMessenger {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Map of chat components with their characters.
    */
@@ -130,7 +130,7 @@ export class KulMessenger {
 
   //#region Internal variables
   #adapter = createAdapter(
-    { compInstance: this, manager: kulManagerSingleton },
+    { compInstance: this, manager: kulManager },
     () => this.#adapter,
   );
   //#endregion
@@ -194,7 +194,7 @@ export class KulMessenger {
    */
   @Method()
   async getProps(): Promise<KulMessengerPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulMessengerPropsInterface;
   }
@@ -364,7 +364,7 @@ export class KulMessenger {
     });
   };
   #prepCharacter = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { controller, elements } = this.#adapter;
     const { name } = controller.get.character;
@@ -392,7 +392,7 @@ export class KulMessenger {
     );
   };
   #prepChat = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { chat, leftExpander, rightExpander, tabbar } =
       this.#adapter.elements.jsx.chat;
@@ -419,7 +419,7 @@ export class KulMessenger {
     );
   };
   #prepCovers = (type: KulMessengerImageTypes, images: VNode[]): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { add } = this.#adapter.elements.jsx.customization.form[type];
 
@@ -436,7 +436,7 @@ export class KulMessenger {
     );
   };
   #prepExtraContext = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { customization, options } = this.#adapter.elements.jsx;
     const { back, customize } = options;
@@ -471,7 +471,7 @@ export class KulMessenger {
     );
   };
   #prepForm = (type: KulMessengerImageTypes): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { cancel, confirm, description, id, imageUrl, title } =
       this.#adapter.elements.jsx.customization.form[type];
@@ -495,7 +495,7 @@ export class KulMessenger {
     );
   };
   #prepList = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { controller, elements, handlers } = this.#adapter;
     const { byType, coverIndex, title } = controller.get.image;
@@ -554,7 +554,7 @@ export class KulMessenger {
     );
   };
   #prepOptions = (): VNode[] => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return OPTION_TYPE_IDS.map((opt) => {
       const { image } = this.#adapter.controller.get;
@@ -620,7 +620,7 @@ export class KulMessenger {
     });
   };
   #prepRoster = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { get, set } = this.#adapter.controller;
 
@@ -662,7 +662,7 @@ export class KulMessenger {
 
   //#region Lifecycle
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -670,23 +670,23 @@ export class KulMessenger {
     this.#initialize();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     if (!hasNodes(this.#adapter)) {
       return;
@@ -712,7 +712,7 @@ export class KulMessenger {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

@@ -11,7 +11,7 @@ import {
   State,
 } from "@stencil/core";
 import { dispose, ECharts, init } from "echarts";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDataDataset } from "src/managers/kul-data/kul-data-declarations";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
@@ -53,7 +53,7 @@ export class KulChart {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * Layout style.
    */
@@ -126,8 +126,8 @@ export class KulChart {
   //#endregion
 
   //#region Internal variables
-  #findColumn = kulManagerSingleton.data.column.find;
-  #stringify = kulManagerSingleton.data.cell.stringify;
+  #findColumn = kulManager.data.column.find;
+  #stringify = kulManager.data.cell.stringify;
   #chartContainer: HTMLDivElement;
   #chartEl: ECharts;
   #axesData: { id: string; data: string[] }[] = [];
@@ -136,7 +136,7 @@ export class KulChart {
     {
       compInstance: this,
       columnById: (id: string) => this.#findColumn(this.kulData, { id })[0],
-      manager: kulManagerSingleton,
+      manager: kulManager,
       mappedType: (type) => {
         switch (type) {
           case "area":
@@ -213,7 +213,7 @@ export class KulChart {
    */
   @Method()
   async getProps(): Promise<KulChartPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -239,7 +239,7 @@ export class KulChart {
 
   //#region Private methods
   #init() {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     if (this.#chartEl) {
       dispose(this.#chartContainer);
@@ -376,7 +376,7 @@ export class KulChart {
     }
   }
   #updateThemeColors() {
-    const { cssVars } = kulManagerSingleton.theme;
+    const { cssVars } = kulManager.theme;
     const { themeValues } = this;
 
     themeValues.background = cssVars[KUL_THEME_COLORS.background];
@@ -390,7 +390,7 @@ export class KulChart {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -400,20 +400,20 @@ export class KulChart {
     }
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.#adapter.controller.set.style.theme();
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     const { kulData } = this;
 
@@ -429,7 +429,7 @@ export class KulChart {
     debug.info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     const { kulSizeX, kulSizeY, kulStyle } = this;
 
@@ -449,7 +449,7 @@ export class KulChart {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     dispose(this.#chartContainer);
     theme.unregister(this);

@@ -12,7 +12,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
@@ -43,7 +43,7 @@ export class KulArticle {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   //#endregion
 
   //#region Props
@@ -97,7 +97,7 @@ export class KulArticle {
    */
   @Method()
   async getProps(): Promise<KulArticlePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -137,7 +137,7 @@ export class KulArticle {
     }
   }
   #articleTemplate(node: KulArticleNode, depth: number): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { children, cssStyle, value } = node;
 
@@ -156,7 +156,7 @@ export class KulArticle {
     );
   }
   #sectionTemplate(node: KulArticleNode, depth: number): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { children, cssStyle, value } = node;
 
@@ -175,7 +175,7 @@ export class KulArticle {
     );
   }
   #wrapperTemplate(node: KulArticleNode, depth: number): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { children, cssStyle, tagName, value } = node;
 
@@ -197,7 +197,7 @@ export class KulArticle {
     );
   }
   #paragraphTemplate(node: KulArticleNode, depth: number): VNode {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { children, cssStyle, value } = node;
 
@@ -216,7 +216,7 @@ export class KulArticle {
     );
   }
   #contentTemplate(node: KulArticleNode, depth: number): VNode {
-    const { data, theme } = kulManagerSingleton;
+    const { data, theme } = kulManager;
     const { decorate } = data.cell.shapes;
 
     const { cells, cssStyle, tagName, value } = node;
@@ -257,28 +257,28 @@ export class KulArticle {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
     const { bemClass, setKulStyle } = theme;
 
     const { kulData, kulEmpty, kulStyle } = this;
@@ -299,7 +299,7 @@ export class KulArticle {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

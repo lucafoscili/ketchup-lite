@@ -14,7 +14,7 @@ import {
   VNode,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KulLLMChoiceMessage } from "src/managers/kul-llm/kul-llm-declarations";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
@@ -46,7 +46,7 @@ export class KulChat {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * History of the messages.
    */
@@ -151,7 +151,7 @@ export class KulChat {
           .reverse()
           .find((m) => m.role === role);
       },
-      manager: kulManagerSingleton,
+      manager: kulManager,
       status: () => this.status,
       view: () => this.view,
     },
@@ -249,7 +249,7 @@ export class KulChat {
    */
   @Method()
   async getProps(): Promise<KulChatPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulChatPropsInterface;
   }
@@ -286,7 +286,7 @@ export class KulChat {
 
   //#region Private methods
   async #checkLLMStatus() {
-    const { llm } = kulManagerSingleton;
+    const { llm } = kulManager;
 
     if (this.status === "offline") {
       this.status = "connecting";
@@ -305,7 +305,7 @@ export class KulChat {
     this.onKulEvent(new CustomEvent("polling"), "polling");
   }
   #prepChat = (): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { clear, progressbar, send, settings, spinner, stt, textarea } =
       this.#adapter.elements.jsx.chat;
@@ -352,7 +352,7 @@ export class KulChat {
     );
   };
   #prepConnecting: () => VNode[] = () => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       <Fragment>
@@ -367,7 +367,7 @@ export class KulChat {
     );
   };
   #prepContent = (message: KulLLMChoiceMessage): VNode[] => {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
     const { bemClass } = theme;
 
     const { messageBlock } = this.#adapter.elements.jsx.chat;
@@ -408,7 +408,7 @@ export class KulChat {
     return elements;
   };
   #prepOffline: () => VNode[] = () => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { set } = this.#adapter.controller;
 
@@ -439,7 +439,7 @@ export class KulChat {
     );
   };
   #prepSettings = () => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { back, endpoint, maxTokens, polling, system, temperature } =
       this.#adapter.elements.jsx.settings;
@@ -458,7 +458,7 @@ export class KulChat {
     );
   };
   #prepToolbar = (m: KulLLMChoiceMessage): VNode => {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { copyContent, deleteMessage, regenerate } =
       this.#adapter.elements.jsx.toolbar;
@@ -475,12 +475,12 @@ export class KulChat {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentWillLoad() {
-    const { debug } = kulManagerSingleton;
+    const { debug } = kulManager;
 
     const { set } = this.#adapter.controller;
 
@@ -497,7 +497,7 @@ export class KulChat {
     }
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.#statusinterval = setInterval(() => {
       this.#checkLLMStatus();
@@ -507,17 +507,17 @@ export class KulChat {
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { bemClass, setKulStyle } = kulManagerSingleton.theme;
+    const { bemClass, setKulStyle } = kulManager.theme;
 
     return (
       <Host>
@@ -543,7 +543,7 @@ export class KulChat {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     clearInterval(this.#statusinterval);
     theme.unregister(this);

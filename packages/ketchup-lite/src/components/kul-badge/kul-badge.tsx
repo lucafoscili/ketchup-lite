@@ -10,7 +10,7 @@ import {
   Prop,
   State,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_THEME_COLORS } from "src/managers/kul-theme/helpers/contants";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
@@ -36,7 +36,7 @@ export class KulBadge {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   //#endregion
 
   //#region Props
@@ -90,7 +90,7 @@ export class KulBadge {
    */
   @Method()
   async getProps(): Promise<KulBadgePropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this);
   }
@@ -116,28 +116,28 @@ export class KulBadge {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { sanitizeProps, theme } = kulManagerSingleton;
+    const { sanitizeProps, theme } = kulManager;
     const { kulImageProps, kulLabel, kulStyle } = this;
 
     let imageEl: HTMLElement = null;
@@ -161,7 +161,7 @@ export class KulBadge {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

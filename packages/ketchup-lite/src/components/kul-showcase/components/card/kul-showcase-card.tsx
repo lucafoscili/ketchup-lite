@@ -1,6 +1,6 @@
 import { Component, Element, Fragment, State, VNode, h } from "@stencil/core";
 
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { CY_ATTRIBUTES } from "src/utils/constants";
 import { KulCardLayout } from "../../../kul-card/kul-card-declarations";
 import { SHOWCASE_DYN_EXAMPLES } from "../../helpers/kul-showcase-dyn-sample";
@@ -23,7 +23,7 @@ export class KulShowcaseCard {
   /**
    * Data of the fixtures.
    */
-  @State() fixtures = CARD_FIXTURES(kulManagerSingleton.assets.get);
+  @State() fixtures = CARD_FIXTURES(kulManager.assets.get);
   //#endregion
 
   //#region Internal variables

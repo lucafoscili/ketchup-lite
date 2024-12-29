@@ -11,7 +11,7 @@ import {
   State,
   VNode,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import {
   CY_ATTRIBUTES,
@@ -39,7 +39,7 @@ export class KulProgressbar {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   //#endregion
 
   //#region Props
@@ -111,7 +111,7 @@ export class KulProgressbar {
    */
   @Method()
   async getProps(): Promise<KulProgressbarPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulProgressbarPropsInterface;
   }
@@ -137,8 +137,8 @@ export class KulProgressbar {
 
   //#region Private methods
   #prepIcon() {
-    const { get } = kulManagerSingleton.assets;
-    const { bemClass } = kulManagerSingleton.theme;
+    const { get } = kulManager.assets;
+    const { bemClass } = kulManager.theme;
 
     const { kulIcon } = this;
 
@@ -152,7 +152,7 @@ export class KulProgressbar {
     );
   }
   #prepLabel() {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { kulIcon, kulLabel, kulValue } = this;
 
@@ -170,7 +170,7 @@ export class KulProgressbar {
     );
   }
   #prepProgressBar() {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       <div class={bemClass("progress-bar")}>
@@ -181,7 +181,7 @@ export class KulProgressbar {
     );
   }
   #prepRadialBar() {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     return (
       <div class={bemClass("progress-bar")}>
@@ -212,28 +212,28 @@ export class KulProgressbar {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     const { kulIsRadial, kulStyle, kulValue } = this;
 
@@ -252,7 +252,7 @@ export class KulProgressbar {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
   }

@@ -11,7 +11,7 @@ import {
   State,
   Watch,
 } from "@stencil/core";
-import { kulManagerSingleton } from "src/global/global";
+import { kulManager } from "src/global/global";
 import { KulDebugLifecycleInfo } from "src/managers/kul-debug/kul-debug-declarations";
 import { KUL_STYLE_ID, KUL_WRAPPER_ID } from "src/utils/constants";
 import {
@@ -38,7 +38,7 @@ export class KulTypewriter {
   /**
    * Debug information.
    */
-  @State() debugInfo = kulManagerSingleton.debug.info.create();
+  @State() debugInfo = kulManager.debug.info.create();
   /**
    * The current text being displayed as it types.
    */
@@ -143,7 +143,7 @@ export class KulTypewriter {
    */
   @Method()
   async getProps(): Promise<KulTypewriterPropsInterface> {
-    const { getProps } = kulManagerSingleton;
+    const { getProps } = kulManager;
 
     return getProps(this) as KulTypewriterPropsInterface;
   }
@@ -229,7 +229,7 @@ export class KulTypewriter {
     this.#startTyping();
   }
   #prepText() {
-    const { bemClass } = kulManagerSingleton.theme;
+    const { bemClass } = kulManager.theme;
 
     const { currentTextIndex, displayedText, isDeleting, kulCursor, kulTag } =
       this;
@@ -255,7 +255,7 @@ export class KulTypewriter {
 
   //#region Lifecycle hooks
   connectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.register(this);
   }
@@ -263,24 +263,24 @@ export class KulTypewriter {
     this.#initializeTexts();
   }
   componentDidLoad() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     this.onKulEvent(new CustomEvent("ready"), "ready");
     requestAnimationFrame(async () => this.#startTyping());
     info.update(this, "did-load");
   }
   componentWillRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "will-render");
   }
   componentDidRender() {
-    const { info } = kulManagerSingleton.debug;
+    const { info } = kulManager.debug;
 
     info.update(this, "did-render");
   }
   render() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     const { kulStyle } = this;
 
@@ -292,7 +292,7 @@ export class KulTypewriter {
     );
   }
   disconnectedCallback() {
-    const { theme } = kulManagerSingleton;
+    const { theme } = kulManager;
 
     theme.unregister(this);
     clearTimeout(this.#timeout);
